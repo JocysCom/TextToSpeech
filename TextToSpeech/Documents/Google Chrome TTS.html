@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <style>
+        td {
+            font-family: 'Courier New';
+            font-size: 10pt;
+        }
+
+        body {
+            font-family: 'Courier New';
+            font-size: 10pt;
+        }
+
+        textarea {
+            font-family: 'Courier New';
+            font-size: 10pt;
+        }
+
+        select {
+            font-family: 'Courier New';
+            font-size: 10pt;
+        }
+
+        button {
+            font-family: 'Courier New';
+            font-size: 10pt;
+        }
+    </style>
+</head>
+<body>
+
+    <script type="text/javascript">
+
+        var voices;
+
+        window.onload = function () {
+            voices = window.speechSynthesis.getVoices();
+            setTimeout(function () {
+                voices = window.speechSynthesis.getVoices();
+                for (var i = 0; i < voices.length; i++) {
+                    document.getElementById("Voices").value = document.getElementById("Voices").value + "Voice " + i.toString() + ' ' + voices[i].name + '\r\n';
+                }
+            }, 1000);
+
+        }
+
+        function Read() {
+
+            speechSynthesis.cancel();
+            var voiceId = document.getElementById("VoiceId").value;
+            var pitch = document.getElementById("Pitch").value;
+            var rate = document.getElementById("Rate").value;
+            var volume = document.getElementById("Volume").value;
+            var text = document.getElementById("TTS").value;
+            var u1 = new SpeechSynthesisUtterance(text);
+            u1.lang = 'en-US';
+            u1.pitch = pitch;
+            u1.rate = rate;
+            u1.voice = voices[voiceId];
+            u1.voiceURI = 'native';
+            u1.volume = volume;
+            speechSynthesis.speak(u1);
+        }
+
+    </script>
+
+    <table style="border: 0;">
+        <tr>
+            <td><textarea id="TTS" cols="64" rows="12">You've arrived just in time. The Blackrock orcs have managed to sneak into Northshire through a break in the mountain. My soldiers are doing the best they can to push them back, but I fear they will be overwhelmed soon. Head northwest into the forest and kill the attacking Blackrock worgs! Help my soldiers!</textarea></td>
+            <td><textarea id="Voices" cols="64" rows="12"></textarea></td>
+            <td style="vertical-align: bottom;">
+                <table style="border: 0;">
+                    <tr>
+                        <td>Voice:</td>
+                        <td>
+                            <select id="VoiceId" onchange="Read();" style="width: 130px;">
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option selected="selected" value="10">10 - default</option>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Volume:</td>
+                        <td>
+                            <select id="Volume" onchange="Read();" style="width: 130px;">
+                                <option>0</option>
+                                <option>0.2</option>
+                                <option>0.4</option>
+                                <option>0.6</option>
+                                <option>0.8</option>
+                                <option selected="selected" value="1">1 - default</option>
+                            </select>
+                        </td>
+                        <td>Voice 10 native only</td>
+                    </tr>
+                    <tr>
+                        <td>Pitch:</td>
+                        <td>
+                            <select id="Pitch" onchange="Read();" style="width: 130px;">
+                                <option>0</option>
+                                <option>0.5</option>
+                                <option selected="selected" value="1">1 - default</option>
+                                <option>1.5</option>
+                                <option>2</option>
+                            </select>
+                        </td>
+                        <td>Voice 10 native only</td>
+                    </tr>
+                    <tr>
+                        <td>Rate:</td>
+                        <td>
+                            <select id="Rate" onchange="Read();" style="width: 130px;">
+                                <option>0</option>
+                                <option selected="selected" value="1">1 - default</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </td>
+                        <td>Voice 10 native only</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button onclick="Read();" style="width: 130px;">SPEAK</button></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <br />
+    <br />
+    <b>For Ivona TTS:</b><br />
+    <span style="color: #ff0000">
+        &#060;voice required="name=UK English Female"&#062;&#060;rate speed="0"&#062;&#060;pitch absmiddle="0"&#062;</span>You've arrived just in time. The Blackrock orcs have managed to sneak into Northshire through a break in the mountain. My soldiers are doing the best they can to push them back, but I fear they will be overwhelmed soon. Head northwest into the forest and kill the attacking Blackrock worgs! Help my soldiers!<span style="color: #ff0000">&#060;/pitch&#062;&#060;/rate&#062;&#060;/voice&#062;</span>
+    <br />
+    <br />
+    <b>For Jocys.com TTS:</b><br />
+    <span style="color: #ff0000">
+        &#060;voice name="Marshal McBride" gender="Male"&#062;</span>You've arrived just in time. The Blackrock orcs have managed to sneak into Northshire through a break in the mountain. My soldiers are doing the best they can to push them back, but I fear they will be overwhelmed soon. Head northwest into the forest and kill the attacking Blackrock worgs! Help my soldiers!<span style="color: #ff0000">&#060;/voice&#062;</span>
+    <br />
+    <br />
+    <span style="color: #0094ff">
+        Name (vardo) raides galima paversti skaičiais (a=0061), tada palikti tik skaičius nuo 0-9, sudėti juos visus ir paimti paskutinį skaičių (gausis nuo 0 iki 9). Tada pvz. pagal savo vardą personažas gaus 3 Voice numerį iš Male sąrašo.<br />
+        Gender (1=Unknown, 2=Male,  3=Female)<br />
+    </span><br />
+    
+    <br />
+    <br />
+    <b>Chrome Speech Synthesis with longer texts</b><br />
+    <a href="http://stackoverflow.com/questions/21947730/chrome-speech-synthesis-with-longer-texts">http://stackoverflow.com/questions/21947730/chrome-speech-synthesis-with-longer-texts</a>
+
+</body>
+</html>

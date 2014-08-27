@@ -1,0 +1,13 @@
+.scc
+*\.scc\*
+*.svn*
+*\.svn\*
+*\obj\*
+MySCMServerInfo
+*\MySCMServerInfo
+Thumbs.db
+*\Thumbs.db
+*.zip
+*.ncb
+*.suo
+*.user

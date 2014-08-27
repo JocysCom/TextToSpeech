@@ -1,0 +1,9 @@
+#Extract current TOC Version (Interface) in chat window: /run print((select(4, GetBuildInfo())));
+
+## Interface: 50400
+## Title: |cff77ccffJocys.com|r Text to Speech
+## Notes: Jocys.com World of Warcraft Text to Speech AddOn
+## SavedVariables: EditBoxF0Value, EditBoxF1Value, EditBoxF2Value, EditBoxF3Value, EditBoxF4Value, EditBoxF5Value, EditBoxF6Value, EditBoxF7Value, EditBoxF8Value, EditBoxF9Value, EditBoxM0Value, EditBoxM1Value, EditBoxM2Value, EditBoxM3Value, EditBoxM4Value, EditBoxM5Value, EditBoxM6Value, EditBoxM7Value, EditBoxM8Value, EditBoxM9Value, EditBoxU0Value, EditBoxU1Value, EditBoxU2Value, EditBoxU3Value, EditBoxU4Value, EditBoxU5Value, EditBoxU6Value, EditBoxU7Value, EditBoxU8Value, EditBoxU9Value, EditBoxP0Value, EditBoxP1Value, EditBoxP2Value, EditBoxP3Value, EditBoxP4Value, EditBoxP5Value, EditBoxP6Value, EditBoxP7Value, EditBoxP8Value, EditBoxP9Value, EditBoxN0Value, EditBoxN1Value, EditBoxN2Value, EditBoxN3Value, EditBoxN4Value, EditBoxN5Value, EditBoxN6Value, EditBoxN7Value, EditBoxN8Value, EditBoxN9Value
+## SavedVariablesPerCharacter: CharacterFirstLoginValue, CheckButtonEnableValue, CheckButtonAutoValue, CheckButtonDNDValue, CheckButtonFilterValue, EditBoxReplaceNameValue
+JocysCom-WoW-TextToSpeech.lua
+JocysCom-WoW-TextToSpeech.xml

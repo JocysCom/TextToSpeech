@@ -1,0 +1,10 @@
+﻿Please download this tool only from trustworthy sources. Make sure that this add-on is always signed by verified publisher (Jocys.com) with signature issue by trusted certificate authority. This tool requires administrative rights to function.
+
+References:
+  Account Security: http://eu.battle.net/security
+  Ivona Voices: http://www.ivona.com
+Pitch Shifting in C#: 
+  Stephan M. Bernsee: http://www.dspdimension.com
+  Michael Knight: http://sites.google.com/site/mikescoderama
+DirectX Effects:
+  jackjohnston99: http://www.codeproject.com/Articles/jackjohnston99

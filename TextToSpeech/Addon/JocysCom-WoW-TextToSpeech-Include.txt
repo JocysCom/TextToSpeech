@@ -1,0 +1,10 @@
+//==============================================================
+// File List:
+//--------------------------------------------------------------
+TextToSpeech\Addon\JocysCom-WoW-TextToSpeech.lua
+TextToSpeech\Addon\JocysCom-WoW-TextToSpeech.toc
+TextToSpeech\Addon\JocysCom-WoW-TextToSpeech.xml
+TextToSpeech\Addon\JocysCom-WoW-TextToSpeech.Help-Online.URL
+TextToSpeech\bin\Debug\JocysCom.WoW.TextToSpeech.Monitor.exe
+TextToSpeech\bin\Debug\JocysCom.WoW.TextToSpeech.Monitor.pdb
+
