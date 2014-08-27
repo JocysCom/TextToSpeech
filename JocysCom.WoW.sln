@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JocysCom.WoW.TextToSpeech.Monitor", "TextToSpeech\JocysCom.WoW.TextToSpeech.Monitor.csproj", "{77CA0386-DC4E-45B1-91C9-B34C8BC6AEB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JocysCom.WoW.TextToSpeech", "TextToSpeech\JocysCom.WoW.TextToSpeech.csproj", "{77CA0386-DC4E-45B1-91C9-B34C8BC6AEB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
