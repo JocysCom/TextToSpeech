@@ -176,6 +176,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Addon\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.sha" />
+    <None Include="Addon\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.zip" />
     <None Include="Addon\JocysCom-WoW-TextToSpeech.bat" />
     <None Include="Addon\JocysCom-WoW-TextToSpeech.Help-Online.URL" />
     <None Include="Addon\JocysCom-WoW-TextToSpeech.lua" />
@@ -191,6 +193,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Addon\Images\Copy.png" />
+    <Content Include="Addon\Images\JocysCom_WoW_TTS_Monitor.png" />
+    <Content Include="Addon\Images\Options_Window.png" />
+    <Content Include="Addon\Images\Quest_Window.png" />
     <Content Include="Addon\JocysCom-WoW-TextToSpeech-Exclude.txt" />
     <Content Include="Addon\JocysCom-WoW-TextToSpeech-Include.txt" />
     <Content Include="Addon\JocysCom-WoW-TextToSpeech-Presets.txt" />

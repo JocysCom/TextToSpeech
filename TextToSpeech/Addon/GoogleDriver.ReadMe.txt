@@ -1,0 +1,3 @@
+TextToSpeech\Addon\Downloads                      -> C:\Users\<User>\Google Drive\WoW-TextToSpeech\Download
+TextToSpeech\Addon\Images                         -> C:\Users\<User>\Google Drive\WoW-TextToSpeech\Images
+TextToSpeech\Addon\JocysCom-WoW-TextToSpeech.zip  -> C:\Users\<User>\Google Drive\WoW-TextToSpeech\JocysCom-WoW-TextToSpeech.zip
