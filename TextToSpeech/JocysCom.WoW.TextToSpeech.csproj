@@ -103,6 +103,7 @@
       <HintPath>..\..\..\..\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.DirectSound.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Speech" />
     <Reference Include="System.Web" />
@@ -125,6 +126,12 @@
     </Compile>
     <Compile Include="Controls\AboutControl.Designer.cs">
       <DependentUpon>AboutControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MessageBoxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\MessageBoxForm.Designer.cs">
+      <DependentUpon>MessageBoxForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Network\IpHeader.cs" />
     <Compile Include="Network\IpHeaderFlags.cs" />
@@ -151,6 +158,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Network\voice.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -159,6 +171,9 @@
     <Compile Include="Network\WowListItem.cs" />
     <EmbeddedResource Include="Controls\AboutControl.resx">
       <DependentUpon>AboutControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MessageBoxForm.resx">
+      <DependentUpon>MessageBoxForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SoundEffectsControl.resx">
       <DependentUpon>SoundEffectsControl.cs</DependentUpon>
@@ -171,17 +186,13 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Addon\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.sha" />
     <None Include="Addon\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.zip" />
     <None Include="Addon\JocysCom-WoW-TextToSpeech.bat" />
     <None Include="Addon\JocysCom-WoW-TextToSpeech.Help-Online.URL" />
     <None Include="Addon\JocysCom-WoW-TextToSpeech.lua" />
     <None Include="Addon\JocysCom-WoW-TextToSpeech.toc" />
+    <None Include="Addon\JocysCom-WoW-TextToSpeech.zip" />
     <None Include="Addon\JocysCom.WoW.TextToSpeech.mklink.bat" />
     <None Include="Addon\JocysCom.WoW.TextToSpeech.Monitor.sign.bat" />
     <None Include="app.config" />
@@ -193,8 +204,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Addon\GoogleDriver.ReadMe.txt" />
     <Content Include="Addon\Images\Copy.png" />
     <Content Include="Addon\Images\JocysCom_WoW_TTS_Monitor.png" />
+    <Content Include="Addon\Images\Monitor_Certificate.PNG" />
+    <Content Include="Addon\Images\Monitor_File_Properties.PNG" />
+    <Content Include="Addon\Images\Monitor_Signature_Details.PNG" />
     <Content Include="Addon\Images\Options_Window.png" />
     <Content Include="Addon\Images\Quest_Window.png" />
     <Content Include="Addon\JocysCom-WoW-TextToSpeech-Exclude.txt" />
@@ -211,6 +226,14 @@
     <Content Include="Addon\Presets\Mechanical.preset.xml" />
     <Content Include="Addon\Presets\Undead.preset.xml" />
     <Content Include="app.ico" />
+    <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Error.ico" />
+    <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Error_32x32.png" />
+    <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Information.ico" />
+    <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Information_32x32.png" />
+    <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Question.ico" />
+    <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Question_32x32.png" />
+    <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Warning.ico" />
+    <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Warning_32x32.png" />
     <Content Include="Documents\Google Chrome TTS.html" />
     <Content Include="Documents\JocysCom_WoW_TTS_Help.html" />
     <Content Include="Documents\JocysCom_WoW_TTS_Help_Images\CategoryContentFooter.png" />

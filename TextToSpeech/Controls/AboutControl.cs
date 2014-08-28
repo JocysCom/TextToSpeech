@@ -19,24 +19,7 @@ namespace JocysCom.WoW.TextToSpeech.Controls
 
 		void LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			OpenUrl(((Control)sender).Text);
-		}
-
-		public void OpenUrl(string url)
-		{
-			try
-			{
-				System.Diagnostics.Process.Start(url);
-			}
-			catch (System.ComponentModel.Win32Exception noBrowser)
-			{
-				if (noBrowser.ErrorCode == -2147467259)
-					MessageBox.Show(noBrowser.Message);
-			}
-			catch (System.Exception other)
-			{
-				MessageBox.Show(other.Message);
-			}
+			MainHelper.OpenUrl(((Control)sender).Text);
 		}
 
 		void AboutControl_Load(object sender, EventArgs e)
