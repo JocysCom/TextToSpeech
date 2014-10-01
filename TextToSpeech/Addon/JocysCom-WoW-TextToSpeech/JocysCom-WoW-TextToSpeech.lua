@@ -532,8 +532,8 @@ function OptionsFrame_OnLoad(self)
 	PitchMinEditBox:SetScript("OnEscapePressed", functionClose);
 	PitchMaxEditBox:SetScript("OnEscapePressed", functionClose);
 	ReplaceNameEditBox:SetScript("OnEscapePressed", functionClose);
-	SaveSettingsButton:Hide();
-	LoadSettingsButton:Hide();
+	--SaveSettingsButton:Hide();
+	--LoadSettingsButton:Hide();
 	LogMessage("Registered");		
 end
 
@@ -789,15 +789,17 @@ end
 -- FUNCTION SAVE VALUES (ON OPTIONS CLOSE AND LOGOUT)
 
 function SaveAllSettings()
+	-- Save check buttons.
 	EnabledCheckButtonValue = EnabledCheckButton:GetChecked();
 	AutoCheckButtonValue = AutoCheckButton:GetChecked();
 	DndCheckButtonValue = DndCheckButton:GetChecked();
 	FilterCheckButtonValue = FilterCheckButton:GetChecked();
-	ReplaceNameCheckButtonValue = ReplaceNameEditBox:GetText();
-	RateMinCheckButtonValue = RateMinEditBox:GetText();
-	RateMaxCheckButtonValue = RateMaxEditBox:GetText();
-	PitchMinCheckButtonValue = PitchMinEditBox:GetText();
-	PitchMaxCheckButtonValue = PitchMaxEditBox:GetText();
+	-- Save edit boxes.
+	ReplaceNameEditBoxValue = ReplaceNameEditBox:GetText();
+	RateMinEditBoxValue = RateMinEditBox:GetText();
+	RateMaxEditBoxValue = RateMaxEditBox:GetText();
+	PitchMinEditBoxValue = PitchMinEditBox:GetText();
+	PitchMaxEditBoxValue = PitchMaxEditBox:GetText();
 	local len = table.getn(defaultSettings);
 	for i = 1, len do
 		local row = defaultSettings[i];
@@ -814,9 +816,11 @@ function SaveAllSettings()
 			AllSavedValues[i]["Voices"][v][3] = GetFrame(prefix .. voiceSuffix):GetText();
 		end
 	end
+	LogMessage("Settings Saved");
 end
 
 function LoadAllSettings()
+	-- Load check buttons.
 	if EnabledCheckButtonValue ~= 1 then EnabledCheckButtonValue = nil end;
 	EnabledCheckButton:SetChecked(EnabledCheckButtonValue);
 	if AutoCheckButtonValue ~=1 then AutoCheckButtonValue = nil end;
@@ -833,6 +837,7 @@ function LoadAllSettings()
 		DndCheckButton:SetChecked(1);
 		FilterCheckButton:SetChecked(1);
 	end
+	-- Load edit boxes.
 	if ReplaceNameEditBoxValue == "" or ReplaceNameEditBoxValue == nil then ReplaceNameEditBoxValue = unitName end;
 	ReplaceNameEditBox:SetText(ReplaceNameEditBoxValue);
 	if RateMinEditBoxValue == "" or RateMinEditBoxValue == nil then RateMinEditBoxValue = RateMin end;
