@@ -1,0 +1,552 @@
+<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.blizzard.com/wow/ui/  ..\FrameXML\UI.xsd" xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="JocysCom-WoW-TextToSpeech-Addon.lua" />
+	<Frame name="OptionsFrame" inherits="BasicFrameTemplate" parentKey="" parent="UIParent" movable="true" frameStrata="HIGH" enableMouse="true">
+		<Size x="780" y="496" />
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="3" y="-3" />
+			</Anchor>
+		</Anchors>
+		<Backdrop tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString name="DefaultsFontString" inherits="GameFontNormal" text="[DefaultsFontString]" justifyH="LEFT">
+					<Size x="334" y="20" />
+					<Anchors>
+						<Anchor point="BOTTOMLEFT">
+							<Offset x="84" y="6" />
+						</Anchor>
+					</Anchors>
+					<Color r="0.502" g="0.502" b="0.502" />
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<CheckButton name="EnabledCheckButton" inherits="UICheckButtonTemplate" text="">
+				<Size x="24" y="24" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="7" y="-25" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						EnabledCheckButton_OnLoad(self);
+					</OnLoad>
+					<OnClick>
+						EnabledCheckButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="AutoCheckButton" inherits="UICheckButtonTemplate" text="">
+				<Size x="24" y="24" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="115" y="-25" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						AutoCheckButton_OnLoad(self);
+					</OnLoad>
+					<OnClick>
+						AutoCheckButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="DndCheckButton" inherits="UICheckButtonTemplate" text="">
+				<Size x="24" y="24" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="394" y="-25" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						DndCheckButton_OnLoad(self);
+					</OnLoad>
+					<OnClick>
+						DndCheckButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="FilterCheckButton" inherits="UICheckButtonTemplate" text="">
+				<Size x="24" y="24" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="546" y="-25" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						FilterCheckButton_OnLoad(self);
+					</OnLoad>
+					<OnClick>
+						FilterCheckButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<Frame name="QuestFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
+				<Size x="712" y="91" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="3" y="-55" />
+					</Anchor>
+					<Anchor point="TOPRIGHT">
+						<Offset x="-3" y="-55" />
+					</Anchor>
+				</Anchors>
+				<Backdrop tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Frames>
+					<ScrollFrame name="QuestScrollFrame" inherits="UIPanelScrollFrameTemplate">
+						<Size x="683" y="91" />
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="5" y="-4" />
+							</Anchor>
+							<Anchor point="BOTTOMRIGHT">
+								<Offset x="-26" y="3" />
+							</Anchor>
+						</Anchors>
+						<Backdrop tile="true">
+							<BackgroundInsets>
+								<AbsInset left="11" right="12" top="12" bottom="11" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="32" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="32" />
+							</EdgeSize>
+						</Backdrop>
+						<Frames>
+							<EditBox name="QuestEditBox" parent="QuestScrollFrame" letters="10000" multiLine="true">
+								<Size>
+									<AbsDimension x="675" y="81" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset x="3" y="-3" />
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT">
+										<Offset x="-3" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										QuestEditBox_OnLoad(self);
+									</OnLoad>
+								</Scripts>
+								<FontString inherits="GameFontHighlightSmall" />
+							</EditBox>
+						</Frames>
+						<Scripts>
+							<OnLoad>
+								QuestScrollFrame_OnLoad(self);
+							</OnLoad>
+						</Scripts>
+					</ScrollFrame>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						QuestFrame_OnLoad(self);
+					</OnLoad>
+				</Scripts>
+			</Frame>
+			<Frame name="VoicesFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
+				<Size x="540" y="237" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="3" y="-147" />
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset x="-169" y="112" />
+					</Anchor>
+				</Anchors>
+				<Backdrop tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Scripts>
+					<OnLoad>
+						VoicesFrame_OnLoad(self);
+					</OnLoad>
+				</Scripts>
+			</Frame>
+			<Frame name="ReplaceFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
+				<Size x="166" y="78" />
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset x="-3" y="-147" />
+					</Anchor>
+				</Anchors>
+				<Backdrop tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="ReplaceFontString" inherits="GameFontNormal" text="Replace Name">
+							<Size x="130" y="20" />
+							<Anchors>
+								<Anchor point="TOP" relativeTo="ReplaceFrame" x="0" y="-8" />
+							</Anchors>
+							<Color r="0.502" g="0.502" b="0.502" />
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<EditBox name="ReplaceNameEditBox" inherits="InputBoxTemplate">
+						<Size x="130" y="32" />
+						<Anchors>
+							<Anchor point="TOP" relativeTo="ReplaceFrame">
+								<Offset y="-34" />
+							</Anchor>
+						</Anchors>
+					</EditBox>
+				</Frames>
+			</Frame>
+			<Frame name="PitchFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
+				<Size x="166" y="78" />
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset x="-3" y="-225" />
+					</Anchor>
+				</Anchors>
+				<Backdrop tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="PitchFontString" inherits="GameFontNormal" text="MAX    Pitch    MIN">
+							<Size x="130" y="20" />
+							<Anchors>
+								<Anchor point="TOP" relativeTo="PitchFrame" x="0" y="-8" />
+							</Anchors>
+							<Color r="0.502" g="0.502" b="0.502" />
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<EditBox name="PitchMinEditBox" inherits="InputBoxTemplate" parent="PitchFrame" letters="3">
+						<TextInsets right="4" left="0" />
+						<Size x="32" y="32" />
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="PitchFontString">
+								<Offset y="-26" />
+							</Anchor>
+						</Anchors>
+						<FontString inherits="ChatFontNormal" justifyH="RIGHT" />
+					</EditBox>
+					<EditBox name="PitchMaxEditBox" inherits="InputBoxTemplate" parent="PitchFrame" letters="3">
+						<TextInsets right="4" left="0" />
+						<Size x="32" y="32" />
+						<Anchors>
+							<Anchor point="TOPRIGHT" relativeTo="PitchFontString">
+								<Offset y="-26" />
+							</Anchor>
+						</Anchors>
+						<FontString inherits="ChatFontNormal" justifyH="RIGHT" />
+					</EditBox>
+				</Frames>
+			</Frame>
+			<Frame name="RateFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
+				<Size x="166" y="78" />
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset x="-3" y="-306" />
+					</Anchor>
+				</Anchors>
+				<Backdrop tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="RateFontString" inherits="GameFontNormal" text="MAX    Rate    MIN">
+							<Size x="130" y="20" />
+							<Anchors>
+								<Anchor point="TOP" relativeTo="RateFrame" x="0" y="-8" />
+							</Anchors>
+							<Color r="0.502" g="0.502" b="0.502" />
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<EditBox name="RateMinEditBox" inherits="InputBoxTemplate" parent="RateFrame" letters="3">
+						<TextInsets right="4" left="0" />
+						<Size x="32" y="32" />
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="RateFontString">
+								<Offset y="-26" />
+							</Anchor>
+						</Anchors>
+						<FontString inherits="ChatFontNormal" justifyH="RIGHT" />
+					</EditBox>
+					<EditBox name="RateMaxEditBox" inherits="InputBoxTemplate" parent="RateFrame" letters="3">
+						<TextInsets right="4" left="0" />
+						<Size x="32" y="32" />
+						<Anchors>
+							<Anchor point="TOPRIGHT" relativeTo="RateFontString">
+								<Offset y="-26" />
+							</Anchor>
+						</Anchors>
+						<FontString inherits="ChatFontNormal" justifyH="RIGHT" />
+					</EditBox>
+				</Frames>
+			</Frame>
+			<Frame name="DescriptionFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
+				<Size x="712" y="77" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="3" y="-385" />
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset x="-3" y="30" />
+					</Anchor>
+				</Anchors>
+				<Backdrop tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="DescriptionFrameFontString" inherits="GameFontHighlightSmall" parentKey="text" text="FontString2" justifyV="TOP" justifyH="LEFT">
+							<Size x="706" y="74" />
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset x="7" y="-7" />
+								</Anchor>
+								<Anchor point="BOTTOMRIGHT">
+									<Offset x="-7" y="7" />
+								</Anchor>
+							</Anchors>
+							<Color r="0.502" g="0.502" b="0.502" />
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						DescriptionFrame_OnLoad(self);
+					</OnLoad>
+				</Scripts>
+			</Frame>
+			<Button name="DefaultsButton" inherits="UIPanelButtonTemplate" parent="OptionsFrame" text="Defaults">
+				<Size x="75" y="23" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="3" y="-468" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						DefaultsButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="LoadSettingsButton" inherits="UIPanelButtonTemplate" parent="OptionsFrame" text="Load">
+				<Size x="75" y="23" />
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset x="-3" y="5" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						LoadSettingsButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="SaveSettingsButton" inherits="UIPanelButtonTemplate" parent="OptionsFrame" text="Save">
+				<Size x="75" y="23" />
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset x="-84" y="5" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						SaveSettingsButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				OptionsFrame_OnLoad(self);
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="MiniFrame" parent="UIParent" frameStrata="DIALOG">
+		<Size x="60" y="33" />
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="225" y="-505" />
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer>
+				<Texture name="MiniFrameTexture" parentKey="texture">
+					<Size x="60" y="33" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0" />
+						<Anchor point="BOTTOMRIGHT" />
+					</Anchors>
+					<Color a="0.8" r="0" g="0" b="0" />
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="OptionsButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="TTS">
+				<Size x="48" y="21" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="6" y="-6" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						OptionsButton_OnClick()
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				MiniFrame_OnLoad(self);
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="ScrollFrame" parent="UIParent" movable="true" resizable="true" frameStrata="DIALOG" enableMouse="true">
+		<Size x="216" y="216" />
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="3" y="-505" />
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="0" right="0" top="0" bottom="0" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer>
+				<Texture name="ScrollFrameTexture" parentKey="texture">
+					<Size x="216" y="216" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0">
+							<Offset />
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT" x="0" y="0">
+							<Offset />
+						</Anchor>
+					</Anchors>
+					<Color a="0.8" r="0" g="0" b="0" />
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="ScrollFontString" inherits="GameFontNormal" parentKey="text" text="Scroll Frame Text">
+					<Size x="200" y="200" />
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset />
+						</Anchor>
+					</Anchors>
+					<Color r="0.5" g="0.5" b="0.5" />
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="ScrollResizeButton" inherits="ResizeButton" parentKey="resizeButton">
+				<Size x="16" y="16" />
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" x="0" y="0" />
+				</Anchors>
+				<Scripts>
+					<OnMouseDown>
+						ScrollResizeButton_OnMouseDown(self);
+					</OnMouseDown>
+					<OnMouseUp>
+						ScrollResizeButton_OnMouseUp(self);
+					</OnMouseUp>
+				</Scripts>
+				<NormalTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Up" />
+				<PushedTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Down" />
+				<HighlightTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Highlight" />
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				ScrollFrame_OnLoad(self);
+			</OnLoad>
+			<OnMouseDown>
+				ScrollFrame_OnMouseDown(self);
+			</OnMouseDown>
+			<OnMouseUp>
+				ScrollFrame_OnMouseUp(self);
+			</OnMouseUp>
+		</Scripts>
+	</Frame>
+</Ui>

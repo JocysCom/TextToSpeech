@@ -379,13 +379,11 @@ namespace JocysCom.WoW.TextToSpeech
 		}
 
 		string buffer = "";
+        VoiceGender gender;
 
 		void resetBuffer()
 		{
 			buffer = "";
-			PitchNumericUpDown.Value = 0;
-			RateNumericUpDown.Value = 0;
-			VolumeNumericUpDown.Value = 100;
 		}
 
 		void ProcessWowMessage(string text)
@@ -393,11 +391,15 @@ namespace JocysCom.WoW.TextToSpeech
 			// If message doesn't contain voice then do nothing.
 			if (!text.Contains("<voice")) return;
 			var v = MainHelper.DeserializeFromXmlString<voice>(text);
-			if (v.name != null) SelectVoice(v.name);
-			if (v.pitch != null) PitchNumericUpDown.Value = decimal.Parse(v.pitch);
-			if (v.rate != null) RateNumericUpDown.Value = decimal.Parse(v.rate);
-			if (v.volume != null) VolumeNumericUpDown.Value = decimal.Parse(v.volume);
-			if (v.effect != null) SelectEffectsPreset(v.effect);
+            if (v.gender != null) gender = (VoiceGender)Enum.Parse(typeof(VoiceGender), v.gender);
+            if (v.volume != null) VolumeNumericUpDown.Value = decimal.Parse(v.volume);
+            if (v.effect != null) SelectEffectsPreset(v.effect);
+            if (v.pitch != null) PitchNumericUpDown.Value = decimal.Parse(v.pitch);
+            if (v.rate != null) RateNumericUpDown.Value = decimal.Parse(v.rate);
+            if (v.name != null)
+            {
+                SelectVoice(v.name, gender);
+            }
 			switch (v.command)
 			{
 				case "copy":
@@ -407,13 +409,15 @@ namespace JocysCom.WoW.TextToSpeech
 					var decodedText = System.Web.HttpUtility.HtmlDecode(buffer);
 					TextTextBox.Text = decodedText;
 					TextXmlTabControl.SelectedTab = TextTabPage;
-					resetBuffer();
                     StopPlayer();
 					AddTextToPlaylist(decodedText);
 					break;
 				case "stop":
 					text = "";
 					StopPlayer();
+                    PitchNumericUpDown.Value = 0;
+                    RateNumericUpDown.Value = 0;
+                    VolumeNumericUpDown.Value = 100;
 					break;
 				case "add":
 					if (v.parts != null) buffer += string.Join("", v.parts);
@@ -554,7 +558,6 @@ namespace JocysCom.WoW.TextToSpeech
 		object playlistLock = new object();
 		CancellationTokenSource token;
 
-
 		void SpeakButton_Click(object sender, EventArgs e)
 		{
 			if (TextXmlTabControl.SelectedTab == SapiTabPage)
@@ -656,18 +659,44 @@ namespace JocysCom.WoW.TextToSpeech
 		//Make the recognizer ready
 		SpeechRecognitionEngine recognitionEngine = null;
 
-		void SelectVoice(string name)
+		void SelectVoice(string name, VoiceGender gender)
 		{
-			foreach (DataGridViewRow row in VoicesDataGridView.Rows)
-			{
-				var voice = (InstalledVoice)row.DataBoundItem;
-				if (voice.VoiceInfo.Name.Contains(name))
-				{
-					row.Selected = true;
-					VoicesDataGridView.FirstDisplayedCell = row.Cells[0];
-					break;
-				}
-			}
+            var data = (InstalledVoice[])VoicesDataGridView.DataSource;
+            // Get voice which will be selected.
+            var voice = data.FirstOrDefault(x => x.VoiceInfo.Name == name);
+            // If voice was not found then...
+            if (voice == null)
+            {
+                // Get alternative.
+                var choice = data.Where(x => x.VoiceInfo.Gender == gender).ToArray();
+                // If nothing to choose from then try all.
+                if (choice.Length == 0) choice = data;
+                if (choice.Length == 0)
+                {
+                    var message = string.Format("Voice '{0}' was not found", name);
+                    LastException = new Exception(message);
+                }
+                else
+                {
+                    // Generate number for picking voice.
+                    var number = MainHelper.GetNumber(0, choice.Count(), "voice", name);
+                    voice = choice[number];
+                    var message = string.Format("Voice '{0}' was not found. Voice '{1}' was used.", name, voice.VoiceInfo.Name);
+                    LastException = new Exception(message);
+                }
+            }
+            else
+            {
+                foreach (DataGridViewRow row in VoicesDataGridView.Rows)
+                {
+                    if (row.DataBoundItem.Equals(voice))
+                    {
+                        row.Selected = true;
+                        VoicesDataGridView.FirstDisplayedCell = row.Cells[0];
+                        break;
+                    }
+                }
+            }
 		}
 
 		InstalledVoice SelectedVoice

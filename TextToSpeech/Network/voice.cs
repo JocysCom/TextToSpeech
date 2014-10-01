@@ -13,6 +13,8 @@ namespace JocysCom.WoW.TextToSpeech.Network
         [XmlAttribute]
         public string rate;
         [XmlAttribute]
+        public string gender;
+        [XmlAttribute]
         public string effect;
         [XmlAttribute]
         public string volume;

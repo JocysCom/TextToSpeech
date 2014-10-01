@@ -120,6 +120,7 @@
     <Compile Include="Audio\EffectsPreset.cs" />
     <Compile Include="Audio\EffectType.cs" />
     <Compile Include="Audio\KeyValue.cs" />
+    <Compile Include="Common\Crc32.cs" />
     <Compile Include="Common\HiLoUhsort.cs" />
     <Compile Include="Controls\AboutControl.cs">
       <SubType>UserControl</SubType>
@@ -188,11 +189,16 @@
     </EmbeddedResource>
     <None Include="Addon\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.sha" />
     <None Include="Addon\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.zip" />
+    <None Include="Addon\FrameXML\UI.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Addon\JocysCom-WoW-TextToSpeech.bat" />
-    <None Include="Addon\JocysCom-WoW-TextToSpeech.Help-Online.URL" />
-    <None Include="Addon\JocysCom-WoW-TextToSpeech.lua" />
-    <None Include="Addon\JocysCom-WoW-TextToSpeech.toc" />
     <None Include="Addon\JocysCom-WoW-TextToSpeech.zip" />
+    <None Include="Addon\JocysCom-WoW-TextToSpeech\JocysCom-WoW-TextToSpeech.Help-Online.URL" />
+    <None Include="Addon\JocysCom-WoW-TextToSpeech\JocysCom-WoW-TextToSpeech.lua" />
+    <None Include="Addon\JocysCom-WoW-TextToSpeech\JocysCom-WoW-TextToSpeech.toc" />
+    <None Include="Addon\JocysCom-WoW-TextToSpeech\JocysCom-WoW-TextToSpeech.wowproj" />
+    <None Include="Addon\JocysCom-WoW-TextToSpeech\JocysCom-WoW-TextToSpeech.wowsln" />
     <None Include="Addon\JocysCom.WoW.TextToSpeech.mklink.bat" />
     <None Include="Addon\JocysCom.WoW.TextToSpeech.Monitor.sign.bat" />
     <None Include="app.config" />
@@ -205,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Addon\GoogleDriver.ReadMe.txt" />
+    <Content Include="Addon\HowToExportInterfaceCode.txt" />
     <Content Include="Addon\Images\Copy.png" />
     <Content Include="Addon\Images\JocysCom_WoW_TTS_Monitor.png" />
     <Content Include="Addon\Images\Monitor_Certificate.PNG" />
@@ -215,7 +222,7 @@
     <Content Include="Addon\JocysCom-WoW-TextToSpeech-Exclude.txt" />
     <Content Include="Addon\JocysCom-WoW-TextToSpeech-Include.txt" />
     <Content Include="Addon\JocysCom-WoW-TextToSpeech-Presets.txt" />
-    <Content Include="Addon\JocysCom-WoW-TextToSpeech.xml" />
+    <Content Include="Addon\JocysCom-WoW-TextToSpeech\JocysCom-WoW-TextToSpeech.xml" />
     <Content Include="Addon\Presets\Beast.preset.xml" />
     <Content Include="Addon\Presets\Default.preset.xml" />
     <Content Include="Addon\Presets\Demon.preset.xml" />

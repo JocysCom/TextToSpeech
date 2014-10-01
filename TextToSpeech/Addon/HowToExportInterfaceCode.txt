@@ -1,0 +1,15 @@
+1. Launch WoW with the -console switch;
+     C:\Program Files\World of Warcraft\Wow.exe -console
+	 or
+	 C:\Program Files\World of Warcraft\Wow-64.exe -console
+
+2.  At the login screen, hit the `/~ key to open a text console a the top of the window.
+3.  Type "exportInterfaceFiles art" and hit [Enter].  Wait for export to finish.
+	Note: WoW will freeze during exportings. Wait till it finish.
+4.  Type "exportInterfaceFiles code" and hit [Enter]. Wait for export to finish.
+	Note: WoW will freeze during exportings. Wait till it finish.
+5.	Find the current version of the stock UI files in your WoW directory:
+	
+	C:\Program Files\World of Warcraft\BlizzardInterfaceArt
+	C:\Program Files\World of Warcraft\BlizzardInterfaceCode
+	

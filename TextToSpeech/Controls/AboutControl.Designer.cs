@@ -70,10 +70,10 @@
             this.AboutWikiLinkLabel.AutoSize = true;
             this.AboutWikiLinkLabel.Location = new System.Drawing.Point(227, 109);
             this.AboutWikiLinkLabel.Name = "AboutWikiLinkLabel";
-            this.AboutWikiLinkLabel.Size = new System.Drawing.Size(164, 13);
+            this.AboutWikiLinkLabel.Size = new System.Drawing.Size(210, 13);
             this.AboutWikiLinkLabel.TabIndex = 0;
             this.AboutWikiLinkLabel.TabStop = true;
-            this.AboutWikiLinkLabel.Text = "http://en.wikipedia.org/wiki/TTS";
+            this.AboutWikiLinkLabel.Text = "http://en.wikipedia.org/wiki/text-to-speech";
             this.AboutWikiLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // AboutWikiLabel
@@ -120,19 +120,19 @@
             this.GoogleProjectLabel.AutoSize = true;
             this.GoogleProjectLabel.Location = new System.Drawing.Point(148, 85);
             this.GoogleProjectLabel.Name = "GoogleProjectLabel";
-            this.GoogleProjectLabel.Size = new System.Drawing.Size(73, 13);
+            this.GoogleProjectLabel.Size = new System.Drawing.Size(74, 13);
             this.GoogleProjectLabel.TabIndex = 0;
-            this.GoogleProjectLabel.Text = "Curse Project:";
+            this.GoogleProjectLabel.Text = "Project Home:";
             // 
             // GoogleProjectLinkLabel
             // 
             this.GoogleProjectLinkLabel.AutoSize = true;
             this.GoogleProjectLinkLabel.Location = new System.Drawing.Point(227, 85);
             this.GoogleProjectLinkLabel.Name = "GoogleProjectLinkLabel";
-            this.GoogleProjectLinkLabel.Size = new System.Drawing.Size(197, 13);
+            this.GoogleProjectLinkLabel.Size = new System.Drawing.Size(274, 13);
             this.GoogleProjectLinkLabel.TabIndex = 0;
             this.GoogleProjectLinkLabel.TabStop = true;
-            this.GoogleProjectLinkLabel.Text = "http://www.curse.com/addons/wow/tts";
+            this.GoogleProjectLinkLabel.Text = "https://code.google.com/p/jocyscom-wow-texttospeech";
             this.GoogleProjectLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // ProductPictureBox

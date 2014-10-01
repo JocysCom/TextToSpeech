@@ -105,7 +105,7 @@ namespace JocysCom.WoW.TextToSpeech
         {
             List<string> blocks = new List<string>();
             var splitItems = SplitText(text, new string[] { ". ", "! ", "? " });
-            var sentences = splitItems.Select(x => (x.Value + x.Key).Trim()).Where(x=>x.Length > 0).ToArray();
+            var sentences = splitItems.Select(x => (x.Value + x.Key).Trim()).Where(x => x.Length > 0).ToArray();
             //var sentences = text.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
             string block = "";
             // Loop trough each sentence.
@@ -255,6 +255,15 @@ namespace JocysCom.WoW.TextToSpeech
                 message += "===============================================================\r\n";
                 message += m;
             }
+        }
+
+        public static int GetNumber(int min, int max, string key, string value)
+        {
+            var s = key + value;
+            var hash = Crc32.ComputeHash(s);
+            var d = ((uint)max - (uint)min);
+            if (d == uint.MaxValue) return (int)hash;
+            return min + (int)(hash % (d + 1));
         }
 
     }
