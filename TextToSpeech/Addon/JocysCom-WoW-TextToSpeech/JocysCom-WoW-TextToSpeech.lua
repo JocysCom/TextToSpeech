@@ -1,29 +1,23 @@
 -- /fstack - show frame names
 
--- DEFAULT VOICES
-
-Female = "IVONA 2 Amy";
-Male = "IVONA 2 Brian";
-Unknown = "Microsoft Zira Desktop";
-
 PitchMin = "-5";
 PitchMax = "5";
-
 RateMin = "0";
 RateMax = "2";
 
 local enableSuffix = "EnableCheckBox";
 local weightSuffix = "WeightEditBox";
 local voiceSuffix = "VoiceEditBox";
-
 local lastOutputMessage;
 local lastVoiceInfo;
-
-local DebugMessages = true;
+local DebugMode = 0;
+local OptionsFrameIsVisible = 0;
 
 function LogMessage(s)
-	SendChatMessage(s, "WHISPER", "Common", unitName);	
-	--print(s);	
+	if DebugMode == 1 then
+		SendChatMessage(s, "WHISPER", "Common", unitName);	
+		--print(s);	
+	end
 end
 
 local defaultSettings =
@@ -35,13 +29,13 @@ local defaultSettings =
 		["Voices"] =
 		{
 			{ true,  100, "IVONA 2 Amy" },
-			{ false, 100, "IVONA 3 Amy" },
-			{ false, 100, "IVONA 2 Amy" },
-			{ false, 100, "IVONA 2 Amy" },
-			{ false, 100, "IVONA 2 Amy" },
-			{ false, 100, "IVONA 2 Amy" },
-			{ false, 100, "IVONA 2 Amy" },
-			{ false, 100, "IVONA 2 Amy" },
+			{ false, 100, "IVONA 2 Natalie" },
+			{ false, 100, "IVONA 2 Emma" },
+			{ false, 100, "IVONA 2 Justin" },
+			{ false, 100, "IVONA 2 Salli" },
+			{ false, 100, "IVONA 2 Kimberly" },
+			{ false, 100, "IVONA 2 Kendra" },
+			{ false, 100, "IVONA 2 Ivy" },
 		},
 	},
 	{
@@ -51,13 +45,13 @@ local defaultSettings =
 		["Voices"] =
 		{
 			{ true,  100, "IVONA 2 Brian" },
-			{ false, 100, "IVONA 4 Brian" },
-			{ false, 100, "IVONA 2 Brian" },
-			{ false, 100, "IVONA 2 Brian" },
-			{ false, 100, "IVONA 2 Brian" },
-			{ false, 100, "IVONA 2 Brian" },
-			{ false, 100, "IVONA 2 Brian" },
-			{ false, 100, "IVONA 2 Brian" },
+			{ false, 100, "IVONA 2 Joey" },
+			{ false, 100, "IVONA 2 Eric" },
+			{ false, 100, "IVONA 2 Russel" },
+			{ false, 100, "" },
+			{ false, 100, "" },
+			{ false, 100, "" },
+			{ false, 100, "" },
 		},
 	},
 	{
@@ -67,13 +61,13 @@ local defaultSettings =
 		["Voices"] =
 		{
 			{ true,  100, "Microsoft Zira Desktop" },
-			{ false, 100, "Microsoft Zira Desktop" },
-			{ false, 100, "Microsoft Zira Desktop" },
-			{ false, 100, "Microsoft Zira Desktop" },
-			{ false, 100, "Microsoft Zira Desktop" },
-			{ false, 100, "Microsoft Zira Desktop" },
-			{ false, 100, "Microsoft Zira Desktop" },
-			{ false, 100, "Microsoft Zira Desktop" },
+			{ false, 100, "" },
+			{ false, 100, "" },
+			{ false, 100, "" },
+			{ false, 100, "" },
+			{ false, 100, "" },
+			{ false, 100, "" },
+			{ false, 100, "" },
 		},
 	},
 };
@@ -83,14 +77,69 @@ local defaultSettings =
 unitName = UnitName("player");
 messageStop = "<voice command=\"stop\" />";
 
-textOptionsFrameTitle = "Jocys.com World of Warcraft Text to Speech Addon - v2014.10.01";
-textDescription = "How it works: When you open NPC dialogue window, |cff77ccffJocys.Com WoW Text to Speech Addon|r creates and sends special whisper message to yourself (message includes dialogue text, voice name, pitch value and effect name). Then, |cff77ccffJocys.Com WoW Text to Speech Monitor|r (which must be running in background) picks-up this message from your network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.";
-textReplace = "CHANGE MY NAME IN TTS\n\n FROM |cff00ff00" .. unitName .. "|r TO";
-textPitch = "Minimum ... PITCH ... Maximum\n\nRecommended: from " .. PitchMin .. " to " .. PitchMax;
-textRate = "Minimum ... RATE ... Maximum\n\nRecommended: from " .. RateMin .. " to " .. RateMax;
-textDefaults = "- Reset all settings to default values";
-textFrameScroll = "When addon is enabled and quest window is open, you can use your mouse wheel over this hidden frame.\n\nSCROLL UP = START SPEECH\n\nSCROLL DOWN = STOP SPEECH";
-textDoNotDisturb = "Please wait... NPC dialog window is open and text-to-speech is enabled.";
+local Translations_EN = {
+	MaleTitleFontString = "MALE TTS VOICES",
+	FemaleTitleFontString = "FEMALE TTS VOICES",
+	NeutralTitleFontString = "NEUTRAL TTS VOICES",
+	OptionsFrameTitle = "Jocys.com World of Warcraft Text to Speech Addon - v2014.10.01",
+	Defaults = "Reset all settings to default values",
+	FrameScroll = "When addon is enabled and quest window is open, you can use your mouse wheel over this hidden frame.\n\nSCROLL UP = START SPEECH\n\nSCROLL DOWN = STOP SPEECH",
+	DoNotDisturb = "Please wait... NPC dialog window is open and text-to-speech is enabled.",
+	Description = "How it works: When you open NPC dialogue window, |cff77ccffJocys.Com WoW Text to Speech Addon|r creates and sends special whisper message to yourself (message includes dialogue text, voice name, pitch value and effect name). Then, |cff77ccffJocys.Com WoW Text to Speech Monitor|r (which must be running in background) picks-up this message from your network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.",
+	-- Help.
+	DndCheckButton_Help = "Enables \"Do not disturb\" status and shows |cffffffff<Busy>|r near name (over character) for other players, when NPC dialogue window is open.",
+	EnableCheckBox_Help = "|cffffffffEnable|r or |cffffffffdisable|r usage of this text-to-speech voice.",
+	WeightEditBox_Help = "Voice popularity. Value from |cffffffff0|r (no usage) or |cffffffff1|r (rare usage) to |cffffffff100|r (often usage). How it works... lets say, you enabled 3 male voices with weight: |cffffffff100 Ivona 2 Brian|r, |cffffffff80 Ivona 2 Joey|r and |cffffffff50 Ivona 2 Eric|r. From name of NPC addon will generate number from |cff77ccff0|r to |cff77ccff230|r (|cffffffff100|r\+|cffffffff80|r\+|cffffffff50|r\=|cff77ccff230|r).\n\nIf this number will be from |cff77ccff1|r to |cff77ccff100|r, then |cffffffff100 Ivona 2 Brian|r voice will be selected.\nIf this number will be from |cff77ccff101|r to |cff77ccff180|r, then |cffffffff80 Ivona 2 Joey|r voice will be selected.\nIf this number will be from |cff77ccff181|r to |cff77ccff230|r, then |cffffffff50 Ivona 2 Eric|r voice will be selected.",
+	VoiceEditBox_Help = "You can write in this field |cfffffffftext-to-speech voice name|r installed on your operating system. For example: |cffffffffMicrosoft Zira Desktop|r or |cffffffffIVONA 2 Brian|r.",
+	ReplaceNameEditBox_Help = "If text-to-speech voice pronounce your character |cffffffffname|r incorrectly, you can change |cffffffffit|r in this field from |cff00ff00" .. unitName .. "|r to ...something else.",
+	RateMinEditBox_Help = "Minimum voice rate (speed). Values from |cffffffff-10|r to |cffffffff10|r. Recommended value |cffffffff" .. RateMin .. "|r.",
+	RateMaxEditBox_Help = "Maximum voice rate (speed). Values from |cffffffff-10|r to |cffffffff10|r. Recommended value |cffffffff" .. RateMax .. "|r.",
+	PitchMinEditBox_Help = "Minimum voice pitch. Values from |cffffffff-10|r to |cffffffff10|r. Recommended value |cffffffff" .. PitchMin .. "|r.",
+	PitchMaxEditBox_Help = "Maximum voice pitch. Values from |cffffffff-10|r to |cffffffff10|r. Recommended value |cffffffff" .. PitchMax .. "|r.",
+};
+
+local L = Translations_EN;
+
+local function ShowHelp(control)
+	local help = L.Description;
+	if control ~= nil then
+		local name = control:GetName();
+		local s = nil;
+		if string.match(name, enableSuffix) then
+			s = L.EnableCheckBox_Help;
+		elseif string.match(name, weightSuffix) then
+			s = L.WeightEditBox_Help;
+		elseif string.match(name, voiceSuffix) then
+			s = L.VoiceEditBox_Help;
+		else
+			s = L[name .. "_Help"];
+		end		
+		if s ~= nil then
+			help = s;
+		end
+	end
+	DescriptionFrame.text:SetText(help);
+end
+
+local function Control_OnLeave(self)
+	ShowHelp(nil);	
+end
+
+local function Control_OnEnter(self)
+	ShowHelp(self);	
+end
+
+local function PitchMinEditBox_OnTextChanged(self)
+end
+
+local function PitchMaxEditBox_OnTextChanged(self)
+end
+
+local function RateMinEditBox_OnTextChanged(self)
+end
+
+local function RateMaxEditBox_OnTextChanged(self)
+end
 
 -- FUNCTION SET COLOR
 local function GetFrame(frameName)
@@ -103,23 +152,6 @@ local function GetFrame(frameName)
 		frame = EnumerateFrames(frame);
 		-- Get the next frame
 	end
-end
-
--- FUNCTION : CREATE DEFAULT FRAME
-
-local function createFrame(name, parent)
-	frame = CreateFrame("Frame", name, parent);
-	frame:Hide();
-	frame:SetSize(100, 100);
-	frame:SetFrameStrata("HIGH");
-	frame:SetMovable(true);
-	frame:EnableMouse(true);
-	frame:RegisterForDrag("LeftButton");
-	frame:SetScript("OnDragStart", frame.StartMoving);
-	frame:SetScript("OnDragStop", frame.StopMovingOrSizing);
-	frame.texture = frame:CreateTexture("ARTWORK");
-	frame.texture:SetAllPoints();
-	frame.texture:SetTexture(0, 0, 0, 0.8);
 end
 
 -- FUNCTION : CREATE DEFAULT EDITBOX
@@ -136,21 +168,6 @@ local function createEditBox(name, parent, text, width)
 	frame.texture = frame:CreateTexture("ARTWORK");
 	frame.texture:SetAllPoints();
 	frame.texture:SetTexture(0, 0, 0, 1.0);
-	return frame;
-end
-
--- FUNCTION : CREATE DEFAULT EDITBOX 2
-
-local function createEditBox2(name, parent, text)
-	frame = CreateFrame("EditBox", name, parent);
-	frame:SetSize(80, 15);
-	frame:SetTextInsets(2, 2, 0, 0);
-	frame:SetFontObject("GameFontHighlightSmall");
-	frame:SetText(text);
-	frame.texture = frame:CreateTexture("ARTWORK");
-	frame.texture:SetAllPoints();
-	frame.texture:SetTexture(0, 0, 0, 1.0);
-	frame:SetJustifyH("CENTER");
 	return frame;
 end
 
@@ -242,37 +259,64 @@ local function PickVoiceInfo(voices, s)
 	return nil;
 end
 
-local function showFrames()
-	OptionsFrame:Show();
+local function UnlockFrames()
 	MiniFrame:SetMovable(true);
 	MiniFrame.texture:SetTexture(0, 0, 0, 0.8);
-	--MiniFrame.SetToplevel(true);
 	ScrollFrame:SetMovable(true);
 	ScrollFrame:SetResizable(true);
 	ScrollFrame:EnableMouse(true);
 	ScrollFrame.texture:SetTexture(0, 0, 0, 0.8);
-	ScrollFrame:Show();
 	ScrollFrame.text:Show();
 	ScrollFrame.resizeButton:Show();
 	ScrollFrame:SetFrameLevel(100);
-	--ScrollFrame.SetToplevel(true);
 end
 
-local function hideFrames()
-	OptionsFrame:Hide();
+local function LockFrames()
 	MiniFrame:SetMovable(false);
 	MiniFrame.texture:SetTexture(0, 0, 0, 0);
 	ScrollFrame:SetMovable(false);
 	ScrollFrame:SetResizable(false);
 	ScrollFrame:EnableMouse(false);
 	ScrollFrame.texture:SetTexture(0, 0, 0, 0);
-	if EnabledCheckButton:GetChecked() ~= 1 then
-		ScrollFrame:Hide();
-	end
 	ScrollFrame.text:Hide();
 	ScrollFrame.resizeButton:Hide();
 end
 
+local function UpdateMiniAndScrollFrame()
+	local frame = nil;
+	if GossipFrame:IsShown() then frame = GossipFrame end
+	if QuestFrame:IsShown() then frame = QuestFrame end
+	if frame == nil then
+		-- Hide all frames.
+		MiniFrame:Hide();
+		ScrollFrame:Hide();
+		OptionsFrame:Hide();
+	else
+		local top = frame:GetTop();
+		local width = frame:GetWidth();
+		-- Move mini frame.
+		MiniFrame:ClearAllPoints();
+		MiniFrame:SetParent(frame);
+		MiniFrame:SetPoint("TOPRIGHT", -4, -26);
+		MiniFrame:Show();
+		-- Move scroll frame.
+		ScrollFrame:ClearAllPoints();
+		ScrollFrame:SetParent(frame);
+		ScrollFrame:SetPoint("TOPLEFT", 12, -67);
+		ScrollFrame:SetWidth(width - 50);
+		ScrollFrame:Show();
+		-- Move options frame.
+		OptionsFrame:ClearAllPoints();
+		OptionsFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT", 4, 0);
+		if OptionsFrameIsVisible == 1 then
+			UnlockFrames();
+			OptionsFrame:Show();
+		else
+			OptionsFrame:Hide();
+			LockFrames();
+		end
+	end
+end
 
 -- FUNCTION SET COLOR
 local function SetFrameTextColor(frameName, enable)
@@ -329,17 +373,12 @@ end
 
 -- FUNCTION ENABLE or DISABLE TTS
 
-local function functionClose()
-	hideFrames();
+local function EditBox_OnEscapePressed()
 	CloseQuest();
 	CloseGossip();
 	sendChatMessageStop();
-end
-
--- FUNCTION CLEAR
-
-local function functionReset()
-	QuestEditBox:SetText("");
+	OptionsFrameIsVisible = 0;
+	UpdateMiniAndScrollFrame();
 end
 
 -- FUNCTION MESSAGE STOP
@@ -450,26 +489,32 @@ local function CreateFrames(parent, controlPrefix, gender, voices, position, col
 		local weight = voices[i + 1][2];
 		local voice = voices[i + 1][3];
 		local top = -32 -(i * 24);
-		-- Create CheckButton
+		-- Create enable CheckButton
 		CreateFrame("CheckButton", prefix .. enableSuffix, parent, "UICheckButtonTemplate");
 		item = GetFrame(prefix .. enableSuffix);
 		item:SetSize(checkBoxSize,checkBoxSize);
 		item:SetPoint("TOPLEFT", position, top);
 		item:SetChecked(enabled);
+		item:SetScript("OnEnter", Control_OnEnter);
+		item:SetScript("OnLeave", Control_OnLeave);
 		-- Create weight TextBox.
 		createEditBox(prefix .. weightSuffix, parent, weight, weightWidth);
 		item = GetFrame(prefix .. weightSuffix);
 		item:SetPoint("TOPLEFT", position + checkBoxSize, top - 4);
 		item:SetJustifyH("RIGHT");
-		item:SetScript("OnEscapePressed", functionClose)
+		item:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
+		item:SetScript("OnEnter", Control_OnEnter);
+		item:SetScript("OnLeave", Control_OnLeave);
 		-- Create voice name TextBox.
 		createEditBox(prefix .. voiceSuffix, parent, voice, nameWidth);
 		item = GetFrame(prefix .. voiceSuffix);
-		item:SetScript("OnEscapePressed", functionClose)
+		item:SetScript("OnEscapePressed", EditBox_OnEscapePressed)
 		item:SetPoint("TOPLEFT", position + checkBoxSize + space + weightWidth, top - 4);
+		item:SetScript("OnEnter", Control_OnEnter);
+		item:SetScript("OnLeave", Control_OnLeave);
 		if i == 0 then
-			local titleName = "Title" .. gender;
-			local titleText = string.upper(gender) .. " TTS VOICES";
+			local titleName = gender .. "TitleFontString";
+			local titleText = L[titleName];
 			local fontString = item:CreateFontString(titleName, ARTWORK, "GameFontHighlightSmall");
 			fontString:SetPoint("TOPLEFT", -34, 21);
 			fontString:SetTextColor(0.5, 0.5, 0.5, 1.0);
@@ -494,8 +539,8 @@ function VoicesFrame_OnLoad(self)
 end
 
 function OptionsFrame_CloseButton_OnClick(self)
-	-- Tell function not to hide OptionsFrame, because it will be hidden already.
-	hideFrames();
+	OptionsFrameIsVisible = 0;
+	UpdateMiniAndScrollFrame();
 end
 
 function OptionsFrame_OnLoad(self)
@@ -510,7 +555,7 @@ function OptionsFrame_OnLoad(self)
 	self.CloseButton:SetScript("OnClick", OptionsFrame_CloseButton_OnClick);
 	-- Setup title.
 	self.TitleText:SetPoint("TOP", 0, -6);
-	self.TitleText:SetText(textOptionsFrameTitle);
+	self.TitleText:SetText(L.OptionsFrameTitle);
 	-- Attach events.
 	self:SetScript("OnEvent", OptionsFrame_OnEvent);
 	self:RegisterEvent("ADDON_LOADED");
@@ -524,48 +569,31 @@ function OptionsFrame_OnLoad(self)
 	self:RegisterEvent("GOSSIP_CLOSED");
 	self:RegisterEvent("PLAYER_LOGOUT");
 	InitialiseMessageEventFilters();
-	DefaultsFontString:SetText(textDefaults);	
-	-- Attach escape scripts.
-	QuestEditBox:SetScript("OnEscapePressed", functionClose);
-	RateMinEditBox:SetScript("OnEscapePressed", functionClose);
-	RateMaxEditBox:SetScript("OnEscapePressed", functionClose);
-	PitchMinEditBox:SetScript("OnEscapePressed", functionClose);
-	PitchMaxEditBox:SetScript("OnEscapePressed", functionClose);
-	ReplaceNameEditBox:SetScript("OnEscapePressed", functionClose);
-	--SaveSettingsButton:Hide();
-	--LoadSettingsButton:Hide();
-	LogMessage("Registered");		
-end
-
-local line = 0;
-
-local function updateMiniFrame()
-	local frame = nil;
-	if GossipFrame:IsShown() then frame = GossipFrame end
-	if QuestFrame:IsShown() then frame = QuestFrame end
-	if frame == nil then
-		-- Hide all frames.
-		MiniFrame:Hide();
-	else
-		local top = frame:GetTop();
-		local width = frame:GetWidth();
-		-- Move mini frame.
-		MiniFrame:ClearAllPoints();
-		--MiniFrame:SetParent(nil);
-		MiniFrame:SetParent(frame);
-		MiniFrame:SetPoint("TOPRIGHT", -4, -26);
-		-- Move scroll frame.
-		ScrollFrame:ClearAllPoints();
-		--ScrollFrame:SetParent(nil);
-		ScrollFrame:SetParent(frame);
-		ScrollFrame:SetPoint("TOPLEFT", 12, -67);
-		ScrollFrame:SetWidth(width - 50);
-		-- Move options frame.
-		OptionsFrame:ClearAllPoints();
-		OptionsFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT", 4, 0);
-		-- Show all frames.
-		MiniFrame:Show();
+	DefaultsFontString:SetText(L.Defaults);	
+	-- Attach escape and OnEnter/OnLeave scripts.
+	QuestEditBox:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
+	DndCheckButton:SetScript("OnEnter", Control_OnEnter);
+	DndCheckButton:SetScript("OnLeave", Control_OnLeave);
+	RateMinEditBox:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
+	RateMinEditBox:SetScript("OnEnter", Control_OnEnter);
+	RateMinEditBox:SetScript("OnLeave", Control_OnLeave);
+	RateMaxEditBox:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
+	RateMaxEditBox:SetScript("OnEnter", Control_OnEnter);
+	RateMaxEditBox:SetScript("OnLeave", Control_OnLeave);
+	PitchMinEditBox:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
+	PitchMinEditBox:SetScript("OnEnter", Control_OnEnter);
+	PitchMinEditBox:SetScript("OnLeave", Control_OnLeave);
+	PitchMaxEditBox:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
+	PitchMaxEditBox:SetScript("OnEnter", Control_OnEnter);
+	PitchMaxEditBox:SetScript("OnLeave", Control_OnLeave);
+	ReplaceNameEditBox:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
+	ReplaceNameEditBox:SetScript("OnEnter", Control_OnEnter);
+	ReplaceNameEditBox:SetScript("OnLeave", Control_OnLeave);
+	if DebugMode == 0 then	
+		SaveSettingsButton:Hide();
+		LoadSettingsButton:Hide();
 	end
+	LogMessage("Registered");		
 end
 
 function UpdateDndStatus()
@@ -588,13 +616,9 @@ local prevVoiceInfo = nil;
 function OptionsFrame_OnEvent(self, event)
 	if event == "ADDON_LOADED" then
 		LoadAllSettings();
-		hideFrames();
-		updateMiniFrame();
+		UpdateMiniAndScrollFrame();
 	elseif event == "QUEST_GREETING" or event == "GOSSIP_SHOW" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" then
-		line = line + 1;
-		--LogMessage("" .. line .. " - " .. event);
-		updateMiniFrame();
-		functionReset();
+		UpdateMiniAndScrollFrame();
 		local vi = GetCurrentVoiceInfo();
 		-- If previous voice was selected then...
 		if prevVoiceInfo ~= nil then
@@ -610,9 +634,7 @@ function OptionsFrame_OnEvent(self, event)
 		-- Format and speak
 		messageSpeak("Auto", outputMessage, vi);
 	elseif event == "QUEST_ACCEPTED" or event == "QUEST_FINISHED" or event == "GOSSIP_CLOSED" then
-		hideFrames();
-		updateMiniFrame();		
-		functionReset();
+		UpdateMiniAndScrollFrame();		
 		if EnabledCheckButton:GetChecked() == 1 then
 			sendChatMessageStop();
 		end
@@ -622,15 +644,12 @@ function OptionsFrame_OnEvent(self, event)
 end
 
 function OptionsButton_OnClick(self)
-	local isShown = OptionsFrame:IsShown();
-	if isShown then
-		-- Hide frames first so there wont be visible lag when closing.
-		hideFrames();
-		-- Save settings after.
-		SaveAllSettings();
+	if OptionsFrame:IsShown() then
+		OptionsFrameIsVisible = 0;
 	else
-		showFrames();
+		OptionsFrameIsVisible = 1;
 	end
+	UpdateMiniAndScrollFrame();	
 end
 
 function EnabledCheckButton_OnLoad(self)
@@ -681,7 +700,7 @@ end
 function FilterCheckButton_OnLoad(self)
 	self.text:SetFontObject(GameFontHighlightSmall);
 	self.text:SetTextColor(0.5, 0.5, 0.5, 1.0);
-	self.text:SetText("Hide addon messages");
+	self.text:SetText("Hide addon messages in chat window");
 end
 
 function FilterCheckButton_OnClick(self)
@@ -693,7 +712,7 @@ function MiniFrame_OnLoad(self)
 end
 
 function ScrollFrame_OnLoad(self)
-	self.text:SetText(textFrameScroll);
+	self.text:SetText(L.FrameScroll);
 	self:SetScript("OnMouseWheel", ScrollFrame_OnMouseWheel);
 end
 
@@ -706,7 +725,6 @@ function ScrollFrame_OnMouseUp(self)
 end
 
 function ScrollFrame_OnMouseWheel(self, delta)
-	functionReset();
 	if EnabledCheckButton:GetChecked() == 1 then
 		-- Send Message
 		if delta == 1 then
@@ -742,7 +760,7 @@ function QuestEditBox_OnLoad(self)
 end
 
 function DescriptionFrame_OnLoad(self)
-	self.text:SetText(textDescription);
+	self.text:SetText(L.Description);
 end
 
 function DefaultsButton_OnClick(self)
@@ -899,12 +917,12 @@ function messageSpeak(sender, outputMessage, voiceInfo)
 		lastVoiceInfo = voiceInfo;
 	end
 	if (sender == "Scroll") or(sender == "Auto" and AutoCheckButton:GetChecked() == 1) then
-		-- Disable Do Not Disturb
-		if DndCheckButton:GetChecked() == 1 then
-			if UnitIsDND("player") == 1 then
-				SendChatMessage("", "DND");
-			end
-		end
+		---- Disable Do Not Disturb
+		--if DndCheckButton:GetChecked() == 1 then
+		--	if UnitIsDND("player") == 1 then
+		--		SendChatMessage("", "DND");
+		--	end
+		--end
 		framesClosed = 1;
 		local size = 140;
 		local startIndex = 1;
@@ -936,7 +954,7 @@ function messageSpeak(sender, outputMessage, voiceInfo)
 			-- look for next space.
 			endIndex = index + 1;
 		end
-		UpdateDndStatus();
+		--UpdateDndStatus();
 		-- FILL EDITBOXES		
 		local outputEditBox = chatMessageSP .. "\n|cffffffff" .. outputMessage .. "|r\n" .. chatMessageE;
 		-- "<" .. event .. " />" ..

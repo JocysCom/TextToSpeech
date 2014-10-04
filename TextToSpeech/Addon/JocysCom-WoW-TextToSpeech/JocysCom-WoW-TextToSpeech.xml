@@ -27,7 +27,7 @@
 							<Offset x="84" y="6" />
 						</Anchor>
 					</Anchors>
-					<Color r="0.502" g="0.502" b="0.502" />
+					<Color r="0.5" g="0.5" b="0.5" />
 				</FontString>
 			</Layer>
 		</Layers>
@@ -220,23 +220,26 @@
 				</Backdrop>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="ReplaceFontString" inherits="GameFontNormal" text="Replace Name">
-							<Size x="130" y="20" />
+						<FontString name="ReplaceFontString" inherits="GameFontHighlightSmall" text="Replace my name in TTS">
+							<Size x="140" y="20" />
 							<Anchors>
-								<Anchor point="TOP" relativeTo="ReplaceFrame" x="0" y="-8" />
+								<Anchor point="TOP">
+									<Offset y="-8" />
+								</Anchor>
 							</Anchors>
-							<Color r="0.502" g="0.502" b="0.502" />
+							<Color r="0.5" g="0.5" b="0.5" />
 						</FontString>
 					</Layer>
 				</Layers>
 				<Frames>
 					<EditBox name="ReplaceNameEditBox" inherits="InputBoxTemplate">
-						<Size x="130" y="32" />
+						<Size x="135" y="32" />
 						<Anchors>
-							<Anchor point="TOP" relativeTo="ReplaceFrame">
-								<Offset y="-34" />
+							<Anchor point="TOP">
+								<Offset x="3" y="-34" />
 							</Anchor>
 						</Anchors>
+						<FontString inherits="GameFontHighlightSmall" />
 					</EditBox>
 				</Frames>
 			</Frame>
@@ -260,12 +263,32 @@
 				</Backdrop>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="PitchFontString" inherits="GameFontNormal" text="MAX    Pitch    MIN">
-							<Size x="130" y="20" />
+						<FontString name="PitchFontString" inherits="GameFontHighlightSmall" text="Voice Pitch">
+							<Size x="70" y="20" />
 							<Anchors>
-								<Anchor point="TOP" relativeTo="PitchFrame" x="0" y="-8" />
+								<Anchor point="TOP">
+									<Offset y="-8" />
+								</Anchor>
 							</Anchors>
-							<Color r="0.502" g="0.502" b="0.502" />
+							<Color r="0.5" g="0.5" b="0.5" />
+						</FontString>
+						<FontString name="PitchMaxFontString" inherits="GameFontHighlightSmall" text="MAX">
+							<Size x="32" y="20" />
+							<Anchors>
+								<Anchor point="BOTTOMRIGHT">
+									<Offset x="-14" y="32" />
+								</Anchor>
+							</Anchors>
+							<Color r="0.5" g="0.5" b="0.5" />
+						</FontString>
+						<FontString name="PitchMinFontString" inherits="GameFontHighlightSmall" text="MIN">
+							<Size x="32" y="20" />
+							<Anchors>
+								<Anchor point="BOTTOMLEFT">
+									<Offset x="13" y="32" />
+								</Anchor>
+							</Anchors>
+							<Color r="0.5" g="0.5" b="0.5" />
 						</FontString>
 					</Layer>
 				</Layers>
@@ -274,21 +297,31 @@
 						<TextInsets right="4" left="0" />
 						<Size x="32" y="32" />
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="PitchFontString">
-								<Offset y="-26" />
+							<Anchor point="BOTTOMLEFT">
+								<Offset x="16" y="8" />
 							</Anchor>
 						</Anchors>
-						<FontString inherits="ChatFontNormal" justifyH="RIGHT" />
+						<Scripts>
+							<OnTextChanged>
+								PitchMinEditBox_OnTextChanged(self);
+							</OnTextChanged>
+						</Scripts>
+						<FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
 					</EditBox>
 					<EditBox name="PitchMaxEditBox" inherits="InputBoxTemplate" parent="PitchFrame" letters="3">
 						<TextInsets right="4" left="0" />
 						<Size x="32" y="32" />
 						<Anchors>
-							<Anchor point="TOPRIGHT" relativeTo="PitchFontString">
-								<Offset y="-26" />
+							<Anchor point="BOTTOMRIGHT">
+								<Offset x="-11" y="8" />
 							</Anchor>
 						</Anchors>
-						<FontString inherits="ChatFontNormal" justifyH="RIGHT" />
+						<Scripts>
+							<OnTextChanged>
+								PitchMaxEditBox_OnTextChanged(self);
+							</OnTextChanged>
+						</Scripts>
+						<FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
 					</EditBox>
 				</Frames>
 			</Frame>
@@ -312,12 +345,32 @@
 				</Backdrop>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="RateFontString" inherits="GameFontNormal" text="MAX    Rate    MIN">
-							<Size x="130" y="20" />
+						<FontString name="RateFontString" inherits="GameFontHighlightSmall" text="Voice Rate">
+							<Size x="70" y="20" />
 							<Anchors>
-								<Anchor point="TOP" relativeTo="RateFrame" x="0" y="-8" />
+								<Anchor point="TOP">
+									<Offset y="-8" />
+								</Anchor>
 							</Anchors>
-							<Color r="0.502" g="0.502" b="0.502" />
+							<Color r="0.5" g="0.5" b="0.5" />
+						</FontString>
+						<FontString name="RateMinFontString" inherits="GameFontHighlightSmall" text="MIN">
+							<Size x="32" y="20" />
+							<Anchors>
+								<Anchor point="BOTTOMLEFT">
+									<Offset x="13" y="32" />
+								</Anchor>
+							</Anchors>
+							<Color r="0.5" g="0.5" b="0.5" />
+						</FontString>
+						<FontString name="RateMaxFontString" inherits="GameFontHighlightSmall" text="MAX">
+							<Size x="32" y="20" />
+							<Anchors>
+								<Anchor point="BOTTOMRIGHT">
+									<Offset x="-14" y="32" />
+								</Anchor>
+							</Anchors>
+							<Color r="0.5" g="0.5" b="0.5" />
 						</FontString>
 					</Layer>
 				</Layers>
@@ -326,21 +379,31 @@
 						<TextInsets right="4" left="0" />
 						<Size x="32" y="32" />
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="RateFontString">
-								<Offset y="-26" />
+							<Anchor point="BOTTOMLEFT">
+								<Offset x="16" y="8" />
 							</Anchor>
 						</Anchors>
-						<FontString inherits="ChatFontNormal" justifyH="RIGHT" />
+						<Scripts>
+							<OnTextChanged>
+								RateMinEditBox_OnTextChanged(self);
+							</OnTextChanged>
+						</Scripts>
+						<FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
 					</EditBox>
 					<EditBox name="RateMaxEditBox" inherits="InputBoxTemplate" parent="RateFrame" letters="3">
 						<TextInsets right="4" left="0" />
 						<Size x="32" y="32" />
 						<Anchors>
-							<Anchor point="TOPRIGHT" relativeTo="RateFontString">
-								<Offset y="-26" />
+							<Anchor point="BOTTOMRIGHT">
+								<Offset x="-11" y="8" />
 							</Anchor>
 						</Anchors>
-						<FontString inherits="ChatFontNormal" justifyH="RIGHT" />
+						<Scripts>
+							<OnTextChanged>
+								RateMaxEditBox_OnTextChanged(self);
+							</OnTextChanged>
+						</Scripts>
+						<FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
 					</EditBox>
 				</Frames>
 			</Frame>
@@ -377,7 +440,7 @@
 									<Offset x="-7" y="7" />
 								</Anchor>
 							</Anchors>
-							<Color r="0.502" g="0.502" b="0.502" />
+							<Color r="0.5" g="0.5" b="0.5" />
 						</FontString>
 					</Layer>
 				</Layers>
@@ -496,10 +559,10 @@
 				<Texture name="ScrollFrameTexture" parentKey="texture">
 					<Size x="216" y="216" />
 					<Anchors>
-						<Anchor point="TOPLEFT" x="0" y="0">
+						<Anchor point="TOPLEFT">
 							<Offset />
 						</Anchor>
-						<Anchor point="BOTTOMRIGHT" x="0" y="0">
+						<Anchor point="BOTTOMRIGHT">
 							<Offset />
 						</Anchor>
 					</Anchors>
@@ -508,10 +571,13 @@
 			</Layer>
 			<Layer level="OVERLAY">
 				<FontString name="ScrollFontString" inherits="GameFontNormal" parentKey="text" text="Scroll Frame Text">
-					<Size x="200" y="200" />
+					<Size x="205" y="202" />
 					<Anchors>
-						<Anchor point="CENTER">
-							<Offset />
+						<Anchor point="TOPLEFT">
+							<Offset x="8" y="-8" />
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset x="-8" y="8" />
 						</Anchor>
 					</Anchors>
 					<Color r="0.5" g="0.5" b="0.5" />
