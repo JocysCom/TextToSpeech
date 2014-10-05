@@ -1,22 +1,24 @@
 -- /fstack - show frame names
 
-PitchMin = "-5";
-PitchMax = "5";
-RateMin = "0";
-RateMax = "2";
+PitchMin = -5;
+PitchMax = 5;
+RateMin = 0;
+RateMax = 2;
 
 local enableSuffix = "EnableCheckBox";
 local weightSuffix = "WeightEditBox";
 local voiceSuffix = "VoiceEditBox";
-local lastOutputMessage;
-local lastVoiceInfo;
+local lastQuest = nil;
+local prevVoiceInfo = nil;
 local DebugMode = 0;
 local OptionsFrameIsVisible = 0;
+local debugLine = 0;
 
 function LogMessage(s)
 	if DebugMode == 1 then
-		SendChatMessage(s, "WHISPER", "Common", unitName);	
-		--print(s);	
+		debugLine = debugLine + 1;
+		SendChatMessage("" .. debugLine .. ": " .. s, "WHISPER", "Common", unitName);	
+		--print("" .. debugLine .. ": " .. s);	
 	end
 end
 
@@ -29,13 +31,13 @@ local defaultSettings =
 		["Voices"] =
 		{
 			{ true,  100, "IVONA 2 Amy" },
-			{ false, 100, "IVONA 2 Natalie" },
-			{ false, 100, "IVONA 2 Emma" },
-			{ false, 100, "IVONA 2 Justin" },
-			{ false, 100, "IVONA 2 Salli" },
-			{ false, 100, "IVONA 2 Kimberly" },
-			{ false, 100, "IVONA 2 Kendra" },
-			{ false, 100, "IVONA 2 Ivy" },
+			{ nil, 100, "IVONA 2 Natalie" },
+			{ nil, 100, "IVONA 2 Emma" },
+			{ nil, 100, "IVONA 2 Justin" },
+			{ nil, 100, "IVONA 2 Salli" },
+			{ nil, 100, "IVONA 2 Kimberly" },
+			{ nil, 100, "IVONA 2 Kendra" },
+			{ nil, 100, "IVONA 2 Ivy" },
 		},
 	},
 	{
@@ -45,13 +47,13 @@ local defaultSettings =
 		["Voices"] =
 		{
 			{ true,  100, "IVONA 2 Brian" },
-			{ false, 100, "IVONA 2 Joey" },
-			{ false, 100, "IVONA 2 Eric" },
-			{ false, 100, "IVONA 2 Russel" },
-			{ false, 100, "" },
-			{ false, 100, "" },
-			{ false, 100, "" },
-			{ false, 100, "" },
+			{ nil, 100, "IVONA 2 Joey" },
+			{ nil, 100, "IVONA 2 Eric" },
+			{ nil, 100, "IVONA 2 Russel" },
+			{ nil, 100, "" },
+			{ nil, 100, "" },
+			{ nil, 100, "" },
+			{ nil, 100, "" },
 		},
 	},
 	{
@@ -61,13 +63,13 @@ local defaultSettings =
 		["Voices"] =
 		{
 			{ true,  100, "Microsoft Zira Desktop" },
-			{ false, 100, "" },
-			{ false, 100, "" },
-			{ false, 100, "" },
-			{ false, 100, "" },
-			{ false, 100, "" },
-			{ false, 100, "" },
-			{ false, 100, "" },
+			{ nil, 100, "" },
+			{ nil, 100, "" },
+			{ nil, 100, "" },
+			{ nil, 100, "" },
+			{ nil, 100, "" },
+			{ nil, 100, "" },
+			{ nil, 100, "" },
 		},
 	},
 };
@@ -130,6 +132,11 @@ local function Control_OnEnter(self)
 end
 
 local function PitchMinEditBox_OnTextChanged(self)
+	LogMessage("Changed");
+	local v = tonumber(self:GetText());
+	if v < PitchMin then
+		self.SetText(PitchMin);
+	end
 end
 
 local function PitchMaxEditBox_OnTextChanged(self)
@@ -272,11 +279,11 @@ local function UnlockFrames()
 end
 
 local function LockFrames()
-	MiniFrame:SetMovable(false);
+	MiniFrame:SetMovable(nil);
 	MiniFrame.texture:SetTexture(0, 0, 0, 0);
-	ScrollFrame:SetMovable(false);
-	ScrollFrame:SetResizable(false);
-	ScrollFrame:EnableMouse(false);
+	ScrollFrame:SetMovable(nil);
+	ScrollFrame:SetResizable(nil);
+	ScrollFrame:EnableMouse(nil);
 	ScrollFrame.texture:SetTexture(0, 0, 0, 0);
 	ScrollFrame.text:Hide();
 	ScrollFrame.resizeButton:Hide();
@@ -384,12 +391,6 @@ end
 -- FUNCTION MESSAGE STOP
 local function sendChatMessageStop()
 	if framesClosed == 1 then
-		-- Disable Do Not Disturb
-		if DndCheckButton:GetChecked() == 1 then
-			if UnitIsDND("player") == 1 then
-				SendChatMessage("", "DND");
-			end
-		end
 		-- Send messageStop
 		SendChatMessage(messageStop, "WHISPER", "Common", unitName);
 		QuestEditBox:SetText(messageStop);
@@ -596,22 +597,33 @@ function OptionsFrame_OnLoad(self)
 	LogMessage("Registered");		
 end
 
-function UpdateDndStatus()
-	local isDndEnabled = (UnitIsDND("player") == 1);
-	local enabled = (EnabledCheckButton:GetChecked() == 1);
-	local dnd = (DndCheckButton:GetChecked() == 1);
-	local isShown = (GossipFrame:IsShown() or QuestFrame:IsShown() or OptionsFrame:IsShown());	
-	local mustEnableDnd = (enabled and dnd and isShown);
-	if not (mustEnableDnd == isDndEnabled) then
-		if mustEnableDnd then
-			SendChatMessage("<" .. unitName .. ">: " .. textDoNotDisturb, "DND");	
+function SetDnd(enable)
+	local addonEnabled = (EnabledCheckButton:GetChecked() == 1);
+	local dndEnabled = (DndCheckButton:GetChecked() == 1);
+	local isShown = GossipFrame:IsShown() or QuestFrame:IsShown();
+	local force = 0;
+	-- If auto then...
+	if enable == -1 then
+		force = 1;
+		if addonEnabled and dndEnabled and isShown then
+			enable = 1;
 		else
+			enable = 0;
+		end
+	end
+	--LogMessage("SetDnd: enable=" .. enable .. ", force=" .. force);
+	-- DND control is allowed then...
+	if force == 1 or (addonEnabled and dndEnabled) then
+		local enabled = (UnitIsDND("player") == 1);
+		if enable == 1 and not enabled then
+			-- Enable DND.
+			SendChatMessage("<" .. unitName .. ">: " .. L.DoNotDisturb, "DND");	
+		elseif enable == 0 and enabled then
+			-- Disable DND.
 			SendChatMessage("", "DND");
 		end
 	end
 end
-
-local prevVoiceInfo = nil;
 
 function OptionsFrame_OnEvent(self, event)
 	if event == "ADDON_LOADED" then
@@ -619,27 +631,100 @@ function OptionsFrame_OnEvent(self, event)
 		UpdateMiniAndScrollFrame();
 	elseif event == "QUEST_GREETING" or event == "GOSSIP_SHOW" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" then
 		UpdateMiniAndScrollFrame();
-		local vi = GetCurrentVoiceInfo();
-		-- If previous voice was selected then...
-		if prevVoiceInfo ~= nil then
-			-- Unselect previous voice.
-			SetFrameTextColor(prevVoiceInfo.prefix .. voiceSuffix, false);
+		SetDnd(1);
+		if event == "QUEST_GREETING" then
+			lastQuest = GetGreetingText();
+		elseif event == "GOSSIP_SHOW" then
+			lastQuest = GetGossipText();
+		elseif event == "QUEST_DETAIL" then
+			lastQuest = GetQuestText() .. " Your objective is to " .. GetObjectiveText();
+		elseif event == "QUEST_PROGRESS" then
+			lastQuest = GetProgressText();
+		elseif event == "QUEST_COMPLETE" then
+			lastQuest = GetRewardText();
 		end
-		-- Store current voice.
-		prevVoiceInfo = vi;
-		-- Select current voice.
-		SetFrameTextColor(prevVoiceInfo.prefix .. voiceSuffix, true);
-		-- Get quest text.
-		local outputMessage = outputFromEvent(event);
-		-- Format and speak
-		messageSpeak("Auto", outputMessage, vi);
+		SpeakMessage("Auto", lastQuest);
 	elseif event == "QUEST_ACCEPTED" or event == "QUEST_FINISHED" or event == "GOSSIP_CLOSED" then
 		UpdateMiniAndScrollFrame();		
+		SetDnd(0);
 		if EnabledCheckButton:GetChecked() == 1 then
 			sendChatMessageStop();
 		end
 	elseif event == "PLAYER_LOGOUT" then
 		SaveAllSettings();
+	end
+end
+
+function SpeakMessage(reason, questText)
+	if questText == nil then
+		LogMessage("No Quest text");
+		return;
+	end
+	local vi = GetCurrentVoiceInfo();
+	-- If previous voice was selected then...
+	if prevVoiceInfo ~= nil then
+		-- Unselect previous voice.
+		SetFrameTextColor(prevVoiceInfo.prefix .. voiceSuffix, nil);
+	end
+	-- Store current voice.
+	prevVoiceInfo = vi;
+	-- Select current voice.
+	SetFrameTextColor(prevVoiceInfo.prefix .. voiceSuffix, true);
+	local message = questText;
+	-- REPLACE NAME
+	--LogMessage("Speak 1: Replace name.");
+	local newUnitName = ReplaceNameEditBox:GetText();
+	if string.len(newUnitName) > 0 and newUnitName ~= unitName then
+		message = string.gsub(message, unitName, newUnitName);
+	end
+	-- FORMAT TEXT
+	--LogMessage("Speak 1: Format text.");
+	local pitchComment = "0";
+	message = string.gsub(message, "\r", " ");
+	message = string.gsub(message, "\n", " ");
+	message = string.gsub(message, "[%.]+", ". ");
+	message = string.gsub(message, "<", " &lt;pitch absmiddle=\"" .. pitchComment .. "\"&gt;");
+	message = string.gsub(message, ">", "&lt;/pitch&gt; ");
+	message = string.gsub(message, "[ ]+", " ");
+	-- Format and speak
+	--LogMessage("Speak 2, " .. reason .. ", message=" .. string.len(message));
+	if (reason == "Scroll") or(reason == "Auto" and AutoCheckButton:GetChecked() == 1) then
+		framesClosed = 1;
+		local size = 140;
+		local startIndex = 1;
+		local endIndex = 1;
+		local part = "";
+		local chatMessageSP = GetStartElement(vi, "play");
+		local chatMessageSA = GetStartElement(vi, "add");
+		local chatMessageE = "</part></voice>";
+		local chatMessage;
+		while true do
+			local command = "";
+			local index = string.find(message, " ", endIndex);
+			-- print(index);
+			-- if nothing found then...
+			if index == nil then
+				part = string.sub(message, startIndex);
+				chatMessage = chatMessageSP .. part .. chatMessageE;
+				SendChatMessage(chatMessage, "WHISPER", "Common", unitName);
+				-- print("[" .. startIndex .. "] '" .. part .. "'");
+				break;
+			elseif (index - startIndex) > size then
+				-- if space is out of size then...
+				part = string.sub(message, startIndex, endIndex - 1);
+				chatMessage = chatMessageSA .. part .. chatMessageE;
+				SendChatMessage(chatMessage, "WHISPER", "Common", unitName);
+				-- print("[" .. startIndex .. "-" .. (endIndex - 1) .. "] '" .. part .. "'");
+				startIndex = endIndex;
+			end
+			-- look for next space.
+			endIndex = index + 1;
+		end
+		-- FILL EDITBOXES
+		local outputEditBox = chatMessageSP .. "\n|cffffffff" .. message .. "|r\n" .. chatMessageE;
+		-- "<" .. event .. " />" ..
+		QuestEditBox:SetText(outputEditBox);
+		QuestEditBox:HighlightText();
 	end
 end
 
@@ -660,15 +745,13 @@ end
 
 function EnabledCheckButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOn");
-	UpdateDndStatus();
 	-- If addon was disabled.
 	if EnabledCheckButton:GetChecked() == 1 then
-
 	else
-		--AutoCheckButton:SetChecked(nil);
-		--SetFrameTextColor("voice", voiceFrameNameDisable, 1);
 		sendChatMessageStop();
 	end
+	UpdateMiniAndScrollFrame();
+	SetDnd(-1);
 end
 
 function AutoCheckButton_OnLoad(self)
@@ -694,7 +777,7 @@ end
 
 function DndCheckButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOn");
-	UpdateDndStatus();
+	SetDnd(-1);
 end
 
 function FilterCheckButton_OnLoad(self)
@@ -728,7 +811,7 @@ function ScrollFrame_OnMouseWheel(self, delta)
 	if EnabledCheckButton:GetChecked() == 1 then
 		-- Send Message
 		if delta == 1 then
-			messageSpeak("Scroll", nil, nil);
+			SpeakMessage("Scroll", lastQuest);
 		else
 			sendChatMessageStop();
 		end
@@ -904,92 +987,4 @@ end
 
 function GetStartElement(vi, command)
 	return "<voice name=\"" .. vi.name .. "\" gender=\"" .. vi.gender .. "\" pitch=\"" .. vi.pitch .. "\" rate=\"" .. vi.rate .. "\" effect=\"" .. vi.effect .. "\" command=\"" .. command .. "\"><part>";
-end
-
-function messageSpeak(sender, outputMessage, voiceInfo)
-	if outputMessage == nil then
-		-- Play last message.
-		outputMessage = lastOutputMessage;
-		voiceInfo = lastVoiceInfo;
-	else
-		-- Store message.
-		lastOutputMessage = outputMessage;
-		lastVoiceInfo = voiceInfo;
-	end
-	if (sender == "Scroll") or(sender == "Auto" and AutoCheckButton:GetChecked() == 1) then
-		---- Disable Do Not Disturb
-		--if DndCheckButton:GetChecked() == 1 then
-		--	if UnitIsDND("player") == 1 then
-		--		SendChatMessage("", "DND");
-		--	end
-		--end
-		framesClosed = 1;
-		local size = 140;
-		local startIndex = 1;
-		local endIndex = 1;
-		local part = "";
-		local chatMessageSP = GetStartElement(voiceInfo, "play");
-		local chatMessageSA = GetStartElement(voiceInfo, "add");
-		local chatMessageE = "</part></voice>";
-		local chatMessage;
-		while true do
-			local command = "";
-			local index = string.find(outputMessage, " ", endIndex);
-			-- print(index);
-			-- if nothing found then...
-			if index == nil then
-				part = string.sub(outputMessage, startIndex);
-				chatMessage = chatMessageSP .. part .. chatMessageE;
-				SendChatMessage(chatMessage, "WHISPER", "Common", unitName);
-				-- print("[" .. startIndex .. "] '" .. part .. "'");
-				break;
-			elseif (index - startIndex) > size then
-				-- if space is out of size then...
-				part = string.sub(outputMessage, startIndex, endIndex - 1);
-				chatMessage = chatMessageSA .. part .. chatMessageE;
-				SendChatMessage(chatMessage, "WHISPER", "Common", unitName);
-				-- print("[" .. startIndex .. "-" .. (endIndex - 1) .. "] '" .. part .. "'");
-				startIndex = endIndex;
-			end
-			-- look for next space.
-			endIndex = index + 1;
-		end
-		--UpdateDndStatus();
-		-- FILL EDITBOXES		
-		local outputEditBox = chatMessageSP .. "\n|cffffffff" .. outputMessage .. "|r\n" .. chatMessageE;
-		-- "<" .. event .. " />" ..
-		QuestEditBox:SetText(outputEditBox);
-		QuestEditBox:HighlightText();
-	end
-end
-
--- GET QUEST TEXT BY EVENT
-
-function outputFromEvent(event)
-	local output;
-	if event == "QUEST_GREETING" then
-		output = GetGreetingText();
-	elseif event == "GOSSIP_SHOW" then
-		output = GetGossipText();
-	elseif event == "QUEST_DETAIL" then
-		output = GetQuestText() .. " Your objective is to " .. GetObjectiveText();
-	elseif event == "QUEST_PROGRESS" then
-		output = GetProgressText();
-	elseif event == "QUEST_COMPLETE" then
-		output = GetRewardText();
-	end
-	-- REPLACE NAME
-	local newUnitName = ReplaceNameEditBox:GetText();
-	if string.len(newUnitName) > 0 and newUnitName ~= unitName then
-		output = string.gsub(output, unitName, newUnitName);
-	end
-	local pitchComment = "0";
-	-- FORMAT AND REPLACE TEXT
-	output = string.gsub(output, "\r", " ");
-	output = string.gsub(output, "\n", " ");
-	output = string.gsub(output, "[%.]+", ". ");
-	output = string.gsub(output, "<", " &lt;pitch absmiddle=\"" .. pitchComment .. "\"&gt;");
-	output = string.gsub(output, ">", "&lt;/pitch&gt; ");
-	output = string.gsub(output, "[ ]+", " ");
-	return output;
 end
