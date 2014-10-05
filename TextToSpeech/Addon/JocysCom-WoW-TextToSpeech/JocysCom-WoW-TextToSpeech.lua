@@ -280,11 +280,11 @@ end
 
 local function LockFrames()
 	MiniFrame:SetMovable(nil);
-	MiniFrame.texture:SetTexture(0, 0, 0, 0);
+	MiniFrame.texture:SetTexture(0, 0, 0, 0.05);
 	ScrollFrame:SetMovable(nil);
 	ScrollFrame:SetResizable(nil);
 	ScrollFrame:EnableMouse(nil);
-	ScrollFrame.texture:SetTexture(0, 0, 0, 0);
+	ScrollFrame.texture:SetTexture(0, 0, 0, 0.05);
 	ScrollFrame.text:Hide();
 	ScrollFrame.resizeButton:Hide();
 end
@@ -690,7 +690,7 @@ function SpeakMessage(reason, questText)
 	--LogMessage("Speak 2, " .. reason .. ", message=" .. string.len(message));
 	if (reason == "Scroll") or(reason == "Auto" and AutoCheckButton:GetChecked() == 1) then
 		framesClosed = 1;
-		local size = 140;
+		local size = 130;
 		local startIndex = 1;
 		local endIndex = 1;
 		local part = "";
@@ -818,6 +818,16 @@ function ScrollFrame_OnMouseWheel(self, delta)
 	end
 end
 
+function PlayButtonButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	SpeakMessage("Scroll", lastQuest);
+end
+
+function StopButtonButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOff");
+	sendChatMessageStop();
+end
+
 function ScrollResizeButton_OnMouseDown(self)
 	self:GetParent():StartSizing("BOTTOMRIGHT");
 	self:GetParent():SetUserPlaced(true);
@@ -921,23 +931,18 @@ function SaveAllSettings()
 end
 
 function LoadAllSettings()
-	-- Load check buttons.
-	if EnabledCheckButtonValue ~= 1 then EnabledCheckButtonValue = nil end;
-	EnabledCheckButton:SetChecked(EnabledCheckButtonValue);
-	if AutoCheckButtonValue ~=1 then AutoCheckButtonValue = nil end;
-	AutoCheckButton:SetChecked(AutoCheckButtonValue);
-	if DndCheckButtonValue ~= 1 then DndCheckButtonValue = nil end;
-	DndCheckButton:SetChecked(DndCheckButtonValue);
-	if FilterCheckButtonValue ~= 1 then FilterCheckButtonValue = nil end;
-	FilterCheckButton:SetChecked(FilterCheckButtonValue);	
 	-- If this is first load then...
-	if CharacterFirstLoginValue == nil then
+	if CharacterFirstLoginValue ~= 1 then
 		CharacterFirstLoginValue = 1;
-		EnabledCheckButton:SetChecked(1);
-		AutoCheckButton:SetChecked(1);
-		DndCheckButton:SetChecked(1);
-		FilterCheckButton:SetChecked(1);
+		EnabledCheckButtonValue = 1;
+		AutoCheckButtonValue = 1;
+		DndCheckButtonValue = 1;
+		FilterCheckButtonValue = 1;
 	end
+	EnabledCheckButton:SetChecked(EnabledCheckButtonValue);
+	AutoCheckButton:SetChecked(AutoCheckButtonValue);
+	DndCheckButton:SetChecked(DndCheckButtonValue);
+	FilterCheckButton:SetChecked(FilterCheckButtonValue);	
 	-- Load edit boxes.
 	if ReplaceNameEditBoxValue == "" or ReplaceNameEditBoxValue == nil then ReplaceNameEditBoxValue = unitName end;
 	ReplaceNameEditBox:SetText(ReplaceNameEditBoxValue);

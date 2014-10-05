@@ -306,7 +306,7 @@
 								PitchMinEditBox_OnTextChanged(self);
 							</OnTextChanged>
 						</Scripts>
-						<FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
+						<FontString inherits="GameFontHighlightSmall" />
 					</EditBox>
 					<EditBox name="PitchMaxEditBox" inherits="InputBoxTemplate" parent="PitchFrame" letters="3">
 						<TextInsets right="4" left="0" />
@@ -321,7 +321,7 @@
 								PitchMaxEditBox_OnTextChanged(self);
 							</OnTextChanged>
 						</Scripts>
-						<FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
+						<FontString inherits="GameFontHighlightSmall" />
 					</EditBox>
 				</Frames>
 			</Frame>
@@ -388,7 +388,7 @@
 								RateMinEditBox_OnTextChanged(self);
 							</OnTextChanged>
 						</Scripts>
-						<FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
+						<FontString inherits="GameFontHighlightSmall" />
 					</EditBox>
 					<EditBox name="RateMaxEditBox" inherits="InputBoxTemplate" parent="RateFrame" letters="3">
 						<TextInsets right="4" left="0" />
@@ -403,7 +403,7 @@
 								RateMaxEditBox_OnTextChanged(self);
 							</OnTextChanged>
 						</Scripts>
-						<FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
+						<FontString inherits="GameFontHighlightSmall" />
 					</EditBox>
 				</Frames>
 			</Frame>
@@ -497,7 +497,7 @@
 		</Scripts>
 	</Frame>
 	<Frame name="MiniFrame" parent="UIParent" frameStrata="DIALOG">
-		<Size x="60" y="33" />
+		<Size x="101" y="33" />
 		<Anchors>
 			<Anchor point="TOPLEFT">
 				<Offset x="225" y="-505" />
@@ -506,7 +506,7 @@
 		<Layers>
 			<Layer>
 				<Texture name="MiniFrameTexture" parentKey="texture">
-					<Size x="60" y="33" />
+					<Size x="114" y="33" />
 					<Anchors>
 						<Anchor point="TOPLEFT" x="0" y="0" />
 						<Anchor point="BOTTOMRIGHT" />
@@ -516,11 +516,11 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="OptionsButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="TTS">
+			<Button name="OptionsButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="TTS...">
 				<Size x="48" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="6" y="-6" />
+						<Offset x="48" y="-6" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -528,6 +528,38 @@
 						OptionsButton_OnClick()
 					</OnClick>
 				</Scripts>
+			</Button>
+			<Button name="PlayButtonButton" parent="MiniFrame">
+				<Size x="26" y="26" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="3" y="-4" />
+					</Anchor>
+				</Anchors>
+				<HitRectInsets left="3" right="3" top="3" bottom="3" />
+				<Scripts>
+					<OnClick>
+						PlayButtonButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up" />
+				<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD" />
+			</Button>
+			<Button name="StopButtonButton" parent="MiniFrame">
+				<Size x="26" y="26" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="25" y="-4" />
+					</Anchor>
+				</Anchors>
+				<HitRectInsets left="3" right="3" top="3" bottom="3" />
+				<Scripts>
+					<OnClick>
+						StopButtonButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+				<NormalTexture file="Interface\TimeManager\ResetButton" />
+				<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD" />
 			</Button>
 		</Frames>
 		<Scripts>
