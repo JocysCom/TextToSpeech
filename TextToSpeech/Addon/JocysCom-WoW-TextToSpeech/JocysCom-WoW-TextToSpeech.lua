@@ -287,6 +287,7 @@ local function LockFrames()
 	ScrollFrame.texture:SetTexture(0, 0, 0, 0.05);
 	ScrollFrame.text:Hide();
 	ScrollFrame.resizeButton:Hide();
+	ScrollFrame:SetFrameLevel(100);
 end
 
 local function UpdateMiniAndScrollFrame()
