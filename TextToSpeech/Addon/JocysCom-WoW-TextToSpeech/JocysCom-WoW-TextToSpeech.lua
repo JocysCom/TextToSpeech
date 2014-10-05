@@ -94,8 +94,8 @@ local Translations_EN = {
 	WeightEditBox_Help = "Voice popularity. Value from |cffffffff0|r (no usage) or |cffffffff1|r (rare usage) to |cffffffff100|r (often usage). How it works... lets say, you enabled 3 male voices with weight: |cffffffff100 Ivona 2 Brian|r, |cffffffff80 Ivona 2 Joey|r and |cffffffff50 Ivona 2 Eric|r. From name of NPC addon will generate number from |cff77ccff0|r to |cff77ccff230|r (|cffffffff100|r\+|cffffffff80|r\+|cffffffff50|r\=|cff77ccff230|r).\n\nIf this number will be from |cff77ccff1|r to |cff77ccff100|r, then |cffffffff100 Ivona 2 Brian|r voice will be selected.\nIf this number will be from |cff77ccff101|r to |cff77ccff180|r, then |cffffffff80 Ivona 2 Joey|r voice will be selected.\nIf this number will be from |cff77ccff181|r to |cff77ccff230|r, then |cffffffff50 Ivona 2 Eric|r voice will be selected.",
 	VoiceEditBox_Help = "You can write in this field |cfffffffftext-to-speech voice name|r installed on your operating system. For example: |cffffffffMicrosoft Zira Desktop|r or |cffffffffIVONA 2 Brian|r.",
 	ReplaceNameEditBox_Help = "If text-to-speech voice pronounce your character |cffffffffname|r incorrectly, you can change |cffffffffit|r in this field from |cff00ff00" .. unitName .. "|r to ...something else.",
-	RateMinEditBox_Help = "Minimum voice rate (speed). Values from |cffffffff-10|r to |cffffffff10|r. Recommended value |cffffffff" .. RateMin .. "|r.",
-	RateMaxEditBox_Help = "Maximum voice rate (speed). Values from |cffffffff-10|r to |cffffffff10|r. Recommended value |cffffffff" .. RateMax .. "|r.",
+	RateMinEditBox_Help = "Minimum voice rate (speed). Values from |cffffffff-10|r to |cffffffff10|r. Recommended value |cffffffff" .. RateMin .. "|r. If you want voice speed to be constantly faster, you can set MIN and MAX voice rate value to |cffffffff2|r.",
+	RateMaxEditBox_Help = "Maximum voice rate (speed). Values from |cffffffff-10|r to |cffffffff10|r. Recommended value |cffffffff" .. RateMax .. "|r. If you want voice speed to be constantly faster, you can set MIN and MAX voice rate value to |cffffffff2|r.",
 	PitchMinEditBox_Help = "Minimum voice pitch. Values from |cffffffff-10|r to |cffffffff10|r. Recommended value |cffffffff" .. PitchMin .. "|r.",
 	PitchMaxEditBox_Help = "Maximum voice pitch. Values from |cffffffff-10|r to |cffffffff10|r. Recommended value |cffffffff" .. PitchMax .. "|r.",
 };
@@ -280,11 +280,11 @@ end
 
 local function LockFrames()
 	MiniFrame:SetMovable(nil);
-	MiniFrame.texture:SetTexture(0, 0, 0, 0.05);
+	MiniFrame.texture:SetTexture(0, 0, 0, 0);
 	ScrollFrame:SetMovable(nil);
 	ScrollFrame:SetResizable(nil);
 	ScrollFrame:EnableMouse(nil);
-	ScrollFrame.texture:SetTexture(0, 0, 0, 0.05);
+	ScrollFrame.texture:SetTexture(0, 0, 0, 0);
 	ScrollFrame.text:Hide();
 	ScrollFrame.resizeButton:Hide();
 	ScrollFrame:SetFrameLevel(100);
