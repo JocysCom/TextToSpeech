@@ -10,7 +10,7 @@ local weightSuffix = "WeightEditBox";
 local voiceSuffix = "VoiceEditBox";
 local lastQuest = nil;
 local prevVoiceInfo = nil;
-local DebugMode = 0;
+local DebugMode = 0; -- 1 = debug mode enabled, 0 = debug mode disabled
 local OptionsFrameIsVisible = 0;
 local debugLine = 0;
 
@@ -27,7 +27,6 @@ local defaultSettings =
 	{
 		["Gender"] = "Female",
 		["ControlPrefix"] = "EditBoxF",
-		["TopLeft"] = 8,
 		["Voices"] =
 		{
 			{ true,  100, "IVONA 2 Amy" },
@@ -43,7 +42,6 @@ local defaultSettings =
 	{
 		["Gender"] = "Male",
 		["ControlPrefix"] = "EditBoxM",
-		["TopLeft"] = (8 + 160),
 		["Voices"] =
 		{
 			{ true,  100, "IVONA 2 Brian" },
@@ -59,12 +57,11 @@ local defaultSettings =
 	{
 		["Gender"] = "Neutral",
 		["ControlPrefix"] = "EditBoxU",
-		["TopLeft"] = (8 + 320),
 		["Voices"] =
 		{
 			{ true,  100, "Microsoft Zira Desktop" },
-			{ nil, 100, "" },
-			{ nil, 100, "" },
+			{ nil, 100, "Microsoft Hazel Desktop" },
+			{ nil, 100, "Microsoft Heera Desktop" },
 			{ nil, 100, "" },
 			{ nil, 100, "" },
 			{ nil, 100, "" },
@@ -83,7 +80,7 @@ local Translations_EN = {
 	MaleTitleFontString = "MALE TTS VOICES",
 	FemaleTitleFontString = "FEMALE TTS VOICES",
 	NeutralTitleFontString = "NEUTRAL TTS VOICES",
-	OptionsFrameTitle = "Jocys.com World of Warcraft Text to Speech Addon - v2014.10.01",
+	OptionsFrameTitle = "Jocys.com World of Warcraft Text to Speech Addon - v2014.10.12",
 	Defaults = "Reset all settings to default values",
 	FrameScroll = "When addon is enabled and quest window is open, you can use your mouse wheel over this hidden frame.\n\nSCROLL UP = START SPEECH\n\nSCROLL DOWN = STOP SPEECH",
 	DoNotDisturb = "Please wait... NPC dialog window is open and text-to-speech is enabled.",
@@ -91,8 +88,8 @@ local Translations_EN = {
 	-- Help.
 	DndCheckButton_Help = "Enables \"Do not disturb\" status and shows |cffffffff<Busy>|r near name (over character) for other players, when NPC dialogue window is open.",
 	EnableCheckBox_Help = "|cffffffffEnable|r or |cffffffffdisable|r usage of this text-to-speech voice.",
-	WeightEditBox_Help = "Voice popularity. Value from |cffffffff0|r (no usage) or |cffffffff1|r (rare usage) to |cffffffff100|r (often usage). How it works... lets say, you enabled 3 male voices with weight: |cffffffff100 Ivona 2 Brian|r, |cffffffff80 Ivona 2 Joey|r and |cffffffff50 Ivona 2 Eric|r. From name of NPC addon will generate number from |cff77ccff0|r to |cff77ccff230|r (|cffffffff100|r\+|cffffffff80|r\+|cffffffff50|r\=|cff77ccff230|r).\n\nIf this number will be from |cff77ccff1|r to |cff77ccff100|r, then |cffffffff100 Ivona 2 Brian|r voice will be selected.\nIf this number will be from |cff77ccff101|r to |cff77ccff180|r, then |cffffffff80 Ivona 2 Joey|r voice will be selected.\nIf this number will be from |cff77ccff181|r to |cff77ccff230|r, then |cffffffff50 Ivona 2 Eric|r voice will be selected.",
-	VoiceEditBox_Help = "You can write in this field |cfffffffftext-to-speech voice name|r installed on your operating system. For example: |cffffffffMicrosoft Zira Desktop|r or |cffffffffIVONA 2 Brian|r.",
+	WeightEditBox_Help = "Voice popularity. Value from |cffffffff0|r (no usage) or |cffffffff1|r (rare usage) to |cffffffff100|r (often usage). How it works... lets say, you enabled 3 male voices with weight: |cffffffff100 Ivona 2 Brian|r, |cffffffff80 Ivona 2 Joey|r and |cffffffff50 Ivona 2 Eric|r. Addon will generate number from |cff77ccff0|r to |cff77ccff230|r (|cffffffff100|r\+|cffffffff80|r\+|cffffffff50|r\=|cff77ccff230|r) from name of NPC...\n\nIf this number will be from |cff77ccff1|r to |cff77ccff100|r, then |cffffffff100 Ivona 2 Brian|r voice will be selected.\nIf this number will be from |cff77ccff101|r to |cff77ccff180|r, then |cffffffff80 Ivona 2 Joey|r voice will be selected.\nIf this number will be from |cff77ccff181|r to |cff77ccff230|r, then |cffffffff50 Ivona 2 Eric|r voice will be selected.",
+	VoiceEditBox_Help = "You can write in this field |cfffffffftext-to-speech voice name|r installed on your operating system. For example: |cffffffffMicrosoft Zira Desktop|r or |cffffffffIVONA 2 Brian|r. Don't forget to run |cff77ccffJocys.Com WoW Text to Speech Monitor|r in background.",
 	ReplaceNameEditBox_Help = "If text-to-speech voice pronounce your character |cffffffffname|r incorrectly, you can change |cffffffffit|r in this field from |cff00ff00" .. unitName .. "|r to ...something else.",
 	RateMinEditBox_Help = "Minimum voice rate (speed). Values from |cffffffff-10|r to |cffffffff10|r. Recommended value |cffffffff" .. RateMin .. "|r. If you want voice speed to be constantly faster, you can set MIN and MAX voice rate value to |cffffffff2|r.",
 	RateMaxEditBox_Help = "Maximum voice rate (speed). Values from |cffffffff-10|r to |cffffffff10|r. Recommended value |cffffffff" .. RateMax .. "|r. If you want voice speed to be constantly faster, you can set MIN and MAX voice rate value to |cffffffff2|r.",
@@ -167,14 +164,14 @@ local function createEditBox(name, parent, text, width)
 	if width == nil then
 		width = 100;
 	end
-	frame = CreateFrame("EditBox", name, parent);
-	frame:SetSize(width, 15);
-	frame:SetTextInsets(2, 2, 0, 0);
+	frame = CreateFrame("EditBox", name, parent, "InputBoxTemplate");
+	frame:SetSize(width, 20);
+	frame:SetTextInsets(0, 5, 0, 0);
 	frame:SetFontObject("GameFontHighlightSmall");
 	frame:SetText(text);
-	frame.texture = frame:CreateTexture("ARTWORK");
-	frame.texture:SetAllPoints();
-	frame.texture:SetTexture(0, 0, 0, 1.0);
+	--frame.texture = frame:CreateTexture("ARTWORK");
+	--frame.texture:SetAllPoints();
+	--frame.texture:SetTexture(0, 0, 0, 1.0);
 	return frame;
 end
 
@@ -268,7 +265,13 @@ end
 
 local function UnlockFrames()
 	MiniFrame:SetMovable(true);
+	MiniFrame:EnableMouse(true);
+	MiniFrame:RegisterForDrag("LeftButton");
+	MiniFrame:SetScript("OnDragStart", MiniFrame.StartMoving);
+	MiniFrame:SetScript("OnDragStop", MiniFrame.StopMovingOrSizing);
 	MiniFrame.texture:SetTexture(0, 0, 0, 0.8);
+
+
 	ScrollFrame:SetMovable(true);
 	ScrollFrame:SetResizable(true);
 	ScrollFrame:EnableMouse(true);
@@ -475,16 +478,18 @@ end
 
 -- VOICE EDITBOXES AND TITLE 
 
-local function CreateFrames(parent, controlPrefix, gender, voices, position, column)
+local function CreateFrames(parent, controlPrefix, gender, voices, column)
 	local voicesLen = table.getn(voices) -1;
 	local item;
 	local parentWidth = parent:GetWidth();
 	local checkBoxSize = 24;
 	local weightWidth = 32;
-	local padding = 8;
+	local paddingLeft = 6;
+	local paddingRight = 10;
 	local space = 4;
-	local nameWidth = ((parentWidth - (padding * 2)) - (checkBoxSize * 3) - (weightWidth * 3) - (space * 7)) / 3;
-	position = padding + space + ((checkBoxSize + weightWidth + nameWidth + (space * 2)) * (column - 1));
+	local columnSpace = 6;
+	local nameWidth = (parentWidth - paddingLeft - paddingRight - (checkBoxSize * 3) - (weightWidth * 3) - (space * 6) - (columnSpace * 2)) / 3;
+	local position = paddingLeft + ((checkBoxSize + space + weightWidth + space + nameWidth + columnSpace) * (column - 1));
 	for i = 0, voicesLen do
 		local prefix = controlPrefix .. i;
 		local enabled = voices[i + 1][1];
@@ -502,8 +507,10 @@ local function CreateFrames(parent, controlPrefix, gender, voices, position, col
 		-- Create weight TextBox.
 		createEditBox(prefix .. weightSuffix, parent, weight, weightWidth);
 		item = GetFrame(prefix .. weightSuffix);
-		item:SetPoint("TOPLEFT", position + checkBoxSize, top - 4);
-		item:SetJustifyH("RIGHT");
+		item:SetPoint("TOPLEFT", position + checkBoxSize + space, top - 1);
+		item:SetJustifyH("CENTER");
+		item:SetMaxLetters(3);
+		item:SetNumeric(true); 
 		item:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
 		item:SetScript("OnEnter", Control_OnEnter);
 		item:SetScript("OnLeave", Control_OnLeave);
@@ -511,7 +518,7 @@ local function CreateFrames(parent, controlPrefix, gender, voices, position, col
 		createEditBox(prefix .. voiceSuffix, parent, voice, nameWidth);
 		item = GetFrame(prefix .. voiceSuffix);
 		item:SetScript("OnEscapePressed", EditBox_OnEscapePressed)
-		item:SetPoint("TOPLEFT", position + checkBoxSize + space + weightWidth, top - 4);
+		item:SetPoint("TOPLEFT", position + checkBoxSize + space + weightWidth + space, top - 1);
 		item:SetScript("OnEnter", Control_OnEnter);
 		item:SetScript("OnLeave", Control_OnLeave);
 		if i == 0 then
@@ -531,12 +538,11 @@ function VoicesFrame_OnLoad(self)
 		local row = defaultSettings[i];
 		local gender = row["Gender"];
 		local controlPrefix = row["ControlPrefix"];
-		local topLeft = row["TopLeft"];
 		local voices = row["Voices"];
 		local voicesLen = table.getn(voices);
 		-- createEditBox("TestEditBox", FrameVoices, voicesLen);
 		-- GetFrame("TestEditBox"):SetPoint("BOTTOMRIGHT", -353, 192);
-		CreateFrames(self, controlPrefix, gender, voices, topLeft, i);
+		CreateFrames(self, controlPrefix, gender, voices, i);
 	end
 end
 
@@ -913,6 +919,7 @@ function SaveAllSettings()
 	PitchMinEditBoxValue = PitchMinEditBox:GetText();
 	PitchMaxEditBoxValue = PitchMaxEditBox:GetText();
 	local len = table.getn(defaultSettings);
+	AllSavedValues = {};
 	for i = 1, len do
 		local row = defaultSettings[i];
 		local controlPrefix = row["ControlPrefix"];
@@ -932,6 +939,14 @@ function SaveAllSettings()
 end
 
 function LoadAllSettings()
+
+		-- Set SetJustify
+	RateMinEditBox:SetJustifyH("CENTER");
+	RateMaxEditBox:SetJustifyH("CENTER");
+	PitchMinEditBox:SetJustifyH("CENTER");
+	PitchMaxEditBox:SetJustifyH("CENTER");
+	ReplaceNameEditBox:SetJustifyH("CENTER");
+
 	-- If this is first load then...
 	if CharacterFirstLoginValue ~= 1 then
 		CharacterFirstLoginValue = 1;

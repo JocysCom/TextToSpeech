@@ -1,7 +1,7 @@
 <Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.blizzard.com/wow/ui/  ..\FrameXML\UI.xsd" xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="JocysCom-WoW-TextToSpeech-Addon.lua" />
 	<Frame name="OptionsFrame" inherits="BasicFrameTemplate" parentKey="" parent="UIParent" movable="true" frameStrata="HIGH" enableMouse="true">
-		<Size x="780" y="496" />
+		<Size x="800" y="496" />
 		<Anchors>
 			<Anchor point="TOPLEFT">
 				<Offset x="3" y="-3" />
@@ -20,7 +20,7 @@
 		</Backdrop>
 		<Layers>
 			<Layer level="OVERLAY">
-				<FontString name="DefaultsFontString" inherits="GameFontNormal" text="[DefaultsFontString]" justifyH="LEFT">
+				<FontString name="DefaultsFontString" inherits="GameFontHighlightSmall" text="[DefaultsFontString]" justifyH="LEFT">
 					<Size x="334" y="20" />
 					<Anchors>
 						<Anchor point="BOTTOMLEFT">
@@ -174,13 +174,13 @@
 				</Scripts>
 			</Frame>
 			<Frame name="VoicesFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
-				<Size x="540" y="237" />
+				<Size x="550" y="237" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset x="3" y="-147" />
 					</Anchor>
 					<Anchor point="BOTTOMRIGHT">
-						<Offset x="-169" y="112" />
+						<Offset x="-159" y="112" />
 					</Anchor>
 				</Anchors>
 				<Backdrop tile="true">
@@ -201,7 +201,7 @@
 				</Scripts>
 			</Frame>
 			<Frame name="ReplaceFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
-				<Size x="166" y="78" />
+				<Size x="156" y="78" />
 				<Anchors>
 					<Anchor point="TOPRIGHT">
 						<Offset x="-3" y="-147" />
@@ -220,7 +220,7 @@
 				</Backdrop>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="ReplaceFontString" inherits="GameFontHighlightSmall" text="Replace my name in TTS">
+						<FontString name="ReplaceFontString" inherits="GameFontHighlightSmall" text="My name in TTS">
 							<Size x="140" y="20" />
 							<Anchors>
 								<Anchor point="TOP">
@@ -233,10 +233,10 @@
 				</Layers>
 				<Frames>
 					<EditBox name="ReplaceNameEditBox" inherits="InputBoxTemplate">
-						<Size x="135" y="32" />
+						<Size x="127" y="20" />
 						<Anchors>
-							<Anchor point="TOP">
-								<Offset x="3" y="-34" />
+							<Anchor point="BOTTOM">
+								<Offset x="3" y="14" />
 							</Anchor>
 						</Anchors>
 						<FontString inherits="GameFontHighlightSmall" />
@@ -244,7 +244,7 @@
 				</Frames>
 			</Frame>
 			<Frame name="PitchFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
-				<Size x="166" y="78" />
+				<Size x="156" y="78" />
 				<Anchors>
 					<Anchor point="TOPRIGHT">
 						<Offset x="-3" y="-225" />
@@ -326,7 +326,7 @@
 				</Frames>
 			</Frame>
 			<Frame name="RateFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
-				<Size x="166" y="78" />
+				<Size x="156" y="78" />
 				<Anchors>
 					<Anchor point="TOPRIGHT">
 						<Offset x="-3" y="-306" />
@@ -434,10 +434,10 @@
 							<Size x="706" y="74" />
 							<Anchors>
 								<Anchor point="TOPLEFT">
-									<Offset x="7" y="-7" />
+									<Offset x="10" y="-10" />
 								</Anchor>
 								<Anchor point="BOTTOMRIGHT">
-									<Offset x="-7" y="7" />
+									<Offset x="-10" y="10" />
 								</Anchor>
 							</Anchors>
 							<Color r="0.5" g="0.5" b="0.5" />
@@ -602,7 +602,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				<FontString name="ScrollFontString" inherits="GameFontNormal" parentKey="text" text="Scroll Frame Text">
+				<FontString name="ScrollFontString" inherits="GameFontHighlightSmall" parentKey="text" text="Scroll Frame Text">
 					<Size x="205" y="202" />
 					<Anchors>
 						<Anchor point="TOPLEFT">
