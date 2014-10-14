@@ -485,9 +485,9 @@ local function CreateFrames(parent, controlPrefix, gender, voices, column)
 	local checkBoxSize = 24;
 	local weightWidth = 32;
 	local paddingLeft = 6;
-	local paddingRight = 10;
+	local paddingRight = 14;
 	local space = 4;
-	local columnSpace = 6;
+	local columnSpace = 4;
 	local nameWidth = (parentWidth - paddingLeft - paddingRight - (checkBoxSize * 3) - (weightWidth * 3) - (space * 6) - (columnSpace * 2)) / 3;
 	local position = paddingLeft + ((checkBoxSize + space + weightWidth + space + nameWidth + columnSpace) * (column - 1));
 	for i = 0, voicesLen do
@@ -518,7 +518,7 @@ local function CreateFrames(parent, controlPrefix, gender, voices, column)
 		createEditBox(prefix .. voiceSuffix, parent, voice, nameWidth);
 		item = GetFrame(prefix .. voiceSuffix);
 		item:SetScript("OnEscapePressed", EditBox_OnEscapePressed)
-		item:SetPoint("TOPLEFT", position + checkBoxSize + space + weightWidth + space, top - 1);
+		item:SetPoint("TOPLEFT", position + checkBoxSize + space + weightWidth + space + 4, top - 1);
 		item:SetScript("OnEnter", Control_OnEnter);
 		item:SetScript("OnLeave", Control_OnLeave);
 		if i == 0 then
