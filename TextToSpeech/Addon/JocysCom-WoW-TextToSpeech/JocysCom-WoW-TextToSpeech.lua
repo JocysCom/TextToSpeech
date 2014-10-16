@@ -22,6 +22,7 @@ function LogMessage(s)
 	end
 end
 
+
 local defaultSettings =
 {
 	{
@@ -80,7 +81,7 @@ local Translations_EN = {
 	MaleTitleFontString = "MALE TTS VOICES",
 	FemaleTitleFontString = "FEMALE TTS VOICES",
 	NeutralTitleFontString = "NEUTRAL TTS VOICES",
-	OptionsFrameTitle = "Jocys.com World of Warcraft Text to Speech Addon - v2014.10.12",
+	OptionsFrameTitle = "Jocys.com World of Warcraft Text to Speech Addon - v2014.10.16",
 	Defaults = "Reset all settings to default values",
 	FrameScroll = "When addon is enabled and quest window is open, you can use your mouse wheel over this hidden frame.\n\nSCROLL UP = START SPEECH\n\nSCROLL DOWN = STOP SPEECH",
 	DoNotDisturb = "Please wait... NPC dialog window is open and text-to-speech is enabled.",
@@ -352,7 +353,7 @@ end
 ---- FUNCTION : ENABLE/DISABLE MESSAGE FILTER : CHAT_MSG_WHISPER
 
 local function hideMessageWhisper(self, event, msg)
-	if msg:find("<voice") and FilterCheckButton:GetChecked() == 1 then
+	if msg:find("<voice") and FilterCheckButton:GetChecked() == true then
 		return true;
 	end
 end
@@ -360,7 +361,7 @@ end
 ---- FUNCTION : ENABLE/DISABLE MESSAGE FILTER : CHAT_MSG_DND
 
 local function hideMessageDnd(self, event, msg)
-	if msg:find("<" .. unitName .. ">: ") and FilterCheckButton:GetChecked() == 1 then
+	if msg:find("<" .. unitName .. ">: ") and FilterCheckButton:GetChecked() == true then
 		return true;
 	end
 end
@@ -368,7 +369,7 @@ end
 ---- FUNCTION : ENABLE/DISABLE MESSAGE FILTER : CHAT_MSG_SYSTEM
 
 local function hideMessageSystem(self, event, msg)
-	if msg:find("You are no") and FilterCheckButton:GetChecked() == 1 then
+	if msg:find("You are no") and FilterCheckButton:GetChecked() == true then
 		return true;
 	end
 end
@@ -441,7 +442,7 @@ function GetCurrentVoiceInfo()
 				local check = GetFrame(prefix .. enableSuffix):GetChecked();
 				local weight = GetFrame(prefix .. weightSuffix):GetText();
 				local voice = GetFrame(prefix .. voiceSuffix):GetText();
-				if check == 1 then
+				if check == true then
 					voiceIndex = voiceIndex + 1;
 					-- add voice to the list.
 					voiceList[voiceIndex] = { voice, tonumber(weight), prefix };
@@ -605,8 +606,8 @@ function OptionsFrame_OnLoad(self)
 end
 
 function SetDnd(enable)
-	local addonEnabled = (EnabledCheckButton:GetChecked() == 1);
-	local dndEnabled = (DndCheckButton:GetChecked() == 1);
+	local addonEnabled = (EnabledCheckButton:GetChecked() == true);
+	local dndEnabled = (DndCheckButton:GetChecked() == true);
 	local isShown = GossipFrame:IsShown() or QuestFrame:IsShown();
 	local force = 0;
 	-- If auto then...
@@ -654,7 +655,7 @@ function OptionsFrame_OnEvent(self, event)
 	elseif event == "QUEST_ACCEPTED" or event == "QUEST_FINISHED" or event == "GOSSIP_CLOSED" then
 		UpdateMiniAndScrollFrame();		
 		SetDnd(0);
-		if EnabledCheckButton:GetChecked() == 1 then
+		if EnabledCheckButton:GetChecked() == true then
 			sendChatMessageStop();
 		end
 	elseif event == "PLAYER_LOGOUT" then
@@ -695,7 +696,7 @@ function SpeakMessage(reason, questText)
 	message = string.gsub(message, "[ ]+", " ");
 	-- Format and speak
 	--LogMessage("Speak 2, " .. reason .. ", message=" .. string.len(message));
-	if (reason == "Scroll") or(reason == "Auto" and AutoCheckButton:GetChecked() == 1) then
+	if (reason == "Scroll") or(reason == "Auto" and AutoCheckButton:GetChecked() == true) then
 		framesClosed = 1;
 		local size = 130;
 		local startIndex = 1;
@@ -753,7 +754,7 @@ end
 function EnabledCheckButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOn");
 	-- If addon was disabled.
-	if EnabledCheckButton:GetChecked() == 1 then
+	if EnabledCheckButton:GetChecked() == true then
 	else
 		sendChatMessageStop();
 	end
@@ -769,7 +770,7 @@ end
 
 function AutoCheckButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOn");
-	if self:GetChecked() == 1 then
+	if self:GetChecked() == true then
 		--if EnabledCheckButton:GetChecked() ~= 1 then
 		--	EnabledCheckButton:SetChecked(1);
 		--end
@@ -815,7 +816,7 @@ function ScrollFrame_OnMouseUp(self)
 end
 
 function ScrollFrame_OnMouseWheel(self, delta)
-	if EnabledCheckButton:GetChecked() == 1 then
+	if EnabledCheckButton:GetChecked() == true then
 		-- Send Message
 		if delta == 1 then
 			SpeakMessage("Scroll", lastQuest);
@@ -946,7 +947,11 @@ function LoadAllSettings()
 	PitchMinEditBox:SetJustifyH("CENTER");
 	PitchMaxEditBox:SetJustifyH("CENTER");
 	ReplaceNameEditBox:SetJustifyH("CENTER");
-
+	RateMinEditBox:SetMaxLetters(3);
+	RateMaxEditBox:SetMaxLetters(3);
+	PitchMinEditBox:SetMaxLetters(3);
+	PitchMaxEditBox:SetMaxLetters(3);
+	
 	-- If this is first load then...
 	if CharacterFirstLoginValue ~= 1 then
 		CharacterFirstLoginValue = 1;
