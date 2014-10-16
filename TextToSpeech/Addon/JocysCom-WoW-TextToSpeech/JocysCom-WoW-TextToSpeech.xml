@@ -497,7 +497,7 @@
 		</Scripts>
 	</Frame>
 	<Frame name="MiniFrame" parent="UIParent" frameStrata="DIALOG">
-		<Size x="101" y="33" />
+		<Size x="130" y="33" />
 		<Anchors>
 			<Anchor point="TOPLEFT">
 				<Offset x="225" y="-505" />
@@ -516,51 +516,66 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="OptionsButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="TTS...">
-				<Size x="48" y="21" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="48" y="-6" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						OptionsButton_OnClick()
-					</OnClick>
-				</Scripts>
-			</Button>
-			<Button name="PlayButtonButton" parent="MiniFrame">
-				<Size x="26" y="26" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="3" y="-4" />
-					</Anchor>
-				</Anchors>
-				<HitRectInsets left="3" right="3" top="3" bottom="3" />
-				<Scripts>
-					<OnClick>
-						PlayButtonButton_OnClick(self);
-					</OnClick>
-				</Scripts>
-				<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up" />
-				<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD" />
-			</Button>
-			<Button name="StopButtonButton" parent="MiniFrame">
-				<Size x="26" y="26" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="25" y="-4" />
-					</Anchor>
-				</Anchors>
-				<HitRectInsets left="3" right="3" top="3" bottom="3" />
-				<Scripts>
-					<OnClick>
-						StopButtonButton_OnClick(self);
-					</OnClick>
-				</Scripts>
-				<NormalTexture file="Interface\TimeManager\ResetButton" />
-				<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD" />
-			</Button>
+      
+      <Button name="PlayButtonButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="►">
+        <Size x="31" y="21" />
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset x="5" y="-6" />
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            PlayButtonButton_OnClick(self);
+          </OnClick>
+        </Scripts>
+        <ButtonText font="Fonts\ARIALN.TTF">
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="2" y="-5" />
+            </Anchor>
+          </Anchors>
+          <FontHeight val="12" />
+        </ButtonText>
+      </Button>
+      
+      <Button name="StopButtonButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="■">
+        <Size x="31" y="21" />
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset x="37" y="-6" />
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            StopButtonButton_OnClick(self);
+          </OnClick>
+        </Scripts>
+        <ButtonText font="Fonts\ARIALN.TTF">
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="1" y="0" />
+            </Anchor>
+          </Anchors>
+          <FontHeight val="18" />
+        </ButtonText>
+      </Button>
+
+      <Button name="OptionsButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="TTS...">
+        <Size x="57" y="21" />
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset x="69" y="-6" />
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            OptionsButton_OnClick();
+          </OnClick>
+        </Scripts>
+      </Button>  
+      
+     
 		</Frames>
 		<Scripts>
 			<OnLoad>
