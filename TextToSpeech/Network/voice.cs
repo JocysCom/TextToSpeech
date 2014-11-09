@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace JocysCom.WoW.TextToSpeech.Network
+namespace JocysCom.TextToSpeech.Monitor.Network
 {
     public class voice
     {

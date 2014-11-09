@@ -1,5 +1,5 @@
 ﻿using System;
-namespace JocysCom.WoW.TextToSpeech.Network
+namespace JocysCom.TextToSpeech.Monitor.Network
 {
     [Flags]
     public enum IpHeaderFlags: byte

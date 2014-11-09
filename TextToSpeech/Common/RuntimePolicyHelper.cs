@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace JocysCom.WoW.TextToSpeech
+namespace JocysCom.TextToSpeech.Monitor
 {
 	/// <summary>
 	/// Reed Copsey, Jr. - http://www.reedcopsey.com - http://twitter.com/ReedCopsey

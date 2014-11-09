@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 
-namespace JocysCom.WoW.TextToSpeech.Network
+namespace JocysCom.TextToSpeech.Monitor.Network
 {
 
     public class IpHeader

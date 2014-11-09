@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace JocysCom.WoW.TextToSpeech.Properties {
+namespace JocysCom.TextToSpeech.Monitor.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace JocysCom.WoW.TextToSpeech.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("JocysCom.WoW.TextToSpeech.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("JocysCom.TextToSpeech.Monitor.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -76,6 +76,26 @@ namespace JocysCom.WoW.TextToSpeech.Properties {
         internal static System.Drawing.Bitmap app_128x128 {
             get {
                 object obj = ResourceManager.GetObject("app_128x128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap app_64 {
+            get {
+                object obj = ResourceManager.GetObject("app_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bullet_square_glass_blue {
+            get {
+                object obj = ResourceManager.GetObject("bullet_square_glass_blue", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,6 +143,16 @@ namespace JocysCom.WoW.TextToSpeech.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap information_icon {
+            get {
+                object obj = ResourceManager.GetObject("information_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap MessageBoxIcon_Error_32x32 {
             get {
                 object obj = ResourceManager.GetObject("MessageBoxIcon_Error_32x32", resourceCulture);
@@ -163,9 +193,9 @@ namespace JocysCom.WoW.TextToSpeech.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap save_16x16 {
+        internal static System.Drawing.Bitmap Save_16 {
             get {
-                object obj = ResourceManager.GetObject("save_16x16", resourceCulture);
+                object obj = ResourceManager.GetObject("Save_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +203,9 @@ namespace JocysCom.WoW.TextToSpeech.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap undo {
+        internal static System.Drawing.Bitmap Undo_Red {
             get {
-                object obj = ResourceManager.GetObject("undo", resourceCulture);
+                object obj = ResourceManager.GetObject("Undo_Red", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

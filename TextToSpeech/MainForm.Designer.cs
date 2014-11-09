@@ -1,4 +1,4 @@
-﻿namespace JocysCom.WoW.TextToSpeech
+﻿namespace JocysCom.TextToSpeech.Monitor
 {
     partial class MainForm
     {
@@ -16,50 +16,38 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.TextTextBox = new System.Windows.Forms.TextBox();
-            this.VoiceDetailsTextBox = new System.Windows.Forms.TextBox();
-            this.VoicesTabControl = new System.Windows.Forms.TabControl();
-            this.VoicesTabPage = new System.Windows.Forms.TabPage();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.VoicesDataGridView = new System.Windows.Forms.DataGridView();
-            this.CultureColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GenderColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabsImageList = new System.Windows.Forms.ImageList(this.components);
             this.MessagesTabControl = new System.Windows.Forms.TabControl();
-            this.MessagesTabPage = new System.Windows.Forms.TabPage();
-            this.MessagesDataGridView = new System.Windows.Forms.DataGridView();
-            this.DestinationAddressColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SequenceNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.WowDataLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VoiceXmlColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MessagesContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.MessagesClearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VoicesTabPanel = new System.Windows.Forms.TabPage();
             this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
-            this.RateLabel = new System.Windows.Forms.Label();
-            this.PitchLabel = new System.Windows.Forms.Label();
-            this.VolumeLabel = new System.Windows.Forms.Label();
-            this.PitchNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.VolumeNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.RateNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.TextXmlTabControl = new System.Windows.Forms.TabControl();
-            this.TextTabPage = new System.Windows.Forms.TabPage();
-            this.SapiTabPage = new System.Windows.Forms.TabPage();
-            this.SapiTextBox = new System.Windows.Forms.TextBox();
-            this.PlayListTabPage = new System.Windows.Forms.TabPage();
-            this.PlayListDataGridView = new System.Windows.Forms.DataGridView();
-            this.PlayListStatusColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PlayListDurationColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PlayListTextColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MainStatusStrip = new System.Windows.Forms.StatusStrip();
-            this.ErrorToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.MonitoringStateStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.PacketsStateStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.VoiceDetailsTabControl = new System.Windows.Forms.TabControl();
-            this.VoiceDetailsTabPage = new System.Windows.Forms.TabPage();
+            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
+            this.AboutTabPage = new System.Windows.Forms.TabPage();
+            this.AboutRichTextBox = new System.Windows.Forms.RichTextBox();
             this.EffectTabControl = new System.Windows.Forms.TabControl();
             this.EffectPresetsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addNewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +56,31 @@
             this.EffectTabPage = new System.Windows.Forms.TabPage();
             this.EffectsPresetsDataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MessagesDataGridView = new System.Windows.Forms.DataGridView();
+            this.DestinationAddressColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SequenceNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WowDataLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VoiceXmlColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MessagesContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.MessagesClearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RateLabel = new System.Windows.Forms.Label();
+            this.PitchLabel = new System.Windows.Forms.Label();
+            this.VolumeLabel = new System.Windows.Forms.Label();
+            this.TextXmlTabControl = new System.Windows.Forms.TabControl();
+            this.SandBoxTabPage = new System.Windows.Forms.TabPage();
+            this.SandBoxTextBox = new System.Windows.Forms.TextBox();
+            this.MessagesTabPage = new System.Windows.Forms.TabPage();
+            this.SapiTabPage = new System.Windows.Forms.TabPage();
+            this.SapiTextBox = new System.Windows.Forms.TextBox();
+            this.PlayListTabPage = new System.Windows.Forms.TabPage();
+            this.PlayListDataGridView = new System.Windows.Forms.DataGridView();
+            this.PlayListStatusColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PlayListDurationColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PlayListTextColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MainStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.PacketsStateStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.MonitoringStateStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ErrorToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.AudioBitsPerSampleComboBox = new System.Windows.Forms.ComboBox();
             this.AudioBitsPerSampleLabel = new System.Windows.Forms.Label();
             this.AudioSampleRateComboBox = new System.Windows.Forms.ComboBox();
@@ -75,546 +88,221 @@
             this.AudioChannelsComboBox = new System.Windows.Forms.ComboBox();
             this.AudioChannelsLabel = new System.Windows.Forms.Label();
             this.RecognizeButton = new System.Windows.Forms.Button();
-            this.AboutTabPage = new System.Windows.Forms.TabPage();
+            this.MainHelpLabel = new System.Windows.Forms.Label();
+            this.MonitorClipboardLabel = new System.Windows.Forms.Label();
+            this.ProductPictureBox = new System.Windows.Forms.PictureBox();
+            this.PitchTextBox = new System.Windows.Forms.TextBox();
+            this.RateTextBox = new System.Windows.Forms.TextBox();
+            this.VolumeTrackBar = new System.Windows.Forms.TrackBar();
             this.StopButton = new System.Windows.Forms.Button();
             this.SpeakButton = new System.Windows.Forms.Button();
-            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.WoW.TextToSpeech.Controls.SoundEffectsControl();
-            this.aboutControl1 = new JocysCom.WoW.TextToSpeech.Controls.AboutControl();
-            this.VoicesTabControl.SuspendLayout();
-            this.VoicesTabPage.SuspendLayout();
+            this.VolumeTextBox = new System.Windows.Forms.TextBox();
+            this.IncomingGroupBox = new System.Windows.Forms.GroupBox();
+            this.IncomingTextTextBox = new System.Windows.Forms.TextBox();
+            this.IncomingCommandTextBox = new System.Windows.Forms.TextBox();
+            this.IncomingVolumeTextBox = new System.Windows.Forms.TextBox();
+            this.IncomingEffectTextBox = new System.Windows.Forms.TextBox();
+            this.IncomingPitchTextBox = new System.Windows.Forms.TextBox();
+            this.IncomingRateTextBox = new System.Windows.Forms.TextBox();
+            this.IncomingGenderTextBox = new System.Windows.Forms.TextBox();
+            this.IncomingNameTextBox = new System.Windows.Forms.TextBox();
+            this.DefaultGenderLabel = new System.Windows.Forms.Label();
+            this.MonitorClipboardComboBox = new System.Windows.Forms.ComboBox();
+            this.GenderComboBox = new System.Windows.Forms.ComboBox();
+            this.PitchMaxComboBox = new System.Windows.Forms.ComboBox();
+            this.RateMaxComboBox = new System.Windows.Forms.ComboBox();
+            this.PitchMinComboBox = new System.Windows.Forms.ComboBox();
+            this.RateMinComboBox = new System.Windows.Forms.ComboBox();
+            this.MaleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FemaleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NeutralColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GenderColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LanguageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CultureColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AgeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DescriptionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).BeginInit();
             this.MessagesTabControl.SuspendLayout();
-            this.MessagesTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MessagesDataGridView)).BeginInit();
-            this.MessagesContextMenuStrip.SuspendLayout();
+            this.VoicesTabPanel.SuspendLayout();
             this.EffectsPresetsEditorTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PitchNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VolumeNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RateNumericUpDown)).BeginInit();
-            this.TextXmlTabControl.SuspendLayout();
-            this.TextTabPage.SuspendLayout();
-            this.SapiTabPage.SuspendLayout();
-            this.PlayListTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PlayListDataGridView)).BeginInit();
-            this.MainStatusStrip.SuspendLayout();
-            this.VoiceDetailsTabControl.SuspendLayout();
-            this.VoiceDetailsTabPage.SuspendLayout();
+            this.AboutTabPage.SuspendLayout();
             this.EffectTabControl.SuspendLayout();
             this.EffectPresetsContextMenuStrip.SuspendLayout();
             this.EffectTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EffectsPresetsDataGridView)).BeginInit();
-            this.AboutTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MessagesDataGridView)).BeginInit();
+            this.MessagesContextMenuStrip.SuspendLayout();
+            this.TextXmlTabControl.SuspendLayout();
+            this.SandBoxTabPage.SuspendLayout();
+            this.MessagesTabPage.SuspendLayout();
+            this.SapiTabPage.SuspendLayout();
+            this.PlayListTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PlayListDataGridView)).BeginInit();
+            this.MainStatusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ProductPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VolumeTrackBar)).BeginInit();
+            this.IncomingGroupBox.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // TextTextBox
-            // 
-            this.TextTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TextTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TextTextBox.Location = new System.Drawing.Point(0, 0);
-            this.TextTextBox.Multiline = true;
-            this.TextTextBox.Name = "TextTextBox";
-            this.TextTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.TextTextBox.Size = new System.Drawing.Size(441, 197);
-            this.TextTextBox.TabIndex = 12;
-            this.TextTextBox.Text = "Test text to speech. ";
-            // 
-            // VoiceDetailsTextBox
-            // 
-            this.VoiceDetailsTextBox.BackColor = System.Drawing.SystemColors.Control;
-            this.VoiceDetailsTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.VoiceDetailsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VoiceDetailsTextBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VoiceDetailsTextBox.Location = new System.Drawing.Point(0, 0);
-            this.VoiceDetailsTextBox.Multiline = true;
-            this.VoiceDetailsTextBox.Name = "VoiceDetailsTextBox";
-            this.VoiceDetailsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.VoiceDetailsTextBox.Size = new System.Drawing.Size(292, 197);
-            this.VoiceDetailsTextBox.TabIndex = 12;
-            // 
-            // VoicesTabControl
-            // 
-            this.VoicesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.VoicesTabControl.Controls.Add(this.VoicesTabPage);
-            this.VoicesTabControl.ImageList = this.TabsImageList;
-            this.VoicesTabControl.Location = new System.Drawing.Point(770, 12);
-            this.VoicesTabControl.Name = "VoicesTabControl";
-            this.VoicesTabControl.Padding = new System.Drawing.Point(6, 4);
-            this.VoicesTabControl.SelectedIndex = 0;
-            this.VoicesTabControl.Size = new System.Drawing.Size(300, 295);
-            this.VoicesTabControl.TabIndex = 14;
-            // 
-            // VoicesTabPage
-            // 
-            this.VoicesTabPage.Controls.Add(this.VoicesDataGridView);
-            this.VoicesTabPage.ImageKey = "businesspeople2.png";
-            this.VoicesTabPage.Location = new System.Drawing.Point(4, 25);
-            this.VoicesTabPage.Name = "VoicesTabPage";
-            this.VoicesTabPage.Size = new System.Drawing.Size(292, 266);
-            this.VoicesTabPage.TabIndex = 0;
-            this.VoicesTabPage.Text = "Voices";
-            this.VoicesTabPage.UseVisualStyleBackColor = true;
             // 
             // VoicesDataGridView
             // 
             this.VoicesDataGridView.AllowUserToAddRows = false;
             this.VoicesDataGridView.AllowUserToDeleteRows = false;
+            this.VoicesDataGridView.AllowUserToResizeColumns = false;
             this.VoicesDataGridView.AllowUserToResizeRows = false;
             this.VoicesDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
             this.VoicesDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.VoicesDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.VoicesDataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.VoicesDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.VoicesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.VoicesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.VoicesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.CultureColumn,
+            this.MaleColumn,
+            this.FemaleColumn,
+            this.NeutralColumn,
             this.GenderColumn,
-            this.NameColumn});
+            this.NameColumn,
+            this.LanguageColumn,
+            this.CultureColumn,
+            this.AgeColumn,
+            this.DescriptionColumn});
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.VoicesDataGridView.DefaultCellStyle = dataGridViewCellStyle11;
             this.VoicesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VoicesDataGridView.EnableHeadersVisualStyles = false;
+            this.VoicesDataGridView.GridColor = System.Drawing.SystemColors.Control;
             this.VoicesDataGridView.Location = new System.Drawing.Point(0, 0);
+            this.VoicesDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.VoicesDataGridView.MultiSelect = false;
             this.VoicesDataGridView.Name = "VoicesDataGridView";
-            this.VoicesDataGridView.ReadOnly = true;
+            this.VoicesDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.VoicesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.VoicesDataGridView.RowHeadersVisible = false;
             this.VoicesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.VoicesDataGridView.Size = new System.Drawing.Size(292, 266);
+            this.VoicesDataGridView.Size = new System.Drawing.Size(816, 266);
             this.VoicesDataGridView.TabIndex = 0;
+            this.VoicesDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.VoicesDataGridView_CellContentClick);
             this.VoicesDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.VoicesDataGridView_CellFormatting);
-            this.VoicesDataGridView.SelectionChanged += new System.EventHandler(this.VoicesDataGridView_SelectionChanged);
-            // 
-            // CultureColumn
-            // 
-            this.CultureColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-            this.CultureColumn.HeaderText = "Culture";
-            this.CultureColumn.MinimumWidth = 54;
-            this.CultureColumn.Name = "CultureColumn";
-            this.CultureColumn.ReadOnly = true;
-            this.CultureColumn.Width = 54;
-            // 
-            // GenderColumn
-            // 
-            this.GenderColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-            this.GenderColumn.HeaderText = "Gender";
-            this.GenderColumn.MinimumWidth = 54;
-            this.GenderColumn.Name = "GenderColumn";
-            this.GenderColumn.ReadOnly = true;
-            this.GenderColumn.Width = 54;
-            // 
-            // NameColumn
-            // 
-            this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.NameColumn.HeaderText = "Name";
-            this.NameColumn.Name = "NameColumn";
-            this.NameColumn.ReadOnly = true;
+            this.VoicesDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.VoicesDataGridView_DataError);
+            this.VoicesDataGridView.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.VoicesDataGridView.MouseHover += new System.EventHandler(this.MouseHover_Voices);
             // 
             // TabsImageList
             // 
             this.TabsImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("TabsImageList.ImageStream")));
             this.TabsImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.TabsImageList.Images.SetKeyName(0, "businessman2.png");
-            this.TabsImageList.Images.SetKeyName(1, "businesspeople2.png");
-            this.TabsImageList.Images.SetKeyName(2, "businesswoman.png");
-            this.TabsImageList.Images.SetKeyName(3, "cubes_blue.png");
-            this.TabsImageList.Images.SetKeyName(4, "about.png");
-            this.TabsImageList.Images.SetKeyName(5, "document.png");
-            this.TabsImageList.Images.SetKeyName(6, "document_pulse.png");
-            this.TabsImageList.Images.SetKeyName(7, "document_music.png");
-            this.TabsImageList.Images.SetKeyName(8, "cube_blue_edit.png");
-            this.TabsImageList.Images.SetKeyName(9, "undo.png");
-            this.TabsImageList.Images.SetKeyName(10, "eye_scan.png");
+            this.TabsImageList.Images.SetKeyName(0, "about.png");
+            this.TabsImageList.Images.SetKeyName(1, "Businesman.png");
+            this.TabsImageList.Images.SetKeyName(2, "Window_Sliders_16.png");
+            this.TabsImageList.Images.SetKeyName(3, "Window_Sliders_Save_16.png");
+            this.TabsImageList.Images.SetKeyName(4, "Page_Text_16.png");
+            this.TabsImageList.Images.SetKeyName(5, "Page_SAPI_16.png");
+            this.TabsImageList.Images.SetKeyName(6, "Page_Play_16.png");
+            this.TabsImageList.Images.SetKeyName(7, "Page_Incoming_16.png");
+            this.TabsImageList.Images.SetKeyName(8, "code_edit.png");
             // 
             // MessagesTabControl
             // 
-            this.MessagesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.MessagesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.MessagesTabControl.Controls.Add(this.MessagesTabPage);
+            this.MessagesTabControl.Controls.Add(this.VoicesTabPanel);
             this.MessagesTabControl.Controls.Add(this.EffectsPresetsEditorTabPage);
             this.MessagesTabControl.Controls.Add(this.AboutTabPage);
             this.MessagesTabControl.ImageList = this.TabsImageList;
-            this.MessagesTabControl.Location = new System.Drawing.Point(12, 12);
+            this.MessagesTabControl.Location = new System.Drawing.Point(6, 34);
+            this.MessagesTabControl.Margin = new System.Windows.Forms.Padding(10);
             this.MessagesTabControl.Name = "MessagesTabControl";
-            this.MessagesTabControl.Padding = new System.Drawing.Point(6, 4);
+            this.MessagesTabControl.Padding = new System.Drawing.Point(6, 5);
             this.MessagesTabControl.SelectedIndex = 0;
-            this.MessagesTabControl.Size = new System.Drawing.Size(752, 295);
-            this.MessagesTabControl.TabIndex = 15;
+            this.MessagesTabControl.Size = new System.Drawing.Size(824, 297);
+            this.MessagesTabControl.TabIndex = 1;
             // 
-            // MessagesTabPage
+            // VoicesTabPanel
             // 
-            this.MessagesTabPage.Controls.Add(this.MessagesDataGridView);
-            this.MessagesTabPage.ImageKey = "eye_scan.png";
-            this.MessagesTabPage.Location = new System.Drawing.Point(4, 25);
-            this.MessagesTabPage.Name = "MessagesTabPage";
-            this.MessagesTabPage.Size = new System.Drawing.Size(744, 266);
-            this.MessagesTabPage.TabIndex = 0;
-            this.MessagesTabPage.Text = "Network Messages";
-            this.MessagesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // MessagesDataGridView
-            // 
-            this.MessagesDataGridView.AllowUserToAddRows = false;
-            this.MessagesDataGridView.AllowUserToDeleteRows = false;
-            this.MessagesDataGridView.AllowUserToResizeRows = false;
-            this.MessagesDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.MessagesDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.MessagesDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.MessagesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MessagesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DestinationAddressColumn,
-            this.SequenceNumberColumn,
-            this.WowDataLength,
-            this.VoiceXmlColumn});
-            this.MessagesDataGridView.ContextMenuStrip = this.MessagesContextMenuStrip;
-            this.MessagesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MessagesDataGridView.Location = new System.Drawing.Point(0, 0);
-            this.MessagesDataGridView.MultiSelect = false;
-            this.MessagesDataGridView.Name = "MessagesDataGridView";
-            this.MessagesDataGridView.ReadOnly = true;
-            this.MessagesDataGridView.RowHeadersVisible = false;
-            this.MessagesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.MessagesDataGridView.Size = new System.Drawing.Size(744, 266);
-            this.MessagesDataGridView.TabIndex = 0;
-            // 
-            // DestinationAddressColumn
-            // 
-            this.DestinationAddressColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.DestinationAddressColumn.DataPropertyName = "DestinationAddress";
-            this.DestinationAddressColumn.HeaderText = "Destination";
-            this.DestinationAddressColumn.Name = "DestinationAddressColumn";
-            this.DestinationAddressColumn.ReadOnly = true;
-            this.DestinationAddressColumn.Width = 85;
-            // 
-            // SequenceNumberColumn
-            // 
-            this.SequenceNumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.SequenceNumberColumn.DataPropertyName = "SequenceNumber";
-            this.SequenceNumberColumn.HeaderText = "Sequence";
-            this.SequenceNumberColumn.Name = "SequenceNumberColumn";
-            this.SequenceNumberColumn.ReadOnly = true;
-            this.SequenceNumberColumn.Width = 81;
-            // 
-            // WowDataLength
-            // 
-            this.WowDataLength.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.WowDataLength.DataPropertyName = "WowDataLength";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.WowDataLength.DefaultCellStyle = dataGridViewCellStyle1;
-            this.WowDataLength.HeaderText = "Size";
-            this.WowDataLength.Name = "WowDataLength";
-            this.WowDataLength.ReadOnly = true;
-            this.WowDataLength.Width = 52;
-            // 
-            // VoiceXmlColumn
-            // 
-            this.VoiceXmlColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.VoiceXmlColumn.DataPropertyName = "VoiceXml";
-            this.VoiceXmlColumn.HeaderText = "XML";
-            this.VoiceXmlColumn.Name = "VoiceXmlColumn";
-            this.VoiceXmlColumn.ReadOnly = true;
-            // 
-            // MessagesContextMenuStrip
-            // 
-            this.MessagesContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MessagesClearToolStripMenuItem});
-            this.MessagesContextMenuStrip.Name = "MessagesContextMenuStrip";
-            this.MessagesContextMenuStrip.Size = new System.Drawing.Size(102, 26);
-            // 
-            // MessagesClearToolStripMenuItem
-            // 
-            this.MessagesClearToolStripMenuItem.Name = "MessagesClearToolStripMenuItem";
-            this.MessagesClearToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
-            this.MessagesClearToolStripMenuItem.Text = "Clear";
-            this.MessagesClearToolStripMenuItem.Click += new System.EventHandler(this.MessagesClearToolStripMenuItem_Click);
+            this.VoicesTabPanel.Controls.Add(this.VoicesDataGridView);
+            this.VoicesTabPanel.ImageKey = "Businesman.png";
+            this.VoicesTabPanel.Location = new System.Drawing.Point(4, 27);
+            this.VoicesTabPanel.Name = "VoicesTabPanel";
+            this.VoicesTabPanel.Size = new System.Drawing.Size(816, 266);
+            this.VoicesTabPanel.TabIndex = 3;
+            this.VoicesTabPanel.Text = "Voices";
             // 
             // EffectsPresetsEditorTabPage
             // 
-            this.EffectsPresetsEditorTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.EffectsPresetsEditorTabPage.Controls.Add(this.EffectPresetsEditorSoundEffectsControl);
-            this.EffectsPresetsEditorTabPage.ImageKey = "cube_blue_edit.png";
-            this.EffectsPresetsEditorTabPage.Location = new System.Drawing.Point(4, 25);
+            this.EffectsPresetsEditorTabPage.ImageKey = "Window_Sliders_16.png";
+            this.EffectsPresetsEditorTabPage.Location = new System.Drawing.Point(4, 27);
             this.EffectsPresetsEditorTabPage.Name = "EffectsPresetsEditorTabPage";
-            this.EffectsPresetsEditorTabPage.Size = new System.Drawing.Size(744, 266);
+            this.EffectsPresetsEditorTabPage.Size = new System.Drawing.Size(816, 266);
             this.EffectsPresetsEditorTabPage.TabIndex = 1;
-            this.EffectsPresetsEditorTabPage.Text = "Effect Preset Editor";
+            this.EffectsPresetsEditorTabPage.Text = "Efect Preset Editor";
             // 
-            // RateLabel
+            // EffectPresetsEditorSoundEffectsControl
             // 
-            this.RateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RateLabel.AutoSize = true;
-            this.RateLabel.Location = new System.Drawing.Point(635, 440);
-            this.RateLabel.Name = "RateLabel";
-            this.RateLabel.Size = new System.Drawing.Size(48, 13);
-            this.RateLabel.TabIndex = 13;
-            this.RateLabel.Text = "Rate (±):";
+            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
+            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(819, 266);
+            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
+            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
             // 
-            // PitchLabel
+            // AboutTabPage
             // 
-            this.PitchLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.PitchLabel.AutoSize = true;
-            this.PitchLabel.Location = new System.Drawing.Point(634, 466);
-            this.PitchLabel.Name = "PitchLabel";
-            this.PitchLabel.Size = new System.Drawing.Size(49, 13);
-            this.PitchLabel.TabIndex = 13;
-            this.PitchLabel.Text = "Pitch (±):";
+            this.AboutTabPage.Controls.Add(this.AboutRichTextBox);
+            this.AboutTabPage.ImageKey = "about.png";
+            this.AboutTabPage.Location = new System.Drawing.Point(4, 27);
+            this.AboutTabPage.Name = "AboutTabPage";
+            this.AboutTabPage.Size = new System.Drawing.Size(816, 266);
+            this.AboutTabPage.TabIndex = 2;
+            this.AboutTabPage.Text = "About and Help  ";
             // 
-            // VolumeLabel
+            // AboutRichTextBox
             // 
-            this.VolumeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.VolumeLabel.AutoSize = true;
-            this.VolumeLabel.Location = new System.Drawing.Point(638, 492);
-            this.VolumeLabel.Name = "VolumeLabel";
-            this.VolumeLabel.Size = new System.Drawing.Size(45, 13);
-            this.VolumeLabel.TabIndex = 13;
-            this.VolumeLabel.Text = "Volume:";
-            // 
-            // PitchNumericUpDown
-            // 
-            this.PitchNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.PitchNumericUpDown.Location = new System.Drawing.Point(689, 464);
-            this.PitchNumericUpDown.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.PitchNumericUpDown.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            -2147483648});
-            this.PitchNumericUpDown.Name = "PitchNumericUpDown";
-            this.PitchNumericUpDown.Size = new System.Drawing.Size(75, 20);
-            this.PitchNumericUpDown.TabIndex = 16;
-            this.PitchNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // VolumeNumericUpDown
-            // 
-            this.VolumeNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.VolumeNumericUpDown.Increment = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.VolumeNumericUpDown.Location = new System.Drawing.Point(689, 490);
-            this.VolumeNumericUpDown.Name = "VolumeNumericUpDown";
-            this.VolumeNumericUpDown.Size = new System.Drawing.Size(75, 20);
-            this.VolumeNumericUpDown.TabIndex = 16;
-            this.VolumeNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.VolumeNumericUpDown.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            // 
-            // RateNumericUpDown
-            // 
-            this.RateNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RateNumericUpDown.Location = new System.Drawing.Point(689, 438);
-            this.RateNumericUpDown.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.RateNumericUpDown.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            -2147483648});
-            this.RateNumericUpDown.Name = "RateNumericUpDown";
-            this.RateNumericUpDown.Size = new System.Drawing.Size(75, 20);
-            this.RateNumericUpDown.TabIndex = 16;
-            this.RateNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // TextXmlTabControl
-            // 
-            this.TextXmlTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextXmlTabControl.Controls.Add(this.TextTabPage);
-            this.TextXmlTabControl.Controls.Add(this.SapiTabPage);
-            this.TextXmlTabControl.Controls.Add(this.PlayListTabPage);
-            this.TextXmlTabControl.ImageList = this.TabsImageList;
-            this.TextXmlTabControl.Location = new System.Drawing.Point(12, 313);
-            this.TextXmlTabControl.Name = "TextXmlTabControl";
-            this.TextXmlTabControl.Padding = new System.Drawing.Point(6, 4);
-            this.TextXmlTabControl.SelectedIndex = 0;
-            this.TextXmlTabControl.Size = new System.Drawing.Size(449, 226);
-            this.TextXmlTabControl.TabIndex = 15;
-            this.TextXmlTabControl.SelectedIndexChanged += new System.EventHandler(this.TextXmlTabControl_SelectedIndexChanged);
-            // 
-            // TextTabPage
-            // 
-            this.TextTabPage.Controls.Add(this.TextTextBox);
-            this.TextTabPage.ImageKey = "document.png";
-            this.TextTabPage.Location = new System.Drawing.Point(4, 25);
-            this.TextTabPage.Name = "TextTabPage";
-            this.TextTabPage.Size = new System.Drawing.Size(441, 197);
-            this.TextTabPage.TabIndex = 0;
-            this.TextTabPage.Text = "Text";
-            this.TextTabPage.UseVisualStyleBackColor = true;
-            // 
-            // SapiTabPage
-            // 
-            this.SapiTabPage.Controls.Add(this.SapiTextBox);
-            this.SapiTabPage.ImageKey = "document_music.png";
-            this.SapiTabPage.Location = new System.Drawing.Point(4, 25);
-            this.SapiTabPage.Name = "SapiTabPage";
-            this.SapiTabPage.Size = new System.Drawing.Size(441, 197);
-            this.SapiTabPage.TabIndex = 2;
-            this.SapiTabPage.Text = "SAPI XML";
-            this.SapiTabPage.UseVisualStyleBackColor = true;
-            // 
-            // SapiTextBox
-            // 
-            this.SapiTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.SapiTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SapiTextBox.Location = new System.Drawing.Point(0, 0);
-            this.SapiTextBox.Multiline = true;
-            this.SapiTextBox.Name = "SapiTextBox";
-            this.SapiTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.SapiTextBox.Size = new System.Drawing.Size(441, 197);
-            this.SapiTextBox.TabIndex = 14;
-            // 
-            // PlayListTabPage
-            // 
-            this.PlayListTabPage.Controls.Add(this.PlayListDataGridView);
-            this.PlayListTabPage.ImageKey = "document_pulse.png";
-            this.PlayListTabPage.Location = new System.Drawing.Point(4, 25);
-            this.PlayListTabPage.Name = "PlayListTabPage";
-            this.PlayListTabPage.Size = new System.Drawing.Size(441, 197);
-            this.PlayListTabPage.TabIndex = 3;
-            this.PlayListTabPage.Text = "Play List";
-            this.PlayListTabPage.UseVisualStyleBackColor = true;
-            // 
-            // PlayListDataGridView
-            // 
-            this.PlayListDataGridView.AllowUserToAddRows = false;
-            this.PlayListDataGridView.AllowUserToDeleteRows = false;
-            this.PlayListDataGridView.AllowUserToResizeRows = false;
-            this.PlayListDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.PlayListDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PlayListDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.PlayListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.PlayListDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.PlayListStatusColumn,
-            this.PlayListDurationColumn,
-            this.PlayListTextColumn});
-            this.PlayListDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PlayListDataGridView.Location = new System.Drawing.Point(0, 0);
-            this.PlayListDataGridView.MultiSelect = false;
-            this.PlayListDataGridView.Name = "PlayListDataGridView";
-            this.PlayListDataGridView.ReadOnly = true;
-            this.PlayListDataGridView.RowHeadersVisible = false;
-            this.PlayListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PlayListDataGridView.Size = new System.Drawing.Size(441, 197);
-            this.PlayListDataGridView.TabIndex = 1;
-            // 
-            // PlayListStatusColumn
-            // 
-            this.PlayListStatusColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.PlayListStatusColumn.DataPropertyName = "Status";
-            this.PlayListStatusColumn.HeaderText = "Status";
-            this.PlayListStatusColumn.Name = "PlayListStatusColumn";
-            this.PlayListStatusColumn.ReadOnly = true;
-            this.PlayListStatusColumn.Width = 62;
-            // 
-            // PlayListDurationColumn
-            // 
-            this.PlayListDurationColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-            this.PlayListDurationColumn.DataPropertyName = "Duration";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.PlayListDurationColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.PlayListDurationColumn.HeaderText = "Duration";
-            this.PlayListDurationColumn.MinimumWidth = 54;
-            this.PlayListDurationColumn.Name = "PlayListDurationColumn";
-            this.PlayListDurationColumn.ReadOnly = true;
-            this.PlayListDurationColumn.Width = 54;
-            // 
-            // PlayListTextColumn
-            // 
-            this.PlayListTextColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.PlayListTextColumn.DataPropertyName = "Text";
-            this.PlayListTextColumn.HeaderText = "Text";
-            this.PlayListTextColumn.Name = "PlayListTextColumn";
-            this.PlayListTextColumn.ReadOnly = true;
-            // 
-            // MainStatusStrip
-            // 
-            this.MainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ErrorToolStripStatusLabel,
-            this.toolStripStatusLabel1,
-            this.MonitoringStateStatusLabel,
-            this.PacketsStateStatusLabel});
-            this.MainStatusStrip.Location = new System.Drawing.Point(0, 547);
-            this.MainStatusStrip.Name = "MainStatusStrip";
-            this.MainStatusStrip.Size = new System.Drawing.Size(1082, 24);
-            this.MainStatusStrip.SizingGrip = false;
-            this.MainStatusStrip.TabIndex = 17;
-            this.MainStatusStrip.Text = "statusStrip1";
-            this.MainStatusStrip.Click += new System.EventHandler(this.MainStatusStrip_Click);
-            // 
-            // ErrorToolStripStatusLabel
-            // 
-            this.ErrorToolStripStatusLabel.Name = "ErrorToolStripStatusLabel";
-            this.ErrorToolStripStatusLabel.Size = new System.Drawing.Size(148, 19);
-            this.ErrorToolStripStatusLabel.Text = "[ErrorToolStripStatusLabel]";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(691, 19);
-            this.toolStripStatusLabel1.Spring = true;
-            // 
-            // MonitoringStateStatusLabel
-            // 
-            this.MonitoringStateStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.MonitoringStateStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
-            this.MonitoringStateStatusLabel.Name = "MonitoringStateStatusLabel";
-            this.MonitoringStateStatusLabel.Size = new System.Drawing.Size(165, 19);
-            this.MonitoringStateStatusLabel.Text = "[MonitoringStateStatusLabel]";
-            // 
-            // PacketsStateStatusLabel
-            // 
-            this.PacketsStateStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.PacketsStateStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
-            this.PacketsStateStatusLabel.Name = "PacketsStateStatusLabel";
-            this.PacketsStateStatusLabel.Size = new System.Drawing.Size(63, 19);
-            this.PacketsStateStatusLabel.Text = "Packets: 0";
-            // 
-            // VoiceDetailsTabControl
-            // 
-            this.VoiceDetailsTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.VoiceDetailsTabControl.Controls.Add(this.VoiceDetailsTabPage);
-            this.VoiceDetailsTabControl.ImageList = this.TabsImageList;
-            this.VoiceDetailsTabControl.Location = new System.Drawing.Point(770, 313);
-            this.VoiceDetailsTabControl.Name = "VoiceDetailsTabControl";
-            this.VoiceDetailsTabControl.Padding = new System.Drawing.Point(6, 4);
-            this.VoiceDetailsTabControl.SelectedIndex = 0;
-            this.VoiceDetailsTabControl.Size = new System.Drawing.Size(300, 226);
-            this.VoiceDetailsTabControl.TabIndex = 14;
-            // 
-            // VoiceDetailsTabPage
-            // 
-            this.VoiceDetailsTabPage.Controls.Add(this.VoiceDetailsTextBox);
-            this.VoiceDetailsTabPage.ImageKey = "businessman2.png";
-            this.VoiceDetailsTabPage.Location = new System.Drawing.Point(4, 25);
-            this.VoiceDetailsTabPage.Name = "VoiceDetailsTabPage";
-            this.VoiceDetailsTabPage.Size = new System.Drawing.Size(292, 197);
-            this.VoiceDetailsTabPage.TabIndex = 0;
-            this.VoiceDetailsTabPage.Text = "Voice Details";
-            this.VoiceDetailsTabPage.UseVisualStyleBackColor = true;
+            this.AboutRichTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.AboutRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.AboutRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AboutRichTextBox.Location = new System.Drawing.Point(0, 0);
+            this.AboutRichTextBox.Name = "AboutRichTextBox";
+            this.AboutRichTextBox.ReadOnly = true;
+            this.AboutRichTextBox.Size = new System.Drawing.Size(816, 266);
+            this.AboutRichTextBox.TabIndex = 18;
+            this.AboutRichTextBox.Text = "";
+            this.AboutRichTextBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.AboutRichTextBox_LinkClicked);
             // 
             // EffectTabControl
             // 
-            this.EffectTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.EffectTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.EffectTabControl.ContextMenuStrip = this.EffectPresetsContextMenuStrip;
             this.EffectTabControl.Controls.Add(this.EffectTabPage);
             this.EffectTabControl.ImageList = this.TabsImageList;
-            this.EffectTabControl.Location = new System.Drawing.Point(467, 313);
+            this.EffectTabControl.Location = new System.Drawing.Point(834, 34);
+            this.EffectTabControl.MinimumSize = new System.Drawing.Size(100, 264);
             this.EffectTabControl.Name = "EffectTabControl";
+            this.EffectTabControl.Padding = new System.Drawing.Point(6, 5);
             this.EffectTabControl.SelectedIndex = 0;
-            this.EffectTabControl.Size = new System.Drawing.Size(137, 226);
-            this.EffectTabControl.TabIndex = 18;
+            this.EffectTabControl.Size = new System.Drawing.Size(236, 297);
+            this.EffectTabControl.TabIndex = 2;
             // 
             // EffectPresetsContextMenuStrip
             // 
@@ -648,10 +336,10 @@
             // EffectTabPage
             // 
             this.EffectTabPage.Controls.Add(this.EffectsPresetsDataGridView);
-            this.EffectTabPage.ImageKey = "cubes_blue.png";
-            this.EffectTabPage.Location = new System.Drawing.Point(4, 23);
+            this.EffectTabPage.ImageKey = "Window_Sliders_Save_16.png";
+            this.EffectTabPage.Location = new System.Drawing.Point(4, 27);
             this.EffectTabPage.Name = "EffectTabPage";
-            this.EffectTabPage.Size = new System.Drawing.Size(129, 199);
+            this.EffectTabPage.Size = new System.Drawing.Size(228, 266);
             this.EffectTabPage.TabIndex = 0;
             this.EffectTabPage.Text = "Effect Presets";
             this.EffectTabPage.UseVisualStyleBackColor = true;
@@ -676,9 +364,11 @@
             this.EffectsPresetsDataGridView.ReadOnly = true;
             this.EffectsPresetsDataGridView.RowHeadersVisible = false;
             this.EffectsPresetsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.EffectsPresetsDataGridView.Size = new System.Drawing.Size(129, 199);
+            this.EffectsPresetsDataGridView.Size = new System.Drawing.Size(228, 266);
             this.EffectsPresetsDataGridView.TabIndex = 0;
             this.EffectsPresetsDataGridView.SelectionChanged += new System.EventHandler(this.EffectsPresetsDataGridView_SelectionChanged);
+            this.EffectsPresetsDataGridView.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.EffectsPresetsDataGridView.MouseHover += new System.EventHandler(this.MouseHover_EffectPresets);
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -687,6 +377,366 @@
             this.dataGridViewTextBoxColumn3.HeaderText = "Name";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // MessagesDataGridView
+            // 
+            this.MessagesDataGridView.AllowUserToAddRows = false;
+            this.MessagesDataGridView.AllowUserToDeleteRows = false;
+            this.MessagesDataGridView.AllowUserToResizeRows = false;
+            this.MessagesDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.MessagesDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.MessagesDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.MessagesDataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.MessagesDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.MessagesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            this.MessagesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.MessagesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DestinationAddressColumn,
+            this.SequenceNumberColumn,
+            this.WowDataLength,
+            this.VoiceXmlColumn});
+            this.MessagesDataGridView.ContextMenuStrip = this.MessagesContextMenuStrip;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.MessagesDataGridView.DefaultCellStyle = dataGridViewCellStyle17;
+            this.MessagesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MessagesDataGridView.EnableHeadersVisualStyles = false;
+            this.MessagesDataGridView.GridColor = System.Drawing.SystemColors.Control;
+            this.MessagesDataGridView.Location = new System.Drawing.Point(0, 0);
+            this.MessagesDataGridView.Margin = new System.Windows.Forms.Padding(0);
+            this.MessagesDataGridView.MultiSelect = false;
+            this.MessagesDataGridView.Name = "MessagesDataGridView";
+            this.MessagesDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.MessagesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            this.MessagesDataGridView.RowHeadersVisible = false;
+            this.MessagesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.MessagesDataGridView.Size = new System.Drawing.Size(606, 210);
+            this.MessagesDataGridView.TabIndex = 0;
+            // 
+            // DestinationAddressColumn
+            // 
+            this.DestinationAddressColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.DestinationAddressColumn.DataPropertyName = "DestinationAddress";
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DestinationAddressColumn.DefaultCellStyle = dataGridViewCellStyle14;
+            this.DestinationAddressColumn.HeaderText = "Destination";
+            this.DestinationAddressColumn.Name = "DestinationAddressColumn";
+            this.DestinationAddressColumn.ReadOnly = true;
+            this.DestinationAddressColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.DestinationAddressColumn.Width = 68;
+            // 
+            // SequenceNumberColumn
+            // 
+            this.SequenceNumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.SequenceNumberColumn.DataPropertyName = "SequenceNumber";
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.SequenceNumberColumn.DefaultCellStyle = dataGridViewCellStyle15;
+            this.SequenceNumberColumn.HeaderText = "Sequence";
+            this.SequenceNumberColumn.Name = "SequenceNumberColumn";
+            this.SequenceNumberColumn.ReadOnly = true;
+            this.SequenceNumberColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SequenceNumberColumn.Width = 64;
+            // 
+            // WowDataLength
+            // 
+            this.WowDataLength.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.WowDataLength.DataPropertyName = "WowDataLength";
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.WowDataLength.DefaultCellStyle = dataGridViewCellStyle16;
+            this.WowDataLength.HeaderText = "Size";
+            this.WowDataLength.Name = "WowDataLength";
+            this.WowDataLength.ReadOnly = true;
+            this.WowDataLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.WowDataLength.Width = 35;
+            // 
+            // VoiceXmlColumn
+            // 
+            this.VoiceXmlColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.VoiceXmlColumn.DataPropertyName = "VoiceXml";
+            this.VoiceXmlColumn.HeaderText = "XML";
+            this.VoiceXmlColumn.Name = "VoiceXmlColumn";
+            this.VoiceXmlColumn.ReadOnly = true;
+            this.VoiceXmlColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // MessagesContextMenuStrip
+            // 
+            this.MessagesContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MessagesClearToolStripMenuItem});
+            this.MessagesContextMenuStrip.Name = "MessagesContextMenuStrip";
+            this.MessagesContextMenuStrip.Size = new System.Drawing.Size(102, 26);
+            // 
+            // MessagesClearToolStripMenuItem
+            // 
+            this.MessagesClearToolStripMenuItem.Name = "MessagesClearToolStripMenuItem";
+            this.MessagesClearToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+            this.MessagesClearToolStripMenuItem.Text = "Clear";
+            this.MessagesClearToolStripMenuItem.Click += new System.EventHandler(this.MessagesClearToolStripMenuItem_Click);
+            // 
+            // RateLabel
+            // 
+            this.RateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.RateLabel.AutoSize = true;
+            this.RateLabel.Location = new System.Drawing.Point(858, 502);
+            this.RateLabel.Name = "RateLabel";
+            this.RateLabel.Size = new System.Drawing.Size(92, 13);
+            this.RateLabel.TabIndex = 13;
+            this.RateLabel.Text = "Rate [ min - max ]:";
+            // 
+            // PitchLabel
+            // 
+            this.PitchLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.PitchLabel.AutoSize = true;
+            this.PitchLabel.Location = new System.Drawing.Point(857, 475);
+            this.PitchLabel.Name = "PitchLabel";
+            this.PitchLabel.Size = new System.Drawing.Size(93, 13);
+            this.PitchLabel.TabIndex = 13;
+            this.PitchLabel.Text = "Pitch [ min - max ]:";
+            // 
+            // VolumeLabel
+            // 
+            this.VolumeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.VolumeLabel.AutoSize = true;
+            this.VolumeLabel.Location = new System.Drawing.Point(904, 532);
+            this.VolumeLabel.Name = "VolumeLabel";
+            this.VolumeLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.VolumeLabel.Size = new System.Drawing.Size(45, 13);
+            this.VolumeLabel.TabIndex = 13;
+            this.VolumeLabel.Text = "Volume:";
+            // 
+            // TextXmlTabControl
+            // 
+            this.TextXmlTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextXmlTabControl.Controls.Add(this.SandBoxTabPage);
+            this.TextXmlTabControl.Controls.Add(this.MessagesTabPage);
+            this.TextXmlTabControl.Controls.Add(this.SapiTabPage);
+            this.TextXmlTabControl.Controls.Add(this.PlayListTabPage);
+            this.TextXmlTabControl.ImageList = this.TabsImageList;
+            this.TextXmlTabControl.Location = new System.Drawing.Point(6, 336);
+            this.TextXmlTabControl.Name = "TextXmlTabControl";
+            this.TextXmlTabControl.Padding = new System.Drawing.Point(6, 5);
+            this.TextXmlTabControl.SelectedIndex = 0;
+            this.TextXmlTabControl.Size = new System.Drawing.Size(614, 241);
+            this.TextXmlTabControl.TabIndex = 3;
+            this.TextXmlTabControl.SelectedIndexChanged += new System.EventHandler(this.TextXmlTabControl_SelectedIndexChanged);
+            // 
+            // SandBoxTabPage
+            // 
+            this.SandBoxTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.SandBoxTabPage.Controls.Add(this.SandBoxTextBox);
+            this.SandBoxTabPage.ImageKey = "code_edit.png";
+            this.SandBoxTabPage.Location = new System.Drawing.Point(4, 27);
+            this.SandBoxTabPage.Name = "SandBoxTabPage";
+            this.SandBoxTabPage.Size = new System.Drawing.Size(606, 210);
+            this.SandBoxTabPage.TabIndex = 7;
+            this.SandBoxTabPage.Text = "SandBox";
+            // 
+            // SandBoxTextBox
+            // 
+            this.SandBoxTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.SandBoxTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SandBoxTextBox.Location = new System.Drawing.Point(0, 0);
+            this.SandBoxTextBox.Multiline = true;
+            this.SandBoxTextBox.Name = "SandBoxTextBox";
+            this.SandBoxTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.SandBoxTextBox.Size = new System.Drawing.Size(606, 210);
+            this.SandBoxTextBox.TabIndex = 0;
+            this.SandBoxTextBox.Text = "<voice name=\"Marshal McBride\" gender=\"Male\" pitch=\"-5\" rate=\"1\" effect=\"Humanoid\"" +
+    " volume=\"100\" command=\"Play\"><part>Test text to speech.</part></voice>";
+            this.SandBoxTextBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.SandBoxTextBox.MouseHover += new System.EventHandler(this.MouseHover_SandBox);
+            // 
+            // MessagesTabPage
+            // 
+            this.MessagesTabPage.Controls.Add(this.MessagesDataGridView);
+            this.MessagesTabPage.ImageKey = "Page_Incoming_16.png";
+            this.MessagesTabPage.Location = new System.Drawing.Point(4, 27);
+            this.MessagesTabPage.Name = "MessagesTabPage";
+            this.MessagesTabPage.Size = new System.Drawing.Size(606, 210);
+            this.MessagesTabPage.TabIndex = 4;
+            this.MessagesTabPage.Text = "1. Incoming Messages";
+            // 
+            // SapiTabPage
+            // 
+            this.SapiTabPage.Controls.Add(this.SapiTextBox);
+            this.SapiTabPage.ImageKey = "Page_SAPI_16.png";
+            this.SapiTabPage.Location = new System.Drawing.Point(4, 27);
+            this.SapiTabPage.Name = "SapiTabPage";
+            this.SapiTabPage.Size = new System.Drawing.Size(606, 210);
+            this.SapiTabPage.TabIndex = 2;
+            this.SapiTabPage.Text = "2. Formated SAPI XML Text";
+            this.SapiTabPage.UseVisualStyleBackColor = true;
+            // 
+            // SapiTextBox
+            // 
+            this.SapiTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.SapiTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SapiTextBox.Location = new System.Drawing.Point(0, 0);
+            this.SapiTextBox.Multiline = true;
+            this.SapiTextBox.Name = "SapiTextBox";
+            this.SapiTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.SapiTextBox.Size = new System.Drawing.Size(606, 210);
+            this.SapiTextBox.TabIndex = 14;
+            // 
+            // PlayListTabPage
+            // 
+            this.PlayListTabPage.Controls.Add(this.PlayListDataGridView);
+            this.PlayListTabPage.ImageKey = "Page_Play_16.png";
+            this.PlayListTabPage.Location = new System.Drawing.Point(4, 27);
+            this.PlayListTabPage.Name = "PlayListTabPage";
+            this.PlayListTabPage.Size = new System.Drawing.Size(606, 210);
+            this.PlayListTabPage.TabIndex = 6;
+            this.PlayListTabPage.Text = "3. Play List";
+            // 
+            // PlayListDataGridView
+            // 
+            this.PlayListDataGridView.AllowUserToAddRows = false;
+            this.PlayListDataGridView.AllowUserToDeleteRows = false;
+            this.PlayListDataGridView.AllowUserToResizeRows = false;
+            this.PlayListDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.PlayListDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PlayListDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.PlayListDataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.PlayListDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle19.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.PlayListDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            this.PlayListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.PlayListDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.PlayListStatusColumn,
+            this.PlayListDurationColumn,
+            this.PlayListTextColumn});
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.PlayListDataGridView.DefaultCellStyle = dataGridViewCellStyle22;
+            this.PlayListDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PlayListDataGridView.EnableHeadersVisualStyles = false;
+            this.PlayListDataGridView.GridColor = System.Drawing.SystemColors.Control;
+            this.PlayListDataGridView.Location = new System.Drawing.Point(0, 0);
+            this.PlayListDataGridView.MultiSelect = false;
+            this.PlayListDataGridView.Name = "PlayListDataGridView";
+            this.PlayListDataGridView.ReadOnly = true;
+            this.PlayListDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.PlayListDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle23;
+            this.PlayListDataGridView.RowHeadersVisible = false;
+            this.PlayListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.PlayListDataGridView.Size = new System.Drawing.Size(606, 210);
+            this.PlayListDataGridView.TabIndex = 1;
+            // 
+            // PlayListStatusColumn
+            // 
+            this.PlayListStatusColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.PlayListStatusColumn.DataPropertyName = "Status";
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.PlayListStatusColumn.DefaultCellStyle = dataGridViewCellStyle20;
+            this.PlayListStatusColumn.HeaderText = "Status";
+            this.PlayListStatusColumn.Name = "PlayListStatusColumn";
+            this.PlayListStatusColumn.ReadOnly = true;
+            this.PlayListStatusColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.PlayListStatusColumn.Width = 45;
+            // 
+            // PlayListDurationColumn
+            // 
+            this.PlayListDurationColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.PlayListDurationColumn.DataPropertyName = "Duration";
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.PlayListDurationColumn.DefaultCellStyle = dataGridViewCellStyle21;
+            this.PlayListDurationColumn.HeaderText = "Duration";
+            this.PlayListDurationColumn.MinimumWidth = 54;
+            this.PlayListDurationColumn.Name = "PlayListDurationColumn";
+            this.PlayListDurationColumn.ReadOnly = true;
+            this.PlayListDurationColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.PlayListDurationColumn.Width = 54;
+            // 
+            // PlayListTextColumn
+            // 
+            this.PlayListTextColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.PlayListTextColumn.DataPropertyName = "Text";
+            this.PlayListTextColumn.HeaderText = "Text";
+            this.PlayListTextColumn.Name = "PlayListTextColumn";
+            this.PlayListTextColumn.ReadOnly = true;
+            this.PlayListTextColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // MainStatusStrip
+            // 
+            this.MainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.PacketsStateStatusLabel,
+            this.MonitoringStateStatusLabel,
+            this.ErrorToolStripStatusLabel});
+            this.MainStatusStrip.Location = new System.Drawing.Point(0, 582);
+            this.MainStatusStrip.Name = "MainStatusStrip";
+            this.MainStatusStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.MainStatusStrip.Size = new System.Drawing.Size(1074, 24);
+            this.MainStatusStrip.SizingGrip = false;
+            this.MainStatusStrip.TabIndex = 17;
+            this.MainStatusStrip.Text = "statusStrip1";
+            this.MainStatusStrip.Click += new System.EventHandler(this.MainStatusStrip_Click);
+            // 
+            // PacketsStateStatusLabel
+            // 
+            this.PacketsStateStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.PacketsStateStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
+            this.PacketsStateStatusLabel.Name = "PacketsStateStatusLabel";
+            this.PacketsStateStatusLabel.Size = new System.Drawing.Size(63, 19);
+            this.PacketsStateStatusLabel.Text = "Packets: 0";
+            // 
+            // MonitoringStateStatusLabel
+            // 
+            this.MonitoringStateStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.MonitoringStateStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
+            this.MonitoringStateStatusLabel.Name = "MonitoringStateStatusLabel";
+            this.MonitoringStateStatusLabel.Size = new System.Drawing.Size(165, 19);
+            this.MonitoringStateStatusLabel.Text = "[MonitoringStateStatusLabel]";
+            // 
+            // ErrorToolStripStatusLabel
+            // 
+            this.ErrorToolStripStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.ErrorToolStripStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
+            this.ErrorToolStripStatusLabel.Name = "ErrorToolStripStatusLabel";
+            this.ErrorToolStripStatusLabel.Size = new System.Drawing.Size(152, 19);
+            this.ErrorToolStripStatusLabel.Text = "[ErrorToolStripStatusLabel]";
+            this.ErrorToolStripStatusLabel.Visible = false;
             // 
             // AudioBitsPerSampleComboBox
             // 
@@ -698,18 +748,19 @@
             this.AudioBitsPerSampleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AudioBitsPerSampleComboBox.FormattingEnabled = true;
             this.AudioBitsPerSampleComboBox.Items.AddRange(new object[] {
-            "SAPI",
-            "SSML"});
-            this.AudioBitsPerSampleComboBox.Location = new System.Drawing.Point(689, 411);
+            "8",
+            "16",
+            "24"});
+            this.AudioBitsPerSampleComboBox.Location = new System.Drawing.Point(954, 417);
             this.AudioBitsPerSampleComboBox.Name = "AudioBitsPerSampleComboBox";
-            this.AudioBitsPerSampleComboBox.Size = new System.Drawing.Size(75, 21);
-            this.AudioBitsPerSampleComboBox.TabIndex = 11;
+            this.AudioBitsPerSampleComboBox.Size = new System.Drawing.Size(114, 21);
+            this.AudioBitsPerSampleComboBox.TabIndex = 8;
             // 
             // AudioBitsPerSampleLabel
             // 
             this.AudioBitsPerSampleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AudioBitsPerSampleLabel.AutoSize = true;
-            this.AudioBitsPerSampleLabel.Location = new System.Drawing.Point(616, 414);
+            this.AudioBitsPerSampleLabel.Location = new System.Drawing.Point(883, 421);
             this.AudioBitsPerSampleLabel.Name = "AudioBitsPerSampleLabel";
             this.AudioBitsPerSampleLabel.Size = new System.Drawing.Size(67, 13);
             this.AudioBitsPerSampleLabel.TabIndex = 13;
@@ -719,24 +770,27 @@
             // 
             this.AudioSampleRateComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AudioSampleRateComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "8",
-            "16",
-            "24"});
+            "11025",
+            "22050",
+            "44100",
+            "48000"});
             this.AudioSampleRateComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AudioSampleRateComboBox.FormattingEnabled = true;
             this.AudioSampleRateComboBox.Items.AddRange(new object[] {
-            "SAPI",
-            "SSML"});
-            this.AudioSampleRateComboBox.Location = new System.Drawing.Point(689, 384);
+            "11025",
+            "22050",
+            "44100",
+            "48000"});
+            this.AudioSampleRateComboBox.Location = new System.Drawing.Point(954, 390);
             this.AudioSampleRateComboBox.Name = "AudioSampleRateComboBox";
-            this.AudioSampleRateComboBox.Size = new System.Drawing.Size(75, 21);
-            this.AudioSampleRateComboBox.TabIndex = 11;
+            this.AudioSampleRateComboBox.Size = new System.Drawing.Size(114, 21);
+            this.AudioSampleRateComboBox.TabIndex = 7;
             // 
             // AudioSampleRateLabel
             // 
             this.AudioSampleRateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AudioSampleRateLabel.AutoSize = true;
-            this.AudioSampleRateLabel.Location = new System.Drawing.Point(612, 387);
+            this.AudioSampleRateLabel.Location = new System.Drawing.Point(879, 394);
             this.AudioSampleRateLabel.Name = "AudioSampleRateLabel";
             this.AudioSampleRateLabel.Size = new System.Drawing.Size(71, 13);
             this.AudioSampleRateLabel.TabIndex = 13;
@@ -746,24 +800,23 @@
             // 
             this.AudioChannelsComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AudioChannelsComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "8",
-            "16",
-            "24"});
+            "Mono",
+            "Stereo"});
             this.AudioChannelsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AudioChannelsComboBox.FormattingEnabled = true;
             this.AudioChannelsComboBox.Items.AddRange(new object[] {
-            "SAPI",
-            "SSML"});
-            this.AudioChannelsComboBox.Location = new System.Drawing.Point(689, 357);
+            "Mono",
+            "Stereo"});
+            this.AudioChannelsComboBox.Location = new System.Drawing.Point(954, 363);
             this.AudioChannelsComboBox.Name = "AudioChannelsComboBox";
-            this.AudioChannelsComboBox.Size = new System.Drawing.Size(75, 21);
-            this.AudioChannelsComboBox.TabIndex = 11;
+            this.AudioChannelsComboBox.Size = new System.Drawing.Size(114, 21);
+            this.AudioChannelsComboBox.TabIndex = 6;
             // 
             // AudioChannelsLabel
             // 
             this.AudioChannelsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AudioChannelsLabel.AutoSize = true;
-            this.AudioChannelsLabel.Location = new System.Drawing.Point(629, 360);
+            this.AudioChannelsLabel.Location = new System.Drawing.Point(896, 367);
             this.AudioChannelsLabel.Name = "AudioChannelsLabel";
             this.AudioChannelsLabel.Size = new System.Drawing.Size(54, 13);
             this.AudioChannelsLabel.TabIndex = 13;
@@ -772,36 +825,98 @@
             // RecognizeButton
             // 
             this.RecognizeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RecognizeButton.Location = new System.Drawing.Point(689, 328);
+            this.RecognizeButton.Location = new System.Drawing.Point(105, 3);
             this.RecognizeButton.Name = "RecognizeButton";
-            this.RecognizeButton.Size = new System.Drawing.Size(75, 23);
+            this.RecognizeButton.Size = new System.Drawing.Size(93, 23);
             this.RecognizeButton.TabIndex = 10;
+            this.RecognizeButton.TabStop = false;
             this.RecognizeButton.Text = "Recognize";
             this.RecognizeButton.UseVisualStyleBackColor = true;
             this.RecognizeButton.Visible = false;
             this.RecognizeButton.Click += new System.EventHandler(this.RecognizeButton_Click);
             // 
-            // AboutTabPage
+            // MainHelpLabel
             // 
-            this.AboutTabPage.BackColor = System.Drawing.SystemColors.Control;
-            this.AboutTabPage.Controls.Add(this.aboutControl1);
-            this.AboutTabPage.ImageKey = "about.png";
-            this.AboutTabPage.Location = new System.Drawing.Point(4, 25);
-            this.AboutTabPage.Name = "AboutTabPage";
-            this.AboutTabPage.Size = new System.Drawing.Size(744, 266);
-            this.AboutTabPage.TabIndex = 2;
-            this.AboutTabPage.Text = "About";
+            this.MainHelpLabel.BackColor = System.Drawing.SystemColors.Info;
+            this.MainHelpLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.MainHelpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MainHelpLabel.Location = new System.Drawing.Point(0, 0);
+            this.MainHelpLabel.Name = "MainHelpLabel";
+            this.MainHelpLabel.Padding = new System.Windows.Forms.Padding(32, 7, 6, 6);
+            this.MainHelpLabel.Size = new System.Drawing.Size(1074, 28);
+            this.MainHelpLabel.TabIndex = 1;
+            this.MainHelpLabel.Text = "Please download this tool only from trustworthy sources. Make sure that this tool" +
+    " is always signed by verified publisher ( Jocys.com ) with signature issue by tr" +
+    "usted certificate authority.";
+            // 
+            // MonitorClipboardLabel
+            // 
+            this.MonitorClipboardLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.MonitorClipboardLabel.AutoSize = true;
+            this.MonitorClipboardLabel.Location = new System.Drawing.Point(858, 340);
+            this.MonitorClipboardLabel.Name = "MonitorClipboardLabel";
+            this.MonitorClipboardLabel.Size = new System.Drawing.Size(92, 13);
+            this.MonitorClipboardLabel.TabIndex = 23;
+            this.MonitorClipboardLabel.Text = "Monitor Clipboard:";
+            // 
+            // ProductPictureBox
+            // 
+            this.ProductPictureBox.BackColor = System.Drawing.SystemColors.Info;
+            this.ProductPictureBox.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.information_icon;
+            this.ProductPictureBox.Location = new System.Drawing.Point(12, 6);
+            this.ProductPictureBox.Name = "ProductPictureBox";
+            this.ProductPictureBox.Size = new System.Drawing.Size(16, 16);
+            this.ProductPictureBox.TabIndex = 22;
+            this.ProductPictureBox.TabStop = false;
+            // 
+            // PitchTextBox
+            // 
+            this.PitchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.PitchTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.PitchTextBox.Enabled = false;
+            this.PitchTextBox.Location = new System.Drawing.Point(999, 472);
+            this.PitchTextBox.Name = "PitchTextBox";
+            this.PitchTextBox.ReadOnly = true;
+            this.PitchTextBox.Size = new System.Drawing.Size(23, 20);
+            this.PitchTextBox.TabIndex = 11;
+            this.PitchTextBox.TabStop = false;
+            this.PitchTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // RateTextBox
+            // 
+            this.RateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.RateTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.RateTextBox.Enabled = false;
+            this.RateTextBox.Location = new System.Drawing.Point(999, 499);
+            this.RateTextBox.Name = "RateTextBox";
+            this.RateTextBox.Size = new System.Drawing.Size(23, 20);
+            this.RateTextBox.TabIndex = 14;
+            this.RateTextBox.TabStop = false;
+            this.RateTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // VolumeTrackBar
+            // 
+            this.VolumeTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.VolumeTrackBar.Location = new System.Drawing.Point(946, 520);
+            this.VolumeTrackBar.Maximum = 100;
+            this.VolumeTrackBar.Name = "VolumeTrackBar";
+            this.VolumeTrackBar.Size = new System.Drawing.Size(130, 45);
+            this.VolumeTrackBar.TabIndex = 16;
+            this.VolumeTrackBar.TickFrequency = 5;
+            this.VolumeTrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.VolumeTrackBar.Value = 100;
+            this.VolumeTrackBar.ValueChanged += new System.EventHandler(this.VolumeTrackBar_ValueChanged);
             // 
             // StopButton
             // 
             this.StopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.StopButton.Image = global::JocysCom.WoW.TextToSpeech.Properties.Resources.bullet_square_glass_red;
+            this.StopButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.bullet_square_glass_red;
             this.StopButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.StopButton.Location = new System.Drawing.Point(689, 516);
+            this.StopButton.Location = new System.Drawing.Point(953, 554);
             this.StopButton.Name = "StopButton";
-            this.StopButton.Size = new System.Drawing.Size(75, 23);
-            this.StopButton.TabIndex = 10;
-            this.StopButton.Text = "Stop";
+            this.StopButton.Size = new System.Drawing.Size(116, 23);
+            this.StopButton.TabIndex = 18;
+            this.StopButton.Text = "   Stop";
             this.StopButton.UseVisualStyleBackColor = true;
             this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
             // 
@@ -809,92 +924,648 @@
             // 
             this.SpeakButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SpeakButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.SpeakButton.Image = global::JocysCom.WoW.TextToSpeech.Properties.Resources.bullet_triangle_glass_blue;
+            this.SpeakButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.bullet_triangle_glass_blue;
             this.SpeakButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.SpeakButton.Location = new System.Drawing.Point(608, 516);
+            this.SpeakButton.Location = new System.Drawing.Point(833, 554);
             this.SpeakButton.Name = "SpeakButton";
-            this.SpeakButton.Size = new System.Drawing.Size(75, 23);
-            this.SpeakButton.TabIndex = 10;
-            this.SpeakButton.Text = "Speak";
+            this.SpeakButton.Size = new System.Drawing.Size(116, 23);
+            this.SpeakButton.TabIndex = 17;
+            this.SpeakButton.Text = "   Speak";
             this.SpeakButton.UseVisualStyleBackColor = true;
             this.SpeakButton.Click += new System.EventHandler(this.SpeakButton_Click);
             // 
-            // EffectPresetsEditorSoundEffectsControl
+            // VolumeTextBox
             // 
-            this.EffectPresetsEditorSoundEffectsControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
-            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(744, 266);
-            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
+            this.VolumeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.VolumeTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.VolumeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.VolumeTextBox.Location = new System.Drawing.Point(875, 532);
+            this.VolumeTextBox.Name = "VolumeTextBox";
+            this.VolumeTextBox.ReadOnly = true;
+            this.VolumeTextBox.Size = new System.Drawing.Size(27, 13);
+            this.VolumeTextBox.TabIndex = 30;
+            this.VolumeTextBox.TabStop = false;
+            this.VolumeTextBox.Text = "100%";
+            this.VolumeTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // aboutControl1
+            // IncomingGroupBox
             // 
-            this.aboutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.aboutControl1.Location = new System.Drawing.Point(0, 0);
-            this.aboutControl1.Name = "aboutControl1";
-            this.aboutControl1.Size = new System.Drawing.Size(744, 266);
-            this.aboutControl1.TabIndex = 0;
+            this.IncomingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.IncomingGroupBox.Controls.Add(this.IncomingTextTextBox);
+            this.IncomingGroupBox.Controls.Add(this.IncomingCommandTextBox);
+            this.IncomingGroupBox.Controls.Add(this.IncomingVolumeTextBox);
+            this.IncomingGroupBox.Controls.Add(this.IncomingEffectTextBox);
+            this.IncomingGroupBox.Controls.Add(this.IncomingPitchTextBox);
+            this.IncomingGroupBox.Controls.Add(this.IncomingRateTextBox);
+            this.IncomingGroupBox.Controls.Add(this.IncomingGenderTextBox);
+            this.IncomingGroupBox.Controls.Add(this.IncomingNameTextBox);
+            this.IncomingGroupBox.Controls.Add(this.RecognizeButton);
+            this.IncomingGroupBox.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.IncomingGroupBox.Location = new System.Drawing.Point(624, 336);
+            this.IncomingGroupBox.Name = "IncomingGroupBox";
+            this.IncomingGroupBox.Size = new System.Drawing.Size(204, 240);
+            this.IncomingGroupBox.TabIndex = 4;
+            this.IncomingGroupBox.TabStop = false;
+            this.IncomingGroupBox.Text = "Incoming ( submited ) values";
+            this.IncomingGroupBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.IncomingGroupBox.MouseHover += new System.EventHandler(this.MouseHover_IncomingGroupBox);
+            // 
+            // IncomingTextTextBox
+            // 
+            this.IncomingTextTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.IncomingTextTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.IncomingTextTextBox.Enabled = false;
+            this.IncomingTextTextBox.Location = new System.Drawing.Point(7, 31);
+            this.IncomingTextTextBox.Name = "IncomingTextTextBox";
+            this.IncomingTextTextBox.ReadOnly = true;
+            this.IncomingTextTextBox.Size = new System.Drawing.Size(190, 20);
+            this.IncomingTextTextBox.TabIndex = 46;
+            this.IncomingTextTextBox.TabStop = false;
+            this.IncomingTextTextBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.IncomingTextTextBox.MouseHover += new System.EventHandler(this.MouseHover_IncomingGroupBox);
+            // 
+            // IncomingCommandTextBox
+            // 
+            this.IncomingCommandTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.IncomingCommandTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.IncomingCommandTextBox.Enabled = false;
+            this.IncomingCommandTextBox.Location = new System.Drawing.Point(7, 213);
+            this.IncomingCommandTextBox.Name = "IncomingCommandTextBox";
+            this.IncomingCommandTextBox.ReadOnly = true;
+            this.IncomingCommandTextBox.Size = new System.Drawing.Size(190, 20);
+            this.IncomingCommandTextBox.TabIndex = 45;
+            this.IncomingCommandTextBox.TabStop = false;
+            this.IncomingCommandTextBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.IncomingCommandTextBox.MouseHover += new System.EventHandler(this.MouseHover_IncomingGroupBox);
+            // 
+            // IncomingVolumeTextBox
+            // 
+            this.IncomingVolumeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.IncomingVolumeTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.IncomingVolumeTextBox.Enabled = false;
+            this.IncomingVolumeTextBox.Location = new System.Drawing.Point(7, 187);
+            this.IncomingVolumeTextBox.Name = "IncomingVolumeTextBox";
+            this.IncomingVolumeTextBox.ReadOnly = true;
+            this.IncomingVolumeTextBox.Size = new System.Drawing.Size(190, 20);
+            this.IncomingVolumeTextBox.TabIndex = 44;
+            this.IncomingVolumeTextBox.TabStop = false;
+            this.IncomingVolumeTextBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.IncomingVolumeTextBox.MouseHover += new System.EventHandler(this.MouseHover_IncomingGroupBox);
+            // 
+            // IncomingEffectTextBox
+            // 
+            this.IncomingEffectTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.IncomingEffectTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.IncomingEffectTextBox.Enabled = false;
+            this.IncomingEffectTextBox.Location = new System.Drawing.Point(7, 109);
+            this.IncomingEffectTextBox.Name = "IncomingEffectTextBox";
+            this.IncomingEffectTextBox.ReadOnly = true;
+            this.IncomingEffectTextBox.Size = new System.Drawing.Size(190, 20);
+            this.IncomingEffectTextBox.TabIndex = 43;
+            this.IncomingEffectTextBox.TabStop = false;
+            this.IncomingEffectTextBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.IncomingEffectTextBox.MouseHover += new System.EventHandler(this.MouseHover_IncomingGroupBox);
+            // 
+            // IncomingPitchTextBox
+            // 
+            this.IncomingPitchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.IncomingPitchTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.IncomingPitchTextBox.Enabled = false;
+            this.IncomingPitchTextBox.Location = new System.Drawing.Point(7, 135);
+            this.IncomingPitchTextBox.Name = "IncomingPitchTextBox";
+            this.IncomingPitchTextBox.ReadOnly = true;
+            this.IncomingPitchTextBox.Size = new System.Drawing.Size(190, 20);
+            this.IncomingPitchTextBox.TabIndex = 42;
+            this.IncomingPitchTextBox.TabStop = false;
+            this.IncomingPitchTextBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.IncomingPitchTextBox.MouseHover += new System.EventHandler(this.MouseHover_IncomingGroupBox);
+            // 
+            // IncomingRateTextBox
+            // 
+            this.IncomingRateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.IncomingRateTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.IncomingRateTextBox.Enabled = false;
+            this.IncomingRateTextBox.Location = new System.Drawing.Point(7, 161);
+            this.IncomingRateTextBox.Name = "IncomingRateTextBox";
+            this.IncomingRateTextBox.ReadOnly = true;
+            this.IncomingRateTextBox.Size = new System.Drawing.Size(190, 20);
+            this.IncomingRateTextBox.TabIndex = 41;
+            this.IncomingRateTextBox.TabStop = false;
+            this.IncomingRateTextBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.IncomingRateTextBox.MouseHover += new System.EventHandler(this.MouseHover_IncomingGroupBox);
+            // 
+            // IncomingGenderTextBox
+            // 
+            this.IncomingGenderTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.IncomingGenderTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.IncomingGenderTextBox.Enabled = false;
+            this.IncomingGenderTextBox.Location = new System.Drawing.Point(7, 83);
+            this.IncomingGenderTextBox.Name = "IncomingGenderTextBox";
+            this.IncomingGenderTextBox.ReadOnly = true;
+            this.IncomingGenderTextBox.Size = new System.Drawing.Size(190, 20);
+            this.IncomingGenderTextBox.TabIndex = 40;
+            this.IncomingGenderTextBox.TabStop = false;
+            this.IncomingGenderTextBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.IncomingGenderTextBox.MouseHover += new System.EventHandler(this.MouseHover_IncomingGroupBox);
+            // 
+            // IncomingNameTextBox
+            // 
+            this.IncomingNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.IncomingNameTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.IncomingNameTextBox.Enabled = false;
+            this.IncomingNameTextBox.Location = new System.Drawing.Point(7, 57);
+            this.IncomingNameTextBox.Name = "IncomingNameTextBox";
+            this.IncomingNameTextBox.ReadOnly = true;
+            this.IncomingNameTextBox.Size = new System.Drawing.Size(190, 20);
+            this.IncomingNameTextBox.TabIndex = 25;
+            this.IncomingNameTextBox.TabStop = false;
+            this.IncomingNameTextBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.IncomingNameTextBox.MouseHover += new System.EventHandler(this.MouseHover_IncomingGroupBox);
+            // 
+            // DefaultGenderLabel
+            // 
+            this.DefaultGenderLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DefaultGenderLabel.AutoSize = true;
+            this.DefaultGenderLabel.Location = new System.Drawing.Point(868, 448);
+            this.DefaultGenderLabel.Name = "DefaultGenderLabel";
+            this.DefaultGenderLabel.Size = new System.Drawing.Size(82, 13);
+            this.DefaultGenderLabel.TabIndex = 39;
+            this.DefaultGenderLabel.Text = "Default Gender:";
+            // 
+            // MonitorClipboardComboBox
+            // 
+            this.MonitorClipboardComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.MonitorClipboardComboBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "Disabled",
+            "For <voice> tags",
+            "For all text"});
+            this.MonitorClipboardComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "MonitorClipboardComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.MonitorClipboardComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.MonitorClipboardComboBox.FormattingEnabled = true;
+            this.MonitorClipboardComboBox.Items.AddRange(new object[] {
+            "Disabled",
+            "For <voice> tags",
+            "For all text"});
+            this.MonitorClipboardComboBox.Location = new System.Drawing.Point(954, 336);
+            this.MonitorClipboardComboBox.Name = "MonitorClipboardComboBox";
+            this.MonitorClipboardComboBox.Size = new System.Drawing.Size(114, 21);
+            this.MonitorClipboardComboBox.TabIndex = 5;
+            this.MonitorClipboardComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.MonitorClipboardComboBoxText;
+            this.MonitorClipboardComboBox.SelectedIndexChanged += new System.EventHandler(this.MonitorClipboardComboBox_SelectedIndexChanged);
+            this.MonitorClipboardComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.MonitorClipboardComboBox.MouseHover += new System.EventHandler(this.MouseHover_MonitorClipboardComboBox);
+            // 
+            // GenderComboBox
+            // 
+            this.GenderComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.GenderComboBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "Male",
+            "Female",
+            "Neutral"});
+            this.GenderComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "GenderComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.GenderComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.GenderComboBox.FormattingEnabled = true;
+            this.GenderComboBox.Items.AddRange(new object[] {
+            "Male",
+            "Female",
+            "Neutral"});
+            this.GenderComboBox.Location = new System.Drawing.Point(954, 444);
+            this.GenderComboBox.Name = "GenderComboBox";
+            this.GenderComboBox.Size = new System.Drawing.Size(114, 21);
+            this.GenderComboBox.TabIndex = 9;
+            this.GenderComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.GenderComboBoxText;
+            this.GenderComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.GenderComboBox.MouseHover += new System.EventHandler(this.MouseHover_GenderComboBox);
+            // 
+            // PitchMaxComboBox
+            // 
+            this.PitchMaxComboBox.AccessibleDescription = "";
+            this.PitchMaxComboBox.AccessibleName = "";
+            this.PitchMaxComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.PitchMaxComboBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "10",
+            "9",
+            "8",
+            "7",
+            "6",
+            "5",
+            "4",
+            "3",
+            "2",
+            "1",
+            "0",
+            "-1",
+            "-2",
+            "-3",
+            "-4",
+            "-5",
+            "-6",
+            "-7",
+            "-8",
+            "-9",
+            "-10"});
+            this.PitchMaxComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "PitchMaxComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.PitchMaxComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.PitchMaxComboBox.FormattingEnabled = true;
+            this.PitchMaxComboBox.Items.AddRange(new object[] {
+            "10",
+            "9",
+            "8",
+            "7",
+            "6",
+            "5",
+            "4",
+            "3",
+            "2",
+            "1",
+            "0",
+            "-1",
+            "-2",
+            "-3",
+            "-4",
+            "-5",
+            "-6",
+            "-7",
+            "-8",
+            "-9",
+            "-10"});
+            this.PitchMaxComboBox.Location = new System.Drawing.Point(1028, 471);
+            this.PitchMaxComboBox.Name = "PitchMaxComboBox";
+            this.PitchMaxComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.PitchMaxComboBox.Size = new System.Drawing.Size(40, 21);
+            this.PitchMaxComboBox.TabIndex = 12;
+            this.PitchMaxComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.PitchMaxComboBoxText;
+            // 
+            // RateMaxComboBox
+            // 
+            this.RateMaxComboBox.AccessibleDescription = "";
+            this.RateMaxComboBox.AccessibleName = "";
+            this.RateMaxComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.RateMaxComboBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "10",
+            "9",
+            "8",
+            "7",
+            "6",
+            "5",
+            "4",
+            "3",
+            "2",
+            "1",
+            "0",
+            "-1",
+            "-2",
+            "-3",
+            "-4",
+            "-5",
+            "-6",
+            "-7",
+            "-8",
+            "-9",
+            "-10"});
+            this.RateMaxComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "RateMaxComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.RateMaxComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.RateMaxComboBox.FormattingEnabled = true;
+            this.RateMaxComboBox.Items.AddRange(new object[] {
+            "10",
+            "9",
+            "8",
+            "7",
+            "6",
+            "5",
+            "4",
+            "3",
+            "2",
+            "1",
+            "0",
+            "-1",
+            "-2",
+            "-3",
+            "-4",
+            "-5",
+            "-6",
+            "-7",
+            "-8",
+            "-9",
+            "-10"});
+            this.RateMaxComboBox.Location = new System.Drawing.Point(1028, 498);
+            this.RateMaxComboBox.Name = "RateMaxComboBox";
+            this.RateMaxComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.RateMaxComboBox.Size = new System.Drawing.Size(40, 21);
+            this.RateMaxComboBox.TabIndex = 15;
+            this.RateMaxComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.RateMaxComboBoxText;
+            // 
+            // PitchMinComboBox
+            // 
+            this.PitchMinComboBox.AccessibleDescription = "";
+            this.PitchMinComboBox.AccessibleName = "";
+            this.PitchMinComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.PitchMinComboBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "10",
+            "9",
+            "8",
+            "7",
+            "6",
+            "5",
+            "4",
+            "3",
+            "2",
+            "1",
+            "0",
+            "-1",
+            "-2",
+            "-3",
+            "-4",
+            "-5",
+            "-6",
+            "-7",
+            "-8",
+            "-9",
+            "-10"});
+            this.PitchMinComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "PitchMinComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.PitchMinComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.PitchMinComboBox.FormattingEnabled = true;
+            this.PitchMinComboBox.Items.AddRange(new object[] {
+            "10",
+            "9",
+            "8",
+            "7",
+            "6",
+            "5",
+            "4",
+            "3",
+            "2",
+            "1",
+            "0",
+            "-1",
+            "-2",
+            "-3",
+            "-4",
+            "-5",
+            "-6",
+            "-7",
+            "-8",
+            "-9",
+            "-10"});
+            this.PitchMinComboBox.Location = new System.Drawing.Point(954, 471);
+            this.PitchMinComboBox.Name = "PitchMinComboBox";
+            this.PitchMinComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.PitchMinComboBox.Size = new System.Drawing.Size(40, 21);
+            this.PitchMinComboBox.TabIndex = 10;
+            this.PitchMinComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.PitchMinComboBoxText;
+            // 
+            // RateMinComboBox
+            // 
+            this.RateMinComboBox.AccessibleDescription = "";
+            this.RateMinComboBox.AccessibleName = "";
+            this.RateMinComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.RateMinComboBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "10",
+            "9",
+            "8",
+            "7",
+            "6",
+            "5",
+            "4",
+            "3",
+            "2",
+            "1",
+            "0",
+            "-1",
+            "-2",
+            "-3",
+            "-4",
+            "-5",
+            "-6",
+            "-7",
+            "-8",
+            "-9",
+            "-10"});
+            this.RateMinComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "RateMinComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.RateMinComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.RateMinComboBox.FormattingEnabled = true;
+            this.RateMinComboBox.Items.AddRange(new object[] {
+            "10",
+            "9",
+            "8",
+            "7",
+            "6",
+            "5",
+            "4",
+            "3",
+            "2",
+            "1",
+            "0",
+            "-1",
+            "-2",
+            "-3",
+            "-4",
+            "-5",
+            "-6",
+            "-7",
+            "-8",
+            "-9",
+            "-10"});
+            this.RateMinComboBox.Location = new System.Drawing.Point(954, 498);
+            this.RateMinComboBox.Name = "RateMinComboBox";
+            this.RateMinComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.RateMinComboBox.Size = new System.Drawing.Size(40, 21);
+            this.RateMinComboBox.TabIndex = 13;
+            this.RateMinComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.RateMinComboBoxText;
+            this.RateMinComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
+            this.RateMinComboBox.MouseHover += new System.EventHandler(this.MouseHover_RateMin);
+            // 
+            // MaleColumn
+            // 
+            this.MaleColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.MaleColumn.DataPropertyName = "Male";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Format = "0";
+            this.MaleColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.MaleColumn.HeaderText = "Male";
+            this.MaleColumn.MaxInputLength = 3;
+            this.MaleColumn.MinimumWidth = 50;
+            this.MaleColumn.Name = "MaleColumn";
+            this.MaleColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.MaleColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.MaleColumn.ToolTipText = "Voice popularity. Value from 0 (don\'t use) to 100 (often usage)";
+            this.MaleColumn.Width = 50;
+            // 
+            // FemaleColumn
+            // 
+            this.FemaleColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.FemaleColumn.DataPropertyName = "Female";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Format = "0";
+            this.FemaleColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.FemaleColumn.HeaderText = "Female";
+            this.FemaleColumn.MaxInputLength = 3;
+            this.FemaleColumn.MinimumWidth = 50;
+            this.FemaleColumn.Name = "FemaleColumn";
+            this.FemaleColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.FemaleColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FemaleColumn.ToolTipText = "Voice popularity. Value from 0 (don\'t use) to 100 (often usage)";
+            this.FemaleColumn.Width = 50;
+            // 
+            // NeutralColumn
+            // 
+            this.NeutralColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.NeutralColumn.DataPropertyName = "Neutral";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Format = "0";
+            this.NeutralColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.NeutralColumn.HeaderText = "Neutral";
+            this.NeutralColumn.MaxInputLength = 3;
+            this.NeutralColumn.MinimumWidth = 50;
+            this.NeutralColumn.Name = "NeutralColumn";
+            this.NeutralColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.NeutralColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NeutralColumn.ToolTipText = "Voice popularity. Value from 0 (don\'t use) to 100 (often usage)";
+            this.NeutralColumn.Width = 50;
+            // 
+            // GenderColumn
+            // 
+            this.GenderColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.GenderColumn.DataPropertyName = "Gender";
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.GenderColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            this.GenderColumn.HeaderText = "Gender";
+            this.GenderColumn.Name = "GenderColumn";
+            this.GenderColumn.ReadOnly = true;
+            this.GenderColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.GenderColumn.Width = 50;
+            // 
+            // NameColumn
+            // 
+            this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.NameColumn.DataPropertyName = "Name";
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.NameColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.NameColumn.HeaderText = "Name";
+            this.NameColumn.Name = "NameColumn";
+            this.NameColumn.ReadOnly = true;
+            this.NameColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NameColumn.Width = 43;
+            // 
+            // LanguageColumn
+            // 
+            this.LanguageColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.LanguageColumn.DataPropertyName = "Language";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LanguageColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            this.LanguageColumn.HeaderText = "Language";
+            this.LanguageColumn.Name = "LanguageColumn";
+            this.LanguageColumn.ReadOnly = true;
+            this.LanguageColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.LanguageColumn.Width = 63;
+            // 
+            // CultureColumn
+            // 
+            this.CultureColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.CultureColumn.DataPropertyName = "CultureName";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.CultureColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            this.CultureColumn.HeaderText = "Culture";
+            this.CultureColumn.Name = "CultureColumn";
+            this.CultureColumn.ReadOnly = true;
+            this.CultureColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CultureColumn.Width = 48;
+            // 
+            // AgeColumn
+            // 
+            this.AgeColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.AgeColumn.DataPropertyName = "Age";
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.AgeColumn.DefaultCellStyle = dataGridViewCellStyle9;
+            this.AgeColumn.HeaderText = "Age";
+            this.AgeColumn.Name = "AgeColumn";
+            this.AgeColumn.ReadOnly = true;
+            this.AgeColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.AgeColumn.Width = 34;
+            // 
+            // DescriptionColumn
+            // 
+            this.DescriptionColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.DescriptionColumn.DataPropertyName = "Description";
+            dataGridViewCellStyle10.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.DescriptionColumn.DefaultCellStyle = dataGridViewCellStyle10;
+            this.DescriptionColumn.HeaderText = "Description";
+            this.DescriptionColumn.Name = "DescriptionColumn";
+            this.DescriptionColumn.ReadOnly = true;
+            this.DescriptionColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1082, 571);
+            this.ClientSize = new System.Drawing.Size(1074, 606);
+            this.Controls.Add(this.MonitorClipboardComboBox);
+            this.Controls.Add(this.DefaultGenderLabel);
+            this.Controls.Add(this.GenderComboBox);
+            this.Controls.Add(this.IncomingGroupBox);
+            this.Controls.Add(this.PitchMaxComboBox);
+            this.Controls.Add(this.RateMaxComboBox);
             this.Controls.Add(this.EffectTabControl);
+            this.Controls.Add(this.VolumeTextBox);
+            this.Controls.Add(this.MonitorClipboardLabel);
+            this.Controls.Add(this.SpeakButton);
+            this.Controls.Add(this.StopButton);
+            this.Controls.Add(this.VolumeTrackBar);
+            this.Controls.Add(this.RateTextBox);
+            this.Controls.Add(this.PitchMinComboBox);
+            this.Controls.Add(this.PitchTextBox);
+            this.Controls.Add(this.ProductPictureBox);
+            this.Controls.Add(this.RateMinComboBox);
+            this.Controls.Add(this.MainHelpLabel);
+            this.Controls.Add(this.AudioChannelsComboBox);
             this.Controls.Add(this.MainStatusStrip);
-            this.Controls.Add(this.VolumeNumericUpDown);
-            this.Controls.Add(this.RateNumericUpDown);
-            this.Controls.Add(this.PitchNumericUpDown);
+            this.Controls.Add(this.AudioBitsPerSampleComboBox);
             this.Controls.Add(this.TextXmlTabControl);
             this.Controls.Add(this.MessagesTabControl);
-            this.Controls.Add(this.VoiceDetailsTabControl);
-            this.Controls.Add(this.VoicesTabControl);
+            this.Controls.Add(this.AudioSampleRateComboBox);
+            this.Controls.Add(this.RateLabel);
+            this.Controls.Add(this.AudioBitsPerSampleLabel);
             this.Controls.Add(this.VolumeLabel);
+            this.Controls.Add(this.AudioSampleRateLabel);
             this.Controls.Add(this.PitchLabel);
             this.Controls.Add(this.AudioChannelsLabel);
-            this.Controls.Add(this.AudioSampleRateLabel);
-            this.Controls.Add(this.AudioBitsPerSampleLabel);
-            this.Controls.Add(this.RateLabel);
-            this.Controls.Add(this.AudioChannelsComboBox);
-            this.Controls.Add(this.AudioSampleRateComboBox);
-            this.Controls.Add(this.AudioBitsPerSampleComboBox);
-            this.Controls.Add(this.StopButton);
-            this.Controls.Add(this.RecognizeButton);
-            this.Controls.Add(this.SpeakButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1098, 610);
+            this.MinimumSize = new System.Drawing.Size(1090, 645);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.VoicesTabControl.ResumeLayout(false);
-            this.VoicesTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).EndInit();
             this.MessagesTabControl.ResumeLayout(false);
-            this.MessagesTabPage.ResumeLayout(false);
+            this.VoicesTabPanel.ResumeLayout(false);
+            this.EffectsPresetsEditorTabPage.ResumeLayout(false);
+            this.AboutTabPage.ResumeLayout(false);
+            this.EffectTabControl.ResumeLayout(false);
+            this.EffectPresetsContextMenuStrip.ResumeLayout(false);
+            this.EffectTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.EffectsPresetsDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MessagesDataGridView)).EndInit();
             this.MessagesContextMenuStrip.ResumeLayout(false);
-            this.EffectsPresetsEditorTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PitchNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VolumeNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RateNumericUpDown)).EndInit();
             this.TextXmlTabControl.ResumeLayout(false);
-            this.TextTabPage.ResumeLayout(false);
-            this.TextTabPage.PerformLayout();
+            this.SandBoxTabPage.ResumeLayout(false);
+            this.SandBoxTabPage.PerformLayout();
+            this.MessagesTabPage.ResumeLayout(false);
             this.SapiTabPage.ResumeLayout(false);
             this.SapiTabPage.PerformLayout();
             this.PlayListTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PlayListDataGridView)).EndInit();
             this.MainStatusStrip.ResumeLayout(false);
             this.MainStatusStrip.PerformLayout();
-            this.VoiceDetailsTabControl.ResumeLayout(false);
-            this.VoiceDetailsTabPage.ResumeLayout(false);
-            this.VoiceDetailsTabPage.PerformLayout();
-            this.EffectTabControl.ResumeLayout(false);
-            this.EffectPresetsContextMenuStrip.ResumeLayout(false);
-            this.EffectTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.EffectsPresetsDataGridView)).EndInit();
-            this.AboutTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ProductPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VolumeTrackBar)).EndInit();
+            this.IncomingGroupBox.ResumeLayout(false);
+            this.IncomingGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -902,34 +1573,17 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox TextTextBox;
-        private System.Windows.Forms.Button SpeakButton;
-        private System.Windows.Forms.TextBox VoiceDetailsTextBox;
-        private System.Windows.Forms.TabControl VoicesTabControl;
-        private System.Windows.Forms.TabPage VoicesTabPage;
         private System.Windows.Forms.DataGridView VoicesDataGridView;
         private System.Windows.Forms.TabControl MessagesTabControl;
-        private System.Windows.Forms.TabPage MessagesTabPage;
 		private System.Windows.Forms.DataGridView MessagesDataGridView;
 		private System.Windows.Forms.Label RateLabel;
 		private System.Windows.Forms.Label PitchLabel;
         private System.Windows.Forms.Label VolumeLabel;
-        private System.Windows.Forms.Button StopButton;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DestinationAddressColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SequenceNumberColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn WowDataLength;
-		private System.Windows.Forms.DataGridViewTextBoxColumn VoiceXmlColumn;
-		private System.Windows.Forms.NumericUpDown PitchNumericUpDown;
-		private System.Windows.Forms.NumericUpDown VolumeNumericUpDown;
-		private System.Windows.Forms.NumericUpDown RateNumericUpDown;
         private System.Windows.Forms.TabControl TextXmlTabControl;
-        private System.Windows.Forms.TabPage TextTabPage;
         private System.Windows.Forms.StatusStrip MainStatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel ErrorToolStripStatusLabel;
         private System.Windows.Forms.TabPage SapiTabPage;
         private System.Windows.Forms.TextBox SapiTextBox;
-		private System.Windows.Forms.TabControl VoiceDetailsTabControl;
-        private System.Windows.Forms.TabPage VoiceDetailsTabPage;
         private System.Windows.Forms.ContextMenuStrip MessagesContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem MessagesClearToolStripMenuItem;
         private System.Windows.Forms.TabPage EffectsPresetsEditorTabPage;
@@ -942,10 +1596,6 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CultureColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GenderColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel MonitoringStateStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel PacketsStateStatusLabel;
         private System.Windows.Forms.ComboBox AudioBitsPerSampleComboBox;
@@ -953,16 +1603,58 @@
         private System.Windows.Forms.ComboBox AudioSampleRateComboBox;
         private System.Windows.Forms.Label AudioSampleRateLabel;
         private System.Windows.Forms.ComboBox AudioChannelsComboBox;
-		private System.Windows.Forms.Label AudioChannelsLabel;
-        private System.Windows.Forms.TabPage PlayListTabPage;
+        private System.Windows.Forms.Label AudioChannelsLabel;
         private System.Windows.Forms.DataGridView PlayListDataGridView;
+        private System.Windows.Forms.Button RecognizeButton;
+        private System.Windows.Forms.ImageList TabsImageList;
+        private System.Windows.Forms.TabPage VoicesTabPanel;
+        private System.Windows.Forms.TabPage MessagesTabPage;
+        private System.Windows.Forms.TabPage PlayListTabPage;
+        private System.Windows.Forms.Label MainHelpLabel;
+        private System.Windows.Forms.ComboBox RateMinComboBox;
+        private System.Windows.Forms.PictureBox ProductPictureBox;
+        private System.Windows.Forms.TabPage AboutTabPage;
+        private System.Windows.Forms.Label MonitorClipboardLabel;
+        private System.Windows.Forms.TabPage SandBoxTabPage;
+        private System.Windows.Forms.TextBox SandBoxTextBox;
+        private System.Windows.Forms.TextBox PitchTextBox;
+        private System.Windows.Forms.ComboBox PitchMinComboBox;
+        private System.Windows.Forms.TextBox RateTextBox;
+        private System.Windows.Forms.TrackBar VolumeTrackBar;
+        private System.Windows.Forms.Button StopButton;
+        private System.Windows.Forms.Button SpeakButton;
+        private System.Windows.Forms.TextBox VolumeTextBox;
+        private System.Windows.Forms.RichTextBox AboutRichTextBox;
+        private System.Windows.Forms.ComboBox RateMaxComboBox;
+        private System.Windows.Forms.ComboBox PitchMaxComboBox;
+        private System.Windows.Forms.GroupBox IncomingGroupBox;
+        private System.Windows.Forms.TextBox IncomingVolumeTextBox;
+        private System.Windows.Forms.TextBox IncomingEffectTextBox;
+        private System.Windows.Forms.TextBox IncomingPitchTextBox;
+        private System.Windows.Forms.TextBox IncomingRateTextBox;
+        private System.Windows.Forms.TextBox IncomingGenderTextBox;
+        private System.Windows.Forms.TextBox IncomingNameTextBox;
+        private System.Windows.Forms.TextBox IncomingCommandTextBox;
+        private System.Windows.Forms.TextBox IncomingTextTextBox;
+        private System.Windows.Forms.ComboBox GenderComboBox;
+        private System.Windows.Forms.Label DefaultGenderLabel;
+        private System.Windows.Forms.ComboBox MonitorClipboardComboBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DestinationAddressColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SequenceNumberColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WowDataLength;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VoiceXmlColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListStatusColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListDurationColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListTextColumn;
-        private System.Windows.Forms.Button RecognizeButton;
-		private System.Windows.Forms.ImageList TabsImageList;
-        private System.Windows.Forms.TabPage AboutTabPage;
-        private Controls.AboutControl aboutControl1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaleColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FemaleColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NeutralColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GenderColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LanguageColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CultureColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AgeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DescriptionColumn;
 
 
 

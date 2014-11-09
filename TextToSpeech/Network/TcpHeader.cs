@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 
-namespace JocysCom.WoW.TextToSpeech.Network
+namespace JocysCom.TextToSpeech.Monitor.Network
 {
     public class TcpHeader
     {

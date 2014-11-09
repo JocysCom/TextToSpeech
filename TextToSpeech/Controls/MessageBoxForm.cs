@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace JocysCom.WoW.TextToSpeech.Controls
+namespace JocysCom.TextToSpeech.Monitor.Controls
 {
 	public partial class MessageBoxForm : Form
 	{

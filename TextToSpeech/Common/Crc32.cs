@@ -1,6 +1,6 @@
 using System;
 
-namespace JocysCom.WoW.TextToSpeech
+namespace JocysCom.TextToSpeech.Monitor
 {
 
     //Name: System.IO.Compression.Crc32Helper 

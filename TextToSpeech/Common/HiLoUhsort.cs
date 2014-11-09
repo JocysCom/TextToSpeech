@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace JocysCom.WoW.TextToSpeech
+namespace JocysCom.TextToSpeech.Monitor
 {
 	[StructLayout(LayoutKind.Explicit)]
 	public struct HiLoUshort

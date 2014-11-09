@@ -1,0 +1,405 @@
+﻿<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.blizzard.com/wow/ui/  ..\FrameXML\UI.xsd" xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="JocysCom-TextToSpeech-WoW-Addon.lua" />
+	<Frame name="OptionsFrame" inherits="BasicFrameTemplate" parentKey="" parent="UIParent" movable="true" frameStrata="HIGH" enableMouse="true">
+		<Size x="600" y="496" />
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="3" y="-3" />
+			</Anchor>
+		</Anchors>
+		<Backdrop tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString name="MessageFontString" inherits="GameFontHighlightSmall" text="">
+					<Size x="550" y="20" />
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset y="-131" />
+						</Anchor>
+					</Anchors>
+					<Color r="0.5" g="0.5" b="0.5" />
+				</FontString>
+				<FontString name="ReplaceFontString" inherits="GameFontHighlightSmall" text="" justifyH="LEFT">
+					<Size x="467" y="20" />
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset x="117" y="-109" />
+						</Anchor>
+					</Anchors>
+					<Color r="0.5" g="0.5" b="0.5" />
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<CheckButton name="EnabledCheckButton" inherits="UICheckButtonTemplate" text="">
+				<Size x="24" y="24" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="7" y="-25" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						EnabledCheckButton_OnLoad(self);
+					</OnLoad>
+					<OnClick>
+						EnabledCheckButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="AutoCheckButton" inherits="UICheckButtonTemplate" text="">
+				<Size x="24" y="24" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="7" y="-45" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						AutoCheckButton_OnLoad(self);
+					</OnLoad>
+					<OnClick>
+						AutoCheckButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="DndCheckButton" inherits="UICheckButtonTemplate" text="">
+				<Size x="24" y="24" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="7" y="-65" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						DndCheckButton_OnLoad(self);
+					</OnLoad>
+					<OnClick>
+						DndCheckButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="FilterCheckButton" inherits="UICheckButtonTemplate" text="">
+				<Size x="24" y="24" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="7" y="-85" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						FilterCheckButton_OnLoad(self);
+					</OnLoad>
+					<OnClick>
+						FilterCheckButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<Frame name="QuestFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
+				<Size x="593" y="231" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="3" y="-148" />
+					</Anchor>
+					<Anchor point="TOPRIGHT">
+						<Offset x="-4" y="-148" />
+					</Anchor>
+				</Anchors>
+				<Backdrop tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Frames>
+					<ScrollFrame name="QuestScrollFrame" inherits="UIPanelScrollFrameTemplate">
+						<Size x="683" y="91" />
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="5" y="-4" />
+							</Anchor>
+							<Anchor point="BOTTOMRIGHT">
+								<Offset x="-26" y="3" />
+							</Anchor>
+						</Anchors>
+						<Backdrop tile="true">
+							<BackgroundInsets>
+								<AbsInset left="11" right="12" top="12" bottom="11" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="32" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="32" />
+							</EdgeSize>
+						</Backdrop>
+						<Frames>
+							<EditBox name="QuestEditBox" parent="QuestScrollFrame" letters="10000" multiLine="true">
+								<Size>
+									<AbsDimension x="675" y="81" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset x="3" y="-3" />
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT">
+										<Offset x="-3" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										QuestEditBox_OnLoad(self);
+									</OnLoad>
+								</Scripts>
+								<FontString inherits="GameFontHighlightSmall" />
+							</EditBox>
+						</Frames>
+						<Scripts>
+							<OnLoad>
+								QuestScrollFrame_OnLoad(self);
+							</OnLoad>
+						</Scripts>
+					</ScrollFrame>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						QuestFrame_OnLoad(self);
+					</OnLoad>
+				</Scripts>
+			</Frame>
+			<Frame name="DescriptionFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
+				<Size x="593" y="120" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="3" y="-380" />
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset x="-4" y="4" />
+					</Anchor>
+				</Anchors>
+				<Backdrop tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="DescriptionFrameFontString" inherits="GameFontHighlightSmall" parentKey="text" text="FontString2" justifyV="TOP" justifyH="LEFT">
+							<Size x="706" y="74" />
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset x="10" y="-10" />
+								</Anchor>
+								<Anchor point="BOTTOMRIGHT">
+									<Offset x="-10" y="10" />
+								</Anchor>
+							</Anchors>
+							<Color r="0.5" g="0.5" b="0.5" />
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						DescriptionFrame_OnLoad(self);
+					</OnLoad>
+				</Scripts>
+			</Frame>
+			<EditBox name="ReplaceNameEditBox" inherits="InputBoxTemplate">
+				<Size x="100" y="20" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-109" />
+					</Anchor>
+				</Anchors>
+				<FontString inherits="GameFontHighlightSmall" />
+			</EditBox>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				OptionsFrame_OnLoad(self);
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="MiniFrame" parent="UIParent" frameStrata="DIALOG">
+		<Size x="130" y="33" />
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="225" y="-505" />
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer>
+				<Texture name="MiniFrameTexture" parentKey="texture">
+					<Size x="114" y="33" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0" />
+						<Anchor point="BOTTOMRIGHT" />
+					</Anchors>
+					<Color a="0.8" r="0" g="0" b="0" />
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="PlayButtonButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="►">
+				<Size x="31" y="21" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="5" y="-6" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						            PlayButtonButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+				<ButtonText font="Fonts\ARIALN.TTF">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="2" y="-5" />
+						</Anchor>
+					</Anchors>
+					<FontHeight val="12" />
+				</ButtonText>
+			</Button>
+			<Button name="StopButtonButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="■">
+				<Size x="31" y="21" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="37" y="-6" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						            StopButtonButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+				<ButtonText font="Fonts\ARIALN.TTF">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="1" />
+						</Anchor>
+					</Anchors>
+					<FontHeight val="18" />
+				</ButtonText>
+			</Button>
+			<Button name="OptionsButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="TTS...">
+				<Size x="57" y="21" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="69" y="-6" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						            OptionsButton_OnClick();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				MiniFrame_OnLoad(self);
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="ScrollFrame" parent="UIParent" movable="true" resizable="true" frameStrata="DIALOG" enableMouse="true">
+		<Size x="216" y="216" />
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="3" y="-505" />
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="0" right="0" top="0" bottom="0" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer>
+				<Texture name="ScrollFrameTexture" parentKey="texture">
+					<Size x="216" y="216" />
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset />
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset />
+						</Anchor>
+					</Anchors>
+					<Color a="0.8" r="0" g="0" b="0" />
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="ScrollFontString" inherits="GameFontHighlightSmall" parentKey="text" text="Scroll Frame Text">
+					<Size x="205" y="202" />
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset x="8" y="-8" />
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset x="-8" y="8" />
+						</Anchor>
+					</Anchors>
+					<Color r="0.5" g="0.5" b="0.5" />
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="ScrollResizeButton" inherits="ResizeButton" parentKey="resizeButton">
+				<Size x="16" y="16" />
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" x="0" y="0" />
+				</Anchors>
+				<Scripts>
+					<OnMouseDown>
+						ScrollResizeButton_OnMouseDown(self);
+					</OnMouseDown>
+					<OnMouseUp>
+						ScrollResizeButton_OnMouseUp(self);
+					</OnMouseUp>
+				</Scripts>
+				<NormalTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Up" />
+				<PushedTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Down" />
+				<HighlightTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Highlight" />
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				ScrollFrame_OnLoad(self);
+			</OnLoad>
+			<OnMouseDown>
+				ScrollFrame_OnMouseDown(self);
+			</OnMouseDown>
+			<OnMouseUp>
+				ScrollFrame_OnMouseUp(self);
+			</OnMouseUp>
+		</Scripts>
+	</Frame>
+</Ui>

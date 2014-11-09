@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JocysCom.WoW.TextToSpeech.Network
+namespace JocysCom.TextToSpeech.Monitor.Network
 {
     [Flags]
     public enum TcpHeaderFlags : byte

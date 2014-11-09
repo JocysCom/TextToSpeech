@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace JocysCom.WoW.TextToSpeech
+namespace JocysCom.TextToSpeech.Monitor
 {
     static class Program
     {

@@ -1,4 +1,4 @@
-﻿namespace JocysCom.WoW.TextToSpeech.Audio
+﻿namespace JocysCom.TextToSpeech.Monitor.Audio
 {
     public enum JobStatusType
     {

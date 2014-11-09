@@ -1,9 +1,27 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="JocysCom.WoW.TextToSpeech.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="JocysCom.TextToSpeech.Monitor.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="FileTextBoxText" Type="System.String" Scope="User">
+    <Setting Name="RateMinComboBoxText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="PitchMinComboBoxText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">-5</Value>
+    </Setting>
+    <Setting Name="RateMaxComboBoxText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="PitchMaxComboBoxText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="GenderComboBoxText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Male</Value>
+    </Setting>
+    <Setting Name="VoicesData" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MonitorClipboardComboBoxText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Disabled</Value>
     </Setting>
   </Settings>
 </SettingsFile>

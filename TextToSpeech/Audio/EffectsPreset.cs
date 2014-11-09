@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace JocysCom.WoW.TextToSpeech.Audio
+namespace JocysCom.TextToSpeech.Monitor.Audio
 {
     public class EffectsPreset
     {

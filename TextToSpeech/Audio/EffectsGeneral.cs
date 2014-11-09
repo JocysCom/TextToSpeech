@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace JocysCom.WoW.TextToSpeech.Audio
+namespace JocysCom.TextToSpeech.Monitor.Audio
 {
 	public struct EffectsGeneral
 	{

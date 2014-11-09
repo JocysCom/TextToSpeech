@@ -11,9 +11,9 @@ using Buffer = Microsoft.DirectX.DirectSound.SecondaryBuffer;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
-using JocysCom.WoW.TextToSpeech.Audio;
+using JocysCom.TextToSpeech.Monitor.Audio;
 
-namespace JocysCom.WoW.TextToSpeech.Controls
+namespace JocysCom.TextToSpeech.Monitor.Controls
 {
     /// <summary>
     /// Summary description for Sound Effects Control.
@@ -25,17 +25,17 @@ namespace JocysCom.WoW.TextToSpeech.Controls
         {
             // Required for Windows Form Designer support
             InitializeComponent();
-			if (IsDesignMode) return;
-		    CurrentPreset = null;
+            if (IsDesignMode) return;
+            CurrentPreset = null;
             var effects = Enum.GetValues(typeof(EffectType)).Cast<EffectType>().Where(x => x != EffectType.None);
             SetDefaultValues();
             InitializeDevice();
         }
 
-		public bool IsDesignMode
-		{
-			get { return DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime; }
-		}
+        public bool IsDesignMode
+        {
+            get { return DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime; }
+        }
 
         private SecondaryBuffer ApplicationBuffer = null;
         private Device ApplicationDevice = null;
@@ -360,13 +360,13 @@ namespace JocysCom.WoW.TextToSpeech.Controls
 
         void ApplyChorusEffect(ref EffectsChorus parameters)
         {
-            ChorusDelayTrackBar.Value = (int)(parameters.Delay * 10.0F);
-            ChorusDepthTrackBar.Value = (int)parameters.Depth;
-            ChorusFeedbackTrackBar.Value = (int)parameters.Feedback;
-            ChorusFrequencyTrackBar.Value = (int)(parameters.Frequency * 10.0F);
-            ResetTrackBar(ChorusWetDryMixTrackBar, ChorusEffect.WetDryMixMin, ChorusEffect.WetDryMixMax, 50F);
-            ChorusPhase90RadioButton.Checked = true;
-            ChorusWaveSinRadioButton.Checked = true;
+            parameters.Delay = (float)ChorusDelayTrackBar.Value / 10.0F;
+            parameters.Depth = ChorusDepthTrackBar.Value;
+            parameters.Feedback = ChorusFeedbackTrackBar.Value;
+            parameters.Frequency = ChorusFrequencyTrackBar.Value / 10.0F;
+            parameters.WetDryMix = ChorusWetDryMixTrackBar.Value;
+            parameters.Phase = ChorusPhases.FirstOrDefault(x => x.Key.Checked).Value;
+            parameters.Waveform = ChorusWaveforms.FirstOrDefault(x => x.Key.Checked).Value;
         }
 
         void LoadChorusEffect(EffectsChorus parameters)

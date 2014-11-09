@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace JocysCom.WoW.TextToSpeech.Audio
+namespace JocysCom.TextToSpeech.Monitor.Audio
 {
     [Serializable, StructLayout(LayoutKind.Sequential)]
     public class KeyValue : KeyValue<string>

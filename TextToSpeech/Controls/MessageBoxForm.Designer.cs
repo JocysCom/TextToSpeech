@@ -1,4 +1,4 @@
-﻿namespace JocysCom.WoW.TextToSpeech.Controls
+﻿namespace JocysCom.TextToSpeech.Monitor.Controls
 {
 	partial class MessageBoxForm
 	{
