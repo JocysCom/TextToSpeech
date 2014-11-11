@@ -561,7 +561,7 @@
             this.SandBoxTextBox.Size = new System.Drawing.Size(606, 210);
             this.SandBoxTextBox.TabIndex = 0;
             this.SandBoxTextBox.Text = "<voice name=\"Marshal McBride\" gender=\"Male\" pitch=\"-5\" rate=\"1\" effect=\"Humanoid\"" +
-    " volume=\"100\" command=\"Play\"><part>Test text to speech.</part></voice>";
+    " volume=\"100\" command=\"Play\"><part>Test text to speech. [comment]Test text to speech.[/comment]</part></voice>";
             this.SandBoxTextBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
             this.SandBoxTextBox.MouseHover += new System.EventHandler(this.MouseHover_SandBox);
             // 

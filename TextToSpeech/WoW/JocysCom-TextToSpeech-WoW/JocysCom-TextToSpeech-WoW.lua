@@ -2,10 +2,9 @@
 
 local lastQuest = nil;
 local DebugMode = 0; -- 1 = debug mode enabled, 0 = debug mode disabled
-local OptionsFrameIsVisible = 0;
 local debugLine = 0;
 
-function LogMessage(s)
+local function LogMessage(s)
 	if DebugMode == 1 then
 		debugLine = debugLine + 1;
 		SendChatMessage("" .. debugLine .. ": " .. s, "WHISPER", "Common", unitName);	
@@ -15,8 +14,8 @@ end
 
 -- TEXT
 
-unitName = UnitName("player");
-messageStop = "<voice command=\"stop\" />";
+local unitName = UnitName("player");
+local messageStop = "<voice command=\"stop\" />";
 
 -- Descrioption and Help.
 local Translations_EN = {
@@ -30,10 +29,10 @@ local Translations_EN = {
 	ReplaceNameEditBox_Help = "If text-to-speech voice pronounces your character |cffffffffname|r incorrectly, you can change |cffffffffit|r in this field from |cff00ff00" .. unitName .. "|r to something else.",
 };
 
-EnabledCheckButton_Label = "Enable addon.";
-FilterCheckButton_Label = "Hide addon's whisper messages in chat window.";
-DndCheckButton_Label = "Show |cffffffff<Busy>|r over my character for other players, when NPC dialogue window is open.";
-AutoCheckButton_Label = "Auto start speech, when dialog window is open.";
+local EnabledCheckButton_Label = "Enable addon.";
+local FilterCheckButton_Label = "Hide addon's whisper messages in chat window.";
+local DndCheckButton_Label = "Show |cffffffff<Busy>|r over my character for other players, when NPC dialogue window is open.";
+local AutoCheckButton_Label = "Auto start speech, when dialog window is open.";
 
 local L = Translations_EN;
 local function ShowHelp(control)
@@ -113,11 +112,9 @@ local function UpdateMiniAndScrollFrame()
 		-- Move options frame.
 		OptionsFrame:ClearAllPoints();
 		OptionsFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT", 4, 0);
-		if OptionsFrameIsVisible == 1 then
+		if OptionsFrame:IsShown() then
 			UnlockFrames();
-			OptionsFrame:Show();
 		else
-			OptionsFrame:Hide();
 			LockFrames();
 		end
 	end
@@ -164,28 +161,27 @@ local function EditBox_OnEscapePressed()
 	CloseQuest();
 	CloseGossip();
 	sendChatMessageStop();
-	OptionsFrameIsVisible = 0;
 	UpdateMiniAndScrollFrame();
 end
 
 -- FUNCTION MESSAGE STOP
 local function sendChatMessageStop()
-	if framesClosed == 1 then
+	-- if framesClosed == 1 then
 		-- Send messageStop
 		SendChatMessage(messageStop, "WHISPER", "Common", unitName);
-		QuestEditBox:SetText(messageStop);
-		QuestEditBox:HighlightText();
-	end
-	framesClosed = 0;
+		QuestEditBox:SetText("|cff808080" .. messageStop .. "|r");
+		-- QuestEditBox:HighlightText();
+	--end
+	-- framesClosed = 0;
 end
 
 -- Close Options frame.
-function OptionsFrame_CloseButton_OnClick(self)
-	OptionsFrameIsVisible = 0;
+local function OptionsFrame_CloseButton_OnClick(self)
+	OptionsFrame:Hide();
 	UpdateMiniAndScrollFrame();
 end
 
-function OptionsFrame_OnLoad(self)
+function JocysCom_OptionsFrame_OnLoad(self)
 	-- self:Hide();
 	self:SetPoint("TOPLEFT", 356, -116);
 	self:SetFrameStrata("HIGH");
@@ -199,7 +195,7 @@ function OptionsFrame_OnLoad(self)
 	self.TitleText:SetPoint("TOP", 0, -6);
 	self.TitleText:SetText(L.OptionsFrameTitle);
 	-- Attach events.
-	self:SetScript("OnEvent", OptionsFrame_OnEvent);
+	self:SetScript("OnEvent", JocysCom_OptionsFrame_OnEvent);
 	self:RegisterEvent("ADDON_LOADED");
 	self:RegisterEvent("QUEST_GREETING");
 	self:RegisterEvent("GOSSIP_SHOW");
@@ -224,7 +220,7 @@ function OptionsFrame_OnLoad(self)
 	LogMessage("Registered");		
 end
 
-function SetDnd(enable)
+function JocysCom_SetDnd(enable)
 	local addonEnabled = (EnabledCheckButton:GetChecked() == true);
 	local dndEnabled = (DndCheckButton:GetChecked() == true);
 	local isShown = GossipFrame:IsShown() or QuestFrame:IsShown();
@@ -238,7 +234,7 @@ function SetDnd(enable)
 			enable = 0;
 		end
 	end
-	--LogMessage("SetDnd: enable=" .. enable .. ", force=" .. force);
+	--LogMessage("JocysCom_SetDnd: enable=" .. enable .. ", force=" .. force);
 	-- DND control is allowed then...
 	if force == 1 or (addonEnabled and dndEnabled) then
 		local enabled = (UnitIsDND("player") == 1);
@@ -252,13 +248,13 @@ function SetDnd(enable)
 	end
 end
 
-function OptionsFrame_OnEvent(self, event)
+function JocysCom_OptionsFrame_OnEvent(self, event)
 	if event == "ADDON_LOADED" then
-		LoadAllSettings();
+		JocysCom_LoadAllSettings();
 		UpdateMiniAndScrollFrame();
 	elseif event == "QUEST_GREETING" or event == "GOSSIP_SHOW" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" then
 		UpdateMiniAndScrollFrame();
-		SetDnd(1);
+		JocysCom_SetDnd(1);
 		if event == "QUEST_GREETING" then
 			lastQuest = GetGreetingText();
 		elseif event == "GOSSIP_SHOW" then
@@ -270,40 +266,50 @@ function OptionsFrame_OnEvent(self, event)
 		elseif event == "QUEST_COMPLETE" then
 			lastQuest = GetRewardText();
 		end
-		SpeakMessage("Auto", lastQuest);
+		JocysCom_SpeakMessage("Auto", lastQuest);
 	elseif event == "QUEST_ACCEPTED" or event == "QUEST_FINISHED" or event == "GOSSIP_CLOSED" then
 		UpdateMiniAndScrollFrame();		
-		SetDnd(0);
+		JocysCom_SetDnd(0);
 		if EnabledCheckButton:GetChecked() == true then
+			
+			local isShown = GossipFrame:IsShown() or QuestFrame:IsShown();
+			if isShown == false then
 			sendChatMessageStop();
+			end
+
+
 		end
 	elseif event == "PLAYER_LOGOUT" then
-		SaveAllSettings();
+		JocysCom_SaveAllSettings();
 	end
 end
 
-function SpeakMessage(reason, questText)
+function JocysCom_SpeakMessage(reason, questText)
 	if questText == nil then
 		LogMessage("No Quest text");
 		return;
 	end
 	-- Get quest message.
 	local message = questText;
-	-- Get target name (Hero call board have wrong target!).
-	local targetName = GetUnitName("target");
-	if targetName == nil then targetName = "nil" end;
-	-- Get target type (Beast, Dragonkin, Demon, Elemental, Giant, Undead, Humanoid, Critter, Mechanical, Not specified, Totem, Non-combat Pet, Gas Cloud).							
-	local targetType = UnitCreatureType("target");
-	if targetType == nil then targetType = "Default" end;
-	-- Get target gender.
-	local targetSex = UnitSex("target");
-	local targetGender = "Neutral";
-	if targetSex == 3 then
-		targetGender = "Female";
-	elseif targetSex == 2 then
-		targetGender = "Male";
+	-- Get NPC name (Hero call board have wrong target!).
+	local NPCName = GetUnitName("npc");
+	if NPCName == nil then
+	NPCName = "nil"
+	else
+	NPCName = string.gsub(NPCName, "\"", "");
 	end
-	LogMessage(targetName .. ", " .. targetType .. ", " .. targetGender);
+	-- Get NPC type (Beast, Dragonkin, Demon, Elemental, Giant, Undead, Humanoid, Critter, Mechanical, Not specified, Totem, Non-combat Pet, Gas Cloud).							
+	local NPCType = UnitCreatureType("npc");
+	if NPCType == nil then NPCType = "Default" end;
+	-- Get NPC gender.
+	local NPCSex = UnitSex("npc");
+	local NPCGender = "Neutral";
+	if NPCSex == 3 then
+		NPCGender = "Female";
+	elseif NPCSex == 2 then
+		NPCGender = "Male";
+	end
+	LogMessage(NPCName .. ", " .. NPCType .. ", " .. NPCGender);
 	
 	-- Replace name.
 	-- LogMessage("Speak 1: Replace name.");
@@ -316,19 +322,22 @@ function SpeakMessage(reason, questText)
 	local pitchComment = "0";
 	message = string.gsub(message, "\r", " ");
 	message = string.gsub(message, "\n", " ");
+	message = string.gsub(message, "%?!%?", "?!");
+	message = string.gsub(message, "[%.]+", ".");
+	message = string.gsub(message, ">.", ".>");
 	message = string.gsub(message, "[%.]+", ". ");
-	message = string.gsub(message, "<", " &lt;pitch absmiddle=\"" .. pitchComment .. "\"&gt;");
-	message = string.gsub(message, ">", "&lt;/pitch&gt; ");
+	message = string.gsub(message, "<", " [comment] ");
+	message = string.gsub(message, ">", " [/comment] ");
 	message = string.gsub(message, "[ ]+", " ");
 	-- Format and send whisper message.
 	-- LogMessage("Speak 2, " .. reason .. ", message=" .. string.len(message));
-	if (reason == "Scroll") or(reason == "Auto" and AutoCheckButton:GetChecked() == true) then
-		framesClosed = 1;
+	if (reason == "Scroll") or (reason == "Auto" and AutoCheckButton:GetChecked() == true) then
+		--framesClosed = 1;
 		local size = 130;
 		local startIndex = 1;
 		local endIndex = 1;
 		local part = "";
-		local chatMessageSP = "<voice name=\"" .. targetName .. "\" gender=\"" .. targetGender .. "\" effect=\"" .. targetType .. "\" command=\"play\"><part>";
+		local chatMessageSP = "<voice name=\"" .. NPCName .. "\" gender=\"" .. NPCGender .. "\" effect=\"" .. NPCType .. "\" command=\"play\"><part>";
 		local chatMessageSA = "<voice command=\"add\"><part>";
 		local chatMessageE = "</part></voice>";
 		local chatMessage;
@@ -355,28 +364,30 @@ function SpeakMessage(reason, questText)
 			endIndex = index + 1;
 		end
 		-- FILL EDITBOXES  .. "<" .. event .. " />" ..
-		local outputEditBox = chatMessageSP .. "\n|cffffffff" .. message .. "|r\n" .. chatMessageE;
+		message = string.gsub(message, "%[comment]", "|cff808080[comment]|r|cfff7e593");
+		message = string.gsub(message, "%[/comment]", "|r|cff808080[/comment]|r");
+		local outputEditBox = "\n|cff808080" .. chatMessageSP .. "|r\n" .. message .. "\n|cff808080" .. chatMessageE .. "|r";
 		QuestEditBox:SetText(outputEditBox);
 		-- QuestEditBox:HighlightText();
 	end
 end
 
-function OptionsButton_OnClick(self)
+function JocysCom_OptionsButton_OnClick(self)
 	if OptionsFrame:IsShown() then
-		OptionsFrameIsVisible = 0;
+		OptionsFrame:Hide();
 	else
-		OptionsFrameIsVisible = 1;
+		OptionsFrame:Show();
 	end
 	UpdateMiniAndScrollFrame();	
 end
 
-function EnabledCheckButton_OnLoad(self)
+function JocysCom_EnabledCheckButton_OnLoad(self)
 	self.text:SetFontObject(GameFontHighlightSmall);
 	self.text:SetTextColor(0.5, 0.5, 0.5, 1.0);
 	self.text:SetText(EnabledCheckButton_Label);
 end
 
-function EnabledCheckButton_OnClick(self)
+function JocysCom_EnabledCheckButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOn");
 	-- If addon was disabled.
 	if EnabledCheckButton:GetChecked() == true then
@@ -384,111 +395,109 @@ function EnabledCheckButton_OnClick(self)
 		sendChatMessageStop();
 	end
 	UpdateMiniAndScrollFrame();
-	SetDnd(-1);
+	JocysCom_SetDnd(-1);
 end
 
-function AutoCheckButton_OnLoad(self)
+function JocysCom_AutoCheckButton_OnLoad(self)
 	self.text:SetFontObject(GameFontHighlightSmall);
 	self.text:SetTextColor(0.5, 0.5, 0.5, 1.0);
 	self.text:SetText(AutoCheckButton_Label);
 end
 
-function AutoCheckButton_OnClick(self)
+function JocysCom_AutoCheckButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOn");
 	if self:GetChecked() == true then
 	end
 end
 
-function DndCheckButton_OnLoad(self)
+function JocysCom_DndCheckButton_OnLoad(self)
 	self.text:SetFontObject(GameFontHighlightSmall);
 	self.text:SetTextColor(0.5, 0.5, 0.5, 1.0);
 	self.text:SetText(DndCheckButton_Label);
 end
 
-function DndCheckButton_OnClick(self)
+function JocysCom_DndCheckButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOn");
-	SetDnd(-1);
+	JocysCom_SetDnd(-1);
 end
 
-function FilterCheckButton_OnLoad(self)
+function JocysCom_FilterCheckButton_OnLoad(self)
 	self.text:SetFontObject(GameFontHighlightSmall);
 	self.text:SetTextColor(0.5, 0.5, 0.5, 1.0);
 	self.text:SetText(FilterCheckButton_Label);
 end
 
-function FilterCheckButton_OnClick(self)
+function JocysCom_FilterCheckButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOn");
 end
 
-function MiniFrame_OnLoad(self)
+function JocysCom_MiniFrame_OnLoad(self)
 	self.texture:SetTexture(0, 0, 0, 0);
 end
 
-function ScrollFrame_OnLoad(self)
+function JocysCom_ScrollFrame_OnLoad(self)
 	self.text:SetText(L.FrameScroll);
-	self:SetScript("OnMouseWheel", ScrollFrame_OnMouseWheel);
+	self:SetScript("OnMouseWheel", JocysCom_ScrollFrame_OnMouseWheel);
 end
 
-function ScrollFrame_OnMouseDown(self)
+function JocysCom_ScrollFrame_OnMouseDown(self)
 	self:StartMoving();
 end
 
-function ScrollFrame_OnMouseUp(self)
+function JocysCom_ScrollFrame_OnMouseUp(self)
 	self:StopMovingOrSizing();
 end
 
-function ScrollFrame_OnMouseWheel(self, delta)
+function JocysCom_ScrollFrame_OnMouseWheel(self, delta)
 	if EnabledCheckButton:GetChecked() == true then
 		-- Send Message
 		if delta == 1 then
-			SpeakMessage("Scroll", lastQuest);
+			JocysCom_SpeakMessage("Scroll", lastQuest);
 		else
 			sendChatMessageStop();
 		end
 	end
 end
 
-function PlayButtonButton_OnClick(self)
+function JocysCom_PlayButtonButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOn");
-	SpeakMessage("Scroll", lastQuest);
+	JocysCom_SpeakMessage("Scroll", lastQuest);
 end
 
-function StopButtonButton_OnClick(self)
+function JocysCom_StopButtonButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOff");
 	sendChatMessageStop();
 end
 
-function ScrollResizeButton_OnMouseDown(self)
+function JocysCom_ScrollResizeButton_OnMouseDown(self)
 	self:GetParent():StartSizing("BOTTOMRIGHT");
 	self:GetParent():SetUserPlaced(true);
 end
 
-function ScrollResizeButton_OnMouseUp(self)
+function JocysCom_ScrollResizeButton_OnMouseUp(self)
 	self:GetParent():StopMovingOrSizing();
 end
 
-function QuestFrame_OnLoad(self)
+function JocysCom_QuestFrame_OnLoad(self)
 	self.Bg:SetTexture(0, 0, 0, 1.0);
 end
 
-function QuestScrollFrame_OnLoad(self)
+function JocysCom_QuestScrollFrame_OnLoad(self)
 	self:SetScrollChild(QuestEditBox);
-	QuestEditBox.texture:SetTexture(0, 0, 0, 0.0);
 end
 
-function QuestEditBox_OnLoad(self)
+function JocysCom_QuestEditBox_OnLoad(self)
 	self:SetTextInsets(5, 5, 5, 5);
-	self:SetTextColor(0.5, 0.5, 0.5, 1.0);
 	self.texture:SetTexture(0, 0, 0, 0.0);
 end
 
-function DescriptionFrame_OnLoad(self)
+function JocysCom_DescriptionFrame_OnLoad(self)
 	self.text:SetText(L.Description);
 end
 
 -- FUNCTION SAVE VALUES (ON OPTIONS CLOSE AND LOGOUT)
 
-function SaveAllSettings()
+function JocysCom_SaveAllSettings()
 	-- Save check buttons.
 	EnabledCheckButtonValue = EnabledCheckButton:GetChecked();
 	AutoCheckButtonValue = AutoCheckButton:GetChecked();
@@ -499,7 +508,7 @@ function SaveAllSettings()
 	LogMessage("Settings Saved");
 end
 
-function LoadAllSettings()
+function JocysCom_LoadAllSettings()
 
 	-- Set SetJustifyH
 	ReplaceNameEditBox:SetJustifyH("CENTER");

@@ -16,8 +16,8 @@ GOTO:EOF
 set sgt=%ProgramFiles%\Microsoft SDKs\Windows\v7.1\Bin\signtool.exe
 if not exist "%sgt%" set sgt=%ProgramFiles(x86)%\Microsoft SDKs\Windows\v7.1A\Bin\signtool.exe
 set pfx=D:\_Backup\Configuration\SSL\Standard\Jocys.com.CodeSign.pfx
-set d=Jocys.com WoW Text To Speech Monitor
-set du=http://www.jocys.com/projects/WowTextToSpeech
+set d=Jocys.com Text To Speech Monitor
+set du=http://www.jocys.com/projects/TextToSpeech
 set vsg=http://timestamp.verisign.com/scripts/timestamp.dll
 if not exist "%sgt%" CALL:Error "%sgt%"
 if not exist "%~1"   CALL:Error "%~1"

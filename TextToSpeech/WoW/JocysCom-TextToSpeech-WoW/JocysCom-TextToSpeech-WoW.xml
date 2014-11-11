@@ -50,10 +50,10 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						EnabledCheckButton_OnLoad(self);
+						JocysCom_EnabledCheckButton_OnLoad(self);
 					</OnLoad>
 					<OnClick>
-						EnabledCheckButton_OnClick(self);
+						JocysCom_EnabledCheckButton_OnClick(self);
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -66,10 +66,10 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						AutoCheckButton_OnLoad(self);
+						JocysCom_AutoCheckButton_OnLoad(self);
 					</OnLoad>
 					<OnClick>
-						AutoCheckButton_OnClick(self);
+						JocysCom_AutoCheckButton_OnClick(self);
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -82,10 +82,10 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						DndCheckButton_OnLoad(self);
+						JocysCom_DndCheckButton_OnLoad(self);
 					</OnLoad>
 					<OnClick>
-						DndCheckButton_OnClick(self);
+						JocysCom_DndCheckButton_OnClick(self);
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -98,10 +98,10 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						FilterCheckButton_OnLoad(self);
+						JocysCom_FilterCheckButton_OnLoad(self);
 					</OnLoad>
 					<OnClick>
-						FilterCheckButton_OnClick(self);
+						JocysCom_FilterCheckButton_OnClick(self);
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -151,7 +151,7 @@
 						<Frames>
 							<EditBox name="QuestEditBox" parent="QuestScrollFrame" letters="10000" multiLine="true">
 								<Size>
-									<AbsDimension x="675" y="81" />
+									<AbsDimension x="560" y="81" />
 								</Size>
 								<Anchors>
 									<Anchor point="TOPLEFT">
@@ -163,7 +163,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										QuestEditBox_OnLoad(self);
+										JocysCom_QuestEditBox_OnLoad(self);
 									</OnLoad>
 								</Scripts>
 								<FontString inherits="GameFontHighlightSmall" />
@@ -171,14 +171,14 @@
 						</Frames>
 						<Scripts>
 							<OnLoad>
-								QuestScrollFrame_OnLoad(self);
+								JocysCom_QuestScrollFrame_OnLoad(self);
 							</OnLoad>
 						</Scripts>
 					</ScrollFrame>
 				</Frames>
 				<Scripts>
 					<OnLoad>
-						QuestFrame_OnLoad(self);
+						JocysCom_QuestFrame_OnLoad(self);
 					</OnLoad>
 				</Scripts>
 			</Frame>
@@ -221,7 +221,7 @@
 				</Layers>
 				<Scripts>
 					<OnLoad>
-						DescriptionFrame_OnLoad(self);
+						JocysCom_DescriptionFrame_OnLoad(self);
 					</OnLoad>
 				</Scripts>
 			</Frame>
@@ -237,7 +237,7 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				OptionsFrame_OnLoad(self);
+				JocysCom_OptionsFrame_OnLoad(self);
 			</OnLoad>
 		</Scripts>
 	</Frame>
@@ -270,7 +270,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						            PlayButtonButton_OnClick(self);
+						JocysCom_PlayButtonButton_OnClick(self);
 					</OnClick>
 				</Scripts>
 				<ButtonText font="Fonts\ARIALN.TTF">
@@ -291,7 +291,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						            StopButtonButton_OnClick(self);
+						JocysCom_StopButtonButton_OnClick(self);
 					</OnClick>
 				</Scripts>
 				<ButtonText font="Fonts\ARIALN.TTF">
@@ -312,14 +312,14 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						            OptionsButton_OnClick();
+						JocysCom_OptionsButton_OnClick();
 					</OnClick>
 				</Scripts>
 			</Button>
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				MiniFrame_OnLoad(self);
+				JocysCom_MiniFrame_OnLoad(self);
 			</OnLoad>
 		</Scripts>
 	</Frame>
@@ -379,10 +379,10 @@
 				</Anchors>
 				<Scripts>
 					<OnMouseDown>
-						ScrollResizeButton_OnMouseDown(self);
+						JocysCom_ScrollResizeButton_OnMouseDown(self);
 					</OnMouseDown>
 					<OnMouseUp>
-						ScrollResizeButton_OnMouseUp(self);
+						JocysCom_ScrollResizeButton_OnMouseUp(self);
 					</OnMouseUp>
 				</Scripts>
 				<NormalTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Up" />
@@ -392,13 +392,13 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				ScrollFrame_OnLoad(self);
+				JocysCom_ScrollFrame_OnLoad(self);
 			</OnLoad>
 			<OnMouseDown>
-				ScrollFrame_OnMouseDown(self);
+				JocysCom_ScrollFrame_OnMouseDown(self);
 			</OnMouseDown>
 			<OnMouseUp>
-				ScrollFrame_OnMouseUp(self);
+				JocysCom_ScrollFrame_OnMouseUp(self);
 			</OnMouseUp>
 		</Scripts>
 	</Frame>

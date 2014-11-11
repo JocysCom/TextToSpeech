@@ -384,6 +384,7 @@ namespace JocysCom.TextToSpeech.Monitor
         string _Gender;
         VoiceGender gender;
         int _Pitch;
+        int _PitchComment;
         int _Rate;
         int _Volume;
         string buffer = "";
@@ -425,6 +426,9 @@ namespace JocysCom.TextToSpeech.Monitor
             if (_Pitch > 10) _Pitch = 10;
             IncomingPitchTextBox.Text = pitchIsValid ? "pitch=\"" + _Pitch + "\"" : "";
             PitchTextBox.Text = pitchIsValid ? PitchTextBox.Text = "" : _Pitch.ToString();
+
+            // Set PitchComment.
+            _PitchComment = _Pitch >= 0 ? -8 : 8;
 
             // Set rate.
             var rateIsValid = int.TryParse(v.rate, out _Rate);
@@ -528,6 +532,11 @@ namespace JocysCom.TextToSpeech.Monitor
             w.WriteAttributeString("absmiddle", pitch.ToString());
             w.WriteStartElement("rate");
             w.WriteAttributeString("absspeed", rate.ToString());
+
+            //// Replace [comment] tags to SAPI.
+            //text = text.Replace("[comment]", "<pitch absmiddle=\"" + _PitchComment.ToString() + "\">").ToString();
+            //text = text.Replace("[/comment]", "</pitch>").ToString();
+
             w.WriteRaw(text);
             w.WriteEndElement();
             w.WriteEndElement();
@@ -573,6 +582,11 @@ namespace JocysCom.TextToSpeech.Monitor
         {
             var vi = SelectedVoice;
             // Split text into blocks.
+
+            // Replace [comment] tags to SAPI.
+            text = text.Replace("[comment]", "<pitch absmiddle=\"" + _PitchComment.ToString() + "\" />").ToString();
+            text = text.Replace("[/comment]", "<pitch absmiddle=\"" + _Pitch.ToString() + "\" />").ToString().ToString();
+
             return GetXmlText(text, vi, _Volume, _Pitch, _Rate);
         }
 
@@ -847,7 +861,7 @@ namespace JocysCom.TextToSpeech.Monitor
             //Fill SandBox Tab if it is empty
             if (string.IsNullOrEmpty(SandBoxTextBox.Text))
             {
-                SandBoxTextBox.Text = "<voice name=\"Marshal McBride\" gender=\"Male\" pitch=\"-5\" rate=\"1\" effect=\"Humanoid\" volume=\"100\" command=\"Play\"><part>Test text to speech.</part></voice>";
+                SandBoxTextBox.Text = "<voice name=\"Marshal McBride\" gender=\"Male\" pitch=\"-5\" rate=\"1\" effect=\"Humanoid\" volume=\"100\" command=\"Play\"><part>Test text to speech. [comment]Test text to speech.[/comment]</part></voice>";
             }
             //Fill SAPI Tab
             if (string.IsNullOrEmpty(IncomingTextTextBox.Text))
