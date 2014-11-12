@@ -24,16 +24,16 @@
 					<Size x="550" y="20" />
 					<Anchors>
 						<Anchor point="TOP">
-							<Offset y="-131" />
+							<Offset y="-111" />
 						</Anchor>
 					</Anchors>
 					<Color r="0.5" g="0.5" b="0.5" />
 				</FontString>
-				<FontString name="ReplaceFontString" inherits="GameFontHighlightSmall" text="" justifyH="LEFT">
+				<FontString name="ReplaceNameFontString" inherits="GameFontHighlightSmall" text="" justifyH="LEFT">
 					<Size x="467" y="20" />
 					<Anchors>
 						<Anchor point="TOPLEFT">
-							<Offset x="117" y="-109" />
+							<Offset x="117" y="-89" />
 						</Anchor>
 					</Anchors>
 					<Color r="0.5" g="0.5" b="0.5" />
@@ -41,23 +41,15 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<CheckButton name="EnabledCheckButton" inherits="UICheckButtonTemplate" text="">
+			<CheckButton name="AutoCheckButton" inherits="UICheckButtonTemplate" text="">
 				<Size x="24" y="24" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset x="7" y="-25" />
 					</Anchor>
 				</Anchors>
-				<Scripts>
-					<OnLoad>
-						JocysCom_EnabledCheckButton_OnLoad(self);
-					</OnLoad>
-					<OnClick>
-						JocysCom_EnabledCheckButton_OnClick(self);
-					</OnClick>
-				</Scripts>
 			</CheckButton>
-			<CheckButton name="AutoCheckButton" inherits="UICheckButtonTemplate" text="">
+			<CheckButton name="DndCheckButton" inherits="UICheckButtonTemplate" text="">
 				<Size x="24" y="24" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -65,25 +57,6 @@
 					</Anchor>
 				</Anchors>
 				<Scripts>
-					<OnLoad>
-						JocysCom_AutoCheckButton_OnLoad(self);
-					</OnLoad>
-					<OnClick>
-						JocysCom_AutoCheckButton_OnClick(self);
-					</OnClick>
-				</Scripts>
-			</CheckButton>
-			<CheckButton name="DndCheckButton" inherits="UICheckButtonTemplate" text="">
-				<Size x="24" y="24" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="7" y="-65" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						JocysCom_DndCheckButton_OnLoad(self);
-					</OnLoad>
 					<OnClick>
 						JocysCom_DndCheckButton_OnClick(self);
 					</OnClick>
@@ -93,26 +66,23 @@
 				<Size x="24" y="24" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="7" y="-85" />
+						<Offset x="7" y="-65" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
-					<OnLoad>
-						JocysCom_FilterCheckButton_OnLoad(self);
-					</OnLoad>
 					<OnClick>
 						JocysCom_FilterCheckButton_OnClick(self);
 					</OnClick>
 				</Scripts>
 			</CheckButton>
 			<Frame name="QuestFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
-				<Size x="593" y="231" />
+				<Size x="593" y="251" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="3" y="-148" />
+						<Offset x="3" y="-128" />
 					</Anchor>
 					<Anchor point="TOPRIGHT">
-						<Offset x="-4" y="-148" />
+						<Offset x="-4" y="-128" />
 					</Anchor>
 				</Anchors>
 				<Backdrop tile="true">
@@ -161,11 +131,6 @@
 										<Offset x="-3" />
 									</Anchor>
 								</Anchors>
-								<Scripts>
-									<OnLoad>
-										JocysCom_QuestEditBox_OnLoad(self);
-									</OnLoad>
-								</Scripts>
 								<FontString inherits="GameFontHighlightSmall" />
 							</EditBox>
 						</Frames>
@@ -205,7 +170,7 @@
 				</Backdrop>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="DescriptionFrameFontString" inherits="GameFontHighlightSmall" parentKey="text" text="FontString2" justifyV="TOP" justifyH="LEFT">
+						<FontString name="DescriptionFrameFontString" inherits="GameFontHighlightSmall" parentKey="text" text="" justifyV="TOP" justifyH="LEFT">
 							<Size x="706" y="74" />
 							<Anchors>
 								<Anchor point="TOPLEFT">
@@ -219,17 +184,12 @@
 						</FontString>
 					</Layer>
 				</Layers>
-				<Scripts>
-					<OnLoad>
-						JocysCom_DescriptionFrame_OnLoad(self);
-					</OnLoad>
-				</Scripts>
 			</Frame>
 			<EditBox name="ReplaceNameEditBox" inherits="InputBoxTemplate">
 				<Size x="100" y="20" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="15" y="-109" />
+						<Offset x="15" y="-89" />
 					</Anchor>
 				</Anchors>
 				<FontString inherits="GameFontHighlightSmall" />
@@ -317,11 +277,6 @@
 				</Scripts>
 			</Button>
 		</Frames>
-		<Scripts>
-			<OnLoad>
-				JocysCom_MiniFrame_OnLoad(self);
-			</OnLoad>
-		</Scripts>
 	</Frame>
 	<Frame name="ScrollFrame" parent="UIParent" movable="true" resizable="true" frameStrata="DIALOG" enableMouse="true">
 		<Size x="216" y="216" />
