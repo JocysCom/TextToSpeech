@@ -20,7 +20,7 @@ local DoNotDisturb_Message = "Please wait... NPC dialog window is open and text-
 -- Set text.
 local function JocysCom_Text_EN()
 	-- Titles.
-	OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.0.8 ( 2014-11-12 )");
+	OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.1.6 ( 2014-11-13 )");
 	-- Frames.
 	ScrollFrame.text:SetText("When addon is enabled and quest window is open, you can use your mouse wheel over this hidden frame.\n\nSCROLL UP = START SPEECH\n\nSCROLL DOWN = STOP SPEECH");
 	-- Check buttons.
@@ -62,11 +62,12 @@ local function LockFrames()
 	ScrollFrame:SetFrameLevel(100);
 end
 
--- Assign frames to GossipFrame or QuestFrame.
+-- Assign frames to GossipFrame, QuestFrame or ItemTextFrame.
 local function UpdateMiniAndScrollFrame()
 	local frame = nil;
 	if GossipFrame:IsShown() then frame = GossipFrame end
 	if QuestFrame:IsShown() then frame = QuestFrame end
+	if ItemTextFrame:IsShown() then frame = ItemTextFrame end 
 	if frame == nil then
 		-- Hide all frames.
 		MiniFrame:Hide();
@@ -78,7 +79,12 @@ local function UpdateMiniAndScrollFrame()
 		-- Move mini frame.
 		MiniFrame:ClearAllPoints();
 		MiniFrame:SetParent(frame);
+		-- Mini frame position, depending on event.
+		if (frame == ItemTextFrame) then
+		MiniFrame:SetPoint("TOP", 15, 33);
+		else
 		MiniFrame:SetPoint("TOPRIGHT", -4, -26);
+		end
 		MiniFrame:Show();
 		-- Move scroll frame.
 		ScrollFrame:ClearAllPoints();
@@ -101,6 +107,7 @@ end
 local function EditBox_OnEscapePressed()
 	CloseQuest();
 	CloseGossip();
+	CloseItemText();
 	sendChatMessageStop();
 	UpdateMiniAndScrollFrame();
 end
@@ -180,6 +187,9 @@ function JocysCom_OptionsFrame_OnLoad(self)
 	self:RegisterEvent("QUEST_ACCEPTED");
 	self:RegisterEvent("QUEST_FINISHED");
 	self:RegisterEvent("GOSSIP_CLOSED");
+	self:RegisterEvent("ITEM_TEXT_BEGIN"); -- books, scrolls, saved copies of mail messages, plaques, gravestones.
+	self:RegisterEvent("ITEM_TEXT_READY"); 
+	self:RegisterEvent("ITEM_TEXT_CLOSED"); 
 	self:RegisterEvent("PLAYER_LOGOUT");
 	-- Attach OnEscape scripts.
 	QuestEditBox:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
@@ -187,11 +197,13 @@ function JocysCom_OptionsFrame_OnLoad(self)
 	LogMessage("Registered");		
 end
 
+local JocysCom_event;
+
 function JocysCom_OptionsFrame_OnEvent(self, event)
 	if event == "ADDON_LOADED" then
 		JocysCom_LoadAllSettings();
 		UpdateMiniAndScrollFrame();
-	elseif event == "QUEST_GREETING" or event == "GOSSIP_SHOW" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" then
+	elseif event == "QUEST_GREETING" or event == "GOSSIP_SHOW" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "ITEM_TEXT_BEGIN" or event == "ITEM_TEXT_READY" then
 		UpdateMiniAndScrollFrame();
 		if event == "QUEST_GREETING" then
 			lastQuest = GetGreetingText();
@@ -203,11 +215,19 @@ function JocysCom_OptionsFrame_OnEvent(self, event)
 			lastQuest = GetProgressText();
 		elseif event == "QUEST_COMPLETE" then
 			lastQuest = GetRewardText();
+		elseif event == "ITEM_TEXT_BEGIN" then
+			lastQuest = ItemTextGetText();
+		elseif event == "ITEM_TEXT_READY" then
+			lastQuest = ItemTextGetText();
+		end
+		JocysCom_event = event;	
+		if (string.find(lastQuest, "HTML") ~= nil) then
+			lastQuest = string.gsub(lastQuest, "%b<>", "")
 		end
 		JocysCom_SpeakMessage("Auto", lastQuest);
-	elseif event == "QUEST_ACCEPTED" or event == "QUEST_FINISHED" or event == "GOSSIP_CLOSED" then
+	elseif event == "QUEST_ACCEPTED" or event == "QUEST_FINISHED" or event == "GOSSIP_CLOSED" or event == "ITEM_TEXT_CLOSED" then
 		UpdateMiniAndScrollFrame();				
-			local isShown = GossipFrame:IsShown() or QuestFrame:IsShown();
+			local isShown = GossipFrame:IsShown() or QuestFrame:IsShown() or ItemTextFrame:IsShown();
 			if isShown == false then
 			sendChatMessageStop();
 			end
@@ -216,7 +236,7 @@ function JocysCom_OptionsFrame_OnEvent(self, event)
 	end
 end
 
-function JocysCom_SpeakMessage(reason, questText)
+function JocysCom_SpeakMessage(reason, questText, event)
 	if questText == nil then
 		LogMessage("No Quest text");
 		return;
@@ -252,11 +272,18 @@ function JocysCom_SpeakMessage(reason, questText)
 	-- Format text.
 	-- LogMessage("Speak 1: Format text.");
 	local pitchComment = "0";
+	-- Replace.
 	message = string.gsub(message, "\r", " ");
+	message = string.gsub(message, "\n(%u)", ".%1");
 	message = string.gsub(message, "\n", " ");
-	message = string.gsub(message, "%?!%?", "?!");
+	message = string.gsub(message, "[ ]+", " ");
+	message = string.gsub(message, " %.", ".");
 	message = string.gsub(message, "[%.]+", ".");
-	message = string.gsub(message, ">.", ".>");
+	message = string.gsub(message, "%?%.", "? ");
+	message = string.gsub(message, "!%.", "! ");
+	message = string.gsub(message, "%?!%?", "?! ");
+	message = string.gsub(message, "^%.", "");
+	message = string.gsub(message, ">%.", ".>");
 	message = string.gsub(message, "[%.]+", ". ");
 	message = string.gsub(message, "<", " [comment] ");
 	message = string.gsub(message, ">", " [/comment] ");
@@ -270,6 +297,14 @@ function JocysCom_SpeakMessage(reason, questText)
 		local endIndex = 1;
 		local part = "";
 		local chatMessageSP = "<voice name=\"" .. NPCName .. "\" gender=\"" .. NPCGender .. "\" effect=\"" .. NPCType .. "\" command=\"play\"><part>";
+		
+	if (JocysCom_event == "ITEM_TEXT_BEGIN") or (JocysCom_event == "ITEM_TEXT_READY") then
+		chatMessageSP = "<voice command=\"play\"><part>";
+	else
+		if (string.find(NPCName, "Board") ~= nil) then
+			chatMessageSP = "<voice command=\"play\"><part>";
+		end
+	end
 		local chatMessageSA = "<voice command=\"add\"><part>";
 		local chatMessageE = "</part></voice>";
 		local chatMessage;
