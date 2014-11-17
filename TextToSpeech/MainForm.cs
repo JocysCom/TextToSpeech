@@ -1154,7 +1154,7 @@ namespace JocysCom.TextToSpeech.Monitor
             foreach (var voice in voices)
             {
                 var savedVoice = savedVoices.FirstOrDefault(x => x.Name == voice.Name && x.Gender == voice.Gender);
-                if (savedVoices == null) continue;
+                if (savedVoice == null) continue;
                 voice.Female = savedVoice.Female;
                 voice.Male = savedVoice.Male;
                 voice.Neutral = savedVoice.Neutral;
