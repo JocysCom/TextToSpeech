@@ -1,6 +1,6 @@
 ﻿<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.blizzard.com/wow/ui/  ..\FrameXML\UI.xsd" xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="JocysCom-TextToSpeech-WoW-Addon.lua" />
-	<Frame name="OptionsFrame" inherits="BasicFrameTemplate" parentKey="" parent="UIParent" movable="true" frameStrata="HIGH" enableMouse="true">
+	<Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parentKey="" parent="UIParent" movable="true" frameStrata="HIGH" enableMouse="true">
 		<Size x="600" y="496" />
 		<Anchors>
 			<Anchor point="TOPLEFT">
@@ -75,7 +75,7 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<Frame name="QuestFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
+			<Frame name="QuestFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
 				<Size x="593" y="251" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -97,7 +97,7 @@
 					</EdgeSize>
 				</Backdrop>
 				<Frames>
-					<ScrollFrame name="QuestScrollFrame" inherits="UIPanelScrollFrameTemplate">
+					<ScrollFrame name="JocysCom_QuestScrollFrame" inherits="UIPanelScrollFrameTemplate">
 						<Size x="683" y="91" />
 						<Anchors>
 							<Anchor point="TOPLEFT">
@@ -119,7 +119,7 @@
 							</EdgeSize>
 						</Backdrop>
 						<Frames>
-							<EditBox name="QuestEditBox" parent="QuestScrollFrame" letters="10000" multiLine="true">
+							<EditBox name="QuestEditBox" parent="JocysCom_QuestScrollFrame" letters="10000" multiLine="true">
 								<Size>
 									<AbsDimension x="560" y="81" />
 								</Size>
@@ -147,7 +147,7 @@
 					</OnLoad>
 				</Scripts>
 			</Frame>
-			<Frame name="DescriptionFrame" inherits="InsetFrameTemplate" parent="OptionsFrame">
+			<Frame name="DescriptionFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
 				<Size x="593" y="120" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -201,31 +201,22 @@
 			</OnLoad>
 		</Scripts>
 	</Frame>
-	<Frame name="MiniFrame" parent="UIParent" frameStrata="DIALOG">
-		<Size x="130" y="33" />
+	<Frame name="JocysCom_MiniFrame" inherits="InsetFrameTemplate2" parent="UIParent" frameStrata="DIALOG">
+		<Size x="135" y="38" />
 		<Anchors>
 			<Anchor point="TOPLEFT">
 				<Offset x="225" y="-505" />
 			</Anchor>
 		</Anchors>
-		<Layers>
-			<Layer>
-				<Texture name="MiniFrameTexture" parentKey="texture">
-					<Size x="114" y="33" />
-					<Anchors>
-						<Anchor point="TOPLEFT" x="0" y="0" />
-						<Anchor point="BOTTOMRIGHT" />
-					</Anchors>
-					<Color a="0.8" r="0" g="0" b="0" />
-				</Texture>
-			</Layer>
-		</Layers>
+		<Backdrop bgFile="Interface\FrameGeneral\UI-Background-Rock" edgeFile="">
+			<BackgroundInsets left="5" right="5" top="5" bottom="5" />
+		</Backdrop>
 		<Frames>
-			<Button name="PlayButtonButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="►">
+			<Button name="PlayButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="►">
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="5" y="-6" />
+						<Offset x="7" y="-8" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -242,11 +233,11 @@
 					<FontHeight val="12" />
 				</ButtonText>
 			</Button>
-			<Button name="StopButtonButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="■">
+			<Button name="StopButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="■">
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="37" y="-6" />
+						<Offset x="39" y="-8" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -263,11 +254,11 @@
 					<FontHeight val="18" />
 				</ButtonText>
 			</Button>
-			<Button name="OptionsButton" inherits="UIPanelButtonTemplate" parent="MiniFrame" text="TTS...">
+			<Button name="OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="TTS...">
 				<Size x="57" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="69" y="-6" />
+						<Offset x="71" y="-8" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -278,7 +269,7 @@
 			</Button>
 		</Frames>
 	</Frame>
-	<Frame name="ScrollFrame" parent="UIParent" movable="true" resizable="true" frameStrata="DIALOG" enableMouse="true">
+	<Frame name="JocysCom_ScrollFrame" parent="UIParent" movable="true" resizable="true" frameStrata="DIALOG" enableMouse="true">
 		<Size x="216" y="216" />
 		<Anchors>
 			<Anchor point="TOPLEFT">
@@ -312,7 +303,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				<FontString name="ScrollFontString" inherits="GameFontHighlightSmall" parentKey="text" text="Scroll Frame Text">
+				<FontString name="ScrollFontString" inherits="GameFontHighlightSmall" parentKey="text" text="">
 					<Size x="205" y="202" />
 					<Anchors>
 						<Anchor point="TOPLEFT">
