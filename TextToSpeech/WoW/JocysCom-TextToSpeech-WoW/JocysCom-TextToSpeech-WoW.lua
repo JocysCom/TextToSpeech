@@ -11,7 +11,7 @@ local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-t
 -- Set text.
 local function JocysCom_Text_EN()
 	-- Titles.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.6 ( 2014-11-16 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.7 ( 2014-11-19 )");
 	-- Frames.
 	JocysCom_ScrollFrame.text:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
 	-- Check buttons.
@@ -60,14 +60,14 @@ end
 
 -- FUNCTION MESSAGE STOP
 local function sendChatMessageStop()
-		SendChatMessage(messageStop, "WHISPER", "Common", unitName);
-		QuestEditBox:SetText("|cff808080" .. messageStop .. "|r");
-	    -- Disable DND <Busy> if checked.
+		-- Disable DND <Busy> if checked.
 		if DndCheckButton:GetChecked() == true then
 		if UnitIsDND("player") == true then
 			SendChatMessage("", "DND");
 		end
 		end
+		SendChatMessage(messageStop, "WHISPER", "Common", unitName);
+		QuestEditBox:SetText("|cff808080" .. messageStop .. "|r");
 end
 
 -- Enable message filter.
@@ -127,11 +127,8 @@ function JocysCom_OptionsFrame_OnLoad(self)
 	self:RegisterEvent("QUEST_COMPLETE");
 	-- books, scrolls, saved copies of mail messages, plaques, gravestones events.
 	self:RegisterEvent("ITEM_TEXT_READY"); 
-	-- Dialogue events (close).
-	self:RegisterEvent("QUEST_ACCEPTED");
-	self:RegisterEvent("QUEST_FINISHED");
-	self:RegisterEvent("GOSSIP_CLOSED");
-	self:RegisterEvent("ITEM_TEXT_CLOSED");
+	-- Close frames.
+	self:RegisterEvent("GOSSIP_CLOSED"); --"QUEST_FINISHED", "QUEST_ACCEPTED"
 	-- Logout event.
 	self:RegisterEvent("PLAYER_LOGOUT");
 end
@@ -157,8 +154,7 @@ function JocysCom_OptionsFrame_OnEvent(self, event)
 			lastQuest = GetRewardText();
 		elseif event == "ITEM_TEXT_READY" then
 			lastQuest = ItemTextGetText();
-		end
-		
+		end	
 		-- Remove HTML <> tags and text between them.
 		if string.find(lastQuest, "HTML") ~= nil then
 			lastQuest = string.gsub(lastQuest, "%b<>", "");
@@ -166,8 +162,8 @@ function JocysCom_OptionsFrame_OnEvent(self, event)
 		lastQuest = string.gsub(lastQuest, "\"", "");
 		lastQuest = string.gsub(lastQuest, "&", " and ");
 		JocysCom_SpeakMessage("Auto", lastQuest);
-	elseif event == "QUEST_ACCEPTED" or event == "QUEST_FINISHED" or event == "GOSSIP_CLOSED" or event == "ITEM_TEXT_CLOSED" then
-		JocysCom_FramesOnHide();
+	elseif event == "GOSSIP_CLOSED" then
+			JocysCom_MiniFrame_Hide();
 	end
 
 
@@ -360,14 +356,20 @@ local function JocysCom_ShowFrames(frame)
 	JocysCom_MiniFrame:Show();
 end
 
+function JocysCom_MiniFrame_OnShow()
+	if DebugEnabled then print("MiniFrame Show") end
+end
+
 -- Close all JocysCom frames.
-function JocysCom_FramesOnHide()
-	JocysCom_MiniFrame:Hide();
-	JocysCom_ScrollFrame:Hide();
+function JocysCom_MiniFrame_OnHide()
+	if DebugEnabled then print("MiniFrame Hide") end
 	JocysCom_OptionsFrame:Hide();
-	JocysCom_LockFrames();
 	sendChatMessageStop();
 	QuestEditBox:SetText("");
+end
+
+function JocysCom_MiniFrame_Hide()
+	JocysCom_MiniFrame:Hide();
 end
 
 -- Open JocysCom frames function.
@@ -380,18 +382,26 @@ local function JocysCom_QuestMapDetailsScrollFrame_OnShow() JocysCom_ShowFrames(
 -- [ Close ] Options button.
 local function JocysCom_OptionsFrame_CloseButton_OnClick(self)
 	JocysCom_OptionsFrame:Hide();
-	JocysCom_LockFrames();
 end
 
 -- [ TTS... ] button.
 function JocysCom_OptionsButton_OnClick(self)
 	if JocysCom_OptionsFrame:IsShown() then
 		JocysCom_OptionsFrame:Hide();
-		JocysCom_LockFrames();
 	else
 		JocysCom_OptionsFrame:Show();
-		JocysCom_UnLockFrames();
 	end
+end
+
+function JocysCom_OptionsFrame_OnShow()
+	JocysCom_UnLockFrames();
+end
+
+function JocysCom_OptionsFrame_OnHide()
+	if string.len(ReplaceNameEditBox:GetText()) < 2 then
+		ReplaceNameEditBox:SetText(unitName);
+	end
+	JocysCom_LockFrames();
 end
 
 -- [ Play ] button.
@@ -420,8 +430,7 @@ function JocysCom_QuestFrame_OnLoad(self)
 	self.Bg:SetTexture(0, 0, 0, 1.0);
 end
 
--- FUNCTION SAVE VALUES (ON OPTIONS CLOSE AND LOGOUT)
-
+-- Save values on options close or logout.
 function JocysCom_SaveAllSettings()
 	-- Save check buttons.
 	AutoCheckButtonValue = AutoCheckButton:GetChecked();
@@ -433,9 +442,7 @@ end
 
 function JocysCom_LoadAllSettings()
 	JocysCom_ShowFrames(GossipFrame);
-	--JocysCom_FramesOnHide();
 	-- Load styles.
-	--JocysCom_MiniFrame.texture:SetTexture(0, 0, 0, 0);
 	QuestEditBox:SetTextInsets(5, 5, 5, 5);	
 	-- Load descriptions.
 	JocysCom_Text_EN();	
@@ -457,10 +464,9 @@ function JocysCom_LoadAllSettings()
 	-- Attach OnEscape scripts.
 	QuestEditBox:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
 	ReplaceNameEditBox:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
-	-- Close JocsysCom frames.
-	QuestLogPopupDetailFrame:SetScript("OnHide", JocysCom_FramesOnHide);
-	QuestMapDetailsScrollFrame:SetScript("OnHide", JocysCom_FramesOnHide);
-	-- Open JocsysCom frames script.
+	-- Open JocysCom frames script.
+	QuestMapDetailsScrollFrame:SetScript("OnHide", JocysCom_MiniFrame_Hide);
+	-- Open JocysCom frames script.
 	GossipFrame:SetScript("OnShow", JocysCom_GossipFrame_OnShow);
 	QuestFrame:SetScript("OnShow", JocysCom_QuestFrame_OnShow);
 	ItemTextFrame:SetScript("OnShow", JocysCom_ItemTextFrame_OnShow);

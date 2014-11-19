@@ -199,6 +199,12 @@
 			<OnLoad>
 				JocysCom_OptionsFrame_OnLoad(self);
 			</OnLoad>
+			<OnHide>
+				JocysCom_OptionsFrame_OnHide()
+			</OnHide>
+			<OnShow>
+				JocysCom_OptionsFrame_OnShow()
+			</OnShow>
 		</Scripts>
 	</Frame>
 	<Frame name="JocysCom_MiniFrame" inherits="InsetFrameTemplate2" parent="UIParent" frameStrata="DIALOG">
@@ -268,6 +274,14 @@
 				</Scripts>
 			</Button>
 		</Frames>
+		<Scripts>
+			<OnHide>
+				JocysCom_MiniFrame_OnHide()
+			</OnHide>
+			<OnShow>
+				JocysCom_MiniFrame_OnShow()
+			</OnShow>
+		</Scripts>
 	</Frame>
 	<Frame name="JocysCom_ScrollFrame" parent="UIParent" movable="true" resizable="true" frameStrata="DIALOG" enableMouse="true">
 		<Size x="216" y="216" />

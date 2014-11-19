@@ -29,6 +29,27 @@ namespace JocysCom.TextToSpeech.Monitor
             PlayListDataGridView.AutoGenerateColumns = false;
             PlayListDataGridView.DataSource = playlist;
             Text = MainHelper.GetProductFullName();
+            InstalledVoices = new BindingList<InstalledVoiceEx>();
+        }
+
+        void InstalledVoices_ListChanged(object sender, ListChangedEventArgs e)
+        {
+
+            ValidateList();
+        }
+
+        void ValidateList()
+        {
+            string error = "";
+            if (InstalledVoices.Count == 0) error = "No voices were found";
+            else if (!InstalledVoices.Any(x => x.Female > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Female\" column to use it as female voice ( recommended value: 100 ).";
+            else if (!InstalledVoices.Any(x => x.Female > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Female\" column for at least one voice to use it as female voice.";
+            else if (!InstalledVoices.Any(x => x.Male > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Male\" column to use it as male voice ( recommended value: 100 ).";
+            else if (!InstalledVoices.Any(x => x.Male > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Male\" column for at least one voice to use it as female voice.";
+            else if (!InstalledVoices.Any(x => x.Neutral > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Neutral\" column to use it as neutral voice ( recommended value: 100 ).";
+            else if (!InstalledVoices.Any(x => x.Neutral > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Neutral\" column for at least one voice to use it as female voice.";
+            VoiceErrorLabel.Visible = error.Length > 0;
+            VoiceErrorLabel.Text = error;
         }
 
         /// <summary>
@@ -495,6 +516,8 @@ namespace JocysCom.TextToSpeech.Monitor
 
         #region Speech
 
+        BindingList<InstalledVoiceEx> InstalledVoices;
+
         void InitializeSpeech()
         {
             AudioChannelsComboBox.DataSource = Enum.GetValues(typeof(AudioChannel));
@@ -509,11 +532,12 @@ namespace JocysCom.TextToSpeech.Monitor
             // Create synthesizer which will be used to create WAV files from SSML XML.
             var ssmlSynthesizer = new SpeechSynthesizer();
             InstalledVoice[] voices = ssmlSynthesizer.GetInstalledVoices().OrderBy(x => x.VoiceInfo.Culture.Name).ThenBy(x => x.VoiceInfo.Gender).ThenBy(x => x.VoiceInfo.Name).ToArray();
-            InstalledVoiceEx[] voicesEx = voices.Select(x => new InstalledVoiceEx(x.VoiceInfo)).ToArray();
+            var voicesEx = voices.Select(x => new InstalledVoiceEx(x.VoiceInfo)).ToArray();
+            LoadSettings(voicesEx);
+            foreach (var voiceEx in voicesEx) InstalledVoices.Add(voiceEx);
             ssmlSynthesizer.Dispose();
             ssmlSynthesizer = null;
-            LoadSettings(voicesEx);
-            VoicesDataGridView.DataSource = voicesEx;
+            VoicesDataGridView.DataSource = InstalledVoices;
             refreshPresets();
         }
 
@@ -720,6 +744,12 @@ namespace JocysCom.TextToSpeech.Monitor
             {
                 if (voice.Age.ToString() == "NotSet") e.Value = "...";
             }
+            e.CellStyle.ForeColor = voice.Enabled
+                ? VoicesDataGridView.DefaultCellStyle.ForeColor
+                : System.Drawing.SystemColors.ControlDark;
+            e.CellStyle.SelectionBackColor = voice.Enabled
+             ? VoicesDataGridView.DefaultCellStyle.SelectionBackColor
+             : System.Drawing.SystemColors.ControlDark;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -736,6 +766,8 @@ namespace JocysCom.TextToSpeech.Monitor
             null, VoicesDataGridView, new object[] { true });
             resetBuffer();
             InitializeSpeech();
+            ValidateList();
+            InstalledVoices.ListChanged += InstalledVoices_ListChanged;
             BeginMonitoring();
             UpdateClipboardMonitor();
             // Load About.rtf file
@@ -753,7 +785,8 @@ namespace JocysCom.TextToSpeech.Monitor
         {
             int popularity;
             InstalledVoiceEx[] choice;
-            var data = (InstalledVoiceEx[])VoicesDataGridView.DataSource;
+            // Get only enabled voices.
+            var data = InstalledVoices.Where(x => x.Enabled).ToArray();
             InstalledVoiceEx voice = null;
 
             // Set voice if only gender value is submited ("Male", "Female", "Neutral").           
@@ -792,12 +825,12 @@ namespace JocysCom.TextToSpeech.Monitor
                     else choice = data.Where(x => x.Neutral > 0).ToArray();
 
                     // If nothing to choose from then try all.
-                    if (choice.Length == 0) 
+                    if (choice.Length == 0)
                     {
                         MainHelpLabel.Text = string.Format("There are no voices enabled in \"{0}\" category ( column ). Set popularity value to 100 ( normal usage ) or 101 ( normal usage / default - favourite )  for one voice at least in \"{0}\" column, to use it as \"{0}\" voice.", gender);
-                        choice = data;
+                        choice = data.ToArray();
                     }
-
+                    if (choice.Length == 0) return; 
                     // Generate number for selecting voice.
                     var number = MainHelper.GetNumber(0, choice.Count() - 1, "name", name);
                     voice = choice[number];
@@ -1003,9 +1036,20 @@ namespace JocysCom.TextToSpeech.Monitor
             System.Diagnostics.Process.Start(e.LinkText);
         }
 
-        private void VoicesDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void VoicesDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            if (e.RowIndex < 0) return;
+            var grid = (DataGridView)sender;
+            //var column = VoicesDataGridView.Columns[e.ColumnIndex];
+            if (e.ColumnIndex == grid.Columns[EnabledColumn.Name].Index)
+            {
+                var voice = (InstalledVoiceEx)grid.Rows[e.RowIndex].DataBoundItem;
+                voice.Enabled = !voice.Enabled;
+                VoicesDataGridView.Invalidate();
+            }
+            if (e.ColumnIndex == grid.Columns[FemaleColumn.Name].Index) VoicesDataGridView.BeginEdit(true);
+            if (e.ColumnIndex == grid.Columns[MaleColumn.Name].Index) VoicesDataGridView.BeginEdit(true);
+            if (e.ColumnIndex == grid.Columns[NeutralColumn.Name].Index) VoicesDataGridView.BeginEdit(true);
         }
 
         private void EffectPresetsEditorSoundEffectsControl_Load(object sender, EventArgs e)
@@ -1083,10 +1127,10 @@ namespace JocysCom.TextToSpeech.Monitor
                 /* Depending on the clipboard's current data format we can process the data differently.
                  * Feel free to add more checks if you want to process more formats. */
                 if (iData.GetDataPresent(DataFormats.Text))
-                {                   
+                {
                     string text = (string)iData.GetData(DataFormats.Text);
-                    
-                    if (MonitorClipboardComboBox.SelectedIndex == 2 && !text.Contains("<voice")) text = "<voice command=\"Play\"><part>" + text + "</part></voice>"; 
+
+                    if (MonitorClipboardComboBox.SelectedIndex == 2 && !text.Contains("<voice")) text = "<voice command=\"Play\"><part>" + text + "</part></voice>";
                     if (string.IsNullOrEmpty(text) || !text.Contains("<voice")) return;
                     var wowItem = new WowListItem(text);
                     addWowListItem(wowItem);
@@ -1136,9 +1180,8 @@ namespace JocysCom.TextToSpeech.Monitor
 
         public void SaveSettings()
         {
-            InstalledVoiceEx[] voices = (InstalledVoiceEx[])VoicesDataGridView.DataSource;
-            if (voices == null) return;
-            var xml = MainHelper.SerializeToXmlString(voices);
+            if (InstalledVoices == null) return;
+            var xml = MainHelper.SerializeToXmlString(InstalledVoices);
             Properties.Settings.Default.VoicesData = xml;
             //Properties.Settings.Default.Save();
         }
@@ -1151,13 +1194,35 @@ namespace JocysCom.TextToSpeech.Monitor
             try { savedVoices = MainHelper.DeserializeFromXmlString<InstalledVoiceEx[]>(xml); }
             catch (Exception) { }
             if (savedVoices == null) return;
+            var newVoices = new List<InstalledVoiceEx>();
+            var oldVoices = new List<InstalledVoiceEx>();
             foreach (var voice in voices)
             {
                 var savedVoice = savedVoices.FirstOrDefault(x => x.Name == voice.Name && x.Gender == voice.Gender);
-                if (savedVoice == null) continue;
-                voice.Female = savedVoice.Female;
-                voice.Male = savedVoice.Male;
-                voice.Neutral = savedVoice.Neutral;
+                if (savedVoice == null)
+                {
+                    newVoices.Add(voice);
+                }
+                else
+                {
+                    oldVoices.Add(voice);
+                    voice.Enabled = savedVoice.Enabled;
+                    voice.Female = savedVoice.Female;
+                    voice.Male = savedVoice.Male;
+                    voice.Neutral = savedVoice.Neutral;
+                }
+            }
+            // If new voices added then...
+            if (newVoices.Count > 0)
+            {
+                var newVoice = newVoices.FirstOrDefault(x => x.Name.StartsWith("Microsoft"));
+                if (newVoice == null) newVoice = newVoices.First();
+                // If list doesn't have female voices then use first new voice.
+                if (!voices.Any(x => x.Female > 0)) newVoice.Female = InstalledVoiceEx.MaxVoice;
+                // If list doesn't have male voices then use first new voice.
+                if (!voices.Any(x => x.Male > 0)) newVoice.Male = InstalledVoiceEx.MaxVoice;
+                // If list doesn't have neutral voices then use first voice.
+                if (!voices.Any(x => x.Neutral > 0)) newVoice.Neutral = InstalledVoiceEx.MaxVoice;
             }
         }
 

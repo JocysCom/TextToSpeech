@@ -45,7 +45,6 @@
             this.MessagesTabControl = new System.Windows.Forms.TabControl();
             this.VoicesTabPanel = new System.Windows.Forms.TabPage();
             this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
-            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
             this.AboutTabPage = new System.Windows.Forms.TabPage();
             this.AboutRichTextBox = new System.Windows.Forms.RichTextBox();
             this.EffectTabControl = new System.Windows.Forms.TabControl();
@@ -113,6 +112,9 @@
             this.RateMaxComboBox = new System.Windows.Forms.ComboBox();
             this.PitchMinComboBox = new System.Windows.Forms.ComboBox();
             this.RateMinComboBox = new System.Windows.Forms.ComboBox();
+            this.VoiceErrorLabel = new System.Windows.Forms.Label();
+            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
+            this.EnabledColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.MaleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FemaleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NeutralColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -166,6 +168,7 @@
             this.VoicesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.VoicesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.VoicesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.EnabledColumn,
             this.MaleColumn,
             this.FemaleColumn,
             this.NeutralColumn,
@@ -200,9 +203,9 @@
             this.VoicesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.VoicesDataGridView.RowHeadersVisible = false;
             this.VoicesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.VoicesDataGridView.Size = new System.Drawing.Size(816, 266);
+            this.VoicesDataGridView.Size = new System.Drawing.Size(816, 247);
             this.VoicesDataGridView.TabIndex = 0;
-            this.VoicesDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.VoicesDataGridView_CellContentClick);
+            this.VoicesDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.VoicesDataGridView_CellClick);
             this.VoicesDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.VoicesDataGridView_CellFormatting);
             this.VoicesDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.VoicesDataGridView_DataError);
             this.VoicesDataGridView.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
@@ -241,6 +244,7 @@
             // VoicesTabPanel
             // 
             this.VoicesTabPanel.Controls.Add(this.VoicesDataGridView);
+            this.VoicesTabPanel.Controls.Add(this.VoiceErrorLabel);
             this.VoicesTabPanel.ImageKey = "Businesman.png";
             this.VoicesTabPanel.Location = new System.Drawing.Point(4, 27);
             this.VoicesTabPanel.Name = "VoicesTabPanel";
@@ -257,15 +261,6 @@
             this.EffectsPresetsEditorTabPage.Size = new System.Drawing.Size(816, 266);
             this.EffectsPresetsEditorTabPage.TabIndex = 1;
             this.EffectsPresetsEditorTabPage.Text = "Efect Preset Editor";
-            // 
-            // EffectPresetsEditorSoundEffectsControl
-            // 
-            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
-            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(819, 266);
-            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
-            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
             // 
             // AboutTabPage
             // 
@@ -561,7 +556,8 @@
             this.SandBoxTextBox.Size = new System.Drawing.Size(606, 210);
             this.SandBoxTextBox.TabIndex = 0;
             this.SandBoxTextBox.Text = "<voice name=\"Marshal McBride\" gender=\"Male\" pitch=\"-5\" rate=\"1\" effect=\"Humanoid\"" +
-    " volume=\"100\" command=\"Play\"><part>Test text to speech. [comment]Test text to speech.[/comment]</part></voice>";
+    " volume=\"100\" command=\"Play\"><part>Test text to speech. [comment]Test text to sp" +
+    "eech.[/comment]</part></voice>";
             this.SandBoxTextBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
             this.SandBoxTextBox.MouseHover += new System.EventHandler(this.MouseHover_SandBox);
             // 
@@ -1375,6 +1371,37 @@
             this.RateMinComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
             this.RateMinComboBox.MouseHover += new System.EventHandler(this.MouseHover_RateMin);
             // 
+            // VoiceErrorLabel
+            // 
+            this.VoiceErrorLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.VoiceErrorLabel.ForeColor = System.Drawing.Color.DarkRed;
+            this.VoiceErrorLabel.Location = new System.Drawing.Point(0, 247);
+            this.VoiceErrorLabel.Name = "VoiceErrorLabel";
+            this.VoiceErrorLabel.Padding = new System.Windows.Forms.Padding(3);
+            this.VoiceErrorLabel.Size = new System.Drawing.Size(816, 19);
+            this.VoiceErrorLabel.TabIndex = 1;
+            this.VoiceErrorLabel.Text = "Voice Error";
+            this.VoiceErrorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VoiceErrorLabel.Visible = false;
+            // 
+            // EffectPresetsEditorSoundEffectsControl
+            // 
+            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
+            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(819, 266);
+            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
+            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
+            // 
+            // EnabledColumn
+            // 
+            this.EnabledColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.EnabledColumn.DataPropertyName = "Enabled";
+            this.EnabledColumn.HeaderText = "ON";
+            this.EnabledColumn.Name = "EnabledColumn";
+            this.EnabledColumn.ReadOnly = true;
+            this.EnabledColumn.Width = 31;
+            // 
             // MaleColumn
             // 
             this.MaleColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -1646,6 +1673,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListStatusColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListDurationColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListTextColumn;
+        private System.Windows.Forms.Label VoiceErrorLabel;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn EnabledColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn MaleColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn FemaleColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn NeutralColumn;
