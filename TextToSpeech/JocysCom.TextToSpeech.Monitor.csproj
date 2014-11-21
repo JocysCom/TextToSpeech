@@ -181,7 +181,13 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Resources\Monitor.psd" />
+    <None Include="Resources\JocysCom-MiniFrame-Border.blp" />
+    <None Include="Resources\JocysCom-MiniFrame.tga" />
+    <None Include="Resources\JocysCom-MiniFramel.psd" />
+    <EmbeddedResource Include="Resources\JocysCom.TextToSpeech.Monitor.rtf" />
+    <None Include="Resources\JocysCom_TTS_Monitor.psd" />
+    <None Include="Resources\JocysCom_TTS_Monitor_Voices.psd" />
+    <None Include="Resources\JocysCom_TTS_WoW_Addon.psd" />
     <None Include="WoW\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.sha" />
     <None Include="WoW\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.zip" />
     <None Include="WoW\FrameXML\UI.xsd">
@@ -205,10 +211,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\WoW_Addon.psd" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\bullet_square_glass_red.ico" />
+    <Content Include="Resources\JocysCom_TTS_Monitor_Voices.png" />
+    <Content Include="Resources\JocysCom_TTS_WoW_Addon.png" />
+    <Content Include="Resources\JocysCom_TTS_WoW_Addon_Buttons.png" />
     <Content Include="WoW\GoogleDriver.ReadMe.txt" />
     <Content Include="WoW\HowToExportInterfaceCode.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Exclude.txt" />
@@ -239,9 +247,6 @@
     <Content Include="Resources\window.png" />
     <Content Include="Resources\Window_Sliders_16.png" />
     <Content Include="Resources\Window_Sliders_Save_16.png" />
-    <Content Include="Resources\WoW_Options_Window.png" />
-    <Content Include="Resources\WoW_Quest_Window.png" />
-    <EmbeddedResource Include="Resources\About.rtf" />
     <None Include="Resources\app_64.png" />
     <None Include="Resources\bullet_square_glass_blue.png" />
     <None Include="Resources\desktop.ini" />

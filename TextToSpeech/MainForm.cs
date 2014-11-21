@@ -45,9 +45,9 @@ namespace JocysCom.TextToSpeech.Monitor
             else if (!InstalledVoices.Any(x => x.Female > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Female\" column to use it as female voice ( recommended value: 100 ).";
             else if (!InstalledVoices.Any(x => x.Female > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Female\" column for at least one voice to use it as female voice.";
             else if (!InstalledVoices.Any(x => x.Male > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Male\" column to use it as male voice ( recommended value: 100 ).";
-            else if (!InstalledVoices.Any(x => x.Male > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Male\" column for at least one voice to use it as female voice.";
+            else if (!InstalledVoices.Any(x => x.Male > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Male\" column for at least one voice to use it as male voice.";
             else if (!InstalledVoices.Any(x => x.Neutral > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Neutral\" column to use it as neutral voice ( recommended value: 100 ).";
-            else if (!InstalledVoices.Any(x => x.Neutral > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Neutral\" column for at least one voice to use it as female voice.";
+            else if (!InstalledVoices.Any(x => x.Neutral > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Neutral\" column for at least one voice to use it as neutral voice.";
             VoiceErrorLabel.Visible = error.Length > 0;
             VoiceErrorLabel.Text = error;
         }
@@ -770,8 +770,8 @@ namespace JocysCom.TextToSpeech.Monitor
             InstalledVoices.ListChanged += InstalledVoices_ListChanged;
             BeginMonitoring();
             UpdateClipboardMonitor();
-            // Load About.rtf file
-            var stream = MainHelper.GetResource("About.rtf");
+            // Load "JocysCom.TextToSpeech.Monitor.rtf" file
+            var stream = MainHelper.GetResource("JocysCom.TextToSpeech.Monitor.rtf");
             var sr = new StreamReader(stream);
             AboutRichTextBox.Rtf = sr.ReadToEnd();
             sr.Close();
