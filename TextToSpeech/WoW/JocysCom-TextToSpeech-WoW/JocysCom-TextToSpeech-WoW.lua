@@ -11,7 +11,7 @@ local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-t
 -- Set text.
 local function JocysCom_Text_EN()
 	-- Titles.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.7 ( 2014-11-19 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.8 ( 2014-11-22 )");
 	-- Frames.
 	JocysCom_ScrollFrame.text:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
 	-- Check buttons.
@@ -29,6 +29,7 @@ local debugLine = 0;
 local debugLineOld = 0;
 local questId = nil;
 local questIdOld = nil;
+local stopWhenClosing = 1;
 
 -- Lock frames.
 local function JocysCom_UnLockFrames()
@@ -62,12 +63,14 @@ end
 local function sendChatMessageStop()
 		-- Disable DND <Busy> if checked.
 		if DndCheckButton:GetChecked() == true then
-		if UnitIsDND("player") == true then
-			SendChatMessage("", "DND");
+			if UnitIsDND("player") == true then
+				SendChatMessage("", "DND");
+			end
 		end
+		if stopWhenClosing == 1 then
+			SendChatMessage(messageStop, "WHISPER", "Common", unitName);
+			QuestEditBox:SetText("|cff808080" .. messageStop .. "|r");
 		end
-		SendChatMessage(messageStop, "WHISPER", "Common", unitName);
-		QuestEditBox:SetText("|cff808080" .. messageStop .. "|r");
 end
 
 -- Enable message filter.
@@ -240,6 +243,7 @@ function JocysCom_SpeakMessage(reason, questText, event)
 			if index == nil then
 				part = string.sub(questText, startIndex);
 				chatMessage = chatMessageSP .. part .. chatMessageE;
+				stopWhenClosing = 1;
 				SendChatMessage(chatMessage, "WHISPER", "Common", unitName);
 				-- print("[" .. startIndex .. "] '" .. part .. "'");
 				break;
@@ -247,6 +251,7 @@ function JocysCom_SpeakMessage(reason, questText, event)
 				-- if space is out of size then...
 				part = string.sub(questText, startIndex, endIndex - 1);
 				chatMessage = chatMessageSA .. part .. chatMessageE;
+				stopWhenClosing = 1;
 				SendChatMessage(chatMessage, "WHISPER", "Common", unitName);
 				-- print("[" .. startIndex .. "-" .. (endIndex - 1) .. "] '" .. part .. "'");
 				startIndex = endIndex;
@@ -261,9 +266,9 @@ function JocysCom_SpeakMessage(reason, questText, event)
 		QuestEditBox:SetText(questEditBox);
 		-- Enable DND <Busy> if checked.
 		if DndCheckButton:GetChecked() == true then
-		if UnitIsDND("player") == false then
+		--if UnitIsDND("player") == false then
 		SendChatMessage("<" .. unitName .. ">: " .. messageDoNotDisturb, "DND");
-	    end		
+	    --end		
 		end
 	end
 end
@@ -323,35 +328,28 @@ local function JocysCom_ShowFrames(frame)
 	local top = frame:GetTop();
 	local width = frame:GetWidth();
 	-- Move Scroll frame.
+	JocysCom_MiniFrame:ClearAllPoints();
 	JocysCom_ScrollFrame:ClearAllPoints();
-	
+	JocysCom_OptionsFrame:ClearAllPoints();	
+	-- Different scrollFrame position and size... if frame is WorldMapFrame.	
 	if frame == WorldMapFrame then
 	JocysCom_ScrollFrame:SetParent(QuestMapDetailsScrollFrame);
-	else
-	JocysCom_ScrollFrame:SetParent(frame);
-	end
-
-	JocysCom_ScrollFrame:SetFrameLevel(100);
-	-- Move Mini frame.		
-	JocysCom_MiniFrame:ClearAllPoints();
-	JocysCom_MiniFrame:SetParent(frame);
-	-- Move Options frame.	
-	JocysCom_OptionsFrame:ClearAllPoints();	
-	JocysCom_OptionsFrame:SetParent(frame);
-	-- Frames position, depending on event.
-	JocysCom_MiniFrame:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", 0, -4);
-	JocysCom_OptionsFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT", 4, 0);
-	
-	if frame == WorldMapFrame then
 	JocysCom_ScrollFrame:SetPoint("TOPLEFT", 0, -4);
 	local width2 = QuestMapDetailsScrollFrame:GetWidth();
 	JocysCom_ScrollFrame:SetWidth(width2 - 4);
 	else
+	JocysCom_ScrollFrame:SetParent(frame);
 	JocysCom_ScrollFrame:SetWidth(width - 50);
 	JocysCom_ScrollFrame:SetPoint("TOPLEFT", 12, -67);
 	end
-
-	-- Show Frames.
+	JocysCom_ScrollFrame:SetFrameLevel(100);
+	-- Set parent frame.		
+	JocysCom_MiniFrame:SetParent(frame);
+	JocysCom_OptionsFrame:SetParent(frame);
+	-- Frames position, depending on event.
+	JocysCom_MiniFrame:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", 0, 0);
+	JocysCom_OptionsFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT", 2, 0);
+		-- Show Frames.
 	JocysCom_ScrollFrame:Show();
 	JocysCom_MiniFrame:Show();
 end
@@ -384,6 +382,12 @@ local function JocysCom_OptionsFrame_CloseButton_OnClick(self)
 	JocysCom_OptionsFrame:Hide();
 end
 
+-- [ Close & Play ] Options button.
+local function JocysCom_OptionsFrame_CloseAndPlayButton_OnClick(self)
+	stopWhenClosing = 0;
+    -- close  windows here.
+end
+
 -- [ TTS... ] button.
 function JocysCom_OptionsButton_OnClick(self)
 	if JocysCom_OptionsFrame:IsShown() then
@@ -407,6 +411,10 @@ end
 -- [ Play ] button.
 function JocysCom_PlayButtonButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOn");
+	if QuestLogPopupDetailFrame:IsShown() or WorldMapFrame:IsShown() then
+		local questDescription, questObjectives = GetQuestLogQuestText();
+		lastQuest = questObjectives .. " Description. " .. questDescription;
+	end
 	JocysCom_SpeakMessage("Scroll", lastQuest);
 end
 

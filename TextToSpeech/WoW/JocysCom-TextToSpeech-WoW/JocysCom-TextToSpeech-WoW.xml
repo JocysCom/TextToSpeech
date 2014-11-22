@@ -207,22 +207,20 @@
 			</OnShow>
 		</Scripts>
 	</Frame>
-	<Frame name="JocysCom_MiniFrame" inherits="InsetFrameTemplate2" parent="UIParent" frameStrata="DIALOG">
-		<Size x="135" y="38" />
+	<Frame name="JocysCom_MiniFrame" parent="UIParent" frameStrata="DIALOG">
+		<Size x="256" y="128" />
 		<Anchors>
 			<Anchor point="TOPLEFT">
 				<Offset x="225" y="-505" />
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile="Interface\FrameGeneral\UI-Background-Rock" edgeFile="">
-			<BackgroundInsets left="5" right="5" top="5" bottom="5" />
-		</Backdrop>
+		<Backdrop bgFile="Interface\AddOns\JocysCom-TextToSpeech-WoW\Images\JocysCom-MiniFrame-Background" edgeFile="" />
 		<Frames>
 			<Button name="PlayButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="►">
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="7" y="-8" />
+						<Offset x="219" y="-1" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -243,7 +241,7 @@
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="39" y="-8" />
+						<Offset x="189" y="-1" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -264,7 +262,7 @@
 				<Size x="57" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="71" y="-8" />
+						<Offset x="133" y="-1" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
