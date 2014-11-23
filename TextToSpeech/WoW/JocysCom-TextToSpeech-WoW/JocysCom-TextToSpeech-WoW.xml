@@ -208,7 +208,7 @@
 		</Scripts>
 	</Frame>
 	<Frame name="JocysCom_MiniFrame" parent="UIParent" frameStrata="DIALOG">
-		<Size x="256" y="128" />
+		<Size x="256" y="32" />
 		<Anchors>
 			<Anchor point="TOPLEFT">
 				<Offset x="225" y="-505" />
