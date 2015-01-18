@@ -23,5 +23,8 @@
     <Setting Name="MonitorClipboardComboBoxText" Type="System.String" Scope="User">
       <Value Profile="(Default)">Disabled</Value>
     </Setting>
+    <Setting Name="PortNumericUpDownValue" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">3724</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

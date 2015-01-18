@@ -351,9 +351,9 @@ namespace JocysCom.TextToSpeech.Monitor
                 LastException = ex;
             }
         }
-
+        
+        
         BindingList<WowListItem> WowMessageList = new BindingList<WowListItem>();
-        public const ushort WoWPortNumber = 3724;
 
         private void ParseData(byte[] byteData, int nReceived)
         {
@@ -366,7 +366,8 @@ namespace JocysCom.TextToSpeech.Monitor
                 // IPHeader.Data stores the data being carried by the IP datagram.
                 TcpHeader tcpHeader = new TcpHeader(ipHeader.Data, 0, ipHeader.Data.Length);
                 // If destination port number belongs to World of Warcraft
-                if (tcpHeader.DestinationPort == WoWPortNumber)
+                var portNumber = (ushort)PortNumericUpDown.Value;
+                if (tcpHeader.DestinationPort == portNumber)
                 {
                     var wowItem = new WowListItem(ipHeader, tcpHeader);
                     // If data contains voice XML.
@@ -1074,6 +1075,31 @@ namespace JocysCom.TextToSpeech.Monitor
             MainHelpLabel.Text = "Maximum voice rate ( speed ). Default value is 2.";
         }
 
+        private void MouseHover_PitchMin(object sender, EventArgs e)
+        {
+            MainHelpLabel.Text = "Minimum voice pitch. Default value is -5.";
+        }
+
+        private void MouseHover_PitchMax(object sender, EventArgs e)
+        {
+            MainHelpLabel.Text = "Maximum voice pitch. Default value is 5.";
+        }
+
+        private void MouseHover_AudioSampleRate(object sender, EventArgs e)
+        {
+            MainHelpLabel.Text = "Audio sample rate. Default value is 22050.";
+        }
+
+        private void MouseHover_AudioBitsPerSample(object sender, EventArgs e)
+        {
+            MainHelpLabel.Text = "Audio bits per sample. Default value is 16.";
+        }
+
+        private void MouseHover_AudioChannels(object sender, EventArgs e)
+        {
+            MainHelpLabel.Text = "Audio chanels. Default value is Mono.";
+        }
+
         private void MouseHover_EffectPresets(object sender, EventArgs e)
         {
             MainHelpLabel.Text = "Configuration of each preset is stored in separate \"PresetName.preset.xml\" file in \"Presets\" folder.";
@@ -1104,11 +1130,17 @@ namespace JocysCom.TextToSpeech.Monitor
             MainHelpLabel.Text = "[ Disabled ] - clipboard monitor is disabled. [ For <voice> tags ] - will read text in clipboard between <voice><part>...</part></voice> tags only. [ For all text ] - will read all text in clipboard.";
         }
 
+        private void MouseHover_PortNumericUpDown(object sender, EventArgs e)
+        {
+            MainHelpLabel.Text = "Port number. Default value is 3724 ( World of Warcraft ).";
+        }
+
+        // Volume TrackBar value changed
         private void VolumeTrackBar_ValueChanged(object sender, EventArgs e)
         {
             VolumeTextBox.Text = VolumeTrackBar.Value.ToString() + "%";
         }
-
+       
         #region Clipboard Monitor
 
         /// <summary>

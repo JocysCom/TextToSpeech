@@ -106,5 +106,17 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
                 this["MonitorClipboardComboBoxText"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3724")]
+        public decimal PortNumericUpDownValue {
+            get {
+                return ((decimal)(this["PortNumericUpDownValue"]));
+            }
+            set {
+                this["PortNumericUpDownValue"] = value;
+            }
+        }
     }
 }

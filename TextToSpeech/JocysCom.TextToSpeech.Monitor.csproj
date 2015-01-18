@@ -160,12 +160,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Network\WowListItem.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Network\WowListItem.cs" />
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Controls\MessageBoxForm.resx">
       <DependentUpon>MessageBoxForm.cs</DependentUpon>
@@ -181,9 +181,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Resources\JocysCom-MiniFrame-Border.blp" />
     <None Include="Resources\JocysCom-MiniFrame.tga" />
-    <None Include="Resources\JocysCom-MiniFramel.psd" />
     <EmbeddedResource Include="Resources\JocysCom.TextToSpeech.Monitor.rtf" />
     <None Include="Resources\JocysCom_TTS_Monitor.psd" />
     <None Include="Resources\JocysCom_TTS_Monitor_Voices.psd" />

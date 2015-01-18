@@ -11,7 +11,7 @@ local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-t
 -- Set text.
 local function JocysCom_Text_EN()
 	-- Titles.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.9 ( 2014-11-22 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.10 ( 2015-01-18 )");
 	-- Frames.
 	JocysCom_ScrollFrame.text:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
 	-- Check buttons.
@@ -144,7 +144,9 @@ function JocysCom_OptionsFrame_OnEvent(self, event)
 		JocysCom_LoadAllSettings();
 	elseif event == "PLAYER_LOGOUT" then
 		JocysCom_SaveAllSettings();
-	elseif JocysCom_MiniFrame:IsShown() and event ~= "ADDON_LOADED" and event ~= "PLAYER_LOGOUT" and event ~= "QUEST_ACCEPTED" and event ~= "QUEST_FINISHED" and event ~= "GOSSIP_CLOSED" and event ~= "ITEM_TEXT_CLOSED" then
+	-- elseif JocysCom_MiniFrame:IsShown() and event ~= "ADDON_LOADED" and event ~= "PLAYER_LOGOUT" and event ~= "QUEST_ACCEPTED" and event ~= "QUEST_FINISHED" and event ~= "GOSSIP_CLOSED" and event ~= "ITEM_TEXT_CLOSED" then
+	elseif JocysCom_MiniFrame:IsShown() and (event == "QUEST_GREETING" or event == "GOSSIP_SHOW" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "ITEM_TEXT_READY") then
+		lastQuest = nil;
 		if event == "QUEST_GREETING" then 
 			lastQuest = GetGreetingText();
 		elseif GossipFrame:IsShown() and event == "GOSSIP_SHOW" then
@@ -166,10 +168,8 @@ function JocysCom_OptionsFrame_OnEvent(self, event)
 		lastQuest = string.gsub(lastQuest, "&", " and ");
 		JocysCom_SpeakMessage("Auto", lastQuest);
 	elseif event == "GOSSIP_CLOSED" then
-			JocysCom_MiniFrame_Hide();
+		JocysCom_MiniFrame_Hide();
 	end
-
-
 end
 
 function JocysCom_SpeakMessage(reason, questText, event)
