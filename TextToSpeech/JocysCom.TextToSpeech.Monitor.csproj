@@ -212,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\bullet_square_glass_red.ico" />
+    <Content Include="Resources\JocysCom.TextToSpeech.Monitor.html" />
     <Content Include="Resources\JocysCom_TTS_Monitor_Voices.png" />
     <Content Include="Resources\JocysCom_TTS_WoW_Addon.png" />
     <Content Include="Resources\JocysCom_TTS_WoW_Addon_Buttons.png" />

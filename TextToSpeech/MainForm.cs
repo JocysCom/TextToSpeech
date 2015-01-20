@@ -30,6 +30,7 @@ namespace JocysCom.TextToSpeech.Monitor
             PlayListDataGridView.DataSource = playlist;
             Text = MainHelper.GetProductFullName();
             InstalledVoices = new BindingList<InstalledVoiceEx>();
+            UpdateLabel.Text = "You are running " + MainHelper.GetProductFullName();
         }
 
         void InstalledVoices_ListChanged(object sender, ListChangedEventArgs e)
@@ -1140,6 +1141,11 @@ namespace JocysCom.TextToSpeech.Monitor
         {
             VolumeTextBox.Text = VolumeTrackBar.Value.ToString() + "%";
         }
+
+        private void UpdateButton_Click(object sender, EventArgs e)
+        {
+            UpdateWebBrowser.Navigate("http://www.jocys.com/files/updates/JocysCom.TextToSpeech.Monitor.html");
+        }
        
         #region Clipboard Monitor
 
@@ -1268,6 +1274,5 @@ namespace JocysCom.TextToSpeech.Monitor
             //var column = VoicesDataGridView.Columns[e.ColumnIndex];
             e.Cancel = true;
         }
-
     }
 }

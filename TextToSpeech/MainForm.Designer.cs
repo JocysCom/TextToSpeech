@@ -56,9 +56,12 @@
             this.VoicesTabPanel = new System.Windows.Forms.TabPage();
             this.VoiceErrorLabel = new System.Windows.Forms.Label();
             this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
-            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
             this.AboutTabPage = new System.Windows.Forms.TabPage();
             this.AboutRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.UpdateTabPage = new System.Windows.Forms.TabPage();
+            this.UpdateButton = new System.Windows.Forms.Button();
+            this.UpdateLabel = new System.Windows.Forms.Label();
+            this.UpdateWebBrowser = new System.Windows.Forms.WebBrowser();
             this.EffectTabControl = new System.Windows.Forms.TabControl();
             this.EffectPresetsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addNewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -126,11 +129,13 @@
             this.RateMaxComboBox = new System.Windows.Forms.ComboBox();
             this.PitchMinComboBox = new System.Windows.Forms.ComboBox();
             this.RateMinComboBox = new System.Windows.Forms.ComboBox();
+            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
             ((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).BeginInit();
             this.MessagesTabControl.SuspendLayout();
             this.VoicesTabPanel.SuspendLayout();
             this.EffectsPresetsEditorTabPage.SuspendLayout();
             this.AboutTabPage.SuspendLayout();
+            this.UpdateTabPage.SuspendLayout();
             this.EffectTabControl.SuspendLayout();
             this.EffectPresetsContextMenuStrip.SuspendLayout();
             this.EffectTabPage.SuspendLayout();
@@ -361,6 +366,7 @@
             this.TabsImageList.Images.SetKeyName(6, "Page_Play_16.png");
             this.TabsImageList.Images.SetKeyName(7, "Page_Incoming_16.png");
             this.TabsImageList.Images.SetKeyName(8, "code_edit.png");
+            this.TabsImageList.Images.SetKeyName(9, "Download_16.png");
             // 
             // MessagesTabControl
             // 
@@ -369,6 +375,7 @@
             this.MessagesTabControl.Controls.Add(this.VoicesTabPanel);
             this.MessagesTabControl.Controls.Add(this.EffectsPresetsEditorTabPage);
             this.MessagesTabControl.Controls.Add(this.AboutTabPage);
+            this.MessagesTabControl.Controls.Add(this.UpdateTabPage);
             this.MessagesTabControl.ImageList = this.TabsImageList;
             this.MessagesTabControl.Location = new System.Drawing.Point(6, 34);
             this.MessagesTabControl.Margin = new System.Windows.Forms.Padding(10);
@@ -412,15 +419,6 @@
             this.EffectsPresetsEditorTabPage.TabIndex = 1;
             this.EffectsPresetsEditorTabPage.Text = "Efect Preset Editor";
             // 
-            // EffectPresetsEditorSoundEffectsControl
-            // 
-            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
-            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(819, 266);
-            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
-            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
-            // 
             // AboutTabPage
             // 
             this.AboutTabPage.Controls.Add(this.AboutRichTextBox);
@@ -443,6 +441,54 @@
             this.AboutRichTextBox.TabIndex = 18;
             this.AboutRichTextBox.Text = "";
             this.AboutRichTextBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.AboutRichTextBox_LinkClicked);
+            // 
+            // UpdateTabPage
+            // 
+            this.UpdateTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.UpdateTabPage.Controls.Add(this.UpdateButton);
+            this.UpdateTabPage.Controls.Add(this.UpdateLabel);
+            this.UpdateTabPage.Controls.Add(this.UpdateWebBrowser);
+            this.UpdateTabPage.ImageKey = "Download_16.png";
+            this.UpdateTabPage.Location = new System.Drawing.Point(4, 27);
+            this.UpdateTabPage.Name = "UpdateTabPage";
+            this.UpdateTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.UpdateTabPage.Size = new System.Drawing.Size(816, 266);
+            this.UpdateTabPage.TabIndex = 4;
+            this.UpdateTabPage.Text = "Update";
+            // 
+            // UpdateButton
+            // 
+            this.UpdateButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.UpdateButton.Location = new System.Drawing.Point(676, 238);
+            this.UpdateButton.Name = "UpdateButton";
+            this.UpdateButton.Size = new System.Drawing.Size(135, 23);
+            this.UpdateButton.TabIndex = 3;
+            this.UpdateButton.Text = "Check for updates";
+            this.UpdateButton.UseVisualStyleBackColor = true;
+            this.UpdateButton.Click += new System.EventHandler(this.UpdateButton_Click);
+            // 
+            // UpdateLabel
+            // 
+            this.UpdateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.UpdateLabel.Location = new System.Drawing.Point(214, 4);
+            this.UpdateLabel.Name = "UpdateLabel";
+            this.UpdateLabel.Size = new System.Drawing.Size(600, 13);
+            this.UpdateLabel.TabIndex = 2;
+            this.UpdateLabel.Text = "UpdateLabelText";
+            this.UpdateLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // UpdateWebBrowser
+            // 
+            this.UpdateWebBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UpdateWebBrowser.Location = new System.Drawing.Point(6, 21);
+            this.UpdateWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.UpdateWebBrowser.Name = "UpdateWebBrowser";
+            this.UpdateWebBrowser.ScrollBarsEnabled = false;
+            this.UpdateWebBrowser.Size = new System.Drawing.Size(804, 211);
+            this.UpdateWebBrowser.TabIndex = 1;
+            this.UpdateWebBrowser.Url = new System.Uri("http://www.jocys.com/files/updates/JocysCom.TextToSpeech.Monitor.html", System.UriKind.Absolute);
             // 
             // EffectTabControl
             // 
@@ -988,7 +1034,7 @@
             // RecognizeButton
             // 
             this.RecognizeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RecognizeButton.Location = new System.Drawing.Point(105, 3);
+            this.RecognizeButton.Location = new System.Drawing.Point(736, 335);
             this.RecognizeButton.Name = "RecognizeButton";
             this.RecognizeButton.Size = new System.Drawing.Size(93, 23);
             this.RecognizeButton.TabIndex = 10;
@@ -1122,7 +1168,6 @@
             this.IncomingGroupBox.Controls.Add(this.IncomingRateTextBox);
             this.IncomingGroupBox.Controls.Add(this.IncomingGenderTextBox);
             this.IncomingGroupBox.Controls.Add(this.IncomingNameTextBox);
-            this.IncomingGroupBox.Controls.Add(this.RecognizeButton);
             this.IncomingGroupBox.ForeColor = System.Drawing.SystemColors.GrayText;
             this.IncomingGroupBox.Location = new System.Drawing.Point(624, 363);
             this.IncomingGroupBox.Name = "IncomingGroupBox";
@@ -1579,6 +1624,17 @@
             this.RateMinComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
             this.RateMinComboBox.MouseHover += new System.EventHandler(this.MouseHover_RateMin);
             // 
+            // EffectPresetsEditorSoundEffectsControl
+            // 
+            this.EffectPresetsEditorSoundEffectsControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
+            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
+            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
+            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1590,6 +1646,7 @@
             this.Controls.Add(this.DefaultGenderLabel);
             this.Controls.Add(this.GenderComboBox);
             this.Controls.Add(this.IncomingGroupBox);
+            this.Controls.Add(this.RecognizeButton);
             this.Controls.Add(this.PitchMaxComboBox);
             this.Controls.Add(this.RateMaxComboBox);
             this.Controls.Add(this.EffectTabControl);
@@ -1627,6 +1684,7 @@
             this.VoicesTabPanel.ResumeLayout(false);
             this.EffectsPresetsEditorTabPage.ResumeLayout(false);
             this.AboutTabPage.ResumeLayout(false);
+            this.UpdateTabPage.ResumeLayout(false);
             this.EffectTabControl.ResumeLayout(false);
             this.EffectPresetsContextMenuStrip.ResumeLayout(false);
             this.EffectTabPage.ResumeLayout(false);
@@ -1741,6 +1799,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DescriptionColumn;
         private System.Windows.Forms.Label MonitorPortLbel;
         private System.Windows.Forms.NumericUpDown PortNumericUpDown;
+        private System.Windows.Forms.TabPage UpdateTabPage;
+        private System.Windows.Forms.WebBrowser UpdateWebBrowser;
+        private System.Windows.Forms.Label UpdateLabel;
+        private System.Windows.Forms.Button UpdateButton;
 
 
 
