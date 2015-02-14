@@ -200,11 +200,8 @@
 				JocysCom_OptionsFrame_OnLoad(self);
 			</OnLoad>
 			<OnHide>
-				JocysCom_OptionsFrame_OnHide()
+				JocysCom_OptionsFrame_OnHide();
 			</OnHide>
-			<OnShow>
-				JocysCom_OptionsFrame_OnShow()
-			</OnShow>
 		</Scripts>
 	</Frame>
 	<Frame name="JocysCom_MiniFrame" parent="UIParent" frameStrata="DIALOG">
@@ -274,10 +271,10 @@
 		</Frames>
 		<Scripts>
 			<OnHide>
-				JocysCom_MiniFrame_OnHide()
+				JocysCom_MiniFrame_OnHide();
 			</OnHide>
 			<OnShow>
-				JocysCom_MiniFrame_OnShow()
+				JocysCom_MiniFrame_OnShow();
 			</OnShow>
 		</Scripts>
 	</Frame>
