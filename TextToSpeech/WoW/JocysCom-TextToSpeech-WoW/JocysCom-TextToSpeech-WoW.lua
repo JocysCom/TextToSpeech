@@ -11,13 +11,14 @@ local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-t
 -- Set text.
 local function JocysCom_Text_EN()
 	-- Titles.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.13 ( 2015-03-01 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.14 ( 2015-04-03 )");
 	-- Frames.
 	JocysCom_ScrollFrame.text:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
 	-- Check buttons.
 	FilterCheckButton.text:SetText("|cff808080 Hide addon's whisper messages in chat window.|r");
 	DndCheckButton.text:SetText("|cff808080 Show|r |cffffffff<Busy>|r|cff808080 over my character for other players, when NPC dialogue window is open and speech is on.|r");
 	AutoCheckButton.text:SetText("|cff808080 Auto start speech, when dialog window is open (except for quest log windows).|r");
+	ContinueCheckButton.text:SetText("|cff808080 Play after closing|r");
 	---- Font Strings
 	DescriptionFrameFontString:SetText("Text-to-speech voices, pitch, rate, effects, etc. ... you will find all options in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window, |cff77ccffJocys.Com Text to Speech WoW Addon|r creates and sends special whisper message to yourself (message includes dialogue text, character name and effect name). Then, |cff77ccffJocys.Com Text to Speech Monitor|r (which must be running in background) picks-up this message from your network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.");
 	ReplaceNameFontString:SetText("Here you can change your name for text to speech from |cff00ff00" .. unitName .. "|r to something else.");
@@ -38,6 +39,12 @@ local function JocysCom_UnLockFrames()
 	JocysCom_MiniFrame:RegisterForDrag("LeftButton");
 	JocysCom_MiniFrame:SetScript("OnDragStart", JocysCom_MiniFrame.StartMoving);
 	JocysCom_MiniFrame:SetScript("OnDragStop", JocysCom_MiniFrame.StopMovingOrSizing);
+	JocysCom_StopFrame:SetMovable(true);
+	JocysCom_StopFrame:EnableMouse(true);
+	JocysCom_StopFrame:RegisterForDrag("LeftButton");
+	JocysCom_StopFrame:SetScript("OnDragStart", JocysCom_StopFrame.StartMoving);
+	JocysCom_StopFrame:SetScript("OnDragStop", JocysCom_StopFrame.StopMovingOrSizing);
+	JocysCom_StopFrame.texture:SetTexture(0, 0, 0, 0.8);
 	JocysCom_ScrollFrame:SetMovable(true);
 	JocysCom_ScrollFrame:SetResizable(true);
 	JocysCom_ScrollFrame:EnableMouse(true);
@@ -50,6 +57,8 @@ end
 -- Unlock frames.
 local function JocysCom_LockFrames()
 	JocysCom_MiniFrame:SetMovable(nil);
+	JocysCom_StopFrame:SetMovable(nil);
+	JocysCom_StopFrame.texture:SetTexture(0, 0, 0, 0);
 	JocysCom_ScrollFrame:SetMovable(nil);
 	JocysCom_ScrollFrame:SetResizable(nil);
 	JocysCom_ScrollFrame:EnableMouse(nil);
@@ -60,7 +69,7 @@ local function JocysCom_LockFrames()
 end
 
 -- FUNCTION MESSAGE STOP
-local function sendChatMessageStop()
+local function sendChatMessageStop(CloseOrButton)
 		-- Disable DND <Busy> if checked.
 		if DndCheckButton:GetChecked() == true then
 			if UnitIsDND("player") == true then
@@ -68,8 +77,10 @@ local function sendChatMessageStop()
 			end
 		end
 		if stopWhenClosing == 1 then
-			SendChatMessage(messageStop, "WHISPER", "Common", unitName);
-			QuestEditBox:SetText("|cff808080" .. messageStop .. "|r");
+			if ContinueCheckButton:GetChecked() ~= true or CloseOrButton == 1 then
+				SendChatMessage(messageStop, "WHISPER", "Common", unitName);
+				QuestEditBox:SetText("|cff808080" .. messageStop .. "|r");
+			end
 		end
 end
 
@@ -292,6 +303,16 @@ function JocysCom_DndCheckButton_OnClick(self)
 	end
 end
 
+-- Continue play Enable / Disable.
+function JocysCom_ContinueCheckButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	if ContinueCheckButton:GetChecked() == true then
+	JocysCom_StopFrame:Show();
+	else
+	JocysCom_StopFrame:Hide();
+	end
+end
+
 -- Hide whisper messages.
 function JocysCom_FilterCheckButton_OnClick(self) PlaySound("igMainMenuOptionCheckBoxOn") end
 
@@ -308,7 +329,7 @@ function JocysCom_ScrollFrame_OnMouseWheel(self, delta)
 		end
 		JocysCom_SpeakMessage("Scroll", lastQuest); -- Send quest message.
 		else
-			sendChatMessageStop(); -- Send stop message.
+			sendChatMessageStop(1); -- Send stop message.
 		end
 end
 
@@ -363,7 +384,7 @@ end
 function JocysCom_MiniFrame_OnHide()
 	if DebugEnabled then print("MiniFrame Hide") end
 	JocysCom_OptionsFrame:Hide();
-	sendChatMessageStop();
+	sendChatMessageStop(0);
 	QuestEditBox:SetText("");
 end
 
@@ -383,11 +404,11 @@ local function JocysCom_OptionsFrame_CloseButton_OnClick(self)
 	JocysCom_OptionsFrame:Hide();
 end
 
--- [ Close & Play ] Options button.
-local function JocysCom_OptionsFrame_CloseAndPlayButton_OnClick(self)
-	stopWhenClosing = 0;
-    -- close  windows here.
-end
+---- [ Close & Play ] Options button.
+--local function JocysCom_OptionsFrame_CloseAndPlayButton_OnClick(self)
+	--stopWhenClosing = 0;
+    ---- close  windows here.
+--end
 
 -- [ TTS... ] button.
 function JocysCom_OptionsButton_OnClick(self)
@@ -422,7 +443,7 @@ end
 -- [ Stop ] button
 function JocysCom_StopButtonButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOff");
-	sendChatMessageStop();
+	sendChatMessageStop(1);
 end
 
 -- Close frames on "Escape" key press.
@@ -431,7 +452,7 @@ local function EditBox_OnEscapePressed()
 	CloseQuest();
 	CloseGossip();
 	CloseItemText();
-	sendChatMessageStop();
+	sendChatMessageStop(0);
 end
 
 -- Black Background for Quest frame.
@@ -445,6 +466,7 @@ function JocysCom_SaveAllSettings()
 	AutoCheckButtonValue = AutoCheckButton:GetChecked();
 	DndCheckButtonValue = DndCheckButton:GetChecked();
 	FilterCheckButtonValue = FilterCheckButton:GetChecked();
+	ContinueCheckButtonValue = ContinueCheckButton:GetChecked();
 	-- Save edit boxes.
 	ReplaceNameEditBoxValue = ReplaceNameEditBox:GetText();
 end
@@ -463,10 +485,12 @@ function JocysCom_LoadAllSettings()
 		AutoCheckButtonValue = 1;
 		DndCheckButtonValue = 1;
 		FilterCheckButtonValue = 1;
+		ContinueCheckButtonValue = 0;
 	end
 	AutoCheckButton:SetChecked(AutoCheckButtonValue);
 	DndCheckButton:SetChecked(DndCheckButtonValue);
-	FilterCheckButton:SetChecked(FilterCheckButtonValue);	
+	FilterCheckButton:SetChecked(FilterCheckButtonValue);
+	ContinueCheckButton:SetChecked(ContinueCheckButtonValue);
 	-- Load edit boxes.
 	if ReplaceNameEditBoxValue == "" or ReplaceNameEditBoxValue == nil then ReplaceNameEditBoxValue = unitName end
 	ReplaceNameEditBox:SetText(ReplaceNameEditBoxValue);
@@ -482,8 +506,10 @@ function JocysCom_LoadAllSettings()
 	QuestLogPopupDetailFrame:SetScript("OnShow", JocysCom_QuestLogPopupDetailFrame_OnShow);
 	QuestMapDetailsScrollFrame:SetScript("OnShow", JocysCom_QuestMapDetailsScrollFrame_OnShow);
 	JocysCom_OptionsFrame:SetScript("OnShow", JocysCom_OptionsFrame_OnShow);
-
-
-
+	if ContinueCheckButton:GetChecked() == true then
+		JocysCom_StopFrame:Show();
+	else
+		JocysCom_StopFrame:Hide();
+	end
 end
 

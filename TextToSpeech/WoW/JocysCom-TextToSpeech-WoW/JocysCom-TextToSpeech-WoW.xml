@@ -217,7 +217,7 @@
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="219" y="-1" />
+						<Offset x="99" y="-1" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -238,7 +238,7 @@
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="189" y="-1" />
+						<Offset x="69" y="-1" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -259,7 +259,7 @@
 				<Size x="57" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="133" y="-1" />
+						<Offset x="13" y="-1" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -268,6 +268,19 @@
 					</OnClick>
 				</Scripts>
 			</Button>
+			<CheckButton name="ContinueCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniFrame" text="">
+				<Size x="24" y="24" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="130" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						JocysCom_ContinueCheckButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
 		</Frames>
 		<Scripts>
 			<OnHide>
@@ -356,5 +369,55 @@
 				JocysCom_ScrollFrame_OnMouseUp(self);
 			</OnMouseUp>
 		</Scripts>
+	</Frame>
+	<Frame name="JocysCom_StopFrame" parent="ObjectiveTrackerFrame" frameStrata="DIALOG">
+		<Size x="36" y="26" />
+		<Anchors>
+			<Anchor point="TOPRIGHT">
+				<Offset x="36" y="2" />
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="" edgeFile="">
+			<Color r="0" g="0" b="0" />
+		</Backdrop>
+		<Layers>
+			<Layer>
+				<Texture name="ScrollFrameTexture" parentKey="texture">
+					<Size x="216" y="216" />
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset />
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset />
+						</Anchor>
+					</Anchors>
+					<Color a="0.8" r="0" g="0" b="0" />
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="StopButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopFrame" text="■">
+				<Size x="31" y="21" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="3" y="-2" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						JocysCom_StopButtonButton_OnClick(self);
+					</OnClick>
+				</Scripts>
+				<ButtonText font="Fonts\ARIALN.TTF">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="1" />
+						</Anchor>
+					</Anchors>
+					<FontHeight val="18" />
+				</ButtonText>
+			</Button>
+		</Frames>
 	</Frame>
 </Ui>

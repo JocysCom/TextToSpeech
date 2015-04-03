@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="RateMinComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="PitchMinComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)">-5</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="RateMaxComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="PitchMaxComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="GenderComboBoxText" Type="System.String" Scope="User">
       <Value Profile="(Default)">Male</Value>

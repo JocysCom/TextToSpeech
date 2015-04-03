@@ -451,7 +451,7 @@ namespace JocysCom.TextToSpeech.Monitor
             PitchTextBox.Text = pitchIsValid ? PitchTextBox.Text = "" : _Pitch.ToString();
 
             // Set PitchComment.
-            _PitchComment = _Pitch >= 0 ? -8 : 8;
+            _PitchComment = _Pitch >= 0 ? -4 : 4;
 
             // Set rate.
             var rateIsValid = int.TryParse(v.rate, out _Rate);
@@ -558,10 +558,6 @@ namespace JocysCom.TextToSpeech.Monitor
             w.WriteAttributeString("absmiddle", pitch.ToString());
             w.WriteStartElement("rate");
             w.WriteAttributeString("absspeed", rate.ToString());
-
-            //// Replace [comment] tags to SAPI.
-            //text = text.Replace("[comment]", "<pitch absmiddle=\"" + _PitchComment.ToString() + "\">").ToString();
-            //text = text.Replace("[/comment]", "</pitch>").ToString();
 
             w.WriteRaw(text);
             w.WriteEndElement();
