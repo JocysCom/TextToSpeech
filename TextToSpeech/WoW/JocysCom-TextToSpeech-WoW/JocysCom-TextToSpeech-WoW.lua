@@ -11,7 +11,7 @@ local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-t
 -- Set text.
 local function JocysCom_Text_EN()
 	-- Titles.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.14 ( 2015-04-03 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.15 ( 2015-04-04 )");
 	-- Frames.
 	JocysCom_ScrollFrame.text:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
 	-- Check buttons.
@@ -58,6 +58,7 @@ end
 local function JocysCom_LockFrames()
 	JocysCom_MiniFrame:SetMovable(nil);
 	JocysCom_StopFrame:SetMovable(nil);
+	JocysCom_StopFrame:EnableMouse(nil);
 	JocysCom_StopFrame.texture:SetTexture(0, 0, 0, 0);
 	JocysCom_ScrollFrame:SetMovable(nil);
 	JocysCom_ScrollFrame:SetResizable(nil);
@@ -469,6 +470,10 @@ function JocysCom_SaveAllSettings()
 	ContinueCheckButtonValue = ContinueCheckButton:GetChecked();
 	-- Save edit boxes.
 	ReplaceNameEditBoxValue = ReplaceNameEditBox:GetText();
+
+	JocysCom_StopFrame:SetMovable(true);
+	JocysCom_StopFrame:EnableMouse(true);
+	JocysCom_StopFrame:SetUserPlaced(true);
 end
 
 function JocysCom_LoadAllSettings()
@@ -511,5 +516,9 @@ function JocysCom_LoadAllSettings()
 	else
 		JocysCom_StopFrame:Hide();
 	end
+
+	JocysCom_StopFrame:SetMovable(true);
+	JocysCom_StopFrame:EnableMouse(true);
+	JocysCom_StopFrame:SetUserPlaced(true);
 end
 

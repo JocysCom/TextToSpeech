@@ -249,7 +249,7 @@
 				<ButtonText font="Fonts\ARIALN.TTF">
 					<Anchors>
 						<Anchor point="TOP">
-							<Offset x="1" />
+							<Offset x="1" y="0" />
 						</Anchor>
 					</Anchors>
 					<FontHeight val="18" />
@@ -311,7 +311,7 @@
 		</Backdrop>
 		<Layers>
 			<Layer>
-				<Texture name="ScrollFrameTexture" parentKey="texture">
+				<Texture name="JocysCom_ScrollFrameTexture" parentKey="texture">
 					<Size x="216" y="216" />
 					<Anchors>
 						<Anchor point="TOPLEFT">
@@ -373,35 +373,25 @@
 	<Frame name="JocysCom_StopFrame" parent="ObjectiveTrackerFrame" frameStrata="DIALOG">
 		<Size x="36" y="26" />
 		<Anchors>
-			<Anchor point="TOPRIGHT">
-				<Offset x="36" y="2" />
-			</Anchor>
+			<Anchor point="TOP" />
 		</Anchors>
 		<Backdrop bgFile="" edgeFile="">
 			<Color r="0" g="0" b="0" />
 		</Backdrop>
 		<Layers>
 			<Layer>
-				<Texture name="ScrollFrameTexture" parentKey="texture">
-					<Size x="216" y="216" />
-					<Anchors>
-						<Anchor point="TOPLEFT">
-							<Offset />
-						</Anchor>
-						<Anchor point="BOTTOMRIGHT">
-							<Offset />
-						</Anchor>
-					</Anchors>
+				<Texture name="JocysCom_StopFrameTexture" parentKey="texture">
+					<Size x="36" y="26" />
 					<Color a="0.8" r="0" g="0" b="0" />
 				</Texture>
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="StopButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopFrame" text="■">
+			<Button name="StopButtonButton2" inherits="UIPanelButtonTemplate" parent="JocysCom_StopFrame" text="■">
 				<Size x="31" y="21" />
 				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="3" y="-2" />
+					<Anchor point="TOP">
+						<Offset x="0" y="0" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -412,7 +402,7 @@
 				<ButtonText font="Fonts\ARIALN.TTF">
 					<Anchors>
 						<Anchor point="TOP">
-							<Offset x="1" />
+							<Offset x="1" y="0" />
 						</Anchor>
 					</Anchors>
 					<FontHeight val="18" />
