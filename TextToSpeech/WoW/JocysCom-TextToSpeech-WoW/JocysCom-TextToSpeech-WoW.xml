@@ -1,6 +1,6 @@
 ﻿<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.blizzard.com/wow/ui/  ..\FrameXML\UI.xsd" xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="JocysCom-TextToSpeech-WoW-Addon.lua" />
-	<Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parentKey="" parent="UIParent" movable="true" frameStrata="HIGH" enableMouse="true">
+	<Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parent="UIParent" movable="true" enableMouse="true">
 		<Size x="600" y="496" />
 		<Anchors>
 			<Anchor point="TOPLEFT">
@@ -217,7 +217,7 @@
 			</OnHide>
 		</Scripts>
 	</Frame>
-	<Frame name="JocysCom_MiniFrame" parent="UIParent" frameStrata="DIALOG">
+	<Frame name="JocysCom_MiniFrame" parent="UIParent">
 		<Size x="256" y="32" />
 		<Anchors>
 			<Anchor point="TOPLEFT">
@@ -260,7 +260,7 @@
 					<FontHeight val="12" />
 				</ButtonText>
 			</Button>
-			<Button name="StopButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="■">
+			<Button name="StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="■">
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -269,7 +269,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						JocysCom_StopButtonButton_OnClick(self);
+						JocysCom_StopButton_OnClick(self);
 					</OnClick>
 				</Scripts>
 				<ButtonText font="Fonts\ARIALN.TTF">
@@ -304,7 +304,7 @@
 			</OnShow>
 		</Scripts>
 	</Frame>
-	<Frame name="JocysCom_ScrollFrame" parent="UIParent" movable="true" resizable="true" frameStrata="DIALOG" enableMouse="true">
+	<Frame name="JocysCom_ScrollFrame" parent="UIParent" movable="true" resizable="true" enableMouse="true">
 		<Size x="216" y="216" />
 		<Anchors>
 			<Anchor point="TOPLEFT">
@@ -383,7 +383,7 @@
 			</OnMouseUp>
 		</Scripts>
 	</Frame>
-	<Frame name="JocysCom_StopFrame" parent="ObjectiveTrackerFrame" frameStrata="DIALOG">
+	<Frame name="JocysCom_StopFrame" parent="ObjectiveTrackerFrame">
 		<Size x="223" y="40" />
 		<Anchors>
       <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" x="-20"/>
@@ -410,7 +410,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="StopButtonButton2" inherits="UIPanelButtonTemplate" parent="JocysCom_StopFrame" text="■">
+			<Button name="StopButton2" inherits="UIPanelButtonTemplate" parent="JocysCom_StopFrame" text="■">
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -419,7 +419,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						JocysCom_StopButtonButton_OnClick(self);
+						JocysCom_StopButton_OnClick(self);
 					</OnClick>
 				</Scripts>
 				<ButtonText font="Fonts\ARIALN.TTF">

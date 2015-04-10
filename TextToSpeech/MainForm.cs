@@ -17,6 +17,7 @@ using System.Speech.Synthesis;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace JocysCom.TextToSpeech.Monitor
 {
@@ -382,17 +383,62 @@ namespace JocysCom.TextToSpeech.Monitor
             }
         }
 
+        bool ScrollMessagesGrid = false;
+        object ScrollMessagesGridLock = new object();
+
         private void addWowListItem(WowListItem wowItem)
         {
-            // Leave maximum 9 items in the list.
-            while (WowMessageList.Count > 9)
+            lock (ScrollMessagesGridLock)
             {
-                WowMessageList.RemoveAt(0);
+                ScrollMessagesGrid = ScrollGrid();
+                // Leave maximum 100 items in the list.
+                while (WowMessageList.Count > 100)
+                {
+                    WowMessageList.RemoveAt(0);
+                }
+                // Add new item at the bottom.
+                WowMessageList.Add(wowItem);
             }
-            // Add new item at the bottom.
-            WowMessageList.Add(wowItem);
             ProcessWowMessage(wowItem.VoiceXml);
+
         }
+
+        bool ScrollGrid()
+        {
+            bool scroll;
+            lock (ScrollMessagesGridLock)
+            {
+                var grid = MessagesDataGridView;
+                int firstDisplayed = grid.FirstDisplayedScrollingRowIndex;
+                int displayed = grid.DisplayedRowCount(true);
+                int lastVisible = (firstDisplayed + displayed) - 1;
+                int lastIndex = grid.RowCount - 1;
+                int newIndex = firstDisplayed + 1;
+                scroll = lastVisible == lastIndex;
+            }
+            return scroll;
+        }
+
+        void ScrollDownGrid(DataGridView grid)
+        {
+            lock (ScrollMessagesGridLock)
+            {
+                if (ScrollMessagesGrid) { grid.FirstDisplayedScrollingRowIndex = grid.RowCount - 1; }
+            }
+        }
+
+        private void MessagesDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            ScrollDownGrid(MessagesDataGridView);
+        }
+
+        private void MessagesDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            ScrollDownGrid(MessagesDataGridView);
+        }
+
+
+
 
         private void SnifferForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -517,7 +563,7 @@ namespace JocysCom.TextToSpeech.Monitor
                     buffer = "";
                     IncomingTextTextBox.Text = decodedText;
                     //TextXmlTabControl.SelectedTab = TextTabPage;
-                    AddTextToPlaylist(decodedText);
+                    AddTextToPlaylist(decodedText, true);
                     break;
                 case "stop":
                     text = "";
@@ -559,7 +605,7 @@ namespace JocysCom.TextToSpeech.Monitor
             refreshPresets();
         }
 
-        string GetXmlText(string text, InstalledVoiceEx vi, int volume, int pitch, int rate)
+        string GetXmlText(string text, InstalledVoiceEx vi, int volume, int pitch, int rate, bool isComment)
         {
             string xml;
             string name = vi.Name;
@@ -567,14 +613,13 @@ namespace JocysCom.TextToSpeech.Monitor
             var w = new XmlTextWriter(sw);
             w.Formatting = Formatting.Indented;
             w.WriteStartElement("voice");
-            w.WriteAttributeString("required", "name=" + name + ";language=" + vi.CultureLCID.ToString("X3"));
+            w.WriteAttributeString("required", "name=" + name); // + ";language=" + vi.CultureLCID.ToString("X3"));
             w.WriteStartElement("volume");
             w.WriteAttributeString("level", volume.ToString());
-            w.WriteStartElement("pitch");
-            w.WriteAttributeString("absmiddle", pitch.ToString());
             w.WriteStartElement("rate");
             w.WriteAttributeString("absspeed", rate.ToString());
-
+            w.WriteStartElement("pitch");
+            w.WriteAttributeString("absmiddle", (isComment ? _PitchComment : pitch).ToString());
             w.WriteRaw(text);
             w.WriteEndElement();
             w.WriteEndElement();
@@ -597,35 +642,44 @@ namespace JocysCom.TextToSpeech.Monitor
             return returnHtmlText;
         }
 
-        void AddTextToPlaylist(string text)
+        List<PlayItem> AddTextToPlaylist(string text, bool addToPlaylist)
         {
-
-            //SwapClipboardHtmlText(text);
-
-
-            var blocks = MainHelper.SplitText(text);
-            foreach (var block in blocks)
+            // It will take too long to convert large amount of text to WAV data and apply all filters.
+            // This function will split text into smaller sentences.
+            var cs = "[comment]";
+            var ce = "[/comment]";
+            var items = new List<PlayItem>();
+            var splitItems = MainHelper.SplitText(text, new string[] { ". ", "! ", "? ", cs, ce });
+            var sentences = splitItems.Where(x => (x.Value + x.Key).Trim().Length > 0).ToArray();
+            bool comment = false;
+            // Loop trough each sentence.
+            for (int i = 0; i < sentences.Length; i++)
             {
-                var item = new PlayItem(this)
+                var block = sentences[i];
+                // Combine sentence and separator.
+                var sentence = block.Value + block.Key.Replace(cs, "").Replace(ce, "");
+                if (!string.IsNullOrEmpty(sentence))
                 {
-                    Text = block,
-                    Xml = ConvertTextToSapiXml(block),
-                    Status = JobStatusType.Parsed,
+                    var item = new PlayItem(this)
+                    {
+                        Text = sentence,
+                        Xml = ConvertTextToSapiXml(sentence, comment),
+                        Status = JobStatusType.Parsed,
+                        IsComment = comment,
+                    };
+                    items.Add(item);
+                    if (addToPlaylist) lock (playlistLock) { playlist.Add(item); }
                 };
-                lock (playlistLock) { playlist.Add(item); }
+                if (block.Key == cs) comment = true;
+                if (block.Key == ce) comment = false;
             }
+            return items;
         }
 
-        string ConvertTextToSapiXml(string text)
+        string ConvertTextToSapiXml(string text, bool isComment = false)
         {
             var vi = SelectedVoice;
-            // Split text into blocks.
-
-            // Replace [comment] tags to SAPI.
-            text = text.Replace("[comment]", "<pitch absmiddle=\"" + _PitchComment.ToString() + "\" />").ToString();
-            text = text.Replace("[/comment]", "<pitch absmiddle=\"" + _Pitch.ToString() + "\" />").ToString().ToString();
-
-            return GetXmlText(text, vi, _Volume, _Pitch, _Rate);
+            return GetXmlText(text, vi, _Volume, _Pitch, _Rate, isComment);
         }
 
         byte[] ConvertSapiXmlToWav(string xml)
@@ -687,15 +741,18 @@ namespace JocysCom.TextToSpeech.Monitor
 
         void SpeakButton_Click(object sender, EventArgs e)
         {
+            // if [ Formated SAPI XML Text ] tab selected.
             if (TextXmlTabControl.SelectedTab == SapiTabPage)
             {
                 var item = new PlayItem(this)
                 {
+                    Text = "SAPI XML",
                     Xml = SapiTextBox.Text,
                     Status = JobStatusType.Parsed,
                 };
                 lock (playlistLock) { playlist.Add(item); }
             }
+            // if [ SandBox ] tab selected.
             else if (TextXmlTabControl.SelectedTab == SandBoxTabPage)
             {
                 var text = SandBoxTextBox.Text;
@@ -703,9 +760,19 @@ namespace JocysCom.TextToSpeech.Monitor
                 var wowItem = new WowListItem(text);
                 addWowListItem(wowItem);
             }
+                // if [ Incoming Messages ] tab selected.
+            else if (TextXmlTabControl.SelectedTab == MessagesTabPage)
+            {
+                var gridRow = MessagesDataGridView.SelectedRows.Cast<DataGridViewRow>().FirstOrDefault();
+                if (gridRow != null)
+                {
+                    var item = (WowListItem)gridRow.DataBoundItem;
+                    ProcessWowMessage(item.VoiceXml);
+                }
+            }
             else
             {
-                AddTextToPlaylist(IncomingTextTextBox.Text);
+                AddTextToPlaylist(IncomingTextTextBox.Text, true);
             }
         }
 
@@ -901,6 +968,7 @@ namespace JocysCom.TextToSpeech.Monitor
             RateMaxComboBox.Enabled = en;
             PitchMinComboBox.Enabled = en;
             PitchMaxComboBox.Enabled = en;
+            _Volume = VolumeTrackBar.Value;
             VolumeTrackBar.Enabled = en;
             VoicesDataGridView.Enabled = en;
             VoicesDataGridView.DefaultCellStyle.SelectionBackColor = en
@@ -918,7 +986,8 @@ namespace JocysCom.TextToSpeech.Monitor
             }
             else
             {
-                SapiTextBox.Text = ConvertTextToSapiXml(IncomingTextTextBox.Text);
+                var blocks = AddTextToPlaylist(IncomingTextTextBox.Text, false);
+                SapiTextBox.Text = string.Join("\r\n\r\n", blocks.Select(x => x.Xml));
             }
         }
 
@@ -1319,5 +1388,6 @@ namespace JocysCom.TextToSpeech.Monitor
             //var column = VoicesDataGridView.Columns[e.ColumnIndex];
             e.Cancel = true;
         }
+
     }
 }

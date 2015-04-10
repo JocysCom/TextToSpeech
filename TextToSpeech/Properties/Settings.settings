@@ -3,25 +3,25 @@
   <Profiles />
   <Settings>
     <Setting Name="RateMinComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PitchMinComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="RateMaxComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PitchMaxComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="GenderComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Male</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="VoicesData" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="MonitorClipboardComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Disabled</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PortNumericUpDownValue" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">3724</Value>

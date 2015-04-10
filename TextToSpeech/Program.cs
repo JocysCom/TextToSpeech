@@ -15,7 +15,6 @@ namespace JocysCom.TextToSpeech.Monitor
         {
             try
             {
-
                 // Update working directory.
                 var fi = new System.IO.FileInfo(Application.ExecutablePath);
                 System.IO.Directory.SetCurrentDirectory(fi.Directory.FullName);
@@ -25,6 +24,18 @@ namespace JocysCom.TextToSpeech.Monitor
                 }
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+              // if settings doesn't exists then...
+                if (string.IsNullOrEmpty(Properties.Settings.Default.PitchMaxComboBoxText))
+                {
+                    Properties.Settings.Default.PitchMaxComboBoxText = "0";
+                    Properties.Settings.Default.PitchMinComboBoxText = "0";
+                    Properties.Settings.Default.RateMaxComboBoxText = "1";
+                    Properties.Settings.Default.RateMinComboBoxText = "1";
+                    Properties.Settings.Default.GenderComboBoxText = "Male";
+                    Properties.Settings.Default.MonitorClipboardComboBoxText = "Disabled";
+                    Properties.Settings.Default.PortNumericUpDownValue = 3724;
+                    Properties.Settings.Default.Save();
+                }
                 Application.Run(new MainForm());
             }
             catch (Exception ex)

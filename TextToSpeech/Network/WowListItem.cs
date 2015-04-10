@@ -59,7 +59,7 @@ namespace JocysCom.TextToSpeech.Monitor.Network
             }
         }
 
-        public int TotalLength { get { return _IpHeader.TotalLength; } }
+        public int TotalLength { get { return _IpHeader == null ? 0 : _IpHeader.TotalLength; } }
 
         public IPAddress SourceAddress { get { return _IpHeader == null ? IPAddress.None : _IpHeader.SourceAddress; } }
         public ushort SourcePort { get { return _TcpHeader == null ? (ushort)0 : _TcpHeader.SourcePort; } }

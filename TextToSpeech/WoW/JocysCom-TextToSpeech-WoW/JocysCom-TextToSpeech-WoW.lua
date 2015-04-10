@@ -13,7 +13,7 @@ local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-t
 -- Set text.
 local function JocysCom_Text_EN()
 	-- Titles.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.18 ( 2015-04-10 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.19 ( 2015-04-10 )");
 	-- Frames.
 	JocysCom_ScrollFrame.text:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
 	-- Check buttons.
@@ -65,7 +65,9 @@ local function JocysCom_UnLockFrames()
 	JocysCom_ScrollFrame.texture:SetTexture(0, 0, 0, 0.8);
 	JocysCom_ScrollFrame.text:Show();
 	JocysCom_ScrollFrame.resizeButton:Show();
-	JocysCom_ScrollFrame:SetFrameLevel(100);
+	JocysCom_OptionsFrame:SetFrameLevel(12);
+	JocysCom_ScrollFrame:SetFrameLevel(11);
+	JocysCom_StopFrame:SetFrameLevel(10);
 end
 
 -- Lock frames.
@@ -78,7 +80,9 @@ local function JocysCom_LockFrames()
 	JocysCom_ScrollFrame.texture:SetTexture(0, 0, 0, 0);
 	JocysCom_ScrollFrame.text:Hide();
 	JocysCom_ScrollFrame.resizeButton:Hide();
-	JocysCom_ScrollFrame:SetFrameLevel(100);
+	JocysCom_OptionsFrame:SetFrameLevel(12);
+	JocysCom_ScrollFrame:SetFrameLevel(11);
+	JocysCom_StopFrame:SetFrameLevel(10);
 end
 
 -- FUNCTION MESSAGE STOP
@@ -134,7 +138,6 @@ end
 -- Options frame on load.
 function JocysCom_OptionsFrame_OnLoad(self)
 	self:SetPoint("TOPLEFT", 356, -116);
-	self:SetFrameStrata("HIGH");
 	self:SetMovable(true);
 	self:EnableMouse(true);
 	self:RegisterForDrag("LeftButton");
@@ -713,13 +716,16 @@ local function JocysCom_ShowFrames(frame)
 	JocysCom_ScrollFrame:SetWidth(width - 50);
 	JocysCom_ScrollFrame:SetPoint("TOPLEFT", 12, -67);
 	end
-	JocysCom_ScrollFrame:SetFrameLevel(100);
 	-- Set parent frame.		
 	JocysCom_MiniFrame:SetParent(frame);
 	JocysCom_OptionsFrame:SetParent(frame);
 	-- Frames position, depending on event.
 	JocysCom_MiniFrame:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", 0, 0);
 	JocysCom_OptionsFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT", 2, 0);
+	-- Set FrameLevel frame.
+	JocysCom_OptionsFrame:SetFrameLevel(12);
+	JocysCom_ScrollFrame:SetFrameLevel(11);
+	JocysCom_StopFrame:SetFrameLevel(10);
 		-- Show Frames.
 	JocysCom_ScrollFrame:Show();
 	JocysCom_MiniFrame:Show();
@@ -790,7 +796,7 @@ function JocysCom_PlayButtonButton_OnClick(self)
 end
 
 -- [ Stop ] button
-function JocysCom_StopButtonButton_OnClick(self)
+function JocysCom_StopButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOff");
 	sendChatMessageStop(1);
 end

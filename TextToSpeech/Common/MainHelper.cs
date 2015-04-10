@@ -60,39 +60,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		#endregion
 
-		/// <summary>
-		/// It will take too long to convert large amount of text to WAV data and apply all filters.
-		/// This function will split text into smaller sentences.
-		/// </summary>
-		public static string[] SplitText(string text)
-		{
-			List<string> blocks = new List<string>();
-			var splitItems = SplitText(text, new string[] { ". ", "! ", "? " });
-			var sentences = splitItems.Select(x => (x.Value + x.Key).Trim()).Where(x => x.Length > 0).ToArray();
-			//var sentences = text.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
-			string block = "";
-			// Loop trough each sentence.
-			for (int i = 0; i < sentences.Length; i++)
-			{
-				block += sentences[i];
-				try
-				{
-					// Make sure that each sentence is a valid XML.
-					XDocument document = XDocument.Parse("<p>" + block + "</p>");
-					blocks.Add(block);
-					block = "";
-				}
-				catch (Exception)
-				{
-					// Probably failed, because XML tag ends in another sentence.
-					// Continue adding
-				}
-
-			}
-			return blocks.ToArray();
-		}
-
-		static KeyValue[] SplitText(string s, string[] separators)
+		public static KeyValue[] SplitText(string s, string[] separators)
 		{
 			var list = new List<KeyValue>();
 			var sepIndex = new List<int>();

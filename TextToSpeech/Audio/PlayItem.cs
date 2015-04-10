@@ -44,6 +44,13 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
             NotifyPropertyChanged("Status");
         }
 
+        bool _IsComment;
+        public bool IsComment
+        {
+            get { return _IsComment; }
+            set { _IsComment = value; NotifyPropertyChanged("IsComment"); }
+        }
+        
         string _Text;
         public string Text
         {
