@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Jocys.com Text To Speech Monitor")]
-[assembly: AssemblyDescription("Jocys.com Text To Speech Monitor")]
+[assembly: AssemblyTitle("Jocys.com Text to Speech Monitor")]
+[assembly: AssemblyDescription("Jocys.com Text to Speech Monitor")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jocys.com")]
-[assembly: AssemblyProduct("Text To Speech Monitor")]
+[assembly: AssemblyProduct("Text to Speech Monitor")]
 [assembly: AssemblyCopyright("Copyright © Jocys.com 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
