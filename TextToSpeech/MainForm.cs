@@ -1,4 +1,5 @@
-﻿using JocysCom.TextToSpeech.Monitor.Audio;
+﻿using JocysCom.ClassLibrary.Runtime;
+using JocysCom.TextToSpeech.Monitor.Audio;
 using JocysCom.TextToSpeech.Monitor.Network;
 using SpeechLib;
 using System;
@@ -352,8 +353,8 @@ namespace JocysCom.TextToSpeech.Monitor
                 LastException = ex;
             }
         }
-        
-        
+
+
         BindingList<WowListItem> WowMessageList = new BindingList<WowListItem>();
 
         private void ParseData(byte[] byteData, int nReceived)
@@ -421,8 +422,23 @@ namespace JocysCom.TextToSpeech.Monitor
         {
             // If <voice.
             if (!text.Contains("<voice")) return;
-            var v = MainHelper.DeserializeFromXmlString<voice>(text);
+            var v = Serializer.DeserializeFromXmlString<voice>(text);
+            // Override voice values.
+            var name = v.name;
+            var overrideVoice = SettingsFile.Current.Overrides.FirstOrDefault(x => x.name == name);
+            // if override was not found then...
+            if (overrideVoice == null)
+            {
 
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(overrideVoice.gender)) v.gender = overrideVoice.gender;
+                if (!string.IsNullOrEmpty(overrideVoice.effect)) v.effect = overrideVoice.effect;
+                if (!string.IsNullOrEmpty(overrideVoice.pitch)) v.pitch = overrideVoice.pitch;
+                if (!string.IsNullOrEmpty(overrideVoice.rate)) v.rate = overrideVoice.rate;
+                if (!string.IsNullOrEmpty(overrideVoice.volume)) v.volume = overrideVoice.volume;
+            }
             //Set gender. "Male"(1), "Female"(2), "Neutral"(3).
             _Gender = string.IsNullOrEmpty(v.gender) || v.gender != "Male" && v.gender != "Female" && v.gender != "Neutral" ? GenderComboBox.Text : v.gender;
             gender = (VoiceGender)Enum.Parse(typeof(VoiceGender), _Gender);
@@ -492,12 +508,15 @@ namespace JocysCom.TextToSpeech.Monitor
             {
                 case "copy":
                     break;
+                case "add":
+                    if (v.parts != null) buffer += string.Join("", v.parts);
+                    break;
                 case "play":
                     if (v.parts != null) buffer += string.Join("", v.parts);
                     var decodedText = System.Web.HttpUtility.HtmlDecode(buffer);
+                    buffer = "";
                     IncomingTextTextBox.Text = decodedText;
                     //TextXmlTabControl.SelectedTab = TextTabPage;
-                    StopPlayer();
                     AddTextToPlaylist(decodedText);
                     break;
                 case "stop":
@@ -505,9 +524,6 @@ namespace JocysCom.TextToSpeech.Monitor
                     StopPlayer();
                     IncomingRateTextBox.Text = "";
                     IncomingPitchTextBox.Text = "";
-                    break;
-                case "add":
-                    if (v.parts != null) buffer += string.Join("", v.parts);
                     break;
                 default:
                     break;
@@ -753,6 +769,7 @@ namespace JocysCom.TextToSpeech.Monitor
         private void MainForm_Load(object sender, EventArgs e)
         {
             if (DesignMode) return;
+            SettingsFile.Current.Load();
             LastException = null;
             VoicesDataGridView.AutoGenerateColumns = false;
             MessagesDataGridView.AutoGenerateColumns = false;
@@ -828,7 +845,7 @@ namespace JocysCom.TextToSpeech.Monitor
                         MainHelpLabel.Text = string.Format("There are no voices enabled in \"{0}\" category ( column ). Set popularity value to 100 ( normal usage ) or 101 ( normal usage / default - favourite )  for one voice at least in \"{0}\" column, to use it as \"{0}\" voice.", gender);
                         choice = data.ToArray();
                     }
-                    if (choice.Length == 0) return; 
+                    if (choice.Length == 0) return;
                     // Generate number for selecting voice.
                     var number = MainHelper.GetNumber(0, choice.Count() - 1, "name", name);
                     voice = choice[number];
@@ -892,7 +909,7 @@ namespace JocysCom.TextToSpeech.Monitor
             //Fill SandBox Tab if it is empty
             if (string.IsNullOrEmpty(SandBoxTextBox.Text))
             {
-                SandBoxTextBox.Text = "<voice name=\"Marshal McBride\" gender=\"Male\" pitch=\"-5\" rate=\"1\" effect=\"Humanoid\" volume=\"100\" command=\"Play\"><part>Test text to speech. [comment]Test text to speech.[/comment]</part></voice>";
+                SandBoxTextBox.Text = "<voice name=\"Marshal McBride\" gender=\"Male\" pitch=\"0\" rate=\"1\" effect=\"Humanoid\" volume=\"100\" command=\"Play\"><part>Test text to speech. [comment]Test text to speech.[/comment]</part></voice>";
             }
             //Fill SAPI Tab
             if (string.IsNullOrEmpty(IncomingTextTextBox.Text))
@@ -1114,7 +1131,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
         private void MouseHover_IncomingGroupBox(object sender, EventArgs e)
         {
-            MainHelpLabel.Text = "Incoming values have priority. If you will submit specific values, Monitor will use them instead of local setup.";
+            MainHelpLabel.Text = "Incoming values have priority over values set in \"Pitch [ min - max ]\", \"Rate [ min - max ]\", \"Default Gender:\" fields and with \"Volume:\" slider. If you will submit specific values, Monitor will use them instead of local setup.";
         }
 
         private void MouseHover_GenderComboBox(object sender, EventArgs e)
@@ -1142,7 +1159,7 @@ namespace JocysCom.TextToSpeech.Monitor
         {
             UpdateWebBrowser.Navigate("http://www.jocys.com/files/updates/JocysCom.TextToSpeech.Monitor.html");
         }
-       
+
         #region Clipboard Monitor
 
         /// <summary>
@@ -1183,25 +1200,56 @@ namespace JocysCom.TextToSpeech.Monitor
             UpdateClipboardMonitor();
         }
 
+        bool MonitoringClipboard;
+        object MonitoringClipboardLock = new object();
+
         void UpdateClipboardMonitor()
         {
             if (MonitorClipboardComboBox.SelectedIndex > 0)
             {
-                // Add our window to the clipboard's format listener list.
-                NativeMethods.AddClipboardFormatListener(this.Handle);
+                lock (MonitoringClipboardLock)
+                {
+                    // If not monitoring clipboard then...
+                    if (!MonitoringClipboard)
+                    {
+                        // Add form window to the clipboard's format listener list.
+                        MonitoringClipboard = NativeMethods.AddClipboardFormatListener(this.Handle);
+                        // if failed then...
+                        if (!MonitoringClipboard)
+                        {
+                            BeginInvoke((Action)delegate()
+                            {
+                                // Set drop down to disabled.
+                                MonitorClipboardComboBox.SelectedIndex = 0;
+                            });
+                        }
+                    }
+                }
             }
             else
             {
-                // Remove our window from the clipboard's format listener list.
-                NativeMethods.RemoveClipboardFormatListener(this.Handle);
+                lock (MonitoringClipboardLock)
+                {
+                    if (MonitoringClipboard)
+                    {
+                        // Remove our window from the clipboard's format listener list.
+                        NativeMethods.RemoveClipboardFormatListener(this.Handle);
+                    }
+                }
             }
 
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Remove our window from the clipboard's format listener list.
-            NativeMethods.RemoveClipboardFormatListener(this.Handle);
+            lock (MonitoringClipboardLock)
+            {
+                if (MonitoringClipboard)
+                {
+                    // Remove our window from the clipboard's format listener list.
+                    NativeMethods.RemoveClipboardFormatListener(this.Handle);
+                }
+            }
             SaveSettings();
             // Save settings
             Properties.Settings.Default.Save();
@@ -1215,8 +1263,9 @@ namespace JocysCom.TextToSpeech.Monitor
         public void SaveSettings()
         {
             if (InstalledVoices == null) return;
-            var xml = MainHelper.SerializeToXmlString(InstalledVoices);
+            var xml = Serializer.SerializeToXmlString(InstalledVoices);
             Properties.Settings.Default.VoicesData = xml;
+            SettingsFile.Current.Save();
             //Properties.Settings.Default.Save();
         }
 
@@ -1225,7 +1274,7 @@ namespace JocysCom.TextToSpeech.Monitor
             var xml = Properties.Settings.Default.VoicesData;
             if (string.IsNullOrEmpty(xml)) return;
             InstalledVoiceEx[] savedVoices = null;
-            try { savedVoices = MainHelper.DeserializeFromXmlString<InstalledVoiceEx[]>(xml); }
+            try { savedVoices = Serializer.DeserializeFromXmlString<InstalledVoiceEx[]>(xml); }
             catch (Exception) { }
             if (savedVoices == null) return;
             var newVoices = new List<InstalledVoiceEx>();

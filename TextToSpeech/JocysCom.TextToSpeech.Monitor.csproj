@@ -105,6 +105,8 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Speech" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -123,12 +125,23 @@
     <Compile Include="Common\Crc32.cs" />
     <Compile Include="Common\HiLoUhsort.cs" />
     <Compile Include="Common\InstalledVoiceEx.cs" />
+    <Compile Include="Common\JocysCom\ComponentModel\PropertyComparer.cs" />
+    <Compile Include="Common\JocysCom\ComponentModel\SortableBindingList.cs" />
+    <Compile Include="Common\JocysCom\Controls\ControlsHelper.cs" />
+    <Compile Include="Common\JocysCom\Runtime\Serializer.cs" />
     <Compile Include="Common\NativeMethods.cs" />
+    <Compile Include="Common\SettingsFile.cs" />
     <Compile Include="Controls\MessageBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Controls\MessageBoxForm.Designer.cs">
       <DependentUpon>MessageBoxForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VoiceOverridesUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\VoiceOverridesUserControl.Designer.cs">
+      <DependentUpon>VoiceOverridesUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Network\IpHeader.cs" />
     <Compile Include="Network\IpHeaderFlags.cs" />
@@ -169,6 +182,9 @@
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Controls\MessageBoxForm.resx">
       <DependentUpon>MessageBoxForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\VoiceOverridesUserControl.resx">
+      <DependentUpon>VoiceOverridesUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SoundEffectsControl.resx">
       <DependentUpon>SoundEffectsControl.cs</DependentUpon>
@@ -211,17 +227,24 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\add_16x16.png" />
     <Content Include="Resources\bullet_square_glass_red.ico" />
+    <None Include="Resources\data_into_16x16.png" />
+    <None Include="Resources\data_out_16x16.png" />
+    <None Include="Resources\delete_16x16.png" />
     <Content Include="Resources\JocysCom.TextToSpeech.Monitor.html" />
     <Content Include="Resources\JocysCom_TTS_Monitor_Voices.png" />
     <Content Include="Resources\JocysCom_TTS_WoW_Addon.png" />
     <Content Include="Resources\JocysCom_TTS_WoW_Addon_Buttons.png" />
+    <Content Include="Resources\override_info_16x16.png" />
     <Content Include="WoW\GoogleDriver.ReadMe.txt" />
     <Content Include="WoW\HowToExportInterfaceCode.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Exclude.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Include.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Presets.txt" />
-    <Content Include="WoW\JocysCom-TextToSpeech-WoW\JocysCom-TextToSpeech-WoW.xml" />
+    <Content Include="WoW\JocysCom-TextToSpeech-WoW\JocysCom-TextToSpeech-WoW.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="WoW\Presets\Beast.preset.xml" />
     <Content Include="WoW\Presets\Default.preset.xml" />
     <Content Include="WoW\Presets\Demon.preset.xml" />

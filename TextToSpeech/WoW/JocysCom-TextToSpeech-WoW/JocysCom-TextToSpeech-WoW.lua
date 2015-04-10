@@ -1,49 +1,63 @@
--- /fstack - show frame names
+-- /fstack - show frame names.
+-- /run local m=MinimapCluster if m:IsShown()then m:Hide()else m:Show()end - Show / Hide MinimapCluster.
 
 -- Debug.
 local DebugEnabled = false; -- true = debug mode enabled, false = debug mode disabled
 
 -- Set variables.
 local unitName = UnitName("player");
+local realmName = GetRealmName();
 local messageStop = "<voice command=\"stop\" />";
 local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-to-speech is enabled.";
 
 -- Set text.
 local function JocysCom_Text_EN()
 	-- Titles.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.15 ( 2015-04-04 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.16 ( 2015-04-10 )");
 	-- Frames.
 	JocysCom_ScrollFrame.text:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
 	-- Check buttons.
 	FilterCheckButton.text:SetText("|cff808080 Hide addon's whisper messages in chat window.|r");
 	DndCheckButton.text:SetText("|cff808080 Show|r |cffffffff<Busy>|r|cff808080 over my character for other players, when NPC dialogue window is open and speech is on.|r");
 	AutoCheckButton.text:SetText("|cff808080 Auto start speech, when dialog window is open (except for quest log windows).|r");
+	LockCheckButton.text:SetText("|cff808080 Lock mini frame with|r |cffffffff[Stop]|r |cff808080button and|r |cffffffffNPC|r|cff808080,|r |cffffffffWhisper|r|cff808080,|r |cffffffffSay|r|cff808080,|r |cffffffffParty|r|cff808080,|r |cffffffff...|r |cff808080check-boxes.|r");
 	ContinueCheckButton.text:SetText("|cff808080 Play after closing|r");
+	MonsterCheckButton.text:SetText("|cfffffb9f N|r");
+	WhisperCheckButton.text:SetText("|cffffb2eb W|r");
+	SayCheckButton.text:SetText("|cffffffff S|r");
+	PartyCheckButton.text:SetText("|cffaaa7ff P|r");
+	CheckButtonTooltipFontString:SetText("");
+	GuildCheckButton.text:SetText("|cff40fb40 G|r");	
+	RaidCheckButton.text:SetText("|cffff7d00 R|r");
+	RaidLeaderCheckButton.text:SetText("|cffff4709 RL|r");
+	BattlegroundCheckButton.text:SetText("|cffff7d00 B|r");
+	BattlegroundLeaderCheckButton.text:SetText("|cffff4709 BL|r");
 	---- Font Strings
 	DescriptionFrameFontString:SetText("Text-to-speech voices, pitch, rate, effects, etc. ... you will find all options in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window, |cff77ccffJocys.Com Text to Speech WoW Addon|r creates and sends special whisper message to yourself (message includes dialogue text, character name and effect name). Then, |cff77ccffJocys.Com Text to Speech Monitor|r (which must be running in background) picks-up this message from your network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.");
 	ReplaceNameFontString:SetText("Here you can change your name for text to speech from |cff00ff00" .. unitName .. "|r to something else.");
 	MessageFontString:SetText("Whisper message for |cff77ccffJocys.Com Text to Speech Monitor|r ... it must be runninng in background:");	
 end
 
+local lastArg = nil;
 local lastQuest = nil;
+local lastMessage = nil;
 local debugLine = 0;
 local debugLineOld = 0;
 local questId = nil;
 local questIdOld = nil;
+local MessageIsFromChat = false;
+local NPCSex = nil;
+local NPCGender = nil;
 local stopWhenClosing = 1;
+local dashIndex = nil;
 
--- Lock frames.
+-- Unlock frames.
 local function JocysCom_UnLockFrames()
 	JocysCom_MiniFrame:SetMovable(true);
 	JocysCom_MiniFrame:EnableMouse(true);
 	JocysCom_MiniFrame:RegisterForDrag("LeftButton");
 	JocysCom_MiniFrame:SetScript("OnDragStart", JocysCom_MiniFrame.StartMoving);
 	JocysCom_MiniFrame:SetScript("OnDragStop", JocysCom_MiniFrame.StopMovingOrSizing);
-	JocysCom_StopFrame:SetMovable(true);
-	JocysCom_StopFrame:EnableMouse(true);
-	JocysCom_StopFrame:RegisterForDrag("LeftButton");
-	JocysCom_StopFrame:SetScript("OnDragStart", JocysCom_StopFrame.StartMoving);
-	JocysCom_StopFrame:SetScript("OnDragStop", JocysCom_StopFrame.StopMovingOrSizing);
 	JocysCom_StopFrame.texture:SetTexture(0, 0, 0, 0.8);
 	JocysCom_ScrollFrame:SetMovable(true);
 	JocysCom_ScrollFrame:SetResizable(true);
@@ -54,11 +68,9 @@ local function JocysCom_UnLockFrames()
 	JocysCom_ScrollFrame:SetFrameLevel(100);
 end
 
--- Unlock frames.
+-- Lock frames.
 local function JocysCom_LockFrames()
 	JocysCom_MiniFrame:SetMovable(nil);
-	JocysCom_StopFrame:SetMovable(nil);
-	JocysCom_StopFrame:EnableMouse(nil);
 	JocysCom_StopFrame.texture:SetTexture(0, 0, 0, 0);
 	JocysCom_ScrollFrame:SetMovable(nil);
 	JocysCom_ScrollFrame:SetResizable(nil);
@@ -80,6 +92,7 @@ local function sendChatMessageStop(CloseOrButton)
 		if stopWhenClosing == 1 then
 			if ContinueCheckButton:GetChecked() ~= true or CloseOrButton == 1 then
 				SendChatMessage(messageStop, "WHISPER", "Common", unitName);
+				stopWhenClosing = 0;
 				QuestEditBox:SetText("|cff808080" .. messageStop .. "|r");
 			end
 		end
@@ -109,6 +122,7 @@ function JocysCom_CHAT_MSG_SYSTEM(self, event, msg)
 		return true;
 	end
 end
+
 -- Filter messages.
 function JocysCom_MessageEventFilters()
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", JocysCom_CHAT_MSG_WHISPER_INFORM);
@@ -144,11 +158,38 @@ function JocysCom_OptionsFrame_OnLoad(self)
 	self:RegisterEvent("ITEM_TEXT_READY"); 
 	-- Close frames.
 	self:RegisterEvent("GOSSIP_CLOSED"); --"QUEST_FINISHED", "QUEST_ACCEPTED"
+	-- Chat MONSTER events.
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE");
+	self:RegisterEvent("CHAT_MSG_MONSTER_WHISPER");
+	self:RegisterEvent("CHAT_MSG_MONSTER_SAY");
+	self:RegisterEvent("CHAT_MSG_MONSTER_PARTY");
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL");
+	-- Chat WHISPER events.
+	self:RegisterEvent("CHAT_MSG_WHISPER");
+	self:RegisterEvent("CHAT_MSG_WHISPER_INFORM");
+	self:RegisterEvent("CHAT_MSG_BN_WHISPER");
+	self:RegisterEvent("CHAT_MSG_BN_WHISPER_INFORM");
+	-- Chat SAY events.
+	self:RegisterEvent("CHAT_MSG_SAY");
+	-- Chat PARTY events.
+	self:RegisterEvent("CHAT_MSG_PARTY");
+	self:RegisterEvent("CHAT_MSG_PARTY_LEADER");
+	self:RegisterEvent("CHAT_MSG_GUILD");
+	self:RegisterEvent("CHAT_MSG_GUILD_ACHIEVEMENT");
+	-- Chat RAID events.
+	self:RegisterEvent("CHAT_MSG_RAID");
+	-- Chat RAID LEADER events.
+	self:RegisterEvent("CHAT_MSG_RAID_LEADER");
+	self:RegisterEvent("CHAT_MSG_RAID_WARNING");
+	-- Chat BATTLEGROUND events.
+	self:RegisterEvent("CHAT_MSG_BATTLEGROUND");
+	-- Chat BATTLEGROUND LEADER events.
+	self:RegisterEvent("CHAT_MSG_BATTLEGROUND_LEADER");
 	-- Logout event.
 	self:RegisterEvent("PLAYER_LOGOUT");
 end
 
-function JocysCom_OptionsFrame_OnEvent(self, event)
+function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 	-- Debug.
 	if DebugEnabled then print(event) end
 	-- Events.
@@ -157,7 +198,7 @@ function JocysCom_OptionsFrame_OnEvent(self, event)
 	elseif event == "PLAYER_LOGOUT" then
 		JocysCom_SaveAllSettings();
 	elseif JocysCom_MiniFrame:IsShown() and (event == "QUEST_GREETING" or event == "GOSSIP_SHOW" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "ITEM_TEXT_READY") then
-		lastQuest = nil;
+		lastQuest = nil;	
 		if event == "QUEST_GREETING" then 
 			lastQuest = GetGreetingText();
 		elseif GossipFrame:IsShown() and event == "GOSSIP_SHOW" then
@@ -179,27 +220,185 @@ function JocysCom_OptionsFrame_OnEvent(self, event)
 		 lastQuest = string.gsub(lastQuest, "\"", "");
 		 lastQuest = string.gsub(lastQuest, "&", " and ");
 		end
-		JocysCom_SpeakMessage("Auto", lastQuest);
+		JocysCom_SpeakMessage("Auto", lastQuest, event);
 	elseif event == "GOSSIP_CLOSED" then
 		JocysCom_MiniFrame_Hide();
+	-- Chat events.
+	elseif MonsterCheckButton:GetChecked() == true and (event == "CHAT_MSG_MONSTER_EMOTE" or event == "CHAT_MSG_MONSTER_WHISPER" or event == "CHAT_MSG_MONSTER_SAY" or event == "CHAT_MSG_MONSTER_PARTY" or event == "CHAT_MSG_MONSTER_YELL") then
+		if arg1:find("<voice") or (lastArg == arg2 .. arg1) then
+		else
+		lastArg = arg2 .. arg1;
+			local SpeechEmotion = " says. ";
+			if (event == "CHAT_MSG_MONSTER_WHISPER") then SpeechEmotion = " whispers. " end
+			if (event == "CHAT_MSG_MONSTER_YELL") then SpeechEmotion = " yells. " end
+			if (event == "CHAT_MSG_MONSTER_EMOTE") then
+				lastMessage = arg2 .. " " .. arg1;
+			else				
+				lastMessage = arg2 .. SpeechEmotion .. arg1;
+			end
+			JocysCom_SpeakMessage("Auto", lastMessage, event, arg2);
+		end
+	elseif WhisperCheckButton:GetChecked() == true and (event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_WHISPER") then
+		if arg1:find("<voice") or (event == "CHAT_MSG_WHISPER" and arg2:find(unitName)) then
+		else
+			if event == "CHAT_MSG_BN_WHISPER" then
+			-- totalBNet, numBNetOnline = BNGetNumFriends();
+			-- presenceID, presenceName, battleTag, isBattleTagPresence, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, broadcastTime, canSoR = BNGetFriendInfoByID(7);		
+				arg2 = string.gsub(arg2, "|", " ");
+				for i in string.gmatch(arg2, "%S+") do
+				  if string.find(i, "Kf") then
+				  arg2 = string.gsub(i, "Kf", "");
+				  end
+				end	
+				presenceID, presenceName, battleTag, isBattleTagPresence, toonName = BNGetFriendInfoByID(arg2);
+				arg2 = toonName;
+			end	
+			dashIndex = string.find(arg2, "-");
+			if dashIndex ~= nil then
+				dashIndex = dashIndex - 1;
+				arg2 = string.sub(arg2, 1, dashIndex);
+			end
+			lastMessage = arg2 .. " whispers. " .. arg1;
+			JocysCom_SpeakMessage("Auto", lastMessage, event, arg2);
+		end
+	elseif WhisperCheckButton:GetChecked() == true and (event == "CHAT_MSG_WHISPER_INFORM" or event == "CHAT_MSG_BN_WHISPER_INFORM") then
+		if arg1:find("<voice") then
+		else
+			arg2 = unitName;
+			lastMessage = arg2 .. " whispers. " .. arg1;
+			JocysCom_SpeakMessage("Auto", lastMessage, event, arg2);
+		end
+	elseif SayCheckButton:GetChecked() == true and (event == "CHAT_MSG_SAY") then
+		if arg1:find("<voice") then
+		else
+			dashIndex = string.find(arg2, "-");
+			if dashIndex ~= nil then
+				dashIndex = dashIndex - 1;
+				arg2 = string.sub(arg2, 1, dashIndex);
+			end
+			lastMessage = arg2 .. " says. " .. arg1;
+			JocysCom_SpeakMessage("Auto", lastMessage, event, arg2);
+		end
+	elseif PartyCheckButton:GetChecked() == true and (event == "CHAT_MSG_PARTY" or event == "CHAT_MSG_PARTY_LEADER") then
+		if arg1:find("<voice") then
+		else
+			dashIndex = string.find(arg2, "-");
+			if dashIndex ~= nil then
+				dashIndex = dashIndex - 1;
+				arg2 = string.sub(arg2, 1, dashIndex);
+			end
+			lastMessage = arg2 .. " says. " .. arg1;
+			JocysCom_SpeakMessage("Auto", lastMessage, event, arg2);
+		end
+	elseif GuildCheckButton:GetChecked() == true and (event == "CHAT_MSG_GUILD") then --  or event == "CHAT_MSG_GUILD_ACHIEVEMENT"
+		if arg1:find("<voice") then
+		else
+			dashIndex = string.find(arg2, "-");
+			if dashIndex ~= nil then
+				dashIndex = dashIndex - 1;
+				arg2 = string.sub(arg2, 1, dashIndex);
+			end
+			lastMessage = arg2 .. " says. " .. arg1;
+			JocysCom_SpeakMessage("Auto", lastMessage, event, arg2);
+		end
+	elseif RaidCheckButton:GetChecked() == true and (event == "CHAT_MSG_RAID" or event == "CHAT_MSG_RAID_LEADER" or event == "CHAT_MSG_RAID_WARNING") then
+		if arg1:find("<voice") then
+		else
+			dashIndex = string.find(arg2, "-");
+			if dashIndex ~= nil then
+				dashIndex = dashIndex - 1;
+				arg2 = string.sub(arg2, 1, dashIndex);
+			end
+			if event == "CHAT_MSG_RAID" then
+				lastMessage = arg2 .. " says. " .. arg1;
+			else
+				lastMessage = "Raid leader " .. arg2 .. " says. " .. arg1;
+			end
+			JocysCom_SpeakMessage("Auto", lastMessage, event, arg2);
+		end
+	elseif RaidLeaderCheckButton:GetChecked() == true and (event == "CHAT_MSG_RAID_LEADER" or event == "CHAT_MSG_RAID_WARNING") then
+		if arg1:find("<voice") then
+		else
+			dashIndex = string.find(arg2, "-");
+			if dashIndex ~= nil then
+				dashIndex = dashIndex - 1;
+				arg2 = string.sub(arg2, 1, dashIndex);
+			end
+			lastMessage = "Raid leader " .. arg2 .. " says. " .. arg1;
+			JocysCom_SpeakMessage("Auto", lastMessage, event, arg2);
+		end
+	elseif BattlegroundCheckButton:GetChecked() == true and (event == "CHAT_MSG_BATTLEGROUND" or event == "CHAT_MSG_BATTLEGROUND_LEADER") then
+		if arg1:find("<voice") then
+		else
+			dashIndex = string.find(arg2, "-");
+			if dashIndex ~= nil then
+				dashIndex = dashIndex - 1;
+				arg2 = string.sub(arg2, 1, dashIndex);
+			end
+			if event == "CHAT_MSG_BATTLEGROUND_LEADER" then
+				lastMessage = "Battleground leader " .. arg2 .. " says. " .. arg1;
+			else
+				lastMessage = arg2 .. " says. " .. arg1;
+			end
+			JocysCom_SpeakMessage("Auto", lastMessage, event, arg2);
+		end
+	elseif BattlegroundLeaderCheckButton:GetChecked() == true and (event == "CHAT_MSG_BATTLEGROUND_LEADER") then
+		if arg1:find("<voice") then
+		else
+			dashIndex = string.find(arg2, "-");
+			if dashIndex ~= nil then
+				dashIndex = dashIndex - 1;
+				arg2 = string.sub(arg2, 1, dashIndex);
+			end
+			lastMessage = "Battleground leader " .. arg2 .. " says. " .. arg1;
+			JocysCom_SpeakMessage("Auto", lastMessage, event, arg2);
+		end
 	end
 end
 
-function JocysCom_SpeakMessage(reason, questText, event)
-	-- if no quest text.
+function JocysCom_SpeakMessage(reason, questText, event, name)
 	if questText == nil then return end
+	if (event == "CHAT_MSG_GUILD_ACHIEVEMENT" or event == "CHAT_MSG_MONSTER_EMOTE" or event == "CHAT_MSG_MONSTER_WHISPER" or event == "CHAT_MSG_MONSTER_SAY" or event == "CHAT_MSG_MONSTER_PARTY" or event == "CHAT_MSG_MONSTER_YELL" or event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" or event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM" or event == "CHAT_MSG_SAY" or event == "CHAT_MSG_PARTY" or event == "CHAT_MSG_PARTY_LEADER" or event == "CHAT_MSG_GUILD" or event == "CHAT_MSG_RAID" or event == "CHAT_MSG_RAID_LEADER" or event == "CHAT_MSG_RAID_WARNING" or event == "CHAT_MSG_BATTLEGROUND" or event == "CHAT_MSG_BATTLEGROUND_LEADER") then
+		MessageIsFromChat = true;
+		dashIndex = string.find(questText, "|");
+		if dashIndex ~= nil then
+			questText = questText:gsub("%|cff(.-)%|h", "");
+			questText = questText:gsub("%|h%|r", "");
+			questText = questText:gsub("%[", " \"");
+			questText = questText:gsub("%]", "\" ");
+		end
+	else
+		MessageIsFromChat = false;
+		sendChatMessageStop(1); -- Send stop message.
+	end
 	-- Set NPC name.
-	local NPCName = GetUnitName("npc");
+	local NPCName = nil;
+	if MessageIsFromChat == true then
+		NPCName = name;
+	else
+		NPCName = GetUnitName("npc");
+	end
+
 	if NPCName == nil then
 		NPCName = "";
 	else
 	NPCName = string.gsub(NPCName, "&", " and ");
 	NPCName = string.gsub(NPCName, "\"", "");
-		NPCName = " name=\"" .. NPCName .. "\"";
+	NPCName = " name=\"" .. NPCName .. "\"";
 	end
 	-- Set NPC gender (1 = Neutrum / Unknown, 2 = Male, 3 = Female). 
-	local NPCSex = UnitSex("npc");
-	local NPCGender = nil;
+	if MessageIsFromChat == true then
+		-- NPCSex = nil;
+		NPCSex = UnitSex(name);
+		-- print(NPCSex);
+		-- print(name);
+		if (event == "CHAT_MSG_GUILD_ACHIEVEMENT" or event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" or event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM" or event == "CHAT_MSG_SAY" or event == "CHAT_MSG_PARTY" or event == "CHAT_MSG_GUILD" or event == "CHAT_MSG_PARTY_LEADER"  or event == "CHAT_MSG_RAID" or event == "CHAT_MSG_RAID_LEADER" or event == "CHAT_MSG_RAID_WARNING" or event == "CHAT_MSG_BATTLEGROUND" or event == "CHAT_MSG_BATTLEGROUND_LEADER") then
+			NPCSex = UnitSex(name);
+		end
+	else
+		NPCSex = UnitSex("npc");	
+	end
+	NPCGender = nil;
 	if NPCSex == 1 then NPCGender = "Neutral" end
 	if NPCSex == 2 then NPCGender = "Male" end
 	if NPCSex == 3 then NPCGender = "Female" end
@@ -235,6 +434,8 @@ function JocysCom_SpeakMessage(reason, questText, event)
 	questText = string.gsub(questText, "<", " [comment] ");
 	questText = string.gsub(questText, ">", " [/comment] ");
 	questText = string.gsub(questText, "[ ]+", " ");
+	questText = string.gsub(questText, "%%s", "");
+	questText = string.gsub(questText, "lvl", "level");
 	-- Format and send whisper message.
 	if (reason == "Scroll") or (reason == "Auto" and AutoCheckButton:GetChecked() == true) then
 		local size = 130;
@@ -243,7 +444,7 @@ function JocysCom_SpeakMessage(reason, questText, event)
 		local part = "";
 		local chatMessageSP = "<voice" .. NPCName .. NPCGender .. NPCType .. " command=\"play\"><part>";
 		if NPCGender == "" then
-		chatMessageSP = "<voice" .. NPCType .. " command=\"play\"><part>";
+		chatMessageSP = "<voice" .. NPCName .. NPCType .. " command=\"play\"><part>";
 		end
 		local chatMessageSA = "<voice command=\"add\"><part>";
 		local chatMessageE = "</part></voice>";
@@ -278,7 +479,7 @@ function JocysCom_SpeakMessage(reason, questText, event)
 		questEditBox = "|cff808080" .. chatMessageSP .. "|r\n" .. questEditBox .. "\n|cff808080" .. chatMessageE .. "|r";
 		QuestEditBox:SetText(questEditBox);
 		-- Enable DND <Busy> if checked.
-		if DndCheckButton:GetChecked() == true then
+		if DndCheckButton:GetChecked() == true and MessageIsFromChat == false then
 		--if UnitIsDND("player") == false then
 		SendChatMessage("<" .. unitName .. ">: " .. messageDoNotDisturb, "DND");
 	    --end		
@@ -287,7 +488,10 @@ function JocysCom_SpeakMessage(reason, questText, event)
 end
 
 -- Auto start speech.
-function JocysCom_AutoCheckButton_OnClick(self) PlaySound("igMainMenuOptionCheckBoxOn") end
+function JocysCom_AutoCheckButton_OnClick(self)
+ PlaySound("igMainMenuOptionCheckBoxOn");
+ JocysCom_SaveAllSettings();
+end
 
 -- DND.
 function JocysCom_DndCheckButton_OnClick(self)
@@ -302,17 +506,161 @@ function JocysCom_DndCheckButton_OnClick(self)
 			SendChatMessage("<" .. unitName .. ">: " .. messageDoNotDisturb, "DND");
 	    end	
 	end
+	JocysCom_SaveAllSettings();
+end
+
+-- Lock Enable / Disable.
+function JocysCom_LockCheckButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	if LockCheckButton:GetChecked() == true then
+		JocysCom_SaveAllSettings();
+		JocysCom_StopFrame:SetMovable(false);
+		JocysCom_StopFrame:EnableMouse(false);
+	else
+		JocysCom_SaveAllSettings();
+		JocysCom_StopFrame:SetMovable(true);
+		JocysCom_StopFrame:EnableMouse(true);
+	end
 end
 
 -- Continue play Enable / Disable.
 function JocysCom_ContinueCheckButton_OnClick(self)
 	PlaySound("igMainMenuOptionCheckBoxOn");
-	if ContinueCheckButton:GetChecked() == true then
-	JocysCom_StopFrame:Show();
-	else
-	JocysCom_StopFrame:Hide();
-	end
+	JocysCom_SaveAllSettings();
 end
+
+-- Clear and Hide MonsterCheckButtonFontString.
+function JocysCom_CheckButtonTooltipFontString_OnLeave(self)
+	CheckButtonTooltipFontString:Hide();
+	CheckButtonTooltipFontString:SetText("");
+	JocysCom_SaveAllSettings();
+end
+
+-- MonsterCheckButton functions.
+function JocysCom_MonsterCheckButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	if MonsterCheckButton:GetChecked() == false then
+		sendChatMessageStop(1);
+	end
+	JocysCom_SaveAllSettings();
+end
+function JocysCom_MonsterCheckButton_OnEnter(self)
+	CheckButtonTooltipFontString:Show();
+	CheckButtonTooltipFontString:SetText("|cfffffb9f Play NPC messages|r");
+end
+
+-- WhisperCheckButton functions.
+function JocysCom_WhisperCheckButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	if WhisperCheckButton:GetChecked() == false then
+		sendChatMessageStop(1);
+	end
+	JocysCom_SaveAllSettings();
+end
+function JocysCom_WhisperCheckButton_OnEnter(self)
+	CheckButtonTooltipFontString:Show();
+	CheckButtonTooltipFontString:SetText("|cffffb2eb Play WHISPER messages|r");
+end
+
+-- SayCheckButton functions.
+function JocysCom_SayCheckButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	if SayCheckButton:GetChecked() == false then
+		sendChatMessageStop(1);
+	end
+	JocysCom_SaveAllSettings();
+end
+function JocysCom_SayCheckButton_OnEnter(self)
+	CheckButtonTooltipFontString:Show();
+	CheckButtonTooltipFontString:SetText("|cffffffff Play SAY messages|r");
+end
+
+-- PartyCheckButton functions.
+function JocysCom_PartyCheckButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	if PartyCheckButton:GetChecked() == false then
+		sendChatMessageStop(1);
+	end
+	JocysCom_SaveAllSettings();
+end
+function JocysCom_PartyCheckButton_OnEnter(self)
+	CheckButtonTooltipFontString:Show();
+	CheckButtonTooltipFontString:SetText("|cffaaa7ff Play PARTY messages|r");
+end
+
+-- GuildCheckButton functions.
+function JocysCom_GuildCheckButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	if GuildCheckButton:GetChecked() == false then
+		sendChatMessageStop(1);
+	end
+	JocysCom_SaveAllSettings();
+end
+function JocysCom_GuildCheckButton_OnEnter(self)
+	CheckButtonTooltipFontString:Show();
+	CheckButtonTooltipFontString:SetText("|cff40fb40 Play GUILD messages|r");
+end
+
+-- RaidCheckButton functions.
+function JocysCom_RaidCheckButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	if RaidCheckButton:GetChecked() == false then
+		sendChatMessageStop(1);
+	else
+		RaidLeaderCheckButton:SetChecked(false);
+	end
+	JocysCom_SaveAllSettings();
+end
+function JocysCom_RaidCheckButton_OnEnter(self)
+	CheckButtonTooltipFontString:Show();
+	CheckButtonTooltipFontString:SetText("|cffff7d00 Play all RAID messages|r");
+end
+
+-- RaidLeaderCheckButton functions.
+function JocysCom_RaidLeaderCheckButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	if RaidLeaderCheckButton:GetChecked() == false then
+		sendChatMessageStop(1);
+	else
+		RaidCheckButton:SetChecked(false);
+	end
+	JocysCom_SaveAllSettings();
+end
+function JocysCom_RaidLeaderCheckButton_OnEnter(self)
+	CheckButtonTooltipFontString:Show();
+	CheckButtonTooltipFontString:SetText("|cffff4709 Play RAID leader messages only|r");
+end
+
+-- BattlegroundCheckButton functions.
+function JocysCom_BattlegroundCheckButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	if BattlegroundCheckButton:GetChecked() == false then
+		sendChatMessageStop(1);
+	else
+		BattlegroundLeaderCheckButton:SetChecked(false);
+	end
+	JocysCom_SaveAllSettings();
+end
+function JocysCom_BattlegroundCheckButton_OnEnter(self)
+	CheckButtonTooltipFontString:Show();
+	CheckButtonTooltipFontString:SetText("|cffff7d00 Play all BATTLEGROUND messages|r");
+end
+
+-- BattlegroundLeaderCheckButton functions.
+function JocysCom_BattlegroundLeaderCheckButton_OnClick(self)
+	PlaySound("igMainMenuOptionCheckBoxOn");
+	if BattlegroundLeaderCheckButton:GetChecked() == false then
+		sendChatMessageStop(1);
+	else
+		BattlegroundCheckButton:SetChecked(false);
+	end
+	JocysCom_SaveAllSettings();
+end
+function JocysCom_BattlegroundLeaderCheckButton_OnEnter(self)
+	CheckButtonTooltipFontString:Show();
+	CheckButtonTooltipFontString:SetText("|cffff4709 Play BATTLEGROUND leader messages only|r");
+end
+
 
 -- Hide whisper messages.
 function JocysCom_FilterCheckButton_OnClick(self) PlaySound("igMainMenuOptionCheckBoxOn") end
@@ -467,7 +815,17 @@ function JocysCom_SaveAllSettings()
 	AutoCheckButtonValue = AutoCheckButton:GetChecked();
 	DndCheckButtonValue = DndCheckButton:GetChecked();
 	FilterCheckButtonValue = FilterCheckButton:GetChecked();
+	LockCheckButtonValue = LockCheckButton:GetChecked();
 	ContinueCheckButtonValue = ContinueCheckButton:GetChecked();
+	MonsterCheckButtonValue = MonsterCheckButton:GetChecked();
+	WhisperCheckButtonValue = WhisperCheckButton:GetChecked();
+	SayCheckButtonValue = SayCheckButton:GetChecked();
+	PartyCheckButtonValue = PartyCheckButton:GetChecked();
+	GuildCheckButtonValue = GuildCheckButton:GetChecked();
+	RaidCheckButtonValue = RaidCheckButton:GetChecked();
+	RaidLeaderCheckButtonValue = RaidLeaderCheckButton:GetChecked();
+	BattlegroundLeaderCheckButtonValue = BattlegroundLeaderCheckButton:GetChecked();
+	BattlegroundCheckButtonValue = BattlegroundCheckButton:GetChecked();
 	-- Save edit boxes.
 	ReplaceNameEditBoxValue = ReplaceNameEditBox:GetText();
 
@@ -484,21 +842,35 @@ function JocysCom_LoadAllSettings()
 	JocysCom_Text_EN();	
 	-- Set SetJustifyH
 	ReplaceNameEditBox:SetJustifyH("CENTER");	
-	-- If this is first load then...
-	if CharacterFirstLoginValue ~= 1 then
-		CharacterFirstLoginValue = 1;
-		AutoCheckButtonValue = 1;
-		DndCheckButtonValue = 1;
-		FilterCheckButtonValue = 1;
-		ContinueCheckButtonValue = 0;
-	end
-	AutoCheckButton:SetChecked(AutoCheckButtonValue);
-	DndCheckButton:SetChecked(DndCheckButtonValue);
-	FilterCheckButton:SetChecked(FilterCheckButtonValue);
-	ContinueCheckButton:SetChecked(ContinueCheckButtonValue);
+	-- If -------------------- value --- was set then set this --- value --------- else --------- default value.
+	if LockCheckButtonValue == true then LockCheckButton:SetChecked(true) else LockCheckButton:SetChecked(false) end;
+	if AutoCheckButtonValue == false then AutoCheckButton:SetChecked(false) else AutoCheckButton:SetChecked(true) end;
+	if DndCheckButtonValue == false then DndCheckButton:SetChecked(false) else DndCheckButton:SetChecked(true) end;
+	if FilterCheckButtonValue == false then FilterCheckButton:SetChecked(false) else FilterCheckButton:SetChecked(true) end;
+	if ContinueCheckButtonValue == false then ContinueCheckButton:SetChecked(false) else ContinueCheckButton:SetChecked(true) end;
+	if MonsterCheckButtonValue == false then MonsterCheckButton:SetChecked(false) else MonsterCheckButton:SetChecked(true) end;
+	if WhisperCheckButtonValue == false then WhisperCheckButton:SetChecked(false) else WhisperCheckButton:SetChecked(true) end;
+	if SayCheckButtonValue == true then SayCheckButton:SetChecked(true) else SayCheckButton:SetChecked(false) end;
+	if PartyCheckButtonValue == false then PartyCheckButton:SetChecked(false) else PartyCheckButton:SetChecked(true) end;
+	if GuildCheckButtonValue == false then GuildCheckButton:SetChecked(false) else GuildCheckButton:SetChecked(true) end;
+	if RaidCheckButtonValue == true then RaidCheckButton:SetChecked(true) else RaidLeaderCheckButton:SetChecked(false) end;
+	if RaidLeaderCheckButtonValue == false then RaidLeaderCheckButton:SetChecked(false) else RaidLeaderCheckButton:SetChecked(true) end;
+	if BattlegroundCheckButtonValue == true then BattlegroundCheckButton:SetChecked(true) else BattlegroundLeaderCheckButton:SetChecked(false) end;
+	if BattlegroundLeaderCheckButtonValue == false then BattlegroundLeaderCheckButton:SetChecked(false) else BattlegroundLeaderCheckButton:SetChecked(true) end;
+
+	MonsterCheckButton.text:SetPoint("TOPLEFT", 4, 10);
+	WhisperCheckButton.text:SetPoint("TOPLEFT", 4, 10);
+	SayCheckButton.text:SetPoint("TOPLEFT", 6, 10);
+	PartyCheckButton.text:SetPoint("TOPLEFT", 5, 10);
+	GuildCheckButton.text:SetPoint("TOPLEFT", 5, 10);
+	BattlegroundCheckButton.text:SetPoint("TOPLEFT", 5, 10);
+	BattlegroundLeaderCheckButton.text:SetPoint("TOPLEFT", 2, 10);
+	RaidCheckButton.text:SetPoint("TOPLEFT", 5, 10);
+	RaidLeaderCheckButton.text:SetPoint("TOPLEFT", 2, 10);
+	
 	-- Load edit boxes.
 	if ReplaceNameEditBoxValue == "" or ReplaceNameEditBoxValue == nil then ReplaceNameEditBoxValue = unitName end
-	ReplaceNameEditBox:SetText(ReplaceNameEditBoxValue);
+	ReplaceNameEditBox:SetText(ReplaceNameEditBoxValue);	
 	-- Attach OnEscape scripts.
 	QuestEditBox:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
 	ReplaceNameEditBox:SetScript("OnEscapePressed", EditBox_OnEscapePressed);
@@ -511,14 +883,19 @@ function JocysCom_LoadAllSettings()
 	QuestLogPopupDetailFrame:SetScript("OnShow", JocysCom_QuestLogPopupDetailFrame_OnShow);
 	QuestMapDetailsScrollFrame:SetScript("OnShow", JocysCom_QuestMapDetailsScrollFrame_OnShow);
 	JocysCom_OptionsFrame:SetScript("OnShow", JocysCom_OptionsFrame_OnShow);
-	if ContinueCheckButton:GetChecked() == true then
-		JocysCom_StopFrame:Show();
+	-- LockCheckButton Enable / Disable.
+	if LockCheckButton:GetChecked() == true then
+		JocysCom_StopFrame:SetMovable(false);
+		JocysCom_StopFrame:EnableMouse(false);
 	else
-		JocysCom_StopFrame:Hide();
+		JocysCom_StopFrame:SetMovable(true);
+		JocysCom_StopFrame:EnableMouse(true);
 	end
-
-	JocysCom_StopFrame:SetMovable(true);
-	JocysCom_StopFrame:EnableMouse(true);
+	-- Set custom position of StopFrame.
+	JocysCom_StopFrame:RegisterForDrag("LeftButton");
+	JocysCom_StopFrame:SetScript("OnDragStart", JocysCom_StopFrame.StartMoving);
+	JocysCom_StopFrame:SetScript("OnDragStop", JocysCom_StopFrame.StopMovingOrSizing);
 	JocysCom_StopFrame:SetUserPlaced(true);
+	JocysCom_StopFrame:Show();
 end
 

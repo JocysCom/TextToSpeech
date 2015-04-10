@@ -4,7 +4,7 @@
 ## Title: |cff77ccffJocys.com|r Text to Speech
 ## Version: 6.1.0
 ## SavedVariables: 
-## SavedVariablesPerCharacter: CharacterFirstLoginValue, AutoCheckButtonValue, DndCheckButtonValue, FilterCheckButtonValue, ContinueCheckButtonValue, ReplaceNameEditBoxValue
+## SavedVariablesPerCharacter: AutoCheckButtonValue, DndCheckButtonValue, FilterCheckButtonValue, LockCheckButtonValue, ContinueCheckButtonValue, MonsterCheckButtonValue, WhisperCheckButtonValue, SayCheckButtonValue, PartyCheckButtonValue, GuildCheckButtonValue, RaidCheckButtonValue, RaidLeaderCheckButtonValue, BattlegroundCheckButtonValue, BattlegroundLeaderCheckButtonValue, ReplaceNameEditBoxValue
 #Extract current TOC Version (Interface) in chat window: /run print((select(4, GetBuildInfo())));
 JocysCom-TextToSpeech-WoW.lua
 JocysCom-TextToSpeech-WoW.xml

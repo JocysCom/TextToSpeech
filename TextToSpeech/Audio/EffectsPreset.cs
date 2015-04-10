@@ -1,4 +1,5 @@
-﻿using Microsoft.DirectX.DirectSound;
+﻿using JocysCom.ClassLibrary.Runtime;
+using Microsoft.DirectX.DirectSound;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -68,7 +69,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
                 var path = System.IO.Path.Combine(presetsDir.FullName, fileName);
                 file = new System.IO.FileInfo(path);
             }
-            var xml = MainHelper.SerializeToXmlString(preset);
+            var xml = Serializer.SerializeToXmlString(preset);
             System.IO.File.WriteAllText(file.FullName, xml, System.Text.Encoding.UTF8);
         }
 
@@ -78,7 +79,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
             var fi = dir.GetFiles(name + _fileSufix, System.IO.SearchOption.AllDirectories).FirstOrDefault();
             if (fi == null) return null;
             var xml = System.IO.File.ReadAllText(fi.FullName, System.Text.Encoding.UTF8);
-            var preset = MainHelper.DeserializeFromXmlString<EffectsPreset>(xml);
+			var preset = Serializer.DeserializeFromXmlString<EffectsPreset>(xml);
             return preset;
         }
 
