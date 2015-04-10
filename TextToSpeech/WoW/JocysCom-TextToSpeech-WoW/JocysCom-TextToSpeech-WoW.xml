@@ -386,7 +386,7 @@
 	<Frame name="JocysCom_StopFrame" parent="ObjectiveTrackerFrame" frameStrata="DIALOG">
 		<Size x="223" y="40" />
 		<Anchors>
-			<Anchor point="TOP" />
+      <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" x="-20"/>
 		</Anchors>
 		<Backdrop bgFile="" edgeFile="">
 			<Color r="0" g="0" b="0" />
