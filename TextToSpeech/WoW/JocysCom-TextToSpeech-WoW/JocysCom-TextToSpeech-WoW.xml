@@ -230,7 +230,7 @@
         <Size x="57" y="21" />
         <Anchors>
           <Anchor point="TOPLEFT">
-            <Offset x="12" y="-1" />
+            <Offset x="17" y="-1" />
           </Anchor>
         </Anchors>
         <Scripts>
@@ -239,32 +239,24 @@
           </OnClick>
         </Scripts>
       </Button>
-			<Button name="PlayButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="►">
-				<Size x="31" y="21" />
+      			<CheckButton name="StopOnCloseCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniFrame" text="">
+				<Size x="22" y="23" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="98" y="-1" />
+						<Offset x="74" y="-1" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						JocysCom_PlayButtonButton_OnClick(self);
+						JocysCom_StopOnCloseCheckButton_OnClick(self);
 					</OnClick>
 				</Scripts>
-				<ButtonText font="Fonts\ARIALN.TTF">
-					<Anchors>
-						<Anchor point="TOP">
-							<Offset x="2" y="-5" />
-						</Anchor>
-					</Anchors>
-					<FontHeight val="12" />
-				</ButtonText>
-			</Button>
+			</CheckButton>
 			<Button name="StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="■">
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="68" y="-1" />
+						<Offset x="188" y="-1" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -281,19 +273,27 @@
 					<FontHeight val="18" />
 				</ButtonText>
 			</Button>
-			<CheckButton name="ContinueCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniFrame" text="">
-				<Size x="24" y="24" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="129" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						JocysCom_ContinueCheckButton_OnClick(self);
-					</OnClick>
-				</Scripts>
-			</CheckButton>
+      <Button name="PlayButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="►">
+        <Size x="31" y="21" />
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset x="218" y="-1" />
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            JocysCom_PlayButtonButton_OnClick(self);
+          </OnClick>
+        </Scripts>
+        <ButtonText font="Fonts\ARIALN.TTF">
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="2" y="-5" />
+            </Anchor>
+          </Anchors>
+          <FontHeight val="12" />
+        </ButtonText>
+      </Button>
 		</Frames>
 		<Scripts>
 			<OnHide>
@@ -385,9 +385,9 @@
 	</Frame>
   <!--ObjectiveTrackerFrame-->
   <Frame name="JocysCom_StopFrame" parent="MinimapCluster">    
-    <Size x="223" y="40" />
+    <Size x="240" y="40" />
 		<Anchors>
-      <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="50" y="-8" />
+      <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="67" y="-12" />
 		</Anchors>
 		<Backdrop bgFile="" edgeFile="">
 			<Color r="0" g="0" b="0" />
@@ -395,7 +395,7 @@
 		<Layers>
 			<Layer>
 				<Texture name="JocysCom_StopFrameTexture" parentKey="texture">
-					<Size x="223" y="40" />
+					<Size x="240" y="40" />
 					<Color a="0.1" r="0" g="0" b="0" />
 				</Texture>
 			</Layer>
@@ -433,7 +433,7 @@
 				</ButtonText>
 			</Button>
 			<CheckButton name="MonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="24" y="24" />
+				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset x="37" y="-15" />
@@ -452,10 +452,10 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="WhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="24" y="24" />
+				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="57" y="-15" />
+						<Offset x="55" y="-15" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -471,10 +471,10 @@
 				</Scripts>
 			</CheckButton>
      <CheckButton name="SayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="24" y="24" />
+				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="77" y="-15" />
+						<Offset x="73" y="-15" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -490,10 +490,10 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="PartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="24" y="24" />
+				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="97" y="-15" />
+						<Offset x="91" y="-15" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -509,10 +509,10 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="GuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="24" y="24" />
+				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="117" y="-15" />
+						<Offset x="109" y="-15" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -528,10 +528,10 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="BattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="24" y="24" />
+				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="137" y="-15" />
+						<Offset x="127" y="-15" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -547,10 +547,10 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="BattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="24" y="24" />
+				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="157" y="-15" />
+						<Offset x="145" y="-15" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -566,10 +566,10 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="RaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="24" y="24" />
+				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="177" y="-15" />
+						<Offset x="163" y="-15" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -585,10 +585,10 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="RaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="24" y="24" />
+				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="197" y="-15" />
+						<Offset x="181" y="-15" />
 					</Anchor>
 				</Anchors>
 				<Scripts>
@@ -603,6 +603,45 @@
 					</OnLeave>
 				</Scripts>
 			</CheckButton>
-		</Frames>
+
+      <CheckButton name="InstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+        <Size x="21" y="22" />
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset x="199" y="-15" />
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            JocysCom_InstanceCheckButton_OnClick(self);
+          </OnClick>
+          <OnEnter>
+            JocysCom_InstanceCheckButton_OnEnter(self)
+          </OnEnter>
+          <OnLeave>
+            JocysCom_CheckButtonTooltipFontString_OnLeave(self);
+          </OnLeave>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="InstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+        <Size x="21" y="22" />
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset x="217" y="-15" />
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            JocysCom_InstanceLeaderCheckButt0on_OnClick(self);
+          </OnClick>
+          <OnEnter>
+            JocysCom_InstanceLeaderCheckButton_OnEnter(self)
+          </OnEnter>
+          <OnLeave>
+            JocysCom_CheckButtonTooltipFontString_OnLeave(self);
+          </OnLeave>
+        </Scripts>
+      </CheckButton>
+    </Frames>
 	</Frame>
 </Ui>

@@ -25,6 +25,7 @@ namespace JocysCom.TextToSpeech.Monitor
     {
         public MainForm()
         {
+            Program.TopForm = this;
             InitializeComponent();
             playlist = new BindingList<PlayItem>();
             playlist.ListChanged += playlist_ListChanged;
@@ -86,8 +87,10 @@ namespace JocysCom.TextToSpeech.Monitor
                     if (pitchedItem != null)
                     {
                         // Must be outside begin invoke.
-                        var ms = new MemoryStream(pitchedItem.Data);
-                        EffectPresetsEditorSoundEffectsControl.LoadSoundFile(ms);
+                        var sampleRate = (int)AudioSampleRateComboBox.SelectedItem;
+                        var bitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
+                        var channelCount = (int)(AudioChannel)AudioChannelsComboBox.SelectedItem;
+                        EffectPresetsEditorSoundEffectsControl.LoadSoundFile(pitchedItem.Data, sampleRate, bitsPerSample, channelCount);
                         EffectPresetsEditorSoundEffectsControl.PlaySound();
                         // Start timer which will reset status to Played
                         pitchedItem.StartPlayTimer();
@@ -588,10 +591,8 @@ namespace JocysCom.TextToSpeech.Monitor
             AudioChannelsComboBox.SelectedItem = AudioChannel.Mono;
             AudioSampleRateComboBox.DataSource = new int[] { 11025, 22050, 44100, 48000 };
             AudioSampleRateComboBox.SelectedItem = 22050;
-            AudioBitsPerSampleComboBox.DataSource = new int[] { 8, 16 };
+            AudioBitsPerSampleComboBox.DataSource = new int[] { 16 };
             AudioBitsPerSampleComboBox.SelectedItem = 16;
-            // Create synthesizer which will be used to create WAV files from SAPI XML.
-            sapiSynthesizer = new SpVoice();
             // Fill grid with voices.
             // Create synthesizer which will be used to create WAV files from SSML XML.
             var ssmlSynthesizer = new SpeechSynthesizer();
@@ -716,25 +717,37 @@ namespace JocysCom.TextToSpeech.Monitor
                     }
                     break;
             }
-            var stream = new SpMemoryStream();
+            var voice = new SpeechLib.SpVoice();
+            //// Write to file.
+            //var fileStream = new SpeechLib.SpFileStream();
+            //fileStream.Open("speak.wav", SpeechLib.SpeechStreamFileMode.SSFMCreateForWrite, false);
+            //voice.AudioOutputStream = fileStream;
+            //voice.Voice = voice.GetVoices().Item(0);
+            //voice.Volume = 100;
+            //voice.Speak(xml, SpeechLib.SpeechVoiceSpeakFlags.SVSFDefault);
+            //MessageBox.Show(voice.AudioOutputStream.Format.Type.ToString());
+            //voice = null;
+            //fileStream.Close();
+            //fileStream = null;
+            // Write into memory.
+            var stream = new SpeechLib.SpMemoryStream();
             stream.Format.Type = t;
-            sapiSynthesizer.AudioOutputStream = stream;
+            voice.AudioOutputStream = stream;
             try
             {
-                sapiSynthesizer.Speak(xml, SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak);
+                voice.Speak(xml, SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak);
             }
             catch (Exception ex)
             {
                 LastException = ex;
                 return null;
             }
-            var spStream = (SpMemoryStream)sapiSynthesizer.AudioOutputStream;
+            var spStream = (SpMemoryStream)voice.AudioOutputStream;
             spStream.Seek(0, SpeechStreamSeekPositionType.SSSPTRelativeToStart);
             var bytes = (byte[])(object)spStream.GetData();
             return bytes;
         }
 
-        SpVoice sapiSynthesizer;
         BindingList<PlayItem> playlist;
         object playlistLock = new object();
         CancellationTokenSource token;
@@ -1144,7 +1157,7 @@ namespace JocysCom.TextToSpeech.Monitor
         //Tooltip Main
         private void MouseLeave_MainHelpLabel(object sender, EventArgs e)
         {
-            MainHelpLabel.Text = "Please download this tool only from trustworthy sources. Make sure that this tool is always signed by verified publisher ( Jocys.com ) with signature issue by trusted certificate authority.";
+            MainHelpLabel.Text = "Please download this tool only from trustworthy sources. Make sure that this tool is always signed by verified publisher ( Jocys.com ) with signature issued by trusted certificate authority.";
         }
 
         //Tooltip MouseHover
@@ -1388,6 +1401,8 @@ namespace JocysCom.TextToSpeech.Monitor
             //var column = VoicesDataGridView.Columns[e.ColumnIndex];
             e.Cancel = true;
         }
+
+    
 
     }
 }

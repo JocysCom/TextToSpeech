@@ -61,11 +61,17 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             ApplicationDevice.SetCooperativeLevel(this, CooperativeLevel.Normal);
         }
 
-        public void LoadSoundFile(Stream stream)
+        public void LoadSoundFile(Stream stream, int sampleRate, int bitsPerSample, int channelCount)
         {
             stream.Position = 0;
             // Create and setup the buffer description.
             BufferDescription buffer_desc = new BufferDescription();
+            buffer_desc.Format = new WaveFormat
+            {
+                BitsPerSample = (short)bitsPerSample,
+                SamplesPerSecond = sampleRate,
+                Channels = (short)channelCount,
+            };
             // This has to be true to use effects.
             buffer_desc.ControlEffects = true;
             // Play sound even if application loses focus.
@@ -74,11 +80,11 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             ApplicationBuffer = new SecondaryBuffer(stream, buffer_desc, ApplicationDevice);
         }
 
-        public void LoadSoundFile(byte[] bytes)
+        public void LoadSoundFile(byte[] bytes, int sampleRate, int bitsPerSample, int channelCount)
         {
             var ms = new MemoryStream(bytes);
             ms.Position = 0;
-            LoadSoundFile(ms);
+            LoadSoundFile(ms, sampleRate, bitsPerSample, channelCount);
         }
 
         public int EffectsCount

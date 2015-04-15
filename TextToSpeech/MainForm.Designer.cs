@@ -995,10 +995,6 @@
             "24"});
             this.AudioBitsPerSampleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AudioBitsPerSampleComboBox.FormattingEnabled = true;
-            this.AudioBitsPerSampleComboBox.Items.AddRange(new object[] {
-            "8",
-            "16",
-            "24"});
             this.AudioBitsPerSampleComboBox.Location = new System.Drawing.Point(954, 444);
             this.AudioBitsPerSampleComboBox.Name = "AudioBitsPerSampleComboBox";
             this.AudioBitsPerSampleComboBox.Size = new System.Drawing.Size(114, 21);
