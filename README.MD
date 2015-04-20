@@ -26,7 +26,7 @@
 
 3. Copy *“!JocysCom-!TextToSpeech-WoW”* folder ( folder is inside downloaded zip file ).
 
-http://www.jocys.com/Files/Software/Copy.png
+![http://www.jocys.com/Files/Software/Copy.png](http://www.jocys.com/Files/Software/Copy.png)
 
 4. Paste *“!JocysCom-!TextToSpeech-WoW”* folder inside *“!AddOns”* folder of WoW.
 
@@ -69,7 +69,6 @@ _</font></blockquote>
 
 <blockquote><p align="justify"><font color="#888888" size="1">_You can pin “Monitor” to Windows OS taskbar, if you plan to use it frequently. Administrator rights are required to run this program. Make sure that you are using <font color="#008000">digitally signed software</font>. Any modification in code of software, after it is signed, <font color="#ff0000">invalidates</font> digital signature. <font color="#008000">Digitally signed software</font> ensures that users can verify origin of software and that no one has tampered with it._</font></p></blockquote>
 
-
 <blockquote><blockquote><blockquote><font color="#888888" size="1">_To run "Monitor" on "Windows XP", you must have installed...
 
 1. [http://www.microsoft.com/en-gb/download/details.aspx?id=24 Microsoft Windows XP Service Pack 3 (2008-05-06)]
@@ -78,7 +77,7 @@ _</font></blockquote>
 
 If you get this error (after trying to run “Monitor”) or no sound, proceed to parts "3" and "4".
 
-http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png
+![http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png](http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png)
 
 3. [http://www.microsoft.com/en-us/download/details.aspx?id=22 Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)]
 
@@ -88,31 +87,31 @@ http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Er
 
 7. Make sure that User Account Control (UAC) Prompt displays *“Verified Publisher: Jocys.com”*.
 
-http://www.jocys.com/Files/Software/Monitor_Signed_UAC.png
+![http://www.jocys.com/Files/Software/Monitor_Signed_UAC.png](http://www.jocys.com/Files/Software/Monitor_Signed_UAC.png)
 
 8. Click *( Yes )* button.
 
 <blockquote><font color="#ff0000">_Do not trust executables from *“Publisher: Unknown”*._</font></blockquote>
 
-http://www.jocys.com/Files/Website/Monitor_NonSigned_UAC.png
+![http://www.jocys.com/Files/Website/Monitor_NonSigned_UAC.png](http://www.jocys.com/Files/Website/Monitor_NonSigned_UAC.png)
 
 9. When *“Monitor”* will open, setup voices in *`[` Voices `]`* tab.
 
-http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png
+![http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png](http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png)
 
 10. Run *“World of Warcraft”* game.
 
 11. *`[` TTS... `]`* *`[` Stop `]`* and *`[` Play `]`* buttons will appear near quest windows now.
 
-http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png
+![http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png](http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png)
 
 <p align="justify">12. *“Mini TTS Frame”* with *`[` Stop `]`* button and NPC, Whisper, Say, Party, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader check-boxes will appear over “Quest Objective Tracker”. You can move *“Mini TTS Frame”* or you can lock it in place in text-to-speech “Options” window.</p>
 
-http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png
+![http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png](http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png)
 
 12. If you will click *`[` TTS... `]`* button, options window will open.
 
-http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png
+![http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png](http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png)
 
 == “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game ==
 <hr />
