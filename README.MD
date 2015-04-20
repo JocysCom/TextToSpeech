@@ -1,50 +1,51 @@
 <font face="Trebuchet MS">
-== Jocys.com Text to Speech Monitor and WoW Addon ï [http://drive.google.com/uc?export=download&id=0BwBTwaPviKIYQjI0TGR5VnhMQU0 Download] ==
+# Monitor and WoW Addon
+[http://drive.google.com/uc?export=download&id=0BwBTwaPviKIYQjI0TGR5VnhMQU0 Download]
 
  * Jocys.com Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.22 (2015-04-14)
  * Jocys.com Text to Speech WoW Addon 2.2.23 (2015-04-15)
 
 <hr />
 
-<p align="justify">Latest version can read <font color="#008000">quests</font> and <font color="#008000">chat messages</font>. If your game supports addons and you know, how to write one, you can add text-to-speech feature to your game too. How it works... When you open NPC dialogue window or receive/send chat message in game, *ìWoW Addonî* creates and sends to you whisper (chat) message between `<voice><part>text</part></voice>` tags. This message can include main `text`, `name`, `gender`, `pitch`, `rate`, `effect`, `volume`, ... and `command` value. Then, *ìMonitorî*, which must be running in background, while gaming, picks-up this message from your network traffic and reads it with specific text-to-speech voice. FREE text-to-speech voices can be installed (on Windows 8.#) with various Microsoft language packs. BETTER text-to-speech voices can be downloaded and installed from [http://www.ivona.com/us/for-individuals/voices-for-windows/ Ivona.com] / [http://harposoftware.com/en/content/10-trial Harposoftware.com] (distributor) websites. Good Ivona voices are English-British [http://harposoftware.com/en/content/10-trial ìAmyî] and [http://harposoftware.com/en/content/10-trial ìBrianî] ([http://harposoftware.com/en/content/10-trial download trials]). Some other voices are are not bad too... you can test them on [http://www.ivona.com main page of Ivona.com] website.</p>
+<p align="justify">Latest version can read <font color="#008000">quests</font> and <font color="#008000">chat messages</font>. If your game supports addons and you know, how to write one, you can add text-to-speech feature to your game too. How it works... When you open NPC dialogue window or receive/send chat message in game, *‚ÄúWoW Addon‚Äù* creates and sends to you whisper (chat) message between `<voice><part>text</part></voice>` tags. This message can include main `text`, `name`, `gender`, `pitch`, `rate`, `effect`, `volume`, ... and `command` value. Then, *‚ÄúMonitor‚Äù*, which must be running in background, while gaming, picks-up this message from your network traffic and reads it with specific text-to-speech voice. FREE text-to-speech voices can be installed (on Windows 8.#) with various Microsoft language packs. BETTER text-to-speech voices can be downloaded and installed from [http://www.ivona.com/us/for-individuals/voices-for-windows/ Ivona.com] / [http://harposoftware.com/en/content/10-trial Harposoftware.com] (distributor) websites. Good Ivona voices are English-British [http://harposoftware.com/en/content/10-trial ‚ÄúAmy‚Äù] and [http://harposoftware.com/en/content/10-trial ‚ÄúBrian‚Äù] ([http://harposoftware.com/en/content/10-trial download trials]). Some other voices are are not bad too... you can test them on [http://www.ivona.com main page of Ivona.com] website.</p>
 
-<font size="1">About ìMonitorî... [http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf JocysCom.TextToSpeech.Monitor.rtf] ï Tested on Windows 8.1 Pro ï All code is available under open source licence.</font>
+<font size="1">About ‚ÄúMonitor‚Äù... [http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf JocysCom.TextToSpeech.Monitor.rtf] ‚Ä¢ Tested on Windows 8.1 Pro ‚Ä¢ All code is available under open source licence.</font>
 
 <wiki:video url="http://www.youtube.com/watch?v=lhBGNJQvbUo"/>
 
-== Security and concerns ==
+# Security and concerns
 <hr />
 
-<p align="justify"><font size="1">This ìWoW Addonî and ìMonitorî does not give you more power or advantages over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between `<voice>` tags or all text from your clipboard with installed text-to-speech voices to you, when you choose so. It makes game more involving, fun and interesting. It makes things easier for people with dyslexia too. This project is open source... anyone can check all code at any time. We digitally sign our software and put our real names on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, spyware, malware or information stealing. Please download this ìWoW Addonî and ìMonitorî only from trustworthy sources. Make sure that ìMonitorî is always <font color="#008000">signed</font> by verified publisher with signature, issued by trusted certificate authority.</font></p>
+<p align="justify"><font size="1">This ‚ÄúWoW Addon‚Äù and ‚ÄúMonitor‚Äù does not give you more power or advantages over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between `<voice>` tags or all text from your clipboard with installed text-to-speech voices to you, when you choose so. It makes game more involving, fun and interesting. It makes things easier for people with dyslexia too. This project is open source... anyone can check all code at any time. We digitally sign our software and put our real names on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, spyware, malware or information stealing. Please download this ‚ÄúWoW Addon‚Äù and ‚ÄúMonitor‚Äù only from trustworthy sources. Make sure that ‚ÄúMonitor‚Äù is always <font color="#008000">signed</font> by verified publisher with signature, issued by trusted certificate authority.</font></p>
 
-== Installation ï Exit WoW before installing or updating addon. ==
+# Installation ‚Ä¢ Exit WoW before installing or updating addon.
 <hr />
 
 1. Download *[http://drive.google.com/uc?export=download&id=0BwBTwaPviKIYQjI0TGR5VnhMQU0 JocysComTextToSpeech-WoW.zip]* file.
 
-2. Open ìFile Explorerî (Win+E), locate downloaded file and open it.
+2. Open ‚ÄúFile Explorer‚Äù (Win+E), locate downloaded file and open it.
 
-3. Copy *ì!JocysCom-!TextToSpeech-WoWî* folder ( folder is inside downloaded zip file ).
+3. Copy *‚Äú!JocysCom-!TextToSpeech-WoW‚Äù* folder ( folder is inside downloaded zip file ).
 
 ![http://www.jocys.com/Files/Software/Copy.png](http://www.jocys.com/Files/Software/Copy.png)
 
-4. Paste *ì!JocysCom-!TextToSpeech-WoWî* folder inside *ì!AddOnsî* folder of WoW.
+4. Paste *‚Äú!JocysCom-!TextToSpeech-WoW‚Äù* folder inside *‚Äú!AddOns‚Äù* folder of WoW.
 
 <blockquote><font color="#888888" size="1">_Usual directory: C:\Program Files\World of Warcraft\Interface\!AddOns_</font></blockquote>
 
 5. Install additional text-to-speech voices, if needed.
  
-<blockquote><p align="justify"><font color="#888888" size="1">_<font color="#008000">Better</font> text-to-speech voices can be downloaded and installed from [http://www.ivona.com/us/for-individuals/voices-for-windows/ Ivona.com] / [http://harposoftware.com/en/content/10-trial Harposoftware.com] (distributor) website. Good Ivona voices are English-British [http://harposoftware.com/en/content/10-trial ìAmyî] and [http://harposoftware.com/en/content/10-trial ìBrianî] ([http://harposoftware.com/en/content/10-trial download trials]). Some other voices are are not bad too... you can test them on [http://www.ivona.com main page of Ivona.com] website. [http://www.ivona.com/us/for-individuals/voices-for-windows/ Ivona.com] text-to-speech voices cost about $45 each. You can use them for free during trial period for 1 month only. If you know free of charge text-to-speech voices as good, as voices by [http://www.ivona.com/us/for-individuals/voices-for-windows/ Ivona.com], please, write us._</font></p></blockquote>
+<blockquote><p align="justify"><font color="#888888" size="1">_<font color="#008000">Better</font> text-to-speech voices can be downloaded and installed from [http://www.ivona.com/us/for-individuals/voices-for-windows/ Ivona.com] / [http://harposoftware.com/en/content/10-trial Harposoftware.com] (distributor) website. Good Ivona voices are English-British [http://harposoftware.com/en/content/10-trial ‚ÄúAmy‚Äù] and [http://harposoftware.com/en/content/10-trial ‚ÄúBrian‚Äù] ([http://harposoftware.com/en/content/10-trial download trials]). Some other voices are are not bad too... you can test them on [http://www.ivona.com main page of Ivona.com] website. [http://www.ivona.com/us/for-individuals/voices-for-windows/ Ivona.com] text-to-speech voices cost about $45 each. You can use them for free during trial period for 1 month only. If you know free of charge text-to-speech voices as good, as voices by [http://www.ivona.com/us/for-individuals/voices-for-windows/ Ivona.com], please, write us._</font></p></blockquote>
 
 <blockquote><font color="#888888" size="1">_<font color="#008000">Free</font> text-to-speech voices by Microsoft can be installed (on Windows 8.#) with various [http://windows.microsoft.com/en-us/windows/language-packs Microsoft language packs]._</font></blockquote>
 
 <blockquote><font color="#888888" size="1">_
- #. Right-click the ìStart Buttonî > Control Panel > Language.
+ #. Right-click the ‚ÄúStart Button‚Äù > Control Panel > Language.
  #. Add additional languages like... English (United States) or English (United Kingdom)... etc.
- #. Go to ìOptionsî of each language and... `[` Download and install language pack `]`.
+ #. Go to ‚ÄúOptions‚Äù of each language and... `[` Download and install language pack `]`.
 _</font></blockquote>
 
-<blockquote><p align="justify"><font color="#888888" size="1">_When you will run *ì!JocysCom.!TextToSpeech.Monitor.exeî*, additional text-to-speech voices should be visible now. Not all languages have text-to-speech voices. To switch between languages in Windows, you can use ( Win+Space )._</font></p></blockquote>
+<blockquote><p align="justify"><font color="#888888" size="1">_When you will run *‚Äú!JocysCom.!TextToSpeech.Monitor.exe‚Äù*, additional text-to-speech voices should be visible now. Not all languages have text-to-speech voices. To switch between languages in Windows, you can use ( Win+Space )._</font></p></blockquote>
 
 <blockquote><font color="#888888" size="1">_Windows 8.1 language packs and text-to-speech voices - [http://en.wikipedia.org/wiki/Microsoft_text-to-speech_voices Wikipedia]:
 
@@ -63,11 +64,11 @@ _</font></blockquote>
   * Spanish - Helena, Sabina.
 _</font></blockquote>
 
-6. Run *ì!JocysCom.!TextToSpeech.Monitor.exeî* file ( file is inside pasted folder ).
+6. Run *‚Äú!JocysCom.!TextToSpeech.Monitor.exe‚Äù* file ( file is inside pasted folder ).
 
 <blockquote><font color="#888888" size="1">_Usual directory: C:\Program Files\World of Warcraft\Interface\!AddOns\!JocysCom-!TextToSpeech-WoW\_</font></blockquote>
 
-<blockquote><p align="justify"><font color="#888888" size="1">_You can pin ìMonitorî to Windows OS taskbar, if you plan to use it frequently. Administrator rights are required to run this program. Make sure that you are using <font color="#008000">digitally signed software</font>. Any modification in code of software, after it is signed, <font color="#ff0000">invalidates</font> digital signature. <font color="#008000">Digitally signed software</font> ensures that users can verify origin of software and that no one has tampered with it._</font></p></blockquote>
+<blockquote><p align="justify"><font color="#888888" size="1">_You can pin ‚ÄúMonitor‚Äù to Windows OS taskbar, if you plan to use it frequently. Administrator rights are required to run this program. Make sure that you are using <font color="#008000">digitally signed software</font>. Any modification in code of software, after it is signed, <font color="#ff0000">invalidates</font> digital signature. <font color="#008000">Digitally signed software</font> ensures that users can verify origin of software and that no one has tampered with it._</font></p></blockquote>
 
 <blockquote><blockquote><blockquote><font color="#888888" size="1">_To run "Monitor" on "Windows XP", you must have installed...
 
@@ -75,7 +76,7 @@ _</font></blockquote>
 
 2. [http://www.microsoft.com/en-gb/download/details.aspx?id=17851 Microsoft .NET Framework 4 (2011-02-21)]
 
-If you get this error (after trying to run ìMonitorî) or no sound, proceed to parts "3" and "4".
+If you get this error (after trying to run ‚ÄúMonitor‚Äù) or no sound, proceed to parts "3" and "4".
 
 ![http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png](http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png)
 
@@ -85,27 +86,27 @@ If you get this error (after trying to run ìMonitorî) or no sound, proceed to pa
 
 "Monitor Clipboard" option doesn't work and must be `[`Disabled`]` in Windows XP._</font></blockquote></blockquote></blockquote>
 
-7. Make sure that User Account Control (UAC) Prompt displays *ìVerified Publisher: Jocys.comî*.
+7. Make sure that User Account Control (UAC) Prompt displays *‚ÄúVerified Publisher: Jocys.com‚Äù*.
 
 ![http://www.jocys.com/Files/Software/Monitor_Signed_UAC.png](http://www.jocys.com/Files/Software/Monitor_Signed_UAC.png)
 
 8. Click *( Yes )* button.
 
-<blockquote><font color="#ff0000">_Do not trust executables from *ìPublisher: Unknownî*._</font></blockquote>
+<blockquote><font color="#ff0000">_Do not trust executables from *‚ÄúPublisher: Unknown‚Äù*._</font></blockquote>
 
 ![http://www.jocys.com/Files/Website/Monitor_NonSigned_UAC.png](http://www.jocys.com/Files/Website/Monitor_NonSigned_UAC.png)
 
-9. When *ìMonitorî* will open, setup voices in *`[` Voices `]`* tab.
+9. When *‚ÄúMonitor‚Äù* will open, setup voices in *`[` Voices `]`* tab.
 
 ![http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png](http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png)
 
-10. Run *ìWorld of Warcraftî* game.
+10. Run *‚ÄúWorld of Warcraft‚Äù* game.
 
 11. *`[` TTS... `]`* *`[` Stop `]`* and *`[` Play `]`* buttons will appear near quest windows now.
 
 ![http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png](http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png)
 
-<p align="justify">12. *ìMini TTS Frameî* with *`[` Stop `]`* button and NPC, Whisper, Say, Party, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader check-boxes will appear over ìQuest Objective Trackerî. You can move *ìMini TTS Frameî* or you can lock it in place in text-to-speech ìOptionsî window.</p>
+<p align="justify">12. *‚ÄúMini TTS Frame‚Äù* with *`[` Stop `]`* button and NPC, Whisper, Say, Party, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader check-boxes will appear over ‚ÄúQuest Objective Tracker‚Äù. You can move *‚ÄúMini TTS Frame‚Äù* or you can lock it in place in text-to-speech ‚ÄúOptions‚Äù window.</p>
 
 ![http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png](http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png)
 
@@ -113,25 +114,25 @@ If you get this error (after trying to run ìMonitorî) or no sound, proceed to pa
 
 ![http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png](http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png)
 
-== ìStop text-to-speechî macro and hotkey setup in ìWorld of Warcraftî game ==
+# ‚ÄúStop text-to-speech‚Äù macro and hotkey setup in ‚ÄúWorld of Warcraft‚Äù game
 <hr />
 
  #. Game Menu > `[` Macros `]` > `[` New `]`
- #. Enter macro name (for example: ìStop TTSî).
+ #. Enter macro name (for example: ‚ÄúStop TTS‚Äù).
  #. Choose an icon for macro.
  #. Click `[` Okay `]` button.
- #. Write in ìEnter Macro Commandsî field: <font color="#008000" size="1">`/run SendChatMessage("<voice command=\"stop\" />", "WHISPER", "Common", UnitName("player"))`</font>
+ #. Write in ‚ÄúEnter Macro Commands‚Äù field: <font color="#008000" size="1">`/run SendChatMessage("<voice command=\"stop\" />", "WHISPER", "Common", UnitName("player"))`</font>
  #. Click `[` Save `]` button.
- #. Drag ìStop TTSî macro icon from ìGeneral Macrosî tab on desired ìAction Barî button.
+ #. Drag ‚ÄúStop TTS‚Äù macro icon from ‚ÄúGeneral Macros‚Äù tab on desired ‚ÄúAction Bar‚Äù button.
  #. Click `[` Exit `]` button.
  #. Game Menu > `[` Key Bindings `]` > `[` Action Bar `]`
- #. Bind desired keyboard key to "Action Bar" button with ìStop TTSî macro. After pressing this key on keyboard, text-to-speech will stop.
+ #. Bind desired keyboard key to "Action Bar" button with ‚ÄúStop TTS‚Äù macro. After pressing this key on keyboard, text-to-speech will stop.
   
-== Possible improvements in ìWorld of Warcraftî game ==
+# Possible improvements in ‚ÄúWorld of Warcraft‚Äù game
 <hr />
    
  * Getting !UnitRace("") for NPC. Sound effects on NPCs are applied by !UnitCreatureType("") now.
- * Getting !UnitAge("") for NPC... in order to apply ìChild", ìAdultî or ìSeniorî sound effect.
+ * Getting !UnitAge("") for NPC... in order to apply ‚ÄúChild", ‚ÄúAdult‚Äù or ‚ÄúSenior‚Äù sound effect.
  * Getting value if NPC has voice over for all text... in order not to start TTS speech.
- * NPC ìtalkingî animation should loop, depending on length of the text.
+ * NPC ‚Äútalking‚Äù animation should loop, depending on length of the text.
 </font>
