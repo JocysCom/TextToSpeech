@@ -20,7 +20,7 @@
 		</Backdrop>
 		<Layers>
 			<Layer level="OVERLAY">
-				<FontString name="MessageFontString" inherits="GameFontHighlightSmall" text="">
+				<FontString name="JocysCom_MessageForMonitorFrameFontString" inherits="GameFontHighlightSmall" text="">
 					<Size x="550" y="20" />
 					<Anchors>
 						<Anchor point="TOP">
@@ -29,7 +29,7 @@
 					</Anchors>
 					<Color r="0.5" g="0.5" b="0.5" />
 				</FontString>
-				<FontString name="ReplaceNameFontString" inherits="GameFontHighlightSmall" text="" justifyH="LEFT">
+				<FontString name="JocysCom_ReplaceNameFontString" inherits="GameFontHighlightSmall" text="" justifyH="LEFT">
 					<Size x="467" y="20" />
 					<Anchors>
 						<Anchor point="TOPLEFT">
@@ -41,7 +41,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<CheckButton name="AutoCheckButton" inherits="UICheckButtonTemplate" text="">
+			<CheckButton name="JocysCom_AutoCheckButton" inherits="UICheckButtonTemplate" text="">
 				<Size x="24" y="24" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -49,7 +49,7 @@
 					</Anchor>
 				</Anchors>
 			</CheckButton>
-			<CheckButton name="DndCheckButton" inherits="UICheckButtonTemplate" text="">
+			<CheckButton name="JocysCom_DndCheckButton" inherits="UICheckButtonTemplate" text="">
 				<Size x="24" y="24" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -62,7 +62,7 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="FilterCheckButton" inherits="UICheckButtonTemplate" text="">
+			<CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate" text="">
 				<Size x="24" y="24" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -75,7 +75,7 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="LockCheckButton" inherits="UICheckButtonTemplate" text="">
+			<CheckButton name="JocysCom_LockCheckButton" inherits="UICheckButtonTemplate" text="">
 				<Size x="24" y="24" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -183,7 +183,7 @@
 				</Backdrop>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="DescriptionFrameFontString" inherits="GameFontHighlightSmall" parentKey="text" text="" justifyV="TOP" justifyH="LEFT">
+						<FontString name="JocysCom_DescriptionFrameFontString" inherits="GameFontHighlightSmall" parentKey="text" text="" justifyV="TOP" justifyH="LEFT">
 							<Size x="706" y="74" />
 							<Anchors>
 								<Anchor point="TOPLEFT">
@@ -198,7 +198,7 @@
 					</Layer>
 				</Layers>
 			</Frame>
-			<EditBox name="ReplaceNameEditBox" inherits="InputBoxTemplate">
+			<EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate">
 				<Size x="100" y="20" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -239,7 +239,7 @@
           </OnClick>
         </Scripts>
       </Button>
-      			<CheckButton name="StopOnCloseCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniFrame" text="">
+      			<CheckButton name="JocysCom_StopOnCloseCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniFrame" text="">
 				<Size x="22" y="23" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -252,7 +252,7 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<Button name="StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="■">
+			<Button name="StopButtonQuest" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="■">
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -261,7 +261,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						JocysCom_StopButton_OnClick(self);
+						JocysCom_StopButtonQuest_OnClick(self);
 					</OnClick>
 				</Scripts>
 				<ButtonText font="Fonts\ARIALN.TTF">
@@ -400,7 +400,7 @@
 				</Texture>
 			</Layer>
 			<Layer>
-				<FontString name="CheckButtonTooltipFontString" inherits="GameFontHighlightSmall" text="">
+				<FontString name="JocysCom_CheckButtonTooltipFontString" inherits="GameFontHighlightSmall" text="">
 					<Anchors>
 						<Anchor point="TOP">
 							<Offset x="0" y="15" />
@@ -411,7 +411,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="StopButton2" inherits="UIPanelButtonTemplate" parent="JocysCom_StopFrame" text="■">
+			<Button name="StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopFrame" text="■">
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -432,7 +432,7 @@
 					<FontHeight val="18" />
 				</ButtonText>
 			</Button>
-			<CheckButton name="MonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+			<CheckButton name="JocysCom_MonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
 				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -451,7 +451,7 @@
 					</OnLeave>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="WhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+			<CheckButton name="JocysCom_WhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
 				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -470,7 +470,7 @@
 					</OnLeave>
 				</Scripts>
 			</CheckButton>
-     <CheckButton name="SayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+     <CheckButton name="JocysCom_SayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
 				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -489,7 +489,7 @@
 					</OnLeave>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="PartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+			<CheckButton name="JocysCom_PartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
 				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -508,7 +508,7 @@
 					</OnLeave>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="GuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+			<CheckButton name="JocysCom_GuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
 				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -527,7 +527,7 @@
 					</OnLeave>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="BattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+			<CheckButton name="JocysCom_BattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
 				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -546,7 +546,7 @@
 					</OnLeave>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="BattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+			<CheckButton name="JocysCom_BattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
 				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -565,7 +565,7 @@
 					</OnLeave>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="RaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+			<CheckButton name="JocysCom_RaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
 				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -584,7 +584,7 @@
 					</OnLeave>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="RaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+			<CheckButton name="JocysCom_RaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
 				<Size x="21" y="22" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -604,7 +604,7 @@
 				</Scripts>
 			</CheckButton>
 
-      <CheckButton name="InstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+      <CheckButton name="JocysCom_InstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
         <Size x="21" y="22" />
         <Anchors>
           <Anchor point="TOPLEFT">
@@ -623,7 +623,7 @@
           </OnLeave>
         </Scripts>
       </CheckButton>
-      <CheckButton name="InstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
+      <CheckButton name="JocysCom_InstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
         <Size x="21" y="22" />
         <Anchors>
           <Anchor point="TOPLEFT">

@@ -56,9 +56,7 @@
             this.VoicesTabPanel = new System.Windows.Forms.TabPage();
             this.VoiceErrorLabel = new System.Windows.Forms.Label();
             this.VoiceOverridesTabPage = new System.Windows.Forms.TabPage();
-            this.VoiceOverridesUserControl = new JocysCom.TextToSpeech.Monitor.Controls.VoiceOverridesUserControl();
             this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
-            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
             this.AboutTabPage = new System.Windows.Forms.TabPage();
             this.AboutRichTextBox = new System.Windows.Forms.RichTextBox();
             this.UpdateTabPage = new System.Windows.Forms.TabPage();
@@ -116,6 +114,7 @@
             this.SpeakButton = new System.Windows.Forms.Button();
             this.VolumeTextBox = new System.Windows.Forms.TextBox();
             this.IncomingGroupBox = new System.Windows.Forms.GroupBox();
+            this.IncomingGroupTextBox = new System.Windows.Forms.TextBox();
             this.IncomingTextTextBox = new System.Windows.Forms.TextBox();
             this.IncomingCommandTextBox = new System.Windows.Forms.TextBox();
             this.IncomingVolumeTextBox = new System.Windows.Forms.TextBox();
@@ -133,6 +132,8 @@
             this.RateMaxComboBox = new System.Windows.Forms.ComboBox();
             this.PitchMinComboBox = new System.Windows.Forms.ComboBox();
             this.RateMinComboBox = new System.Windows.Forms.ComboBox();
+            this.VoiceOverridesUserControl = new JocysCom.TextToSpeech.Monitor.Controls.VoiceOverridesUserControl();
+            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
             ((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).BeginInit();
             this.MessagesTabControl.SuspendLayout();
             this.VoicesTabPanel.SuspendLayout();
@@ -426,14 +427,6 @@
             this.VoiceOverridesTabPage.TabIndex = 5;
             this.VoiceOverridesTabPage.Text = "Voice Overrides";
             // 
-            // VoiceOverridesUserControl
-            // 
-            this.VoiceOverridesUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VoiceOverridesUserControl.Location = new System.Drawing.Point(0, 0);
-            this.VoiceOverridesUserControl.Name = "VoiceOverridesUserControl";
-            this.VoiceOverridesUserControl.Size = new System.Drawing.Size(816, 266);
-            this.VoiceOverridesUserControl.TabIndex = 0;
-            // 
             // EffectsPresetsEditorTabPage
             // 
             this.EffectsPresetsEditorTabPage.Controls.Add(this.EffectPresetsEditorSoundEffectsControl);
@@ -443,17 +436,6 @@
             this.EffectsPresetsEditorTabPage.Size = new System.Drawing.Size(816, 266);
             this.EffectsPresetsEditorTabPage.TabIndex = 1;
             this.EffectsPresetsEditorTabPage.Text = "Efect Preset Editor";
-            // 
-            // EffectPresetsEditorSoundEffectsControl
-            // 
-            this.EffectPresetsEditorSoundEffectsControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
-            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
-            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
-            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
             // 
             // AboutTabPage
             // 
@@ -664,7 +646,7 @@
             this.MessagesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
             this.MessagesDataGridView.RowHeadersVisible = false;
             this.MessagesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.MessagesDataGridView.Size = new System.Drawing.Size(606, 237);
+            this.MessagesDataGridView.Size = new System.Drawing.Size(606, 252);
             this.MessagesDataGridView.TabIndex = 0;
             this.MessagesDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.MessagesDataGridView_RowsAdded);
             this.MessagesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.MessagesDataGridView_RowsRemoved);
@@ -732,7 +714,7 @@
             // 
             this.RateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.RateLabel.AutoSize = true;
-            this.RateLabel.Location = new System.Drawing.Point(858, 529);
+            this.RateLabel.Location = new System.Drawing.Point(858, 544);
             this.RateLabel.Name = "RateLabel";
             this.RateLabel.Size = new System.Drawing.Size(92, 13);
             this.RateLabel.TabIndex = 208;
@@ -742,7 +724,7 @@
             // 
             this.PitchLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.PitchLabel.AutoSize = true;
-            this.PitchLabel.Location = new System.Drawing.Point(857, 502);
+            this.PitchLabel.Location = new System.Drawing.Point(857, 517);
             this.PitchLabel.Name = "PitchLabel";
             this.PitchLabel.Size = new System.Drawing.Size(93, 13);
             this.PitchLabel.TabIndex = 207;
@@ -752,7 +734,7 @@
             // 
             this.VolumeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.VolumeLabel.AutoSize = true;
-            this.VolumeLabel.Location = new System.Drawing.Point(904, 559);
+            this.VolumeLabel.Location = new System.Drawing.Point(904, 574);
             this.VolumeLabel.Name = "VolumeLabel";
             this.VolumeLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.VolumeLabel.Size = new System.Drawing.Size(45, 13);
@@ -773,7 +755,7 @@
             this.TextXmlTabControl.Name = "TextXmlTabControl";
             this.TextXmlTabControl.Padding = new System.Drawing.Point(6, 5);
             this.TextXmlTabControl.SelectedIndex = 0;
-            this.TextXmlTabControl.Size = new System.Drawing.Size(614, 268);
+            this.TextXmlTabControl.Size = new System.Drawing.Size(614, 283);
             this.TextXmlTabControl.TabIndex = 3;
             this.TextXmlTabControl.SelectedIndexChanged += new System.EventHandler(this.TextXmlTabControl_SelectedIndexChanged);
             // 
@@ -784,7 +766,7 @@
             this.SandBoxTabPage.ImageKey = "code_edit.png";
             this.SandBoxTabPage.Location = new System.Drawing.Point(4, 27);
             this.SandBoxTabPage.Name = "SandBoxTabPage";
-            this.SandBoxTabPage.Size = new System.Drawing.Size(606, 237);
+            this.SandBoxTabPage.Size = new System.Drawing.Size(606, 252);
             this.SandBoxTabPage.TabIndex = 7;
             this.SandBoxTabPage.Text = "SandBox";
             // 
@@ -796,11 +778,9 @@
             this.SandBoxTextBox.Multiline = true;
             this.SandBoxTextBox.Name = "SandBoxTextBox";
             this.SandBoxTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.SandBoxTextBox.Size = new System.Drawing.Size(606, 237);
+            this.SandBoxTextBox.Size = new System.Drawing.Size(606, 252);
             this.SandBoxTextBox.TabIndex = 0;
-            this.SandBoxTextBox.Text = "<voice name=\"Marshal McBride\" gender=\"Male\" pitch=\"0\" rate=\"1\" effect=\"Humanoid\" " +
-    "volume=\"100\" command=\"Play\"><part>Test text to speech. [comment]Test text to spe" +
-    "ech.[/comment]</part></voice>";
+            this.SandBoxTextBox.Text = resources.GetString("SandBoxTextBox.Text");
             this.SandBoxTextBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
             this.SandBoxTextBox.MouseHover += new System.EventHandler(this.MouseHover_SandBox);
             // 
@@ -810,7 +790,7 @@
             this.MessagesTabPage.ImageKey = "Page_Incoming_16.png";
             this.MessagesTabPage.Location = new System.Drawing.Point(4, 27);
             this.MessagesTabPage.Name = "MessagesTabPage";
-            this.MessagesTabPage.Size = new System.Drawing.Size(606, 237);
+            this.MessagesTabPage.Size = new System.Drawing.Size(606, 252);
             this.MessagesTabPage.TabIndex = 4;
             this.MessagesTabPage.Text = "1. Incoming Messages";
             // 
@@ -820,7 +800,7 @@
             this.SapiTabPage.ImageKey = "Page_SAPI_16.png";
             this.SapiTabPage.Location = new System.Drawing.Point(4, 27);
             this.SapiTabPage.Name = "SapiTabPage";
-            this.SapiTabPage.Size = new System.Drawing.Size(606, 237);
+            this.SapiTabPage.Size = new System.Drawing.Size(606, 252);
             this.SapiTabPage.TabIndex = 2;
             this.SapiTabPage.Text = "2. Formated SAPI XML Text";
             this.SapiTabPage.UseVisualStyleBackColor = true;
@@ -833,7 +813,7 @@
             this.SapiTextBox.Multiline = true;
             this.SapiTextBox.Name = "SapiTextBox";
             this.SapiTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.SapiTextBox.Size = new System.Drawing.Size(606, 237);
+            this.SapiTextBox.Size = new System.Drawing.Size(606, 252);
             this.SapiTextBox.TabIndex = 14;
             // 
             // PlayListTabPage
@@ -842,7 +822,7 @@
             this.PlayListTabPage.ImageKey = "Page_Play_16.png";
             this.PlayListTabPage.Location = new System.Drawing.Point(4, 27);
             this.PlayListTabPage.Name = "PlayListTabPage";
-            this.PlayListTabPage.Size = new System.Drawing.Size(606, 237);
+            this.PlayListTabPage.Size = new System.Drawing.Size(606, 252);
             this.PlayListTabPage.TabIndex = 6;
             this.PlayListTabPage.Text = "3. Play List";
             // 
@@ -895,7 +875,7 @@
             this.PlayListDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle23;
             this.PlayListDataGridView.RowHeadersVisible = false;
             this.PlayListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PlayListDataGridView.Size = new System.Drawing.Size(606, 237);
+            this.PlayListDataGridView.Size = new System.Drawing.Size(606, 252);
             this.PlayListDataGridView.TabIndex = 1;
             // 
             // PlayListStatusColumn
@@ -946,7 +926,7 @@
             this.PacketsStateStatusLabel,
             this.MonitoringStateStatusLabel,
             this.ErrorToolStripStatusLabel});
-            this.MainStatusStrip.Location = new System.Drawing.Point(0, 610);
+            this.MainStatusStrip.Location = new System.Drawing.Point(0, 625);
             this.MainStatusStrip.Name = "MainStatusStrip";
             this.MainStatusStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.MainStatusStrip.Size = new System.Drawing.Size(1074, 24);
@@ -995,7 +975,7 @@
             "24"});
             this.AudioBitsPerSampleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AudioBitsPerSampleComboBox.FormattingEnabled = true;
-            this.AudioBitsPerSampleComboBox.Location = new System.Drawing.Point(954, 444);
+            this.AudioBitsPerSampleComboBox.Location = new System.Drawing.Point(954, 459);
             this.AudioBitsPerSampleComboBox.Name = "AudioBitsPerSampleComboBox";
             this.AudioBitsPerSampleComboBox.Size = new System.Drawing.Size(114, 21);
             this.AudioBitsPerSampleComboBox.TabIndex = 8;
@@ -1006,7 +986,7 @@
             // 
             this.AudioBitsPerSampleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AudioBitsPerSampleLabel.AutoSize = true;
-            this.AudioBitsPerSampleLabel.Location = new System.Drawing.Point(853, 448);
+            this.AudioBitsPerSampleLabel.Location = new System.Drawing.Point(853, 463);
             this.AudioBitsPerSampleLabel.Name = "AudioBitsPerSampleLabel";
             this.AudioBitsPerSampleLabel.Size = new System.Drawing.Size(97, 13);
             this.AudioBitsPerSampleLabel.TabIndex = 205;
@@ -1029,7 +1009,7 @@
             "22050",
             "44100",
             "48000"});
-            this.AudioSampleRateComboBox.Location = new System.Drawing.Point(954, 417);
+            this.AudioSampleRateComboBox.Location = new System.Drawing.Point(954, 432);
             this.AudioSampleRateComboBox.Name = "AudioSampleRateComboBox";
             this.AudioSampleRateComboBox.Size = new System.Drawing.Size(114, 21);
             this.AudioSampleRateComboBox.TabIndex = 7;
@@ -1040,7 +1020,7 @@
             // 
             this.AudioSampleRateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AudioSampleRateLabel.AutoSize = true;
-            this.AudioSampleRateLabel.Location = new System.Drawing.Point(849, 421);
+            this.AudioSampleRateLabel.Location = new System.Drawing.Point(849, 436);
             this.AudioSampleRateLabel.Name = "AudioSampleRateLabel";
             this.AudioSampleRateLabel.Size = new System.Drawing.Size(101, 13);
             this.AudioSampleRateLabel.TabIndex = 204;
@@ -1057,7 +1037,7 @@
             this.AudioChannelsComboBox.Items.AddRange(new object[] {
             "Mono",
             "Stereo"});
-            this.AudioChannelsComboBox.Location = new System.Drawing.Point(954, 390);
+            this.AudioChannelsComboBox.Location = new System.Drawing.Point(954, 405);
             this.AudioChannelsComboBox.Name = "AudioChannelsComboBox";
             this.AudioChannelsComboBox.Size = new System.Drawing.Size(114, 21);
             this.AudioChannelsComboBox.TabIndex = 6;
@@ -1068,7 +1048,7 @@
             // 
             this.AudioChannelsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AudioChannelsLabel.AutoSize = true;
-            this.AudioChannelsLabel.Location = new System.Drawing.Point(867, 394);
+            this.AudioChannelsLabel.Location = new System.Drawing.Point(867, 409);
             this.AudioChannelsLabel.Name = "AudioChannelsLabel";
             this.AudioChannelsLabel.Size = new System.Drawing.Size(84, 13);
             this.AudioChannelsLabel.TabIndex = 203;
@@ -1077,7 +1057,7 @@
             // RecognizeButton
             // 
             this.RecognizeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RecognizeButton.Location = new System.Drawing.Point(736, 335);
+            this.RecognizeButton.Location = new System.Drawing.Point(736, 334);
             this.RecognizeButton.Name = "RecognizeButton";
             this.RecognizeButton.Size = new System.Drawing.Size(93, 23);
             this.RecognizeButton.TabIndex = 10;
@@ -1105,7 +1085,7 @@
             // 
             this.MonitorClipboardLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.MonitorClipboardLabel.AutoSize = true;
-            this.MonitorClipboardLabel.Location = new System.Drawing.Point(858, 367);
+            this.MonitorClipboardLabel.Location = new System.Drawing.Point(858, 382);
             this.MonitorClipboardLabel.Name = "MonitorClipboardLabel";
             this.MonitorClipboardLabel.Size = new System.Drawing.Size(92, 13);
             this.MonitorClipboardLabel.TabIndex = 202;
@@ -1126,7 +1106,7 @@
             this.PitchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.PitchTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.PitchTextBox.Enabled = false;
-            this.PitchTextBox.Location = new System.Drawing.Point(999, 499);
+            this.PitchTextBox.Location = new System.Drawing.Point(999, 514);
             this.PitchTextBox.Name = "PitchTextBox";
             this.PitchTextBox.ReadOnly = true;
             this.PitchTextBox.Size = new System.Drawing.Size(23, 20);
@@ -1139,7 +1119,7 @@
             this.RateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.RateTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.RateTextBox.Enabled = false;
-            this.RateTextBox.Location = new System.Drawing.Point(999, 526);
+            this.RateTextBox.Location = new System.Drawing.Point(999, 541);
             this.RateTextBox.Name = "RateTextBox";
             this.RateTextBox.Size = new System.Drawing.Size(23, 20);
             this.RateTextBox.TabIndex = 14;
@@ -1149,7 +1129,7 @@
             // VolumeTrackBar
             // 
             this.VolumeTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.VolumeTrackBar.Location = new System.Drawing.Point(946, 547);
+            this.VolumeTrackBar.Location = new System.Drawing.Point(946, 562);
             this.VolumeTrackBar.Maximum = 100;
             this.VolumeTrackBar.Name = "VolumeTrackBar";
             this.VolumeTrackBar.Size = new System.Drawing.Size(130, 45);
@@ -1164,7 +1144,7 @@
             this.StopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.StopButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.bullet_square_glass_red;
             this.StopButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.StopButton.Location = new System.Drawing.Point(953, 581);
+            this.StopButton.Location = new System.Drawing.Point(953, 596);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(116, 23);
             this.StopButton.TabIndex = 18;
@@ -1178,7 +1158,7 @@
             this.SpeakButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.SpeakButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.bullet_triangle_glass_blue;
             this.SpeakButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.SpeakButton.Location = new System.Drawing.Point(833, 581);
+            this.SpeakButton.Location = new System.Drawing.Point(833, 596);
             this.SpeakButton.Name = "SpeakButton";
             this.SpeakButton.Size = new System.Drawing.Size(116, 23);
             this.SpeakButton.TabIndex = 17;
@@ -1191,7 +1171,7 @@
             this.VolumeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.VolumeTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.VolumeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.VolumeTextBox.Location = new System.Drawing.Point(875, 559);
+            this.VolumeTextBox.Location = new System.Drawing.Point(875, 574);
             this.VolumeTextBox.Name = "VolumeTextBox";
             this.VolumeTextBox.ReadOnly = true;
             this.VolumeTextBox.Size = new System.Drawing.Size(27, 13);
@@ -1202,7 +1182,9 @@
             // 
             // IncomingGroupBox
             // 
-            this.IncomingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.IncomingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.IncomingGroupBox.Controls.Add(this.IncomingGroupTextBox);
             this.IncomingGroupBox.Controls.Add(this.IncomingTextTextBox);
             this.IncomingGroupBox.Controls.Add(this.IncomingCommandTextBox);
             this.IncomingGroupBox.Controls.Add(this.IncomingVolumeTextBox);
@@ -1212,21 +1194,33 @@
             this.IncomingGroupBox.Controls.Add(this.IncomingGenderTextBox);
             this.IncomingGroupBox.Controls.Add(this.IncomingNameTextBox);
             this.IncomingGroupBox.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.IncomingGroupBox.Location = new System.Drawing.Point(624, 363);
+            this.IncomingGroupBox.Location = new System.Drawing.Point(624, 362);
             this.IncomingGroupBox.Name = "IncomingGroupBox";
-            this.IncomingGroupBox.Size = new System.Drawing.Size(204, 240);
+            this.IncomingGroupBox.Size = new System.Drawing.Size(204, 256);
             this.IncomingGroupBox.TabIndex = 100;
             this.IncomingGroupBox.TabStop = false;
             this.IncomingGroupBox.Text = "Incoming ( submited ) values";
             this.IncomingGroupBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
             this.IncomingGroupBox.MouseHover += new System.EventHandler(this.MouseHover_IncomingGroupBox);
             // 
+            // IncomingGroupTextBox
+            // 
+            this.IncomingGroupTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.IncomingGroupTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.IncomingGroupTextBox.Enabled = false;
+            this.IncomingGroupTextBox.Location = new System.Drawing.Point(8, 121);
+            this.IncomingGroupTextBox.Name = "IncomingGroupTextBox";
+            this.IncomingGroupTextBox.ReadOnly = true;
+            this.IncomingGroupTextBox.Size = new System.Drawing.Size(190, 20);
+            this.IncomingGroupTextBox.TabIndex = 109;
+            this.IncomingGroupTextBox.TabStop = false;
+            // 
             // IncomingTextTextBox
             // 
             this.IncomingTextTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.IncomingTextTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.IncomingTextTextBox.Enabled = false;
-            this.IncomingTextTextBox.Location = new System.Drawing.Point(7, 31);
+            this.IncomingTextTextBox.Location = new System.Drawing.Point(7, 17);
             this.IncomingTextTextBox.Name = "IncomingTextTextBox";
             this.IncomingTextTextBox.ReadOnly = true;
             this.IncomingTextTextBox.Size = new System.Drawing.Size(190, 20);
@@ -1240,7 +1234,7 @@
             this.IncomingCommandTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.IncomingCommandTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.IncomingCommandTextBox.Enabled = false;
-            this.IncomingCommandTextBox.Location = new System.Drawing.Point(7, 213);
+            this.IncomingCommandTextBox.Location = new System.Drawing.Point(7, 225);
             this.IncomingCommandTextBox.Name = "IncomingCommandTextBox";
             this.IncomingCommandTextBox.ReadOnly = true;
             this.IncomingCommandTextBox.Size = new System.Drawing.Size(190, 20);
@@ -1254,7 +1248,7 @@
             this.IncomingVolumeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.IncomingVolumeTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.IncomingVolumeTextBox.Enabled = false;
-            this.IncomingVolumeTextBox.Location = new System.Drawing.Point(7, 187);
+            this.IncomingVolumeTextBox.Location = new System.Drawing.Point(7, 199);
             this.IncomingVolumeTextBox.Name = "IncomingVolumeTextBox";
             this.IncomingVolumeTextBox.ReadOnly = true;
             this.IncomingVolumeTextBox.Size = new System.Drawing.Size(190, 20);
@@ -1268,7 +1262,7 @@
             this.IncomingEffectTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.IncomingEffectTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.IncomingEffectTextBox.Enabled = false;
-            this.IncomingEffectTextBox.Location = new System.Drawing.Point(7, 109);
+            this.IncomingEffectTextBox.Location = new System.Drawing.Point(7, 95);
             this.IncomingEffectTextBox.Name = "IncomingEffectTextBox";
             this.IncomingEffectTextBox.ReadOnly = true;
             this.IncomingEffectTextBox.Size = new System.Drawing.Size(190, 20);
@@ -1282,7 +1276,7 @@
             this.IncomingPitchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.IncomingPitchTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.IncomingPitchTextBox.Enabled = false;
-            this.IncomingPitchTextBox.Location = new System.Drawing.Point(7, 135);
+            this.IncomingPitchTextBox.Location = new System.Drawing.Point(8, 147);
             this.IncomingPitchTextBox.Name = "IncomingPitchTextBox";
             this.IncomingPitchTextBox.ReadOnly = true;
             this.IncomingPitchTextBox.Size = new System.Drawing.Size(190, 20);
@@ -1296,7 +1290,7 @@
             this.IncomingRateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.IncomingRateTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.IncomingRateTextBox.Enabled = false;
-            this.IncomingRateTextBox.Location = new System.Drawing.Point(7, 161);
+            this.IncomingRateTextBox.Location = new System.Drawing.Point(7, 173);
             this.IncomingRateTextBox.Name = "IncomingRateTextBox";
             this.IncomingRateTextBox.ReadOnly = true;
             this.IncomingRateTextBox.Size = new System.Drawing.Size(190, 20);
@@ -1310,7 +1304,7 @@
             this.IncomingGenderTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.IncomingGenderTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.IncomingGenderTextBox.Enabled = false;
-            this.IncomingGenderTextBox.Location = new System.Drawing.Point(7, 83);
+            this.IncomingGenderTextBox.Location = new System.Drawing.Point(7, 69);
             this.IncomingGenderTextBox.Name = "IncomingGenderTextBox";
             this.IncomingGenderTextBox.ReadOnly = true;
             this.IncomingGenderTextBox.Size = new System.Drawing.Size(190, 20);
@@ -1324,7 +1318,7 @@
             this.IncomingNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.IncomingNameTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.IncomingNameTextBox.Enabled = false;
-            this.IncomingNameTextBox.Location = new System.Drawing.Point(7, 58);
+            this.IncomingNameTextBox.Location = new System.Drawing.Point(7, 44);
             this.IncomingNameTextBox.Name = "IncomingNameTextBox";
             this.IncomingNameTextBox.ReadOnly = true;
             this.IncomingNameTextBox.Size = new System.Drawing.Size(190, 20);
@@ -1337,7 +1331,7 @@
             // 
             this.DefaultGenderLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.DefaultGenderLabel.AutoSize = true;
-            this.DefaultGenderLabel.Location = new System.Drawing.Point(868, 475);
+            this.DefaultGenderLabel.Location = new System.Drawing.Point(868, 490);
             this.DefaultGenderLabel.Name = "DefaultGenderLabel";
             this.DefaultGenderLabel.Size = new System.Drawing.Size(82, 13);
             this.DefaultGenderLabel.TabIndex = 206;
@@ -1347,7 +1341,7 @@
             // 
             this.MonitorPortLbel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.MonitorPortLbel.AutoSize = true;
-            this.MonitorPortLbel.Location = new System.Drawing.Point(883, 340);
+            this.MonitorPortLbel.Location = new System.Drawing.Point(883, 355);
             this.MonitorPortLbel.Name = "MonitorPortLbel";
             this.MonitorPortLbel.Size = new System.Drawing.Size(67, 13);
             this.MonitorPortLbel.TabIndex = 201;
@@ -1359,7 +1353,7 @@
             // 
             this.PortNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.PortNumericUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "PortNumericUpDownValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.PortNumericUpDown.Location = new System.Drawing.Point(954, 337);
+            this.PortNumericUpDown.Location = new System.Drawing.Point(954, 352);
             this.PortNumericUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1392,7 +1386,7 @@
             "Disabled",
             "For <voice> tags",
             "For all text"});
-            this.MonitorClipboardComboBox.Location = new System.Drawing.Point(954, 363);
+            this.MonitorClipboardComboBox.Location = new System.Drawing.Point(954, 378);
             this.MonitorClipboardComboBox.Name = "MonitorClipboardComboBox";
             this.MonitorClipboardComboBox.Size = new System.Drawing.Size(114, 21);
             this.MonitorClipboardComboBox.TabIndex = 5;
@@ -1415,7 +1409,7 @@
             "Male",
             "Female",
             "Neutral"});
-            this.GenderComboBox.Location = new System.Drawing.Point(954, 471);
+            this.GenderComboBox.Location = new System.Drawing.Point(954, 486);
             this.GenderComboBox.Name = "GenderComboBox";
             this.GenderComboBox.Size = new System.Drawing.Size(114, 21);
             this.GenderComboBox.TabIndex = 9;
@@ -1475,7 +1469,7 @@
             "-8",
             "-9",
             "-10"});
-            this.PitchMaxComboBox.Location = new System.Drawing.Point(1028, 498);
+            this.PitchMaxComboBox.Location = new System.Drawing.Point(1028, 513);
             this.PitchMaxComboBox.Name = "PitchMaxComboBox";
             this.PitchMaxComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.PitchMaxComboBox.Size = new System.Drawing.Size(40, 21);
@@ -1536,7 +1530,7 @@
             "-8",
             "-9",
             "-10"});
-            this.RateMaxComboBox.Location = new System.Drawing.Point(1028, 525);
+            this.RateMaxComboBox.Location = new System.Drawing.Point(1028, 540);
             this.RateMaxComboBox.Name = "RateMaxComboBox";
             this.RateMaxComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.RateMaxComboBox.Size = new System.Drawing.Size(40, 21);
@@ -1597,7 +1591,7 @@
             "-8",
             "-9",
             "-10"});
-            this.PitchMinComboBox.Location = new System.Drawing.Point(954, 498);
+            this.PitchMinComboBox.Location = new System.Drawing.Point(954, 513);
             this.PitchMinComboBox.Name = "PitchMinComboBox";
             this.PitchMinComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.PitchMinComboBox.Size = new System.Drawing.Size(40, 21);
@@ -1658,7 +1652,7 @@
             "-8",
             "-9",
             "-10"});
-            this.RateMinComboBox.Location = new System.Drawing.Point(954, 525);
+            this.RateMinComboBox.Location = new System.Drawing.Point(954, 540);
             this.RateMinComboBox.Name = "RateMinComboBox";
             this.RateMinComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.RateMinComboBox.Size = new System.Drawing.Size(40, 21);
@@ -1667,11 +1661,30 @@
             this.RateMinComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
             this.RateMinComboBox.MouseHover += new System.EventHandler(this.MouseHover_RateMin);
             // 
+            // VoiceOverridesUserControl
+            // 
+            this.VoiceOverridesUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VoiceOverridesUserControl.Location = new System.Drawing.Point(0, 0);
+            this.VoiceOverridesUserControl.Name = "VoiceOverridesUserControl";
+            this.VoiceOverridesUserControl.Size = new System.Drawing.Size(816, 266);
+            this.VoiceOverridesUserControl.TabIndex = 0;
+            // 
+            // EffectPresetsEditorSoundEffectsControl
+            // 
+            this.EffectPresetsEditorSoundEffectsControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
+            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
+            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
+            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1074, 634);
+            this.ClientSize = new System.Drawing.Size(1074, 649);
             this.Controls.Add(this.PortNumericUpDown);
             this.Controls.Add(this.MonitorPortLbel);
             this.Controls.Add(this.MonitorClipboardComboBox);
@@ -1706,7 +1719,7 @@
             this.Controls.Add(this.PitchLabel);
             this.Controls.Add(this.AudioChannelsLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1090, 672);
+            this.MinimumSize = new System.Drawing.Size(1090, 688);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -1839,6 +1852,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CommentColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListDurationColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListTextColumn;
+        private System.Windows.Forms.TextBox IncomingGroupTextBox;
 
 
 

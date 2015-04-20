@@ -486,6 +486,7 @@ namespace JocysCom.TextToSpeech.Monitor
                 if (!string.IsNullOrEmpty(overrideVoice.effect)) v.effect = overrideVoice.effect;
                 if (!string.IsNullOrEmpty(overrideVoice.pitch)) v.pitch = overrideVoice.pitch;
                 if (!string.IsNullOrEmpty(overrideVoice.rate)) v.rate = overrideVoice.rate;
+                if (!string.IsNullOrEmpty(overrideVoice.group)) v.volume = overrideVoice.group;
                 if (!string.IsNullOrEmpty(overrideVoice.volume)) v.volume = overrideVoice.volume;
             }
             //Set gender. "Male"(1), "Female"(2), "Neutral"(3).
@@ -548,6 +549,11 @@ namespace JocysCom.TextToSpeech.Monitor
             if (!volumeIsValid) _Volume = VolumeTrackBar.Value;
             IncomingVolumeTextBox.Text = volumeIsValid ? "volume=\"" + _Volume + "\"" : "";
 
+            // Set group.
+            var groupValue = string.IsNullOrEmpty(v.group) ? "" : v.group;
+            IncomingGroupTextBox.Text = !string.IsNullOrEmpty(v.group) ? "group=\"" + v.group + "\"" : "";
+            
+            
             // Set command.
             IncomingCommandTextBox.Text = (string.IsNullOrEmpty(v.command)) ? "command value was not submited!" : "command=\"" + v.command + "\"";
             if (string.IsNullOrEmpty(v.command)) return;
@@ -990,7 +996,7 @@ namespace JocysCom.TextToSpeech.Monitor
             //Fill SandBox Tab if it is empty
             if (string.IsNullOrEmpty(SandBoxTextBox.Text))
             {
-                SandBoxTextBox.Text = "<voice name=\"Marshal McBride\" gender=\"Male\" pitch=\"0\" rate=\"1\" effect=\"Humanoid\" volume=\"100\" command=\"Play\"><part>Test text to speech. [comment]Test text to speech.[/comment]</part></voice>";
+                SandBoxTextBox.Text = "<voice command=\"Play\" name=\"Marshal McBride\" gender=\"Male\" effect=\"Humanoid\" group=\"Quest\" pitch=\"0\" rate=\"1\" volume=\"100\"><part>Test text to speech. [comment]Test text to speech.[/comment]</part></voice>";
             }
             //Fill SAPI Tab
             if (string.IsNullOrEmpty(IncomingTextTextBox.Text))

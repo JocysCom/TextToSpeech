@@ -33,6 +33,10 @@ namespace JocysCom.TextToSpeech.Monitor.Network
 		[XmlAttribute]
 		public string effect { get { return _effect; } set { _effect = value; NotifyPropertyChanged("effect"); } }
 		string _effect;
+
+        [XmlAttribute]
+        public string group { get { return _group; } set { _group = value; NotifyPropertyChanged("group"); } }
+        string _group;
 		
 		[XmlAttribute]
 		public string volume { get { return _volume; } set { _volume = value; NotifyPropertyChanged("volume"); } }

@@ -1,3 +1,4 @@
+/.svn
 /TextToSpeech/bin
 /TextToSpeech/obj
 /*.suo
@@ -6,3 +7,4 @@
 /TextToSpeech/WoW/JocysCom-TextToSpeech-WoW/*.wowsuo
 /TextToSpeech/*.suo
 /TextToSpeech/*.user
+/*.sdf
