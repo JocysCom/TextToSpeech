@@ -114,7 +114,8 @@
 2. Enter macro name (for example: “Stop TTS”).<br />
 3. Choose an icon for macro.<br />
 4. Click [Okay] button.<br />
-5. Write in “Enter Macro Commands” field: <sup><code>/run SendChatMessage("&lt;voice command=\"stop\" /&gt;", "WHISPER", "Common", UnitName("player"))</code><sup></p>
+5. Write in “Enter Macro Commands” field:</p>
+<p><sup><code>/run SendChatMessage("&lt;voice command=\"stop\" /&gt;", "WHISPER", "Common", UnitName("player"))</code><sup></p>
 <p>6. Click [Save] button.<br />
 7. Drag “Stop TTS” macro icon from “General Macros” tab on desired “Action Bar” button.<br />
 8. Click [Exit] button.<br />
