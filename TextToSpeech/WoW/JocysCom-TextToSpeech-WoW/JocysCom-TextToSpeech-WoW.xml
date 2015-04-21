@@ -88,7 +88,7 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<Frame name="QuestFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
+			<Frame name="JocysCom_MessageFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
 				<Size x="593" y="231" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -132,7 +132,7 @@
 							</EdgeSize>
 						</Backdrop>
 						<Frames>
-							<EditBox name="QuestEditBox" parent="JocysCom_QuestScrollFrame" letters="10000" multiLine="true">
+							<EditBox name="JocysCom_QuestEditBox" parent="JocysCom_QuestScrollFrame" letters="10000" multiLine="true">
 								<Size>
 									<AbsDimension x="560" y="81" />
 								</Size>
@@ -147,20 +147,10 @@
 								<FontString inherits="GameFontHighlightSmall" />
 							</EditBox>
 						</Frames>
-						<Scripts>
-							<OnLoad>
-								JocysCom_QuestScrollFrame_OnLoad(self);
-							</OnLoad>
-						</Scripts>
 					</ScrollFrame>
 				</Frames>
-				<Scripts>
-					<OnLoad>
-						JocysCom_QuestFrame_OnLoad(self);
-					</OnLoad>
-				</Scripts>
 			</Frame>
-			<Frame name="DescriptionFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
+			<Frame name="JocysCom_DescriptionFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
 				<Size x="593" y="120" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -209,9 +199,6 @@
 			</EditBox>
 		</Frames>
 		<Scripts>
-			<OnLoad>
-				JocysCom_OptionsFrame_OnLoad(self);
-			</OnLoad>
 			<OnHide>
 				JocysCom_OptionsFrame_OnHide();
 			</OnHide>
@@ -224,9 +211,9 @@
 				<Offset x="225" y="-505" />
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile="Interface\AddOns\JocysCom-TextToSpeech-WoW\Images\JocysCom-MiniFrame-Background" edgeFile="" />
+		<Backdrop bgFile="" edgeFile="" />
 		<Frames>
-      <Button name="OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="TTS...">
+      <Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="TTS...">
         <Size x="57" y="21" />
         <Anchors>
           <Anchor point="TOPLEFT">
@@ -252,7 +239,7 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<Button name="StopButtonQuest" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="■">
+			<Button name="JocysCom_StopButtonQuest" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="■">
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -273,7 +260,7 @@
 					<FontHeight val="18" />
 				</ButtonText>
 			</Button>
-      <Button name="PlayButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="►">
+      <Button name="JocysCom_PlayButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="►">
         <Size x="31" y="21" />
         <Anchors>
           <Anchor point="TOPLEFT">
@@ -338,7 +325,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				<FontString name="ScrollFontString" inherits="GameFontHighlightSmall" parentKey="text" text="">
+				<FontString name="JocysCom_ScrollFrameFontString" inherits="GameFontHighlightSmall" parentKey="text" text="">
 					<Size x="205" y="202" />
 					<Anchors>
 						<Anchor point="TOPLEFT">
@@ -353,7 +340,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="ScrollResizeButton" inherits="ResizeButton" parentKey="resizeButton">
+			<Button name="JocysCom_ScrollResizeButton" inherits="ResizeButton" parentKey="resizeButton">
 				<Size x="16" y="16" />
 				<Anchors>
 					<Anchor point="BOTTOMRIGHT" x="0" y="0" />
@@ -372,9 +359,6 @@
 			</Button>
 		</Frames>
 		<Scripts>
-			<OnLoad>
-				JocysCom_ScrollFrame_OnLoad(self);
-			</OnLoad>
 			<OnMouseDown>
 				JocysCom_ScrollFrame_OnMouseDown(self);
 			</OnMouseDown>
@@ -383,7 +367,6 @@
 			</OnMouseUp>
 		</Scripts>
 	</Frame>
-  <!--ObjectiveTrackerFrame-->
   <Frame name="JocysCom_StopFrame" parent="MinimapCluster">    
     <Size x="240" y="40" />
 		<Anchors>
@@ -411,7 +394,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopFrame" text="■">
+			<Button name="JocysCom_StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopFrame" text="■">
 				<Size x="31" y="21" />
 				<Anchors>
 					<Anchor point="TOPLEFT">
