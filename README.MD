@@ -44,8 +44,8 @@
 
 <p>Windows 8.1 language packs and text-to-speech voices (<a href="http://en.wikipedia.org/wiki/Microsoft_text-to-speech_voices">Wikipedia</a>):</p>
 
-<p>• English (United States) - *David (male)*, Zira (female).<br />
-• English (United Kingdom) - *Heera (female)*, Hazel (female), Zira (female).<br />
+<p>• English (United States) - David (male), Zira (female).<br />
+• English (United Kingdom) - Heera (female), Hazel (female), Zira (female).<br />
 • Chinese Simplified - Hanhan, Huihui.<br />
 • Chinese Traditional - Tracy.<br />
 • French - Hortense.<br />
