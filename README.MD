@@ -114,7 +114,7 @@
  2. Enter macro name (for example: “Stop TTS”).<br />
  3. Choose an icon for macro.<br />
  4. Click [Okay] button.<br />
- 5. Write in “Enter Macro Commands” field: <code>/run SendChatMessage("<voice command=\"stop\" />", "WHISPER", "Common", UnitName("player"))</code><br />
+ 5. Write in “Enter Macro Commands” field: <code>/run SendChatMessage("&lt;voice command=\"stop\" /&gt;", "WHISPER", "Common", UnitName("player"))</code><br />
  6. Click [Save] button.<br />
  7. Drag “Stop TTS” macro icon from “General Macros” tab on desired “Action Bar” button.<br />
  8. Click [Exit] button.<br />
@@ -124,7 +124,7 @@
 ### Possible improvements in “World of Warcraft” game
 <hr />
 
-<p>• Getting UnitRace("") for NPC. Sound effects on NPCs are applied by UnitCreatureType("") now.<br />
-• Getting UnitAge("") for NPC... in order to apply “Child", “Adult” or “Senior” sound effect.<br />
+<p>• Getting <b>UnitRace()</b> for NPC. Sound effects on NPCs are applied by <b>UnitCreatureType()</b> now.<br />
+• Getting <b>UnitAge()</b> for NPC... in order to apply “Child", “Adult” or “Senior” sound effect.<br />
 • Getting value if NPC has voice over for all text... in order not to start TTS speech.<br />
 • NPC “talking” animation should loop, depending on length of the text.</p>
