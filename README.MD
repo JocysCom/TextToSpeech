@@ -129,3 +129,5 @@
 • Getting <b>UnitAge()</b> for NPC... in order to apply “Child", “Adult” or “Senior” sound effect.<br />
 • Getting value if NPC has voice over for all text... in order not to start TTS speech.<br />
 • NPC “talking” animation should loop, depending on length of the text.</p>
+
+
