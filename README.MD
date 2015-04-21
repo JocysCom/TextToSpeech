@@ -19,7 +19,7 @@
 ### Installation • Exit WoW before installing or updating addon.
 <hr />
 
-<p>1. Download <a href="http://drive.google.com/uc?export=download&id=0BwBTwaPviKIYQjI0TGR5VnhMQU0">JocysComTextToSpeech-WoW.zip</a> file.<br />
+<p>1. Download <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip">JocysComTextToSpeech-WoW.zip</a> file.<br />
 2. Open “File Explorer” (Win+E), locate downloaded file and open it.<br />
 3. Copy <i>“JocysCom-TextToSpeech-WoW”</i> folder (folder is inside downloaded zip file).</p>
 <p><img src="http://www.jocys.com/Files/Software/Copy.png" /></p>
