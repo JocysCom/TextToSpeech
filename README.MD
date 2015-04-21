@@ -31,7 +31,9 @@
  
 <blockquote>
 <p align="justify">BETTER text-to-speech voices can be downloaded and installed from <a href="http://www.ivona.com/us/for-individuals/voices-for-windows/">Ivona.com</a> / <a href="http://harposoftware.com/en/content/10-trial">Harposoftware.com</a>&nbsp;(distributor) websites. Good Ivona voices are English-British <a href="http://harposoftware.com/en/content/10-trial">“Amy”</a> and <a href="http://harposoftware.com/en/content/10-trial">“Brian”</a>&nbsp;(<a href="http://harposoftware.com/en/content/10-trial">download trials</a>). Some other voices are are not bad too... you can test them on <a href="http://www.ivona.com">main page of Ivona.com</a> website. <a href="http://www.ivona.com/us/for-individuals/voices-for-windows/">Ivona.com</a> text-to-speech voices cost about $45 each. You can use them for free during trial period for 1 month only. If you know free of charge text-to-speech voices as good, as voices by <a href="http://www.ivona.com/us/for-individuals/voices-for-windows/">Ivona.com</a>, please, write us.</p>
+</blockquote>
 
+<blockquote>
 <p align="justify">FREE text-to-speech voices by Microsoft can be installed (on Windows 8.#) with various <a href="http://windows.microsoft.com/en-us/windows/language-packs">Microsoft language packs</a>.</p>
 
 <p>1. Right-click the “Start Button” > Control Panel > Language.<br />
@@ -40,7 +42,7 @@
  
 <p align="justify">When you will run <b>“JocysCom.TextToSpeech.Monitor.exe”</b>, additional text-to-speech voices should be visible now. Not all languages have text-to-speech voices. To switch between languages in Windows, you can use ( Win+Space ).</p>
 
-<p>Windows 8.1 language packs and text-to-speech voices - <a href="http://en.wikipedia.org/wiki/Microsoft_text-to-speech_voices">Wikipedia</a>:</p>
+<p>Windows 8.1 language packs and text-to-speech voices (<a href="http://en.wikipedia.org/wiki/Microsoft_text-to-speech_voices">Wikipedia</a>):</p>
 
 <p>• English (United States) - *David (male)*, Zira (female).<br />
 • English (United Kingdom) - *Heera (female)*, Hazel (female), Zira (female).<br />
