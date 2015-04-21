@@ -22,7 +22,7 @@
 <p>1. Download <a href="http://drive.google.com/uc?export=download&id=0BwBTwaPviKIYQjI0TGR5VnhMQU0">JocysComTextToSpeech-WoW.zip</a> file.<br />
 2. Open “File Explorer” (Win+E), locate downloaded file and open it.<br />
 3. Copy <i>“JocysCom-TextToSpeech-WoW”</i> folder (folder is inside downloaded zip file).</p>
-<img src="http://www.jocys.com/Files/Software/Copy.png">
+<p><img src="http://www.jocys.com/Files/Software/Copy.png" /></p>
 <p>4. Paste <i>“JocysCom-TextToSpeech-WoW”</i> folder inside <i>“AddOns”</i> folder of WoW.</p>
 <blockquote>
 <p>Usual directory: C:\Program Files\World of Warcraft\Interface\AddOns</p>
@@ -40,7 +40,7 @@
  2. Add additional languages like... English (United States) or English (United Kingdom)... etc.<br />
  3. Go to “Options” of each language and... [ Download and install language pack ].</p>
  
-<p align="justify">When you will run <b>“JocysCom.TextToSpeech.Monitor.exe”</b>, additional text-to-speech voices should be visible now. Not all languages have text-to-speech voices. To switch between languages in Windows, you can use ( Win+Space ).</p>
+<p align="justify">When you will run <b>“JocysCom.TextToSpeech.Monitor.exe”</b>, additional text-to-speech voices should be visible now. Not all languages have text-to-speech voices. To switch between languages in Windows, you can use (Win+Space).</p>
 
 <p>Windows 8.1 language packs and text-to-speech voices (<a href="http://en.wikipedia.org/wiki/Microsoft_text-to-speech_voices">Wikipedia</a>):</p>
 
@@ -59,76 +59,73 @@
 • Spanish - Helena, Sabina.</p>
 </blockquote>
 
-<p>6. Run <b>“JocysCom.TextToSpeech.Monitor.exe”</b> file ( file is inside pasted folder ).</p>
+<p>6. Run <b>“JocysCom.TextToSpeech.Monitor.exe”</b> file (file is inside pasted folder).</p>
 
 <blockquote>
 <p>Usual directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysCom-TextToSpeech-WoW\</p>
 </blockquote>
 
-<blockquote><p align="justify">You can pin “Monitor” to Windows OS taskbar, if you plan to use it frequently. Administrator rights are required to run this program. Make sure that you are using <i>digitally signed software</i>. Any modification in code of software, after it is signed, <i>invalidates</i> digital signature. <i>Digitally signed software</i> ensures that users can verify origin of software and that no one has tampered with it.</p></blockquote>
+<blockquote>
+<p align="justify">You can pin “Monitor” to Windows OS taskbar, if you plan to use it frequently. Administrator rights are required to run this program. Make sure that you are using <i>digitally signed software</i>. Any modification in code of software, after it is signed, <i>invalidates</i> digital signature. <i>Digitally signed software</i> ensures that users can verify origin of software and that no one has tampered with it.</p>
+</blockquote>
 
-<blockquote><blockquote><blockquote>To run "Monitor" on "Windows XP", you must have installed...
+<blockquote>
+<p>To run "Monitor" on "Windows XP", you must have installed...<br />
+1. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06)</a><br />
+2. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
+<p>If you get this error (after trying to run “Monitor”) or no sound, proceed to parts "3" and "4".</p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png" /></p>
+<p>3. <a href="http://www.microsoft.com/en-us/download/details.aspx?id=22">Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)</a><br />
+4. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=8109">Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)</a></p>
+<p>"Monitor Clipboard" option doesn't work and must be [Disabled] in Windows XP.</blockquote>
 
-1. [Microsoft Windows XP Service Pack 3 (2008-05-06)](http://www.microsoft.com/en-gb/download/details.aspx?id=24)
+<p>7. Make sure that User Account Control (UAC) Prompt displays <b>“Verified Publisher: Jocys.com”</b>.</p>
 
-2. [Microsoft .NET Framework 4 (2011-02-21)](http://www.microsoft.com/en-gb/download/details.aspx?id=17851)
+<p><img src="http://www.jocys.com/Files/Software/Monitor_Signed_UAC.png" /></p> 
 
-If you get this error (after trying to run “Monitor”) or no sound, proceed to parts "3" and "4".
+<p>8. Click <b>[ Yes ]</b> button.</p>
 
-![JocysCom_TTS_Monitor_Windows_XP_Exception_Error](http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png)
+<blockquote>
+<p>Do not trust executables from <b>“Publisher: Unknown”</b>.</p>
+<p><img src="http://www.jocys.com/Files/Website/Monitor_NonSigned_UAC.png" />
+</blockquote>
 
-3. [Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)](http://www.microsoft.com/en-us/download/details.aspx?id=22)
+<p>9. When <b>“Monitor”</b>, will open, setup voices in [Voices] tab.</p>
 
-4. [Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)](http://www.microsoft.com/en-gb/download/details.aspx?id=8109)
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" /></p>
 
-"Monitor Clipboard" option doesn't work and must be `[`Disabled`]` in Windows XP._</blockquote></blockquote></blockquote>
+<p>10. Run <b>“World of Warcraft”</b> game.</p>
 
-7. Make sure that User Account Control (UAC) Prompt displays *“Verified Publisher: Jocys.com”*.
+<p>11. [TTS...] [Stop] and [Play] buttons will appear near quest windows now.</p>
 
-![Monitor_Signed_UAC](http://www.jocys.com/Files/Software/Monitor_Signed_UAC.png)
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png" /></p>
 
-8. Click *( Yes )* button.
+<p align="justify">12. *“Mini TTS Frame”* with [Stop] button and NPC, Whisper, Say, Party, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader check-boxes will appear over “Quest Objective Tracker”. You can move *“Mini TTS Frame”* or you can lock it in place in text-to-speech “Options” window.</p>
 
-<blockquote><font color="#ff0000">_Do not trust executables from *“Publisher: Unknown”*._</font></blockquote>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png"/></p>
 
-![Monitor_NonSigned_UAC](http://www.jocys.com/Files/Website/Monitor_NonSigned_UAC.png)
+<p>12. If you will click [TTS...] button, options window will open.</p>
 
-9. When *“Monitor”* will open, setup voices in *`[` Voices `]`* tab.
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" /></p>
 
-![JocysCom_TTS_Monitor](http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png)
-
-10. Run *“World of Warcraft”* game.
-
-11. *`[` TTS... `]`* *`[` Stop `]`* and *`[` Play `]`* buttons will appear near quest windows now.
-
-![JocysCom_TTS_WoW_Addon_Buttons](http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png)
-
-<p align="justify">12. *“Mini TTS Frame”* with *`[` Stop `]`* button and NPC, Whisper, Say, Party, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader check-boxes will appear over “Quest Objective Tracker”. You can move *“Mini TTS Frame”* or you can lock it in place in text-to-speech “Options” window.</p>
-
-![JocysCom_TTS_WoW_Addon_MiniFrame](http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png)
-
-12. If you will click *`[` TTS... `]`* button, options window will open.
-
-![JocysCom_TTS_WoW_Addon](http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png)
-
-# “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
+### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
 
- #. Game Menu > `[` Macros `]` > `[` New `]`
- #. Enter macro name (for example: “Stop TTS”).
- #. Choose an icon for macro.
- #. Click `[` Okay `]` button.
- #. Write in “Enter Macro Commands” field: <font color="#008000" size="1">`/run SendChatMessage("<voice command=\"stop\" />", "WHISPER", "Common", UnitName("player"))`</font>
- #. Click `[` Save `]` button.
- #. Drag “Stop TTS” macro icon from “General Macros” tab on desired “Action Bar” button.
- #. Click `[` Exit `]` button.
- #. Game Menu > `[` Key Bindings `]` > `[` Action Bar `]`
- #. Bind desired keyboard key to "Action Bar" button with “Stop TTS” macro. After pressing this key on keyboard, text-to-speech will stop.
-  
-# Possible improvements in “World of Warcraft” game
+<p>1. Game Menu > [Macros] > [New]<br />
+ 2. Enter macro name (for example: “Stop TTS”).<br />
+ 3. Choose an icon for macro.<br />
+ 4. Click `[` Okay `]` button.<br />
+ 5. Write in “Enter Macro Commands” field: <code>/run SendChatMessage("<voice command=\"stop\" />", "WHISPER", "Common", UnitName("player"))</code><br />
+ 6. Click `[` Save `]` button.<br />
+ 7. Drag “Stop TTS” macro icon from “General Macros” tab on desired “Action Bar” button.<br />
+ 8. Click `[` Exit `]` button.<br />
+ 9. Game Menu > `[` Key Bindings `]` > `[` Action Bar `]`<br />
+ 10. Bind desired keyboard key to "Action Bar" button with “Stop TTS” macro. After pressing this key on keyboard, text-to-speech will stop.</p>
+
+### Possible improvements in “World of Warcraft” game
 <hr />
-   
- * Getting !UnitRace("") for NPC. Sound effects on NPCs are applied by !UnitCreatureType("") now.
- * Getting !UnitAge("") for NPC... in order to apply “Child", “Adult” or “Senior” sound effect.
- * Getting value if NPC has voice over for all text... in order not to start TTS speech.
- * NPC “talking” animation should loop, depending on length of the text.
+
+<p>• Getting !UnitRace("") for NPC. Sound effects on NPCs are applied by !UnitCreatureType("") now.<br />
+• Getting !UnitAge("") for NPC... in order to apply “Child", “Adult” or “Senior” sound effect.<br />
+• Getting value if NPC has voice over for all text... in order not to start TTS speech.<br />
+• NPC “talking” animation should loop, depending on length of the text.</p>
