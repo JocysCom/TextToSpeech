@@ -1,4 +1,3 @@
-<font face="Trebuchet MS">
 ### Monitor and WoW Addon • [Download](http://drive.google.com/uc?export=download&id=0BwBTwaPviKIYQjI0TGR5VnhMQU0)
 
  * Jocys.com Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.22 (2015-04-14)
@@ -6,33 +5,27 @@
 
 <hr />
 
-Latest version can read <span style="color: #008000">quests</span> and <font color="#008000">chat messages</font>. If your game supports addons and you know, how to write one, you can add text-to-speech feature to your game too. How it works... When you open NPC dialogue window or receive/send chat message in game, *“WoW Addon”* creates and sends to you whisper (chat) message between `<voice><part>text</part></voice>` tags. This message can include main `text`, `name`, `gender`, `pitch`, `rate`, `effect`, `volume`, ... and `command` value. Then, *“Monitor”*, which must be running in background, while gaming, picks-up this message from your network traffic and reads it with specific text-to-speech voice. FREE text-to-speech voices can be installed (on Windows 8.#) with various Microsoft language packs. BETTER text-to-speech voices can be downloaded and installed from [Ivona.com](http://www.ivona.com/us/for-individuals/voices-for-windows/) or [Harposoftware.com](http://harposoftware.com/en/content/10-trial) distributor websites. Good Ivona voices are English-British [“Amy”](http://harposoftware.com/en/content/10-trial) and [“Brian”](http://harposoftware.com/en/content/10-trial) [download trials](http://harposoftware.com/en/content/10-trial). Some other voices are are not bad too... you can test them on [http://www.ivona.com](main page of Ivona.com) website.
+<p align="justify">Latest version can read <i>quests</i> and <i>chat messages</i>. If your game supports addons and you know, how to write one, you can add text-to-speech feature to your game too. How it works... When you open NPC dialogue window or receive/send chat message in game, <b>“WoW Addon”</b> creates and sends to you whisper (chat) message between  <code>&lt;voice&gt;&lt;part&gt;text&lt;/part&gt;&lt;/voice&gt;</code> tags. This message can include main <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code>, ... and <code>command</code> value. Then, <b>“Monitor”</b>, which must be running in background, while gaming, picks-up this message from your network traffic and reads it with specific text-to-speech voice. FREE text-to-speech voices can be installed (on Windows 8.#) with various Microsoft language packs. BETTER text-to-speech voices can be downloaded and installed from <a href="http://www.ivona.com/us/for-individuals/voices-for-windows/">Ivona.com</a> or <a href="http://harposoftware.com/en/content/10-trial">Harposoftware.com</a> distributor websites. Good Ivona voices are English-British <a href="http://harposoftware.com/en/content/10-trial">“Amy”</a> and <a href="http://harposoftware.com/en/content/10-trial">“Brian”</a> <a href="http://harposoftware.com/en/content/10-trial">download trials</a>. Some other voices are are not bad too... you can test them on <a href="http://www.ivona.com">main page of Ivona.com</a> website.</p>
 
-<font size="1">About “Monitor”... [JocysCom.TextToSpeech.Monitor.rtf](http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf) • Tested on Windows 8.1 Pro • All code is available under open source licence.</font>
+<sub>About “Monitor”... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8.1 Pro • All code is available under open source licence.</sub>
 
 [![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
-# Security and concerns
+### Security and concerns
 <hr />
 
-<p align="justify"><font size="1">This “WoW Addon” and “Monitor” does not give you more power or advantages over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between `<voice>` tags or all text from your clipboard with installed text-to-speech voices to you, when you choose so. It makes game more involving, fun and interesting. It makes things easier for people with dyslexia too. This project is open source... anyone can check all code at any time. We digitally sign our software and put our real names on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, spyware, malware or information stealing. Please download this “WoW Addon” and “Monitor” only from trustworthy sources. Make sure that “Monitor” is always <font color="#008000">signed</font> by verified publisher with signature, issued by trusted certificate authority.</font></p>
+<p align="justify">This “WoW Addon” and “Monitor” does not give you more power or advantages over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between <code>&lt;voice&gt;</code> tags or all text from your clipboard with installed text-to-speech voices to you, when you choose so. It makes game more involving, fun and interesting. It makes things easier for people with dyslexia too. This project is open source... anyone can check all code at any time. We digitally sign our software and put our real names on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, spyware, malware or information stealing. Please download this “WoW Addon” and “Monitor” only from trustworthy sources. Make sure that “Monitor” is always <i>signed</i> by verified publisher with signature, issued by trusted certificate authority.</p>
 
-# Installation • Exit WoW before installing or updating addon.
+### Installation • Exit WoW before installing or updating addon.
 <hr />
 
-1. Download [JocysComTextToSpeech-WoW.zip](http://drive.google.com/uc?export=download&id=0BwBTwaPviKIYQjI0TGR5VnhMQU0) file.
-
-2. Open “File Explorer” (Win+E), locate downloaded file and open it.
-
-3. Copy *“!JocysCom-!TextToSpeech-WoW”* folder ( folder is inside downloaded zip file ).
-
-![Copy](http://www.jocys.com/Files/Software/Copy.png)
-
-4. Paste *“!JocysCom-!TextToSpeech-WoW”* folder inside *“!AddOns”* folder of WoW.
-
-<blockquote><font color="#888888" size="1">_Usual directory: C:\Program Files\World of Warcraft\Interface\!AddOns_</font></blockquote>
-
-5. Install additional text-to-speech voices, if needed.
+<p>1. Download <a href="http://drive.google.com/uc?export=download&id=0BwBTwaPviKIYQjI0TGR5VnhMQU0">JocysComTextToSpeech-WoW.zip</a> file.<br />
+2. Open “File Explorer” (Win+E), locate downloaded file and open it.<br />
+3. Copy <i>“JocysCom-TextToSpeech-WoW”</i> folder (folder is inside downloaded zip file).</p>
+<img src="http://www.jocys.com/Files/Software/Copy.png">
+<p>4. Paste <i>“JocysCom-TextToSpeech-WoW”</i> folder inside <i>“AddOns”</i> folder of WoW.</p>
+<blockquote><i><sub>Usual directory: C:\Program Files\World of Warcraft\Interface\AddOns</sub></i></blockquote>
+<p>5. Install additional text-to-speech voices, if needed.</p>
  
 <blockquote><p align="justify"><font color="#888888" size="1">_<font color="#008000">Better</font> text-to-speech voices can be downloaded and installed from [http://www.ivona.com/us/for-individuals/voices-for-windows/ Ivona.com] / [http://harposoftware.com/en/content/10-trial Harposoftware.com] (distributor) website. Good Ivona voices are English-British [http://harposoftware.com/en/content/10-trial “Amy”] and [http://harposoftware.com/en/content/10-trial “Brian”] ([http://harposoftware.com/en/content/10-trial download trials]). Some other voices are are not bad too... you can test them on [http://www.ivona.com main page of Ivona.com] website. [http://www.ivona.com/us/for-individuals/voices-for-windows/ Ivona.com] text-to-speech voices cost about $45 each. You can use them for free during trial period for 1 month only. If you know free of charge text-to-speech voices as good, as voices by [http://www.ivona.com/us/for-individuals/voices-for-windows/ Ivona.com], please, write us._</font></p></blockquote>
 
@@ -134,4 +127,3 @@ If you get this error (after trying to run “Monitor”) or no sound, proceed t
  * Getting !UnitAge("") for NPC... in order to apply “Child", “Adult” or “Senior” sound effect.
  * Getting value if NPC has voice over for all text... in order not to start TTS speech.
  * NPC “talking” animation should loop, depending on length of the text.
-</font>
