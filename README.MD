@@ -90,42 +90,41 @@
 <p><img src="http://www.jocys.com/Files/Website/Monitor_NonSigned_UAC.png" />
 </blockquote>
 
-<p>9. When <b>“Monitor”</b>, will open, setup voices in [Voices] tab.</p>
+<p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" /></p>
 
-<p>10. Run <b>“World of Warcraft”</b> game.</p>
-
-<p>11. [TTS...] [Stop] and [Play] buttons will appear near quest windows now.</p>
+<p>10. Run <b>“World of Warcraft”</b> game.<br />
+11. <b>[TTS...]</b> <b>[Stop]</b> and <b>[Play]</b> buttons will appear near quest windows now.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png" /></p>
 
-<p align="justify">12. *“Mini TTS Frame”* with [Stop] button and NPC, Whisper, Say, Party, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader check-boxes will appear over “Quest Objective Tracker”. You can move *“Mini TTS Frame”* or you can lock it in place in text-to-speech “Options” window.</p>
+<p align="justify">12. <b>“Mini TTS Frame”</b> with <b>[Stop]</b> button and NPC, Whisper, Say, Party, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader check-boxes will appear over “Quest Objective Tracker”. You can move <b>“Mini TTS Frame”</b> or you can lock it in place in text-to-speech “Options” window.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png"/></p>
 
-<p>12. If you will click [TTS...] button, options window will open.</p>
+<p>12. If you will click <b>[TTS...]</b> button, options window will open.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" /></p>
 
-### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
+#### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
 
 <p>1. Game Menu > [Macros] > [New]<br />
  2. Enter macro name (for example: “Stop TTS”).<br />
  3. Choose an icon for macro.<br />
- 4. Click `[` Okay `]` button.<br />
+ 4. Click [Okay] button.<br />
  5. Write in “Enter Macro Commands” field: <code>/run SendChatMessage("<voice command=\"stop\" />", "WHISPER", "Common", UnitName("player"))</code><br />
- 6. Click `[` Save `]` button.<br />
+ 6. Click [Save] button.<br />
  7. Drag “Stop TTS” macro icon from “General Macros” tab on desired “Action Bar” button.<br />
- 8. Click `[` Exit `]` button.<br />
- 9. Game Menu > `[` Key Bindings `]` > `[` Action Bar `]`<br />
+ 8. Click [Exit] button.<br />
+ 9. Game Menu > [Key Bindings] > [Action Bar]<br />
  10. Bind desired keyboard key to "Action Bar" button with “Stop TTS” macro. After pressing this key on keyboard, text-to-speech will stop.</p>
 
 ### Possible improvements in “World of Warcraft” game
 <hr />
 
-<p>• Getting !UnitRace("") for NPC. Sound effects on NPCs are applied by !UnitCreatureType("") now.<br />
-• Getting !UnitAge("") for NPC... in order to apply “Child", “Adult” or “Senior” sound effect.<br />
+<p>• Getting UnitRace("") for NPC. Sound effects on NPCs are applied by UnitCreatureType("") now.<br />
+• Getting UnitAge("") for NPC... in order to apply “Child", “Adult” or “Senior” sound effect.<br />
 • Getting value if NPC has voice over for all text... in order not to start TTS speech.<br />
 • NPC “talking” animation should loop, depending on length of the text.</p>
