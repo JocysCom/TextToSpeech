@@ -1,7 +1,7 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
  * Jocys.com Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.22 (2015-04-14)
- * Jocys.com Text to Speech WoW Addon 2.2.23 (2015-04-15)
+ * Jocys.com Text to Speech WoW Addon 2.2.24 (2015-04-20)
 
 <hr />
 
