@@ -103,7 +103,7 @@
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png"/></p>
 
-<p>12. If you will click <b>[TTS...]</b> button, options window will open.</p>
+<p>13. If you will click <b>[TTS...]</b> button, options window will open.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" /></p>
 
@@ -111,15 +111,16 @@
 <hr />
 
 <p>1. Game Menu > [Macros] > [New]<br />
- 2. Enter macro name (for example: “Stop TTS”).<br />
- 3. Choose an icon for macro.<br />
- 4. Click [Okay] button.<br />
- 5. Write in “Enter Macro Commands” field: <code>/run SendChatMessage("&lt;voice command=\"stop\" /&gt;", "WHISPER", "Common", UnitName("player"))</code><br />
- 6. Click [Save] button.<br />
- 7. Drag “Stop TTS” macro icon from “General Macros” tab on desired “Action Bar” button.<br />
- 8. Click [Exit] button.<br />
- 9. Game Menu > [Key Bindings] > [Action Bar]<br />
- 10. Bind desired keyboard key to "Action Bar" button with “Stop TTS” macro. After pressing this key on keyboard, text-to-speech will stop.</p>
+2. Enter macro name (for example: “Stop TTS”).<br />
+3. Choose an icon for macro.<br />
+4. Click [Okay] button.<br />
+5. Write in “Enter Macro Commands” field:</p>
+<p><code>/run SendChatMessage("&lt;voice command=\"stop\" /&gt;", "WHISPER", "Common", UnitName("player"))</code></p>
+<p>6. Click [Save] button.<br />
+7. Drag “Stop TTS” macro icon from “General Macros” tab on desired “Action Bar” button.<br />
+8. Click [Exit] button.<br />
+9. Game Menu > [Key Bindings] > [Action Bar]<br />
+10. Bind desired keyboard key to "Action Bar" button with “Stop TTS” macro. After pressing this key on keyboard, text-to-speech will stop.</p>
 
 ### Possible improvements in “World of Warcraft” game
 <hr />
