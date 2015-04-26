@@ -28,7 +28,7 @@
 <p>Usual directory: C:\Program Files\World of Warcraft\Interface\AddOns</p>
 </blockquote>
 <p>5. Install additional text-to-speech voices, if needed.</p>
- 
+
 <blockquote>
 <p align="justify">BETTER text-to-speech voices can be downloaded and installed from <a href="http://www.ivona.com/us/for-individuals/voices-for-windows/">Ivona.com</a> / <a href="http://harposoftware.com/en/content/10-trial">Harposoftware.com</a>&nbsp;(distributor) websites. Good Ivona voices are English-British <a href="http://harposoftware.com/en/content/10-trial">“Amy”</a> and <a href="http://harposoftware.com/en/content/10-trial">“Brian”</a>&nbsp;(<a href="http://harposoftware.com/en/content/10-trial">download trials</a>). Some other voices are are not bad too... you can test them on <a href="http://www.ivona.com">main page of Ivona.com</a> website. <a href="http://www.ivona.com/us/for-individuals/voices-for-windows/">Ivona.com</a> text-to-speech voices cost about $45 each. You can use them for free during trial period for 1 month only. If you know free of charge text-to-speech voices as good, as voices by <a href="http://www.ivona.com/us/for-individuals/voices-for-windows/">Ivona.com</a>, please, write us.</p>
 </blockquote>
@@ -70,14 +70,16 @@
 </blockquote>
 
 <blockquote>
-<p>To run "Monitor" on "Windows XP", you must have installed...<br />
-1. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06)</a><br />
-2. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
+<p><b>To run “Monitor” (on “Windows XP”), you must have installed at least...</b></p>
+<p>1. Latest version of “World of Warcraft” game.<br />
+2. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06)</a><br />
+3. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
 <p>If you get this error (after trying to run “Monitor”) or no sound, proceed to parts "3" and "4".</p>
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png" /></p>
-<p>3. <a href="http://www.microsoft.com/en-us/download/details.aspx?id=22">Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)</a><br />
-4. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=8109">Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)</a></p>
-<p>"Monitor Clipboard" option doesn't work and must be [Disabled] in Windows XP.</blockquote>
+<p>4. <a href="http://www.microsoft.com/en-us/download/details.aspx?id=22">Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)</a><br />
+5. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=8109">Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)</a></p>
+<p>“Monitor Clipboard” option doesn't work and must be [Disabled] in Windows XP.<br />
+“Addon” requires latest version of “World of Warcraft” game.</blockquote>
 
 <p>7. Make sure that User Account Control (UAC) Prompt displays <b>“Verified Publisher: Jocys.com”</b>.</p>
 
@@ -102,11 +104,11 @@
 
 <p>12. Also, <b>[ Stop ]</b> button will appear at the top of WoW <b>[Social]</b> button. If you will move mouse pointer over this <b>[Stop]</b> button, then <b>[Save]</b>, <b>[Options]</b> buttons and <b>check-boxes</b> (Quest, NPC, Whisper, Say, Party, Guild, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader) will appear.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_26.png"/></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_26_1.png"/></p>
 
 <p>13. If you will click <b>[Options]</b> button, <b>“Options”</b> window will open.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_2_2_26.png" /></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_2_2_26_1.png" /></p>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
