@@ -70,7 +70,7 @@
 </blockquote>
 
 <blockquote>
-<p><b>To run "Monitor" (on "Windows XP"), you must have installed at least...</b></p>
+<p><b>To run “Monitor” (on “Windows XP”), you must have installed at least...</b></p>
 <p>1. Latest version of “World of Warcraft” game.<br />
 2. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06)</a><br />
 3. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
