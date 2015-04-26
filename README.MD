@@ -78,7 +78,7 @@
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png" /></p>
 <p>4. <a href="http://www.microsoft.com/en-us/download/details.aspx?id=22">Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)</a><br />
 5. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=8109">Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)</a></p>
-<p>"Monitor Clipboard" option doesn't work and must be [Disabled] in Windows XP.</blockquote>
+<p>“Monitor Clipboard” option doesn't work and must be [Disabled] in Windows XP.</blockquote>
 
 <p>7. Make sure that User Account Control (UAC) Prompt displays <b>“Verified Publisher: Jocys.com”</b>.</p>
 
