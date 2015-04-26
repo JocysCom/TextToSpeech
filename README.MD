@@ -92,21 +92,21 @@
 
 <p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" /></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_2_2_26.png" /></p>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
 11. <b>“Play after closing”</b> check-box and <b>[Stop]</b> with <b>[Play]</b> buttons will appear at the bottom of some windows.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png" /></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_26.png" /></p>
 
 
 <p>12. Also, <b>[ Stop ]</b> button will appear at the top of WoW <b>[Social]</b> button. If you will move mouse pointer over this <b>[Stop]</b> button, then <b>[Save]</b>, <b>[Options]</b> buttons and <b>check-boxes</b> (Quest, NPC, Whisper, Say, Party, Guild, Battleground, Battleground Leader, Raid, Raid Leader, Instance and Instance Leader) will appear.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png"/></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_26.png"/></p>
 
 <p>13. If you will click <b>[Options]</b> button, <b>“Options”</b> window will open.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" /></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_2_2_26.png" /></p>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
