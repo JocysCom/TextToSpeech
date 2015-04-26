@@ -1,7 +1,7 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
- * Jocys.com Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.22 (2015-04-14)
- * Jocys.com Text to Speech WoW Addon 2.2.24 (2015-04-20)
+ * Jocys.com Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.26 (2015-04-26)
+ * Jocys.com Text to Speech WoW Addon 2.2.26 (2015-04-26)
 
 <hr />
 
@@ -95,15 +95,16 @@
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" /></p>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
-11. <b>[TTS...]</b> <b>[Stop]</b> and <b>[Play]</b> buttons will appear near quest windows now.</p>
+11. <b>“Play after closing”</b> check-box and <b>[Stop]</b> with <b>[Play]</b> buttons will appear at the bottom of some windows.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png" /></p>
 
-<p align="justify">12. <b>“Mini TTS Frame”</b> with <b>[Stop]</b> button and NPC, Whisper, Say, Party, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader check-boxes will appear over “Quest Objective Tracker”. You can move <b>“Mini TTS Frame”</b> or you can lock it in place in text-to-speech “Options” window.</p>
+
+<p>12. Also, <b>[ Stop ]</b> button will appear at the top of WoW <b>[Social]</b> button. If you will move mouse pointer over this <b>[Stop]</b> button, then <b>[Save]</b>, <b>[Options]</b> buttons and <b>check-boxes</b> (Quest, NPC, Whisper, Say, Party, Guild, Battleground, Battleground Leader, Raid, Raid Leader, Instance and Instance Leader) will appear.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png"/></p>
 
-<p>13. If you will click <b>[TTS...]</b> button, options window will open.</p>
+<p>13. If you will click <b>[Options]</b> button, <b>“Options”</b> window will open.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" /></p>
 
