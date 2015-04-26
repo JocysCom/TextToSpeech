@@ -70,8 +70,8 @@
 </blockquote>
 
 <blockquote>
-<p>To run "Monitor" on "Windows XP", you must have installed...<br />
-1. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06)</a><br />
+<p><b>To run "Monitor" (on "Windows XP"), you must have installed at least...</b></p>
+<p>1. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06)</a><br />
 2. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
 <p>If you get this error (after trying to run “Monitor”) or no sound, proceed to parts "3" and "4".</p>
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png" /></p>
