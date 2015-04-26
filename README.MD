@@ -94,7 +94,7 @@
 
 <p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_2_2_26.png" /></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_2_2_26_1.png" /></p>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
 11. <b>“Play after closing”</b> check-box and <b>[Stop]</b> with <b>[Play]</b> buttons will appear at the bottom of some windows.</p>
