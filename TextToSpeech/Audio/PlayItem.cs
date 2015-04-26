@@ -58,6 +58,13 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
             set { _Text = value; NotifyPropertyChanged("Text"); }
         }
 
+        string _Group;
+        public string Group
+        {
+            get { return _Group; }
+            set { _Group = value; NotifyPropertyChanged("Group"); }
+        }
+
         string _Xml;
         public string Xml
         {

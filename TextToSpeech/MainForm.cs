@@ -61,21 +61,27 @@ namespace JocysCom.TextToSpeech.Monitor
         /// </summary>
         void playlist_ListChanged(object sender, ListChangedEventArgs e)
         {
-            var items = playlist.ToArray();
+            var changed = (e.ListChangedType == ListChangedType.ItemChanged && e.PropertyDescriptor.Name == "Status");
             var added = e.ListChangedType == ListChangedType.ItemAdded;
             var deleted = e.ListChangedType == ListChangedType.ItemDeleted;
             var reset = e.ListChangedType == ListChangedType.Reset;
-            var changed = (e.ListChangedType == ListChangedType.ItemChanged && e.PropertyDescriptor.Name == "Status");
             if (added || deleted || reset)
             {
                 BeginInvoke((Action)(() =>
                 {
+                    var items = playlist.ToArray();
                     PlayListTabPage.Text = items.Length == 0
                         ? "Play List"
                         : string.Format("Play List: {0}", items.Length);
                 }));
             }
+            CheckPlayList(added, changed);
+        }
+
+        void CheckPlayList(bool added, bool changed)
+        {
             // If new item was added or item status changed then...
+            var items = playlist.ToArray();
             if (added || changed)
             {
                 // If nothing is playing then...
@@ -102,7 +108,9 @@ namespace JocysCom.TextToSpeech.Monitor
                 {
                     BeginInvoke((Action)(() =>
                     {
-                        lock (playlistLock) { ClearPlayList(); }
+                        bool groupIsPlaying;
+                        int itemsLeftToPlay;
+                        lock (playlistLock) { ClearPlayList(null, out groupIsPlaying, out itemsLeftToPlay); }
                     }));
                 }
                 else
@@ -123,14 +131,29 @@ namespace JocysCom.TextToSpeech.Monitor
             }
         }
 
-        void ClearPlayList()
+        /// <summary>
+        /// If group specified then remove only items from the group.
+        /// </summary>
+        /// <param name="group"></param>
+        void ClearPlayList(string group, out bool groupIsPlaying, out int itemsLeftToPlay)
         {
-            var items = playlist.ToArray();
-            foreach (var item in playlist)
+            PlayItem[] itemsToClear;
+            if (string.IsNullOrEmpty(group))
+            {
+                itemsToClear = playlist.ToArray();
+                groupIsPlaying = false;
+            }
+            else
+            {
+                itemsToClear = playlist.Where(x => x.Group != null && x.Group.ToLower() == group.ToLower()).ToArray();
+                groupIsPlaying = itemsToClear.Any(x => x.Status == JobStatusType.Playing);
+            }
+            foreach (var item in itemsToClear)
             {
                 item.Dispose();
+                playlist.Remove(item);
             }
-            playlist.Clear();
+            itemsLeftToPlay = playlist.Count();
         }
 
         bool threadIsRunning;
@@ -476,19 +499,7 @@ namespace JocysCom.TextToSpeech.Monitor
             var name = v.name;
             var overrideVoice = SettingsFile.Current.Overrides.FirstOrDefault(x => x.name == name);
             // if override was not found then...
-            if (overrideVoice == null)
-            {
-
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(overrideVoice.gender)) v.gender = overrideVoice.gender;
-                if (!string.IsNullOrEmpty(overrideVoice.effect)) v.effect = overrideVoice.effect;
-                if (!string.IsNullOrEmpty(overrideVoice.pitch)) v.pitch = overrideVoice.pitch;
-                if (!string.IsNullOrEmpty(overrideVoice.rate)) v.rate = overrideVoice.rate;
-                if (!string.IsNullOrEmpty(overrideVoice.group)) v.volume = overrideVoice.group;
-                if (!string.IsNullOrEmpty(overrideVoice.volume)) v.volume = overrideVoice.volume;
-            }
+            if (overrideVoice != null) v.OverrideFrom(overrideVoice);
             //Set gender. "Male"(1), "Female"(2), "Neutral"(3).
             _Gender = string.IsNullOrEmpty(v.gender) || v.gender != "Male" && v.gender != "Female" && v.gender != "Neutral" ? GenderComboBox.Text : v.gender;
             gender = (VoiceGender)Enum.Parse(typeof(VoiceGender), _Gender);
@@ -552,8 +563,8 @@ namespace JocysCom.TextToSpeech.Monitor
             // Set group.
             var groupValue = string.IsNullOrEmpty(v.group) ? "" : v.group;
             IncomingGroupTextBox.Text = !string.IsNullOrEmpty(v.group) ? "group=\"" + v.group + "\"" : "";
-            
-            
+
+
             // Set command.
             IncomingCommandTextBox.Text = (string.IsNullOrEmpty(v.command)) ? "command value was not submited!" : "command=\"" + v.command + "\"";
             if (string.IsNullOrEmpty(v.command)) return;
@@ -572,13 +583,18 @@ namespace JocysCom.TextToSpeech.Monitor
                     buffer = "";
                     IncomingTextTextBox.Text = decodedText;
                     //TextXmlTabControl.SelectedTab = TextTabPage;
-                    AddTextToPlaylist(decodedText, true);
+
+                    // mark text (or audio file) with v.goup value.
+                    AddTextToPlaylist(decodedText, true, v.group);
                     break;
                 case "stop":
                     text = "";
-                    StopPlayer();
+                    StopPlayer(v.group);
                     IncomingRateTextBox.Text = "";
                     IncomingPitchTextBox.Text = "";
+                    break;
+                case "save":
+                    if (!string.IsNullOrEmpty(v.name)) VoiceOverridesPanel.UpsertRecord(v);
                     break;
                 default:
                     break;
@@ -649,7 +665,7 @@ namespace JocysCom.TextToSpeech.Monitor
             return returnHtmlText;
         }
 
-        List<PlayItem> AddTextToPlaylist(string text, bool addToPlaylist)
+        List<PlayItem> AddTextToPlaylist(string text, bool addToPlaylist, string voiceGroup)
         {
             // It will take too long to convert large amount of text to WAV data and apply all filters.
             // This function will split text into smaller sentences.
@@ -673,6 +689,7 @@ namespace JocysCom.TextToSpeech.Monitor
                         Xml = ConvertTextToSapiXml(sentence, comment),
                         Status = JobStatusType.Parsed,
                         IsComment = comment,
+                        Group = voiceGroup,
                     };
                     items.Add(item);
                     if (addToPlaylist) lock (playlistLock) { playlist.Add(item); }
@@ -779,7 +796,7 @@ namespace JocysCom.TextToSpeech.Monitor
                 var wowItem = new WowListItem(text);
                 addWowListItem(wowItem);
             }
-                // if [ Incoming Messages ] tab selected.
+            // if [ Incoming Messages ] tab selected.
             else if (TextXmlTabControl.SelectedTab == MessagesTabPage)
             {
                 var gridRow = MessagesDataGridView.SelectedRows.Cast<DataGridViewRow>().FirstOrDefault();
@@ -791,7 +808,7 @@ namespace JocysCom.TextToSpeech.Monitor
             }
             else
             {
-                AddTextToPlaylist(IncomingTextTextBox.Text, true);
+                AddTextToPlaylist(IncomingTextTextBox.Text, true, "TextBox");
             }
         }
 
@@ -960,12 +977,21 @@ namespace JocysCom.TextToSpeech.Monitor
             }
         }
 
-        void StopPlayer()
+        void StopPlayer(string group = null)
         {
-            lock (playlistLock) { ClearPlayList(); }
-            resetBuffer();
-            if (token != null) token.Cancel();
-            EffectPresetsEditorSoundEffectsControl.StopSound();
+            bool groupIsPlaying;
+            int itemsLeftToPlay;
+            lock (playlistLock) { ClearPlayList(group, out groupIsPlaying, out itemsLeftToPlay); }
+            if (groupIsPlaying || itemsLeftToPlay == 0)
+            {
+                resetBuffer();
+                if (token != null) token.Cancel();
+                EffectPresetsEditorSoundEffectsControl.StopSound();
+            }
+            if (itemsLeftToPlay > 0)
+            {
+                CheckPlayList(false, true);
+            }
         }
 
         private void StopButton_Click(object sender, EventArgs e)
@@ -1005,7 +1031,7 @@ namespace JocysCom.TextToSpeech.Monitor
             }
             else
             {
-                var blocks = AddTextToPlaylist(IncomingTextTextBox.Text, false);
+                var blocks = AddTextToPlaylist(IncomingTextTextBox.Text, false, "TextBox");
                 SapiTextBox.Text = string.Join("\r\n\r\n", blocks.Select(x => x.Xml));
             }
         }
@@ -1408,7 +1434,7 @@ namespace JocysCom.TextToSpeech.Monitor
             e.Cancel = true;
         }
 
-    
+
 
     }
 }

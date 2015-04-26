@@ -40,13 +40,27 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             if (e.ColumnIndex == grid.Columns[VolumeColumn.Name].Index) VoicesOverridesDataGridView.BeginEdit(true);
         }
 
-        private void AddButton_Click(object sender, EventArgs e)
+        public void UpsertRecord(voice v)
+        {
+            // Try to find existing override record from the list.
+            var voice = SettingsFile.Current.Overrides.FirstOrDefault(x => x.name.ToLower() == v.name.ToLower());
+            if (voice == null)
+            {
+               voice = new voice();
+               voice.name = v.name;
+               SettingsFile.Current.Overrides.Add(voice);
+            }
+            voice.OverrideFrom(v);
+        }
+
+        public void AddNewRecord()
         {
             var grid = VoicesOverridesDataGridView;
             int i = 0;
             string name;
             // Get all names in lowercase.
             var names = SettingsFile.Current.Overrides.Select(x => x.name.ToLower()).ToArray();
+            // Loop until free name is found.
             while (true)
             {
                 i++;
@@ -58,7 +72,11 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             voice.name = name;
             SettingsFile.Current.Overrides.Add(voice);
             grid.BeginEdit(true);
-            //grid.EndEdit();
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            AddNewRecord();
         }
 
         private void ImportButton_Click(object sender, EventArgs e)

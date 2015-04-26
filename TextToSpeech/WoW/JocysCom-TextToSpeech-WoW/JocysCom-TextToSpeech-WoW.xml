@@ -1,60 +1,36 @@
 ﻿<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.blizzard.com/wow/ui/  ..\FrameXML\UI.xsd" xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="JocysCom-TextToSpeech-WoW-Addon.lua" />
-	<Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parent="UIParent" movable="true" enableMouse="true">
+	<Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parent="UIParent" frameLevel="10">
 		<Size x="600" y="496" />
 		<Anchors>
-			<Anchor point="TOPLEFT">
-				<Offset x="3" y="-3" />
-			</Anchor>
+			<Anchor point="CENTER" relativePoint="CENTER" />
 		</Anchors>
-		<Backdrop tile="true">
-			<BackgroundInsets>
-				<AbsInset left="11" right="12" top="12" bottom="11" />
-			</BackgroundInsets>
-			<TileSize>
-				<AbsValue val="32" />
-			</TileSize>
-			<EdgeSize>
-				<AbsValue val="32" />
-			</EdgeSize>
-		</Backdrop>
+    <TitleRegion>
+      <Anchors>
+        <Anchor point="TOP" relativePoint="CENTER" />
+      </Anchors>
+    </TitleRegion>
 		<Layers>
-			<Layer level="OVERLAY">
-				<FontString name="JocysCom_MessageForMonitorFrameFontString" inherits="GameFontHighlightSmall" text="">
-					<Size x="550" y="20" />
+			<Layer>
+				<FontString name="JocysCom_MessageForMonitorFrameFontString" inherits="GameFontHighlightSmall">
 					<Anchors>
-						<Anchor point="TOP">
-							<Offset y="-131" />
-						</Anchor>
+						<Anchor point="TOP" y="-152" />
 					</Anchors>
 					<Color r="0.5" g="0.5" b="0.5" />
 				</FontString>
-				<FontString name="JocysCom_ReplaceNameFontString" inherits="GameFontHighlightSmall" text="" justifyH="LEFT">
-					<Size x="467" y="20" />
+				<FontString name="JocysCom_ReplaceNameFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
 					<Anchors>
-						<Anchor point="TOPLEFT">
-							<Offset x="117" y="-109" />
-						</Anchor>
+						<Anchor point="TOPLEFT" x="120" y="-124" />
 					</Anchors>
 					<Color r="0.5" g="0.5" b="0.5" />
 				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
-			<CheckButton name="JocysCom_AutoCheckButton" inherits="UICheckButtonTemplate" text="">
-				<Size x="24" y="24" />
+			<CheckButton name="JocysCom_DndCheckButton" inherits="UICheckButtonTemplate">
+				<Size x="28" y="28" />
 				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="7" y="-25" />
-					</Anchor>
-				</Anchors>
-			</CheckButton>
-			<CheckButton name="JocysCom_DndCheckButton" inherits="UICheckButtonTemplate" text="">
-				<Size x="24" y="24" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="7" y="-45" />
-					</Anchor>
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-26" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
@@ -62,89 +38,68 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate" text="">
-				<Size x="24" y="24" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="7" y="-65" />
-					</Anchor>
-				</Anchors>
+			<CheckButton name="JocysCom_LockCheckButton" inherits="UICheckButtonTemplate">
+        <Size x="28" y="28" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-48" />
+        </Anchors>
 				<Scripts>
 					<OnClick>
-						JocysCom_FilterCheckButton_OnClick(self);
+						JocysCom_LockCheckButton_OnClick();
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="JocysCom_LockCheckButton" inherits="UICheckButtonTemplate" text="">
-				<Size x="24" y="24" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="7" y="-85" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						JocysCom_LockCheckButton_OnClick(self);
-					</OnClick>
-				</Scripts>
-			</CheckButton>
+      <CheckButton name="JocysCom_MenuCheckButton" inherits="UICheckButtonTemplate">
+        <Size x="28" y="28" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-70" />
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            JocysCom_MenuCheckButton_OnClick();
+          </OnClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate">
+        <Size x="28" y="28" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-92" />
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            JocysCom_PlaySoundAndSaveSettings();
+          </OnClick>
+        </Scripts>
+      </CheckButton>
+      <EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate">
+        <Size x="100" y="20" />
+        <Anchors>
+          <Anchor point="TOPLEFT" x="15" y="-118" />
+        </Anchors>
+        <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
+      </EditBox>
 			<Frame name="JocysCom_MessageFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
-				<Size x="593" y="231" />
+				<Size x="593" y="211" />
 				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="3" y="-148" />
-					</Anchor>
-					<Anchor point="TOPRIGHT">
-						<Offset x="-4" y="-148" />
-					</Anchor>
+					<Anchor point="TOPLEFT" x="3" y="-168" />
+					<Anchor point="TOPRIGHT" x="-4" y="-148" />
 				</Anchors>
-				<Backdrop tile="true">
-					<BackgroundInsets>
-						<AbsInset left="11" right="12" top="12" bottom="11" />
-					</BackgroundInsets>
-					<TileSize>
-						<AbsValue val="32" />
-					</TileSize>
-					<EdgeSize>
-						<AbsValue val="32" />
-					</EdgeSize>
-				</Backdrop>
 				<Frames>
-					<ScrollFrame name="JocysCom_QuestScrollFrame" inherits="UIPanelScrollFrameTemplate">
+					<ScrollFrame name="JocysCom_OptionsFrameScroll" inherits="UIPanelScrollFrameTemplate">
 						<Size x="683" y="91" />
 						<Anchors>
-							<Anchor point="TOPLEFT">
-								<Offset x="5" y="-4" />
-							</Anchor>
-							<Anchor point="BOTTOMRIGHT">
-								<Offset x="-26" y="3" />
-							</Anchor>
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="5" y="-4" />
+							<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-26" y="3" />
 						</Anchors>
-						<Backdrop tile="true">
-							<BackgroundInsets>
-								<AbsInset left="11" right="12" top="12" bottom="11" />
-							</BackgroundInsets>
-							<TileSize>
-								<AbsValue val="32" />
-							</TileSize>
-							<EdgeSize>
-								<AbsValue val="32" />
-							</EdgeSize>
-						</Backdrop>
 						<Frames>
-							<EditBox name="JocysCom_QuestEditBox" parent="JocysCom_QuestScrollFrame" letters="10000" multiLine="true">
-								<Size>
-									<AbsDimension x="560" y="81" />
-								</Size>
-								<Anchors>
-									<Anchor point="TOPLEFT">
-										<Offset x="3" y="-3" />
-									</Anchor>
-									<Anchor point="BOTTOMRIGHT">
-										<Offset x="-3" />
-									</Anchor>
-								</Anchors>
-								<FontString inherits="GameFontHighlightSmall" />
+							<EditBox name="JocysCom_OptionsEditBox" parent="JocysCom_OptionsFrameScroll" letters="10000" multiLine="true">
+								<Size x="565" y="81" />
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="3" y="-3" />
+                  <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-3" y="3"  />
+                </Anchors>
+                <TextInsets left="5" right="5" top="5" bottom="5" />
+                <FontString inherits="GameFontHighlightSmall" />
 							</EditBox>
 						</Frames>
 					</ScrollFrame>
@@ -153,50 +108,22 @@
 			<Frame name="JocysCom_DescriptionFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
 				<Size x="593" y="120" />
 				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="3" y="-380" />
-					</Anchor>
-					<Anchor point="BOTTOMRIGHT">
-						<Offset x="-4" y="4" />
-					</Anchor>
+					<Anchor point="TOPLEFT" x="3" y="-380" />
+					<Anchor point="BOTTOMRIGHT" x="-4" y="4" />
 				</Anchors>
-				<Backdrop tile="true">
-					<BackgroundInsets>
-						<AbsInset left="11" right="12" top="12" bottom="11" />
-					</BackgroundInsets>
-					<TileSize>
-						<AbsValue val="32" />
-					</TileSize>
-					<EdgeSize>
-						<AbsValue val="32" />
-					</EdgeSize>
-				</Backdrop>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="JocysCom_DescriptionFrameFontString" inherits="GameFontHighlightSmall" parentKey="text" text="" justifyV="TOP" justifyH="LEFT">
+						<FontString name="JocysCom_DescriptionFrameFontString" inherits="GameFontHighlightSmall" justifyV="TOP" justifyH="LEFT">
 							<Size x="706" y="74" />
 							<Anchors>
-								<Anchor point="TOPLEFT">
-									<Offset x="10" y="-10" />
-								</Anchor>
-								<Anchor point="BOTTOMRIGHT">
-									<Offset x="-10" y="10" />
-								</Anchor>
+								<Anchor point="TOPLEFT" x="10" y="-10" />
+								<Anchor point="BOTTOMRIGHT" x="-10" y="10" />
 							</Anchors>
 							<Color r="0.5" g="0.5" b="0.5" />
 						</FontString>
 					</Layer>
 				</Layers>
 			</Frame>
-			<EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate">
-				<Size x="100" y="20" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="15" y="-109" />
-					</Anchor>
-				</Anchors>
-				<FontString inherits="GameFontHighlightSmall" />
-			</EditBox>
 		</Frames>
 		<Scripts>
 			<OnHide>
@@ -204,68 +131,44 @@
 			</OnHide>
 		</Scripts>
 	</Frame>
-	<Frame name="JocysCom_MiniFrame" parent="UIParent">
+	<Frame name="JocysCom_DialogueMiniFrame" parent="UIParent">
 		<Size x="256" y="32" />
 		<Anchors>
-			<Anchor point="TOPLEFT">
-				<Offset x="225" y="-505" />
-			</Anchor>
+			<Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" />
 		</Anchors>
-		<Backdrop bgFile="" edgeFile="" />
 		<Frames>
-      <Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="TTS...">
-        <Size x="57" y="21" />
-        <Anchors>
-          <Anchor point="TOPLEFT">
-            <Offset x="17" y="-1" />
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnClick>
-            JocysCom_OptionsButton_OnClick();
-          </OnClick>
-        </Scripts>
-      </Button>
-      			<CheckButton name="JocysCom_StopOnCloseCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniFrame" text="">
+      <CheckButton name="JocysCom_StopOnCloseCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_DialogueMiniFrame">
 				<Size x="22" y="23" />
 				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="74" y="-1" />
-					</Anchor>
+					<Anchor point="TOPLEFT" x="72" y="-1" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						JocysCom_StopOnCloseCheckButton_OnClick(self);
-					</OnClick>
+            JocysCom_PlaySoundAndSaveSettings();
+          </OnClick>
 				</Scripts>
 			</CheckButton>
-			<Button name="JocysCom_StopButtonQuest" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="■">
+			<Button name="JocysCom_StopButtonQuest" inherits="UIPanelButtonTemplate" parent="JocysCom_DialogueMiniFrame" text="■">
 				<Size x="31" y="21" />
 				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="188" y="-1" />
-					</Anchor>
+					<Anchor point="TOPLEFT" x="188" y="-1" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						JocysCom_StopButtonQuest_OnClick(self);
-					</OnClick>
+            JocysCom_StopButton_OnClick("Quest");
+          </OnClick>
 				</Scripts>
 				<ButtonText font="Fonts\ARIALN.TTF">
 					<Anchors>
-						<Anchor point="TOP">
-							<Offset x="1" />
-						</Anchor>
+						<Anchor point="TOP" x="1" />
 					</Anchors>
 					<FontHeight val="18" />
 				</ButtonText>
 			</Button>
-      <Button name="JocysCom_PlayButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_MiniFrame" text="►">
+      <Button name="JocysCom_PlayButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_DialogueMiniFrame" text="►">
         <Size x="31" y="21" />
         <Anchors>
-          <Anchor point="TOPLEFT">
-            <Offset x="218" y="-1" />
-          </Anchor>
+          <Anchor point="TOPLEFT" x="218" y="-1" />
         </Anchors>
         <Scripts>
           <OnClick>
@@ -274,9 +177,7 @@
         </Scripts>
         <ButtonText font="Fonts\ARIALN.TTF">
           <Anchors>
-            <Anchor point="TOP">
-              <Offset x="2" y="-5" />
-            </Anchor>
+            <Anchor point="TOP" x="2" y="-5" />
           </Anchors>
           <FontHeight val="12" />
         </ButtonText>
@@ -284,73 +185,48 @@
 		</Frames>
 		<Scripts>
 			<OnHide>
-				JocysCom_MiniFrame_OnHide();
+				JocysCom_DialogueMiniFrame_OnHide();
 			</OnHide>
-			<OnShow>
-				JocysCom_MiniFrame_OnShow();
-			</OnShow>
 		</Scripts>
 	</Frame>
-	<Frame name="JocysCom_ScrollFrame" parent="UIParent" movable="true" resizable="true" enableMouse="true">
+	<Frame name="JocysCom_DialogueScrollFrame" parent="UIParent">
 		<Size x="216" y="216" />
 		<Anchors>
-			<Anchor point="TOPLEFT">
-				<Offset x="3" y="-505" />
-			</Anchor>
+			<Anchor point="TOPLEFT" relativePoint="TOPLEFT" />
 		</Anchors>
-		<Backdrop bgFile="" tile="true">
-			<BackgroundInsets>
-				<AbsInset left="0" right="0" top="0" bottom="0" />
-			</BackgroundInsets>
-			<TileSize>
-				<AbsValue val="32" />
-			</TileSize>
-			<EdgeSize>
-				<AbsValue val="32" />
-			</EdgeSize>
-		</Backdrop>
+    <ResizeBounds>
+      <maxResize x="288" y="288" />
+      <minResize x="100" y="100" />
+    </ResizeBounds>
 		<Layers>
 			<Layer>
-				<Texture name="JocysCom_ScrollFrameTexture" parentKey="texture">
-					<Size x="216" y="216" />
-					<Anchors>
-						<Anchor point="TOPLEFT">
-							<Offset />
-						</Anchor>
-						<Anchor point="BOTTOMRIGHT">
-							<Offset />
-						</Anchor>
-					</Anchors>
+				<Texture name="JocysCom_DialogueScrollFrame_Texture">
 					<Color a="0.8" r="0" g="0" b="0" />
 				</Texture>
 			</Layer>
-			<Layer level="OVERLAY">
-				<FontString name="JocysCom_ScrollFrameFontString" inherits="GameFontHighlightSmall" parentKey="text" text="">
+			<Layer>
+				<FontString name="JocysCom_DialogueScrollFrame_FontString" inherits="GameFontHighlightSmall">
 					<Size x="205" y="202" />
 					<Anchors>
-						<Anchor point="TOPLEFT">
-							<Offset x="8" y="-8" />
-						</Anchor>
-						<Anchor point="BOTTOMRIGHT">
-							<Offset x="-8" y="8" />
-						</Anchor>
+						<Anchor point="TOPLEFT" x="8" y="-8" />
+						<Anchor point="BOTTOMRIGHT" x="-8" y="8" />
 					</Anchors>
 					<Color r="0.5" g="0.5" b="0.5" />
 				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="JocysCom_ScrollResizeButton" inherits="ResizeButton" parentKey="resizeButton">
+			<Button name="JocysCom_DialogueScrollFrameResizeButton" inherits="ResizeButton">
 				<Size x="16" y="16" />
 				<Anchors>
-					<Anchor point="BOTTOMRIGHT" x="0" y="0" />
+					<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" />
 				</Anchors>
 				<Scripts>
 					<OnMouseDown>
-						JocysCom_ScrollResizeButton_OnMouseDown(self);
+						JocysCom_DialogueScrollFrameResizeButton_OnMouseDown(self);
 					</OnMouseDown>
 					<OnMouseUp>
-						JocysCom_ScrollResizeButton_OnMouseUp(self);
+						JocysCom_DialogueScrollFrameResizeButton_OnMouseUp(self);
 					</OnMouseUp>
 				</Scripts>
 				<NormalTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Up" />
@@ -358,273 +234,334 @@
 				<HighlightTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Highlight" />
 			</Button>
 		</Frames>
-		<Scripts>
-			<OnMouseDown>
-				JocysCom_ScrollFrame_OnMouseDown(self);
-			</OnMouseDown>
-			<OnMouseUp>
-				JocysCom_ScrollFrame_OnMouseUp(self);
-			</OnMouseUp>
-		</Scripts>
 	</Frame>
-  <Frame name="JocysCom_StopFrame" parent="MinimapCluster">    
-    <Size x="240" y="40" />
+  
+<Frame name="JocysCom_StopButtonFrame" parent="FriendsMicroButton" clampedToScreen="true">    
+    <Size x="27" y="72" />
 		<Anchors>
-      <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="67" y="-12" />
+      <Anchor point="BOTTOM" relativePoint="TOP" x="-1" />
 		</Anchors>
-		<Backdrop bgFile="" edgeFile="">
-			<Color r="0" g="0" b="0" />
-		</Backdrop>
 		<Layers>
 			<Layer>
-				<Texture name="JocysCom_StopFrameTexture" parentKey="texture">
-					<Size x="240" y="40" />
-					<Color a="0.1" r="0" g="0" b="0" />
+				<Texture name="JocysCom_StopButtonFrame_Texture">
+					<Color a="0" r="0" g="0" b="0" />
 				</Texture>
-			</Layer>
-			<Layer>
-				<FontString name="JocysCom_CheckButtonTooltipFontString" inherits="GameFontHighlightSmall" text="">
-					<Anchors>
-						<Anchor point="TOP">
-							<Offset x="0" y="15" />
-						</Anchor>
-					</Anchors>
-					<Color r="0.5" g="0.5" b="0.5" />
-				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="JocysCom_StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopFrame" text="■">
-				<Size x="31" y="21" />
+      <Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="≡">
+        <Size x="23" y="21" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="2" y="-3" />
+        </Anchors>
+        <Scripts>
+          <OnEnter>
+            JocysCom_MiniMenuFrame_Show("Options");
+          </OnEnter>
+          <OnClick>
+            JocysCom_OptionsButton_OnClick();
+          </OnClick>
+          <OnLeave>
+            JocysCom_MiniMenuFrame_Hide();
+          </OnLeave>
+        </Scripts>
+        <ButtonText font="Fonts\ARIALN.TTF">
+          <Anchors>
+            <Anchor point="CENTER" relativePoint="CENTER" x="0" y="0" />
+          </Anchors>
+          <FontHeight val="18" />
+        </ButtonText>
+      </Button>
+      <Button name="JocysCom_SaveButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="S">
+        <Size x="23" y="21" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="2" y="-25" />
+        </Anchors>
+        <Scripts>
+          <OnEnter>
+            JocysCom_MiniMenuFrame_Show("Save");
+          </OnEnter>
+          <OnClick>
+            JocysCom_SaveButton_OnClick();
+          </OnClick>
+          <OnLeave>
+            JocysCom_MiniMenuFrame_Hide();
+          </OnLeave>
+        </Scripts>
+        <ButtonText font="Fonts\ARIALN.TTF">
+          <Anchors>
+            <Anchor point="CENTER" relativePoint="CENTER" x="1" y="0" />
+          </Anchors>
+          <FontHeight val="12" />
+        </ButtonText>
+      </Button>
+			<Button name="JocysCom_StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="■">
+				<Size x="23" y="21" />
 				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="4" y="-15" />
-					</Anchor>
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="2" y="-47" />
 				</Anchors>
 				<Scripts>
+          <OnEnter>
+            JocysCom_MiniMenuFrame_Show("Stop");
+          </OnEnter>
 					<OnClick>
-						JocysCom_StopButton_OnClick(self);
-					</OnClick>
+            JocysCom_StopButton_OnClick();
+          </OnClick>
+          <OnLeave>
+            JocysCom_MiniMenuFrame_Show();
+          </OnLeave>
 				</Scripts>
 				<ButtonText font="Fonts\ARIALN.TTF">
 					<Anchors>
-						<Anchor point="TOP">
-							<Offset x="1" />
-						</Anchor>
+						<Anchor point="TOP" relativePoint="TOP" x="1" />
 					</Anchors>
 					<FontHeight val="18" />
 				</ButtonText>
 			</Button>
-			<CheckButton name="JocysCom_MonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="21" y="22" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="37" y="-15" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						JocysCom_MonsterCheckButton_OnClick(self);
-					</OnClick>
-					<OnEnter>
-						JocysCom_MonsterCheckButton_OnEnter(self)
-					</OnEnter>
-					<OnLeave>
-						JocysCom_CheckButtonTooltipFontString_OnLeave(self);
-					</OnLeave>
-				</Scripts>
-			</CheckButton>
-			<CheckButton name="JocysCom_WhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="21" y="22" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="55" y="-15" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						JocysCom_WhisperCheckButton_OnClick(self);
-					</OnClick>
-					<OnEnter>
-						JocysCom_WhisperCheckButton_OnEnter(self)
-					</OnEnter>
-					<OnLeave>
-						JocysCom_CheckButtonTooltipFontString_OnLeave(self);
-					</OnLeave>
-				</Scripts>
-			</CheckButton>
-     <CheckButton name="JocysCom_SayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="21" y="22" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="73" y="-15" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						JocysCom_SayCheckButton_OnClick(self);
-					</OnClick>
-					<OnEnter>
-						JocysCom_SayCheckButton_OnEnter(self)
-					</OnEnter>
-					<OnLeave>
-						JocysCom_CheckButtonTooltipFontString_OnLeave(self);
-					</OnLeave>
-				</Scripts>
-			</CheckButton>
-			<CheckButton name="JocysCom_PartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="21" y="22" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="91" y="-15" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						JocysCom_PartyCheckButton_OnClick(self);
-					</OnClick>
-					<OnEnter>
-						JocysCom_PartyCheckButton_OnEnter(self)
-					</OnEnter>
-					<OnLeave>
-						JocysCom_CheckButtonTooltipFontString_OnLeave(self);
-					</OnLeave>
-				</Scripts>
-			</CheckButton>
-			<CheckButton name="JocysCom_GuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="21" y="22" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="109" y="-15" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						JocysCom_GuildCheckButton_OnClick(self);
-					</OnClick>
-					<OnEnter>
-						JocysCom_GuildCheckButton_OnEnter(self)
-					</OnEnter>
-					<OnLeave>
-						JocysCom_CheckButtonTooltipFontString_OnLeave(self);
-					</OnLeave>
-				</Scripts>
-			</CheckButton>
-			<CheckButton name="JocysCom_BattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="21" y="22" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="127" y="-15" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						JocysCom_BattlegroundCheckButton_OnClick(self);
-					</OnClick>
-					<OnEnter>
-						JocysCom_BattlegroundCheckButton_OnEnter(self)
-					</OnEnter>
-					<OnLeave>
-						JocysCom_CheckButtonTooltipFontString_OnLeave(self);
-					</OnLeave>
-				</Scripts>
-			</CheckButton>
-			<CheckButton name="JocysCom_BattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="21" y="22" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="145" y="-15" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						JocysCom_BattlegroundLeaderCheckButton_OnClick(self);
-					</OnClick>
-					<OnEnter>
-						JocysCom_BattlegroundLeaderCheckButton_OnEnter(self)
-					</OnEnter>
-					<OnLeave>
-						JocysCom_CheckButtonTooltipFontString_OnLeave(self);
-					</OnLeave>
-				</Scripts>
-			</CheckButton>
-			<CheckButton name="JocysCom_RaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="21" y="22" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="163" y="-15" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						JocysCom_RaidCheckButton_OnClick(self);
-					</OnClick>
-					<OnEnter>
-						JocysCom_RaidCheckButton_OnEnter(self)
-					</OnEnter>
-					<OnLeave>
-						JocysCom_CheckButtonTooltipFontString_OnLeave(self);
-					</OnLeave>
-				</Scripts>
-			</CheckButton>
-			<CheckButton name="JocysCom_RaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-				<Size x="21" y="22" />
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset x="181" y="-15" />
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						 JocysCom_RaidLeaderCheckButton_OnClick(self);
-					</OnClick>
-					<OnEnter>
-						JocysCom_RaidLeaderCheckButton_OnEnter(self)
-					</OnEnter>
-					<OnLeave>
-						JocysCom_CheckButtonTooltipFontString_OnLeave(self);
-					</OnLeave>
-				</Scripts>
-			</CheckButton>
-
-      <CheckButton name="JocysCom_InstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-        <Size x="21" y="22" />
+      <Frame name="JocysCom_MiniMenuFrame" parent="JocysCom_StopButtonFrame">
+        <Size x="260" y="72" />
         <Anchors>
-          <Anchor point="TOPLEFT">
-            <Offset x="199" y="-15" />
-          </Anchor>
+          <Anchor point="LEFT" relativePoint="RIGHT" x="0" y="0" />
         </Anchors>
+        <Layers>
+          <Layer>
+            <FontString name="JocysCom_MiniMenuFrame_FontString" inherits="GameFontHighlightSmall">
+              <Anchors>
+                <Anchor point="TOP" relativePoint="TOP" x="0" y="-10" />
+              </Anchors>
+            </FontString>
+            <Texture>
+              <Size x="260" y="72"/>
+              <Anchors>
+                <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="0" y="0" />
+              </Anchors>
+              <Color a="0.0" r="0" g="0" b="0" />
+            </Texture>
+          </Layer>
+        </Layers>
+        <Frames>
+          <CheckButton name="JocysCom_QuestCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame" text="" >
+            <Size x="26" y="26" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="2" y="-46" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Quest");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Quest");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="JocysCom_MonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="26" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="23" y="-46" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Monster");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Monster");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="JocysCom_WhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="26" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="44" y="-46" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Whisper");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Whisper");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="JocysCom_SayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="26" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="65" y="-46" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Say");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Say");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="JocysCom_PartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="26" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="86" y="-46" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Party");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Party");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="JocysCom_GuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="26" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="107" y="-46" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Guild");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Guild");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="JocysCom_BattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="26" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="128" y="-46" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Battleground");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Battleground");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="JocysCom_BattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="26" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="149" y="-46" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("BattlegroundLeader");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "BattlegroundLeader");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="JocysCom_RaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="26" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="170" y="-46" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Raid");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Raid");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="JocysCom_RaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="26" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="191" y="-46" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("RaidLeader");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "RaidLeader");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="JocysCom_InstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="26" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="212" y="-46" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Instance");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Instance");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="JocysCom_InstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="26" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="233" y="-46" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("InstanceLeader");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "InstanceLeader");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+        </Frames>
         <Scripts>
-          <OnClick>
-            JocysCom_InstanceCheckButton_OnClick(self);
-          </OnClick>
           <OnEnter>
-            JocysCom_InstanceCheckButton_OnEnter(self)
+            JocysCom_MiniMenuFrame_Show();
           </OnEnter>
           <OnLeave>
-            JocysCom_CheckButtonTooltipFontString_OnLeave(self);
+            JocysCom_MiniMenuFrame_Hide();
           </OnLeave>
         </Scripts>
-      </CheckButton>
-      <CheckButton name="JocysCom_InstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_StopFrame" text="">
-        <Size x="21" y="22" />
-        <Anchors>
-          <Anchor point="TOPLEFT">
-            <Offset x="217" y="-15" />
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnClick>
-            JocysCom_InstanceLeaderCheckButt0on_OnClick(self);
-          </OnClick>
-          <OnEnter>
-            JocysCom_InstanceLeaderCheckButton_OnEnter(self)
-          </OnEnter>
-          <OnLeave>
-            JocysCom_CheckButtonTooltipFontString_OnLeave(self);
-          </OnLeave>
-        </Scripts>
-      </CheckButton>
+      </Frame>
     </Frames>
+  <Scripts>
+    <OnEnter>
+      JocysCom_MiniMenuFrame_Show();
+    </OnEnter>
+    <OnLeave>
+      JocysCom_MiniMenuFrame_Hide();
+    </OnLeave>
+  </Scripts>
 	</Frame>
 </Ui>

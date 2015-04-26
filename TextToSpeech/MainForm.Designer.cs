@@ -56,7 +56,9 @@
             this.VoicesTabPanel = new System.Windows.Forms.TabPage();
             this.VoiceErrorLabel = new System.Windows.Forms.Label();
             this.VoiceOverridesTabPage = new System.Windows.Forms.TabPage();
+            this.VoiceOverridesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoiceOverridesUserControl();
             this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
+            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
             this.AboutTabPage = new System.Windows.Forms.TabPage();
             this.AboutRichTextBox = new System.Windows.Forms.RichTextBox();
             this.UpdateTabPage = new System.Windows.Forms.TabPage();
@@ -132,8 +134,6 @@
             this.RateMaxComboBox = new System.Windows.Forms.ComboBox();
             this.PitchMinComboBox = new System.Windows.Forms.ComboBox();
             this.RateMinComboBox = new System.Windows.Forms.ComboBox();
-            this.VoiceOverridesUserControl = new JocysCom.TextToSpeech.Monitor.Controls.VoiceOverridesUserControl();
-            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
             ((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).BeginInit();
             this.MessagesTabControl.SuspendLayout();
             this.VoicesTabPanel.SuspendLayout();
@@ -419,13 +419,21 @@
             // VoiceOverridesTabPage
             // 
             this.VoiceOverridesTabPage.BackColor = System.Drawing.SystemColors.Control;
-            this.VoiceOverridesTabPage.Controls.Add(this.VoiceOverridesUserControl);
+            this.VoiceOverridesTabPage.Controls.Add(this.VoiceOverridesPanel);
             this.VoiceOverridesTabPage.ImageKey = "override_info_16x16.png";
             this.VoiceOverridesTabPage.Location = new System.Drawing.Point(4, 27);
             this.VoiceOverridesTabPage.Name = "VoiceOverridesTabPage";
             this.VoiceOverridesTabPage.Size = new System.Drawing.Size(816, 266);
             this.VoiceOverridesTabPage.TabIndex = 5;
             this.VoiceOverridesTabPage.Text = "Voice Overrides";
+            // 
+            // VoiceOverridesPanel
+            // 
+            this.VoiceOverridesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VoiceOverridesPanel.Location = new System.Drawing.Point(0, 0);
+            this.VoiceOverridesPanel.Name = "VoiceOverridesPanel";
+            this.VoiceOverridesPanel.Size = new System.Drawing.Size(816, 266);
+            this.VoiceOverridesPanel.TabIndex = 0;
             // 
             // EffectsPresetsEditorTabPage
             // 
@@ -436,6 +444,17 @@
             this.EffectsPresetsEditorTabPage.Size = new System.Drawing.Size(816, 266);
             this.EffectsPresetsEditorTabPage.TabIndex = 1;
             this.EffectsPresetsEditorTabPage.Text = "Efect Preset Editor";
+            // 
+            // EffectPresetsEditorSoundEffectsControl
+            // 
+            this.EffectPresetsEditorSoundEffectsControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
+            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
+            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
+            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
             // 
             // AboutTabPage
             // 
@@ -1661,25 +1680,6 @@
             this.RateMinComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
             this.RateMinComboBox.MouseHover += new System.EventHandler(this.MouseHover_RateMin);
             // 
-            // VoiceOverridesUserControl
-            // 
-            this.VoiceOverridesUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VoiceOverridesUserControl.Location = new System.Drawing.Point(0, 0);
-            this.VoiceOverridesUserControl.Name = "VoiceOverridesUserControl";
-            this.VoiceOverridesUserControl.Size = new System.Drawing.Size(816, 266);
-            this.VoiceOverridesUserControl.TabIndex = 0;
-            // 
-            // EffectPresetsEditorSoundEffectsControl
-            // 
-            this.EffectPresetsEditorSoundEffectsControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
-            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
-            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
-            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1846,7 +1846,7 @@
         private System.Windows.Forms.Label UpdateLabel;
         private System.Windows.Forms.Button UpdateButton;
 		private System.Windows.Forms.TabPage VoiceOverridesTabPage;
-		private Controls.VoiceOverridesUserControl VoiceOverridesUserControl;
+		private Controls.VoiceOverridesUserControl VoiceOverridesPanel;
         public System.Windows.Forms.Label MainHelpLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListStatusColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn CommentColumn;

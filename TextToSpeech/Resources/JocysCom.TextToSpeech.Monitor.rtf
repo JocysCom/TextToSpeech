@@ -5728,11 +5728,14 @@ ffffffffffffffffffffffffffffffffffffffffffffff040000002701ffff030000000000
 \cf4\f1 command\cf0\f0  - if you need to start and stop speech or split text in message ( due to 255 character limitation ), use... \cf1\f1 "Add"\cf0\f0 , \cf1\f1 "Play"\cf0\f0 , \cf1\f1 "Stop"\cf0\f0  values:\par
 \cf1\f1 <\cf3 voice\cf1  \cf4 command=\cf1 "Add"><\cf3 part\cf1 >\cf0 text\cf1 </\cf3 part\cf1 ></\cf3 voice\cf1 >\cf0\f0  -- First part of message.\line\cf1\f1 <\cf3 voice\cf1  \cf4 command=\cf1 "Add<\cf3 part\cf1 >\cf0 text\cf1 </\cf3 part\cf1 ></\cf3 voice\cf1 >\cf0\f0  -- Second part of message.\line\cf1\f1 <\cf3 voice\cf1  \cf4 command=\cf1 "Play"><\cf3 part\cf1 >\cf0 text\cf1 </\cf3 part\cf1 ></\cf3 voice\cf1 >\cf0\f0  -- Third ( last ) part of message. Monitor will combine all three messages into one and will start speech. All other \cf1\f1 values\cf0\f0  for \cf4\f1 name\cf0\f0 , \cf4\f1 gender\cf0\f0 , \cf4\f1 effect\cf0\f0 ... should be submitted in this ( last ) part.\par
 \cf1\f1 <\cf3 voice\cf1  \cf4 command=\cf1 "Stop" />\cf0\f0  -- Stops speech and removes all text from playlist.\line\cf1\f1 <\cf3 voice\cf1  \cf4 command=\cf1 "Stop" \cf4 group=\cf1 "Quest" />\cf0\f0  --  Stops speech and removes \cf1\f1 "Quest"\cf0\f0  group text from playlist.\par
-\lang2057\bullet\b\lang9  PORT NUMBERS \b0\lang2057\bullet\par
+You can save \cf4\f1 name\cf0\f0 , \cf4\f1 gender and effect \cf1 values\cf0\f0  in \cf6 [ Voice Overrides ] \cf0 list / tab of \i Monitor\i0 , by sending message with \cf4\f1 command=\cf1 "Save"\cf0\f0 .\par
+\cf1\f1 <\cf3 voice\cf1  \cf4 command=\cf1 "Save" \cf4 name=\cf1 "Thomas Miller" \cf4 gender=\cf1 "Male" \cf4 effect=\cf1 "Humanoid" />\cf0\f0  \f1\par
+\f0\lang2057\bullet\b\lang9  PORT NUMBERS \b0\lang2057\bullet\par
 \lang9 3724 - World of Warcraft.\par
-\lang2057\bullet\b\lang9  FILES \b0\lang2057\bullet\b\lang9  WINDOWS 8 \b0\lang2057\bullet\par
-\lang9 Monitor's configuration: C:\\Users\\<USERNAME>\\AppData\\Local\\Jocys.com\\JocysCom.TextToSpeech...\line Effect's preset configuration: C:\\Program Files\\World of Warcraft\\Interface\\AddOns\\JocysCom-TextToSpeech-WoW\\Presets\\<PRESETNAME>.preset.xml\par
-WoW Addon's configuration ( usual directory ): C:\\Program Files (x86)\\World of Warcraft\\WTF\\Account\\<USERNAME>\\...\line Search for... "JocysCom" ( JocysCom-TextToSpeech-WoW.lua, JocysCom-TextToSpeech-WoW.lua.bak ).\par
-Custom position of frames ( usual directory ): C:\\Program Files (x86)\\World of Warcraft\\WTF\\Account\\<USERNAME>\\<REALMNAME>\\<CHARACTERNAME>\\layout-local.txt file. \par
+\lang2057\bullet\b\lang9  MONITOR FILES \b0\lang2057\bullet\b\lang9  WINDOWS 8 \b0\lang2057\bullet\par
+\lang9 Monitor's configuration ( usual directory ):\cf5  C:\\Users\\<USERNAME>\\AppData\\Local\\Jocys.com\\JocysCom.TextToSpeech...\cf0\line Effect's preset configuration ( usual directory ): \cf5 C:\\Program Files\\World of Warcraft\\Interface\\AddOns\\JocysCom-TextToSpeech-WoW\\Presets\\<PRESETNAME>.preset.xml\cf0\par
+\lang2057\bullet\b\lang9  WORLD OF WARCRAFT ADDON FILES \b0\lang2057\bullet\b\lang9  WINDOWS 8 \b0\lang2057\bullet\lang9\par
+WoW Addon's configuration ( usual directory ): \cf5 C:\\Program Files (x86)\\World of Warcraft\\WTF\\Account\\<USERNAME>\\<REALMNAME>\\<CHARACTERNAME>\\SavedVariables\\JocysCom-TextToSpeech-WoW.lua\cf0  and \cf5 JocysCom-TextToSpeech-WoW.lua.bak \cf0\par
+Custom position of frames ( usual directory ): \cf5 C:\\Program Files (x86)\\World of Warcraft\\WTF\\Account\\<USERNAME>\\<REALMNAME>\\<CHARACTERNAME>\\layout-local.txt\cf0\par
 }
  
