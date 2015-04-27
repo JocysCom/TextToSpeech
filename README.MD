@@ -1,7 +1,7 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
- * <a targe="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.26 (2015-04-26)
- * <a targe="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech WoW Addon 2.2.26 (2015-04-26)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.26 (2015-04-26)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech WoW Addon 2.2.26 (2015-04-26)
 
 <hr />
 
@@ -137,5 +137,3 @@
 • Getting <b>UnitAge()</b> for NPC... in order to apply “Child", “Adult” or “Senior” sound effect.<br />
 • Getting value if NPC has voice over for all text... in order not to start TTS speech.<br />
 • NPC “talking” animation should loop, depending on length of the text.</p>
-
-
