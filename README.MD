@@ -107,7 +107,7 @@
 <p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_2_2_26_1.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_26.png" /></a></p>
 
 
-<p>12. Another <b>[■]</b> (Stop) button will appear at the top of WoW's <b>[Social]</b> button. If you will move mouse pointer over <b>[■]</b> button... <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with <b>check-boxes</b> <i>(Quest, NPC, Whisper, Say, Party, Guild, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader)</i> will appear.</p>
+<p>12. Another <b>[■]</b> (Stop) button will appear at the top of WoW's <b>[Social]</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> <i>(Quest, NPC, Whisper, Say, Party, Guild, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader)</i> will appear.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_26_1.png"/></p>
 
