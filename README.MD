@@ -77,12 +77,12 @@
 <blockquote>
 <p><b>To run “Monitor” (on “Windows XP”), you must have installed at least...</b></p>
 <p>1. Latest version of “World of Warcraft” game.<br />
-2. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06)</a><br />
-3. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
+2. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06)</a><br />
+3. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
 <p>If you get this error (after trying to run “Monitor”) or no sound, proceed to parts "3" and "4".</p>
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png" /></p>
-<p>4. <a href="http://www.microsoft.com/en-us/download/details.aspx?id=22">Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)</a><br />
-5. <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=8109">Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)</a></p>
+<p>4. <a target="_blank"  href="http://www.microsoft.com/en-us/download/details.aspx?id=22">Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)</a><br />
+5. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=8109">Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)</a></p>
 <p>“Monitor Clipboard” option doesn't work and must be [Disabled] in Windows XP.<br />
 “Addon” requires latest version of “World of Warcraft” game.</blockquote>
 
@@ -99,12 +99,12 @@
 
 <p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_2_2_26_1.png" /></p>
+<p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_2_2_26_1.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_2_2_26_1.png" /></a></p>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
 11. <b>“Play after closing”</b> check-box and <b>[Stop]</b> with <b>[Play]</b> buttons will appear at the bottom of some windows.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_26.png" /></p>
+<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_2_2_26_1.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_26.png" /></a></p>
 
 
 <p>12. Also, <b>[ Stop ]</b> button will appear at the top of WoW <b>[Social]</b> button. If you will move mouse pointer over this <b>[Stop]</b> button, then <b>[Save]</b>, <b>[Options]</b> buttons and <b>check-boxes</b> (Quest, NPC, Whisper, Say, Party, Guild, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader) will appear.</p>
