@@ -129,7 +129,8 @@
 ### Possible improvements in “World of Warcraft” game
 <hr />
 
-<p>• Getting <b>UnitRace()</b> for NPC. Sound effects on NPCs are applied by <b>UnitCreatureType()</b> now.<br />
-• Getting <b>UnitAge()</b> for NPC... in order to apply “Child", “Adult” or “Senior” sound effect.<br />
-• Getting value if NPC has voice over for all text... in order not to start TTS speech.<br />
+<p>• Getting <b>UnitSex</b> for NPC in chat and quest log ... in order to apply gender.<br />
+• Getting <b>UnitAge</b> for NPC... in order to apply “Child", “Adult” or “Senior” effects.<br />
+• Getting <b>UnitRace</b> for NPC... Sound effects on NPCs are applied by <b>UnitCreatureType</b> now.<br />
+• Getting <b>value</b> if NPC has voice over for all text... in order not to start TTS speech.<br />
 • NPC “talking” animation should loop, depending on length of the text.</p>
