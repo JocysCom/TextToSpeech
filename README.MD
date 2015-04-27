@@ -111,8 +111,6 @@
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_26_1.png"/></p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_2_2_26_2.png" /></p>
-
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
 
