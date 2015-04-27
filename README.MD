@@ -97,9 +97,9 @@
 <p><img src="http://www.jocys.com/Files/Website/Monitor_NonSigned_UAC.png" />
 </blockquote>
 
-<p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab.</p>
+<p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab (example).</p>
 
-<p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_2_2_26_1.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_2_2_26_1.png" /></a></p>
+<p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_Web.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_Web.png" /></a></p>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
 11. <b>[v] Play after closing</b> check-box and <b>[■]</b> (Stop) with <b>[►]</b> (Play) buttons will appear at the bottom of some windows.</p>
