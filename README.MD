@@ -1,15 +1,15 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.26 (2015-04-26)
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech WoW Addon 2.2.26 (2015-04-26)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.28 (2015-04-30)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech WoW Addon 2.2.28 (2015-04-30)
 
 <hr />
 
-<p align="justify">Latest version can read <i>quests</i> and <i>chat messages</i>. How it works: When you open NPC dialogue window or receive chat message in game, <b>“WoW Addon”</b> creates and sends whisper (chat) message between  <code>&lt;voice&gt;&lt;part&gt;text&lt;/part&gt;&lt;/voice&gt;</code> tags to yourself. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code>... and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this message from your network and reads it with specific text-to-speech voice. FREE text-to-speech voices can be installed (on Windows 8.#) with various Microsoft language packs. BETTER text-to-speech voices by <a target="_blank"  href="http://www.ivona.com/us/for-individuals/voices-for-windows/">Ivona.com</a> (developer), like English-British <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">“Amy”</a> and <a href="http://harposoftware.com/en/content/10-trial">“Brian”</a>, can be downloaded and installed from <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">Harposoftware.com</a>&nbsp;(distributor) website. You can test voices on <a target="_blank"  href="http://www.ivona.com">main page of Ivona.com</a> website.</p>
+<p align="justify">Latest version can read <i>quests</i> and <i>chat messages</i>. How it works: When you open NPC dialogue window or receive chat message in game, <b>“WoW Addon”</b> creates and sends whisper (chat) message between  <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code> tags to yourself. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code>... and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this message from your network and reads it with specific text-to-speech voice. FREE text-to-speech voices can be installed (on Windows 8.#) with various Microsoft language packs. BETTER text-to-speech voices by <a target="_blank"  href="http://www.ivona.com/us/for-individuals/voices-for-windows/">Ivona.com</a> (developer), like English-British <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">“Amy”</a> and <a href="http://harposoftware.com/en/content/10-trial">“Brian”</a>, can be downloaded and installed from <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">Harposoftware.com</a>&nbsp;(distributor) website. You can test voices on <a target="_blank"  href="http://www.ivona.com">main page of Ivona.com</a> website.</p>
 
 <sub>About “Monitor”... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8.1 Pro • All code is available under open source licence.</sub>
 
-<p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small.png" /></a></p>
+<p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_2_2_28.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small_2_2_28.png" /></a></p>
 
 ### YouTube video ...old “WoW Addon” version with Ivona voices
 <hr />
@@ -19,7 +19,7 @@
 ### Security and concerns
 <hr />
 
-<p align="justify">This “WoW Addon” and “Monitor” does not give you more power or advantages over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between <code>&lt;voice&gt;</code> tags or all text from your clipboard with installed text-to-speech voices to you, when you want it. It makes game more involving, fun and interesting... and easier for people with dyslexia too. This project is open source... anyone can check all code at any time. We digitally sign our software and put our real names on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, malware or spyware. Please download this “WoW Addon” and “Monitor” only from trustworthy sources. Make sure that “Monitor” is always <i>signed</i> by verified publisher with signature, issued by trusted certificate authority.</p>
+<p align="justify">This “WoW Addon” and “Monitor” does not give you more power over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between <code>&lt;message&gt;</code> tags or text from your clipboard with installed text-to-speech voices, when you want it. It makes game more involving, fun and interesting... and easier for people with dyslexia too. This project is open source... anyone can check all code at any time. We digitally sign our software and put our real names on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, malware or spyware. Please download this “WoW Addon” and “Monitor” only from trustworthy sources. Make sure that “Monitor” is always <i>signed</i> by verified publisher with signature, issued by trusted certificate authority.</p>
 
 ### Installation • Exit WoW before installing or updating addon.
 <hr />
@@ -99,17 +99,17 @@
 
 <p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab (example).</p>
 
-<p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_Web.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_Web.png" /></a></p>
+<p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_2_2_28.png" /></a></p>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
 11. <b>[v] Play after closing</b> check-box and <b>[■]</b> (Stop) with <b>[►]</b> (Play) buttons will appear at the bottom of some windows.</p>
 
-<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_2_2_26_1.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_26.png" /></a></p>
+<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_28.png" /></a></p>
 
 
-<p>12. Another <b>[■]</b> (Stop) button will appear at the top of WoW's <b>[Social]</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> <i>(Quest, NPC, Whisper, Say, Party, Guild, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader)</i> will appear.</p>
+<p>12. Another <b>[■]</b> (Stop) button will appear at the top of WoW's <b>[Social]</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> <i>(Busy, Quest, NPC, Whisper, Say, Party, Guild, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader)</i> will appear.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_26_1.png"/></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_28.png"/></p>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
@@ -119,7 +119,7 @@
 3. Choose an icon for macro.<br />
 4. Click [Okay] button.<br />
 5. Write in “Enter Macro Commands” field:</p>
-<p><sup><code>/run SendChatMessage("&lt;voice command=\"stop\" /&gt;", "WHISPER", "Common", UnitName("player"))</code><sup></p>
+<p><sup><code>/run SendChatMessage("&lt;message command=\"stop\" /&gt;", "WHISPER", "Common", UnitName("player"))</code><sup></p>
 <p>6. Click [Save] button.<br />
 7. Drag “Stop TTS” macro icon from “General Macros” tab on desired “Action Bar” button.<br />
 8. Click [Exit] button.<br />
