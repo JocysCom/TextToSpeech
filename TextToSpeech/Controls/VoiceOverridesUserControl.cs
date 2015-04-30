@@ -28,8 +28,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             var grid = (DataGridView)sender;
             if (e.ColumnIndex == grid.Columns[EnabledColumn.Name].Index)
             {
-                var voice = (voice)grid.Rows[e.RowIndex].DataBoundItem;
-                voice.enabled = !voice.enabled;
+                var msg = (message)grid.Rows[e.RowIndex].DataBoundItem;
+                msg.enabled = !msg.enabled;
                 VoicesOverridesDataGridView.Invalidate();
             }
             if (e.ColumnIndex == grid.Columns[NameColumn.Name].Index) VoicesOverridesDataGridView.BeginEdit(true);
@@ -40,17 +40,17 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             if (e.ColumnIndex == grid.Columns[VolumeColumn.Name].Index) VoicesOverridesDataGridView.BeginEdit(true);
         }
 
-        public void UpsertRecord(voice v)
+        public void UpsertRecord(message v)
         {
             // Try to find existing override record from the list.
-            var voice = SettingsFile.Current.Overrides.FirstOrDefault(x => x.name.ToLower() == v.name.ToLower());
-            if (voice == null)
+            var msg = SettingsFile.Current.Overrides.FirstOrDefault(x => x.name.ToLower() == v.name.ToLower());
+            if (msg == null)
             {
-               voice = new voice();
-               voice.name = v.name;
-               SettingsFile.Current.Overrides.Add(voice);
+               msg = new message();
+               msg.name = v.name;
+               SettingsFile.Current.Overrides.Add(msg);
             }
-            voice.OverrideFrom(v);
+            msg.OverrideFrom(v);
         }
 
         public void AddNewRecord()
@@ -68,9 +68,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
                 // If name is unique and not in the list then break loop.
                 if (!names.Contains(name.ToLower())) break;
             }
-            var voice = new voice();
-            voice.name = name;
-            SettingsFile.Current.Overrides.Add(voice);
+            var msg = new message();
+            msg.name = name;
+            SettingsFile.Current.Overrides.Add(msg);
             grid.BeginEdit(true);
         }
 
@@ -92,17 +92,17 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             var result = dialog.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-                List<voice> items;
+                List<message> items;
                 if (dialog.FileName.EndsWith(".gz"))
                 {
                     var compressedBytes = System.IO.File.ReadAllBytes(dialog.FileName);
                     var bytes = MainHelper.Decompress(compressedBytes);
                     var xml = System.Text.Encoding.UTF8.GetString(bytes);
-                    items = Serializer.DeserializeFromXmlString<List<voice>>(xml, System.Text.Encoding.UTF8);
+                    items = Serializer.DeserializeFromXmlString<List<message>>(xml, System.Text.Encoding.UTF8);
                 }
                 else
                 {
-                    items = Serializer.DeserializeFromXmlFile<List<voice>>(dialog.FileName);
+                    items = Serializer.DeserializeFromXmlFile<List<message>>(dialog.FileName);
                 }
                 foreach (var item in items)
                 {
@@ -188,19 +188,19 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             if (e.RowIndex == -1) return;
             var grid = (DataGridView)sender;
             var row = grid.Rows[e.RowIndex];
-            var voice = (voice)row.DataBoundItem;
+            var msg = (message)row.DataBoundItem;
             // If this is not row header then...
             if (e.ColumnIndex > -1)
             {
                 var column = VoicesOverridesDataGridView.Columns[e.ColumnIndex];
             }
-            e.CellStyle.ForeColor = voice.enabled
+            e.CellStyle.ForeColor = msg.enabled
                 ? VoicesOverridesDataGridView.DefaultCellStyle.ForeColor
                 : System.Drawing.SystemColors.ControlDark;
-            e.CellStyle.SelectionBackColor = voice.enabled
+            e.CellStyle.SelectionBackColor = msg.enabled
              ? VoicesOverridesDataGridView.DefaultCellStyle.SelectionBackColor
              : System.Drawing.SystemColors.ControlDark;
-            row.HeaderCell.Style.SelectionBackColor = voice.enabled
+            row.HeaderCell.Style.SelectionBackColor = msg.enabled
              ? VoicesOverridesDataGridView.DefaultCellStyle.SelectionBackColor
              : System.Drawing.SystemColors.ControlDark;
 
@@ -214,13 +214,13 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             // Don't try to validate the 'new row' until finished  
             // editing since there is no point in validating its initial values. 
             if (row.IsNewRow) { return; }
-            var voice = (voice)row.DataBoundItem;
+            var msg = (message)row.DataBoundItem;
             var column = grid.Columns[e.ColumnIndex];
             string error = null;
             bool success;
             var value = e.FormattedValue.ToString();
             // If name changed then...
-            if (e.ColumnIndex == grid.Columns[NameColumn.Name].Index && value.ToLower() != voice.name.ToLower())
+            if (e.ColumnIndex == grid.Columns[NameColumn.Name].Index && value.ToLower() != msg.name.ToLower())
             {
                 var names = SettingsFile.Current.Overrides.Select(x => x.name.ToLower()).ToArray();
                 if (string.IsNullOrEmpty(value) || names.Contains(value.ToLower()))

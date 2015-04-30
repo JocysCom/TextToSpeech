@@ -21,31 +21,18 @@ local messageType = nil;
 local messageLeader = nil;
 local objectiveTitleText = "Your objective is to";
 local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-to-speech is enabled.";
-local messageStop = "<voice command=\"stop\" />";
+local messageStop = "<message command=\"stop\" />";
 
 -- Set text.
-local function JocysCom_Text_EN()
-	-- Title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.26 ( 2015-04-26 )");
-	-- CheckButtons.
+function JocysCom_Text_EN()
+	-- OptionsFrame title.
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.28 ( 2015-04-30 )");
+	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon's whisper messages in chat window.|r");
-	JocysCom_DndCheckButton.text:SetText("|cff808080 Show |cffffffff<Busy>|r |cff808080over my character for other players, when NPC dialogue window is open and speech is on.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Stop]|r |cff808080button.|r");
 	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on the right side of |cffffffff[Stop]|r |cff808080button. [Unchecked] show menu on the left side.|r");
+	-- CheckButton (DialogueMiniFrame) text.
 	JocysCom_StopOnCloseCheckButton.text:SetText(" |cff808080Play after closing|r");
-	JocysCom_QuestCheckButton.text:SetText("|cffdddddd Q|r");
-	JocysCom_MonsterCheckButton.text:SetText("|cfffffb9f N|r");
-	JocysCom_WhisperCheckButton.text:SetText("|cffffb2eb W|r");
-	JocysCom_SayCheckButton.text:SetText("|cffffffff S|r");
-	JocysCom_PartyCheckButton.text:SetText("|cffaaa7ff P|r");
-	JocysCom_MiniMenuFrame_FontString:SetText("");
-	JocysCom_GuildCheckButton.text:SetText("|cff40fb40 G|r");	
-	JocysCom_RaidCheckButton.text:SetText("|cffff7d00 R|r");
-	JocysCom_RaidLeaderCheckButton.text:SetText("|cffff4709 RL|r");
-	JocysCom_BattlegroundCheckButton.text:SetText("|cffff7d00 B|r");
-	JocysCom_BattlegroundLeaderCheckButton.text:SetText("|cffff4709 BL|r");
-	JocysCom_InstanceCheckButton.text:SetText("|cffff7d00 I|r");
-	JocysCom_InstanceLeaderCheckButton.text:SetText("|cffff4709 IL|r");
 	-- Font Strings.
 	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
 	JocysCom_DescriptionFrameFontString:SetText("Text-to-speech voices, pitch, rate, effects, etc. ... you will find all options in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window, |cff77ccffJocys.Com Text to Speech WoW Addon|r creates and sends special whisper message to yourself (message includes dialogue text, character name and effect name). Then, |cff77ccffJocys.Com Text to Speech Monitor|r (which must be running in background) picks-up this message from your network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.");
@@ -54,7 +41,7 @@ local function JocysCom_Text_EN()
 end
 
 -- Unlock frames.
-local function JocysCom_UnLockFrames()
+function JocysCom_OptionsFrame_OnShow()
 	JocysCom_StopButtonFrame_Texture:SetTexture(0, 0, 0, 0.5);
 	JocysCom_DialogueScrollFrame:EnableMouse(true);
 	JocysCom_DialogueScrollFrame_Texture:SetTexture(0, 0, 0, 0.8);
@@ -63,7 +50,10 @@ local function JocysCom_UnLockFrames()
 end
 
 -- Lock frames.
-local function JocysCom_LockFrames()
+function JocysCom_OptionsFrame_OnHide()
+	if string.len(JocysCom_ReplaceNameEditBox:GetText()) < 2 then
+		JocysCom_ReplaceNameEditBox:SetText(unitName);
+	end
 	JocysCom_StopButtonFrame_Texture:SetTexture(0, 0, 0, 0);
 	JocysCom_DialogueScrollFrame:EnableMouse(false);
 	JocysCom_DialogueScrollFrame_Texture:SetTexture(0, 0, 0, 0);
@@ -72,12 +62,12 @@ local function JocysCom_LockFrames()
 end
 
 -- MessageStop function.
-local function sendChatMessageStop(CloseOrButton, group)
+function JocysCom_sendChatMessageStop(CloseOrButton, group)
 	-- Add group value if exists.
 	if group == nil or group == "" then
-		messageStop = "<voice command=\"stop\" />";
+		messageStop = "<message command=\"stop\" />";
 	else
-		messageStop = "<voice command=\"stop\" group=\"" .. group .. "\" />";
+		messageStop = "<message command=\"stop\" group=\"" .. group .. "\" />";
 	end			
 	-- Disable DND <Busy> if checked.
 	if JocysCom_DndCheckButton:GetChecked() == true and UnitIsDND("player") == true then
@@ -143,7 +133,6 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 	-- Events.
 	if event == "ADDON_LOADED" then
 		JocysCom_LoadTocFileSettings();
-		JocysCom_SetInterfaceSettings();
 		return;
 	elseif event == "PLAYER_LOGOUT" then
 		JocysCom_SaveTocFileSettings();
@@ -218,8 +207,8 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 	if string.find(event, "CHAT") ~= nil then
 		speakMessage = arg1;
 	end
-	 -- don't proceed messages with <voice> tags and your own incoming whispers.
-	if string.find(speakMessage, "<voice") ~= nil or (event == "CHAT_MSG_WHISPER" and string.find(arg2, unitName) ~= nil) then return end
+	 -- don't proceed messages with <message> tags and your own incoming whispers.
+	if string.find(speakMessage, "<message") ~= nil or (event == "CHAT_MSG_WHISPER" and string.find(arg2, unitName) ~= nil) then return end
 	-- Remove realm name from name.
 	dashIndex = string.find(arg2, "-");
 	if dashIndex ~= nil then arg2 = string.sub(arg2, 1, dashIndex - 1) end
@@ -258,7 +247,7 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group)
 			speakMessage = string.gsub(speakMessage, "%]", "\" ");
 		end
 	else
-		sendChatMessageStop(1); -- Send stop message.
+		JocysCom_sendChatMessageStop(1); -- Send stop message.
 	end
 	-- Set NPC name.
 	local NPCName = nil;
@@ -340,12 +329,12 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group)
 	speakMessage = string.gsub(speakMessage, "%%s", "");
 	speakMessage = string.gsub(speakMessage, "lvl", "level");
 	-- Format and send whisper message.
-		local chatMessageSP = "<voice command=\"play\"" .. group .. NPCName .. NPCGender .. NPCType .. "><part>";
+		local chatMessageSP = "<message command=\"play\"" .. group .. NPCName .. NPCGender .. NPCType .. "><part>";
 		if NPCGender == "" then
-		chatMessageSP = "<voice" .. group .. NPCName .. NPCType .. " command=\"play\"><part>";
+		chatMessageSP = "<message" .. group .. NPCName .. NPCType .. " command=\"play\"><part>";
 		end
-		local chatMessageSA = "<voice command=\"add\"><part>";
-		local chatMessageE = "</part></voice>";
+		local chatMessageSA = "<message command=\"add\"><part>";
+		local chatMessageE = "</part></message>";
 		local chatMessage;
 		local chatMessageLimit = 240;
 		local sizeAdd = chatMessageLimit - string.len(chatMessageSA) - string.len(chatMessageE);
@@ -437,9 +426,9 @@ function JocysCom_MenuCheckButton_OnClick()
 	PlaySound("igMainMenuOptionCheckBoxOn");
  	JocysCom_MiniMenuFrame:ClearAllPoints();
 	if JocysCom_MenuCheckButton:GetChecked() == true then
-	JocysCom_MiniMenuFrame:SetPoint("LEFT", JocysCom_StopButtonFrame, "RIGHT", 0, 0);
+	JocysCom_MiniMenuFrame:SetPoint("LEFT", JocysCom_StopButtonFrame, "RIGHT", 0, -4);
 	else
-	JocysCom_MiniMenuFrame:SetPoint("RIGHT", JocysCom_StopButtonFrame, "LEFT", 0, 0);
+	JocysCom_MiniMenuFrame:SetPoint("RIGHT", JocysCom_StopButtonFrame, "LEFT", 0, -4);
 	end
 	JocysCom_SaveTocFileSettings();
 end
@@ -449,25 +438,25 @@ function JocysCom_CheckButton_OnClick(self, name)
 	PlaySound("igMainMenuOptionCheckBoxOn");
 	if self:GetChecked() == true then
 		if name == "StopAll" then
-			sendChatMessageStop(1);
+			JocysCom_sendChatMessageStop(1);
 		elseif name == "Battleground" then
 			JocysCom_BattlegroundLeaderCheckButton:SetChecked(false);
 		elseif name == "BattlegroundLeader" and JocysCom_BattlegroundCheckButton:GetChecked() == true  then
 			JocysCom_BattlegroundCheckButton:SetChecked(false);
-			sendChatMessageStop(1, "Battleground");
+			JocysCom_sendChatMessageStop(1, "Battleground");
 		elseif name == "Raid" then
 			JocysCom_RaidLeaderCheckButton:SetChecked(false);
 		elseif name == "RaidLeader" and JocysCom_RaidCheckButton:GetChecked() == true then
 			JocysCom_RaidCheckButton:SetChecked(false);
-			sendChatMessageStop(1, "Raid");		
+			JocysCom_sendChatMessageStop(1, "Raid");		
 		elseif name == "Instance" then
 			JocysCom_InstanceLeaderCheckButton:SetChecked(false);
 		elseif name == "InstanceLeader" and JocysCom_InstanceCheckButton:GetChecked() == true then
 			JocysCom_InstanceCheckButton:SetChecked(false);
-			sendChatMessageStop(1, "Instance");
+			JocysCom_sendChatMessageStop(1, "Instance");
 		end 
 	else
-		sendChatMessageStop(1, name);
+		JocysCom_sendChatMessageStop(1, name);
 	end
 	JocysCom_SaveTocFileSettings();
 end
@@ -479,38 +468,46 @@ end
 	if name == "Stop" then
 		fontString = "|cffddddddStop text-to-speech and clear all playlist|r";
 	elseif name == "Save" then
-		fontString = "|cffddddddSave target name, gender and type in Monitor|r";
+		fontString = "|cffddddddSave target name, gender, type in Monitor|r";
 	elseif name == "Options" then
 		fontString = "|cffddddddOpen text-to-speech Options window|r";
+	elseif name == "Busy" then
+		fontString = "|cff6464ffShow <Busy> when window is open and speech is on|r";
 	elseif name == "Quest" then
-		fontString = "|cffddddddPlay QUEST-DIALOGUE, BOOK, PLAQUE ... text|r";
+		fontString = "|cfffffb9fPlay DIALOGUE, BOOK, PLAQUE, etc. window text|r";
 	elseif name == "Monster" then
-		fontString = "|cfffffb9fPlay NPC messages|r";
+		fontString = "|cfffffb9fPlay NPC chat messages|r";
 	elseif name == "Whisper" then
-		fontString = "|cffffb2ebPlay WHISPER messages|r";
+		fontString = "|cffffb2ebPlay WHISPER chat messages|r";
 	elseif name == "Say" then
-		fontString = "|cffffffffPlay SAY messages|r";
+		fontString = "|cffffffffPlay SAY chat messages|r";
 	elseif name == "Party" then
-		fontString = "|cffaaa7ffPlay PARTY messages|r";
+		fontString = "|cffaaa7ffPlay PARTY chat messages|r";
 	elseif name == "Guild" then
-		fontString = "|cff40fb40Play GUILD messages|r";
+		fontString = "|cff40fb40Play GUILD chat messages|r";
 	elseif name == "Raid" then
-		fontString = "|cffff7d00Play all RAID messages|r";
+		fontString = "|cffff7d00Play all RAID chat messages|r";
 	elseif name == "RaidLeader" then
-		fontString = "|cffff4709Play RAID leader messages only|r";
+		fontString = "|cffff4709Play RAID leader chat messages only|r";
 	elseif name == "Battleground" then
-		fontString = "|cffff7d00Play all BATTLEGROUND messages|r";
+		fontString = "|cffff7d00Play all BATTLEGROUND chat messages|r";
 	elseif name == "BattlegroundLeader" then
-		fontString = "|cffff4709Play BATTLEGROUND leader messages only|r";
+		fontString = "|cffff4709Play BATTLEGROUND leader chat messages only|r";
 	elseif name == "Instance" then
-		fontString = "|cffff7d00Play all INSTANCE messages|r";
+		fontString = "|cffff7d00Play all INSTANCE chat messages|r";
 	elseif name == "InstanceLeader" then
-		fontString = "|cffff4709Play INSTANCE leader messages only|r";
+		fontString = "|cffff4709Play INSTANCE leader chat messages only|r";
 	else
 		JocysCom_MiniMenuFrame_FontString:Hide();
 	end
-	JocysCom_MiniMenuFrame:SetBackdrop({bgFile="Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-MiniMenuFrame-Background"});
+	--JocysCom_MiniMenuFrame:SetBackdrop({
+	----bgFile="Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-MiniMenuFrame-Background",
+	----tile = true,
+	----tileSize = 32,
+	----insets = { left = 0, right = 0, top = 0, bottom = 0 }
+	--});
 	JocysCom_MiniMenuFrame_FontString:SetText(fontString);
+	JocysCom_MiniMenuFrameBorder:SetBackdrop( { edgeFile = "Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-MiniMenuFrame-Border", edgeSize = 23 });
 	JocysCom_MiniMenuFrame:Show();
 	JocysCom_OptionsButton:Show();
 	JocysCom_SaveButton:Show();
@@ -527,9 +524,9 @@ end
 function JocysCom_StopButton_OnClick(name)
 	PlaySound("igMainMenuOptionCheckBoxOn");
 	if name == "Quest" then
-		sendChatMessageStop(1, name);
+		JocysCom_sendChatMessageStop(1, name);
 	else
-		sendChatMessageStop(1);
+		JocysCom_sendChatMessageStop(1);
 	end
 end
 
@@ -538,21 +535,12 @@ function JocysCom_DialogueScrollFrame_OnMouseWheel(self, delta)
 	if delta == 1 then
 			JocysCom_PlayButtonButton_OnClick();
 		else
-			sendChatMessageStop(1, "Quest");
+			JocysCom_sendChatMessageStop(1, "Quest");
 		end
-end
--- ScrollFrame - start resizing.
-function JocysCom_DialogueScrollFrameResizeButton_OnMouseDown(self) 
-	self:GetParent():StartSizing("BOTTOMRIGHT");
-	--self:GetParent():SetUserPlaced(true);
-end
--- ScrollFrame - stop resizing.
-function JocysCom_DialogueScrollFrameResizeButton_OnMouseUp(self)
-	self:GetParent():StopMovingOrSizing();
 end
 
 -- Show or Hide JocysCom frames.
-local function JocysCom_AttachAndShowFrames(frame)
+function JocysCom_AttachAndShowFrames(frame)
 	-- Set ScrollFrame.
 	local width = 100;
 	JocysCom_DialogueScrollFrame:ClearAllPoints();
@@ -574,14 +562,14 @@ local function JocysCom_AttachAndShowFrames(frame)
 	JocysCom_DialogueMiniFrame:ClearAllPoints();
 	JocysCom_DialogueMiniFrame:SetParent(frame);
 	JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", 0, 0);
+	JocysCom_DialogueMiniFrame:SetBackdrop( { bgFile="Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-DialogueMiniFrame-Background" });
 	JocysCom_DialogueMiniFrame:Show();
-	JocysCom_DialogueMiniFrame:SetBackdrop({bgFile="Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-MiniFrame-Background"});
 end
 
 -- Close all JocysCom frames.
 function JocysCom_DialogueMiniFrame_OnHide()
 	if DebugEnabled then print("MiniFrame Hide") end
-	sendChatMessageStop(0, "Quest");
+	JocysCom_sendChatMessageStop(0, "Quest");
 end
 
 function JocysCom_DialogueMiniFrame_Hide()
@@ -625,18 +613,10 @@ function JocysCom_SaveButton_OnClick(self)
 	else
 		local targetTypeValue = targetType
 	end
-
 	print("Save : " .. targetName .. " : " .. targetSex .. " : " .. targetType);
-	local saveMessage = "<voice command=\"Save\" name=\"" .. targetName .. "\" gender=\"" .. targetSex .. "\" effect=\"" .. targetType .. "\" />";
+	local saveMessage = "<message command=\"Save\" name=\"" .. targetName .. "\" gender=\"" .. targetSex .. "\" effect=\"" .. targetType .. "\" />";
 	SendChatMessage(saveMessage, "WHISPER", "Common", unitName);
 	JocysCom_OptionsEditBox:SetText("|cff808080" .. saveMessage .. "|r");
-end
-
-function JocysCom_OptionsFrame_OnHide()
-	if string.len(JocysCom_ReplaceNameEditBox:GetText()) < 2 then
-		JocysCom_ReplaceNameEditBox:SetText(unitName);
-	end
-	JocysCom_LockFrames();
 end
 
 -- [ Play ] button.
@@ -645,20 +625,19 @@ function JocysCom_PlayButtonButton_OnClick(self)
 		local questDescription, questObjectives = GetQuestLogQuestText();
 		questMessage = questObjectives .. " Description. " .. questDescription;
 		-- questPortrait, questPortraitText, questPortraitName = GetQuestLogPortraitGiver();
-		-- print(" questPortrait: " .. tostring(questPortrait) .. " questPortraitText: " .. tostring(questPortraitText) .. " questPortraitName: " .. tostring(questPortraitName));
 	end
 	JocysCom_SpeakMessage(questMessage, "SROLL_UP_OR_PLAY_BUTTON", "", "Quest");
 end
 
 -- Enable message filter.
 function JocysCom_CHAT_MSG_WHISPER_INFORM(self, event, msg)
-	if string.find(msg, "<voice") ~= nil then
+	if string.find(msg, "<message") ~= nil then
 		return true;
 	end
 end
 -- Enable/Disable message filter.
 function JocysCom_CHAT_MSG_WHISPER(self, event, msg)
-	if string.find(msg, "<voice") ~= nil and JocysCom_FilterCheckButton:GetChecked() == true then
+	if string.find(msg, "<message") ~= nil and JocysCom_FilterCheckButton:GetChecked() == true then
 		return true;
 	end
 end
@@ -675,13 +654,29 @@ function JocysCom_CHAT_MSG_SYSTEM(self, event, msg)
 	end
 end
 
--- Load settings from toc file.
+-- Load and apply settings from toc file.
 function JocysCom_LoadTocFileSettings()
-	-- Set CheckBoxes.
+	-- Set (Options) CheckButtons.
 	if JocysCom_DndCheckButtonValue == false then JocysCom_DndCheckButton:SetChecked(false) else JocysCom_DndCheckButton:SetChecked(true) end
+	-- Set LockCheckButton and StopButtonFrame.
 	if JocysCom_LockCheckButtonValue == false then JocysCom_LockCheckButton:SetChecked(false) else JocysCom_LockCheckButton:SetChecked(true) end
+	if JocysCom_LockCheckButton:GetChecked() == true then JocysCom_StopButtonFrame:RegisterForDrag() else JocysCom_StopButtonFrame:RegisterForDrag("LeftButton") end
+	-- Set MenuCheckButton and MiniMenuFrame.
 	if JocysCom_MenuCheckButtonValue == false then JocysCom_MenuCheckButton:SetChecked(false) else JocysCom_MenuCheckButton:SetChecked(true) end
+	JocysCom_MiniMenuFrame:ClearAllPoints();
+	if JocysCom_MenuCheckButton:GetChecked() == true then
+	JocysCom_MiniMenuFrame:SetPoint("LEFT", JocysCom_StopButtonFrame, "RIGHT", 0, -4);
+	else
+	JocysCom_MiniMenuFrame:SetPoint("RIGHT", JocysCom_StopButtonFrame, "LEFT", 0, -4);
+	end
+	-- Set FilterCheckButton and Message filters.
 	if JocysCom_FilterCheckButtonValue == false then JocysCom_FilterCheckButton:SetChecked(false) else JocysCom_FilterCheckButton:SetChecked(true) end
+	-- Add chat message filters.
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", JocysCom_CHAT_MSG_WHISPER_INFORM);
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", JocysCom_CHAT_MSG_WHISPER);
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_DND", JocysCom_CHAT_MSG_DND);
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", JocysCom_CHAT_MSG_SYSTEM);
+	-- Set (MiniFrame) CheckButtons.
 	if JocysCom_QuestCheckButtonValue == false then JocysCom_QuestCheckButton:SetChecked(false) else JocysCom_QuestCheckButton:SetChecked(true) end
 	if JocysCom_MonsterCheckButtonValue == false then JocysCom_MonsterCheckButton:SetChecked(false) else JocysCom_MonsterCheckButton:SetChecked(true) end
 	if JocysCom_WhisperCheckButtonValue == false then JocysCom_WhisperCheckButton:SetChecked(false) else JocysCom_WhisperCheckButton:SetChecked(true) end
@@ -722,88 +717,29 @@ function JocysCom_SaveTocFileSettings()
 end
 
 function JocysCom_SetInterfaceSettings()
-	-- Add chat message filters.
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", JocysCom_CHAT_MSG_WHISPER_INFORM);
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", JocysCom_CHAT_MSG_WHISPER);
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_DND", JocysCom_CHAT_MSG_DND);
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", JocysCom_CHAT_MSG_SYSTEM);
-	-- Set OptionsFrame movable.
-	JocysCom_OptionsFrame:Hide();
-	JocysCom_OptionsFrame:SetMovable(true);
-	JocysCom_OptionsFrame:EnableMouse(true);
-	JocysCom_OptionsFrame:RegisterForDrag("LeftButton");
-	JocysCom_OptionsFrame:SetScript("OnDragStart", JocysCom_OptionsFrame.StartMoving);
-	JocysCom_OptionsFrame:SetScript("OnDragStop", JocysCom_OptionsFrame.StopMovingOrSizing);
-	JocysCom_OptionsFrame:SetScript("OnShow", JocysCom_UnLockFrames);
-	-- Set OptionsEditBox child of OptionsScrollFrame.
-	JocysCom_OptionsFrameScroll:SetScrollChild(JocysCom_OptionsEditBox);
-	-- Set ScrollFrame movable.
-	JocysCom_DialogueScrollFrame:SetMovable(true);
-	JocysCom_DialogueScrollFrame:SetResizable(true);
-	--JocysCom_DialogueScrollFrame:EnableMouse(true);
-	JocysCom_DialogueScrollFrame:RegisterForDrag("LeftButton");
-	JocysCom_DialogueScrollFrame:SetScript("OnDragStart", JocysCom_OptionsFrame.StartMoving);
-	JocysCom_DialogueScrollFrame:SetScript("OnDragStop", JocysCom_OptionsFrame.StopMovingOrSizing);
-	JocysCom_DialogueScrollFrame:SetScript("OnMouseWheel", JocysCom_DialogueScrollFrame_OnMouseWheel);
-	-- Attach DialogueScroll and DialogueMini frames to WoW frame.
+	-- Attach (and show) DialogueScroll and DialogueMini frames to WoW (GossipFrame) frame.
 	JocysCom_AttachAndShowFrames(GossipFrame);
-	-- StopButtonFrame.
-	JocysCom_StopButtonFrame:SetMovable(true);
-	JocysCom_StopButtonFrame:EnableMouse(true);
-	JocysCom_StopButtonFrame:RegisterForDrag("LeftButton");
-	JocysCom_StopButtonFrame:SetScript("OnDragStart", JocysCom_DialogueMiniFrame.StartMoving);
-	JocysCom_StopButtonFrame:SetScript("OnDragStop", JocysCom_DialogueMiniFrame.StopMovingOrSizing);
-	if JocysCom_LockCheckButton:GetChecked() == true then 
-		JocysCom_StopButtonFrame:RegisterForDrag();
-	else
-		JocysCom_StopButtonFrame:RegisterForDrag("LeftButton");
-	end
-	-- MiniMenuFrame.
+	-- Hide frames.
+	JocysCom_OptionsFrame:Hide();
 	JocysCom_MiniMenuFrame:Hide();
-	JocysCom_MiniMenuFrame:EnableMouse(true);
-	JocysCom_MiniMenuFrame_FontString:Hide();
-	JocysCom_MiniMenuFrame:ClearAllPoints();
-	if JocysCom_MenuCheckButton:GetChecked() == true then
-	JocysCom_MiniMenuFrame:SetPoint("LEFT", JocysCom_StopButtonFrame, "RIGHT", 0, 0);
-	else
-	JocysCom_MiniMenuFrame:SetPoint("RIGHT", JocysCom_StopButtonFrame, "LEFT", 0, 0);
-	end
-	-- Set Save and Options buttons.
 	JocysCom_SaveButton:Hide();
 	JocysCom_OptionsButton:Hide();
-	-- Black Background for message frame.
-	JocysCom_MessageFrame.Bg:SetTexture(0, 0, 0, 1.0);
 	-- Load descriptions.
 	JocysCom_Text_EN();	
-	-- CheckBox label position.
-	JocysCom_StopOnCloseCheckButton.text:SetPoint("LEFT", 19, 1);
-	JocysCom_QuestCheckButton.text:SetPoint("TOPLEFT", 5, 10);
-	JocysCom_MonsterCheckButton.text:SetPoint("TOPLEFT", 6, 10);
-	JocysCom_WhisperCheckButton.text:SetPoint("TOPLEFT", 5, 10);
-	JocysCom_SayCheckButton.text:SetPoint("TOPLEFT", 7, 10);
-	JocysCom_PartyCheckButton.text:SetPoint("TOPLEFT", 7, 10);
-	JocysCom_GuildCheckButton.text:SetPoint("TOPLEFT", 6, 10);
-	JocysCom_BattlegroundCheckButton.text:SetPoint("TOPLEFT", 7, 10);
-	JocysCom_BattlegroundLeaderCheckButton.text:SetPoint("TOPLEFT", 4, 10);
-	JocysCom_RaidCheckButton.text:SetPoint("TOPLEFT", 6, 10);
-	JocysCom_RaidLeaderCheckButton.text:SetPoint("TOPLEFT", 4, 10);
-	JocysCom_InstanceCheckButton.text:SetPoint("TOPLEFT", 8, 10);
-	JocysCom_InstanceLeaderCheckButton.text:SetPoint("TOPLEFT", 6, 10);
-	-- OnEscape scripts.
-	JocysCom_OptionsEditBox:SetScript("OnEscapePressed", JocysCom_OptionsButton_OnClick);
-	JocysCom_ReplaceNameEditBox:SetScript("OnEscapePressed", JocysCom_OptionsButton_OnClick);
-	-- OnShow sripts.
+	-- Attach OnShow and OnHide sripts to WoW frames.
 	QuestLogPopupDetailFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
 	GossipFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
 	QuestFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
 	ItemTextFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
+	QuestMapDetailsScrollFrame:SetScript("OnHide", JocysCom_DialogueMiniFrame_Hide);
 	QuestMapDetailsScrollFrame:SetScript("OnShow", function()
 	JocysCom_AttachAndShowFrames(WorldMapFrame);
 	end);
-	-- OnHide sripts.
-	QuestMapDetailsScrollFrame:SetScript("OnHide", JocysCom_DialogueMiniFrame_Hide);
 end
 
--- Register events (on ADDON_LOADED event load toc file values and set them).
+-- Load UI settings.
+JocysCom_SetInterfaceSettings();
+
+-- Register events (and on ADDON_LOADED event load toc file values and set them).
 JocysCom_RegisterEvents();
 

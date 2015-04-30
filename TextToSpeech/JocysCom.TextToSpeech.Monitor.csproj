@@ -139,6 +139,12 @@
     <Compile Include="Controls\MessageBoxForm.Designer.cs">
       <DependentUpon>MessageBoxForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MonitorsUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MonitorsUserControl.Designer.cs">
+      <DependentUpon>MonitorsUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\VoiceOverridesUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -169,7 +175,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Network\voice.cs" />
+    <Compile Include="Network\message.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -184,6 +190,9 @@
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Controls\MessageBoxForm.resx">
       <DependentUpon>MessageBoxForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MonitorsUserControl.resx">
+      <DependentUpon>MonitorsUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\VoiceOverridesUserControl.resx">
       <DependentUpon>VoiceOverridesUserControl.cs</DependentUpon>
@@ -200,11 +209,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Resources\JocysCom-MiniFrame.tga" />
     <EmbeddedResource Include="Resources\JocysCom.TextToSpeech.Monitor.rtf" />
-    <None Include="Resources\JocysCom_TTS_Monitor.psd" />
-    <None Include="Resources\JocysCom_TTS_Monitor_Voices.psd" />
-    <None Include="Resources\JocysCom_TTS_WoW_Addon.psd" />
     <None Include="WoW\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.sha" />
     <None Include="WoW\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.zip" />
     <None Include="WoW\FrameXML\UI.xsd">
@@ -236,9 +241,6 @@
     <None Include="Resources\data_out_16x16.png" />
     <None Include="Resources\delete_16x16.png" />
     <Content Include="Resources\JocysCom.TextToSpeech.Monitor.html" />
-    <Content Include="Resources\JocysCom_TTS_Monitor_Voices.png" />
-    <Content Include="Resources\JocysCom_TTS_WoW_Addon.png" />
-    <Content Include="Resources\JocysCom_TTS_WoW_Addon_Buttons.png" />
     <Content Include="Resources\override_info_16x16.png" />
     <Content Include="WoW\GoogleDriver.ReadMe.txt" />
     <Content Include="WoW\HowToExportInterfaceCode.txt" />
@@ -258,11 +260,6 @@
     <Content Include="WoW\Presets\Mechanical.preset.xml" />
     <Content Include="WoW\Presets\Undead.preset.xml" />
     <Content Include="app.ico" />
-    <Content Include="Resources\Monitor_Certificate.PNG" />
-    <Content Include="Resources\Monitor_File_Properties.PNG" />
-    <Content Include="Resources\Monitor_NonSigned_UAC.PNG" />
-    <Content Include="Resources\Monitor_Signature_Details.PNG" />
-    <Content Include="Resources\Monitor_Signed_UAC.PNG" />
     <Content Include="Resources\Page_Incoming_16.png" />
     <Content Include="Resources\Page_Plain.png" />
     <Content Include="Resources\Page_Play_16.png" />
@@ -284,9 +281,7 @@
     <Content Include="Resources\businessman2.ico" />
     <Content Include="Resources\check_16x16.png" />
     <Content Include="Resources\code_edit.png" />
-    <Content Include="Resources\Copy.png" />
     <Content Include="Resources\Google Chrome TTS.html" />
-    <Content Include="Resources\JocysCom_TTS_Monitor.png" />
     <Content Include="Resources\Local_Security_Policy_Capture_UAC.png" />
     <Content Include="Resources\message_64_x_64.png" />
     <None Include="Resources\Microsoft Multilingual TTS.URL" />

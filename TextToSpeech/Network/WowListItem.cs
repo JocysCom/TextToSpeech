@@ -22,18 +22,18 @@ namespace JocysCom.TextToSpeech.Monitor.Network
         {
             _IpHeader = ipHeader;
             _TcpHeader = tcpHeader;
-            // Convert bytes to ASCII text. ASCII encoding is used in order to find propert position of <voice></voice> tags inside byte array.
+            // Convert bytes to ASCII text. ASCII encoding is used in order to find propert position of <message></message> tags inside byte array.
             var text = System.Text.Encoding.ASCII.GetString(ipHeader.Data);
             loadFromText(text, ipHeader.Data);
         }
 
         void loadFromText(string text, byte[] data = null)
         {
-            if (text.Contains("<voice"))
+            if (text.Contains("<message"))
             {
-                var endTag = "</voice>";
+                var endTag = "</message>";
                 // Find start of the voice tag.
-                var start = text.IndexOf("<voice");
+                var start = text.IndexOf("<message");
                 // Find end of the voice tag.
                 var end = text.IndexOf(endTag, start);
                 if (end == -1)

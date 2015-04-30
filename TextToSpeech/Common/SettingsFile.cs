@@ -18,11 +18,11 @@ namespace JocysCom.TextToSpeech.Monitor
 	{
 
 		[NonSerialized]
-		SortableBindingList<voice> _Overrides;
+		SortableBindingList<message> _Overrides;
 
 		public SettingsFile()
 		{
-			_Overrides = new SortableBindingList<voice>();
+			_Overrides = new SortableBindingList<message>();
 			_Overrides.AddingNew += _Overrides_AddingNew;
 			_Overrides.ListChanged += _Overrides_ListChanged;
 			FolderPath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\JocysCom TextToSpeech Monitor";
@@ -46,7 +46,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			get { return _current = _current ?? new SettingsFile(); }
 		}
 
-		public SortableBindingList<voice> Overrides { get { return _Overrides; } }
+		public SortableBindingList<message> Overrides { get { return _Overrides; } }
 
 		public string FolderPath;
 		public string FileName = "Settings.xml";
@@ -92,7 +92,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					}
 					var bytes = MainHelper.Decompress(compressedBytes);
 					var xml = System.Text.Encoding.UTF8.GetString(bytes);
-					var items = Serializer.DeserializeFromXmlString<List<voice>>(xml);
+					var items = Serializer.DeserializeFromXmlString<List<message>>(xml);
 					Overrides.Clear();
 					for (int i = 0; i < items.Count; i++) Overrides.Add(items[i]);
 				}

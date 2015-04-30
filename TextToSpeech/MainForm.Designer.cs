@@ -56,9 +56,8 @@
             this.VoicesTabPanel = new System.Windows.Forms.TabPage();
             this.VoiceErrorLabel = new System.Windows.Forms.Label();
             this.VoiceOverridesTabPage = new System.Windows.Forms.TabPage();
-            this.VoiceOverridesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoiceOverridesUserControl();
             this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
-            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
+            this.MonitoringTabPage = new System.Windows.Forms.TabPage();
             this.AboutTabPage = new System.Windows.Forms.TabPage();
             this.AboutRichTextBox = new System.Windows.Forms.RichTextBox();
             this.UpdateTabPage = new System.Windows.Forms.TabPage();
@@ -134,11 +133,15 @@
             this.RateMaxComboBox = new System.Windows.Forms.ComboBox();
             this.PitchMinComboBox = new System.Windows.Forms.ComboBox();
             this.RateMinComboBox = new System.Windows.Forms.ComboBox();
+            this.VoiceOverridesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoiceOverridesUserControl();
+            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
+            this.monitorsUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.MonitorsUserControl();
             ((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).BeginInit();
             this.MessagesTabControl.SuspendLayout();
             this.VoicesTabPanel.SuspendLayout();
             this.VoiceOverridesTabPage.SuspendLayout();
             this.EffectsPresetsEditorTabPage.SuspendLayout();
+            this.MonitoringTabPage.SuspendLayout();
             this.AboutTabPage.SuspendLayout();
             this.UpdateTabPage.SuspendLayout();
             this.EffectTabControl.SuspendLayout();
@@ -373,6 +376,7 @@
             this.TabsImageList.Images.SetKeyName(8, "code_edit.png");
             this.TabsImageList.Images.SetKeyName(9, "Download_16.png");
             this.TabsImageList.Images.SetKeyName(10, "override_info_16x16.png");
+            this.TabsImageList.Images.SetKeyName(11, "Monitoring_16x16.png");
             // 
             // MessagesTabControl
             // 
@@ -381,6 +385,7 @@
             this.MessagesTabControl.Controls.Add(this.VoicesTabPanel);
             this.MessagesTabControl.Controls.Add(this.VoiceOverridesTabPage);
             this.MessagesTabControl.Controls.Add(this.EffectsPresetsEditorTabPage);
+            this.MessagesTabControl.Controls.Add(this.MonitoringTabPage);
             this.MessagesTabControl.Controls.Add(this.AboutTabPage);
             this.MessagesTabControl.Controls.Add(this.UpdateTabPage);
             this.MessagesTabControl.ImageList = this.TabsImageList;
@@ -427,14 +432,6 @@
             this.VoiceOverridesTabPage.TabIndex = 5;
             this.VoiceOverridesTabPage.Text = "Voice Overrides";
             // 
-            // VoiceOverridesPanel
-            // 
-            this.VoiceOverridesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VoiceOverridesPanel.Location = new System.Drawing.Point(0, 0);
-            this.VoiceOverridesPanel.Name = "VoiceOverridesPanel";
-            this.VoiceOverridesPanel.Size = new System.Drawing.Size(816, 266);
-            this.VoiceOverridesPanel.TabIndex = 0;
-            // 
             // EffectsPresetsEditorTabPage
             // 
             this.EffectsPresetsEditorTabPage.Controls.Add(this.EffectPresetsEditorSoundEffectsControl);
@@ -445,16 +442,16 @@
             this.EffectsPresetsEditorTabPage.TabIndex = 1;
             this.EffectsPresetsEditorTabPage.Text = "Efect Preset Editor";
             // 
-            // EffectPresetsEditorSoundEffectsControl
+            // MonitoringTabPage
             // 
-            this.EffectPresetsEditorSoundEffectsControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
-            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
-            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
-            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
+            this.MonitoringTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.MonitoringTabPage.Controls.Add(this.monitorsUserControl1);
+            this.MonitoringTabPage.ImageKey = "Monitoring_16x16.png";
+            this.MonitoringTabPage.Location = new System.Drawing.Point(4, 27);
+            this.MonitoringTabPage.Name = "MonitoringTabPage";
+            this.MonitoringTabPage.Size = new System.Drawing.Size(816, 266);
+            this.MonitoringTabPage.TabIndex = 6;
+            this.MonitoringTabPage.Text = "Monitoring";
             // 
             // AboutTabPage
             // 
@@ -1396,14 +1393,14 @@
             this.MonitorClipboardComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.MonitorClipboardComboBox.AutoCompleteCustomSource.AddRange(new string[] {
             "Disabled",
-            "For <voice> tags",
+            "For <message> tags",
             "For all text"});
             this.MonitorClipboardComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "MonitorClipboardComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.MonitorClipboardComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.MonitorClipboardComboBox.FormattingEnabled = true;
             this.MonitorClipboardComboBox.Items.AddRange(new object[] {
             "Disabled",
-            "For <voice> tags",
+            "For <message> tags",
             "For all text"});
             this.MonitorClipboardComboBox.Location = new System.Drawing.Point(954, 378);
             this.MonitorClipboardComboBox.Name = "MonitorClipboardComboBox";
@@ -1680,6 +1677,33 @@
             this.RateMinComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
             this.RateMinComboBox.MouseHover += new System.EventHandler(this.MouseHover_RateMin);
             // 
+            // VoiceOverridesPanel
+            // 
+            this.VoiceOverridesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VoiceOverridesPanel.Location = new System.Drawing.Point(0, 0);
+            this.VoiceOverridesPanel.Name = "VoiceOverridesPanel";
+            this.VoiceOverridesPanel.Size = new System.Drawing.Size(816, 266);
+            this.VoiceOverridesPanel.TabIndex = 0;
+            // 
+            // EffectPresetsEditorSoundEffectsControl
+            // 
+            this.EffectPresetsEditorSoundEffectsControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
+            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
+            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
+            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
+            // 
+            // monitorsUserControl1
+            // 
+            this.monitorsUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.monitorsUserControl1.Location = new System.Drawing.Point(0, 0);
+            this.monitorsUserControl1.Name = "monitorsUserControl1";
+            this.monitorsUserControl1.Size = new System.Drawing.Size(816, 266);
+            this.monitorsUserControl1.TabIndex = 2;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1729,6 +1753,7 @@
             this.VoicesTabPanel.ResumeLayout(false);
             this.VoiceOverridesTabPage.ResumeLayout(false);
             this.EffectsPresetsEditorTabPage.ResumeLayout(false);
+            this.MonitoringTabPage.ResumeLayout(false);
             this.AboutTabPage.ResumeLayout(false);
             this.UpdateTabPage.ResumeLayout(false);
             this.EffectTabControl.ResumeLayout(false);
@@ -1853,6 +1878,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListDurationColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListTextColumn;
         private System.Windows.Forms.TextBox IncomingGroupTextBox;
+        private System.Windows.Forms.TabPage MonitoringTabPage;
+        private Controls.MonitorsUserControl monitorsUserControl1;
 
 
 

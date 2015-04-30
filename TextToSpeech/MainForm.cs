@@ -399,7 +399,7 @@ namespace JocysCom.TextToSpeech.Monitor
                 if (tcpHeader.DestinationPort == portNumber)
                 {
                     var wowItem = new WowListItem(ipHeader, tcpHeader);
-                    // If data contains voice XML.
+                    // If data contains message XML.
                     if (wowItem.IsVoiceItem)
                     {
                         // Thread safe adding of the nodes.
@@ -492,9 +492,9 @@ namespace JocysCom.TextToSpeech.Monitor
 
         void ProcessWowMessage(string text)
         {
-            // If <voice.
-            if (!text.Contains("<voice")) return;
-            var v = Serializer.DeserializeFromXmlString<voice>(text);
+            // If <message.
+            if (!text.Contains("<message")) return;
+            var v = Serializer.DeserializeFromXmlString<message>(text);
             // Override voice values.
             var name = v.name;
             var overrideVoice = SettingsFile.Current.Overrides.FirstOrDefault(x => x.name == name);
@@ -775,26 +775,39 @@ namespace JocysCom.TextToSpeech.Monitor
         object playlistLock = new object();
         CancellationTokenSource token;
 
+        public void AddMessageToPlay(string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                if (text.StartsWith("<message"))
+                {
+                    var wowItem = new WowListItem(text);
+                    addWowListItem(wowItem);
+                }
+                else
+                {
+                    var item = new PlayItem(this)
+                    {
+                        Text = "SAPI XML",
+                        Xml = text,
+                        Status = JobStatusType.Parsed,
+                    };
+                    lock (playlistLock) { playlist.Add(item); }
+                }
+            }
+        }
+
         void SpeakButton_Click(object sender, EventArgs e)
         {
             // if [ Formated SAPI XML Text ] tab selected.
             if (TextXmlTabControl.SelectedTab == SapiTabPage)
             {
-                var item = new PlayItem(this)
-                {
-                    Text = "SAPI XML",
-                    Xml = SapiTextBox.Text,
-                    Status = JobStatusType.Parsed,
-                };
-                lock (playlistLock) { playlist.Add(item); }
+                AddMessageToPlay(SapiTextBox.Text);
             }
             // if [ SandBox ] tab selected.
             else if (TextXmlTabControl.SelectedTab == SandBoxTabPage)
             {
-                var text = SandBoxTextBox.Text;
-                if (string.IsNullOrEmpty(text) || !text.Contains("<voice")) return;
-                var wowItem = new WowListItem(text);
-                addWowListItem(wowItem);
+                AddMessageToPlay(SandBoxTextBox.Text);
             }
             // if [ Incoming Messages ] tab selected.
             else if (TextXmlTabControl.SelectedTab == MessagesTabPage)
@@ -1022,7 +1035,7 @@ namespace JocysCom.TextToSpeech.Monitor
             //Fill SandBox Tab if it is empty
             if (string.IsNullOrEmpty(SandBoxTextBox.Text))
             {
-                SandBoxTextBox.Text = "<voice command=\"Play\" name=\"Marshal McBride\" gender=\"Male\" effect=\"Humanoid\" group=\"Quest\" pitch=\"0\" rate=\"1\" volume=\"100\"><part>Test text to speech. [comment]Test text to speech.[/comment]</part></voice>";
+                SandBoxTextBox.Text = "<message command=\"Play\" name=\"Marshal McBride\" gender=\"Male\" effect=\"Humanoid\" group=\"Quest\" pitch=\"0\" rate=\"1\" volume=\"100\"><part>Test text to speech. [comment]Test text to speech.[/comment]</part></message>";
             }
             //Fill SAPI Tab
             if (string.IsNullOrEmpty(IncomingTextTextBox.Text))
@@ -1255,7 +1268,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
         private void MouseHover_MonitorClipboardComboBox(object sender, EventArgs e)
         {
-            MainHelpLabel.Text = "[ Disabled ] - clipboard monitor is disabled. [ For <voice> tags ] - will read text in clipboard between <voice><part>...</part></voice> tags only. [ For all text ] - will read all text in clipboard.";
+            MainHelpLabel.Text = "[ Disabled ] - clipboard monitor is disabled. [ For <message> tags ] - will read text in clipboard between <message><part>...</part></message> tags only. [ For all text ] - will read all text in clipboard.";
         }
 
         private void MouseHover_PortNumericUpDown(object sender, EventArgs e)
@@ -1295,8 +1308,8 @@ namespace JocysCom.TextToSpeech.Monitor
                 {
                     string text = (string)iData.GetData(DataFormats.Text);
 
-                    if (MonitorClipboardComboBox.SelectedIndex == 2 && !text.Contains("<voice")) text = "<voice command=\"Play\"><part>" + text + "</part></voice>";
-                    if (string.IsNullOrEmpty(text) || !text.Contains("<voice")) return;
+                    if (MonitorClipboardComboBox.SelectedIndex == 2 && !text.Contains("<message")) text = "<message command=\"Play\"><part>" + text + "</part></message>";
+                    if (string.IsNullOrEmpty(text) || !text.Contains("<message")) return;
                     var wowItem = new WowListItem(text);
                     addWowListItem(wowItem);
                     // do something with it
