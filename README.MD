@@ -76,13 +76,12 @@
 
 <blockquote>
 <p><b>To run “Monitor” (on “Windows XP”), you must have installed at least...</b></p>
-<p>1. Latest version of “World of Warcraft” game.<br />
-2. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06)</a><br />
-3. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
+<p>1. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06)</a><br />
+2. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
 <p>If you get this error (after trying to run “Monitor”) or no sound, proceed to parts "3" and "4".</p>
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png" /></p>
-<p>4. <a target="_blank"  href="http://www.microsoft.com/en-us/download/details.aspx?id=22">Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)</a><br />
-5. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=8109">Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)</a></p>
+<p>3. <a target="_blank"  href="http://www.microsoft.com/en-us/download/details.aspx?id=22">Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)</a><br />
+4. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=8109">Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)</a></p>
 <p>“Monitor Clipboard” option doesn't work and must be [Disabled] in Windows XP.<br />
 “Addon” requires latest version of “World of Warcraft” game.</blockquote>
 
