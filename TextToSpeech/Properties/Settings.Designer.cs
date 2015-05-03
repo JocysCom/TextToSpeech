@@ -118,5 +118,17 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
                 this["PortNumericUpDownValue"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonitorPortChecked {
+            get {
+                return ((bool)(this["MonitorPortChecked"]));
+            }
+            set {
+                this["MonitorPortChecked"] = value;
+            }
+        }
     }
 }

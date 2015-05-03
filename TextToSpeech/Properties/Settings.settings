@@ -26,5 +26,8 @@
     <Setting Name="PortNumericUpDownValue" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">3724</Value>
     </Setting>
+    <Setting Name="MonitorPortChecked" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
