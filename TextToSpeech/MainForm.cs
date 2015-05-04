@@ -309,7 +309,12 @@ namespace JocysCom.TextToSpeech.Monitor
 					{
 						if (ip.AddressFamily == AddressFamily.InterNetwork)
 						{
-							IpAddresses.Add(ip);
+							// If IP address is not in the list then...
+							if (!IpAddresses.Contains(ip))
+							{
+								// Add IP Address.
+								IpAddresses.Add(ip);
+							}
 						}
 					}
 				}
@@ -416,6 +421,9 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		BindingList<WowListItem> WowMessageList = new BindingList<WowListItem>();
 
+		object SequenceNumbersLock = new object();
+		List<uint> SequenceNumbers = new List<uint>();
+
 		private void ParseData(byte[] byteData, int nReceived)
 		{
 			// All protocol packets are encapsulated in the IP datagram.
@@ -439,8 +447,16 @@ namespace JocysCom.TextToSpeech.Monitor
 						// If data contains XML message then...
 						if (wowItem.IsVoiceItem)
 						{
-							// Add wow item to the list. Use Invoke to make it Thread safe.
-							this.Invoke((Action<WowListItem>)addWowListItem, new object[] { wowItem });
+							lock (SequenceNumbersLock)
+							{
+								while (SequenceNumbers.Count > 10) SequenceNumbers.RemoveAt(0);
+								if (!SequenceNumbers.Contains(tcpHeader.SequenceNumber))
+								{
+									SequenceNumbers.Add(tcpHeader.SequenceNumber);
+									// Add wow item to the list. Use Invoke to make it Thread safe.
+									this.Invoke((Action<WowListItem>)addWowListItem, new object[] { wowItem });
+								}
+							}
 						}
 					}
 				}
@@ -1246,13 +1262,13 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			MainHelpLabel.Text = "Please download this tool only from trustworthy sources. Make sure that this tool is always signed by verified publisher ( Jocys.com ) with signature issued by trusted certificate authority.";
 		}
-    
-        //Tooltip MouseHover
 
-        private void RateLabel_MouseHover(object sender, EventArgs e)
-        {
-            MainHelpLabel.Text = "Voice rate ( speed ). Default minimum value is 1. Default maximum value is 1.";
-        }
+		//Tooltip MouseHover
+
+		private void RateLabel_MouseHover(object sender, EventArgs e)
+		{
+			MainHelpLabel.Text = "Voice rate ( speed ). Default minimum value is 1. Default maximum value is 1.";
+		}
 
 		private void MouseHover_RateMin(object sender, EventArgs e)
 		{
@@ -1264,10 +1280,10 @@ namespace JocysCom.TextToSpeech.Monitor
 			MainHelpLabel.Text = "Maximum voice rate ( speed ). Default value is 1.";
 		}
 
-        private void PitchLabel_MouseHover(object sender, EventArgs e)
-        {
-            MainHelpLabel.Text = "Voice pitch. Default minimum value is 0. Default maximum value is 0.";
-        }
+		private void PitchLabel_MouseHover(object sender, EventArgs e)
+		{
+			MainHelpLabel.Text = "Voice pitch. Default minimum value is 0. Default maximum value is 0.";
+		}
 
 		private void MouseHover_PitchMin(object sender, EventArgs e)
 		{
@@ -1321,18 +1337,18 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		private void MouseHover_MonitorClipboardComboBox(object sender, EventArgs e)
 		{
-            MainHelpLabel.Text = "[ Disabled ] - clipboard monitor is disabled. [ For <message> tags ] - will read clipboard text between <message><part>...</part></message> tags only. [ For all text ] - will read all clipboard text.";
+			MainHelpLabel.Text = "[ Disabled ] - clipboard monitor is disabled. [ For <message> tags ] - will read clipboard text between <message><part>...</part></message> tags only. [ For all text ] - will read all clipboard text.";
 		}
 
 		private void MouseHover_PortNumericUpDown(object sender, EventArgs e)
 		{
-            MainHelpLabel.Text = "Port number. Default value is 3724 ( World of Warcraft ).";
+			MainHelpLabel.Text = "Port number. Default value is 3724 ( World of Warcraft ).";
 		}
 
-        private void MonitorPortCheckBox_MouseEnter(object sender, EventArgs e)
-        {
-            MainHelpLabel.Text = "Disable or enable port monitoring. Uncheck to edit port number. Default port number value is 3724 ( World of Warcraft ).";
-        }
+		private void MonitorPortCheckBox_MouseEnter(object sender, EventArgs e)
+		{
+			MainHelpLabel.Text = "Disable or enable port monitoring. Uncheck to edit port number. Default port number value is 3724 ( World of Warcraft ).";
+		}
 
 		// Volume TrackBar value changed
 		private void VolumeTrackBar_ValueChanged(object sender, EventArgs e)
