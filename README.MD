@@ -110,9 +110,9 @@
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_33.png"/></p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_IntroSounds.png"/></p>
-
 <p>You can enable (or disable) sounds (which can play at the beginning of messages, to separate messages) in <b>“Addon”</b>. You can assign various sounds to groups (Say, Whisper, Yell, etc.) in <b>[Intro Sounds]</b> tab of <b>“Monitor”</b> (example):</p>
+
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_IntroSounds.png"/></p>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
