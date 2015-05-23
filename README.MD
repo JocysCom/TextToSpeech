@@ -1,7 +1,7 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.31 (2015-05-05)
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech WoW Addon 2.2.28 (2015-04-30)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.33 (2015-05-23)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech WoW Addon 2.2.33 (2015-05-23)
 
 <hr />
 
@@ -9,7 +9,7 @@
 
 <sub>About “Monitor”... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8.1 Pro • All code is available under open source licence.</sub>
 
-<p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_2_2_30.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small_2_2_28_1.png" /></a></p>
+<p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_2_2_33.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small_2_2_33.png" /></a></p>
 
 ### YouTube video ...old “WoW Addon” version with Ivona voices
 <hr />
@@ -98,17 +98,21 @@
 
 <p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab (example).</p>
 
-<p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_2_2_28.png" /></a></p>
+<p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_2_2_33.png" /></a></p>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
 11. <b>[v] Play after closing</b> check-box and <b>[■]</b> (Stop) with <b>[►]</b> (Play) buttons will appear at the bottom of some windows.</p>
 
-<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_28.png" /></a></p>
+<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_33.png" /></a></p>
 
 
-<p>12. Another <b>[■]</b> (Stop) button will appear at the top of WoW's <b>[Social]</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> <i>(Busy, Quest, NPC, Whisper, Say, Party, Guild, Battleground, Battleground Leader, Raid, Raid Leader, Instance, Instance Leader)</i> will appear.</p>
+<p>12. Another <b>[■]</b> (Stop) button will appear at the top of WoW's <b>[Social]</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> <i>(Busy, Quest, NPC, Whisper, Say, Party, Guild... )</i> will appear.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_28.png"/></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_33.png"/></p>
+
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_IntroSounds.png"/></p>
+
+<p>You can enable (or disable) sounds (which can play at the beginning of messages, to separate messages) in <b>“Addon”</b>. You can assign various sounds to groups (Say, Whisper, Yell, etc.) in <b>[Intro Sounds]</b> tab of <b>“Monitor”</b> (example):</p>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
