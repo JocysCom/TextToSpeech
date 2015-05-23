@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -50,7 +51,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
             get { return _IsComment; }
             set { _IsComment = value; NotifyPropertyChanged("IsComment"); }
         }
-        
+
         string _Text;
         public string Text
         {
@@ -73,11 +74,19 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
         }
 
         byte[] _Data;
-        public byte[] Data
+        public byte[] WavData
         {
             get { return _Data; }
             set { _Data = value; NotifyPropertyChanged("Data"); }
         }
+
+        Stream _StreamData;
+        public Stream StreamData
+        {
+            get { return _StreamData; }
+            set { _StreamData = value; NotifyPropertyChanged("StreamData"); }
+        }
+
 
         int _Duration;
         public int Duration
@@ -102,13 +111,14 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
             if (IsDisposing) return;
             var ev = PropertyChanged;
             if (ev == null) return;
-            if (_parent == null)
+            var p = _parent;
+            if (p == null)
             {
                 ev(this, new PropertyChangedEventArgs(propertyName));
             }
             else
             {
-                _parent.Invoke((Action)(() =>
+                p.BeginInvoke((Action)(() =>
                 {
                     var args = new PropertyChangedEventArgs(propertyName);
                     ev(this, args);
@@ -141,6 +151,11 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
                 {
                     playTimer.Dispose();
                     playTimer = null;
+                }
+                if (StreamData != null)
+                {
+                    StreamData.Close();
+                    StreamData = null;
                 }
             }
         }

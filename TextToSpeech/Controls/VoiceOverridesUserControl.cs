@@ -13,9 +13,9 @@ using JocysCom.ClassLibrary.Controls;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-    public partial class VoiceOverridesUserControl : UserControl
+    public partial class VoicesOverridesUserControl : UserControl
     {
-        public VoiceOverridesUserControl()
+        public VoicesOverridesUserControl()
         {
             InitializeComponent();
             VoicesOverridesDataGridView.AutoGenerateColumns = false;
@@ -38,6 +38,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             if (e.ColumnIndex == grid.Columns[PitchColumn.Name].Index) VoicesOverridesDataGridView.BeginEdit(true);
             if (e.ColumnIndex == grid.Columns[RateColumn.Name].Index) VoicesOverridesDataGridView.BeginEdit(true);
             if (e.ColumnIndex == grid.Columns[VolumeColumn.Name].Index) VoicesOverridesDataGridView.BeginEdit(true);
+            if (e.ColumnIndex == grid.Columns[LanguageColumn.Name].Index) VoicesOverridesDataGridView.BeginEdit(true);
         }
 
         public void UpsertRecord(message v)
@@ -116,6 +117,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
                     else
                     {
                         // Udate old item.
+                        oldItem.language = item.language;
                         oldItem.effect = item.effect;
                         oldItem.gender = item.gender;
                         oldItem.pitch = item.pitch;

@@ -145,6 +145,12 @@
     <Compile Include="Controls\MonitorsUserControl.Designer.cs">
       <DependentUpon>MonitorsUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SoundsUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SoundsUserControl.Designer.cs">
+      <DependentUpon>SoundsUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\VoiceOverridesUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -158,6 +164,7 @@
     <Compile Include="Audio\PitchShifter.cs" />
     <Compile Include="Audio\PlayItem.cs" />
     <Compile Include="Common\RuntimePolicyHelper.cs" />
+    <Compile Include="Controls\Sounds.cs" />
     <Compile Include="Network\TcpHeader.cs" />
     <Compile Include="Network\TcpHeaderFlags.cs" />
     <Compile Include="Controls\SoundEffectsControl.cs">
@@ -176,12 +183,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Network\message.cs" />
+    <Compile Include="Network\WowListItem.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Network\WowListItem.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -193,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MonitorsUserControl.resx">
       <DependentUpon>MonitorsUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SoundsUserControl.resx">
+      <DependentUpon>SoundsUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\VoiceOverridesUserControl.resx">
       <DependentUpon>VoiceOverridesUserControl.cs</DependentUpon>
@@ -206,9 +216,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Audio\Emote.wav" />
+    <EmbeddedResource Include="Resources\Audio\Important.wav" />
+    <EmbeddedResource Include="Resources\Audio\Message.wav" />
+    <EmbeddedResource Include="Resources\Audio\Normal.wav" />
+    <EmbeddedResource Include="Resources\Audio\Private.wav" />
+    <EmbeddedResource Include="Resources\Audio\Radio.wav" />
     <EmbeddedResource Include="Resources\JocysCom.TextToSpeech.Monitor.rtf" />
     <None Include="WoW\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.sha" />
     <None Include="WoW\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.zip" />
@@ -240,8 +256,11 @@
     <None Include="Resources\data_into_16x16.png" />
     <None Include="Resources\data_out_16x16.png" />
     <None Include="Resources\delete_16x16.png" />
+    <None Include="Resources\information_icon.bmp" />
     <Content Include="Resources\JocysCom.TextToSpeech.Monitor.html" />
+    <Content Include="Resources\Music_Blue_16x16.png" />
     <Content Include="Resources\override_info_16x16.png" />
+    <EmbeddedResource Include="Resources\Settings.xml" />
     <Content Include="WoW\GoogleDriver.ReadMe.txt" />
     <Content Include="WoW\HowToExportInterfaceCode.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Exclude.txt" />
@@ -272,7 +291,7 @@
     <None Include="Resources\app_64.png" />
     <None Include="Resources\bullet_square_glass_blue.png" />
     <None Include="Resources\desktop.ini" />
-    <None Include="Resources\information_icon.png" />
+    <EmbeddedResource Include="Resources\information_icon.png" />
     <Content Include="Resources\about.ico" />
     <Content Include="Resources\about.png" />
     <Content Include="Resources\bullet_triangle_glass_blue.ico" />
@@ -341,6 +360,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

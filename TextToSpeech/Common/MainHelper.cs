@@ -1,4 +1,5 @@
-﻿using JocysCom.TextToSpeech.Monitor.Audio;
+﻿
+using JocysCom.TextToSpeech.Monitor.Audio;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -224,6 +225,88 @@ namespace JocysCom.TextToSpeech.Monitor
 			if (d == uint.MaxValue) return (int)hash;
 			return min + (int)(hash % (d + 1));
 		}
+
+		#region Path Converter
+
+		/// <summary>
+		/// Allows case insensitive replace.
+		/// </summary>
+		public static string Replace(string s, string oldValue, string newValue, StringComparison comparison)
+		{
+			StringBuilder sb = new StringBuilder();
+			int previousIndex = 0;
+			int index = s.IndexOf(oldValue, comparison);
+			while (index != -1)
+			{
+				sb.Append(s.Substring(previousIndex, index - previousIndex));
+				sb.Append(newValue);
+				index += oldValue.Length;
+				previousIndex = index;
+				index = s.IndexOf(oldValue, index, comparison);
+			}
+			sb.Append(s.Substring(previousIndex));
+			return sb.ToString();
+		}
+
+		static object SpecialFoldersLock = new object();
+		
+		static Dictionary<string, string> _SpecialFolders;
+
+		static Dictionary<string, string> SpecialFolders
+		{
+			get
+			{
+				lock (SpecialFoldersLock)
+				{
+					if (_SpecialFolders == null)
+					{
+						var keys = (System.Environment.SpecialFolder[])Enum.GetValues(typeof(System.Environment.SpecialFolder));
+						var items = new List<KeyValuePair<string, string>>();
+						foreach (var key in keys)
+						{
+							var item = new KeyValuePair<string, string>(string.Format("$({0})", key), System.Environment.GetFolderPath(key));
+							// Make sure all values are not empty and uniqe.
+							if (!string.IsNullOrEmpty(item.Key) && !string.IsNullOrEmpty(item.Value))
+							{
+								items.Add(item);
+							}
+						}
+						_SpecialFolders = new Dictionary<string, string>();
+						// Order forders descending.
+						var list = items.OrderByDescending(x => x.Value).ToArray();
+						foreach (var listItem in list)
+						{
+							// If list doesn't contains key then...
+							if (!SpecialFolders.ContainsKey(listItem.Key))
+							{
+								SpecialFolders.Add(listItem.Key, listItem.Value);
+							}
+						}
+					}
+				}
+				return _SpecialFolders;
+			}
+		}
+
+		public static string ConvertToSpecialFoldersPattern(string path)
+		{
+			foreach (var key in SpecialFolders.Keys)
+			{
+				path = Replace(path, SpecialFolders[key], key, StringComparison.InvariantCultureIgnoreCase);
+			}
+			return path;
+		}
+
+		public static string ConvertFromSpecialFoldersPattern(string path)
+		{
+			foreach (var key in SpecialFolders.Keys)
+			{
+				path = Replace(path, key, SpecialFolders[key], StringComparison.InvariantCultureIgnoreCase);
+			}
+			return path;
+		}
+
+		#endregion
 
 	}
 }

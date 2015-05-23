@@ -84,7 +84,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			if (string.IsNullOrEmpty(Properties.Settings.Default.PitchMaxComboBoxText))
 			{
-				Properties.Settings.Default.PitchMaxComboBoxText = "0";
+                Properties.Settings.Default.DefaultIntroSoundComboBox = "Radio";
+                Properties.Settings.Default.PitchMaxComboBoxText = "0";
 				Properties.Settings.Default.PitchMinComboBoxText = "0";
 				Properties.Settings.Default.RateMaxComboBoxText = "1";
 				Properties.Settings.Default.RateMinComboBoxText = "1";
@@ -105,7 +106,9 @@ namespace JocysCom.TextToSpeech.Monitor
 		}
 		public static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
-			MessageBox.Show(((Exception)e.ExceptionObject).ToString());
+            var errorText = ((Exception)e.ExceptionObject).ToString();
+            System.IO.File.WriteAllText("JocysCom.TextToSpeech.Monitor.Error.txt", errorText);
+            MessageBox.Show(errorText);
 		}
 
 	}

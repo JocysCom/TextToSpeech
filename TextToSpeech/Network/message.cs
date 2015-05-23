@@ -9,10 +9,14 @@ namespace JocysCom.TextToSpeech.Monitor.Network
         [XmlAttribute, DefaultValue(true)]
         public bool enabled { get { return _enabled; } set { _enabled = value; NotifyPropertyChanged("_enabled"); } }
         bool _enabled = true;
-
+      
         [XmlAttribute]
         public string name { get { return _name; } set { _name = value; NotifyPropertyChanged("name"); } }
         string _name;
+
+        [XmlAttribute]
+        public string language { get { return _language; } set { _language = value; NotifyPropertyChanged("language"); } }
+        string _language;
 
         [XmlAttribute]
         public string command { get { return _command; } set { _command = value; NotifyPropertyChanged("command"); } }
@@ -52,6 +56,7 @@ namespace JocysCom.TextToSpeech.Monitor.Network
         /// <param name="v">voice which will be used as source of values.</param>
         public void OverrideFrom(message v)
         {
+            if (!string.IsNullOrEmpty(v.language)) language = v.language;
             if (!string.IsNullOrEmpty(v.gender)) gender = v.gender;
             if (!string.IsNullOrEmpty(v.effect)) effect = v.effect;
             if (!string.IsNullOrEmpty(v.pitch)) pitch = v.pitch;

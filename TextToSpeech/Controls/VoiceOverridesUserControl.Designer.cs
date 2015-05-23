@@ -1,6 +1,6 @@
 ﻿namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-	partial class VoiceOverridesUserControl
+	partial class VoicesOverridesUserControl
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -28,24 +28,17 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.VoicesOverridesDataGridView = new System.Windows.Forms.DataGridView();
-            this.EnabledColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GenderColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EffectColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PitchColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VolumeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmptyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VoicesOverridesToolStrip = new System.Windows.Forms.ToolStrip();
             this.AddButton = new System.Windows.Forms.ToolStripButton();
             this.DeleteButton = new System.Windows.Forms.ToolStripButton();
@@ -53,6 +46,15 @@
             this.ImportButton = new System.Windows.Forms.ToolStripButton();
             this.ImportOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.ExportSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.EnabledColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GenderColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EffectColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PitchColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VolumeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LanguageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmptyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.VoicesOverridesDataGridView)).BeginInit();
             this.VoicesOverridesToolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -68,14 +70,14 @@
             this.VoicesOverridesDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.VoicesOverridesDataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.VoicesOverridesDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.VoicesOverridesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.VoicesOverridesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.VoicesOverridesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.VoicesOverridesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.EnabledColumn,
@@ -85,15 +87,16 @@
             this.PitchColumn,
             this.RateColumn,
             this.VolumeColumn,
+            this.LanguageColumn,
             this.EmptyColumn});
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.VoicesOverridesDataGridView.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.VoicesOverridesDataGridView.DefaultCellStyle = dataGridViewCellStyle9;
             this.VoicesOverridesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VoicesOverridesDataGridView.EnableHeadersVisualStyles = false;
             this.VoicesOverridesDataGridView.GridColor = System.Drawing.SystemColors.Control;
@@ -101,13 +104,13 @@
             this.VoicesOverridesDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.VoicesOverridesDataGridView.Name = "VoicesOverridesDataGridView";
             this.VoicesOverridesDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.VoicesOverridesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.VoicesOverridesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.VoicesOverridesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.VoicesOverridesDataGridView.Size = new System.Drawing.Size(551, 255);
             this.VoicesOverridesDataGridView.TabIndex = 2;
@@ -116,89 +119,6 @@
             this.VoicesOverridesDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.VoicesDataGridView_CellFormatting);
             this.VoicesOverridesDataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.VoicesDataGridView_CellValidating);
             this.VoicesOverridesDataGridView.MouseHover += new System.EventHandler(this.VoicesOverrides_MouseHover);
-            // 
-            // EnabledColumn
-            // 
-            this.EnabledColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.EnabledColumn.DataPropertyName = "enabled";
-            this.EnabledColumn.HeaderText = "ON";
-            this.EnabledColumn.Name = "EnabledColumn";
-            this.EnabledColumn.ReadOnly = true;
-            this.EnabledColumn.Width = 31;
-            // 
-            // NameColumn
-            // 
-            this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.NameColumn.DataPropertyName = "name";
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.NameColumn.DefaultCellStyle = dataGridViewCellStyle11;
-            this.NameColumn.HeaderText = "Name";
-            this.NameColumn.MinimumWidth = 120;
-            this.NameColumn.Name = "NameColumn";
-            this.NameColumn.Width = 120;
-            // 
-            // GenderColumn
-            // 
-            this.GenderColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.GenderColumn.DataPropertyName = "gender";
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle12.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.GenderColumn.DefaultCellStyle = dataGridViewCellStyle12;
-            this.GenderColumn.HeaderText = "Gender";
-            this.GenderColumn.Name = "GenderColumn";
-            this.GenderColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.GenderColumn.Width = 50;
-            // 
-            // EffectColumn
-            // 
-            this.EffectColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.EffectColumn.DataPropertyName = "effect";
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
-            this.EffectColumn.DefaultCellStyle = dataGridViewCellStyle13;
-            this.EffectColumn.HeaderText = "Effect";
-            this.EffectColumn.Name = "EffectColumn";
-            this.EffectColumn.Width = 62;
-            // 
-            // PitchColumn
-            // 
-            this.PitchColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.PitchColumn.DataPropertyName = "pitch";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            this.PitchColumn.DefaultCellStyle = dataGridViewCellStyle14;
-            this.PitchColumn.HeaderText = "Pitch";
-            this.PitchColumn.Name = "PitchColumn";
-            this.PitchColumn.Width = 58;
-            // 
-            // RateColumn
-            // 
-            this.RateColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.RateColumn.DataPropertyName = "rate";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window;
-            this.RateColumn.DefaultCellStyle = dataGridViewCellStyle15;
-            this.RateColumn.HeaderText = "Rate";
-            this.RateColumn.Name = "RateColumn";
-            this.RateColumn.Width = 57;
-            // 
-            // VolumeColumn
-            // 
-            this.VolumeColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.VolumeColumn.DataPropertyName = "volume";
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
-            this.VolumeColumn.DefaultCellStyle = dataGridViewCellStyle16;
-            this.VolumeColumn.HeaderText = "Volume";
-            this.VolumeColumn.Name = "VolumeColumn";
-            this.VolumeColumn.Width = 69;
-            // 
-            // EmptyColumn
-            // 
-            this.EmptyColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.EmptyColumn.HeaderText = "";
-            this.EmptyColumn.Name = "EmptyColumn";
-            this.EmptyColumn.ReadOnly = true;
             // 
             // VoicesOverridesToolStrip
             // 
@@ -255,13 +175,106 @@
             this.ImportButton.Text = "Import...";
             this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
             // 
-            // VoiceOverridesUserControl
+            // EnabledColumn
+            // 
+            this.EnabledColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.EnabledColumn.DataPropertyName = "enabled";
+            this.EnabledColumn.HeaderText = "ON";
+            this.EnabledColumn.Name = "EnabledColumn";
+            this.EnabledColumn.ReadOnly = true;
+            this.EnabledColumn.Width = 31;
+            // 
+            // NameColumn
+            // 
+            this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.NameColumn.DataPropertyName = "name";
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.NameColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.NameColumn.HeaderText = "Name";
+            this.NameColumn.MinimumWidth = 120;
+            this.NameColumn.Name = "NameColumn";
+            this.NameColumn.Width = 120;
+            // 
+            // GenderColumn
+            // 
+            this.GenderColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.GenderColumn.DataPropertyName = "gender";
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.GenderColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.GenderColumn.HeaderText = "Gender";
+            this.GenderColumn.Name = "GenderColumn";
+            this.GenderColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.GenderColumn.Width = 50;
+            // 
+            // EffectColumn
+            // 
+            this.EffectColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.EffectColumn.DataPropertyName = "effect";
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            this.EffectColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.EffectColumn.HeaderText = "Effect";
+            this.EffectColumn.Name = "EffectColumn";
+            this.EffectColumn.Width = 62;
+            // 
+            // PitchColumn
+            // 
+            this.PitchColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.PitchColumn.DataPropertyName = "pitch";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            this.PitchColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            this.PitchColumn.HeaderText = "Pitch";
+            this.PitchColumn.Name = "PitchColumn";
+            this.PitchColumn.Width = 58;
+            // 
+            // RateColumn
+            // 
+            this.RateColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.RateColumn.DataPropertyName = "rate";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            this.RateColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.RateColumn.HeaderText = "Rate";
+            this.RateColumn.Name = "RateColumn";
+            this.RateColumn.Width = 57;
+            // 
+            // VolumeColumn
+            // 
+            this.VolumeColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.VolumeColumn.DataPropertyName = "volume";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            this.VolumeColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            this.VolumeColumn.HeaderText = "Volume";
+            this.VolumeColumn.Name = "VolumeColumn";
+            this.VolumeColumn.Width = 69;
+            // 
+            // LanguageColumn
+            // 
+            this.LanguageColumn.DataPropertyName = "language";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            this.LanguageColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            this.LanguageColumn.HeaderText = "Language";
+            this.LanguageColumn.Name = "LanguageColumn";
+            this.LanguageColumn.Width = 70;
+            // 
+            // EmptyColumn
+            // 
+            this.EmptyColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.EmptyColumn.HeaderText = "";
+            this.EmptyColumn.Name = "EmptyColumn";
+            this.EmptyColumn.ReadOnly = true;
+            // 
+            // VoicesOverridesUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.VoicesOverridesDataGridView);
             this.Controls.Add(this.VoicesOverridesToolStrip);
-            this.Name = "VoiceOverridesUserControl";
+            this.Name = "VoicesOverridesUserControl";
             this.Size = new System.Drawing.Size(551, 280);
             ((System.ComponentModel.ISupportInitialize)(this.VoicesOverridesDataGridView)).EndInit();
             this.VoicesOverridesToolStrip.ResumeLayout(false);
@@ -288,6 +301,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn PitchColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn RateColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn VolumeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LanguageColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn EmptyColumn;
 	}
 }
