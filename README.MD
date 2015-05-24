@@ -109,7 +109,7 @@
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_33.png"/></p>
 
-<p>You can enable intro sounds to groups (like “Whisper”, “Say”, “Party”, etc.) in <b>“Addon”</b>. Then, sounds will play at the beginning of messages, to separate them between each other. All groups will be added to “Monitor” (during gaming) automatically. You can assign custom sounds to groups in <b>[Intro Sounds]</b> tab of <b>“Monitor”</b> (example):</p>
+<p>You can enable intro sounds for groups (like “Whisper”, “Say”, “Party”, etc.) in <b>“Addon”</b>. Then, sounds will play at the beginning of messages, to separate them between each other. All groups will be added to “Monitor” (during gaming) automatically. You can assign custom sounds to groups in <b>[Intro Sounds]</b> tab of <b>“Monitor”</b> (example):</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_IntroSounds_2_2_34.png"/></p>
 
