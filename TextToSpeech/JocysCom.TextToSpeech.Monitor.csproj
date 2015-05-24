@@ -225,7 +225,7 @@
     <EmbeddedResource Include="Resources\Audio\Normal.wav" />
     <EmbeddedResource Include="Resources\Audio\Private.wav" />
     <EmbeddedResource Include="Resources\Audio\Radio.wav" />
-    <EmbeddedResource Include="Resources\JocysCom.TextToSpeech.Monitor.rtf" />
+    <EmbeddedResource Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.rtf" />
     <None Include="WoW\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.sha" />
     <None Include="WoW\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.zip" />
     <None Include="WoW\FrameXML\UI.xsd">
@@ -257,7 +257,7 @@
     <None Include="Resources\data_out_16x16.png" />
     <None Include="Resources\delete_16x16.png" />
     <None Include="Resources\information_icon.bmp" />
-    <Content Include="Resources\JocysCom.TextToSpeech.Monitor.html" />
+    <Content Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.html" />
     <Content Include="Resources\Music_Blue_16x16.png" />
     <Content Include="Resources\override_info_16x16.png" />
     <EmbeddedResource Include="Resources\Settings.xml" />
@@ -300,7 +300,7 @@
     <Content Include="Resources\businessman2.ico" />
     <Content Include="Resources\check_16x16.png" />
     <Content Include="Resources\code_edit.png" />
-    <Content Include="Resources\Google Chrome TTS.html" />
+    <Content Include="Resources\Documents\Google Chrome TTS.html" />
     <Content Include="Resources\Local_Security_Policy_Capture_UAC.png" />
     <Content Include="Resources\message_64_x_64.png" />
     <None Include="Resources\Microsoft Multilingual TTS.URL" />

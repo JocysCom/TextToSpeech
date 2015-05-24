@@ -29,10 +29,11 @@
 		private void InitializeComponent()
 		{
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.SoundsDataGridView = new System.Windows.Forms.DataGridView();
             this.SoundsToolStrip = new System.Windows.Forms.ToolStrip();
             this.SoundsAddButton = new System.Windows.Forms.ToolStripButton();
@@ -42,9 +43,9 @@
             this.SoundsImportOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SoundsExportSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.AudioFileOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.FileColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GroupColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EnabledColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.GroupColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FileColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.SoundsDataGridView)).BeginInit();
             this.SoundsToolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -73,14 +74,14 @@
             this.EnabledColumn,
             this.GroupColumn,
             this.FileColumn});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.SoundsDataGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.SoundsDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
             this.SoundsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SoundsDataGridView.EnableHeadersVisualStyles = false;
             this.SoundsDataGridView.GridColor = System.Drawing.SystemColors.Control;
@@ -88,17 +89,18 @@
             this.SoundsDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.SoundsDataGridView.Name = "SoundsDataGridView";
             this.SoundsDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.SoundsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.SoundsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.SoundsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.SoundsDataGridView.Size = new System.Drawing.Size(551, 255);
             this.SoundsDataGridView.TabIndex = 2;
             this.SoundsDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SoundsGridView_CellClick);
+            this.SoundsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SoundsDataGridView_CellContentClick);
             this.SoundsDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.SoundsDataGridView_CellEndEdit);
             this.SoundsDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.SoundsDataGridView_CellFormatting);
             this.SoundsDataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.SoundsDataGridView_CellValidating);
@@ -159,37 +161,40 @@
             this.SoundsImportButton.Text = "Import...";
             this.SoundsImportButton.Click += new System.EventHandler(this.SoundsImportButton_Click);
             // 
-            // FileColumn
+            // EnabledColumn
             // 
-            this.FileColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.FileColumn.DataPropertyName = "file";
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.FileColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.FileColumn.HeaderText = "File";
-            this.FileColumn.Name = "FileColumn";
-            this.FileColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.EnabledColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.EnabledColumn.DataPropertyName = "enabled";
+            dataGridViewCellStyle2.NullValue = false;
+            this.EnabledColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.EnabledColumn.HeaderText = "ON";
+            this.EnabledColumn.Name = "EnabledColumn";
+            this.EnabledColumn.ReadOnly = true;
+            this.EnabledColumn.Width = 31;
             // 
             // GroupColumn
             // 
             this.GroupColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.GroupColumn.DataPropertyName = "group";
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.GroupColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.GroupColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.GroupColumn.HeaderText = "Group";
             this.GroupColumn.MinimumWidth = 120;
             this.GroupColumn.Name = "GroupColumn";
             this.GroupColumn.Width = 120;
             // 
-            // EnabledColumn
+            // FileColumn
             // 
-            this.EnabledColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.EnabledColumn.DataPropertyName = "enabled";
-            this.EnabledColumn.HeaderText = "ON";
-            this.EnabledColumn.Name = "EnabledColumn";
-            this.EnabledColumn.ReadOnly = true;
-            this.EnabledColumn.Width = 31;
+            this.FileColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.FileColumn.DataPropertyName = "file";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.FileColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.FileColumn.HeaderText = "Sound ( name  or  path to wav file )";
+            this.FileColumn.Name = "FileColumn";
+            this.FileColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // SoundsUserControl
             // 
