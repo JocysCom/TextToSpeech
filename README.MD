@@ -1,7 +1,7 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.33 (2015-05-23)
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech WoW Addon 2.2.33 (2015-05-23)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.34 (2015-05-24)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech WoW Addon 2.2.34 (2015-05-24)
 
 <hr />
 
@@ -105,14 +105,13 @@
 
 <p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_33.png" /></a></p>
 
-
-<p>12. Another <b>[■]</b> (Stop) button will appear at the top of WoW's <b>[Social]</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> <i>(Busy, Quest, NPC, Whisper, Say, Party, Guild... )</i> will appear.</p>
+<p>12. Another <b>[■]</b> (Stop) button will appear at the top of WoW's <b>[Social]</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> will appear. Move mouse pointer over <b>check-box</b> and title will show, what it enables/disables.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_33.png"/></p>
 
-<p>You can enable (or disable) sounds (which can play at the beginning of messages, to separate messages) in <b>“Addon”</b>. You can assign various sounds to groups (Say, Whisper, Yell, etc.) in <b>[Intro Sounds]</b> tab of <b>“Monitor”</b> (example):</p>
+<p>You can enable intro sounds to groups (like “Whisper”, “Say”, “Party”, etc.) in <b>“Addon”</b>. Then, sounds will play at the beginning of messages, to separate them between each other. All groups will be added to “Monitor” (during gaming) automatically. You can assign custom sounds to groups in <b>[Intro Sounds]</b> tab of <b>“Monitor”</b> (example):</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_IntroSounds.png"/></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_IntroSounds_2_2_34.png"/></p>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
