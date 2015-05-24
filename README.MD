@@ -106,7 +106,7 @@
 “IVONA 2 Amy” -- will be used as Female (100) voice.<br />
 “Microsoft Hazel Desktop” -- will be used as Neutral (50) voice.<br />
 <br />
-Number ( from 0 to 100 ) sets, how often voice should be used, relatively to other voices in the same category (Male, Female or Neutral). If you have IVONA male and female voices, you can to disable “Microsoft (...) Desktop” voices ( as they are quite bad ).</p>
+Number ( from 0 to 100 ) sets, how often voice should be used, relatively to other voices in the same category (Male, Female or Neutral). If you have IVONA male and female voices, you can disable “Microsoft (...) Desktop” voices ( as they are quite bad ).</p>
 </blockquote>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
