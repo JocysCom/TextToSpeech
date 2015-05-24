@@ -100,6 +100,15 @@
 
 <p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_2_2_33.png" /></a></p>
 
+<blockquote>
+<p>3 voices are enabled in this setup:<br />
+“IVONA 2 Brian” -- will be used as Male (100) and Neutral (100) voice.<br />
+“IVONA 2 Amy” -- will be used as Female (100) voice.<br />
+“Microsoft Hazel Desktop” -- will be used as Neutral (50) voice.<br />
+<br />
+Number ( from 0 to 100 ) sets, how often voice should be used, relatively to other voices in the same category (Male, Female or Neutral). If you have IVONA male and female voices, you can to disable “Microsoft (...) Desktop” voices ( as they are quite bad ).</p>
+</blockquote>
+
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
 11. <b>[v] Play after closing</b> check-box and <b>[■]</b> (Stop) with <b>[►]</b> (Play) buttons will appear at the bottom of some windows.</p>
 
