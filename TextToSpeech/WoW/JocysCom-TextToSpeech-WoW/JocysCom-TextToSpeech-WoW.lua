@@ -27,7 +27,7 @@ local messageStop = "<message command=\"stop\" />";
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.34 ( 2015-05-24 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.35 ( 2015-05-25 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon's whisper messages in chat window.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Stop]|r |cff808080button.|r");
@@ -150,6 +150,7 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 	elseif JocysCom_DialogueMiniFrame:IsShown() and (string.find(event, "QUEST") ~= nil or event == "GOSSIP_SHOW" or event == "ITEM_TEXT_READY") then
 		group = "Quest";
 		questMessage = nil;
+		speakMessage = nil;
 		if event == "QUEST_GREETING" then 
 			speakMessage = GetGreetingText();
 		elseif GossipFrame:IsShown() and event == "GOSSIP_SHOW" then

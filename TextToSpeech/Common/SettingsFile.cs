@@ -42,7 +42,7 @@ namespace JocysCom.TextToSpeech.Monitor
         public SortableBindingList<sound> Sounds { get { return _Sounds; } }
 
         public string FolderPath;
-        public string FileName = "Settings.xml";
+        public string FileName = "Settings.Monitor.xml";
         object saveReadFileLock = new object();
 
         public void Save()
@@ -54,52 +54,54 @@ namespace JocysCom.TextToSpeech.Monitor
             }
         }
 
+        SettingsFile GetDefault()
+        {
+            SettingsFile data = null;
+            bool compressed = false;
+            var resource = MainHelper.GetResource(FileName + ".gz");
+            // If internal preset was found.
+            if (resource != null) compressed = true;
+            // Try to get uncompressed resource.
+            else resource = MainHelper.GetResource(FileName);
+            // If resource was found.
+            if (resource != null)
+            {
+                var sr = new StreamReader(resource);
+                var bytes = default(byte[]);
+                using (var memstream = new MemoryStream())
+                {
+                    sr.BaseStream.CopyTo(memstream);
+                    bytes = memstream.ToArray();
+                }
+                if (compressed) bytes = MainHelper.Decompress(bytes);
+                var xml = System.Text.Encoding.UTF8.GetString(bytes);
+                data = Serializer.DeserializeFromXmlString<SettingsFile>(xml);
+            }
+            return data;
+        }
+
         public void Load()
         {
             // If configuration file exists then...
             var fullName = System.IO.Path.Combine(FolderPath, FileName);
+            SettingsFile data = null;
+            var defaultData = GetDefault();
+            SortableBindingList<message> overrides;
+            SortableBindingList<sound> sounds;
             if (System.IO.File.Exists(fullName))
             {
-                SettingsFile data;
                 // Deserialize and load data.
                 lock (saveReadFileLock)
                 {
                     data = Serializer.DeserializeFromXmlFile<SettingsFile>(fullName);
                 }
-                if (data == null) return;
-                Overrides.Clear();
-                if (data.Overrides != null) for (int i = 0; i < data.Overrides.Count; i++) Overrides.Add(data.Overrides[i]);
-                Sounds.Clear();
-                if (data.Sounds != null) for (int i = 0; i < data.Sounds.Count; i++) Sounds.Add(data.Sounds[i]);
             }
-            else
-            {
-                bool compressed = false;
-                var resource = MainHelper.GetResource(FileName + ".gz");
-                // If internal preset was found.
-                if (resource != null) compressed = true;
-                // Try to get uncompressed resource.
-                else resource = MainHelper.GetResource(FileName);
-                // If resource was found.
-                if (resource != null)
-                {
-                    var sr = new StreamReader(resource);
-                    var bytes = default(byte[]);
-                    using (var memstream = new MemoryStream())
-                    {
-                        sr.BaseStream.CopyTo(memstream);
-                        bytes = memstream.ToArray();
-                    }
-                    if (compressed) bytes = MainHelper.Decompress(bytes);
-                    var xml = System.Text.Encoding.UTF8.GetString(bytes);
-                    var data = Serializer.DeserializeFromXmlString<SettingsFile>(xml);
-                    if (data == null) return;
-                    Overrides.Clear();
-                    if (data.Overrides != null) for (int i = 0; i < data.Overrides.Count; i++) Overrides.Add(data.Overrides[i]);
-                    Sounds.Clear();
-                    if (data.Sounds != null) for (int i = 0; i < data.Sounds.Count; i++) Sounds.Add(data.Sounds[i]);
-                }
-            }
+            overrides = data != null && data.Overrides != null && data.Overrides.Count > 0 ? data.Overrides : defaultData.Overrides;
+            sounds = data != null && data.Sounds != null && data.Sounds.Count > 0 ? data.Sounds : defaultData.Sounds;
+            Overrides.Clear();
+            if (overrides != null) for (int i = 0; i < overrides.Count; i++) Overrides.Add(overrides[i]);
+            Sounds.Clear();
+            if (sounds != null) for (int i = 0; i < sounds.Count; i++) Sounds.Add(sounds[i]);
         }
 
     }

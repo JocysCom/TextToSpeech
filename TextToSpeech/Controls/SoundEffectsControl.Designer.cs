@@ -362,7 +362,7 @@
             // GeneralSaveButton
             // 
             this.GeneralSaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.GeneralSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save_16;
+            this.GeneralSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save;
             this.GeneralSaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.GeneralSaveButton.Location = new System.Drawing.Point(699, 269);
             this.GeneralSaveButton.Name = "GeneralSaveButton";
@@ -407,7 +407,7 @@
             // GeneralResetButton
             // 
             this.GeneralResetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.GeneralResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo_Red;
+            this.GeneralResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo;
             this.GeneralResetButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.GeneralResetButton.Location = new System.Drawing.Point(699, 242);
             this.GeneralResetButton.Name = "GeneralResetButton";
@@ -459,7 +459,7 @@
             // ChorusSaveButton
             // 
             this.ChorusSaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ChorusSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save_16;
+            this.ChorusSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save;
             this.ChorusSaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ChorusSaveButton.Location = new System.Drawing.Point(699, 269);
             this.ChorusSaveButton.Name = "ChorusSaveButton";
@@ -602,7 +602,7 @@
             // ChorusResetButton
             // 
             this.ChorusResetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ChorusResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo_Red;
+            this.ChorusResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo;
             this.ChorusResetButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ChorusResetButton.Location = new System.Drawing.Point(699, 242);
             this.ChorusResetButton.Name = "ChorusResetButton";
@@ -775,7 +775,7 @@
             // CompressorSaveButton
             // 
             this.CompressorSaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CompressorSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save_16;
+            this.CompressorSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save;
             this.CompressorSaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.CompressorSaveButton.Location = new System.Drawing.Point(699, 269);
             this.CompressorSaveButton.Name = "CompressorSaveButton";
@@ -868,7 +868,7 @@
             // CompressorResetButton
             // 
             this.CompressorResetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CompressorResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo_Red;
+            this.CompressorResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo;
             this.CompressorResetButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.CompressorResetButton.Location = new System.Drawing.Point(699, 242);
             this.CompressorResetButton.Name = "CompressorResetButton";
@@ -1030,7 +1030,7 @@
             // DistortionSaveButton
             // 
             this.DistortionSaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DistortionSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save_16;
+            this.DistortionSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save;
             this.DistortionSaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.DistortionSaveButton.Location = new System.Drawing.Point(699, 269);
             this.DistortionSaveButton.Name = "DistortionSaveButton";
@@ -1043,7 +1043,7 @@
             // DistortionResetButton
             // 
             this.DistortionResetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DistortionResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo_Red;
+            this.DistortionResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo;
             this.DistortionResetButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.DistortionResetButton.Location = new System.Drawing.Point(699, 242);
             this.DistortionResetButton.Name = "DistortionResetButton";
@@ -1253,7 +1253,7 @@
             // EchoSaveButton
             // 
             this.EchoSaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.EchoSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save_16;
+            this.EchoSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save;
             this.EchoSaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.EchoSaveButton.Location = new System.Drawing.Point(699, 269);
             this.EchoSaveButton.Name = "EchoSaveButton";
@@ -1285,7 +1285,7 @@
             // EchoResetButton
             // 
             this.EchoResetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.EchoResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo_Red;
+            this.EchoResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo;
             this.EchoResetButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.EchoResetButton.Location = new System.Drawing.Point(699, 242);
             this.EchoResetButton.Name = "EchoResetButton";
@@ -1460,7 +1460,7 @@
             // FlangerSaveButton
             // 
             this.FlangerSaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.FlangerSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save_16;
+            this.FlangerSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save;
             this.FlangerSaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.FlangerSaveButton.Location = new System.Drawing.Point(699, 269);
             this.FlangerSaveButton.Name = "FlangerSaveButton";
@@ -1513,7 +1513,7 @@
             // FlangerResetButton
             // 
             this.FlangerResetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.FlangerResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo_Red;
+            this.FlangerResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo;
             this.FlangerResetButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.FlangerResetButton.Location = new System.Drawing.Point(699, 242);
             this.FlangerResetButton.Name = "FlangerResetButton";
@@ -1762,7 +1762,7 @@
             // GargleSaveButton
             // 
             this.GargleSaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.GargleSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save_16;
+            this.GargleSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save;
             this.GargleSaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.GargleSaveButton.Location = new System.Drawing.Point(699, 269);
             this.GargleSaveButton.Name = "GargleSaveButton";
@@ -1775,7 +1775,7 @@
             // GargleResetButton
             // 
             this.GargleResetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.GargleResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo_Red;
+            this.GargleResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo;
             this.GargleResetButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.GargleResetButton.Location = new System.Drawing.Point(699, 242);
             this.GargleResetButton.Name = "GargleResetButton";
@@ -1890,7 +1890,7 @@
             // ParamEqSaveButton
             // 
             this.ParamEqSaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ParamEqSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save_16;
+            this.ParamEqSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save;
             this.ParamEqSaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ParamEqSaveButton.Location = new System.Drawing.Point(699, 269);
             this.ParamEqSaveButton.Name = "ParamEqSaveButton";
@@ -1903,7 +1903,7 @@
             // ParamEqResetButton
             // 
             this.ParamEqResetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ParamEqResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo_Red;
+            this.ParamEqResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo;
             this.ParamEqResetButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ParamEqResetButton.Location = new System.Drawing.Point(699, 242);
             this.ParamEqResetButton.Name = "ParamEqResetButton";
@@ -2052,7 +2052,7 @@
             // ReverbSaveButton
             // 
             this.ReverbSaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ReverbSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save_16;
+            this.ReverbSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save;
             this.ReverbSaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ReverbSaveButton.Location = new System.Drawing.Point(699, 269);
             this.ReverbSaveButton.Name = "ReverbSaveButton";
@@ -2065,7 +2065,7 @@
             // ReverbResetButton
             // 
             this.ReverbResetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ReverbResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo_Red;
+            this.ReverbResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo;
             this.ReverbResetButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ReverbResetButton.Location = new System.Drawing.Point(699, 242);
             this.ReverbResetButton.Name = "ReverbResetButton";
@@ -2268,7 +2268,7 @@
             // Reverb3dSaveButton
             // 
             this.Reverb3dSaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Reverb3dSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save_16;
+            this.Reverb3dSaveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Save;
             this.Reverb3dSaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Reverb3dSaveButton.Location = new System.Drawing.Point(699, 269);
             this.Reverb3dSaveButton.Name = "Reverb3dSaveButton";
@@ -2281,7 +2281,7 @@
             // Reverb3dResetButton
             // 
             this.Reverb3dResetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Reverb3dResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo_Red;
+            this.Reverb3dResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Undo;
             this.Reverb3dResetButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Reverb3dResetButton.Location = new System.Drawing.Point(699, 242);
             this.Reverb3dResetButton.Name = "Reverb3dResetButton";

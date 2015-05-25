@@ -705,6 +705,7 @@ namespace JocysCom.TextToSpeech.Monitor
                             if (Sound.enabled == false) break;
                             // Get wav name/path.
                             string wavToPlay = string.IsNullOrEmpty(Sound.file) ? introSound : Sound.file;
+                            wavToPlay = MainHelper.ConvertFromSpecialFoldersPattern(wavToPlay);
                             //DefaultIntroSoundComboBox_SelectedIndexChanged(null, null, wavToPlay);
                             // byte[] wavData;
                             var stream = GetIntroSound(wavToPlay);

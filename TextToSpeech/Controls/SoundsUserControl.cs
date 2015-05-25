@@ -67,7 +67,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
                     var snd = new sound();
                     snd.group = group;
-                    snd.file = MainHelper.ConvertToSpecialFoldersPattern(dialog.FileName);
+                    //snd.file = MainHelper.ConvertToSpecialFoldersPattern(dialog.FileName);
+                    snd.file = dialog.FileName;
                     SettingsFile.Current.Sounds.Add(snd);
                     grid.BeginEdit(true);
                 }
@@ -115,7 +116,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             dialog.RestoreDirectory = true;
             if (string.IsNullOrEmpty(dialog.FileName)) dialog.FileName = "Settings.Sounds";
             if (string.IsNullOrEmpty(dialog.InitialDirectory)) dialog.InitialDirectory = SettingsFile.Current.FolderPath;
-            dialog.Title = "Import Games Settings File";
+            dialog.Title = "Import Settings (Sounds) File";
             var result = dialog.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.OK)
             {
@@ -159,7 +160,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             dialog.RestoreDirectory = true;
             if (string.IsNullOrEmpty(dialog.FileName)) dialog.FileName = "Settings.Sounds";
             if (string.IsNullOrEmpty(dialog.InitialDirectory)) dialog.InitialDirectory = SettingsFile.Current.FolderPath;
-            dialog.Title = "Export Sounds File";
+            dialog.Title = "Export Settings (Sounds) File";
             var result = dialog.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.OK)
             {

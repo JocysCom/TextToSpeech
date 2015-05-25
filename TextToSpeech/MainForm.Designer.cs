@@ -371,19 +371,19 @@
             // 
             this.TabsImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("TabsImageList.ImageStream")));
             this.TabsImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.TabsImageList.Images.SetKeyName(0, "about.png");
-            this.TabsImageList.Images.SetKeyName(1, "Businesman.png");
-            this.TabsImageList.Images.SetKeyName(2, "Window_Sliders_16.png");
-            this.TabsImageList.Images.SetKeyName(3, "Window_Sliders_Save_16.png");
-            this.TabsImageList.Images.SetKeyName(4, "Page_Text_16.png");
-            this.TabsImageList.Images.SetKeyName(5, "Page_SAPI_16.png");
-            this.TabsImageList.Images.SetKeyName(6, "Page_Play_16.png");
-            this.TabsImageList.Images.SetKeyName(7, "Page_Incoming_16.png");
-            this.TabsImageList.Images.SetKeyName(8, "code_edit.png");
-            this.TabsImageList.Images.SetKeyName(9, "Download_16.png");
-            this.TabsImageList.Images.SetKeyName(10, "override_info_16x16.png");
-            this.TabsImageList.Images.SetKeyName(11, "Monitoring_16x16.png");
-            this.TabsImageList.Images.SetKeyName(12, "Music_Blue_16x16.png");
+            this.TabsImageList.Images.SetKeyName(0, "About.png");
+            this.TabsImageList.Images.SetKeyName(1, "Businessman.png");
+            this.TabsImageList.Images.SetKeyName(2, "BusinessPeople.png");
+            this.TabsImageList.Images.SetKeyName(3, "Code_Edit.png");
+            this.TabsImageList.Images.SetKeyName(4, "Download.png");
+            this.TabsImageList.Images.SetKeyName(5, "eye.png");
+            this.TabsImageList.Images.SetKeyName(6, "Information.png");
+            this.TabsImageList.Images.SetKeyName(7, "Message_Incoming.png");
+            this.TabsImageList.Images.SetKeyName(8, "Message_SAPI.png");
+            this.TabsImageList.Images.SetKeyName(9, "Music.png");
+            this.TabsImageList.Images.SetKeyName(10, "Play_List.png");
+            this.TabsImageList.Images.SetKeyName(11, "Window_Effects_Editor.png");
+            this.TabsImageList.Images.SetKeyName(12, "Window_Effects_Presets.png");
             // 
             // MessagesTabControl
             // 
@@ -409,7 +409,7 @@
             // 
             this.VoicesTabPage.Controls.Add(this.VoicesDataGridView);
             this.VoicesTabPage.Controls.Add(this.VoiceErrorLabel);
-            this.VoicesTabPage.ImageKey = "Businesman.png";
+            this.VoicesTabPage.ImageKey = "Businessman.png";
             this.VoicesTabPage.Location = new System.Drawing.Point(4, 27);
             this.VoicesTabPage.Name = "VoicesTabPage";
             this.VoicesTabPage.Size = new System.Drawing.Size(816, 266);
@@ -433,7 +433,7 @@
             // 
             this.VoiceOverridesTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.VoiceOverridesTabPage.Controls.Add(this.VoiceOverridesPanel);
-            this.VoiceOverridesTabPage.ImageKey = "override_info_16x16.png";
+            this.VoiceOverridesTabPage.ImageKey = "BusinessPeople.png";
             this.VoiceOverridesTabPage.Location = new System.Drawing.Point(4, 27);
             this.VoiceOverridesTabPage.Name = "VoiceOverridesTabPage";
             this.VoiceOverridesTabPage.Size = new System.Drawing.Size(816, 266);
@@ -451,7 +451,7 @@
             // EffectsPresetsEditorTabPage
             // 
             this.EffectsPresetsEditorTabPage.Controls.Add(this.EffectPresetsEditorSoundEffectsControl);
-            this.EffectsPresetsEditorTabPage.ImageKey = "Window_Sliders_16.png";
+            this.EffectsPresetsEditorTabPage.ImageKey = "Window_Effects_Editor.png";
             this.EffectsPresetsEditorTabPage.Location = new System.Drawing.Point(4, 27);
             this.EffectsPresetsEditorTabPage.Name = "EffectsPresetsEditorTabPage";
             this.EffectsPresetsEditorTabPage.Size = new System.Drawing.Size(816, 266);
@@ -473,7 +473,7 @@
             // 
             this.SoundsTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.SoundsTabPage.Controls.Add(this.SoundsPanel);
-            this.SoundsTabPage.ImageKey = "Music_Blue_16x16.png";
+            this.SoundsTabPage.ImageKey = "Music.png";
             this.SoundsTabPage.Location = new System.Drawing.Point(4, 27);
             this.SoundsTabPage.Name = "SoundsTabPage";
             this.SoundsTabPage.Size = new System.Drawing.Size(816, 266);
@@ -492,7 +492,7 @@
             // 
             this.MonitoringTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.MonitoringTabPage.Controls.Add(this.monitorsUserControl1);
-            this.MonitoringTabPage.ImageKey = "Monitoring_16x16.png";
+            this.MonitoringTabPage.ImageKey = "eye.png";
             this.MonitoringTabPage.Location = new System.Drawing.Point(4, 27);
             this.MonitoringTabPage.Name = "MonitoringTabPage";
             this.MonitoringTabPage.Size = new System.Drawing.Size(816, 266);
@@ -510,7 +510,7 @@
             // AboutTabPage
             // 
             this.AboutTabPage.Controls.Add(this.AboutRichTextBox);
-            this.AboutTabPage.ImageKey = "about.png";
+            this.AboutTabPage.ImageKey = "About.png";
             this.AboutTabPage.Location = new System.Drawing.Point(4, 27);
             this.AboutTabPage.Name = "AboutTabPage";
             this.AboutTabPage.Size = new System.Drawing.Size(816, 266);
@@ -536,7 +536,7 @@
             this.UpdateTabPage.Controls.Add(this.UpdateButton);
             this.UpdateTabPage.Controls.Add(this.UpdateLabel);
             this.UpdateTabPage.Controls.Add(this.UpdateWebBrowser);
-            this.UpdateTabPage.ImageKey = "Download_16.png";
+            this.UpdateTabPage.ImageKey = "Download.png";
             this.UpdateTabPage.Location = new System.Drawing.Point(4, 27);
             this.UpdateTabPage.Name = "UpdateTabPage";
             this.UpdateTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -624,7 +624,7 @@
             // EffectTabPage
             // 
             this.EffectTabPage.Controls.Add(this.EffectsPresetsDataGridView);
-            this.EffectTabPage.ImageKey = "Window_Sliders_Save_16.png";
+            this.EffectTabPage.ImageKey = "Window_Effects_Presets.png";
             this.EffectTabPage.Location = new System.Drawing.Point(4, 27);
             this.EffectTabPage.Name = "EffectTabPage";
             this.EffectTabPage.Size = new System.Drawing.Size(228, 266);
@@ -837,7 +837,7 @@
             // 
             this.SandBoxTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.SandBoxTabPage.Controls.Add(this.SandBoxTextBox);
-            this.SandBoxTabPage.ImageKey = "code_edit.png";
+            this.SandBoxTabPage.ImageKey = "Code_Edit.png";
             this.SandBoxTabPage.Location = new System.Drawing.Point(4, 27);
             this.SandBoxTabPage.Name = "SandBoxTabPage";
             this.SandBoxTabPage.Size = new System.Drawing.Size(606, 278);
@@ -861,7 +861,7 @@
             // MessagesTabPage
             // 
             this.MessagesTabPage.Controls.Add(this.MessagesDataGridView);
-            this.MessagesTabPage.ImageKey = "Page_Incoming_16.png";
+            this.MessagesTabPage.ImageKey = "Message_Incoming.png";
             this.MessagesTabPage.Location = new System.Drawing.Point(4, 27);
             this.MessagesTabPage.Name = "MessagesTabPage";
             this.MessagesTabPage.Size = new System.Drawing.Size(606, 278);
@@ -871,7 +871,7 @@
             // SapiTabPage
             // 
             this.SapiTabPage.Controls.Add(this.SapiTextBox);
-            this.SapiTabPage.ImageKey = "Page_SAPI_16.png";
+            this.SapiTabPage.ImageKey = "Message_SAPI.png";
             this.SapiTabPage.Location = new System.Drawing.Point(4, 27);
             this.SapiTabPage.Name = "SapiTabPage";
             this.SapiTabPage.Size = new System.Drawing.Size(606, 278);
@@ -893,7 +893,7 @@
             // PlayListTabPage
             // 
             this.PlayListTabPage.Controls.Add(this.PlayListDataGridView);
-            this.PlayListTabPage.ImageKey = "Page_Play_16.png";
+            this.PlayListTabPage.ImageKey = "Play_List.png";
             this.PlayListTabPage.Location = new System.Drawing.Point(4, 27);
             this.PlayListTabPage.Name = "PlayListTabPage";
             this.PlayListTabPage.Size = new System.Drawing.Size(606, 278);
@@ -1174,7 +1174,7 @@
             // ProductPictureBox
             // 
             this.ProductPictureBox.BackColor = System.Drawing.SystemColors.Info;
-            this.ProductPictureBox.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.information_icon;
+            this.ProductPictureBox.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Information;
             this.ProductPictureBox.Location = new System.Drawing.Point(12, 6);
             this.ProductPictureBox.Name = "ProductPictureBox";
             this.ProductPictureBox.Size = new System.Drawing.Size(16, 16);
@@ -1222,7 +1222,7 @@
             // StopButton
             // 
             this.StopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.StopButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.bullet_square_glass_red;
+            this.StopButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Square_Glass_Red;
             this.StopButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.StopButton.Location = new System.Drawing.Point(953, 622);
             this.StopButton.Name = "StopButton";
@@ -1236,7 +1236,7 @@
             // 
             this.SpeakButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SpeakButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.SpeakButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.bullet_triangle_glass_blue;
+            this.SpeakButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Triangle_Glass_Blue;
             this.SpeakButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.SpeakButton.Location = new System.Drawing.Point(833, 622);
             this.SpeakButton.Name = "SpeakButton";

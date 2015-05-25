@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSound xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <sound group="Monster" file="Message" />
+  <sound group="Whisper" file="Private" />
+  <sound group="Say" file="Radio" />
+  <sound group="Yell" file="Radio" />
+  <sound group="Party" file="Radio" />
+  <sound group="Guild" file="Radio" />
+  <sound group="Raid" file="Radio" />
+  <sound group="RaidLeader" file="Important" />
+  <sound group="Battleground" file="Radio" />
+  <sound group="BattlegroundLeader" file="Important" />
+  <sound group="Instance" file="Radio" />
+  <sound group="InstanceLeader" file="Important" />
+</ArrayOfSound>

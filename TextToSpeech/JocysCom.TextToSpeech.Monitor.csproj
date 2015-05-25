@@ -14,6 +14,7 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -226,6 +226,76 @@
     <EmbeddedResource Include="Resources\Audio\Private.wav" />
     <EmbeddedResource Include="Resources\Audio\Radio.wav" />
     <EmbeddedResource Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.rtf" />
+    <EmbeddedResource Include="Resources\Icons\Information.png" />
+    <None Include="Resources\Adobe\Adobe Photoshop CS6 %2864 Bit%29\Plug-ins\File Formats\BLP.8bi" />
+    <None Include="Resources\Adobe\Adobe Photoshop CS6 %2864 Bit%29\Plug-ins\File Formats\ICO.8bi" />
+    <None Include="Resources\Fonts\FRIZQUAD.TTF" />
+    <None Include="Resources\Fonts\MORPHEUS.TTF" />
+    <None Include="Resources\Fonts\SKURRI.ttf" />
+    <None Include="Resources\Icons\Businessman.png" />
+    <None Include="Resources\Icons\BusinessPeople.png" />
+    <None Include="Resources\Icons\Code_Edit.png" />
+    <None Include="Resources\Icons\Data_Into.png" />
+    <None Include="Resources\Icons\Data_Out.png" />
+    <None Include="Resources\Icons\Delete.png" />
+    <None Include="Resources\Icons\Error_32x32.png" />
+    <None Include="Resources\Icons\eye.png" />
+    <None Include="Resources\Icons\Icons.psd" />
+    <None Include="Resources\Icons\Information_32x32.png" />
+    <None Include="Resources\Icons\message.ico" />
+    <None Include="Resources\Icons\Message_Incoming.png" />
+    <None Include="Resources\Icons\Message_SAPI.png" />
+    <None Include="Resources\Icons\Minus.png" />
+    <None Include="Resources\Icons\Minus_Small.png" />
+    <None Include="Resources\Icons\Music.png" />
+    <None Include="Resources\Icons\Plus.png" />
+    <None Include="Resources\Icons\Question_32x32.png" />
+    <None Include="Resources\Icons\Save.png" />
+    <None Include="Resources\Icons\Square_Glass_Green.png" />
+    <None Include="Resources\Icons\Square_Glass_Grey.png" />
+    <None Include="Resources\Icons\Square_Glass_Red.png" />
+    <None Include="Resources\Icons\Triangle_Glass_Blue.png" />
+    <None Include="Resources\Icons\Undo.png" />
+    <None Include="Resources\Icons\Warning_32x32.png" />
+    <None Include="Resources\Icons\Window_Effects_Editor.png" />
+    <None Include="Resources\Icons\Window_Effects_Presets.png" />
+    <None Include="Resources\Images Addon\CHATFRAME\UI-CHATINPUTBORDER-LEFT.BLP" />
+    <None Include="Resources\Images Addon\CHATFRAME\UI-ChatInputBorder-Left2.blp" />
+    <None Include="Resources\Images Addon\CHATFRAME\UI-ChatInputBorder-Mid.blp" />
+    <None Include="Resources\Images Addon\CHATFRAME\UI-ChatInputBorder-Mid2.blp" />
+    <None Include="Resources\Images Addon\CHATFRAME\UI-CHATINPUTBORDER-RIGHT.BLP" />
+    <None Include="Resources\Images Addon\CHATFRAME\UI-ChatInputBorder-Right2.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\DialogAlertIcon.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\DialogFrame-Bot.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\DialogFrame-Corners.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\DialogFrame-Left.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\DialogFrame-Right.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\DialogFrame-Top.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\DialogIcon-AlertNew-16.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-Dialog-Icon-AlertNew.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-Dialog-Icon-AlertOther.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-DialogBox-Background-Dark.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-DialogBox-Background.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-DialogBox-Border.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-DialogBox-Corner.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-DialogBox-Divider.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-DialogBox-Gold-Background.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-DialogBox-Gold-Border.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-DialogBox-Gold-Corner.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-DialogBox-Gold-Dragon.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-DialogBox-Gold-Header.blp" />
+    <None Include="Resources\Images Addon\DialogFrame\UI-DialogBox-Header.blp" />
+    <None Include="Resources\Images Addon\FrameGeneral\!UI-Frame.blp" />
+    <None Include="Resources\Images Addon\FrameGeneral\UI-Background-Marble.blp" />
+    <None Include="Resources\Images Addon\FrameGeneral\UI-Background-Rock.blp" />
+    <None Include="Resources\Images Addon\FrameGeneral\UI-Frame.blp" />
+    <None Include="Resources\Images Addon\FrameGeneral\_UI-Frame.blp" />
+    <None Include="Resources\Images Addon\JocysCom-Border-2-H.blp" />
+    <None Include="Resources\Images Addon\JocysCom-Border-2-H.psd" />
+    <None Include="Resources\Images Addon\JocysCom-Border-2.blp" />
+    <None Include="Resources\Images Addon\JocysCom-DialogueMiniFrame-Background.psd" />
+    <None Include="Resources\Images Addon\JocysCom-MiniMenuFrame-Border.psd" />
+    <None Include="Resources\Images Addon\JocysCom_TTS_WoW_Addon.psd" />
     <None Include="WoW\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.sha" />
     <None Include="WoW\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.zip" />
     <None Include="WoW\FrameXML\UI.xsd">
@@ -251,19 +321,44 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\add_16x16.png" />
-    <Content Include="Resources\bullet_square_glass_red.ico" />
-    <None Include="Resources\data_into_16x16.png" />
-    <None Include="Resources\data_out_16x16.png" />
-    <None Include="Resources\delete_16x16.png" />
-    <None Include="Resources\information_icon.bmp" />
     <Content Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.html" />
-    <Content Include="Resources\Music_Blue_16x16.png" />
-    <Content Include="Resources\override_info_16x16.png" />
-    <EmbeddedResource Include="Resources\Settings.xml" />
+    <Content Include="WoW\JocysCom-TextToSpeech-WoW-Overrides.txt" />
+    <Content Include="WoW\Overrides\Settings.Overrides.xml" />
+    <Content Include="WoW\JocysCom-TextToSpeech-WoW-Sounds.txt" />
+    <Content Include="WoW\Sounds\Settings.Sounds.xml" />
+    <EmbeddedResource Include="WoW\Settings\Settings.Monitor.xml" />
+    <Content Include="Resources\Icons\About.ico" />
+    <Content Include="Resources\Icons\About.png" />
+    <Content Include="Resources\Icons\Businessman.ico" />
+    <Content Include="Resources\Icons\BusinessPeople.ico" />
+    <Content Include="Resources\Icons\Code_Edit.ico" />
+    <Content Include="Resources\Icons\data_into.ico" />
+    <Content Include="Resources\Icons\data_out.ico" />
+    <Content Include="Resources\Icons\Delete.ico" />
+    <Content Include="Resources\Icons\download.ico" />
+    <Content Include="Resources\Icons\Download.png" />
+    <Content Include="Resources\Icons\Error.ico" />
+    <Content Include="Resources\Icons\Eye.ico" />
+    <Content Include="Resources\Icons\Information.ico" />
+    <Content Include="Resources\Icons\Minus.ico" />
+    <Content Include="Resources\Icons\Music.ico" />
+    <Content Include="Resources\Icons\Play_List.png" />
+    <Content Include="Resources\Icons\Plus.ico" />
+    <Content Include="Resources\Icons\Plus_Small.png" />
+    <Content Include="Resources\Icons\Question.ico" />
+    <Content Include="Resources\Icons\Square_Glass_Blue.png" />
+    <Content Include="Resources\Icons\Square_Glass_Red.ico" />
+    <Content Include="Resources\Icons\Triangle_Glass_Blue.ico" />
+    <Content Include="Resources\Icons\Warning.ico" />
+    <Content Include="Resources\Icons\Window.ico" />
+    <Content Include="Resources\Images Addon\JocysCom_TTS_WoW_Addon.png" />
+    <Content Include="Resources\Images Addon\JocysCom_TTS_WoW_Addon_Buttons.png" />
+    <Content Include="Resources\Images Addon\JocysCom_TTS_WoW_Addon_MiniFrame.png" />
+    <Content Include="Resources\Images Addon\JocysCom_TTS_WoW_Addon_Small.png" />
     <Content Include="WoW\GoogleDriver.ReadMe.txt" />
     <Content Include="WoW\HowToExportInterfaceCode.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Exclude.txt" />
+    <Content Include="WoW\JocysCom-TextToSpeech-WoW-Images.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Include.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Presets.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW\JocysCom-TextToSpeech-WoW.xml">
@@ -279,40 +374,10 @@
     <Content Include="WoW\Presets\Mechanical.preset.xml" />
     <Content Include="WoW\Presets\Undead.preset.xml" />
     <Content Include="app.ico" />
-    <Content Include="Resources\Page_Incoming_16.png" />
-    <Content Include="Resources\Page_Plain.png" />
-    <Content Include="Resources\Page_Play_16.png" />
-    <Content Include="Resources\Page_SAPI_16.png" />
-    <Content Include="Resources\Page_Text_16.png" />
-    <Content Include="Resources\Tab_Voices.png" />
-    <Content Include="Resources\window.png" />
-    <Content Include="Resources\Window_Sliders_16.png" />
-    <Content Include="Resources\Window_Sliders_Save_16.png" />
-    <None Include="Resources\app_64.png" />
-    <None Include="Resources\bullet_square_glass_blue.png" />
     <None Include="Resources\desktop.ini" />
-    <EmbeddedResource Include="Resources\information_icon.png" />
-    <Content Include="Resources\about.ico" />
-    <Content Include="Resources\about.png" />
-    <Content Include="Resources\bullet_triangle_glass_blue.ico" />
-    <Content Include="Resources\Businesman.png" />
-    <Content Include="Resources\businessman.ico" />
-    <Content Include="Resources\businessman2.ico" />
-    <Content Include="Resources\check_16x16.png" />
-    <Content Include="Resources\code_edit.png" />
     <Content Include="Resources\Documents\Google Chrome TTS.html" />
-    <Content Include="Resources\Local_Security_Policy_Capture_UAC.png" />
-    <Content Include="Resources\message_64_x_64.png" />
-    <None Include="Resources\Microsoft Multilingual TTS.URL" />
-    <None Include="Resources\navigate_minus.png" />
-    <None Include="Resources\navigate_plus.png" />
-    <None Include="Resources\navigate_minus_red.png" />
-    <None Include="Resources\Minus.png" />
-    <None Include="Resources\Page_16x16.psd" />
-    <None Include="Resources\Plus.png" />
-    <None Include="Resources\Undo_Red.png" />
-    <None Include="Resources\Undo_Blue.png" />
-    <None Include="Resources\Save_16.png" />
+    <Content Include="Resources\Images Monitor\Local_Security_Policy_Capture_UAC.png" />
+    <None Include="Resources\Documents\Microsoft Multilingual TTS.URL" />
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Error.ico" />
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Error_32x32.png" />
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Information.ico" />
@@ -321,11 +386,6 @@
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Question_32x32.png" />
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Warning.ico" />
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Warning_32x32.png" />
-    <None Include="Resources\app_128x128.png" />
-    <None Include="Resources\bullet_triangle_glass_blue.png" />
-    <None Include="Resources\bullet_square_glass_red.png" />
-    <None Include="Resources\bullet_square_glass_grey.png" />
-    <None Include="Resources\bullet_square_glass_green.png" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="SpeechLib">

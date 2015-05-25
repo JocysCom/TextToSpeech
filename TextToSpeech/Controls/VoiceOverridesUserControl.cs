@@ -89,7 +89,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             dialog.RestoreDirectory = true;
             if (string.IsNullOrEmpty(dialog.FileName)) dialog.FileName = "Settings.Overrides";
             if (string.IsNullOrEmpty(dialog.InitialDirectory)) dialog.InitialDirectory = SettingsFile.Current.FolderPath;
-            dialog.Title = "Import Games Settings File";
+            dialog.Title = "Import Settings (Overrides) File";
             var result = dialog.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.OK)
             {
@@ -137,7 +137,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             dialog.RestoreDirectory = true;
             if (string.IsNullOrEmpty(dialog.FileName)) dialog.FileName = "Settings.Overrides";
             if (string.IsNullOrEmpty(dialog.InitialDirectory)) dialog.InitialDirectory = SettingsFile.Current.FolderPath;
-            dialog.Title = "Export Voice Overrides File";
+            dialog.Title = "Export Settings (Overrides) File";
             var result = dialog.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.OK)
             {

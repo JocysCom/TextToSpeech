@@ -139,7 +139,7 @@
             // 
             // AddButton
             // 
-            this.AddButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.add_16x16;
+            this.AddButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Plus;
             this.AddButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(76, 22);
@@ -148,7 +148,7 @@
             // 
             // DeleteButton
             // 
-            this.DeleteButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.delete_16x16;
+            this.DeleteButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Delete;
             this.DeleteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DeleteButton.Name = "DeleteButton";
             this.DeleteButton.Size = new System.Drawing.Size(60, 22);
@@ -158,7 +158,7 @@
             // ExportButton
             // 
             this.ExportButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.ExportButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.data_out_16x16;
+            this.ExportButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Data_Out;
             this.ExportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(69, 22);
@@ -168,7 +168,7 @@
             // ImportButton
             // 
             this.ImportButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.ImportButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.data_into_16x16;
+            this.ImportButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Data_Into;
             this.ImportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ImportButton.Name = "ImportButton";
             this.ImportButton.Size = new System.Drawing.Size(72, 22);

@@ -35,6 +35,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.SoundsDataGridView = new System.Windows.Forms.DataGridView();
+            this.EnabledColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.GroupColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FileColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SoundsToolStrip = new System.Windows.Forms.ToolStrip();
             this.SoundsAddButton = new System.Windows.Forms.ToolStripButton();
             this.SoundsDeleteButton = new System.Windows.Forms.ToolStripButton();
@@ -43,9 +46,6 @@
             this.SoundsImportOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.SoundsExportSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.AudioFileOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.EnabledColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.GroupColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FileColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.SoundsDataGridView)).BeginInit();
             this.SoundsToolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -106,61 +106,6 @@
             this.SoundsDataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.SoundsDataGridView_CellValidating);
             this.SoundsDataGridView.MouseHover += new System.EventHandler(this.Sounds_MouseHover);
             // 
-            // SoundsToolStrip
-            // 
-            this.SoundsToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.SoundsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SoundsAddButton,
-            this.SoundsDeleteButton,
-            this.SoundsExportButton,
-            this.SoundsImportButton});
-            this.SoundsToolStrip.Location = new System.Drawing.Point(0, 0);
-            this.SoundsToolStrip.Name = "SoundsToolStrip";
-            this.SoundsToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.SoundsToolStrip.Size = new System.Drawing.Size(551, 25);
-            this.SoundsToolStrip.TabIndex = 3;
-            this.SoundsToolStrip.Text = "toolStrip1";
-            this.SoundsToolStrip.MouseLeave += new System.EventHandler(this.Sounds_MouseLeave);
-            this.SoundsToolStrip.MouseHover += new System.EventHandler(this.Sounds_MouseHover);
-            // 
-            // SoundsAddButton
-            // 
-            this.SoundsAddButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.add_16x16;
-            this.SoundsAddButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.SoundsAddButton.Name = "SoundsAddButton";
-            this.SoundsAddButton.Size = new System.Drawing.Size(76, 22);
-            this.SoundsAddButton.Text = "Add New";
-            this.SoundsAddButton.Click += new System.EventHandler(this.SoundsAddButton_Click);
-            // 
-            // SoundsDeleteButton
-            // 
-            this.SoundsDeleteButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.delete_16x16;
-            this.SoundsDeleteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.SoundsDeleteButton.Name = "SoundsDeleteButton";
-            this.SoundsDeleteButton.Size = new System.Drawing.Size(60, 22);
-            this.SoundsDeleteButton.Text = "Delete";
-            this.SoundsDeleteButton.Click += new System.EventHandler(this.SoundsDeleteButton_Click);
-            // 
-            // SoundsExportButton
-            // 
-            this.SoundsExportButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.SoundsExportButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.data_out_16x16;
-            this.SoundsExportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.SoundsExportButton.Name = "SoundsExportButton";
-            this.SoundsExportButton.Size = new System.Drawing.Size(69, 22);
-            this.SoundsExportButton.Text = "Export...";
-            this.SoundsExportButton.Click += new System.EventHandler(this.SoundsExportButton_Click);
-            // 
-            // SoundsImportButton
-            // 
-            this.SoundsImportButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.SoundsImportButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.data_into_16x16;
-            this.SoundsImportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.SoundsImportButton.Name = "SoundsImportButton";
-            this.SoundsImportButton.Size = new System.Drawing.Size(72, 22);
-            this.SoundsImportButton.Text = "Import...";
-            this.SoundsImportButton.Click += new System.EventHandler(this.SoundsImportButton_Click);
-            // 
             // EnabledColumn
             // 
             this.EnabledColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -195,6 +140,61 @@
             this.FileColumn.HeaderText = "Sound ( name  or  path to wav file )";
             this.FileColumn.Name = "FileColumn";
             this.FileColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // SoundsToolStrip
+            // 
+            this.SoundsToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.SoundsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SoundsAddButton,
+            this.SoundsDeleteButton,
+            this.SoundsExportButton,
+            this.SoundsImportButton});
+            this.SoundsToolStrip.Location = new System.Drawing.Point(0, 0);
+            this.SoundsToolStrip.Name = "SoundsToolStrip";
+            this.SoundsToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.SoundsToolStrip.Size = new System.Drawing.Size(551, 25);
+            this.SoundsToolStrip.TabIndex = 3;
+            this.SoundsToolStrip.Text = "toolStrip1";
+            this.SoundsToolStrip.MouseLeave += new System.EventHandler(this.Sounds_MouseLeave);
+            this.SoundsToolStrip.MouseHover += new System.EventHandler(this.Sounds_MouseHover);
+            // 
+            // SoundsAddButton
+            // 
+            this.SoundsAddButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Plus;
+            this.SoundsAddButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SoundsAddButton.Name = "SoundsAddButton";
+            this.SoundsAddButton.Size = new System.Drawing.Size(76, 22);
+            this.SoundsAddButton.Text = "Add New";
+            this.SoundsAddButton.Click += new System.EventHandler(this.SoundsAddButton_Click);
+            // 
+            // SoundsDeleteButton
+            // 
+            this.SoundsDeleteButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Delete;
+            this.SoundsDeleteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SoundsDeleteButton.Name = "SoundsDeleteButton";
+            this.SoundsDeleteButton.Size = new System.Drawing.Size(60, 22);
+            this.SoundsDeleteButton.Text = "Delete";
+            this.SoundsDeleteButton.Click += new System.EventHandler(this.SoundsDeleteButton_Click);
+            // 
+            // SoundsExportButton
+            // 
+            this.SoundsExportButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.SoundsExportButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Data_Out;
+            this.SoundsExportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SoundsExportButton.Name = "SoundsExportButton";
+            this.SoundsExportButton.Size = new System.Drawing.Size(69, 22);
+            this.SoundsExportButton.Text = "Export...";
+            this.SoundsExportButton.Click += new System.EventHandler(this.SoundsExportButton_Click);
+            // 
+            // SoundsImportButton
+            // 
+            this.SoundsImportButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.SoundsImportButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Data_Into;
+            this.SoundsImportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SoundsImportButton.Name = "SoundsImportButton";
+            this.SoundsImportButton.Size = new System.Drawing.Size(72, 22);
+            this.SoundsImportButton.Text = "Import...";
+            this.SoundsImportButton.Click += new System.EventHandler(this.SoundsImportButton_Click);
             // 
             // SoundsUserControl
             // 
