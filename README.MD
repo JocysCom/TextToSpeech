@@ -9,7 +9,7 @@
 
 <sub>About “Monitor”... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8.1 Pro • All code is available under open source licence.</sub>
 
-<p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_2_2_33.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small_2_2_33.png" /></a></p>
+<p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_2_2_35.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small_2_2_33.png" /></a></p>
 
 ### YouTube video ...old “WoW Addon” version with Ivona voices
 <hr />
@@ -98,7 +98,16 @@
 
 <p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab (example).</p>
 
-<p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_2_2_33.png" /></a></p>
+<p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_2_2_35.png" /></a></p>
+
+<blockquote>
+<p>3 voices are enabled in this setup:<br />
+“IVONA 2 Brian” -- will be used as Male (100) and Neutral (100) voice.<br />
+“IVONA 2 Amy” -- will be used as Female (100) voice.<br />
+“Microsoft Hazel Desktop” -- will be used as Neutral (50) voice.<br />
+<br />
+Number ( from 0 to 100 ) sets, how often voice should be used, relatively to other voices in the same category (Male, Female or Neutral). If you have IVONA male and female voices, you can disable “Microsoft (...) Desktop” voices ( as they are quite bad ).</p>
+</blockquote>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
 11. <b>[v] Play after closing</b> check-box and <b>[■]</b> (Stop) with <b>[►]</b> (Play) buttons will appear at the bottom of some windows.</p>
@@ -111,7 +120,7 @@
 
 <p>You can enable intro sounds for groups (like “Whisper”, “Say”, “Party”, etc.) in <b>“Addon”</b>. Then, sounds will play at the beginning of messages, to separate them between each other. All groups will be added to “Monitor” (during gaming) automatically. You can assign custom sounds to groups in <b>[Intro Sounds]</b> tab of <b>“Monitor”</b> (example):</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_IntroSounds_2_2_34.png"/></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_IntroSounds_2_2_35.png"/></p>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
