@@ -42,7 +42,7 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 </blockquote>
 
 <blockquote>
-<p align="justify">FREE text-to-speech voices by Microsoft can be installed (on Windows 8.#) with various <a target="_blank"  href="http://windows.microsoft.com/en-us/windows/language-packs">Microsoft language packs</a>.</p>
+<p align="justify">FREE text-to-speech voices can be installed (on Windows 8.#) with <a target="_blank"  href="http://windows.microsoft.com/en-us/windows/language-packs">Microsoft language packs</a>.</p>
 
 <p>1. Right-click the “Start Button” > Control Panel > Language.<br />
  2. Add additional languages like... English (United States) or English (United Kingdom)... etc.<br />
