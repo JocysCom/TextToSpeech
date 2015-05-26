@@ -35,7 +35,11 @@
 <p>5. Install additional text-to-speech voices, if needed.</p>
 
 <blockquote>
-<p align="justify">BETTER text-to-speech voices can be downloaded and installed from <a target="_blank"  href="http://www.ivona.com/us/for-individuals/voices-for-windows/">Ivona.com</a> / <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">Harposoftware.com</a>&nbsp;(distributor) websites. Good Ivona voices are English-British <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">“Amy”</a> and <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">“Brian”</a>&nbsp;(<a target="_blank"  href="http://harposoftware.com/en/content/10-trial">download trials</a>). Some other voices are are not bad too... you can test them on <a target="_blank"  href="http://www.ivona.com">main page of Ivona.com</a> website. <a target="_blank"  href="http://www.ivona.com/us/for-individuals/voices-for-windows/">Ivona.com</a> text-to-speech voices cost about $45 each. You can use them for free during trial period for 1 month only. If you know free of charge text-to-speech voices as good, as voices by <a target="_blank"  href="http://www.ivona.com/us/for-individuals/voices-for-windows/">Ivona.com</a>, please, write us.</p>
+<p align="justify">BETTER are Ivona text-to-speech voices.<br />
+Test voices online: <a href="http://www.ivona.com" target="_blank">Ivona.com</a><br />
+Download trials (from distributor) and use them for free for 1 month: <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harposoftware.com/en/content/10-trial</a><br />
+Buy voices from distributor ($35 each): <a href="http://harposoftware.com/en" target="_blank">Harposoftware.com</a><br />
+Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. Some other voices are are not bad too. If you know free of charge text-to-speech voices as good, as voices by Ivona, please, write us.</p>
 </blockquote>
 
 <blockquote>
