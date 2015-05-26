@@ -15,7 +15,7 @@
 <hr />
 
 <p>Old versions of “Monitor” and “Addon” (2014-08-06) are presented in this video.<br />
-New versions (2015-05-25) with more options can read quest and chat messages.</p>
+New versions (2015-05-25) with more options can read quests and chat messages.</p>
 
 [![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
