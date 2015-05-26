@@ -35,7 +35,7 @@
 <p>5. Install additional text-to-speech voices, if needed.</p>
 
 <blockquote>
-<p align="justify">BETTER are Ivona text-to-speech voices. Test voices online: <a href="http://www.ivona.com" target="_blank">Ivona.com</a><br />
+<p align="justify">BETTER are Ivona text-to-speech voices. Test voices online (developer): <a href="http://www.ivona.com" target="_blank">Ivona.com</a><br />
 Download trials and test for free for 1 month (distributor): <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harposoftware.com/en/content/10-trial</a><br />
 Buy voices from distributor ($35 each): <a href="http://harposoftware.com/en" target="_blank">Harposoftware.com</a><br />
 Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. Some other voices are are not bad too. If you know free of charge text-to-speech voices as good, as voices by Ivona, please, write us.</p>
