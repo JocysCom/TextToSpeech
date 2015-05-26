@@ -1,13 +1,14 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.35 (2015-05-25)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.36 (2015-05-26)
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech WoW Addon 2.2.35 (2015-05-25)
 
 <hr />
 
 <p align="justify">Latest version can read <i>quests</i> and <i>chat messages</i>. How it works: When you open NPC dialogue window or receive chat message in game, <b>“WoW Addon”</b> creates and sends whisper (chat) message between  <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code> tags to yourself. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code>... and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this message from your network and reads it with specific text-to-speech voice. FREE text-to-speech voices can be installed (on Windows 8.#) with various <a target="_blank" href="http://windows.microsoft.com/en-us/windows/language-packs">Microsoft language packs</a>. BETTER are text-to-speech voices by <a target="_blank"  href="http://www.ivona.com">Ivona.com</a> (developer) / <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">Harposoftware.com</a>&nbsp;(distributor). Good voices are English-British <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">“Amy”</a> and <a href="http://harposoftware.com/en/content/10-trial">“Brian”</a>. Some other voices are not bad too.</p>
 
-<sub>About “Monitor”... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8.1 Pro • All code is available under open source licence.</sub>
+<sub>About “Monitor”... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8.1 Pro • All code is available under open source licence.</sub><br />
+<sup>You can use “Monitor” and write your own text-to-speech addons for games, if they support addons.<sup>
 
 <p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_2_2_35_1.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small_2_2_33.png" /></a></p>
 
