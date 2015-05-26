@@ -56,13 +56,9 @@
             this.VoicesTabPage = new System.Windows.Forms.TabPage();
             this.VoiceErrorLabel = new System.Windows.Forms.Label();
             this.VoiceOverridesTabPage = new System.Windows.Forms.TabPage();
-            this.VoiceOverridesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesOverridesUserControl();
             this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
-            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
             this.SoundsTabPage = new System.Windows.Forms.TabPage();
-            this.SoundsPanel = new JocysCom.TextToSpeech.Monitor.Controls.SoundsUserControl();
             this.MonitoringTabPage = new System.Windows.Forms.TabPage();
-            this.monitorsUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.MonitorsUserControl();
             this.AboutTabPage = new System.Windows.Forms.TabPage();
             this.AboutRichTextBox = new System.Windows.Forms.RichTextBox();
             this.UpdateTabPage = new System.Windows.Forms.TabPage();
@@ -141,6 +137,10 @@
             this.RateMaxComboBox = new System.Windows.Forms.ComboBox();
             this.PitchMinComboBox = new System.Windows.Forms.ComboBox();
             this.RateMinComboBox = new System.Windows.Forms.ComboBox();
+            this.VoiceOverridesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesOverridesUserControl();
+            this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
+            this.SoundsPanel = new JocysCom.TextToSpeech.Monitor.Controls.SoundsUserControl();
+            this.monitorsUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.MonitorsUserControl();
             ((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).BeginInit();
             this.MessagesTabControl.SuspendLayout();
             this.VoicesTabPage.SuspendLayout();
@@ -440,14 +440,6 @@
             this.VoiceOverridesTabPage.TabIndex = 5;
             this.VoiceOverridesTabPage.Text = "Voice Overrides";
             // 
-            // VoiceOverridesPanel
-            // 
-            this.VoiceOverridesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VoiceOverridesPanel.Location = new System.Drawing.Point(0, 0);
-            this.VoiceOverridesPanel.Name = "VoiceOverridesPanel";
-            this.VoiceOverridesPanel.Size = new System.Drawing.Size(816, 266);
-            this.VoiceOverridesPanel.TabIndex = 0;
-            // 
             // EffectsPresetsEditorTabPage
             // 
             this.EffectsPresetsEditorTabPage.Controls.Add(this.EffectPresetsEditorSoundEffectsControl);
@@ -457,17 +449,6 @@
             this.EffectsPresetsEditorTabPage.Size = new System.Drawing.Size(816, 266);
             this.EffectsPresetsEditorTabPage.TabIndex = 1;
             this.EffectsPresetsEditorTabPage.Text = "Efect Preset Editor";
-            // 
-            // EffectPresetsEditorSoundEffectsControl
-            // 
-            this.EffectPresetsEditorSoundEffectsControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
-            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
-            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
-            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
             // 
             // SoundsTabPage
             // 
@@ -480,14 +461,6 @@
             this.SoundsTabPage.TabIndex = 7;
             this.SoundsTabPage.Text = "Intro Sounds";
             // 
-            // SoundsPanel
-            // 
-            this.SoundsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SoundsPanel.Location = new System.Drawing.Point(0, 0);
-            this.SoundsPanel.Name = "SoundsPanel";
-            this.SoundsPanel.Size = new System.Drawing.Size(816, 266);
-            this.SoundsPanel.TabIndex = 0;
-            // 
             // MonitoringTabPage
             // 
             this.MonitoringTabPage.BackColor = System.Drawing.SystemColors.Control;
@@ -498,14 +471,6 @@
             this.MonitoringTabPage.Size = new System.Drawing.Size(816, 266);
             this.MonitoringTabPage.TabIndex = 6;
             this.MonitoringTabPage.Text = "Monitoring";
-            // 
-            // monitorsUserControl1
-            // 
-            this.monitorsUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.monitorsUserControl1.Location = new System.Drawing.Point(0, 0);
-            this.monitorsUserControl1.Name = "monitorsUserControl1";
-            this.monitorsUserControl1.Size = new System.Drawing.Size(816, 266);
-            this.monitorsUserControl1.TabIndex = 2;
             // 
             // AboutTabPage
             // 
@@ -1043,10 +1008,6 @@
             // AudioBitsPerSampleComboBox
             // 
             this.AudioBitsPerSampleComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.AudioBitsPerSampleComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "8",
-            "16",
-            "24"});
             this.AudioBitsPerSampleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AudioBitsPerSampleComboBox.FormattingEnabled = true;
             this.AudioBitsPerSampleComboBox.Location = new System.Drawing.Point(954, 485);
@@ -1071,18 +1032,8 @@
             // AudioSampleRateComboBox
             // 
             this.AudioSampleRateComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.AudioSampleRateComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "11025",
-            "22050",
-            "44100",
-            "48000"});
             this.AudioSampleRateComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AudioSampleRateComboBox.FormattingEnabled = true;
-            this.AudioSampleRateComboBox.Items.AddRange(new object[] {
-            "11025",
-            "22050",
-            "44100",
-            "48000"});
             this.AudioSampleRateComboBox.Location = new System.Drawing.Point(954, 458);
             this.AudioSampleRateComboBox.Name = "AudioSampleRateComboBox";
             this.AudioSampleRateComboBox.Size = new System.Drawing.Size(114, 21);
@@ -1105,14 +1056,8 @@
             // AudioChannelsComboBox
             // 
             this.AudioChannelsComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.AudioChannelsComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "Mono",
-            "Stereo"});
             this.AudioChannelsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AudioChannelsComboBox.FormattingEnabled = true;
-            this.AudioChannelsComboBox.Items.AddRange(new object[] {
-            "Mono",
-            "Stereo"});
             this.AudioChannelsComboBox.Location = new System.Drawing.Point(954, 431);
             this.AudioChannelsComboBox.Name = "AudioChannelsComboBox";
             this.AudioChannelsComboBox.Size = new System.Drawing.Size(114, 21);
@@ -1445,13 +1390,6 @@
             // DefaultIntroSoundComboBox
             // 
             this.DefaultIntroSoundComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DefaultIntroSoundComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "Radio",
-            "Private",
-            "Normal",
-            "Message",
-            "Important",
-            "Emote"});
             this.DefaultIntroSoundComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "DefaultIntroSoundComboBox", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.DefaultIntroSoundComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.DefaultIntroSoundComboBox.FormattingEnabled = true;
@@ -1505,10 +1443,6 @@
             // MonitorClipboardComboBox
             // 
             this.MonitorClipboardComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.MonitorClipboardComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "Disabled",
-            "For <message> tags",
-            "For all text"});
             this.MonitorClipboardComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "MonitorClipboardComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.MonitorClipboardComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.MonitorClipboardComboBox.FormattingEnabled = true;
@@ -1528,10 +1462,6 @@
             // GenderComboBox
             // 
             this.GenderComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.GenderComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "Male",
-            "Female",
-            "Neutral"});
             this.GenderComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "GenderComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.GenderComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.GenderComboBox.FormattingEnabled = true;
@@ -1552,28 +1482,6 @@
             this.PitchMaxComboBox.AccessibleDescription = "";
             this.PitchMaxComboBox.AccessibleName = "";
             this.PitchMaxComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.PitchMaxComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "10",
-            "9",
-            "8",
-            "7",
-            "6",
-            "5",
-            "4",
-            "3",
-            "2",
-            "1",
-            "0",
-            "-1",
-            "-2",
-            "-3",
-            "-4",
-            "-5",
-            "-6",
-            "-7",
-            "-8",
-            "-9",
-            "-10"});
             this.PitchMaxComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "PitchMaxComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.PitchMaxComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PitchMaxComboBox.FormattingEnabled = true;
@@ -1613,28 +1521,6 @@
             this.RateMaxComboBox.AccessibleDescription = "";
             this.RateMaxComboBox.AccessibleName = "";
             this.RateMaxComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RateMaxComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "10",
-            "9",
-            "8",
-            "7",
-            "6",
-            "5",
-            "4",
-            "3",
-            "2",
-            "1",
-            "0",
-            "-1",
-            "-2",
-            "-3",
-            "-4",
-            "-5",
-            "-6",
-            "-7",
-            "-8",
-            "-9",
-            "-10"});
             this.RateMaxComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "RateMaxComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.RateMaxComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.RateMaxComboBox.FormattingEnabled = true;
@@ -1674,28 +1560,6 @@
             this.PitchMinComboBox.AccessibleDescription = "";
             this.PitchMinComboBox.AccessibleName = "";
             this.PitchMinComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.PitchMinComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "10",
-            "9",
-            "8",
-            "7",
-            "6",
-            "5",
-            "4",
-            "3",
-            "2",
-            "1",
-            "0",
-            "-1",
-            "-2",
-            "-3",
-            "-4",
-            "-5",
-            "-6",
-            "-7",
-            "-8",
-            "-9",
-            "-10"});
             this.PitchMinComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "PitchMinComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.PitchMinComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PitchMinComboBox.FormattingEnabled = true;
@@ -1735,28 +1599,6 @@
             this.RateMinComboBox.AccessibleDescription = "";
             this.RateMinComboBox.AccessibleName = "";
             this.RateMinComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RateMinComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            "10",
-            "9",
-            "8",
-            "7",
-            "6",
-            "5",
-            "4",
-            "3",
-            "2",
-            "1",
-            "0",
-            "-1",
-            "-2",
-            "-3",
-            "-4",
-            "-5",
-            "-6",
-            "-7",
-            "-8",
-            "-9",
-            "-10"});
             this.RateMinComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "RateMinComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.RateMinComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.RateMinComboBox.FormattingEnabled = true;
@@ -1790,6 +1632,41 @@
             this.RateMinComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.RateMinComboBoxText;
             this.RateMinComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
             this.RateMinComboBox.MouseHover += new System.EventHandler(this.MouseHover_RateMin);
+            // 
+            // VoiceOverridesPanel
+            // 
+            this.VoiceOverridesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VoiceOverridesPanel.Location = new System.Drawing.Point(0, 0);
+            this.VoiceOverridesPanel.Name = "VoiceOverridesPanel";
+            this.VoiceOverridesPanel.Size = new System.Drawing.Size(816, 266);
+            this.VoiceOverridesPanel.TabIndex = 0;
+            // 
+            // EffectPresetsEditorSoundEffectsControl
+            // 
+            this.EffectPresetsEditorSoundEffectsControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
+            this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
+            this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
+            this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
+            // 
+            // SoundsPanel
+            // 
+            this.SoundsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SoundsPanel.Location = new System.Drawing.Point(0, 0);
+            this.SoundsPanel.Name = "SoundsPanel";
+            this.SoundsPanel.Size = new System.Drawing.Size(816, 266);
+            this.SoundsPanel.TabIndex = 0;
+            // 
+            // monitorsUserControl1
+            // 
+            this.monitorsUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.monitorsUserControl1.Location = new System.Drawing.Point(0, 0);
+            this.monitorsUserControl1.Name = "monitorsUserControl1";
+            this.monitorsUserControl1.Size = new System.Drawing.Size(816, 266);
+            this.monitorsUserControl1.TabIndex = 2;
             // 
             // MainForm
             // 
