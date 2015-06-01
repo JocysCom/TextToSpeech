@@ -9,6 +9,7 @@ local unitName = UnitName("player");
 local realmName = GetRealmName();
 local questMessage = nil;
 local speakMessage = nil;
+local objectivesHeader = nil;
 local NameIntro = false;
 local arg1 = nil;
 local arg2 = nil;
@@ -20,14 +21,13 @@ local dashIndex = nil;
 local group = nil;
 local messageType = nil;
 local messageLeader = nil;
-local objectiveTitleText = "Your objective is to";
 local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-to-speech is enabled.";
 local messageStop = "<message command=\"stop\" />";
 
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.35 ( 2015-05-25 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.38 ( 2015-06-01 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon's whisper messages in chat window.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Stop]|r |cff808080button.|r");
@@ -151,12 +151,20 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 		group = "Quest";
 		questMessage = nil;
 		speakMessage = nil;
+		objectivesHeader = nil;
 		if event == "QUEST_GREETING" then 
 			speakMessage = GetGreetingText();
 		elseif GossipFrame:IsShown() and event == "GOSSIP_SHOW" then
 			speakMessage = GetGossipText();
 		elseif event == "QUEST_DETAIL" then
-			speakMessage = GetQuestText() .. " " .. objectiveTitleText .. " " .. GetObjectiveText();
+			objectivesHeader = QuestInfoObjectivesHeader:GetText();
+			if (objectivesHeader == nil) then
+				objectivesHeader = "";
+			else
+				objectivesHeader = string.gsub(objectivesHeader, "Quest ", "Your ");
+				objectivesHeader = objectivesHeader .. ".";
+			end
+			speakMessage = GetQuestText() .. " " .. objectivesHeader .. " " .. GetObjectiveText();
 		elseif event == "QUEST_PROGRESS" then
 			speakMessage = GetProgressText();
 		elseif event == "QUEST_COMPLETE" then

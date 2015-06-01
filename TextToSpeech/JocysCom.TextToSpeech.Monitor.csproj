@@ -225,6 +225,7 @@
     <EmbeddedResource Include="Resources\Audio\Normal.wav" />
     <EmbeddedResource Include="Resources\Audio\Private.wav" />
     <EmbeddedResource Include="Resources\Audio\Radio.wav" />
+    <EmbeddedResource Include="Resources\Audio\Radio1.wav" />
     <EmbeddedResource Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.rtf" />
     <EmbeddedResource Include="Resources\Icons\Information.png" />
     <None Include="Resources\Adobe\Adobe Photoshop CS6 %2864 Bit%29\Plug-ins\File Formats\BLP.8bi" />
@@ -321,6 +322,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Audio\Radio2.wav" />
+    <EmbeddedResource Include="Resources\Audio\Radio3.wav" />
+    <EmbeddedResource Include="Resources\Audio\Radio4.wav" />
     <Content Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.html" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Overrides.txt" />
     <Content Include="WoW\Overrides\Settings.Overrides.xml" />
