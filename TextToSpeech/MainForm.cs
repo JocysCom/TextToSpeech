@@ -1624,11 +1624,13 @@ namespace JocysCom.TextToSpeech.Monitor
         public void LoadSettings(InstalledVoiceEx[] voices)
         {
             var xml = Properties.Settings.Default.VoicesData;
-            if (string.IsNullOrEmpty(xml)) return;
             InstalledVoiceEx[] savedVoices = null;
-            try { savedVoices = Serializer.DeserializeFromXmlString<InstalledVoiceEx[]>(xml); }
-            catch (Exception) { }
-            if (savedVoices == null) return;
+            if (!string.IsNullOrEmpty(xml))
+            {
+                try { savedVoices = Serializer.DeserializeFromXmlString<InstalledVoiceEx[]>(xml); }
+                catch (Exception) { }
+            }
+            if (savedVoices == null) savedVoices = new InstalledVoiceEx[0];
             var newVoices = new List<InstalledVoiceEx>();
             var oldVoices = new List<InstalledVoiceEx>();
             foreach (var voice in voices)
@@ -1650,17 +1652,40 @@ namespace JocysCom.TextToSpeech.Monitor
             // If new voices added then...
             if (newVoices.Count > 0)
             {
-                var newVoice = newVoices.FirstOrDefault(x => x.Name.StartsWith("Microsoft"));
-                if (newVoice == null) newVoice = newVoices.First();
+                var maleIvonaFound = voices.Any(x => x.Name.StartsWith("IVONA") && x.Gender == VoiceGender.Male);
+                var femaleIvonaFound = voices.Any(x => x.Name.StartsWith("IVONA") && x.Gender == VoiceGender.Female);
+                foreach (var newVoice in newVoices)
+                {
+                    // If new voice is Microsoft then...
+                    if (newVoice.Name.StartsWith("Microsoft"))
+                    {
+                        if (newVoice.Gender == VoiceGender.Male && maleIvonaFound) newVoice.Enabled = false;
+                        if (newVoice.Gender == VoiceGender.Female && femaleIvonaFound) newVoice.Enabled = false;
+                    }
+                }
+                var firstVoiceVoice = newVoices.First();
                 // If list doesn't have female voices then use first new voice.
-                if (!voices.Any(x => x.Female > 0)) newVoice.Female = InstalledVoiceEx.MaxVoice;
+                if (!voices.Any(x => x.Female > 0)) firstVoiceVoice.Female = InstalledVoiceEx.MaxVoice;
                 // If list doesn't have male voices then use first new voice.
-                if (!voices.Any(x => x.Male > 0)) newVoice.Male = InstalledVoiceEx.MaxVoice;
+                if (!voices.Any(x => x.Male > 0)) firstVoiceVoice.Male = InstalledVoiceEx.MaxVoice;
                 // If list doesn't have neutral voices then use first voice.
-                if (!voices.Any(x => x.Neutral > 0)) newVoice.Neutral = InstalledVoiceEx.MaxVoice;
+                if (!voices.Any(x => x.Neutral > 0))
+                {
+                    var neutralVoices = voices.Where(x => x.Gender == VoiceGender.Neutral);
+                    foreach (var neutralVoice in neutralVoices) neutralVoice.Neutral = InstalledVoiceEx.MaxVoice;
+                    if (neutralVoices.Count() == 0)
+                    {
+                        var maleVoices = voices.Where(x => x.Gender == VoiceGender.Male);
+                        foreach (var maleVoice in maleVoices) maleVoice.Neutral = InstalledVoiceEx.MaxVoice;
+                        if (maleVoices.Count() == 0)
+                        {
+                            var femaleVoices = voices.Where(x => x.Gender == VoiceGender.Female);
+                            foreach (var femaleVoice in femaleVoices) femaleVoice.Neutral = InstalledVoiceEx.MaxVoice;
+                        }
+                    }
+                }
             }
         }
-
         #endregion
 
         private void VoicesDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)

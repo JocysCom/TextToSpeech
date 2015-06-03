@@ -1,17 +1,17 @@
 ﻿<EffectsPreset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Elemental</Name>
-  <GeneralEnabled>false</GeneralEnabled>
+  <GeneralEnabled>true</GeneralEnabled>
   <ChorusEnabled>false</ChorusEnabled>
   <CompressorEnabled>false</CompressorEnabled>
   <DistortionEnabled>false</DistortionEnabled>
-  <EchoEnabled>false</EchoEnabled>
+  <EchoEnabled>true</EchoEnabled>
   <FlangerEnabled>false</FlangerEnabled>
   <GargleEnabled>false</GargleEnabled>
   <ParamEqEnabled>false</ParamEqEnabled>
   <ReverbEnabled>false</ReverbEnabled>
   <Reverb3DEnabled>false</Reverb3DEnabled>
   <General>
-    <Pitch>1</Pitch>
+    <Pitch>0.9</Pitch>
   </General>
   <Chorus>
     <Delay>0</Delay>
@@ -39,10 +39,10 @@
   </Distortion>
   <Echo>
     <PanDelay>0</PanDelay>
-    <Feedback>50</Feedback>
-    <WetDryMix>50</WetDryMix>
-    <RightDelay>0</RightDelay>
-    <LeftDelay>1</LeftDelay>
+    <Feedback>98</Feedback>
+    <WetDryMix>15</WetDryMix>
+    <RightDelay>100</RightDelay>
+    <LeftDelay>100</LeftDelay>
   </Echo>
   <Flanger>
     <Delay>2</Delay>

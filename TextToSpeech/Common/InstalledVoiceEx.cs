@@ -16,6 +16,8 @@ namespace JocysCom.TextToSpeech.Monitor
         [NonSerialized]
         public const int MaxVoice = 100;
 
+
+
         public InstalledVoiceEx(VoiceInfo voice)
         {
             Gender = voice.Gender;

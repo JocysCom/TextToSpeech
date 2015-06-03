@@ -11,7 +11,7 @@
   <ReverbEnabled>false</ReverbEnabled>
   <Reverb3DEnabled>false</Reverb3DEnabled>
   <General>
-    <Pitch>0.8</Pitch>
+    <Pitch>0.78</Pitch>
   </General>
   <Chorus>
     <Delay>0</Delay>
@@ -39,9 +39,9 @@
   </Distortion>
   <Echo>
     <PanDelay>0</PanDelay>
-    <Feedback>15</Feedback>
-    <WetDryMix>4</WetDryMix>
-    <RightDelay>0</RightDelay>
+    <Feedback>10</Feedback>
+    <WetDryMix>1</WetDryMix>
+    <RightDelay>100</RightDelay>
     <LeftDelay>100</LeftDelay>
   </Echo>
   <Flanger>
