@@ -5,7 +5,7 @@
 
 <hr />
 
-<p align="justify">Latest version can read <i>quests</i> and <i>chat messages</i>. How it works: When you open NPC dialogue window or receive chat message in game, <b>“WoW Addon”</b> creates and sends whisper (chat) message between  <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code> tags to yourself. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code>... and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this message from your network and reads it with specific text-to-speech voice. FREE text-to-speech voices can be installed (on Windows 8.#) with various <a target="_blank" href="http://windows.microsoft.com/en-us/windows/language-packs">Microsoft language packs</a>. BETTER are text-to-speech voices by <a target="_blank"  href="http://www.ivona.com">Ivona.com</a> (developer) / <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">Harposoftware.com</a>&nbsp;(distributor). Good voices are English-British <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">“Amy”</a> and <a href="http://harposoftware.com/en/content/10-trial">“Brian”</a>. Some other voices are not bad too.</p>
+<p align="justify">Latest version can read <i>quests</i> and <i>chat messages</i>. How it works: When you open window with text or receive chat message in game, <b>“WoW Addon”</b> creates and sends whisper (chat) message between  <code>&lt;message&gt;...&lt;/message&gt;</code> tags to yourself. This message can include... <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code> ...and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this <code>&lt;message&gt;...&lt;/message&gt;</code> from your network and reads it with specific text-to-speech voice. FREE text-to-speech voices can be installed with various <a target="_blank" href="http://windows.microsoft.com/en-us/windows/language-packs">Microsoft language packs</a>. BETTER are text-to-speech voices by <a target="_blank"  href="http://www.ivona.com">Ivona.com</a> (developer) / <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">Harposoftware.com</a>&nbsp;(distributor). Good voices are English-British <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">“Amy”</a> and <a href="http://harposoftware.com/en/content/10-trial">“Brian”</a>. Some other voices are not bad too.</p>
 
 <sub>About “Monitor”... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8.1 Pro • All code is available under open source licence.</sub><br />
 <sup>You can use “Monitor” and create your own text-to-speech addons for games, if they support addons.<sup>
@@ -81,6 +81,16 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 <p align="justify">You can pin “Monitor” to Windows OS taskbar, if you plan to use it frequently. Administrator rights are required to run this program. Make sure that you are using <i>digitally signed software</i>. Any modification in code of software, after it is signed, <i>invalidates</i> digital signature. <i>Digitally signed software</i> ensures that users can verify origin of software and that no one has tampered with it.</p>
 </blockquote>
 
+<p>7. User Account Control window must show <b>“Verified Publisher: Jocys.com”</b>.</p>
+
+<blockquote>
+<p>Do not trust executables from <b>“Publisher: Unknown”</b>.</p>
+</blockquote>
+
+<p><img src="http://www.jocys.com/Files/Software/Monitor_Signed_UAC.png" /></p> 
+
+<p>8. Click <b>[ Yes ]</b> button.</p>
+
 <blockquote>
 <p><b>To run “Monitor” (on “Windows XP”), you must have installed at least...</b></p>
 <p>1. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06)</a><br />
@@ -91,17 +101,6 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 4. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=8109">Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)</a></p>
 <p>“Monitor Clipboard” option doesn't work and must be [Disabled] in Windows XP.<br />
 “Addon” requires latest version of “World of Warcraft” game.</blockquote>
-
-<p>7. Make sure that User Account Control (UAC) Prompt displays <b>“Verified Publisher: Jocys.com”</b>.</p>
-
-<p><img src="http://www.jocys.com/Files/Software/Monitor_Signed_UAC.png" /></p> 
-
-<p>8. Click <b>[ Yes ]</b> button.</p>
-
-<blockquote>
-<p>Do not trust executables from <b>“Publisher: Unknown”</b>.</p>
-<p><img src="http://www.jocys.com/Files/Website/Monitor_NonSigned_UAC.png" />
-</blockquote>
 
 <p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab (example).</p>
 
@@ -117,17 +116,14 @@ Number ( from 0 to 100 ) sets, how often voice should be used, relatively to oth
 </blockquote>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
-11. <b>[v] Play after closing</b> check-box and <b>[■]</b> (Stop) with <b>[►]</b> (Play) buttons will appear at the bottom of some windows.</p>
 
-<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_33.png" /></a></p>
-
-<p>12. Another <b>[■]</b> (Stop) button will appear at the top of WoW's <b>[Social]</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> will appear. Move mouse pointer over <b>check-box</b> and title will show, what it enables/disables.</p>
+<p>11. <b>[■]</b> (Stop) button will appear at the top of WoW's <b>“Social”</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> will appear. Move mouse pointer over any <b>check-box</b> and title will show, what it enables/disables.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_39.png"/></p>
 
-<p>You can enable intro sounds for groups (like “Whisper”, “Say”, “Party”, etc.) in <b>“Addon”</b>. Then, sounds will play at the beginning of messages, to separate them between each other. All groups will be added to “Monitor” (during gaming) automatically. You can assign custom sounds to groups in <b>[Intro Sounds]</b> tab of <b>“Monitor”</b> (example):</p>
+12. <b>[v] Play after closing</b> check-box and <b>[■]</b> (Stop) with <b>[►]</b> (Play) buttons will appear at the bottom of some windows too.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_IntroSounds_2_2_35.png"/></p>
+<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_33.png" /></a></p>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
