@@ -92,10 +92,10 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 <p>“Monitor Clipboard” option doesn't work and must be [Disabled] in Windows XP.<br />
 “Addon” requires latest version of “World of Warcraft” game.</blockquote>
 
-<p>7. <a href="http://windows.microsoft.com/en-us/windows/what-is-user-account-control" target="_blank"><img alt="" src="http://www.jocys.com/Files/Software/UserAccountControl_Verified.png" style="width: 40px; height: 43px;" /></a> User Account Control window must show <strong>“Verified Publisher: Jocys.com”</strong>.</p>
+<p>7. <a href="http://windows.microsoft.com/en-us/windows/what-is-user-account-control" target="_blank"><img alt="" src="http://www.jocys.com/Files/Software/UserAccountControl_Verified.png" style="width: 40px; height: 43px;" /></a> User Account Control window must show <b>“Verified Publisher: Jocys.com”</b>.</p>
 
 <blockquote>
-<p style="margin-left: 14px;"><a href="http://windows.microsoft.com/en-us/windows/what-is-user-account-control" target="_blank"><img alt="" src="http://www.jocys.com/Files/Software/UserAccountControl_Unknown.png" style="width: 40px; height: 43px;" /></span></a> <span class="Css05">Do not trust executables from <strong>“Publisher: Unknown”</strong>.</p>
+<p style="margin-left: 14px;"><a href="http://windows.microsoft.com/en-us/windows/what-is-user-account-control" target="_blank"><img alt="" src="http://www.jocys.com/Files/Software/UserAccountControl_Unknown.png" style="width: 40px; height: 43px;" /></span></a> <span class="Css05">Do not trust executables from <b>“Publisher: Unknown”</b>.</p>
 </blockquote>
 
 <p><img src="http://www.jocys.com/Files/Software/Monitor_Signed_UAC.png" /></p> 
