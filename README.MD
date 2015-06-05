@@ -117,17 +117,14 @@ Number ( from 0 to 100 ) sets, how often voice should be used, relatively to oth
 </blockquote>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
-11. <b>[v] Play after closing</b> check-box and <b>[■]</b> (Stop) with <b>[►]</b> (Play) buttons will appear at the bottom of some windows.</p>
 
-<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_33.png" /></a></p>
-
-<p>12. Another <b>[■]</b> (Stop) button will appear at the top of WoW's <b>[Social]</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> will appear. Move mouse pointer over <b>check-box</b> and title will show, what it enables/disables.</p>
+<p>11. <b>[■]</b> (Stop) button will appear at the top of WoW's <b>“Social”</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> will appear. Move mouse pointer over <b>check-box</b> and title will show, what it enables/disables.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_39.png"/></p>
 
-<p>You can enable intro sounds for groups (like “Whisper”, “Say”, “Party”, etc.) in <b>“Addon”</b>. Then, sounds will play at the beginning of messages, to separate them between each other. All groups will be added to “Monitor” (during gaming) automatically. You can assign custom sounds to groups in <b>[Intro Sounds]</b> tab of <b>“Monitor”</b> (example):</p>
+12. <b>[v] Play after closing</b> check-box and <b>[■]</b> (Stop) with <b>[►]</b> (Play) buttons will appear at the bottom of some windows too.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_IntroSounds_2_2_35.png"/></p>
+<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_33.png" /></a></p>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
