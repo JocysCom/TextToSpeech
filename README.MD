@@ -95,7 +95,7 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 <p>7. User Account Control window must show <b>“Verified Publisher: Jocys.com”</b>.</p>
 
 <blockquote>
-<p style="margin-left: 14px;">Do not trust executables from <b>“Publisher: Unknown”</b>.</p>
+<p>Do not trust executables from <b>“Publisher: Unknown”</b>.</p>
 </blockquote>
 
 <p><img src="http://www.jocys.com/Files/Software/Monitor_Signed_UAC.png" /></p> 
