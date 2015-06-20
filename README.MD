@@ -143,7 +143,7 @@ Number ( from 0 to 100 ) sets, how often voice should be used, relatively to oth
 ### Possible improvements in “World of Warcraft” game
 <hr />
 
-<p>• Getting <b>UnitSex</b> of NPC from chat and quest log ... in order to apply gender.<br />
+<p>• Getting <b>UnitSex</b> of NPC from chat and quest log... in order to apply gender.<br />
 • Getting <b>UnitAge</b> of NPC... in order to apply “Child", “Adult” or “Senior” effects.<br />
 • Getting <b>UnitRace</b> of NPC... Sound effects on NPCs are applied by <b>UnitCreatureType</b> now.<br />
 • Getting <b>value</b> if NPC has voice over for all text... in order not to start TTS speech.<br />
