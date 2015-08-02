@@ -1,7 +1,7 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.40 (2015-06-03)
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.40 (2015-06-03)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.42 (2015-08-02)
 
 <hr />
 
@@ -16,7 +16,7 @@
 <hr />
 
 <p>Old versions of “Monitor” and “Addon” (2014-08-06) are presented in this video.<br />
-New versions (2015-06-03) with more options can read quests and chat messages.</p>
+New versions (2015-08-02) with more options can read quests and chat messages.</p>
 
 [![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
@@ -143,8 +143,8 @@ Number ( from 0 to 100 ) sets, how often voice should be used, relatively to oth
 ### Possible improvements in “World of Warcraft” game
 <hr />
 
-<p>• Getting <b>UnitSex</b> for NPC in chat and quest log ... in order to apply gender.<br />
-• Getting <b>UnitAge</b> for NPC... in order to apply “Child", “Adult” or “Senior” effects.<br />
-• Getting <b>UnitRace</b> for NPC... Sound effects on NPCs are applied by <b>UnitCreatureType</b> now.<br />
+<p>• Getting <b>UnitSex</b> of NPC from chat and quest log... in order to apply gender.<br />
+• Getting <b>UnitAge</b> of NPC... in order to apply “Child", “Adult” or “Senior” effects.<br />
+• Getting <b>UnitRace</b> of NPC... Sound effects on NPCs are applied by <b>UnitCreatureType</b> now.<br />
 • Getting <b>value</b> if NPC has voice over for all text... in order not to start TTS speech.<br />
 • NPC “talking” animation should loop, depending on length of the text.</p>
