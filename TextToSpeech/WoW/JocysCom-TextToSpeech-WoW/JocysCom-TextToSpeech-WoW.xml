@@ -155,10 +155,10 @@
 				self:StopMovingOrSizing();
 			</OnDragStop>
 			<OnHide>
-				JocysCom_OptionsFrame_OnHide()
+				JocysCom_OptionsFrame_OnHide();
 			</OnHide>
 			<OnShow>
-				JocysCom_OptionsFrame_OnShow()
+				JocysCom_OptionsFrame_OnShow();
 			</OnShow>
 		</Scripts>
 	</Frame>
