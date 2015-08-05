@@ -27,7 +27,7 @@ local messageStop = "<message command=\"stop\" />";
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.43 ( 2015-08-02 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.45 ( 2015-08-05 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon's whisper messages in chat window.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Stop]|r |cff808080button.|r");
@@ -887,6 +887,17 @@ function JocysCom_SaveTocFileSettings()
 end
 
 function JocysCom_SetInterfaceSettings()
+	-- Attach OnShow and OnHide sripts to WoW frames.
+	QuestLogPopupDetailFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
+	GossipFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
+	QuestFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
+	ItemTextFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
+	QuestMapDetailsScrollFrame:SetScript("OnHide", JocysCom_DialogueMiniFrame_Hide);
+	JocysCom_OptionsFrame:SetScript("OnShow", JocysCom_OptionsFrame_OnShow);
+	JocysCom_OptionsFrame:SetScript("OnHide", JocysCom_OptionsFrame_OnHide);
+	QuestMapDetailsScrollFrame:SetScript("OnShow", function()
+	JocysCom_AttachAndShowFrames(WorldMapFrame);
+	end);
 	-- Attach (and show) DialogueScroll and DialogueMini frames to WoW (GossipFrame) frame.
 	JocysCom_AttachAndShowFrames(GossipFrame);
 	-- Hide frames.
@@ -896,15 +907,6 @@ function JocysCom_SetInterfaceSettings()
 	JocysCom_OptionsButton:Hide();
 	-- Load descriptions.
 	JocysCom_Text_EN();	
-	-- Attach OnShow and OnHide sripts to WoW frames.
-	QuestLogPopupDetailFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
-	GossipFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
-	QuestFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
-	ItemTextFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
-	QuestMapDetailsScrollFrame:SetScript("OnHide", JocysCom_DialogueMiniFrame_Hide);
-	QuestMapDetailsScrollFrame:SetScript("OnShow", function()
-	JocysCom_AttachAndShowFrames(WorldMapFrame);
-	end);
 end
 
 -- Load UI settings.
