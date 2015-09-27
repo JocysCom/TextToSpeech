@@ -1,13 +1,13 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.40 (2015-06-03)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor <font color="#008000">(Digitally Signed)</font> 2.2.41 (2015-09-27)
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.45 (2015-08-05)
 
 <hr />
 
-<p align="justify">Latest version can read <i>quests</i> and <i>chat messages</i>. How it works: When you open window with text or receive chat message in game, <b>“WoW Addon”</b> creates and sends whisper (chat) message between  <code>&lt;message&gt;...&lt;/message&gt;</code> tags to yourself. This message can include... <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code> ...and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this <code>&lt;message&gt;...&lt;/message&gt;</code> from your network and reads it with specific text-to-speech voice. FREE text-to-speech voices can be installed with various <a target="_blank" href="http://windows.microsoft.com/en-us/windows/language-packs">Microsoft language packs</a>. BETTER are text-to-speech voices by <a target="_blank"  href="http://www.ivona.com">Ivona.com</a> (developer) / <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">Harposoftware.com</a>&nbsp;(distributor). Good voices are English-British <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">“Amy”</a> and <a href="http://harposoftware.com/en/content/10-trial">“Brian”</a>. Some other voices are not bad too.</p>
+<p align="justify">Reads <i>quests</i> and <i>chat messages</i> with text-to-speech voices. When you open window with text or receive chat message in game, <b>“WoW Addon”</b> creates and sends whisper (chat) message between  <code>&lt;message&gt;...&lt;/message&gt;</code> tags to yourself. This message can include... <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code> ...and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this <code>&lt;message&gt;...&lt;/message&gt;</code> from your network and reads it with specific text-to-speech voice. FREE text-to-speech voices can be installed with various <a target="_blank" href="http://windows.microsoft.com/en-us/windows/language-packs">Microsoft language packs</a>. BETTER are text-to-speech voices by <a target="_blank"  href="http://www.ivona.com">Ivona.com</a> (developer) / <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">Harposoftware.com</a>&nbsp;(distributor). Good voices are English-British <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">“Amy”</a> and <a href="http://harposoftware.com/en/content/10-trial">“Brian”</a>. Some other voices are not bad too.</p>
 
-<sub>About “Monitor”... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8.1 Pro • All code is available under open source licence.</sub><br />
+<sub>About “Monitor”... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8 and 10 • All code is available under open source licence.</sub><br />
 <sup>You can use “Monitor” and create your own text-to-speech addons for games, if they support addons.<sup>
 
 <p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_2_2_35_1.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small_2_2_39.png" /></a></p>
@@ -23,7 +23,7 @@ New versions (2015-08-05) with more options can read quests and chat messages.</
 ### Security and concerns
 <hr />
 
-<p align="justify">This “WoW Addon” and “Monitor” does not give you more power over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between <code>&lt;message&gt;</code> tags or text from your clipboard with installed text-to-speech voices, when you want it. It makes game more involving, fun and interesting... and easier for people with dyslexia too. This project is open source... anyone can check all code at any time. We digitally sign our software and put our real names on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, malware or spyware. Please download this “WoW Addon” and “Monitor” only from trustworthy sources. Make sure that “Monitor” is always <i>signed</i> by verified publisher with signature, issued by trusted certificate authority.</p>
+<p align="justify"><sub>This “WoW Addon” and “Monitor” does not give you more power over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between <code>&lt;message&gt;</code> tags or text from your clipboard with installed text-to-speech voices, when you want it. It makes game more involving, fun and interesting... and easier for people with dyslexia too. This project is open source... anyone can check all code at any time. We digitally sign our software and put our real names on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, malware or spyware. Please download this “WoW Addon” and “Monitor” only from trustworthy sources. Make sure that “Monitor” is always <i>signed</i> by verified publisher with signature, issued by trusted certificate authority.</sub></p>
 
 ### Installation • Exit WoW before installing or updating addon.
 <hr />
@@ -34,14 +34,13 @@ New versions (2015-08-05) with more options can read quests and chat messages.</
 <p><img src="http://www.jocys.com/Files/Software/Copy.png" /></p>
 <p>4. Paste <i>“JocysCom-TextToSpeech-WoW”</i> folder inside <i>“AddOns”</i> folder of WoW.</p>
 <blockquote>
-<p>Usual directory: C:\Program Files\World of Warcraft\Interface\AddOns</p>
+<p><sub>Usual directory: C:\Program Files\World of Warcraft\Interface\AddOns</sub></p>
 </blockquote>
 <p>5. Install additional text-to-speech voices, if needed.</p>
 
 <blockquote>
-<p align="justify">BETTER are Ivona text-to-speech voices. Test voices online (developer): <a href="http://www.ivona.com" target="_blank">Ivona.com</a><br />
+<p align="justify">BETTER are Ivona text-to-speech voices (<a href="http://harposoftware.com/en" target="_blank">$35 each</a>). Test voices online (developer): <a href="http://www.ivona.com" target="_blank">Ivona.com</a><br />
 Download and test voices 30 days for free (distributor): <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harposoftware.com/en/content/10-trial</a><br />
-Buy voices ($35 each): <a href="http://harposoftware.com/en" target="_blank">Harposoftware.com</a><br />
 Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. Some other voices are not bad too. If you know free of charge text-to-speech voices as good, as voices by Ivona, please, write us.</p>
 </blockquote>
 
@@ -56,7 +55,7 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 
 <p>Windows 8.1 language packs and text-to-speech voices (<a target="_blank"  href="http://en.wikipedia.org/wiki/Microsoft_text-to-speech_voices">Wikipedia</a>):</p>
 
-<p>• English (United States) - David (male), Zira (female).<br />
+<p><sub>• English (United States) - David (male), Zira (female).<br />
 • English (United Kingdom) - Heera (female), Hazel (female), Zira (female).<br />
 • Chinese Simplified - Hanhan, Huihui.<br />
 • Chinese Traditional - Tracy.<br />
@@ -68,17 +67,17 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 • Polish - Paulina.<br />
 • Portuguese - Maria.<br />
 • Russian - Irina.<br />
-• Spanish - Helena, Sabina.</p>
+• Spanish - Helena, Sabina.</sub></p>
 </blockquote>
 
 <p>6. Run <b>“JocysCom.TextToSpeech.Monitor.exe”</b> file (file is inside pasted folder).</p>
 
 <blockquote>
-<p>Usual directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysCom-TextToSpeech-WoW\</p>
+<p><sub>Usual directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysCom-TextToSpeech-WoW\</sub></p>
 </blockquote>
 
 <blockquote>
-<p align="justify">You can pin “Monitor” to Windows OS taskbar, if you plan to use it frequently. Administrator rights are required to run this program. Make sure that you are using <i>digitally signed software</i>. Any modification in code of software, after it is signed, <i>invalidates</i> digital signature. <i>Digitally signed software</i> ensures that users can verify origin of software and that no one has tampered with it.</p>
+<p align="justify"><sub>You can pin “Monitor” to Windows OS taskbar, if you plan to use it frequently. Administrator rights are required to run this program. Make sure that you are using <i>digitally signed software</i>. Any modification in code of software, after it is signed, <i>invalidates</i> digital signature. <i>Digitally signed software</i> ensures that users can verify origin of software and that no one has tampered with it.</sub></p>
 </blockquote>
 
 <p>7. User Account Control window must show <b>“Verified Publisher: Jocys.com”</b>.</p>
@@ -92,12 +91,14 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 <p>8. Click <b>[ Yes ]</b> button.</p>
 
 <blockquote>
-<p><b>To run “Monitor” (on “Windows XP”), you must have installed at least...</b></p>
-<p>1. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06)</a><br />
+<p><b>To run “Monitor” on old OS, like “Windows XP”, you must have installed at least...</b></p>
+<p>1. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06) (for Windows XP only)</a> <br />
 2. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
-<p>If you get this error (after trying to run “Monitor”) or no sound, proceed to parts "3" and "4".</p>
+<p>If you get DirectX error (after trying to run “Monitor”) or no sound, proceed to parts "3" and "4".</p>
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png" /></p>
 <p>3. <a target="_blank"  href="http://www.microsoft.com/en-us/download/details.aspx?id=22">Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)</a><br />
+In Windows 8 and 10: Control Panel > Programs and Features > Turn Windows features on or off
+> enable “.NET Framework 3.5 (includes 2.0 and 3.0)”.<br />
 4. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=8109">Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)</a></p>
 <p>“Monitor Clipboard” option doesn't work and must be [Disabled] in Windows XP.<br />
 “Addon” requires latest version of “World of Warcraft” game.</blockquote>
@@ -107,12 +108,12 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 <p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_2_2_35.png" /></a></p>
 
 <blockquote>
-<p>3 voices are enabled in this setup:<br />
+<p><sub>3 voices are enabled in this setup:<br />
 “IVONA 2 Brian” -- will be used as Male (100) and Neutral (100) voice.<br />
 “IVONA 2 Amy” -- will be used as Female (100) voice.<br />
 “Microsoft Hazel Desktop” -- will be used as Neutral (50) voice.<br />
 <br />
-Number ( from 0 to 100 ) sets, how often voice should be used, relatively to other voices in the same category (Male, Female or Neutral). If you have IVONA male and female voices, you can disable “Microsoft (...) Desktop” voices ( as they are quite bad ).</p>
+Number ( from 0 to 100 ) sets, how often voice should be used, relatively to other voices in the same category (Male, Female or Neutral). If you have IVONA male and female voices, you can disable “Microsoft (...) Desktop” voices ( as they are quite bad ).</sub></p>
 </blockquote>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
