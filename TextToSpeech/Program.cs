@@ -46,7 +46,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				{
 					message += "===============================================================\r\n";
 					message += "You can click the link below to download Microsoft DirectX.";
-					box.MainLinkLabel.Text = "http://www.microsoft.com/en-us/download/details.aspx?id=35";
+                    box.MainLinkLabel.Text = "http://www.microsoft.com/en-gb/download/details.aspx?id=8109";
 					box.MainLinkLabel.Visible = true;
 				}
 				var result = box.ShowForm(message, "Exception!", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
