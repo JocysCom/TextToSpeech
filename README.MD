@@ -126,9 +126,9 @@ Number ( from 0 to 100 ) sets, how often voice should be used, relatively to oth
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_39.png"/></p>
 
 <blockquote>
-<sub>If “Social-Friends” button is not visible, change...<br />
+<sub>If “Social-Friends” button is not visible, you can change...<br />
 <code>parent="FriendsMicroButton"</code> to <code>parent="UIParent"</code><br />
-...in JocysCom-TextToSpeech-WoW.xml file.<br />
+...in <i>JocysCom-TextToSpeech-WoW.xml</i> file.<br />
 You can unlock [■] (Stop) button in [≡] (Options) and move it to desired position.</sub>
 </blockquote>
 
