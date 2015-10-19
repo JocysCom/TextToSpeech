@@ -126,10 +126,10 @@ Number ( from 0 to 100 ) sets, how often voice should be used, relatively to oth
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_39.png"/></p>
 
 <blockquote>
-<sub>If “Social-Friends” button is not visible, you can change...<br />
-<code>parent="FriendsMicroButton"</code> to <code>parent="UIParent"</code><br />
-...in <i>JocysCom-TextToSpeech-WoW.xml</i> file.<br />
-You can unlock [■] (Stop) button in [≡] (Options) and move it to desired position.</sub>
+<sub>If “Social-Friends” button is not visible:<br />
+1. Open <i>JocysCom-TextToSpeech-WoW.xml</i> file with Notepad.<br />
+2. Change <code>parent="FriendsMicroButton"</code> to <code>parent="UIParent"</code><br />
+3. Reload WoW. -- [■] (Stop) button should appear at the top-center of your screen. You can unlock [■] (Stop) button in [≡] (Options) and move it to desired position.</sub>
 </blockquote>
 
 12. <b>[v] Play after closing</b> check-box and <b>[■]</b> (Stop) with <b>[►]</b> (Play) buttons will appear at the bottom of some windows too.</p>
