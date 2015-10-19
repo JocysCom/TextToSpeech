@@ -128,7 +128,7 @@ Number ( from 0 to 100 ) sets, how often voice should be used, relatively to oth
 <blockquote>
 <sub>If “Social-Friends” button is not visible:<br />
 1. Open <i>JocysCom-TextToSpeech-WoW.xml</i> file with Notepad.<br />
-2. Change <code>parent="FriendsMicroButton"</code> to <code>parent="UIParent"</code><br />
+2. Find and change <code>"FriendsMicroButton"</code> to <code>"UIParent"</code><br />
 3. Reload WoW. -- [■] (Stop) button should appear at the top-center of your screen. You can unlock [■] (Stop) button in [≡] (Options) and move it to desired position.</sub>
 </blockquote>
 
