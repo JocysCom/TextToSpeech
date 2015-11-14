@@ -1,5 +1,5 @@
--- /fstack - show frame names.
--- /run local m=MinimapCluster if m:IsShown()then m:Hide()else m:Show()end - Show / Hide MinimapCluster.
+-- Show or hide frame names: /fstack
+-- Show or hide FriendsMicroButton ("Social" button): /run local m=FriendsMicroButton if m:IsShown()then m:Hide()else m:Show()end
 
 -- Debug mode true(enabled) or false(disabled).
 local DebugEnabled = false;
@@ -27,7 +27,7 @@ local messageStop = "<message command=\"stop\" />";
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.45 ( 2015-08-05 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.46 ( 2015-11-14 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon's whisper messages in chat window.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Stop]|r |cff808080button.|r");
@@ -188,12 +188,12 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 		group = "Monster";
 		if JocysCom_SoundMonsterCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameMonsterCheckButton:GetChecked() == true or (event == "CHAT_MSG_MONSTER_EMOTE") then NameIntro = true end
-	elseif JocysCom_WhisperCheckButton:GetChecked() == true and (event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_WHISPER") then
+	elseif JocysCom_WhisperCheckButton:GetChecked() == true and (event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" or event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM") then
 		group = "Whisper";
 		if JocysCom_SoundWhisperCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameWhisperCheckButton:GetChecked() == true then NameIntro = true end
 		-- replace friend's real name with character name.
-		if event == "CHAT_MSG_BN_WHISPER" then
+		if event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM" then
 			-- totalBNet, numBNetOnline = BNGetNumFriends();
 			-- presenceID, presenceName, battleTag, isBattleTagPresence, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, broadcastTime, canSoR = BNGetFriendInfoByID(7);		
 			arg2 = string.gsub(arg2, "|", " ");
@@ -205,10 +205,6 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 			presenceID, presenceName, battleTag, isBattleTagPresence, toonName = BNGetFriendInfoByID(arg2);
 			arg2 = toonName;
 		end	
-	elseif JocysCom_WhisperCheckButton:GetChecked() == true and string.find(event, "WHISPER_INFORM") ~= nil then
-		group = "Whisper";
-		if JocysCom_SoundWhisperCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
-		if JocysCom_NameWhisperCheckButton:GetChecked() == true then NameIntro = true end	
 	elseif JocysCom_EmoteCheckButton:GetChecked() == true and ((event == "CHAT_MSG_EMOTE") or (event == "CHAT_MSG_TEXT_EMOTE")) then
 		group = "Emote"	
 		if JocysCom_SoundEmoteCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end

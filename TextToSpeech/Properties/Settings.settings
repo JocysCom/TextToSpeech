@@ -24,13 +24,19 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PortNumericUpDownValue" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">3724</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="MonitorPortChecked" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="DefaultIntroSoundComboBox" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DelayBeforeValue" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="AddSilcenceBeforeMessage" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>
