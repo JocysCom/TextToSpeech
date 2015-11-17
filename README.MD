@@ -19,7 +19,7 @@ BETTER text-to-speech voices, like English-British <a target="_blank"  href="htt
 <hr />
 
 <p>Old versions of “Monitor” and “Addon” (2014-08-06) are presented in this video.<br />
-New versions (2015-08-05) with more options can read quests and chat messages.</p>
+New versions (2015-11-14) with more options can read quests and chat messages.</p>
 
 [![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
