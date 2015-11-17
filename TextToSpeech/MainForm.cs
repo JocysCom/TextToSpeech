@@ -1,5 +1,6 @@
 ﻿using JocysCom.ClassLibrary.Runtime;
 using JocysCom.TextToSpeech.Monitor.Audio;
+using JocysCom.TextToSpeech.Monitor.Controls;
 using JocysCom.TextToSpeech.Monitor.Network;
 using SpeechLib;
 using System;
@@ -726,10 +727,23 @@ namespace JocysCom.TextToSpeech.Monitor
 					var decodedText = System.Web.HttpUtility.HtmlDecode(buffer);
 					buffer = "";
 					IncomingTextTextBox.Text = decodedText;
-					//TextXmlTabControl.SelectedTab = TextTabPage;
-					// mark text (or audio file) with v.goup value.
-					AddTextToPlaylist(decodedText, true, v.group);
-					break;
+                    //TextXmlTabControl.SelectedTab = TextTabPage;
+                    // mark text (or audio file) with v.goup value.
+
+                    // Add silence before message.
+                    int silenceIntBefore = Decimal.ToInt32(OptionsPanel.silenceBefore);
+                    string silenceStringBefore = OptionsPanel.silenceBefore.ToString();
+                    if (silenceIntBefore > 0) AddTextToPlaylist("<silence msec=\"" + silenceStringBefore + "\" />", true, v.group);
+
+                    AddTextToPlaylist(decodedText, true, v.group);
+
+                    // Add silence after message.
+                    int silenceIntAfter = Decimal.ToInt32(OptionsPanel.silenceAfter);
+                    string silenceStringAfter = OptionsPanel.silenceAfter.ToString();
+                    if (silenceIntAfter > 0) AddTextToPlaylist("<silence msec=\"" + silenceStringAfter + "\" />", true, v.group);
+
+
+                    break;
 				case "stop":
 					text = "";
 					StopPlayer(v.group);
@@ -1244,10 +1258,11 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				SandBoxTextBox.Text = "<message command=\"Play\" language=\"809\" name=\"Marshal McBride\" gender=\"Male\" effect=\"Humanoid\" group=\"Quest\" pitch=\"0\" rate=\"1\" volume=\"100\"><part>Test text to speech. [comment]Test text to speech.[/comment]</part></message>";
 			}
+
 			//Fill SAPI Tab
 			if (string.IsNullOrEmpty(IncomingTextTextBox.Text))
 			{
-				SapiTextBox.Text = ConvertTextToSapiXml("Test text to speech.");
+                SapiTextBox.Text = ConvertTextToSapiXml("Test text to speech.");
 			}
 			else
 			{
