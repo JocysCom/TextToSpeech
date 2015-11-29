@@ -706,7 +706,7 @@
 						</Anchors>
 						<Scripts>
               <OnLoad>
-                self.text:SetText("|cffff4709 I|r");
+                self.text:SetText("|cffff4709 IL|r");
                 self.text:SetPoint("TOPLEFT", 6, 10);
               </OnLoad>
 							<OnEnter>
