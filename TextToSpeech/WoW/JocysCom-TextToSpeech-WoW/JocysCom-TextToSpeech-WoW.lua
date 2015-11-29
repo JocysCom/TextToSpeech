@@ -27,7 +27,7 @@ local messageStop = "<message command=\"stop\" />";
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.46 ( 2015-11-14 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.48 ( 2015-11-28 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon's whisper messages in chat window.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Stop]|r |cff808080button.|r");
@@ -64,17 +64,22 @@ end
 
 -- MessageStop function.
 function JocysCom_SendChatMessageStop(CloseOrButton, group)
+	-- Disable DND <Busy> if checked.
+	if JocysCom_DndCheckButton:GetChecked() == true and UnitIsDND("player") == true then
+		SendChatMessage("", "DND");
+	end
+	if CloseOrButton ~= 0 then
+		if JocysCom_StopSpeechCheckButton:GetChecked() ~= true and CloseOrButton ~= 2  then
+			return;
+		end
+	end
 	-- Add group value if exists.
 	if group == nil or group == "" then
 		messageStop = "<message command=\"stop\" />";
 	else
 		messageStop = "<message command=\"stop\" group=\"" .. group .. "\" />";
 	end			
-	-- Disable DND <Busy> if checked.
-	if JocysCom_DndCheckButton:GetChecked() == true and UnitIsDND("player") == true then
-		SendChatMessage("", "DND");
-	end
-	if (stopWhenClosing == 1 or group ~= nil or group ~= "") and (JocysCom_StopOnCloseCheckButton:GetChecked() ~= true or CloseOrButton == 1) then
+	if (stopWhenClosing == 1 or group ~= nil or group ~= "") and (JocysCom_StopOnCloseCheckButton:GetChecked() ~= true or (CloseOrButton == 1 or CloseOrButton == 2)) then
 		SendChatMessage(messageStop, "WHISPER", "Common", unitName);
 		stopWhenClosing = 0;
 		JocysCom_OptionsEditBox:SetText("|cff808080" .. messageStop .. "|r");
@@ -167,7 +172,11 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 				objectivesHeader = string.gsub(objectivesHeader, "Quest ", "Your ");
 				objectivesHeader = objectivesHeader .. ".";
 			end
-			speakMessage = GetQuestText() .. " " .. objectivesHeader .. " " .. GetObjectiveText();
+			if JocysCom_ObjectivesCheckButton:GetChecked() == true then		
+				speakMessage = GetQuestText() .. " " .. objectivesHeader .. " " .. GetObjectiveText();
+			else
+				speakMessage = GetQuestText();
+			end
 		elseif event == "QUEST_PROGRESS" then
 			speakMessage = GetProgressText();
 		elseif event == "QUEST_COMPLETE" then
@@ -489,9 +498,7 @@ end
 function JocysCom_CheckButton_OnClick(self, name)
 	PlaySound("igMainMenuOptionCheckBoxOn");
 	if self:GetChecked() == true then
-		if name == "StopAll" then
-			JocysCom_SendChatMessageStop(1);
-		elseif name == "Battleground" then
+		if name == "Battleground" then
 			JocysCom_BattlegroundLeaderCheckButton:SetChecked(false);
 		elseif name == "BattlegroundLeader" and JocysCom_BattlegroundCheckButton:GetChecked() == true  then
 			JocysCom_BattlegroundCheckButton:SetChecked(false);
@@ -553,6 +560,10 @@ end
 		fontString = "|cffff7d00Play all INSTANCE chat messages|r";
 	elseif name == "InstanceLeader" then
 		fontString = "|cffff4709Play INSTANCE leader chat messages only|r";
+	elseif name == "Objectives" then
+		fontString = "|cffddddddInclude QUEST OBJECTIVES in text-to-speech|r";
+	elseif name == "StopSpeech" then
+		fontString = "|cffddddddInstantly play what you see in DIALOGUE, BOOK, PLAQUE, etc. window|r";
 	-- Play intro sound check-boxes.
 	elseif name == "SoundMonster" then
 		fontString = "|cfffffb9fPlay sound at the beginning of NPC messages|r";
@@ -632,9 +643,9 @@ end
 function JocysCom_StopButton_OnClick(name)
 	PlaySound("igMainMenuOptionCheckBoxOn");
 	if name == "Quest" then
-		JocysCom_SendChatMessageStop(1, name);
+		JocysCom_SendChatMessageStop(2, name);
 	else
-		JocysCom_SendChatMessageStop(1);
+		JocysCom_SendChatMessageStop(2);
 	end
 end
 
@@ -643,7 +654,7 @@ function JocysCom_DialogueScrollFrame_OnMouseWheel(self, delta)
 	if delta == 1 then
 			JocysCom_PlayButtonButton_OnClick();
 		else
-			JocysCom_SendChatMessageStop(1, "Quest");
+			JocysCom_SendChatMessageStop(2, "Quest");
 		end
 end
 
@@ -801,6 +812,8 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_RaidLeaderCB == true then JocysCom_RaidLeaderCheckButton:SetChecked(true) else JocysCom_RaidLeaderCheckButton:SetChecked(false) end
 	if JocysCom_InstanceCB == false then JocysCom_InstanceCheckButton:SetChecked(false) else JocysCom_InstanceCheckButton:SetChecked(true) end
 	if JocysCom_InstanceLeaderCB == true then JocysCom_InstanceLeaderCheckButton:SetChecked(true) else JocysCom_InstanceLeaderCheckButton:SetChecked(false) end
+	if JocysCom_ObjectivesCB == false then JocysCom_ObjectivesCheckButton:SetChecked(false) else JocysCom_ObjectivesCheckButton:SetChecked(true) end
+	if JocysCom_StopSpeechCB == false then JocysCom_StopSpeechCheckButton:SetChecked(false) else JocysCom_StopSpeechCheckButton:SetChecked(true) end
 	-- Set (MiniFrame) Sound CheckButtons.
 	if JocysCom_SMonsterCB == false then JocysCom_SoundMonsterCheckButton:SetChecked(false) else JocysCom_SoundMonsterCheckButton:SetChecked(true) end
 	if JocysCom_SWhisperCB == false then JocysCom_SoundWhisperCheckButton:SetChecked(false) else JocysCom_SoundWhisperCheckButton:SetChecked(true) end
@@ -853,6 +866,8 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_RaidLeaderCB = JocysCom_RaidLeaderCheckButton:GetChecked();
 	JocysCom_InstanceCB = JocysCom_InstanceCheckButton:GetChecked();
 	JocysCom_InstanceLeaderCB = JocysCom_InstanceLeaderCheckButton:GetChecked();
+	JocysCom_ObjectivesCB = JocysCom_ObjectivesCheckButton:GetChecked();
+	JocysCom_StopSpeechCB = JocysCom_StopSpeechCheckButton:GetChecked();
 	-- Save sound check buttons.
 	JocysCom_SMonsterCB = JocysCom_SoundMonsterCheckButton:GetChecked();
 	JocysCom_SWhisperCB = JocysCom_SoundWhisperCheckButton:GetChecked();

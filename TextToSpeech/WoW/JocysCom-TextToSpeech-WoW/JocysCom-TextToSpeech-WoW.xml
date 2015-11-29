@@ -357,7 +357,7 @@
 				</ButtonText>
 			</Button>
 			<Frame name="JocysCom_MiniMenuFrame" parent="JocysCom_StopButtonFrame" enableMouse="true">
-				<Size x="339" y="114" />
+				<Size x="391" y="114" />
 				<Anchors>
 					<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="0" y="-4" />
 				</Anchors>
@@ -706,7 +706,7 @@
 						</Anchors>
 						<Scripts>
               <OnLoad>
-                self.text:SetText("|cffff4709 IL|r");
+                self.text:SetText("|cffff4709 I|r");
                 self.text:SetPoint("TOPLEFT", 6, 10);
               </OnLoad>
 							<OnEnter>
@@ -719,7 +719,50 @@
 		            JocysCom_MiniMenuFrame_Hide();
 							</OnLeave>
 						</Scripts>
-					</CheckButton>			
+					</CheckButton>		
+          <CheckButton name="JocysCom_ObjectivesCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+          <Size x="26" y="27" />
+          <Anchors>
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="337" y="50" />
+          </Anchors>
+          <Scripts>
+            <OnLoad>
+                self.text:SetText("|cffdddddd O|r");
+                self.text:SetPoint("TOPLEFT", 6, 10);
+            </OnLoad>
+            <OnEnter>
+              JocysCom_MiniMenuFrame_Show("Objectives");
+            </OnEnter>
+            <OnClick>
+              JocysCom_PlaySoundAndSaveSettings();
+            </OnClick>
+            <OnLeave>
+              JocysCom_MiniMenuFrame_Hide();
+            </OnLeave>
+          </Scripts>
+        </CheckButton>                
+        <CheckButton name="JocysCom_StopSpeechCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+          <Size x="26" y="27" />
+          <Anchors>
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="358" y="50" />
+          </Anchors>
+          <Scripts>
+            <OnLoad>
+                self.text:SetText("|cffdddddd IP|r");
+                self.text:SetPoint("TOPLEFT", 5, 10);
+            </OnLoad>
+            <OnEnter>
+              JocysCom_MiniMenuFrame_Show("StopSpeech");
+            </OnEnter>
+            <OnClick>
+              JocysCom_PlaySoundAndSaveSettings();
+            </OnClick>
+            <OnLeave>
+              JocysCom_MiniMenuFrame_Hide();
+            </OnLeave>
+          </Scripts>
+        </CheckButton>   
+        
       
       <!--******************************************************************************************************-->
 
@@ -1158,7 +1201,7 @@
               JocysCom_MiniMenuFrame_Hide();
             </OnLeave>
           </Scripts>
-        </CheckButton>    
+        </CheckButton>                 
       </Frames>
 				<Scripts>
 					<OnEnter>
