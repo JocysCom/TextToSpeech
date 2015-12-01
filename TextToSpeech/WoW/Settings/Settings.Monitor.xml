@@ -4,6 +4,7 @@
       <message name="Marshal McBride" gender="Male" />
   </Overrides>
   <Sounds>
+    <sound group="Quest" file="Message" />
     <sound group="Emote" file="Emote" />
     <sound group="Monster" file="Message" />
     <sound group="Whisper" file="Private" />

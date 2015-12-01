@@ -28,7 +28,7 @@
 		</Layers>
 		<Frames>
 			<CheckButton name="JocysCom_LockCheckButton" inherits="UICheckButtonTemplate">
-				<Size x="28" y="28" />
+				<Size x="26" y="27" />
 				<Anchors>
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-26" />
 				</Anchors>
@@ -42,7 +42,7 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="JocysCom_MenuCheckButton" inherits="UICheckButtonTemplate">
-				<Size x="28" y="28" />
+				<Size x="26" y="27" />
 				<Anchors>
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-48" />
 				</Anchors>
@@ -56,7 +56,7 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate">
-				<Size x="28" y="28" />
+				<Size x="26" y="27" />
 				<Anchors>
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-70" />
 				</Anchors>
@@ -157,29 +157,15 @@
 		</Scripts>
 	</Frame>
 	<Frame name="JocysCom_DialogueMiniFrame" parent="UIParent">
-		<Size x="256" y="32" />
+		<Size x="128" y="32" />
 		<Anchors>
 			<Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" />
 		</Anchors>
 		<Frames>
-			<CheckButton name="JocysCom_StopOnCloseCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_DialogueMiniFrame">
-				<Size x="22" y="23" />
-				<Anchors>
-					<Anchor point="TOPLEFT" x="72" y="-1" />
-				</Anchors>
-				<Scripts>
-          <OnLoad>
-            self.text:SetPoint("LEFT", 19, 1);
-          </OnLoad>
-					<OnClick>
-            JocysCom_PlaySoundAndSaveSettings();
-          </OnClick>
-				</Scripts>
-			</CheckButton>
 			<Button name="JocysCom_StopButtonQuest" inherits="UIPanelButtonTemplate" parent="JocysCom_DialogueMiniFrame" text="■">
 				<Size x="31" y="21" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="188" y="-1" />
+					<Anchor point="TOPLEFT" x="53" y="-1" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
@@ -196,7 +182,7 @@
 			<Button name="JocysCom_PlayButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_DialogueMiniFrame" text="►">
 				<Size x="31" y="21" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="218" y="-1" />
+					<Anchor point="TOPLEFT" x="83" y="-1" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
@@ -357,7 +343,7 @@
 				</ButtonText>
 			</Button>
 			<Frame name="JocysCom_MiniMenuFrame" parent="JocysCom_StopButtonFrame" enableMouse="true">
-				<Size x="391" y="114" />
+				<Size x="412" y="114" />
 				<Anchors>
 					<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="0" y="-4" />
 				</Anchors>
@@ -425,11 +411,32 @@
                 JocysCom_MiniMenuFrame_Hide();
               </OnLeave>
             </Scripts>
-          </CheckButton>
+          </CheckButton>        
+          <CheckButton name="JocysCom_ObjectivesCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+          <Size x="26" y="27" />
+          <Anchors>
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="33" y="50" />
+          </Anchors>
+          <Scripts>
+            <OnLoad>
+                self.text:SetText("|cfffffb9f O|r");
+                self.text:SetPoint("TOPLEFT", 6, 10);
+            </OnLoad>
+            <OnEnter>
+              JocysCom_MiniMenuFrame_Show("Objectives");
+            </OnEnter>
+            <OnClick>
+              JocysCom_PlaySoundAndSaveSettings();
+            </OnClick>
+            <OnLeave>
+              JocysCom_MiniMenuFrame_Hide();
+            </OnLeave>
+          </Scripts>
+        </CheckButton>             
 					<CheckButton name="JocysCom_QuestCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
 						<Size x="26" y="27" />
 						<Anchors>
-							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="33" y="50" />
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="54" y="50" />
 						</Anchors>
 						<Scripts>
               <OnLoad>
@@ -450,7 +457,7 @@
 					<CheckButton name="JocysCom_MonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
 						<Size x="26" y="27" />
 						<Anchors>
-							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="54" y="50" />
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="75" y="50" />
 						</Anchors>
 						<Scripts>
               <OnLoad>
@@ -471,7 +478,7 @@
         <CheckButton name="JocysCom_EmoteCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="75" y="50" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="96" y="50" />
           </Anchors>
           <Scripts>
             <OnLoad>
@@ -492,7 +499,7 @@
 					<CheckButton name="JocysCom_WhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
 						<Size x="26" y="27" />
 						<Anchors>
-							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="96" y="50" />
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="117" y="50" />
 						</Anchors>
 						<Scripts>
               <OnLoad>
@@ -513,7 +520,7 @@
 					<CheckButton name="JocysCom_SayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
 						<Size x="26" y="27" />
 						<Anchors>
-							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="118" y="50" />
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="138" y="50" />
 						</Anchors>
 						<Scripts>
               <OnLoad>
@@ -534,7 +541,7 @@
         <CheckButton name="JocysCom_YellCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="138" y="50" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="159" y="50" />
           </Anchors>
           <Scripts>
             <OnLoad>
@@ -555,7 +562,7 @@
 					<CheckButton name="JocysCom_PartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
 						<Size x="26" y="27" />
 						<Anchors>
-							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="159" y="50" />
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="180" y="50" />
 						</Anchors>
 						<Scripts>
               <OnLoad>
@@ -576,7 +583,7 @@
 					<CheckButton name="JocysCom_GuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
 						<Size x="26" y="27" />
 						<Anchors>
-							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="180" y="50" />
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="201" y="50" />
 						</Anchors>
 						<Scripts>
               <OnLoad>
@@ -597,7 +604,7 @@
 					<CheckButton name="JocysCom_BattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
 						<Size x="26" y="27" />
 						<Anchors>
-							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="201" y="50" />
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="222" y="50" />
 						</Anchors>
 						<Scripts>
               <OnLoad>
@@ -618,7 +625,7 @@
 					<CheckButton name="JocysCom_BattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
 						<Size x="26" y="27" />
 						<Anchors>
-							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="222" y="50" />
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="243" y="50" />
 						</Anchors>
 						<Scripts>
               <OnLoad>
@@ -639,7 +646,7 @@
 					<CheckButton name="JocysCom_RaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
 						<Size x="26" y="27" />
 						<Anchors>
-							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="243" y="50" />
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="264" y="50" />
 						</Anchors>
 						<Scripts>
               <OnLoad>
@@ -660,7 +667,7 @@
 					<CheckButton name="JocysCom_RaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
 						<Size x="26" y="27" />
 						<Anchors>
-							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="264" y="50" />
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="285" y="50" />
 						</Anchors>
 						<Scripts>
               <OnLoad>
@@ -681,7 +688,7 @@
 					<CheckButton name="JocysCom_InstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
 						<Size x="26" y="27" />
 						<Anchors>
-							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="285" y="50" />
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="306" y="50" />
 						</Anchors>
 						<Scripts>
               <OnLoad>
@@ -702,7 +709,7 @@
 					<CheckButton name="JocysCom_InstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
 						<Size x="26" y="27" />
 						<Anchors>
-							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="306" y="50" />
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="327" y="50" />
 						</Anchors>
 						<Scripts>
               <OnLoad>
@@ -719,40 +726,19 @@
 		            JocysCom_MiniMenuFrame_Hide();
 							</OnLeave>
 						</Scripts>
-					</CheckButton>		
-          <CheckButton name="JocysCom_ObjectivesCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-          <Size x="26" y="27" />
-          <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="337" y="50" />
-          </Anchors>
-          <Scripts>
-            <OnLoad>
-                self.text:SetText("|cffdddddd O|r");
-                self.text:SetPoint("TOPLEFT", 6, 10);
-            </OnLoad>
-            <OnEnter>
-              JocysCom_MiniMenuFrame_Show("Objectives");
-            </OnEnter>
-            <OnClick>
-              JocysCom_PlaySoundAndSaveSettings();
-            </OnClick>
-            <OnLeave>
-              JocysCom_MiniMenuFrame_Hide();
-            </OnLeave>
-          </Scripts>
-        </CheckButton>                
-        <CheckButton name="JocysCom_StopSpeechCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+					</CheckButton>		             
+        <CheckButton name="JocysCom_StartOnOpenCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
             <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="358" y="50" />
           </Anchors>
           <Scripts>
             <OnLoad>
-                self.text:SetText("|cffdddddd IP|r");
-                self.text:SetPoint("TOPLEFT", 5, 10);
+                self.text:SetText("|cffefc176 OP|r");
+                self.text:SetPoint("TOPLEFT", 3, 10);
             </OnLoad>
             <OnEnter>
-              JocysCom_MiniMenuFrame_Show("StopSpeech");
+              JocysCom_MiniMenuFrame_Show("StartOnOpen");
             </OnEnter>
             <OnClick>
               JocysCom_PlaySoundAndSaveSettings();
@@ -762,11 +748,33 @@
             </OnLeave>
           </Scripts>
         </CheckButton>   
+       <CheckButton name="JocysCom_StopOnCloseCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+          <Size x="26" y="27" />
+          <Anchors>
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="379" y="50" />
+          </Anchors>
+          <Scripts>
+            <OnLoad>
+                self.text:SetText("|cffefc176 CS|r");
+                self.text:SetPoint("TOPLEFT", 3, 10);
+            </OnLoad>
+            <OnEnter>
+              JocysCom_MiniMenuFrame_Show("StopOnClose");
+            </OnEnter>
+            <OnClick>
+              JocysCom_PlaySoundAndSaveSettings();
+            </OnClick>
+            <OnLeave>
+              JocysCom_MiniMenuFrame_Hide();
+            </OnLeave>
+          </Scripts>
+        </CheckButton>
         
       
       <!--******************************************************************************************************-->
-
-        <CheckButton name="JocysCom_SoundMonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+        
+        
+          <CheckButton name="JocysCom_SoundQuestCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
             <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="54" y="30" />
@@ -776,6 +784,23 @@
               self.text:SetText("|cff808080 Sound:|r");
               self.text:SetPoint("LEFT", -38, 1);
             </OnLoad>
+            <OnEnter>
+              JocysCom_MiniMenuFrame_Show("SoundQuest");
+            </OnEnter>
+            <OnClick>
+              JocysCom_PlaySoundAndSaveSettings();
+            </OnClick>
+            <OnLeave>
+              JocysCom_MiniMenuFrame_Hide();
+            </OnLeave>
+          </Scripts>
+        </CheckButton>
+        <CheckButton name="JocysCom_SoundMonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+          <Size x="26" y="27" />
+          <Anchors>
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="75" y="30" />
+          </Anchors>
+          <Scripts>
             <OnEnter>
               JocysCom_MiniMenuFrame_Show("SoundMonster");
             </OnEnter>
@@ -790,7 +815,7 @@
         <CheckButton name="JocysCom_SoundEmoteCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="75" y="30" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="96" y="30" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -807,7 +832,7 @@
         <CheckButton name="JocysCom_SoundWhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="96" y="30" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="117" y="30" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -824,7 +849,7 @@
         <CheckButton name="JocysCom_SoundSayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="118" y="30" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="138" y="30" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -841,7 +866,7 @@
         <CheckButton name="JocysCom_SoundYellCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="138" y="30" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="159" y="30" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -858,7 +883,7 @@
         <CheckButton name="JocysCom_SoundPartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="159" y="30" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="180" y="30" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -875,7 +900,7 @@
         <CheckButton name="JocysCom_SoundGuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="180" y="30" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="201" y="30" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -892,7 +917,7 @@
         <CheckButton name="JocysCom_SoundBattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="201" y="30" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="222" y="30" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -909,7 +934,7 @@
         <CheckButton name="JocysCom_SoundBattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="222" y="30" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="243" y="30" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -926,7 +951,7 @@
         <CheckButton name="JocysCom_SoundRaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="243" y="30" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="264" y="30" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -943,7 +968,7 @@
         <CheckButton name="JocysCom_SoundRaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="264" y="30" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="285" y="30" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -960,7 +985,7 @@
         <CheckButton name="JocysCom_SoundInstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="285" y="30" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="306" y="30" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -977,7 +1002,7 @@
         <CheckButton name="JocysCom_SoundInstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="306" y="30" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="327" y="30" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -994,7 +1019,7 @@
 
         <!--******************************************************************************************************-->
 
-        <CheckButton name="JocysCom_NameMonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+          <CheckButton name="JocysCom_NameQuestCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
             <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="54" y="10" />
@@ -1004,6 +1029,23 @@
               self.text:SetText("|cff808080 Name:|r");
               self.text:SetPoint("LEFT", -36, 1);
             </OnLoad>
+            <OnEnter>
+              JocysCom_MiniMenuFrame_Show("NameQuest");
+            </OnEnter>
+            <OnClick>
+              JocysCom_PlaySoundAndSaveSettings();
+            </OnClick>
+            <OnLeave>
+              JocysCom_MiniMenuFrame_Hide();
+            </OnLeave>
+          </Scripts>
+        </CheckButton>   
+          <CheckButton name="JocysCom_NameMonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+          <Size x="26" y="27" />
+          <Anchors>
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="75" y="10" />
+          </Anchors>
+          <Scripts>
             <OnEnter>
               JocysCom_MiniMenuFrame_Show("NameMonster");
             </OnEnter>
@@ -1018,7 +1060,7 @@
         <CheckButton name="JocysCom_NameWhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="96" y="10" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="117" y="10" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -1035,7 +1077,7 @@
         <CheckButton name="JocysCom_NameSayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="118" y="10" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="138" y="10" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -1052,7 +1094,7 @@
         <CheckButton name="JocysCom_NameYellCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="138" y="10" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="159" y="10" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -1069,7 +1111,7 @@
         <CheckButton name="JocysCom_NamePartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="159" y="10" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="180" y="10" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -1086,7 +1128,7 @@
         <CheckButton name="JocysCom_NameGuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="180" y="10" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="201" y="10" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -1103,7 +1145,7 @@
         <CheckButton name="JocysCom_NameBattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="201" y="10" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="222" y="10" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -1120,7 +1162,7 @@
         <CheckButton name="JocysCom_NameBattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="222" y="10" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="243" y="10" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -1137,7 +1179,7 @@
         <CheckButton name="JocysCom_NameRaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="243" y="10" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="264" y="10" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -1154,7 +1196,7 @@
         <CheckButton name="JocysCom_NameRaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="264" y="10" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="285" y="10" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -1171,7 +1213,7 @@
         <CheckButton name="JocysCom_NameInstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="285" y="10" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="306" y="10" />
           </Anchors>
           <Scripts>
             <OnEnter>
@@ -1188,7 +1230,7 @@
         <CheckButton name="JocysCom_NameInstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
           <Size x="26" y="27" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="306" y="10" />
+            <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" x="327" y="10" />
           </Anchors>
           <Scripts>
             <OnEnter>
