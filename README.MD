@@ -7,8 +7,13 @@
 
 <p align="justify">Reads <i>quests</i> and <i>chat messages</i> with text-to-speech voices.<br />
 How it works: When you open window with text or receive chat message in game, <b>“WoW Addon”</b> sends whisper (chat) message between  <code>&lt;message&gt;...&lt;/message&gt;</code> tags to yourself. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code> and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this <code>&lt;message&gt;...&lt;/message&gt;</code> from your network and reads it with specific text-to-speech voice.<br />
+
+<p style="text-align: center; margin: 10px;"><strong>Text-to-Speech Voices by <a href="http://windows.microsoft.com/en-us/windows/language-packs" target="_blank">Microsoft</a> or <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Ivona</a> / <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a></strong></p>
+
 FREE text-to-speech voices can be installed with <a target="_blank" href="http://windows.microsoft.com/en-us/windows/language-packs">Microsoft language packs</a>.<br />
 BETTER text-to-speech voices, like English-British <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">“Amy”</a> or <a href="http://harposoftware.com/en/content/10-trial">“Brian”</a>, are developed by <a target="_blank"  href="http://www.ivona.com">Ivona.com</a> and distributed by <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">HarpoSoftware.com</a>.</p>
+
+<p style="text-align: center;"><a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/209_S2G_Brian.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Brian.jpg" style="width: 110px; height: 84px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/208_S2G_Amy.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Amy.jpg" style="width: 110px; height: 84px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/247_S2G_Maxim.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Maxim.jpg" style="width: 110px; height: 84px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/248_S2G_Tatyana.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Tatyana.jpg" style="width: 110px; height: 84px;" /></a></p>
 
 <sub>About “Monitor”... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8 and 10 • All code is available under open source licence.</sub><br />
 <sup>You can use “Monitor” and create your own text-to-speech addons for games, if they support addons.<sup>
