@@ -50,7 +50,7 @@ New versions (2015-12-01) with more options can read quests and chat messages.</
 <p>5. Install additional text-to-speech voices, if needed.</p>
 
 <blockquote>
-<p align="justify">BETTER are Ivona text-to-speech voices (<a href="http://harposoftware.com/en" target="_blank">$35 each</a>). Test voices online (developer): <a href="http://www.ivona.com" target="_blank">Ivona.com</a><br />
+<p align="justify">BETTER are Ivona text-to-speech voices (<a href="http://harposoftware.com/en" target="_blank">$45 each</a>). Test voices online (developer): <a href="http://www.ivona.com" target="_blank">Ivona.com</a><br />
 Download and test voices 30 days for free (distributor): <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harposoftware.com/en/content/10-trial</a><br />
 Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. Some other voices are not bad too. If you know free of charge text-to-speech voices as good, as voices by Ivona, please, write us.</p>
 </blockquote>
