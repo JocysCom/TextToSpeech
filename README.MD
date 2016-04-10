@@ -15,6 +15,11 @@ BETTER text-to-speech voices, like English-British <a target="_blank"  href="htt
 
 <p style="text-align: center;"><a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/309_Brian.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Brian.jpg" style="width: 110px; height: 84px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/308_Amy.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Amy.jpg" style="width: 110px; height: 84px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/347_Maxim.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Maxim.jpg" style="width: 110px; height: 84px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/348_Tatyana.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Tatyana.jpg" style="width: 110px; height: 84px;" /></a></p>
 
+<p style="text-align: center;"><a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/304_Hans.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Hans.jpg" style="width: 110px; height: 84px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/305_Marlene.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Marlene.jpg" style="width: 110px; height: 84px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/329_Mathieu.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Mathieu.jpg" style="width: 110px; height: 84px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/328_Celine.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Celine.jpg" style="width: 110px; height: 84px;" /></a></p>
+
+<p style="text-align: center;"><strong><a href="http://harposoftware.com/en/content/10-trial" target="_blank">OTHER LANGUAGES...</a></strong></p>
+
+
 <sub>About “Monitor”... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8 and 10 • All code is available under open source licence.</sub><br />
 <sup>You can use “Monitor” and create your own text-to-speech addons for games, if they support addons.<sup>
 
