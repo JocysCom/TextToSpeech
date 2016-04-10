@@ -160,7 +160,7 @@ Usual file directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysC
 9. Game Menu > [Key Bindings] > [Action Bar]<br />
 10. Bind desired keyboard key to "Action Bar" button with “Stop TTS” macro. After pressing this key on keyboard, text-to-speech will stop.</p>
 
-### Possible improvements in “World of Warcraft” game
+### Desired improvements in “World of Warcraft” game
 <hr />
 
 <p>• Getting <b>UnitSex</b> of NPC from chat and quest log... in order to apply gender.<br />
