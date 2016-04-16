@@ -5,6 +5,13 @@
 
 <hr />
 
+# Monitor and WoW Addon • [Download Beta](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-Beta.zip)
+
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.3.6 Beta (2015-12-01) • Not Digitally Signed
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.50 (2015-12-01)
+
+<hr />
+
 <p align="justify">Reads <i>quests</i> and <i>chat messages</i> with text-to-speech voices.<br />
 How it works: When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, <b>“WoW Addon”</b> sends whisper (chat) message between  <code>&lt;message&gt;...&lt;/message&gt;</code> tags to yourself. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code> and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this text between <code>&lt;message&gt;...&lt;/message&gt;</code> tags from your local network, formats it to SAPI XML and reads it with specific text-to-speech voice.<br />
 
