@@ -5,12 +5,27 @@
 
 <hr />
 
-<p align="justify">Reads <i>quests</i> and <i>chat messages</i> with text-to-speech voices.<br />
-How it works: When you open window with text or receive chat message in game, <b>“WoW Addon”</b> sends whisper (chat) message between  <code>&lt;message&gt;...&lt;/message&gt;</code> tags to yourself. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code> and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this <code>&lt;message&gt;...&lt;/message&gt;</code> from your network and reads it with specific text-to-speech voice.<br />
-FREE text-to-speech voices can be installed with <a target="_blank" href="http://windows.microsoft.com/en-us/windows/language-packs">Microsoft language packs</a>.<br />
-BETTER text-to-speech voices, like English-British <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">“Amy”</a> or <a href="http://harposoftware.com/en/content/10-trial">“Brian”</a>, are developed by <a target="_blank"  href="http://www.ivona.com">Ivona.com</a> and distributed by <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">HarpoSoftware.com</a>.</p>
+# Monitor and WoW Addon • [Download Beta](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-Beta.zip)
 
-<sub>About “Monitor”... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8 and 10 • All code is available under open source licence.</sub><br />
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.3.6 Beta (2016-04-16) • Not Digitally Signed
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.50 (2015-12-01)
+
+<hr />
+
+<p align="justify">Reads <i>quests</i> and <i>chat messages</i> with text-to-speech voices.<br />
+How it works: When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, <b>“WoW Addon”</b> sends whisper (chat) message between  <code>&lt;message&gt;...&lt;/message&gt;</code> tags to yourself. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code> and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this text between <code>&lt;message&gt;...&lt;/message&gt;</code> tags from your local network, formats it to SAPI XML and reads it with specific text-to-speech voice.<br />
+
+<p style="text-align: center; margin: 10px;"><strong>Text-to-Speech Voices by <a href="http://windows.microsoft.com/en-us/windows/language-packs" target="_blank">Microsoft</a> or <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Ivona</a> / <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a></strong></p>
+
+FREE text-to-speech voices can be installed with <a target="_blank" href="http://windows.microsoft.com/en-us/windows/language-packs">Microsoft language packs</a>.<br />
+BETTER text-to-speech voices are developed by <a target="_blank"  href="http://www.ivona.com">Ivona.com</a> and distributed by <a target="_blank"  href="http://harposoftware.com/en/content/10-trial">HarpoSoftware.com</a>.</p>
+
+<p style="text-align: center;"><a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/309_Brian.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Brian_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/308_Amy.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Amy_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/347_Maxim.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Maxim_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/348_Tatyana.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Tatyana_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/304_Hans.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Hans_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/305_Marlene.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Marlene_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/329_Mathieu.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Mathieu_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/328_Celine.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Celine_G1.jpg" style="width: 102px; height: 78px;" /></a></p>
+
+<p style="text-align: center;"><strong><a href="http://harposoftware.com/en/content/10-trial" target="_blank">OTHER LANGUAGES...</a></strong></p>
+
+
+<sub>About... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8 and 10 • All code is available under open source licence.</sub><br />
 <sup>You can use “Monitor” and create your own text-to-speech addons for games, if they support addons.<sup>
 
 <p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_2_2_35_1.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small_2_2_50.png" /></a></p>
@@ -26,7 +41,7 @@ New versions (2015-12-01) with more options can read quests and chat messages.</
 ### Security and concerns
 <hr />
 
-<p align="justify"><sub>This “WoW Addon” and “Monitor” does not give you more power over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between <code>&lt;message&gt;</code> tags or text from your clipboard with installed text-to-speech voices, when you want it. It makes game more involving, fun and interesting... and easier for people with dyslexia too. This project is open source... anyone can check all code at any time. We digitally sign our software and put our real names on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, malware or spyware. Please download this “WoW Addon” and “Monitor” only from trustworthy sources. Make sure that “Monitor” is always <i>signed</i> by verified publisher with signature, issued by trusted certificate authority.</sub></p>
+<p align="justify"><sub>This “WoW Addon” and “Monitor” does not give you more power over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between <code>&lt;message&gt;</code> tags or text from your clipboard with installed text-to-speech voices, when you want it. It makes game more involving, fun and interesting... and easier for people with <b>dyslexia</b> too. This project is open source... anyone can check all code at any time. We digitally sign our software and put our real names on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, malware or spyware. Please download this “WoW Addon” and “Monitor” only from trustworthy sources. Make sure that “Monitor” is always <i>signed</i> by verified publisher with signature, issued by trusted certificate authority.</sub></p>
 
 ### Installation • Exit WoW before installing or updating addon.
 <hr />
@@ -42,7 +57,7 @@ New versions (2015-12-01) with more options can read quests and chat messages.</
 <p>5. Install additional text-to-speech voices, if needed.</p>
 
 <blockquote>
-<p align="justify">BETTER are Ivona text-to-speech voices (<a href="http://harposoftware.com/en" target="_blank">$35 each</a>). Test voices online (developer): <a href="http://www.ivona.com" target="_blank">Ivona.com</a><br />
+<p align="justify">BETTER are Ivona text-to-speech voices (<a href="http://harposoftware.com/en" target="_blank">$45 each</a>). Test voices online (developer): <a href="http://www.ivona.com" target="_blank">Ivona.com</a><br />
 Download and test voices 30 days for free (distributor): <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harposoftware.com/en/content/10-trial</a><br />
 Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. Some other voices are not bad too. If you know free of charge text-to-speech voices as good, as voices by Ivona, please, write us.</p>
 </blockquote>
@@ -152,7 +167,7 @@ Usual file directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysC
 9. Game Menu > [Key Bindings] > [Action Bar]<br />
 10. Bind desired keyboard key to "Action Bar" button with “Stop TTS” macro. After pressing this key on keyboard, text-to-speech will stop.</p>
 
-### Possible improvements in “World of Warcraft” game
+### Desired improvements in “World of Warcraft” game
 <hr />
 
 <p>• Getting <b>UnitSex</b> of NPC from chat and quest log... in order to apply gender.<br />

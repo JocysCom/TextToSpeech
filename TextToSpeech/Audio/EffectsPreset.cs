@@ -1,5 +1,5 @@
 ﻿using JocysCom.ClassLibrary.Runtime;
-using Microsoft.DirectX.DirectSound;
+using SharpDX.DirectSound;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -105,7 +105,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
         public EffectsPreset()
         {
-            Chorus = new EffectsChorus();
+            Chorus = new ChorusSettings();
         }
 
         public bool GeneralEnabled { get; set; }
@@ -120,15 +120,15 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
         public bool Reverb3DEnabled { get; set; }
 
         public EffectsGeneral General { get; set; }
-        public EffectsChorus Chorus { get; set; }
-        public EffectsCompressor Compressor { get; set; }
-        public EffectsDistortion Distortion { get; set; }
-        public EffectsEcho Echo { get; set; }
-        public EffectsFlanger Flanger { get; set; }
-        public EffectsGargle Gargle { get; set; }
-        public EffectsParamEq ParamEq { get; set; }
-        public EffectsWavesReverb Reverb { get; set; }
-        public EffectsInteractive3DLevel2Reverb Reverb3D { get; set; }
+        public ChorusSettings Chorus { get; set; }
+        public CompressorSettings Compressor { get; set; }
+        public DistortionSettings Distortion { get; set; }
+        public EchoSettings Echo { get; set; }
+        public FlangerSettings Flanger { get; set; }
+        public GargleSettings Gargle { get; set; }
+        public ParametricEqualizerSettings ParamEq { get; set; }
+        public WavesReverbSettings Reverb { get; set; }
+        public I3DL2ReverbSettings Reverb3D { get; set; }
 
     }
 }

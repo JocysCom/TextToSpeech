@@ -32,8 +32,8 @@
   </Compressor>
   <Distortion>
     <PreLowpassCutoff>8000</PreLowpassCutoff>
-    <PostEqBandwidth>2400</PostEqBandwidth>
-    <PostEqCenterFrequency>2400</PostEqCenterFrequency>
+    <PostEQBandwidth>2400</PostEQBandwidth>
+    <PostEQCenterFrequency>2400</PostEQCenterFrequency>
     <Edge>15</Edge>
     <Gain>-18</Gain>
   </Distortion>
@@ -63,23 +63,23 @@
     <Center>8000</Center>
   </ParamEq>
   <Reverb>
-    <HighFrequencyRtRatio>0.001</HighFrequencyRtRatio>
+    <HighFreqRTRatio>0.001</HighFreqRTRatio>
     <ReverbTime>1000</ReverbTime>
     <ReverbMix>0</ReverbMix>
     <InGain>0</InGain>
   </Reverb>
   <Reverb3D>
-    <HfReference>5000</HfReference>
+    <HFReference>5000</HFReference>
     <Density>100</Density>
     <Diffusion>100</Diffusion>
     <ReverbDelay>0.01</ReverbDelay>
     <Reverb>200</Reverb>
     <Reflections>-2602</Reflections>
     <ReflectionsDelay>0.007</ReflectionsDelay>
-    <DecayHfRatio>0.82</DecayHfRatio>
+    <DecayHFRatio>0.82</DecayHFRatio>
     <DecayTime>1.49</DecayTime>
     <RoomRolloffFactor>0</RoomRolloffFactor>
-    <RoomHf>-100</RoomHf>
+    <RoomHF>-100</RoomHF>
     <Room>-1000</Room>
   </Reverb3D>
 </EffectsPreset>
