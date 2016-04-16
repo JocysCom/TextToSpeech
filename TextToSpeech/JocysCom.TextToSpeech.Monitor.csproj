@@ -100,9 +100,11 @@
   <ItemGroup>
     <Reference Include="SharpDX">
       <HintPath>Resources\SharpDX\SharpDX.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.DirectSound">
       <HintPath>Resources\SharpDX\SharpDX.DirectSound.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
