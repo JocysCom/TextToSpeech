@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor
@@ -21,6 +22,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			// Update working directory.
 			var fi = new System.IO.FileInfo(Application.ExecutablePath);
 			System.IO.Directory.SetCurrentDirectory(fi.Directory.FullName);
+			// Load embedded assemblies.
+			AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 			if (!RuntimePolicyHelper.LegacyV2RuntimeEnabledSuccessfully)
 			{
 				// Failed to enable useLegacyV2RuntimeActivationPolicy at runtime.
@@ -46,7 +49,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				{
 					message += "===============================================================\r\n";
 					message += "You can click the link below to download Microsoft DirectX.";
-                    box.MainLinkLabel.Text = "http://www.microsoft.com/en-gb/download/details.aspx?id=8109";
+					box.MainLinkLabel.Text = "http://www.microsoft.com/en-gb/download/details.aspx?id=8109";
 					box.MainLinkLabel.Visible = true;
 				}
 				var result = box.ShowForm(message, "Exception!", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
@@ -84,8 +87,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			if (string.IsNullOrEmpty(Properties.Settings.Default.PitchMaxComboBoxText))
 			{
-                Properties.Settings.Default.DefaultIntroSoundComboBox = "Radio";
-                Properties.Settings.Default.PitchMaxComboBoxText = "0";
+				Properties.Settings.Default.DefaultIntroSoundComboBox = "Radio";
+				Properties.Settings.Default.PitchMaxComboBoxText = "0";
 				Properties.Settings.Default.PitchMinComboBoxText = "0";
 				Properties.Settings.Default.RateMaxComboBoxText = "1";
 				Properties.Settings.Default.RateMinComboBoxText = "1";
@@ -106,9 +109,37 @@ namespace JocysCom.TextToSpeech.Monitor
 		}
 		public static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
-            var errorText = ((Exception)e.ExceptionObject).ToString();
-            System.IO.File.WriteAllText("JocysCom.TextToSpeech.Monitor.Error.txt", errorText);
-            MessageBox.Show(errorText);
+			var errorText = ((Exception)e.ExceptionObject).ToString();
+			System.IO.File.WriteAllText("JocysCom.TextToSpeech.Monitor.Error.txt", errorText);
+			MessageBox.Show(errorText);
+		}
+
+		static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs e)
+		{
+			string dllName = e.Name.Contains(",") ? e.Name.Substring(0, e.Name.IndexOf(',')) : e.Name.Replace(".dll", "");
+			string path = null;
+			switch (dllName)
+			{
+				case "SharpDX":
+					path = "Resources.SharpDX.SharpDX.dll";
+					break;
+				case "SharpDX.DirectSound":
+					path = "Resources.SharpDX.SharpDX.DirectSound.dll";
+					break;
+				default:
+					break;
+			}
+			if (path == null) return null;
+			var assembly = Assembly.GetExecutingAssembly();
+			var sr = assembly.GetManifestResourceStream(typeof(MainForm).Namespace + "." + path);
+			if (sr == null)
+			{
+				return null;
+			}
+			byte[] bytes = new byte[sr.Length];
+			sr.Read(bytes, 0, bytes.Length);
+			var asm = Assembly.Load(bytes);
+			return asm;
 		}
 
 	}
