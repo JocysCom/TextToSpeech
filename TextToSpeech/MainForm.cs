@@ -267,7 +267,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			// Add 200 milliseconds at the end.
 			var silenceEnd = 200;
 			var silenceBytes = AudioHelper.GetSilenceByteCount(channelCount, sampleRate, bitsPerSample, silenceStart + silenceEnd);
-			AudioHelper.WriteHeader(writer, bytes.Length + silenceBytes, channelCount, sampleRate, bitsPerSample);
+			// Comment WriteHeader(...) line, because SharpDX don't need that (it creates noise).
+			//AudioHelper.WriteHeader(writer, bytes.Length + silenceBytes, channelCount, sampleRate, bitsPerSample);
 			if (applyEffects)
 			{
 				token = new CancellationTokenSource();
