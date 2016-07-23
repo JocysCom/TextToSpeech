@@ -5,7 +5,7 @@
 
 <hr />
 
-<img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Beta_Info.png" />
+<a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-Beta.zip" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Beta_Info.png" /></a>
 
 # Monitor and WoW Addon • [Download Beta](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-Beta.zip)
 
