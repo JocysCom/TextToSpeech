@@ -5,6 +5,8 @@
 
 <hr />
 
+<img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Beta_Info.png" />
+
 # Monitor and WoW Addon • [Download Beta](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-Beta.zip)
 
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.3.6 Beta (2016-04-16) • Not Digitally Signed
