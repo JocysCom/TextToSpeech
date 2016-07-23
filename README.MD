@@ -30,7 +30,7 @@ BETTER text-to-speech voices are developed by <a target="_blank"  href="http://w
 <sub>About... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8 and 10 • All code is available under open source licence.</sub><br />
 <sup>You can use “Monitor” and create your own text-to-speech addons for games, if they support addons.<sup>
 
-<p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_1.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small.png" /></a></p>
+<p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_1.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small_1.png" /></a></p>
 
 ### YouTube video ...“WoW Addon” (old version) with Ivona voices
 <hr />
@@ -140,7 +140,7 @@ Number ( from 0 to 100 ) sets, how often voice should be used, relatively to oth
 
 <p>11. <b>[■]</b> (Stop) button will appear at the top of WoW's <b>“Social-Friends”</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> will appear. Move mouse pointer over any <b>check-box</b> and title will show, what it enables/disables.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png"/></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_1.png"/></p>
 
 <blockquote>
 <sub>If “Social-Friends” button is not visible:<br />
