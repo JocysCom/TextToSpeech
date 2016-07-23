@@ -27,7 +27,7 @@ local messageStop = "<message command=\"stop\" />";
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.60 ( 2016-07-23 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.61 ( 2016-07-23 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon's whisper messages in chat window.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Stop]|r |cff808080button.|r");
@@ -816,8 +816,8 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_YellCB == false then JocysCom_YellCheckButton:SetChecked(false) else JocysCom_YellCheckButton:SetChecked(true) end
 	if JocysCom_PartyCB == false then JocysCom_PartyCheckButton:SetChecked(false) else JocysCom_PartyCheckButton:SetChecked(true) end
 	if JocysCom_GuildCB == false then JocysCom_GuildCheckButton:SetChecked(false) else JocysCom_GuildCheckButton:SetChecked(true) end
-	if JocysCom_BattlegroundCB == false then JocysCom_BattlegroundCheckButton:SetChecked(false) else JocysCom_BattlegroundCheckButton:SetChecked(true) end
-	if JocysCom_BattlegroundLCB == true then JocysCom_BattlegroundLeaderCheckButton:SetChecked(true) else JocysCom_BattlegroundLeaderCheckButton:SetChecked(false) end
+	if JocysCom_BGCB == false then JocysCom_BattlegroundCheckButton:SetChecked(false) else JocysCom_BattlegroundCheckButton:SetChecked(true) end
+	if JocysCom_BGLCB == true then JocysCom_BattlegroundLeaderCheckButton:SetChecked(true) else JocysCom_BattlegroundLeaderCheckButton:SetChecked(false) end
 	if JocysCom_RaidCB == false then JocysCom_RaidCheckButton:SetChecked(false) else JocysCom_RaidCheckButton:SetChecked(true) end
 	if JocysCom_RaidLCB == true then JocysCom_RaidLeaderCheckButton:SetChecked(true) else JocysCom_RaidLeaderCheckButton:SetChecked(false) end
 	if JocysCom_InstanceCB == false then JocysCom_InstanceCheckButton:SetChecked(false) else JocysCom_InstanceCheckButton:SetChecked(true) end
@@ -826,6 +826,7 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_StartOnOpenCB == false then JocysCom_StartOnOpenCheckButton:SetChecked(false) else JocysCom_StartOnOpenCheckButton:SetChecked(true) end
 	if JocysCom_StopOnCloseCB == false then JocysCom_StopOnCloseCheckButton:SetChecked(false) else JocysCom_StopOnCloseCheckButton:SetChecked(true) end
 	-- Set (MiniFrame) Sound CheckButtons.
+	if JocysCom_SQuestCB == true then JocysCom_SoundQuestCheckButton:SetChecked(true) else JocysCom_SoundQuestCheckButton:SetChecked(false) end
 	if JocysCom_SMonsterCB == false then JocysCom_SoundMonsterCheckButton:SetChecked(false) else JocysCom_SoundMonsterCheckButton:SetChecked(true) end
 	if JocysCom_SWhisperCB == false then JocysCom_SoundWhisperCheckButton:SetChecked(false) else JocysCom_SoundWhisperCheckButton:SetChecked(true) end
 	if JocysCom_SEmoteCB == false then JocysCom_SoundEmoteCheckButton:SetChecked(false) else JocysCom_SoundEmoteCheckButton:SetChecked(true) end
@@ -833,21 +834,22 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_SYellCB == false then JocysCom_SoundYellCheckButton:SetChecked(false) else JocysCom_SoundYellCheckButton:SetChecked(true) end
 	if JocysCom_SPartyCB == false then JocysCom_SoundPartyCheckButton:SetChecked(false) else JocysCom_SoundPartyCheckButton:SetChecked(true) end
 	if JocysCom_SGuildCB == false then JocysCom_SoundGuildCheckButton:SetChecked(false) else JocysCom_SoundGuildCheckButton:SetChecked(true) end
-	if JocysCom_SBattlegroundCB == false then JocysCom_SoundBattlegroundCheckButton:SetChecked(false) else JocysCom_SoundBattlegroundCheckButton:SetChecked(true) end
-	if JocysCom_SBattlegroundLCB == false then JocysCom_SoundBattlegroundLeaderCheckButton:SetChecked(false) else JocysCom_SoundBattlegroundLeaderCheckButton:SetChecked(true) end
+	if JocysCom_SBGCB == false then JocysCom_SoundBattlegroundCheckButton:SetChecked(false) else JocysCom_SoundBattlegroundCheckButton:SetChecked(true) end
+	if JocysCom_SBGLCB == false then JocysCom_SoundBattlegroundLeaderCheckButton:SetChecked(false) else JocysCom_SoundBattlegroundLeaderCheckButton:SetChecked(true) end
 	if JocysCom_SRaidCB == false then JocysCom_SoundRaidCheckButton:SetChecked(false) else JocysCom_SoundRaidCheckButton:SetChecked(true) end
 	if JocysCom_SRaidLCB == false then JocysCom_SoundRaidLeaderCheckButton:SetChecked(false) else JocysCom_SoundRaidLeaderCheckButton:SetChecked(true) end
 	if JocysCom_SInstanceCB == false then JocysCom_SoundInstanceCheckButton:SetChecked(false) else JocysCom_SoundInstanceCheckButton:SetChecked(true) end
 	if JocysCom_SInstanceLCB == false then JocysCom_SoundInstanceLeaderCheckButton:SetChecked(false) else JocysCom_SoundInstanceLeaderCheckButton:SetChecked(true) end
 	-- Set (MiniFrame) Name CheckButtons.
+	if JocysCom_NQuestCB == true then JocysCom_NameQuestCheckButton:SetChecked(true) else JocysCom_NameQuestCheckButton:SetChecked(false) end
 	if JocysCom_NMonsterCB == true then JocysCom_NameMonsterCheckButton:SetChecked(true) else JocysCom_NameMonsterCheckButton:SetChecked(false) end
 	if JocysCom_NWhisperCB == true then JocysCom_NameWhisperCheckButton:SetChecked(true) else JocysCom_NameWhisperCheckButton:SetChecked(false) end
 	if JocysCom_NSayCB == true then JocysCom_NameSayCheckButton:SetChecked(true) else JocysCom_NameSayCheckButton:SetChecked(false) end
 	if JocysCom_NYellCB == true then JocysCom_NameYellCheckButton:SetChecked(true) else JocysCom_NameYellCheckButton:SetChecked(false) end
 	if JocysCom_NPartyCB == true then JocysCom_NamePartyCheckButton:SetChecked(true) else JocysCom_NamePartyCheckButton:SetChecked(false) end
 	if JocysCom_NGuildCB == true then JocysCom_NameGuildCheckButton:SetChecked(true) else JocysCom_NameGuildCheckButton:SetChecked(false) end
-	if JocysCom_NBattlegroundCB == true then JocysCom_NameBattlegroundCheckButton:SetChecked(true) else JocysCom_NameBattlegroundCheckButton:SetChecked(false) end
-	if JocysCom_NBattlegroundLCB == true then JocysCom_NameBattlegroundLeaderCheckButton:SetChecked(true) else JocysCom_NameBattlegroundLeaderCheckButton:SetChecked(false) end
+	if JocysCom_NBGCB == true then JocysCom_NameBattlegroundCheckButton:SetChecked(true) else JocysCom_NameBattlegroundCheckButton:SetChecked(false) end
+	if JocysCom_NBGLCB == true then JocysCom_NameBattlegroundLeaderCheckButton:SetChecked(true) else JocysCom_NameBattlegroundLeaderCheckButton:SetChecked(false) end
 	if JocysCom_NRaidCB == true then JocysCom_NameRaidCheckButton:SetChecked(true) else JocysCom_NameRaidCheckButton:SetChecked(false) end
 	if JocysCom_NRaidLCB == true then JocysCom_NameRaidLeaderCheckButton:SetChecked(true) else JocysCom_NameRaidLeaderCheckButton:SetChecked(false) end
 	if JocysCom_NInstanceCB == true then JocysCom_NameInstanceCheckButton:SetChecked(true) else JocysCom_NameInstanceCheckButton:SetChecked(false) end
@@ -870,8 +872,8 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_YellCB = JocysCom_YellCheckButton:GetChecked();
 	JocysCom_PartyCB = JocysCom_PartyCheckButton:GetChecked();
 	JocysCom_GuildCB = JocysCom_GuildCheckButton:GetChecked();
-	JocysCom_BattlegroundCB = JocysCom_BattlegroundCheckButton:GetChecked();
-	JocysCom_BattlegroundLCB = JocysCom_BattlegroundLeaderCheckButton:GetChecked();
+	JocysCom_BGCB = JocysCom_BattlegroundCheckButton:GetChecked();
+	JocysCom_BGLCB = JocysCom_BattlegroundLeaderCheckButton:GetChecked();
 	JocysCom_RaidCB = JocysCom_RaidCheckButton:GetChecked();
 	JocysCom_RaidLCB = JocysCom_RaidLeaderCheckButton:GetChecked();
 	JocysCom_InstanceCB = JocysCom_InstanceCheckButton:GetChecked();
@@ -880,6 +882,7 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_StartOnOpenCB = JocysCom_StartOnOpenCheckButton:GetChecked();
 	JocysCom_StopOnCloseCB = JocysCom_StopOnCloseCheckButton:GetChecked();
 	-- Save sound check buttons.
+	JocysCom_SQuestCB = JocysCom_SoundQuestCheckButton:GetChecked();
 	JocysCom_SMonsterCB = JocysCom_SoundMonsterCheckButton:GetChecked();
 	JocysCom_SWhisperCB = JocysCom_SoundWhisperCheckButton:GetChecked();
 	JocysCom_SEmoteCB = JocysCom_SoundEmoteCheckButton:GetChecked();
@@ -887,21 +890,22 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_SYellCB = JocysCom_SoundYellCheckButton:GetChecked();
 	JocysCom_SPartyCB = JocysCom_SoundPartyCheckButton:GetChecked();
 	JocysCom_SGuildCB = JocysCom_SoundGuildCheckButton:GetChecked();
-	JocysCom_SBattlegroundCB = JocysCom_SoundBattlegroundCheckButton:GetChecked();
-	JocysCom_SBattlegroundLCB = JocysCom_SoundBattlegroundLeaderCheckButton:GetChecked();
+	JocysCom_SBGCB = JocysCom_SoundBattlegroundCheckButton:GetChecked();
+	JocysCom_SBGLCB = JocysCom_SoundBattlegroundLeaderCheckButton:GetChecked();
 	JocysCom_SRaidCB = JocysCom_SoundRaidCheckButton:GetChecked();
 	JocysCom_SRaidLCB = JocysCom_SoundRaidLeaderCheckButton:GetChecked();
 	JocysCom_SInstanceCB = JocysCom_SoundInstanceCheckButton:GetChecked();
 	JocysCom_SInstanceLCB = JocysCom_SoundInstanceLeaderCheckButton:GetChecked();
 	-- Save name check buttons.
+	JocysCom_NQuestCB = JocysCom_NameQuestCheckButton:GetChecked();
 	JocysCom_NMonsterCB = JocysCom_NameMonsterCheckButton:GetChecked();
 	JocysCom_NWhisperCB = JocysCom_NameWhisperCheckButton:GetChecked();
 	JocysCom_NSayCB = JocysCom_NameSayCheckButton:GetChecked();
 	JocysCom_NYellCB = JocysCom_NameYellCheckButton:GetChecked();
 	JocysCom_NPartyCB = JocysCom_NamePartyCheckButton:GetChecked();
 	JocysCom_NGuildCB = JocysCom_NameGuildCheckButton:GetChecked();
-	JocysCom_NBattlegroundCB = JocysCom_NameBattlegroundCheckButton:GetChecked();
-	JocysCom_NBattlegroundLCB = JocysCom_NameBattlegroundLeaderCheckButton:GetChecked();
+	JocysCom_NBGCB = JocysCom_NameBattlegroundCheckButton:GetChecked();
+	JocysCom_NBGLCB = JocysCom_NameBattlegroundLeaderCheckButton:GetChecked();
 	JocysCom_NRaidCB = JocysCom_NameRaidCheckButton:GetChecked();
 	JocysCom_NRaidLCB = JocysCom_NameRaidLeaderCheckButton:GetChecked();
 	JocysCom_NInstanceCB = JocysCom_NameInstanceCheckButton:GetChecked();
