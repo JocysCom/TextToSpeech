@@ -27,7 +27,7 @@ local messageStop = "<message command=\"stop\" />";
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.51 ( 2016-07-22 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.60 ( 2016-07-23 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon's whisper messages in chat window.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Stop]|r |cff808080button.|r");
@@ -36,7 +36,7 @@ function JocysCom_Text_EN()
 	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
 	JocysCom_DescriptionFrameFontString:SetText("Text-to-speech voices, pitch, rate, effects, etc. ... you will find all options in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window, |cff77ccffJocys.Com Text to Speech WoW Addon|r creates and sends special whisper message to yourself (message includes dialogue text, character name and effect name). Then, |cff77ccffJocys.Com Text to Speech Monitor|r (which must be running in background) picks-up this message from your network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.");
 	JocysCom_ReplaceNameFontString:SetText("Here you can change your name for text to speech from |cff00ff00" .. unitName .. "|r to something else.");
-	JocysCom_MessageForMonitorFrameFontString:SetText("Whisper message for |cff77ccffJocys.Com Text to Speech Monitor|r ... it must be runninng in background:");	
+	JocysCom_MessageForMonitorFrameFontString:SetText("Whisper message for |cff77ccffJocys.Com Text to Speech Monitor|r ... it must be runninng in background:");
 end
 
 -- Unlock frames.
@@ -529,104 +529,104 @@ end
  function JocysCom_MiniMenuFrame_Show(name)
  	local fontString = "";
 	JocysCom_MiniMenuFrame_FontString:Show();
-	if name == "Stop" then
-		fontString = "|cffddddddStop text-to-speech and clear all playlist.|r";
+	if name == "Options" then
+		fontString = "|cffddddddOpen text-to-speech Options window.\n|r";
 	elseif name == "Save" then
-		fontString = "|cffddddddSave target name, gender, type in Monitor.|r";
-	elseif name == "Options" then
-		fontString = "|cffddddddOpen text-to-speech Options window.|r";
+		fontString = "|cffddddddSave target name, gender, type in Monitor.\n|r";
+	elseif name == "Stop" then
+		fontString = "|cffddddddStop text-to-speech and clear all playlist.\n|r";
 	elseif name == "Busy" then
-		fontString = "|cff6464ffShow <Busy> over your character when window is open and speech is on.|r";
+		fontString = "|cff6464ffShow <Busy> over your character\nwhen window is open and speech is on.|r";
 	elseif name == "Objectives" then
-		fontString = "|cfffffb9fInclude QUEST OBJECTIVES in text-to-speech.|r";
-	elseif name == "Quest" then
-		fontString = "|cfffffb9fPlay DIALOGUE, BOOK, PLAQUE, etc. window text.|r";
-	elseif name == "Monster" then
-		fontString = "|cfffffb9fPlay NPC chat messages.|r";
-	elseif name == "Whisper" then
-		fontString = "|cffffb2ebPlay WHISPER chat messages.|r";
-	elseif name == "Emote" then
-		fontString = "|cffff6b26Play player EMOTE  chat messages.|r";
-	elseif name == "Say" then
-		fontString = "|cffffffffPlay SAY chat messages.|r";
-	elseif name == "Yell" then
-		fontString = "|cffff3f40Play YELL chat messages.|r";
-	elseif name == "Party" then
-		fontString = "|cffaaa7ffPlay PARTY chat messages.|r";
-	elseif name == "Guild" then
-		fontString = "|cff40fb40Play GUILD chat messages.|r";
-	elseif name == "Raid" then
-		fontString = "|cffff7d00Play all RAID chat messages.|r";
-	elseif name == "RaidLeader" then
-		fontString = "|cffff4709Play RAID LEADER chat messages only.|r";
-	elseif name == "Battleground" then
-		fontString = "|cffff7d00Play all BATTLEGROUND chat messages.|r";
-	elseif name == "BattlegroundLeader" then
-		fontString = "|cffff4709Play BATTLEGROUND LEADER chat messages only.|r";
-	elseif name == "Instance" then
-		fontString = "|cffff7d00Play all INSTANCE chat messages.|r";
-	elseif name == "InstanceLeader" then
-		fontString = "|cffff4709Play INSTANCE LEADER chat messages only.|r";
+		fontString = "|cffefc176Include QUEST OBJECTIVES\nin text-to-speech.|r";
 	elseif name == "StartOnOpen" then
-		fontString = "|cffefc176Instantly START to play DIALOGUE, BOOK, etc. text on opening window.|r";
+		fontString = "|cffefc176Instantly START to play DIALOGUE,\nBOOK, etc. text on opening window.|r";
 	elseif name == "StopOnClose" then
-		fontString = "|cffefc176Instantly STOP to play DIALOGUE, BOOK, etc. text on closing window.|r";
+		fontString = "|cffefc176Instantly STOP to play DIALOGUE,\nBOOK, etc. text on closing window.|r";
+	elseif name == "Quest" then
+		fontString = "|cffefc176Play DIALOGUE, BOOK, PLAQUE, etc.\nwindow text.|r";
+	elseif name == "Monster" then
+		fontString = "|cfffffb9fPlay NPC chat messages.\n|r";
+	elseif name == "Whisper" then
+		fontString = "|cffffb2ebPlay WHISPER chat messages.\n|r";
+	elseif name == "Emote" then
+		fontString = "|cffff6b26Play player EMOTE  chat messages.\n|r";
+	elseif name == "Say" then
+		fontString = "|cffffffffPlay SAY chat messages.\n|r";
+	elseif name == "Yell" then
+		fontString = "|cffff3f40Play YELL chat messages.\n|r";
+	elseif name == "Party" then
+		fontString = "|cffaaa7ffPlay PARTY chat messages.\n|r";
+	elseif name == "Guild" then
+		fontString = "|cff40fb40Play GUILD chat messages.\n|r";
+	elseif name == "Raid" then
+		fontString = "|cffff7d00Play all RAID chat messages.\n|r";
+	elseif name == "RaidLeader" then
+		fontString = "|cffff4709Play RAID LEADER chat messages only.\n|r";
+	elseif name == "Battleground" then
+		fontString = "|cffff7d00Play all BATTLEGROUND chat messages.\n|r";
+	elseif name == "BattlegroundLeader" then
+		fontString = "|cffff4709Play BATTLEGROUND LEADER\nchat messages only.|r";
+	elseif name == "Instance" then
+		fontString = "|cffff7d00Play all INSTANCE chat messages.\n|r";
+	elseif name == "InstanceLeader" then
+		fontString = "|cffff4709Play INSTANCE LEADER\nchat messages only.|r";
 	-- Play intro sound check-boxes.
 	elseif name == "SoundQuest" then
-		fontString = "|cfffffb9fPlay sound at the beginning of DIALOGUE, BOOK, PLAQUE, etc. window text.|r";
+		fontString = "|cfffffb9fPlay intro sound at the beginning of\nDIALOGUE, BOOK, etc. window text.|r";
 	elseif name == "SoundMonster" then
-		fontString = "|cfffffb9fPlay sound at the beginning of NPC messages.|r";
+		fontString = "|cfffffb9fPlay intro sound at the beginning of\nNPC messages.|r";
 	elseif name == "SoundWhisper" then
-		fontString = "|cffffb2ebPlay sound at the beginning of WHISPER messages.|r";
+		fontString = "|cffffb2ebPlay intro sound at the beginning of\nWHISPER messages.|r";
 		elseif name == "SoundEmote" then
-		fontString = "|cffff6b26Play sound at the beginning of player EMOTE messages.|r";
+		fontString = "|cffff6b26Play intro sound at the beginning of\nplayer EMOTE messages.|r";
 	elseif name == "SoundSay" then
-		fontString = "|cffffffffPlay sound at the beginning of SAY messages.|r";
+		fontString = "|cffffffffPlay intro sound at the beginning of\nSAY messages.|r";
 	elseif name == "SoundYell" then
-		fontString = "|cffff3f40Play sound at the beginning of YELL messages.|r";
+		fontString = "|cffff3f40Play intro sound at the beginning of\nYELL messages.|r";
 	elseif name == "SoundParty" then
-		fontString = "|cffaaa7ffPlay sound at the beginning of PARTY messages.|r";
+		fontString = "|cffaaa7ffPlay intro sound at the beginning of\nPARTY messages.|r";
 	elseif name == "SoundGuild" then
-		fontString = "|cff40fb40Play sound at the beginning of GUILD messages.|r";
+		fontString = "|cff40fb40Play intro sound at the beginning of\nGUILD messages.|r";
 	elseif name == "SoundRaid" then
-		fontString = "|cffff7d00Play sound at the beginning of RAID messages.|r";
+		fontString = "|cffff7d00Play intro sound at the beginning of\nRAID messages.|r";
 	elseif name == "SoundRaidLeader" then
-		fontString = "|cffff4709Play sound at the beginning of RAID LEADER messages.|r";
+		fontString = "|cffff4709Play intro sound at the beginning of\nRAID LEADER messages.|r";
 	elseif name == "SoundBattleground" then
-		fontString = "|cffff7d00Play sound at the beginning of BATTLEGROUND messages.|r";
+		fontString = "|cffff7d00Play intro sound at the beginning of\nBATTLEGROUND messages.|r";
 	elseif name == "SoundBattlegroundLeader" then
-		fontString = "|cffff4709Play sound at the beginning of BATTLEGROUND LEADER messages.|r";
+		fontString = "|cffff4709Play intro sound at the beginning of\nBATTLEGROUND LEADER messages.|r";
 	elseif name == "SoundInstance" then
-		fontString = "|cffff7d00Play sound at the beginning of INSTANCE messages.|r";
+		fontString = "|cffff7d00Play intro sound at the beginning of\nINSTANCE messages.|r";
 	elseif name == "SoundInstanceLeader" then
-		fontString = "|cffff4709Play sound at the beginning of INSTANCE LEADER messages.|r";
+		fontString = "|cffff4709Play intro sound at the beginning of\nINSTANCE LEADER messages.|r";
 	-- Add name check-boxes.
 	elseif name == "NameQuest" then
-		fontString = "|cfffffb9fAdd \"<Name> says.\" to DIALOGUE, BOOK, PLAQUE, etc. window text.|r";
+		fontString = "|cfffffb9fAdd \"<CharacterName> says.\" to\nDIALOGUE, BOOK, etc. window text.|r";
 	elseif name == "NameMonster" then
-		fontString = "|cfffffb9fAdd \"<Name> whispers \\ says \\ yells.\" to NPC messages.|r";
+		fontString = "|cfffffb9fAdd \"<Name> whispers \\ says \\ yells.\" to\nNPC messages.|r";
 	elseif name == "NameWhisper" then
-		fontString = "|cffffb2ebAdd \"<Name> whispers.\" to WHISPER messages.|r";
+		fontString = "|cffffb2ebAdd \"<CharacterName> whispers.\" to\nWHISPER messages.|r";
 	elseif name == "NameSay" then
-		fontString = "|cffffffffAdd \"<Name> says.\" to SAY messages.|r";
+		fontString = "|cffffffffAdd \"<CharacterName> says.\" to\nSAY messages.|r";
 	elseif name == "NameYell" then
-		fontString = "|cffff3f40Add \"<Name> yells.\" to YELL messages.|r";
+		fontString = "|cffff3f40Add \"<CharacterName> yells.\" to\nYELL messages.|r";
 	elseif name == "NameParty" then
-		fontString = "|cffaaa7ffAdd \"<Name> says.\" to PARTY messages.|r";
+		fontString = "|cffaaa7ffAdd \"<CharacterName> says.\" to\nPARTY messages.|r";
 	elseif name == "NameGuild" then
-		fontString = "|cff40fb40Add \"<Name> says.\" to GUILD messages.|r";
+		fontString = "|cff40fb40Add \"<CharacterName> says.\" to\nGUILD messages.|r";
 	elseif name == "NameRaid" then
-		fontString = "|cffff7d00Add \"<Name> says.\" to RAID messages.|r";
+		fontString = "|cffff7d00Add \"<CharacterName> says.\" to\nRAID messages.|r";
 	elseif name == "NameRaidLeader" then
-		fontString = "|cffff4709Add \"<Name> says.\" to RAID LEADER messages.|r";
+		fontString = "|cffff4709Add \"<CharacterName> says.\" to\nRAID LEADER messages.|r";
 	elseif name == "NameBattleground" then
-		fontString = "|cffff7d00Add \"<Name> says.\" to BATTLEGROUND messages.|r";
+		fontString = "|cffff7d00Add \"<CharacterName> says.\" to\nBATTLEGROUND messages.|r";
 	elseif name == "NameBattlegroundLeader" then
-		fontString = "|cffff4709Add \"<Name> says.\" to BATTLEGROUND LEADER messages.|r";
+		fontString = "|cffff4709Add \"<CharacterName> says.\" to\nBATTLEGROUND LEADER messages.|r";
 	elseif name == "NameInstance" then
-		fontString = "|cffff7d00Add \"<Name> says.\" to INSTANCE messages.|r";
+		fontString = "|cffff7d00Add \"<CharacterName> says.\" to\nINSTANCE messages.|r";
 	elseif name == "NameInstanceLeader" then
-		fontString = "|cffff4709Add \"<Name> says.\" to INSTANCE LEADER messages.|r";
+		fontString = "|cffff4709Add \"<CharacterName> says.\" to\nINSTANCE LEADER messages.|r";
 	else
 		JocysCom_MiniMenuFrame_FontString:Hide();
 	end
