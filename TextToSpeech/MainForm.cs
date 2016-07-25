@@ -456,7 +456,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		}
 
 
-		BindingList<WowListItem> WowMessageList = new BindingList<WowListItem>();
+		BindingList<PlugIns.IVoiceListItem> WowMessageList = new BindingList<PlugIns.IVoiceListItem>();
 
 		object SequenceNumbersLock = new object();
 		List<uint> SequenceNumbers = new List<uint>();
@@ -480,7 +480,8 @@ namespace JocysCom.TextToSpeech.Monitor
 					// If message was sent to specified port then...
 					if (tcpHeader.DestinationPort == portNumber)
 					{
-						var wowItem = new WowListItem(ipHeader, tcpHeader);
+						var wowItem = new PlugIns.WowListItem();
+						wowItem.Load(ipHeader, tcpHeader);
 						// If data contains XML message then...
 						if (wowItem.IsVoiceItem)
 						{
@@ -491,7 +492,7 @@ namespace JocysCom.TextToSpeech.Monitor
 								{
 									SequenceNumbers.Add(tcpHeader.SequenceNumber);
 									// Add wow item to the list. Use Invoke to make it Thread safe.
-									this.Invoke((Action<WowListItem>)addWowListItem, new object[] { wowItem });
+									this.Invoke((Action<PlugIns.IVoiceListItem>)addVoiceListItem, new object[] { wowItem });
 								}
 							}
 						}
@@ -503,7 +504,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		bool ScrollMessagesGrid = false;
 		object ScrollMessagesGridLock = new object();
 
-		private void addWowListItem(WowListItem wowItem)
+		private void addVoiceListItem(PlugIns.IVoiceListItem wowItem)
 		{
 			lock (ScrollMessagesGridLock)
 			{
@@ -946,8 +947,9 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				if (text.StartsWith("<message"))
 				{
-					var wowItem = new WowListItem(text);
-					addWowListItem(wowItem);
+					var wowItem = new PlugIns.WowListItem();
+					wowItem.Load(text);
+					addVoiceListItem(wowItem);
 				}
 				else
 				{
@@ -980,7 +982,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				var gridRow = MessagesDataGridView.SelectedRows.Cast<DataGridViewRow>().FirstOrDefault();
 				if (gridRow != null)
 				{
-					var item = (WowListItem)gridRow.DataBoundItem;
+					var item = (PlugIns.IVoiceListItem)gridRow.DataBoundItem;
 					ProcessWowMessage(item.VoiceXml);
 				}
 			}
@@ -1551,8 +1553,9 @@ namespace JocysCom.TextToSpeech.Monitor
 
 					if (MonitorClipboardComboBox.SelectedIndex == 2 && !text.Contains("<message")) text = "<message command=\"Play\"><part>" + text + "</part></message>";
 					if (string.IsNullOrEmpty(text) || !text.Contains("<message")) return;
-					var wowItem = new WowListItem(text);
-					addWowListItem(wowItem);
+					var wowItem = new PlugIns.WowListItem();
+					wowItem.Load(text);
+					addVoiceListItem(wowItem);
 					// do something with it
 				}
 				else if (iData.GetDataPresent(DataFormats.Bitmap))
