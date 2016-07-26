@@ -2,6 +2,7 @@
 using JocysCom.TextToSpeech.Monitor.Audio;
 using JocysCom.TextToSpeech.Monitor.Controls;
 using JocysCom.TextToSpeech.Monitor.Network;
+using JocysCom.TextToSpeech.Monitor.PlugIns;
 using SpeechLib;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,20 @@ namespace JocysCom.TextToSpeech.Monitor
 			InstalledVoices = new BindingList<InstalledVoiceEx>();
 			DefaultIntroSoundComboBox.DataSource = GetIntroSoundNames();
 			UpdateLabel.Text = "You are running " + MainHelper.GetProductFullName();
+
+			PlugIns.Add(new WowListItem());
+			PlugIns.Add(new Battlefield4ListItem());
+			ProgramComboBox.DataSource = PlugIns;
+			ProgramComboBox.DisplayMember = "Name";
+			var name = Properties.Settings.Default.ProgramComboBoxText;
+			if (!string.IsNullOrEmpty(name))
+			{
+				ProgramComboBox.Text = name;
+			}
+			ProgramComboBox.SelectedIndexChanged += ProgramComboBox_SelectedIndexChanged;
 		}
+
+		List<VoiceListItem> PlugIns = new List<VoiceListItem>();
 
 		System.Media.SoundPlayer WavPlayer;
 
@@ -362,7 +376,6 @@ namespace JocysCom.TextToSpeech.Monitor
 				}
 				try
 				{
-					var monitorPort = (int)PortNumericUpDown.Value;
 					continueMonitoring = true;
 					foreach (var ip in IpAddresses)
 					{
@@ -371,7 +384,7 @@ namespace JocysCom.TextToSpeech.Monitor
 						var socket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP);
 						//Bind the socket to the selected IP address.
 						// Note: it looks like monitorPort value is ignored and all ports will be monitored.
-						socket.Bind(new IPEndPoint(ip, monitorPort));
+						socket.Bind(new IPEndPoint(ip, MonitorItem.PortNumber));
 						//Set the socket  options: Applies only to TCP packets, Set the include the header, option to true.
 						socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.HeaderIncluded, true);
 						// Input data required by the operation. 
@@ -456,7 +469,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		}
 
 
-		BindingList<PlugIns.IVoiceListItem> WowMessageList = new BindingList<PlugIns.IVoiceListItem>();
+		BindingList<PlugIns.VoiceListItem> WowMessageList = new BindingList<PlugIns.VoiceListItem>();
 
 		object SequenceNumbersLock = new object();
 		List<uint> SequenceNumbers = new List<uint>();
@@ -474,16 +487,15 @@ namespace JocysCom.TextToSpeech.Monitor
 				// If message was sent from local IP Address to remote IP address then...
 				if (sourceIsLocal && !destinationIsLocal)
 				{
-					var portNumber = (ushort)PortNumericUpDown.Value;
 					// IPHeader.Data stores the data being carried by the IP datagram.
 					TcpHeader tcpHeader = new TcpHeader(ipHeader.Data, 0, ipHeader.Data.Length);
 					// If message was sent to specified port then...
-					if (tcpHeader.DestinationPort == portNumber)
+					if (tcpHeader.DestinationPort == MonitorItem.PortNumber)
 					{
-						var wowItem = new PlugIns.WowListItem();
-						wowItem.Load(ipHeader, tcpHeader);
+						var voiceItem = (VoiceListItem)Activator.CreateInstance(MonitorItem.GetType());
+						voiceItem.Load(ipHeader, tcpHeader);
 						// If data contains XML message then...
-						if (wowItem.IsVoiceItem)
+						if (voiceItem.IsVoiceItem)
 						{
 							lock (SequenceNumbersLock)
 							{
@@ -492,7 +504,7 @@ namespace JocysCom.TextToSpeech.Monitor
 								{
 									SequenceNumbers.Add(tcpHeader.SequenceNumber);
 									// Add wow item to the list. Use Invoke to make it Thread safe.
-									this.Invoke((Action<PlugIns.IVoiceListItem>)addVoiceListItem, new object[] { wowItem });
+									this.Invoke((Action<PlugIns.VoiceListItem>)addVoiceListItem, new object[] { voiceItem });
 								}
 							}
 						}
@@ -504,7 +516,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		bool ScrollMessagesGrid = false;
 		object ScrollMessagesGridLock = new object();
 
-		private void addVoiceListItem(PlugIns.IVoiceListItem wowItem)
+		private void addVoiceListItem(PlugIns.VoiceListItem wowItem)
 		{
 			lock (ScrollMessagesGridLock)
 			{
@@ -729,23 +741,23 @@ namespace JocysCom.TextToSpeech.Monitor
 					var decodedText = System.Web.HttpUtility.HtmlDecode(buffer);
 					buffer = "";
 					IncomingTextTextBox.Text = decodedText;
-                    //TextXmlTabControl.SelectedTab = TextTabPage;
-                    // mark text (or audio file) with v.goup value.
+					//TextXmlTabControl.SelectedTab = TextTabPage;
+					// mark text (or audio file) with v.goup value.
 
-                    // Add silence before message.
-                    int silenceIntBefore = Decimal.ToInt32(OptionsPanel.silenceBefore);
-                    string silenceStringBefore = OptionsPanel.silenceBefore.ToString();
-                    if (silenceIntBefore > 0) AddTextToPlaylist("<silence msec=\"" + silenceStringBefore + "\" />", true, v.group);
+					// Add silence before message.
+					int silenceIntBefore = Decimal.ToInt32(OptionsPanel.silenceBefore);
+					string silenceStringBefore = OptionsPanel.silenceBefore.ToString();
+					if (silenceIntBefore > 0) AddTextToPlaylist("<silence msec=\"" + silenceStringBefore + "\" />", true, v.group);
 
-                    AddTextToPlaylist(decodedText, true, v.group);
+					AddTextToPlaylist(decodedText, true, v.group);
 
-                    // Add silence after message.
-                    int silenceIntAfter = Decimal.ToInt32(OptionsPanel.silenceAfter);
-                    string silenceStringAfter = OptionsPanel.silenceAfter.ToString();
-                    if (silenceIntAfter > 0) AddTextToPlaylist("<silence msec=\"" + silenceStringAfter + "\" />", true, v.group);
+					// Add silence after message.
+					int silenceIntAfter = Decimal.ToInt32(OptionsPanel.silenceAfter);
+					string silenceStringAfter = OptionsPanel.silenceAfter.ToString();
+					if (silenceIntAfter > 0) AddTextToPlaylist("<silence msec=\"" + silenceStringAfter + "\" />", true, v.group);
 
 
-                    break;
+					break;
 				case "stop":
 					text = "";
 					StopPlayer(v.group);
@@ -947,9 +959,9 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				if (text.StartsWith("<message"))
 				{
-					var wowItem = new PlugIns.WowListItem();
-					wowItem.Load(text);
-					addVoiceListItem(wowItem);
+					var voiceItem = (VoiceListItem)Activator.CreateInstance(MonitorItem.GetType());
+					voiceItem.Load(text);
+					addVoiceListItem(voiceItem);
 				}
 				else
 				{
@@ -982,7 +994,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				var gridRow = MessagesDataGridView.SelectedRows.Cast<DataGridViewRow>().FirstOrDefault();
 				if (gridRow != null)
 				{
-					var item = (PlugIns.IVoiceListItem)gridRow.DataBoundItem;
+					var item = (PlugIns.VoiceListItem)gridRow.DataBoundItem;
 					ProcessWowMessage(item.VoiceXml);
 				}
 			}
@@ -1069,7 +1081,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			if (MonitorPortCheckBox.Checked)
 			{
 				StartNetworkMonitor();
-				PortNumericUpDown.Enabled = false;
+				ProgramComboBox.Enabled = false;
 			}
 			UpdateClipboardMonitor();
 			// Load "JocysCom.TextToSpeech.Monitor.rtf" file
@@ -1265,7 +1277,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			//Fill SAPI Tab
 			if (string.IsNullOrEmpty(IncomingTextTextBox.Text))
 			{
-                SapiTextBox.Text = ConvertTextToSapiXml("Test text to speech.");
+				SapiTextBox.Text = ConvertTextToSapiXml("Test text to speech.");
 			}
 			else
 			{
@@ -1358,7 +1370,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			DisposeRecognitionEngine();
 			recognitionEngine = new SpeechRecognitionEngine(); //SelectedVoice.Culture
-			//Load grammar
+															   //Load grammar
 			Choices sentences = new Choices();
 			sentences.Add(new string[] { "Yes" });
 			sentences.Add(new string[] { "No" });
@@ -1553,9 +1565,9 @@ namespace JocysCom.TextToSpeech.Monitor
 
 					if (MonitorClipboardComboBox.SelectedIndex == 2 && !text.Contains("<message")) text = "<message command=\"Play\"><part>" + text + "</part></message>";
 					if (string.IsNullOrEmpty(text) || !text.Contains("<message")) return;
-					var wowItem = new PlugIns.WowListItem();
-					wowItem.Load(text);
-					addVoiceListItem(wowItem);
+					var voiceItem = (VoiceListItem)Activator.CreateInstance(MonitorItem.GetType());
+					voiceItem.Load(text);
+					addVoiceListItem(voiceItem);
 					// do something with it
 				}
 				else if (iData.GetDataPresent(DataFormats.Bitmap))
@@ -1588,7 +1600,7 @@ namespace JocysCom.TextToSpeech.Monitor
 						// if failed then...
 						if (!MonitoringClipboard)
 						{
-							BeginInvoke((Action)delegate()
+							BeginInvoke((Action)delegate ()
 							{
 								// Set drop down to disabled.
 								MonitorClipboardComboBox.SelectedIndex = 0;
@@ -1623,6 +1635,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			SaveSettings();
 			// Save settings
+			var name = Properties.Settings.Default.ProgramComboBoxText;
 			Properties.Settings.Default.Save();
 		}
 
@@ -1723,7 +1736,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		void UpdateMonitor()
 		{
-			PortNumericUpDown.Enabled = !MonitorPortCheckBox.Checked;
+			ProgramComboBox.Enabled = !MonitorPortCheckBox.Checked;
 			if (MonitorPortCheckBox.Checked)
 			{
 				StartNetworkMonitor();
@@ -1815,5 +1828,17 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		#endregion
 
+
+		VoiceListItem MonitorItem;
+
+		private void ProgramComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (ProgramComboBox.SelectedIndex > -1)
+			{
+				var item = (VoiceListItem)ProgramComboBox.SelectedItem;
+				MonitorItem = item;
+				Properties.Settings.Default.ProgramComboBoxText = item.Name;
+			}
+		}
 	}
 }

@@ -189,7 +189,6 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PlugIns\Battlefield4ListItem.cs" />
-    <Compile Include="PlugIns\IVoiceListItem.cs" />
     <Compile Include="PlugIns\VoiceListItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -240,8 +239,8 @@
     <EmbeddedResource Include="Resources\Audio\Private.wav" />
     <EmbeddedResource Include="Resources\Audio\Radio.wav" />
     <EmbeddedResource Include="Resources\Audio\Radio1.wav" />
-    <EmbeddedResource Include="Resources\Audio\Documents\JocysCom.TextToSpeech.Monitor.rtf" />
     <EmbeddedResource Include="Resources\Icons\Information.png" />
+    <EmbeddedResource Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.rtf" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor.psd" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor_IntroSounds.psd" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor_Voices.psd" />
@@ -346,7 +345,6 @@
     <EmbeddedResource Include="Resources\Audio\Radio2.wav" />
     <EmbeddedResource Include="Resources\Audio\Radio3.wav" />
     <EmbeddedResource Include="Resources\Audio\Radio4.wav" />
-    <Content Include="Resources\Audio\Documents\JocysCom.TextToSpeech.Monitor.html" />
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.DirectSound.dll" />
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.DirectSound.xml" />
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.dll" />
@@ -420,8 +418,6 @@
     <Content Include="WoW\Presets\Undead.preset.xml" />
     <Content Include="app.ico" />
     <None Include="Resources\desktop.ini" />
-    <Content Include="Resources\Audio\Documents\Google Chrome TTS.html" />
-    <None Include="Resources\Audio\Documents\Microsoft Multilingual TTS.URL" />
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Error.ico" />
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Error_32x32.png" />
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Information.ico" />

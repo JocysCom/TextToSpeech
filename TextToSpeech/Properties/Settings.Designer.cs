@@ -109,13 +109,13 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public decimal PortNumericUpDownValue {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ProgramComboBoxText {
             get {
-                return ((decimal)(this["PortNumericUpDownValue"]));
+                return ((string)(this["ProgramComboBoxText"]));
             }
             set {
-                this["PortNumericUpDownValue"] = value;
+                this["ProgramComboBoxText"] = value;
             }
         }
         

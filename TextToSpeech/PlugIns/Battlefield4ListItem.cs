@@ -7,64 +7,20 @@ using System.Text;
 
 namespace JocysCom.TextToSpeech.Monitor.PlugIns
 {
-	public class Battlefield4ListItem : VoiceListItem, IVoiceListItem
+	public class Battlefield4ListItem : VoiceListItem
 	{
-
-		#region IVoiceListItem
-
-		bool _IsVoiceItem;
-		public bool IsVoiceItem { get { return _IsVoiceItem; } }
-
-		string _VoiceXml;
-		public string VoiceXml { get { return _VoiceXml; } }
-
-		public int PortNumber { get { return 3724; } }
-
-		public string Name { get { return "WoW"; } }
-
-
-		public void Load(string text)
+		public Battlefield4ListItem()
 		{
-			loadFromText(text);
+			_PortNumber = 0;
+			_Name = "Battlefield 4";
 		}
 
-		public void Load(IpHeader ipHeader, TcpHeader tcpHeader)
+		public override void Load(IpHeader ipHeader, TcpHeader tcpHeader)
 		{
+			_IpHeader = ipHeader;
+			_TcpHeader = tcpHeader;
+			// Parse battlefield message data.
+			var data = ipHeader.Data;
 		}
-
-		#endregion
-
-		void loadFromText(string text, byte[] data = null)
-		{
-			if (text.Contains("<message"))
-			{
-				var endTag = "</message>";
-				// Find start of the voice tag.
-				var start = text.IndexOf("<message");
-				// Find end of the voice tag.
-				var end = text.IndexOf(endTag, start);
-				if (end == -1)
-				{
-					endTag = " />";
-					end = text.IndexOf(endTag, start);
-				}
-				if (end > start)
-				{
-					_IsVoiceItem = true;
-					// If original bytes are not available then...
-					if (data == null)
-					{
-						// Get voice text from original text block.
-						_VoiceXml = text.Substring(start, end - start + endTag.Length);
-					}
-					else
-					{
-						// Get voice text from original bytes as UTF8 text.
-						_VoiceXml = System.Text.Encoding.UTF8.GetString(data, start, end - start + endTag.Length);
-					}
-				}
-			}
-		}
-
 	}
 }
