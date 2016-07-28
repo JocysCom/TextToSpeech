@@ -95,7 +95,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				Properties.Settings.Default.GenderComboBoxText = "Male";
 				Properties.Settings.Default.MonitorClipboardComboBoxText = "Disabled";
 				Properties.Settings.Default.MonitorPortChecked = true;
-				Properties.Settings.Default.PortNumericUpDownValue = 3724;
+				Properties.Settings.Default.ProgramComboBoxText = new PlugIns.WowListItem().Name;
 				Properties.Settings.Default.Save();
 			}
 

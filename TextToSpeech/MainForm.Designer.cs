@@ -58,6 +58,7 @@
 			this.VoiceOverridesTabPage = new System.Windows.Forms.TabPage();
 			this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
 			this.SoundsTabPage = new System.Windows.Forms.TabPage();
+			this.OptionsTabPage = new System.Windows.Forms.TabPage();
 			this.MonitoringTabPage = new System.Windows.Forms.TabPage();
 			this.AboutTabPage = new System.Windows.Forms.TabPage();
 			this.AboutRichTextBox = new System.Windows.Forms.RichTextBox();
@@ -130,25 +131,25 @@
 			this.DefaultIntroSoundLabel = new System.Windows.Forms.Label();
 			this.DefaultIntroSoundComboBox = new System.Windows.Forms.ComboBox();
 			this.MonitorPortCheckBox = new System.Windows.Forms.CheckBox();
-			this.PortNumericUpDown = new System.Windows.Forms.NumericUpDown();
 			this.MonitorClipboardComboBox = new System.Windows.Forms.ComboBox();
 			this.GenderComboBox = new System.Windows.Forms.ComboBox();
 			this.PitchMaxComboBox = new System.Windows.Forms.ComboBox();
 			this.RateMaxComboBox = new System.Windows.Forms.ComboBox();
 			this.PitchMinComboBox = new System.Windows.Forms.ComboBox();
 			this.RateMinComboBox = new System.Windows.Forms.ComboBox();
-			this.OptionsTabPage = new System.Windows.Forms.TabPage();
+			this.ProgramComboBox = new System.Windows.Forms.ComboBox();
 			this.VoiceOverridesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesOverridesUserControl();
 			this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
 			this.SoundsPanel = new JocysCom.TextToSpeech.Monitor.Controls.SoundsUserControl();
-			this.monitorsUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.MonitorsUserControl();
 			this.OptionsPanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsControl();
+			this.monitorsUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.MonitorsUserControl();
 			((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).BeginInit();
 			this.MessagesTabControl.SuspendLayout();
 			this.VoicesTabPage.SuspendLayout();
 			this.VoiceOverridesTabPage.SuspendLayout();
 			this.EffectsPresetsEditorTabPage.SuspendLayout();
 			this.SoundsTabPage.SuspendLayout();
+			this.OptionsTabPage.SuspendLayout();
 			this.MonitoringTabPage.SuspendLayout();
 			this.AboutTabPage.SuspendLayout();
 			this.UpdateTabPage.SuspendLayout();
@@ -168,8 +169,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.ProductPictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeTrackBar)).BeginInit();
 			this.IncomingGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PortNumericUpDown)).BeginInit();
-			this.OptionsTabPage.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// VoicesDataGridView
@@ -466,6 +465,17 @@
 			this.SoundsTabPage.TabIndex = 7;
 			this.SoundsTabPage.Text = "Intro Sounds";
 			// 
+			// OptionsTabPage
+			// 
+			this.OptionsTabPage.BackColor = System.Drawing.SystemColors.Control;
+			this.OptionsTabPage.Controls.Add(this.OptionsPanel);
+			this.OptionsTabPage.ImageKey = "Options_16x16.png";
+			this.OptionsTabPage.Location = new System.Drawing.Point(4, 27);
+			this.OptionsTabPage.Name = "OptionsTabPage";
+			this.OptionsTabPage.Size = new System.Drawing.Size(816, 266);
+			this.OptionsTabPage.TabIndex = 8;
+			this.OptionsTabPage.Text = "Options";
+			// 
 			// MonitoringTabPage
 			// 
 			this.MonitoringTabPage.BackColor = System.Drawing.SystemColors.Control;
@@ -754,7 +764,7 @@
 			// 
 			this.RateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.RateLabel.AutoSize = true;
-			this.RateLabel.Location = new System.Drawing.Point(858, 570);
+			this.RateLabel.Location = new System.Drawing.Point(856, 569);
 			this.RateLabel.Name = "RateLabel";
 			this.RateLabel.Size = new System.Drawing.Size(92, 13);
 			this.RateLabel.TabIndex = 208;
@@ -766,7 +776,7 @@
 			// 
 			this.PitchLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.PitchLabel.AutoSize = true;
-			this.PitchLabel.Location = new System.Drawing.Point(857, 543);
+			this.PitchLabel.Location = new System.Drawing.Point(855, 542);
 			this.PitchLabel.Name = "PitchLabel";
 			this.PitchLabel.Size = new System.Drawing.Size(93, 13);
 			this.PitchLabel.TabIndex = 207;
@@ -1026,7 +1036,7 @@
 			// 
 			this.AudioBitsPerSampleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.AudioBitsPerSampleLabel.AutoSize = true;
-			this.AudioBitsPerSampleLabel.Location = new System.Drawing.Point(853, 489);
+			this.AudioBitsPerSampleLabel.Location = new System.Drawing.Point(851, 488);
 			this.AudioBitsPerSampleLabel.Name = "AudioBitsPerSampleLabel";
 			this.AudioBitsPerSampleLabel.Size = new System.Drawing.Size(97, 13);
 			this.AudioBitsPerSampleLabel.TabIndex = 205;
@@ -1050,7 +1060,7 @@
 			// 
 			this.AudioSampleRateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.AudioSampleRateLabel.AutoSize = true;
-			this.AudioSampleRateLabel.Location = new System.Drawing.Point(849, 462);
+			this.AudioSampleRateLabel.Location = new System.Drawing.Point(847, 461);
 			this.AudioSampleRateLabel.Name = "AudioSampleRateLabel";
 			this.AudioSampleRateLabel.Size = new System.Drawing.Size(101, 13);
 			this.AudioSampleRateLabel.TabIndex = 204;
@@ -1074,7 +1084,7 @@
 			// 
 			this.AudioChannelsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.AudioChannelsLabel.AutoSize = true;
-			this.AudioChannelsLabel.Location = new System.Drawing.Point(866, 435);
+			this.AudioChannelsLabel.Location = new System.Drawing.Point(864, 434);
 			this.AudioChannelsLabel.Name = "AudioChannelsLabel";
 			this.AudioChannelsLabel.Size = new System.Drawing.Size(84, 13);
 			this.AudioChannelsLabel.TabIndex = 203;
@@ -1084,8 +1094,8 @@
 			// 
 			// RecognizeButton
 			// 
-			this.RecognizeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.RecognizeButton.Location = new System.Drawing.Point(736, 360);
+			this.RecognizeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.RecognizeButton.Location = new System.Drawing.Point(737, 333);
 			this.RecognizeButton.Name = "RecognizeButton";
 			this.RecognizeButton.Size = new System.Drawing.Size(93, 23);
 			this.RecognizeButton.TabIndex = 10;
@@ -1113,7 +1123,7 @@
 			// 
 			this.MonitorClipboardLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.MonitorClipboardLabel.AutoSize = true;
-			this.MonitorClipboardLabel.Location = new System.Drawing.Point(858, 381);
+			this.MonitorClipboardLabel.Location = new System.Drawing.Point(856, 380);
 			this.MonitorClipboardLabel.Name = "MonitorClipboardLabel";
 			this.MonitorClipboardLabel.Size = new System.Drawing.Size(92, 13);
 			this.MonitorClipboardLabel.TabIndex = 202;
@@ -1374,7 +1384,7 @@
 			// 
 			this.DefaultGenderLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.DefaultGenderLabel.AutoSize = true;
-			this.DefaultGenderLabel.Location = new System.Drawing.Point(845, 516);
+			this.DefaultGenderLabel.Location = new System.Drawing.Point(843, 515);
 			this.DefaultGenderLabel.Name = "DefaultGenderLabel";
 			this.DefaultGenderLabel.Size = new System.Drawing.Size(105, 13);
 			this.DefaultGenderLabel.TabIndex = 206;
@@ -1386,7 +1396,7 @@
 			// 
 			this.DefaultIntroSoundLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.DefaultIntroSoundLabel.AutoSize = true;
-			this.DefaultIntroSoundLabel.Location = new System.Drawing.Point(848, 408);
+			this.DefaultIntroSoundLabel.Location = new System.Drawing.Point(846, 407);
 			this.DefaultIntroSoundLabel.Name = "DefaultIntroSoundLabel";
 			this.DefaultIntroSoundLabel.Size = new System.Drawing.Size(102, 13);
 			this.DefaultIntroSoundLabel.TabIndex = 213;
@@ -1412,39 +1422,16 @@
 			this.MonitorPortCheckBox.Checked = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.MonitorPortChecked;
 			this.MonitorPortCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.MonitorPortCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "MonitorPortChecked", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-			this.MonitorPortCheckBox.Location = new System.Drawing.Point(867, 352);
+			this.MonitorPortCheckBox.Location = new System.Drawing.Point(887, 352);
+			this.MonitorPortCheckBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
 			this.MonitorPortCheckBox.Name = "MonitorPortCheckBox";
-			this.MonitorPortCheckBox.Size = new System.Drawing.Size(86, 17);
+			this.MonitorPortCheckBox.Size = new System.Drawing.Size(64, 17);
 			this.MonitorPortCheckBox.TabIndex = 211;
-			this.MonitorPortCheckBox.Text = "Monitor Port:";
+			this.MonitorPortCheckBox.Text = "Monitor:";
 			this.MonitorPortCheckBox.UseVisualStyleBackColor = true;
 			this.MonitorPortCheckBox.CheckedChanged += new System.EventHandler(this.MonitorPortCheckBox_CheckedChanged);
 			this.MonitorPortCheckBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.MonitorPortCheckBox.MouseHover += new System.EventHandler(this.MonitorPortCheckBox_MouseEnter);
-			// 
-			// PortNumericUpDown
-			// 
-			this.PortNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.PortNumericUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "PortNumericUpDownValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-			this.PortNumericUpDown.Location = new System.Drawing.Point(954, 351);
-			this.PortNumericUpDown.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-			this.PortNumericUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.PortNumericUpDown.Name = "PortNumericUpDown";
-			this.PortNumericUpDown.Size = new System.Drawing.Size(114, 20);
-			this.PortNumericUpDown.TabIndex = 4;
-			this.PortNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.PortNumericUpDown.Value = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.PortNumericUpDownValue;
-			this.PortNumericUpDown.Click += new System.EventHandler(this.MouseHover_PortNumericUpDown);
-			this.PortNumericUpDown.Enter += new System.EventHandler(this.MouseHover_PortNumericUpDown);
-			this.PortNumericUpDown.Leave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			// 
 			// MonitorClipboardComboBox
 			// 
@@ -1639,16 +1626,19 @@
 			this.RateMinComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.RateMinComboBox.MouseHover += new System.EventHandler(this.MouseHover_RateMin);
 			// 
-			// OptionsTabPage
+			// ProgramComboBox
 			// 
-			this.OptionsTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.OptionsTabPage.Controls.Add(this.OptionsPanel);
-			this.OptionsTabPage.ImageKey = "Options_16x16.png";
-			this.OptionsTabPage.Location = new System.Drawing.Point(4, 27);
-			this.OptionsTabPage.Name = "OptionsTabPage";
-			this.OptionsTabPage.Size = new System.Drawing.Size(816, 266);
-			this.OptionsTabPage.TabIndex = 8;
-			this.OptionsTabPage.Text = "Options";
+			this.ProgramComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.ProgramComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ProgramComboBox.FormattingEnabled = true;
+			this.ProgramComboBox.Items.AddRange(new object[] {
+            "Disabled",
+            "For <message> tags",
+            "For all text"});
+			this.ProgramComboBox.Location = new System.Drawing.Point(953, 350);
+			this.ProgramComboBox.Name = "ProgramComboBox";
+			this.ProgramComboBox.Size = new System.Drawing.Size(114, 21);
+			this.ProgramComboBox.TabIndex = 214;
 			// 
 			// VoiceOverridesPanel
 			// 
@@ -1677,6 +1667,24 @@
 			this.SoundsPanel.Size = new System.Drawing.Size(816, 266);
 			this.SoundsPanel.TabIndex = 0;
 			// 
+			// OptionsPanel
+			// 
+			this.OptionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.OptionsPanel.Location = new System.Drawing.Point(0, 0);
+			this.OptionsPanel.Name = "OptionsPanel";
+			this.OptionsPanel.silenceAfter = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.OptionsPanel.silenceBefore = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.OptionsPanel.Size = new System.Drawing.Size(816, 266);
+			this.OptionsPanel.TabIndex = 0;
+			// 
 			// monitorsUserControl1
 			// 
 			this.monitorsUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1685,22 +1693,15 @@
 			this.monitorsUserControl1.Size = new System.Drawing.Size(816, 266);
 			this.monitorsUserControl1.TabIndex = 2;
 			// 
-			// OptionsPanel
-			// 
-			this.OptionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.OptionsPanel.Location = new System.Drawing.Point(0, 0);
-			this.OptionsPanel.Size = new System.Drawing.Size(816, 266);
-			this.OptionsPanel.TabIndex = 0;
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1074, 676);
+			this.Controls.Add(this.ProgramComboBox);
 			this.Controls.Add(this.DefaultIntroSoundLabel);
 			this.Controls.Add(this.DefaultIntroSoundComboBox);
 			this.Controls.Add(this.MonitorPortCheckBox);
-			this.Controls.Add(this.PortNumericUpDown);
 			this.Controls.Add(this.MonitorClipboardComboBox);
 			this.Controls.Add(this.DefaultGenderLabel);
 			this.Controls.Add(this.GenderComboBox);
@@ -1744,6 +1745,7 @@
 			this.VoiceOverridesTabPage.ResumeLayout(false);
 			this.EffectsPresetsEditorTabPage.ResumeLayout(false);
 			this.SoundsTabPage.ResumeLayout(false);
+			this.OptionsTabPage.ResumeLayout(false);
 			this.MonitoringTabPage.ResumeLayout(false);
 			this.AboutTabPage.ResumeLayout(false);
 			this.UpdateTabPage.ResumeLayout(false);
@@ -1767,8 +1769,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.VolumeTrackBar)).EndInit();
 			this.IncomingGroupBox.ResumeLayout(false);
 			this.IncomingGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PortNumericUpDown)).EndInit();
-			this.OptionsTabPage.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1856,7 +1856,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CultureColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn AgeColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn DescriptionColumn;
-        private System.Windows.Forms.NumericUpDown PortNumericUpDown;
         private System.Windows.Forms.TabPage UpdateTabPage;
         private System.Windows.Forms.WebBrowser UpdateWebBrowser;
         private System.Windows.Forms.Label UpdateLabel;
@@ -1879,6 +1878,7 @@
         private System.Windows.Forms.Label DefaultIntroSoundLabel;
 		private System.Windows.Forms.TabPage OptionsTabPage;
 		private Controls.OptionsControl OptionsPanel;
+		private System.Windows.Forms.ComboBox ProgramComboBox;
 	}
 }
 

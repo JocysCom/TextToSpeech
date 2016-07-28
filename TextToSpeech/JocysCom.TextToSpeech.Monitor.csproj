@@ -188,10 +188,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PlugIns\Battlefield4ListItem.cs" />
+    <Compile Include="PlugIns\VoiceListItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Network\message.cs" />
-    <Compile Include="Network\WowListItem.cs" />
+    <Compile Include="PlugIns\WowListItem.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -237,8 +239,8 @@
     <EmbeddedResource Include="Resources\Audio\Private.wav" />
     <EmbeddedResource Include="Resources\Audio\Radio.wav" />
     <EmbeddedResource Include="Resources\Audio\Radio1.wav" />
-    <EmbeddedResource Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.rtf" />
     <EmbeddedResource Include="Resources\Icons\Information.png" />
+    <EmbeddedResource Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.rtf" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor.psd" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor_IntroSounds.psd" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor_Voices.psd" />
@@ -343,7 +345,6 @@
     <EmbeddedResource Include="Resources\Audio\Radio2.wav" />
     <EmbeddedResource Include="Resources\Audio\Radio3.wav" />
     <EmbeddedResource Include="Resources\Audio\Radio4.wav" />
-    <Content Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.html" />
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.DirectSound.dll" />
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.DirectSound.xml" />
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.dll" />
@@ -417,8 +418,6 @@
     <Content Include="WoW\Presets\Undead.preset.xml" />
     <Content Include="app.ico" />
     <None Include="Resources\desktop.ini" />
-    <Content Include="Resources\Documents\Google Chrome TTS.html" />
-    <None Include="Resources\Documents\Microsoft Multilingual TTS.URL" />
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Error.ico" />
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Error_32x32.png" />
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Information.ico" />
@@ -461,9 +460,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Battlefield\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -23,8 +23,8 @@
     <Setting Name="MonitorClipboardComboBoxText" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PortNumericUpDownValue" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="ProgramComboBoxText" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="MonitorPortChecked" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
