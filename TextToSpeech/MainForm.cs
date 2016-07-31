@@ -430,7 +430,6 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			try
 			{
-				Interlocked.Add(ref PacketsCount, 1);
 				if (Disposing || IsDisposed || !IsHandleCreated)
 				{
 					return;
@@ -492,7 +491,8 @@ namespace JocysCom.TextToSpeech.Monitor
 					// If message was sent to specified port then...
 					if (tcpHeader.DestinationPort == MonitorItem.PortNumber)
 					{
-						var voiceItem = (VoiceListItem)Activator.CreateInstance(MonitorItem.GetType());
+                        var pluginType = MonitorItem.GetType();
+                        var voiceItem = (VoiceListItem)Activator.CreateInstance(pluginType);
 						voiceItem.Load(ipHeader, tcpHeader);
 						// If data contains XML message then...
 						if (voiceItem.IsVoiceItem)
