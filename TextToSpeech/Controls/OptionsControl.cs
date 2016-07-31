@@ -71,5 +71,32 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
         {
             SilenceAfter();
         }
+
+        string DefaultLoggingFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\JocysComMonitorLog.txt";
+        private void OptionsControl_Load(object sender, EventArgs e)
+        {
+            if (LoggingFolderTextBox.Text.Length == 0)
+            {
+                LoggingFolderTextBox.Text = DefaultLoggingFolder;
+            }
+
+        }
+
+        private void LoggingButton_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.RootFolder = Environment.SpecialFolder.Desktop;
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                LoggingFolderTextBox.Text = fbd.SelectedPath + "\\JocysComMonitorLog.txt";
+            }
+        }
+
+        private void LoggingDefaultButton_Click(object sender, EventArgs e)
+        {
+            LoggingFolderTextBox.Text = DefaultLoggingFolder;
+        }
+
+
     }
 }

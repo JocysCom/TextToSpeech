@@ -1840,5 +1840,10 @@ namespace JocysCom.TextToSpeech.Monitor
 				Properties.Settings.Default.ProgramComboBoxText = item.Name;
 			}
 		}
-	}
+
+        private void OptionsPanel_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
