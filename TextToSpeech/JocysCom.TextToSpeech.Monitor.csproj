@@ -129,12 +129,16 @@
     <Compile Include="Common\Crc32.cs" />
     <Compile Include="Common\HiLoUhsort.cs" />
     <Compile Include="Common\InstalledVoiceEx.cs" />
+    <Compile Include="Common\JocysCom\Collections\KeyValue.cs" />
     <Compile Include="Common\JocysCom\ComponentModel\PropertyComparer.cs" />
     <Compile Include="Common\JocysCom\ComponentModel\SortableBindingList.cs" />
     <Compile Include="Common\JocysCom\Controls\ControlsHelper.cs" />
+    <Compile Include="Common\JocysCom\IO\LogWriter.cs" />
     <Compile Include="Common\JocysCom\Runtime\Serializer.cs" />
+    <Compile Include="Common\JocysCom\Text\Helper.cs" />
     <Compile Include="Common\NativeMethods.cs" />
     <Compile Include="Common\SettingsFile.cs" />
+    <Compile Include="Common\SocketState.cs" />
     <Compile Include="Controls\MessageBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>

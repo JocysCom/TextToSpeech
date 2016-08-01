@@ -11,8 +11,8 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 	{
 		public Battlefield4ListItem()
 		{
-			_PortNumber = 0;
-			_Name = "Battlefield 4";
+			PortNumber = 0;
+			Name = "Battlefield 4";
 		}
 
 		public override void Load(IpHeader ipHeader, TcpHeader tcpHeader)

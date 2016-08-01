@@ -166,5 +166,29 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
                 this["AddSilcenceBeforeMessage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LogEnable {
+            get {
+                return ((bool)(this["LogEnable"]));
+            }
+            set {
+                this["LogEnable"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LogText {
+            get {
+                return ((string)(this["LogText"]));
+            }
+            set {
+                this["LogText"] = value;
+            }
+        }
     }
 }

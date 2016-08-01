@@ -32,13 +32,16 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 		public string VoiceXml { get { return _VoiceXml; } }
 		internal string _VoiceXml;
 
-		public int PortNumber { get { return _PortNumber; } }
-		internal int _PortNumber;
+        #region Listen Filter
 
-		public string Name { get { return _Name; } }
-		internal string _Name;
+        public int PortNumber { get; set; }
+		public string Name { get; set; }
+        public bool Incomming { get; set; }
+        public bool Outgoing { get; set; }
 
-		public virtual void Load(string text) { }
+        #endregion
+
+        public virtual void Load(string text) { }
 
 		public virtual void Load(IpHeader ipHeader, TcpHeader tcpHeader) { }
 

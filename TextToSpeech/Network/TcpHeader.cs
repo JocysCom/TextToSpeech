@@ -17,8 +17,8 @@ namespace JocysCom.TextToSpeech.Monitor.Network
         uint _SequenceNumber;
         public uint SequenceNumber { get { return _SequenceNumber; } }
 
-        uint _AcknowledgementNumber;
-        public uint AcknowledgementNumber { get { return _AcknowledgementNumber; } }
+        uint _AcknowledgmentNumber;
+        public uint AcknowledgementNumber { get { return _AcknowledgmentNumber; } }
 
         byte _HeaderLength;
         public byte HeaderLength { get { return _HeaderLength; } }
@@ -48,8 +48,8 @@ namespace JocysCom.TextToSpeech.Monitor.Network
             _DestinationPort = (ushort)IPAddress.NetworkToHostOrder(binaryReader.ReadInt16());
             // Next 4 bytes have the sequence number.
             _SequenceNumber = (uint)IPAddress.NetworkToHostOrder(binaryReader.ReadInt32());
-            // Next 4 bytes have the acknowledgement number.
-            _AcknowledgementNumber = (uint)IPAddress.NetworkToHostOrder(binaryReader.ReadInt32());
+            // Next 4 bytes have the acknowledgment number.
+            _AcknowledgmentNumber = (uint)IPAddress.NetworkToHostOrder(binaryReader.ReadInt32());
             // Next 2 bytes have the flags and the data offset.
             ushort dataOffsetAndFlags = (ushort)IPAddress.NetworkToHostOrder(binaryReader.ReadInt16());
             // Upper 4 bits have the header length.
@@ -65,7 +65,7 @@ namespace JocysCom.TextToSpeech.Monitor.Network
             _UrgentPointer = (ushort)IPAddress.NetworkToHostOrder(binaryReader.ReadInt16());
             // Calculate data length (total length of the TCP packet - header length).
             int dataLength = (int)(count - _HeaderLength);
-            // Create new arrray to store data.
+            // Create new array to store data.
             _Data = new byte[dataLength];
             // Copy the data carried by the datagram.
             Array.Copy(buffer, _HeaderLength, _Data, 0, dataLength);
@@ -84,7 +84,7 @@ namespace JocysCom.TextToSpeech.Monitor.Network
             node.Nodes.Add("Header Length: " + _HeaderLength);
             node.Nodes.Add("Data Length: " + _Data.Length); 
             node.Nodes.Add("Flags: " + _Flags);
-            if (_Flags.HasFlag(TcpHeaderFlags.ACK)) node.Nodes.Add("Acknowledgement Number: " + _AcknowledgementNumber);
+            if (_Flags.HasFlag(TcpHeaderFlags.ACK)) node.Nodes.Add("Acknowledgment Number: " + _AcknowledgmentNumber);
             if (_Flags.HasFlag(TcpHeaderFlags.URG)) node.Nodes.Add("Urgent Pointer: " + _UrgentPointer);
             node.Nodes.Add("Window Size: " + _WindowSize);
 

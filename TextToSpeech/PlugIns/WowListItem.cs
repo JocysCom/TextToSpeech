@@ -11,8 +11,8 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 	{
 		public WowListItem()
 		{
-			_PortNumber = 3724;
-			_Name = "WoW";
+			PortNumber = 3724;
+			Name = "WoW";
 		}
 
 		public override void Load(IpHeader ipHeader, TcpHeader tcpHeader)

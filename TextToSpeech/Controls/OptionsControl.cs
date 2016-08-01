@@ -6,12 +6,24 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
+using JocysCom.ClassLibrary.IO;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
 
-	public partial class OptionsControl : UserControl
-	{
+    public partial class OptionsControl : UserControl
+    {
+
+
+        public OptionsControl()
+        {
+            InitializeComponent();
+            LoggingFolderTextBox.Text = GetLogsPath(true);
+            LoadSettings();
+            SilenceBefore();
+            SilenceAfter();
+        }
 
         private void SilenceBefore()
         {
@@ -55,13 +67,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             set { AddSilenceAfterNumericUpDown.Value = value; }
         }
 
-       public OptionsControl()
-		{
-			InitializeComponent();
-            SilenceBefore();
-            SilenceAfter();
-        }
-
         private void AddSilcenceBeforeNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             SilenceBefore();
@@ -72,31 +77,95 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             SilenceAfter();
         }
 
-        string DefaultLoggingFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\JocysComMonitorLog.txt";
-        private void OptionsControl_Load(object sender, EventArgs e)
+        public string GetLogsPath(bool create)
         {
-            if (LoggingFolderTextBox.Text.Length == 0)
+            var path = new DirectoryInfo(Application.CommonAppDataPath).Parent.FullName;
+            path = Path.Combine(path, "Logs");
+            if (create && !Directory.Exists(path))
             {
-                LoggingFolderTextBox.Text = DefaultLoggingFolder;
+                Directory.CreateDirectory(path);
             }
 
+            return path;
         }
 
-        private void LoggingButton_Click(object sender, EventArgs e)
+        private void OpenButton_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.RootFolder = Environment.SpecialFolder.Desktop;
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            MainHelper.OpenUrl(LoggingFolderTextBox.Text);
+        }
+
+        public byte[] SearchPattern;
+        public JocysCom.ClassLibrary.IO.LogWriter Writer;
+        public object WriterLock = new object();
+
+        void LoadSettings()
+        {
+            // Load settings into form.
+            LoggingTextBox.Text = Properties.Settings.Default.LogText;
+            SearchPattern = Encoding.ASCII.GetBytes(LoggingTextBox.Text);
+            LoggingCheckBox.Checked = Properties.Settings.Default.LogEnable;
+            // Update writer settings.
+            UpdateLogSettings();
+            // Attach events.
+            LoggingTextBox.TextChanged += LoggingTextBox_TextChanged;
+            LoggingCheckBox.CheckedChanged += LoggingCheckBox_CheckedChanged;
+        }
+
+        private void LoggingTextBox_TextChanged(object sender, EventArgs e)
+        {
+            var text = LoggingTextBox.Text;
+            Properties.Settings.Default.LogText = text;
+            SearchPattern = string.IsNullOrEmpty(text)
+                ? null
+                : Encoding.ASCII.GetBytes(LoggingTextBox.Text);
+        }
+
+        void UpdateLogSettings()
+        {
+            Properties.Settings.Default.LogEnable = LoggingCheckBox.Checked;
+            LoggingTextBox.ReadOnly = LoggingCheckBox.Checked;
+            var path = GetLogsPath(true);
+            path = Path.Combine(path, "log_{0:yyyyMMdd_HHmmss}.txt");
+            lock (WriterLock)
             {
-                LoggingFolderTextBox.Text = fbd.SelectedPath + "\\JocysComMonitorLog.txt";
+                var en = Properties.Settings.Default.LogEnable;
+                if (Writer == null && en && !IsDisposed && !Disposing)
+                {
+                    Writer = new ClassLibrary.IO.LogWriter(path, true);
+                    Writer.LogAutoFlush = true;
+                }
+                else if (Writer != null && !en)
+                {
+                    Writer.Dispose();
+                    Writer = null;
+                }
             }
         }
 
-        private void LoggingDefaultButton_Click(object sender, EventArgs e)
+        private void LoggingCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            LoggingFolderTextBox.Text = DefaultLoggingFolder;
+            UpdateLogSettings();
         }
 
-
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            lock (WriterLock)
+            {
+                if (Writer != null)
+                {
+                    Writer.Dispose();
+                    Writer = null;
+                }
+            }
+            base.Dispose(disposing);
+        }
     }
 }
