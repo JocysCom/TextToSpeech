@@ -15,7 +15,7 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 			Name = "WoW";
 		}
 
-		public override void Load(IpHeader ipHeader, TcpHeader tcpHeader)
+		public override void Load(IpHeader ipHeader, IPortsHeader tcpHeader)
 		{
 			_IpHeader = ipHeader;
 			_TcpHeader = tcpHeader;

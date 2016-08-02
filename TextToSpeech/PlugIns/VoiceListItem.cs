@@ -11,7 +11,7 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 	{
 
 		internal IpHeader _IpHeader;
-		internal TcpHeader _TcpHeader;
+		internal IPortsHeader _TcpHeader;
 
 		#region GridView columns.
 
@@ -20,8 +20,6 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 		public ushort SourcePort { get { return _TcpHeader == null ? (ushort)0 : _TcpHeader.SourcePort; } }
 		public IPAddress DestinationAddress { get { return _IpHeader == null ? IPAddress.None : _IpHeader.DestinationAddress; } }
 		public ushort DestinationPort { get { return _TcpHeader == null ? (ushort)0 : _TcpHeader.DestinationPort; } }
-		public uint SequenceNumber { get { return _TcpHeader == null ? 0 : _TcpHeader.SequenceNumber; } }
-		public TcpHeaderFlags Flags { get { return _TcpHeader == null ? TcpHeaderFlags.None : _TcpHeader.Flags; } }
 		public int DataLength { get { return _TcpHeader == null ? 0 : _TcpHeader.Data.Length; } }
 
 		#endregion
@@ -43,7 +41,7 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 
         public virtual void Load(string text) { }
 
-		public virtual void Load(IpHeader ipHeader, TcpHeader tcpHeader) { }
+		public virtual void Load(IpHeader ipHeader, IPortsHeader tcpHeader) { }
 
 	}
 

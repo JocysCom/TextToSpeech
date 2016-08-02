@@ -1,12 +1,11 @@
 using System.Net;
-using System.Text;
 using System;
 using System.IO;
 using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor.Network
 {
-    public class TcpHeader
+    public class TcpHeader: IPortsHeader
     {
         ushort _SourcePort;
         public ushort SourcePort { get { return _SourcePort; } }
@@ -87,7 +86,6 @@ namespace JocysCom.TextToSpeech.Monitor.Network
             if (_Flags.HasFlag(TcpHeaderFlags.ACK)) node.Nodes.Add("Acknowledgment Number: " + _AcknowledgmentNumber);
             if (_Flags.HasFlag(TcpHeaderFlags.URG)) node.Nodes.Add("Urgent Pointer: " + _UrgentPointer);
             node.Nodes.Add("Window Size: " + _WindowSize);
-
             node.Nodes.Add(string.Format("Checksum: 0x{0:X2} ({0})", _Checksum));
             return node;
         }

@@ -483,14 +483,26 @@ namespace JocysCom.TextToSpeech.Monitor
             // All protocol packets are encapsulated in the IP datagram.
             // Parse IP header and see what protocol data is being carried by it.
             IpHeader ipHeader = new IpHeader(byteData, 0, nReceived);
-            // If IP datagram contains carries TCP data then...
+            // ------------------------------------------------------------
+            var sourceIsLocal = IpAddresses.Contains(ipHeader.SourceAddress);
+            var destinationIsLocal = IpAddresses.Contains(ipHeader.DestinationAddress);
+            TcpHeader tcpHeader = null;
+            IPortsHeader header = null;
+            uint? sequenceNumber = null;
             if (ipHeader.Protocol == ProtocolType.Tcp)
             {
+                tcpHeader = new TcpHeader(ipHeader.Data, 0, ipHeader.Data.Length);
+                sequenceNumber = tcpHeader.SequenceNumber;
+                header = tcpHeader;
+            }
+            else if (ipHeader.Protocol == ProtocolType.Udp)
+            {
+                header = new UdpHeader(ipHeader.Data, 0, ipHeader.Data.Length);
+            }
+            // If IP datagram contains carries TCP data then...
+            if (header != null)
+            {
                 // IPHeader.Data stores the data being carried by the IP datagram.
-                TcpHeader tcpHeader = new TcpHeader(ipHeader.Data, 0, ipHeader.Data.Length);
-                // ------------------------------------------------------------
-                var sourceIsLocal = IpAddresses.Contains(ipHeader.SourceAddress);
-                var destinationIsLocal = IpAddresses.Contains(ipHeader.DestinationAddress);
                 if (Properties.Settings.Default.LogEnable)
                 {
                     var index = 0;
@@ -503,17 +515,18 @@ namespace JocysCom.TextToSpeech.Monitor
                         var writer = OptionsPanel.Writer;
                         if (writer != null)
                         {
-                            writer.WriteLine("{0:HH:mm:ss.fff}: {2}:{3} -> {4}:{5} Data[{6}]",
+                            writer.WriteLine("{0:HH:mm:ss.fff}: {1} {2}: {3}:{4} -> {5}:{6} Data[{7}]",
                                 DateTime.Now,
+                                ipHeader.Protocol.ToString().ToUpper(),
                                 destinationIsLocal ? "In" : "Out",
                                 ipHeader.SourceAddress,
-                                tcpHeader.SourcePort,
+                                header.SourcePort,
                                 ipHeader.DestinationAddress,
-                                tcpHeader.DestinationPort,
-                                tcpHeader.Data.Length
-                                );
+                                header.DestinationPort,
+                                header.Data.Length
+                            );
                             var block = JocysCom.ClassLibrary.Text.Helper.BytesToStringBlock(
-                                tcpHeader.Data, false, true, true);
+                                header.Data, false, true, true);
                             block = JocysCom.ClassLibrary.Text.Helper.IdentText(4, block, ' ');
                             writer.WriteLine(block);
                             writer.WriteLine("");
@@ -525,22 +538,25 @@ namespace JocysCom.TextToSpeech.Monitor
                 if (sourceIsLocal && !destinationIsLocal)
                 {
                     // If message was sent to specified port then...
-                    if (tcpHeader.DestinationPort == MonitorItem.PortNumber)
+                    if (header.DestinationPort == MonitorItem.PortNumber)
                     {
                         var pluginType = MonitorItem.GetType();
                         var voiceItem = (VoiceListItem)Activator.CreateInstance(pluginType);
-                        voiceItem.Load(ipHeader, tcpHeader);
+                        voiceItem.Load(ipHeader, header);
                         // If data contains XML message then...
                         if (voiceItem.IsVoiceItem)
                         {
-                            lock (SequenceNumbersLock)
+                            if (sequenceNumber.HasValue)
                             {
-                                while (SequenceNumbers.Count > 10) SequenceNumbers.RemoveAt(0);
-                                if (!SequenceNumbers.Contains(tcpHeader.SequenceNumber))
+                                lock (SequenceNumbersLock)
                                 {
-                                    SequenceNumbers.Add(tcpHeader.SequenceNumber);
-                                    // Add wow item to the list. Use Invoke to make it Thread safe.
-                                    this.Invoke((Action<PlugIns.VoiceListItem>)addVoiceListItem, new object[] { voiceItem });
+                                    while (SequenceNumbers.Count > 10) SequenceNumbers.RemoveAt(0);
+                                    if (!SequenceNumbers.Contains(sequenceNumber.Value))
+                                    {
+                                        SequenceNumbers.Add(sequenceNumber.Value);
+                                        // Add wow item to the list. Use Invoke to make it Thread safe.
+                                        this.Invoke((Action<PlugIns.VoiceListItem>)addVoiceListItem, new object[] { voiceItem });
+                                    }
                                 }
                             }
                         }
