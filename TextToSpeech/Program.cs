@@ -96,8 +96,9 @@ namespace JocysCom.TextToSpeech.Monitor
 				Properties.Settings.Default.MonitorClipboardComboBoxText = "Disabled";
 				Properties.Settings.Default.MonitorPortChecked = true;
 				Properties.Settings.Default.ProgramComboBoxText = new PlugIns.WowListItem().Name;
-				Properties.Settings.Default.Save();
-			}
+                Properties.Settings.Default.LogText = "me66age";
+                Properties.Settings.Default.Save();
+            }
 
 			return true;
 		}

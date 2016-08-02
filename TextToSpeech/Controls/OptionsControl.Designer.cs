@@ -155,10 +155,10 @@
             this.label1.ForeColor = System.Drawing.SystemColors.GrayText;
             this.label1.Location = new System.Drawing.Point(9, 146);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(606, 13);
+            this.label1.Size = new System.Drawing.Size(512, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "3. Information about founded packets with specified text ( for example: me66age )" +
-    " will be logged to JocysComMonitorLog.txt file.";
+    " will be logged to TXT file.";
             // 
             // LoggingLabel2
             // 
