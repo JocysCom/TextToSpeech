@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 
 namespace JocysCom.TextToSpeech.Monitor.PlugIns
@@ -11,7 +12,7 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 	{
 
 		internal IpHeader _IpHeader;
-		internal IPortsHeader _TcpHeader;
+		internal ITcpUdpHeader _TcpHeader;
 
 		#region GridView columns.
 
@@ -30,18 +31,21 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 		public string VoiceXml { get { return _VoiceXml; } }
 		internal string _VoiceXml;
 
-        #region Listen Filter
-
-        public int PortNumber { get; set; }
 		public string Name { get; set; }
-        public bool Incomming { get; set; }
-        public bool Outgoing { get; set; }
 
-        #endregion
+		#region Listen Filter
 
-        public virtual void Load(string text) { }
+		public int FilterDestinationPort { get; set; }
+		public int FilterSourcePort { get; set; }
+		public TrafficDirection FilterDirection { get; set; }
+		public ProtocolType? FilterProtocol { get; set; } 
+		public string FilterProcessName { get; set; }
 
-		public virtual void Load(IpHeader ipHeader, IPortsHeader tcpHeader) { }
+		#endregion
+
+		public virtual void Load(string text) { }
+
+		public virtual void Load(IpHeader ipHeader, ITcpUdpHeader tcpHeader) { }
 
 	}
 

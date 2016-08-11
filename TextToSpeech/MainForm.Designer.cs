@@ -522,7 +522,6 @@
             0});
             this.OptionsPanel.Size = new System.Drawing.Size(816, 266);
             this.OptionsPanel.TabIndex = 0;
-            this.OptionsPanel.Load += new System.EventHandler(this.OptionsPanel_Load);
             // 
             // MonitoringTabPage
             // 

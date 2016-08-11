@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor.Network
 {
-    public class TcpHeader: IPortsHeader
+    public class TcpHeader: ITcpUdpHeader
     {
         ushort _SourcePort;
         public ushort SourcePort { get { return _SourcePort; } }

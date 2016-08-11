@@ -11,11 +11,14 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 	{
 		public WowListItem()
 		{
-			PortNumber = 3724;
 			Name = "WoW";
+
+			FilterDestinationPort = 3724;
+			FilterDirection = TrafficDirection.Out;
+			FilterProtocol = System.Net.Sockets.ProtocolType.Tcp;
 		}
 
-		public override void Load(IpHeader ipHeader, IPortsHeader tcpHeader)
+		public override void Load(IpHeader ipHeader, ITcpUdpHeader tcpHeader)
 		{
 			_IpHeader = ipHeader;
 			_TcpHeader = tcpHeader;

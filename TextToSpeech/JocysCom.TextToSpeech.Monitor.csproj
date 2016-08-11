@@ -134,11 +134,13 @@
     <Compile Include="Common\JocysCom\ComponentModel\SortableBindingList.cs" />
     <Compile Include="Common\JocysCom\Controls\ControlsHelper.cs" />
     <Compile Include="Common\JocysCom\IO\LogWriter.cs" />
+    <Compile Include="Common\JocysCom\Network\NetStatInfo.cs" />
     <Compile Include="Common\JocysCom\Runtime\Serializer.cs" />
     <Compile Include="Common\JocysCom\Text\Helper.cs" />
     <Compile Include="Common\NativeMethods.cs" />
     <Compile Include="Common\SettingsFile.cs" />
     <Compile Include="Common\SocketState.cs" />
+    <Compile Include="Common\TrafficDirection.cs" />
     <Compile Include="Controls\MessageBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +171,12 @@
     <Compile Include="Controls\VoiceOverridesUserControl.Designer.cs">
       <DependentUpon>VoiceOverridesUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainForm_Network.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm_Speech.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Network\IpHeader.cs" />
     <Compile Include="Network\IpHeaderFlags.cs" />
     <Compile Include="Audio\JobStatusType.cs" />
@@ -177,7 +185,7 @@
     <Compile Include="Audio\PlayItem.cs" />
     <Compile Include="Common\RuntimePolicyHelper.cs" />
     <Compile Include="Controls\Sounds.cs" />
-    <Compile Include="Network\IPortsHeader.cs" />
+    <Compile Include="Network\ITcpUdpHeader.cs" />
     <Compile Include="Network\TcpHeader.cs" />
     <Compile Include="Network\TcpHeaderFlags.cs" />
     <Compile Include="Controls\SoundEffectsControl.cs">

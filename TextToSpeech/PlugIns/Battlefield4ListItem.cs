@@ -11,11 +11,13 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 	{
 		public Battlefield4ListItem()
 		{
-			PortNumber = 0;
 			Name = "Battlefield 4";
+			FilterDestinationPort = 0;
+			FilterDirection = TrafficDirection.In;
+			FilterProtocol = System.Net.Sockets.ProtocolType.Tcp;
 		}
 
-		public override void Load(IpHeader ipHeader, IPortsHeader tcpHeader)
+		public override void Load(IpHeader ipHeader, ITcpUdpHeader tcpHeader)
 		{
 			_IpHeader = ipHeader;
 			_TcpHeader = tcpHeader;
