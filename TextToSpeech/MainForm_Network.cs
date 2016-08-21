@@ -209,7 +209,19 @@ namespace JocysCom.TextToSpeech.Monitor
 				}
 				if (index > -1)
 				{
-					var writer = OptionsPanel.Writer;
+                    // Play "Radio2" sound if "LogEnabled" and "LogSound" check-boxes are checked.
+                    if (Properties.Settings.Default.LogEnable && Properties.Settings.Default.LogSound)
+                    {
+                            var stream = GetIntroSound("Radio2");
+                            if (stream != null)
+                            {
+                                var player = new System.Media.SoundPlayer();
+                                player.Stream = stream;
+                                player.Play();
+                            }
+                    }
+                    // ---------------------------------------------
+                    var writer = OptionsPanel.Writer;
 					if (writer != null)
 					{
 						writer.WriteLine("{0:HH:mm:ss.fff}: {1} {2}: {3}:{4} -> {5}:{6} Data[{7}]",

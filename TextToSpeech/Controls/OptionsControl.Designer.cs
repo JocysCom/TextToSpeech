@@ -21,11 +21,12 @@
             this.SilenceBeforeTagLabel = new System.Windows.Forms.Label();
             this.SilenceAfterTagLabel = new System.Windows.Forms.Label();
             this.LoggingGroupBox = new System.Windows.Forms.GroupBox();
+            this.LoggingPlaySoundCheckBox = new System.Windows.Forms.CheckBox();
             this.LogFolderLabel = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.FilterTextLabel = new System.Windows.Forms.Label();
             this.LoggingFolderTextBox = new System.Windows.Forms.TextBox();
             this.OpenButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.LoggingLabel3 = new System.Windows.Forms.Label();
             this.LoggingLabel2 = new System.Windows.Forms.Label();
             this.LoggingLabel1 = new System.Windows.Forms.Label();
             this.LoggingTextBox = new System.Windows.Forms.TextBox();
@@ -94,11 +95,12 @@
             this.LoggingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.LoggingGroupBox.Controls.Add(this.LoggingPlaySoundCheckBox);
             this.LoggingGroupBox.Controls.Add(this.LogFolderLabel);
-            this.LoggingGroupBox.Controls.Add(this.label2);
+            this.LoggingGroupBox.Controls.Add(this.FilterTextLabel);
             this.LoggingGroupBox.Controls.Add(this.LoggingFolderTextBox);
             this.LoggingGroupBox.Controls.Add(this.OpenButton);
-            this.LoggingGroupBox.Controls.Add(this.label1);
+            this.LoggingGroupBox.Controls.Add(this.LoggingLabel3);
             this.LoggingGroupBox.Controls.Add(this.LoggingLabel2);
             this.LoggingGroupBox.Controls.Add(this.LoggingLabel1);
             this.LoggingGroupBox.Controls.Add(this.LoggingTextBox);
@@ -110,6 +112,18 @@
             this.LoggingGroupBox.TabStop = false;
             this.LoggingGroupBox.Text = "Log Network Packets";
             // 
+            // LoggingPlaySoundCheckBox
+            // 
+            this.LoggingPlaySoundCheckBox.AutoSize = true;
+            this.LoggingPlaySoundCheckBox.Checked = true;
+            this.LoggingPlaySoundCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.LoggingPlaySoundCheckBox.Location = new System.Drawing.Point(72, 22);
+            this.LoggingPlaySoundCheckBox.Name = "LoggingPlaySoundCheckBox";
+            this.LoggingPlaySoundCheckBox.Size = new System.Drawing.Size(328, 17);
+            this.LoggingPlaySoundCheckBox.TabIndex = 11;
+            this.LoggingPlaySoundCheckBox.Text = "Play “Radio2” sound, when filter text is found in network packet.";
+            this.LoggingPlaySoundCheckBox.UseVisualStyleBackColor = true;
+            // 
             // LogFolderLabel
             // 
             this.LogFolderLabel.AutoSize = true;
@@ -119,14 +133,14 @@
             this.LogFolderLabel.TabIndex = 10;
             this.LogFolderLabel.Text = "Log Folder:";
             // 
-            // label2
+            // FilterTextLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 48);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Filter Text:";
+            this.FilterTextLabel.AutoSize = true;
+            this.FilterTextLabel.Location = new System.Drawing.Point(6, 48);
+            this.FilterTextLabel.Name = "FilterTextLabel";
+            this.FilterTextLabel.Size = new System.Drawing.Size(56, 13);
+            this.FilterTextLabel.TabIndex = 10;
+            this.FilterTextLabel.Text = "Filter Text:";
             // 
             // LoggingFolderTextBox
             // 
@@ -149,15 +163,15 @@
             this.OpenButton.UseVisualStyleBackColor = true;
             this.OpenButton.Click += new System.EventHandler(this.OpenButton_Click);
             // 
-            // label1
+            // LoggingLabel3
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label1.Location = new System.Drawing.Point(9, 146);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(512, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "3. Information about founded packets with specified text ( for example: me66age )" +
+            this.LoggingLabel3.AutoSize = true;
+            this.LoggingLabel3.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.LoggingLabel3.Location = new System.Drawing.Point(9, 146);
+            this.LoggingLabel3.Name = "LoggingLabel3";
+            this.LoggingLabel3.Size = new System.Drawing.Size(512, 13);
+            this.LoggingLabel3.TabIndex = 4;
+            this.LoggingLabel3.Text = "3. Information about founded packets with specified text ( for example: me66age )" +
     " will be logged to TXT file.";
             // 
             // LoggingLabel2
@@ -194,7 +208,7 @@
             // LoggingCheckBox
             // 
             this.LoggingCheckBox.AutoSize = true;
-            this.LoggingCheckBox.Location = new System.Drawing.Point(7, 22);
+            this.LoggingCheckBox.Location = new System.Drawing.Point(9, 22);
             this.LoggingCheckBox.Name = "LoggingCheckBox";
             this.LoggingCheckBox.Size = new System.Drawing.Size(59, 17);
             this.LoggingCheckBox.TabIndex = 0;
@@ -278,12 +292,13 @@
         private System.Windows.Forms.GroupBox LoggingGroupBox;
         private System.Windows.Forms.TextBox LoggingTextBox;
         private System.Windows.Forms.CheckBox LoggingCheckBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label LoggingLabel3;
         private System.Windows.Forms.Label LoggingLabel2;
         private System.Windows.Forms.Label LoggingLabel1;
         private System.Windows.Forms.TextBox LoggingFolderTextBox;
         private System.Windows.Forms.Label LogFolderLabel;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label FilterTextLabel;
         private System.Windows.Forms.Button OpenButton;
+        private System.Windows.Forms.CheckBox LoggingPlaySoundCheckBox;
     }
 }

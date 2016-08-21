@@ -104,11 +104,20 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             LoggingTextBox.Text = Properties.Settings.Default.LogText;
             SearchPattern = Encoding.ASCII.GetBytes(LoggingTextBox.Text);
             LoggingCheckBox.Checked = Properties.Settings.Default.LogEnable;
+            LoggingPlaySoundCheckBox.Checked = Properties.Settings.Default.LogSound;
             // Update writer settings.
             UpdateLogSettings();
             // Attach events.
             LoggingTextBox.TextChanged += LoggingTextBox_TextChanged;
             LoggingCheckBox.CheckedChanged += LoggingCheckBox_CheckedChanged;
+            LoggingPlaySoundCheckBox.CheckedChanged += LoggingPlaySoundCheckBox_CheckedChanged;
+        }
+
+        // Save value
+        private void LoggingPlaySoundCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            var value = LoggingPlaySoundCheckBox.Checked;
+            Properties.Settings.Default.LogSound = value;
         }
 
         private void LoggingTextBox_TextChanged(object sender, EventArgs e)
@@ -123,7 +132,15 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
         void UpdateLogSettings()
         {
             Properties.Settings.Default.LogEnable = LoggingCheckBox.Checked;
-            LoggingTextBox.ReadOnly = LoggingCheckBox.Checked;
+            LoggingTextBox.Enabled = !LoggingCheckBox.Checked;
+            LoggingPlaySoundCheckBox.Enabled = !LoggingCheckBox.Checked;
+            LoggingFolderTextBox.Enabled = !LoggingCheckBox.Checked;
+            OpenButton.Enabled = !LoggingCheckBox.Checked;
+            FilterTextLabel.Enabled = !LoggingCheckBox.Checked;
+            LogFolderLabel.Enabled = !LoggingCheckBox.Checked;
+            LoggingLabel1.Enabled = !LoggingCheckBox.Checked;
+            LoggingLabel2.Enabled = !LoggingCheckBox.Checked;
+            LoggingLabel3.Enabled = !LoggingCheckBox.Checked;
             var path = GetLogsPath(true);
             path = Path.Combine(path, "log_{0:yyyyMMdd_HHmmss}.txt");
             lock (WriterLock)
@@ -167,5 +184,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             }
             base.Dispose(disposing);
         }
+
     }
 }

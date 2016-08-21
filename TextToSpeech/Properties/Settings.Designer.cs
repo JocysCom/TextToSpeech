@@ -190,5 +190,17 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
                 this["LogText"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool LogSound {
+            get {
+                return ((bool)(this["LogSound"]));
+            }
+            set {
+                this["LogSound"] = value;
+            }
+        }
     }
 }
