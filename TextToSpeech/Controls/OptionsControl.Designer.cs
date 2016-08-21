@@ -110,7 +110,7 @@
             this.LoggingGroupBox.Size = new System.Drawing.Size(632, 342);
             this.LoggingGroupBox.TabIndex = 9;
             this.LoggingGroupBox.TabStop = false;
-            this.LoggingGroupBox.Text = "Log Network Packets";
+            this.LoggingGroupBox.Text = "Log Network Packets ( Plugin Helper )";
             // 
             // LoggingPlaySoundCheckBox
             // 
