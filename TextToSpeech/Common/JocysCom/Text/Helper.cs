@@ -77,24 +77,23 @@ namespace JocysCom.ClassLibrary.Text
         /// </returns>
         public static int IndexOf(byte[] input, byte[] value, int startIndex = 0)
         {
-            if (value.Length > (input.Length - startIndex))
+            for (int i = startIndex; i < input.Length; i++)
             {
-                return -1;
-            }
-            for (int i = startIndex; i < input.Length - value.Length; i++)
-            {
-                bool found = true;
-                for (int j = 0; j < value.Length; j++)
+                // If remaining searchable data is smaller than value then...
+                if (value.Length > (input.Length - i))
                 {
-                    if (input[i + j] != value[j])
+                    return -1;
+                }
+                for (int v = 0; v < value.Length; v++)
+                {
+                    if (input[i + v] != value[v])
                     {
-                        found = false;
                         break;
                     }
-                }
-                if (found)
-                {
-                    return i;
+                    else if (v + 1 == value.Length)
+                    {
+                        return i;
+                    }
                 }
             }
             return -1;

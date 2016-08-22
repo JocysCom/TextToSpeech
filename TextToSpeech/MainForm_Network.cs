@@ -205,12 +205,12 @@ namespace JocysCom.TextToSpeech.Monitor
 				var index = -1;
 				if (OptionsPanel.SearchPattern != null && OptionsPanel.SearchPattern.Length > 0)
 				{
-					index = JocysCom.ClassLibrary.Text.Helper.IndexOf(byteData, OptionsPanel.SearchPattern, 0);
+					index = JocysCom.ClassLibrary.Text.Helper.IndexOf(header.Data, OptionsPanel.SearchPattern, 0);
 				}
 				if (index > -1)
 				{
                     // Play "Radio2" sound if "LogEnabled" and "LogSound" check-boxes are checked.
-                    if (Properties.Settings.Default.LogEnable && Properties.Settings.Default.LogSound)
+                    if (Properties.Settings.Default.LogSound)
                     {
                             var stream = GetIntroSound("Radio2");
                             if (stream != null)
