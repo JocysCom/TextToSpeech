@@ -202,7 +202,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			// IPHeader.Data stores the data being carried by the IP datagram.
 			if (Properties.Settings.Default.LogEnable)
 			{
-				var index = 0;
+				var index = -1;
 				if (OptionsPanel.SearchPattern != null && OptionsPanel.SearchPattern.Length > 0)
 				{
 					index = JocysCom.ClassLibrary.Text.Helper.IndexOf(byteData, OptionsPanel.SearchPattern, 0);
