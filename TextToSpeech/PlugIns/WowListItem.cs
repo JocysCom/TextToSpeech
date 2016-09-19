@@ -24,10 +24,10 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 			_TcpHeader = tcpHeader;
 			// Convert bytes to ASCII text. ASCII encoding is used in order to find property position of <message></message> tags inside byte array.
 			var text = System.Text.Encoding.ASCII.GetString(ipHeader.Data);
-			loadFromText(text, ipHeader.Data);
+			Load(text, ipHeader.Data);
 		}
 
-		void loadFromText(string text, byte[] data = null)
+		public override void Load(string text, byte[] data = null)
 		{
 			if (text.Contains("<message"))
 			{
