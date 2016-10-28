@@ -43,7 +43,7 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 
 		#endregion
 
-		public virtual void Load(string text) { }
+		public virtual void Load(string text, byte[] data = null) { }
 
 		public virtual void Load(IpHeader ipHeader, ITcpUdpHeader tcpHeader) { }
 
