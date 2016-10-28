@@ -1,1372 +1,1387 @@
 ﻿<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd" xmlns="http://www.blizzard.com/wow/ui/">
-<Script file="JocysCom-TextToSpeech-WoW-Addon.lua" />
-<Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parent="UIParent" movable="true" frameLevel="10" enableMouse="true">
-<Size x="600" y="496" />
-<Anchors>
-<Anchor point="CENTER" relativePoint="CENTER" />
-</Anchors>
-<TitleRegion>
-<Anchors>
-<Anchor point="TOP" relativePoint="CENTER" />
-</Anchors>
-</TitleRegion>
-<Layers>
-<Layer>
-<FontString name="JocysCom_MessageForMonitorFrameFontString" inherits="GameFontHighlightSmall">
-<Anchors>
-<Anchor point="TOP" y="-127" />
-</Anchors>
-<Color r="0.5" g="0.5" b="0.5" />
-</FontString>
-<FontString name="JocysCom_ReplaceNameFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
-<Anchors>
-<Anchor point="TOPLEFT" x="121" y="-102" />
-</Anchors>
-<Color r="0.5" g="0.5" b="0.5" />
-</FontString>
-</Layer>
-</Layers>
-<Frames>
-<CheckButton name="JocysCom_LockCheckButton" inherits="UICheckButtonTemplate">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-26" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetPoint("LEFT", 27, 0);
-</OnLoad>
-<OnClick>
- JocysCom_LockCheckButton_OnClick();
-</OnClick>
-</Scripts>
-</CheckButton>
-<CheckButton name="JocysCom_MenuCheckButton" inherits="UICheckButtonTemplate">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-48" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetPoint("LEFT", 27, 0);
-</OnLoad>
-<OnClick>
- JocysCom_MenuCheckButton_OnClick();
-</OnClick>
-</Scripts>
-</CheckButton>
-<CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-70" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetPoint("LEFT", 27, 0);
-</OnLoad>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-</Scripts>
-</CheckButton>
-<EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate" >
-<Size x="100" y="20" />
-<Anchors>
-<Anchor point="TOPLEFT" x="15" y="-96" />
-</Anchors>
-<Scripts>
-<OnEscapePressed>
- JocysCom_OptionsButton_OnClick();
-</OnEscapePressed>
-</Scripts>
-<FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
-</EditBox>
-
-<!-- ******************************************************************************************************************** -->
-
-<Frame name="JocysCom_MessageFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
-<Size x="593" y="233" />
-<Anchors>
-<Anchor point="TOPLEFT" x="3" y="-142" />
-<Anchor point="BOTTOMRIGHT" x="-4" y="117" />
-</Anchors>
-<Frames>
-<ScrollFrame name="JocysCom_OptionsFrameScroll" inherits="UIPanelScrollFrameTemplate">
-<Size x="683" y="91" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="5" y="-4" />
-<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-26" y="3" />
-</Anchors>
-<Frames>
-<EditBox name="JocysCom_OptionsEditBox" parent="JocysCom_OptionsFrameScroll" letters="10000" multiLine="true" >
-<Size x="565" y="81" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="3" y="-3" />
-<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-3" y="3" />
-</Anchors>
-<Scripts>
-<OnEscapePressed>
- JocysCom_OptionsButton_OnClick();
-</OnEscapePressed>
-</Scripts>
-<TextInsets left="5" right="5" top="5" bottom="5" />
-<FontString inherits="GameFontHighlightSmall" />
-</EditBox>
-</Frames>
-<Scripts>
-<OnLoad>
- self:SetScrollChild(JocysCom_OptionsEditBox);<!--when text in JocysCom_OptionsEditBox is selected, selection backgroud width is limited to parent frame width.-->
-</OnLoad>
-</Scripts>
-</ScrollFrame>
- 
-</Frames>
-<Scripts>
-<OnLoad>
-	<!-- self.Bg:SetTexture(0, 0, 0); -->
-</OnLoad>
-</Scripts>
-</Frame>
-<Frame name="JocysCom_DescriptionFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
-<Size x="593" y="120" />
-<Anchors>
-<Anchor point="TOPLEFT" x="3" y="-380" />
-<Anchor point="BOTTOMRIGHT" x="-4" y="4" />
-</Anchors>
-<Layers>
-<Layer level="OVERLAY">
-<FontString name="JocysCom_DescriptionFrameFontString" inherits="GameFontHighlightSmall" justifyV="TOP" justifyH="LEFT">
-<Size x="706" y="74" />
-<Anchors>
-<Anchor point="TOPLEFT" x="10" y="-10" />
-<Anchor point="BOTTOMRIGHT" x="-10" y="10" />
-</Anchors>
-<Color r="0.5" g="0.5" b="0.5" />
-</FontString>
-</Layer>
-</Layers>
-</Frame>
-</Frames>
-<Scripts>
-<OnLoad>
-  self:RegisterForDrag("LeftButton");
-</OnLoad>
-<OnDragStart>
-  self:StartMoving();
-</OnDragStart>
-<OnDragStop>
-  self:StopMovingOrSizing();
-</OnDragStop>
-</Scripts>
-</Frame>
-<Frame name="JocysCom_DialogueMiniFrame" parent="UIParent">
-<Size x="128" y="32" />
-<Anchors>
-<Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" />
-</Anchors>
-<Frames>
-<Button name="JocysCom_StopButtonQuest" inherits="UIPanelButtonTemplate" parent="JocysCom_DialogueMiniFrame" text="■">
-<Size x="31" y="21" />
-<Anchors>
-<Anchor point="TOPLEFT" x="53" y="-1" />
-</Anchors>
-<Scripts>
-<OnClick>
- JocysCom_StopButton_OnClick("Quest");
-</OnClick>
-</Scripts>
-<ButtonText font="Fonts\ARIALN.TTF">
-<Anchors>
-<Anchor point="TOP" x="1" />
-</Anchors>
-<FontHeight val="18" />
-</ButtonText>
-</Button>
-<Button name="JocysCom_PlayButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_DialogueMiniFrame" text="►">
-<Size x="31" y="21" />
-<Anchors>
-<Anchor point="TOPLEFT" x="83" y="-1" />
-</Anchors>
-<Scripts>
-<OnClick>
- JocysCom_PlayButtonButton_OnClick(self);
-</OnClick>
-</Scripts>
-<ButtonText font="Fonts\ARIALN.TTF">
-<Anchors>
-<Anchor point="TOP" x="2" y="-5" />
-</Anchors>
-<FontHeight val="12" />
-</ButtonText>
-</Button>
-</Frames>
-<Scripts>
-<OnHide>
- JocysCom_DialogueMiniFrame_OnHide();
-</OnHide>
-</Scripts>
-</Frame>
-<Frame name="JocysCom_DialogueScrollFrame" parent="UIParent" movable="true" resizable="true">
-<Size x="216" y="216" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" />
-</Anchors>
-<ResizeBounds>
-<minResize x="100" y="100" />
-<maxResize x="288" y="288" />
-</ResizeBounds>
-<Layers>
-<Layer>
-<Texture name="JocysCom_DialogueScrollFrame_Texture">
-<Color a="0.8" r="0" g="0" b="0" />
-</Texture>
-</Layer>
-<Layer>
-<FontString name="JocysCom_DialogueScrollFrame_FontString" inherits="GameFontHighlightSmall">
-<Size x="205" y="202" />
-<Anchors>
-<Anchor point="TOPLEFT" x="8" y="-8" />
-<Anchor point="BOTTOMRIGHT" x="-8" y="8" />
-</Anchors>
-<Color r="0.5" g="0.5" b="0.5" />
-</FontString>
-</Layer>
-</Layers>
-<Frames>
-<Button name="JocysCom_DialogueScrollFrameResizeButton" inherits="ResizeButton">
-<Size x="16" y="16" />
-<Anchors>
-<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" />
-</Anchors>
-<Scripts>
-<OnMouseDown>
- self:GetParent():StartSizing("BOTTOMRIGHT");
-</OnMouseDown>
-<OnMouseUp>
- self:GetParent():StopMovingOrSizing();
-</OnMouseUp>
-</Scripts>
-<NormalTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Up" />
-<PushedTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Down" />
-<HighlightTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Highlight" />
-</Button>
-</Frames>
-<Scripts>
-<OnLoad>
- self:RegisterForDrag("LeftButton");
-</OnLoad>
-<OnDragStart>
- self:StartMoving();
-</OnDragStart>
-<OnDragStop>
- self:StopMovingOrSizing();
-</OnDragStop>
-<OnMouseWheel>
- JocysCom_DialogueScrollFrame_OnMouseWheel(self, delta);
-</OnMouseWheel>
-</Scripts>
-</Frame>
-<Frame name="JocysCom_StopButtonFrame" parent="FriendsMicroButton" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH">
-<Size x="27" y="72" />
-<Anchors>
-<Anchor point="BOTTOM" relativePoint="TOP" />
-</Anchors>
-<Layers>
-<Layer>
-<Texture name="JocysCom_StopButtonFrame_Texture">
-<Color a="0" r="0" g="0" b="0" />
-</Texture>
-</Layer>
-</Layers>
-<Frames>
-<Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="≡">
-<Size x="23" y="21" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="2" y="-3" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("Options");
-</OnEnter>
-<OnClick>
- JocysCom_OptionsButton_OnClick();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-<ButtonText font="Fonts\ARIALN.TTF">
-<Anchors>
-<Anchor point="CENTER" relativePoint="CENTER" x="0" y="0" />
-</Anchors>
-<FontHeight val="18" />
-</ButtonText>
-</Button>
-<Button name="JocysCom_SaveButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="S">
-<Size x="23" y="21" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="2" y="-25" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("Save");
-</OnEnter>
-<OnClick>
- JocysCom_SaveButton_OnClick();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-<ButtonText font="Fonts\ARIALN.TTF">
-<Anchors>
-<Anchor point="CENTER" relativePoint="CENTER" x="1" y="0" />
-</Anchors>
-<FontHeight val="12" />
-</ButtonText>
-</Button>
-<Button name="JocysCom_StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="■">
-<Size x="23" y="21" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="2" y="-47" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("Stop");
-</OnEnter>
-<OnClick>
- JocysCom_StopButton_OnClick();
-</OnClick>
-</Scripts>
-<ButtonText font="Fonts\ARIALN.TTF">
-<Anchors>
-<Anchor point="TOP" relativePoint="TOP" x="1" />
-</Anchors>
-<FontHeight val="18" />
-</ButtonText>
-</Button>
-<Frame name="JocysCom_MiniMenuFrame" parent="JocysCom_StopButtonFrame" enableMouse="true">
-<Size x="240" y="486" />
-<Anchors>
-<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="0" y="-4" />
-</Anchors>
-
-<Backdrop tile="true" bgFile="Interface/FrameGeneral/UI-Background-Rock">
-<TileSize val="350" />
-<BackgroundInsets left="7" right="3" top="3" bottom="5" />
-</Backdrop>
-
-<Layers>
-<Layer>
-<Texture>
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-3" />
-<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-3" y="5" />
-</Anchors>
-<Color a="0.6" r="0" g="0" b="0"/>
-</Texture>
-</Layer>
-</Layers>
-<Frames>
-<Frame name="JocysCom_MiniMenuFrameHeader" parent="JocysCom_MiniMenuFrame">
-<Size x="339" y="22" />
-<Anchors>
-<Anchor point="TOP" relativePoint="TOP" x="3" y="-14" />
-</Anchors>
-<Layers>
-<Layer>
-
-<FontString name="JocysCom_Details_FontString" inherits="GameFontHighlightSmall" text="Move mouse over checkbox to see details:">
-<Anchors>
-<Anchor point="BOTTOM" relativePoint="BOTTOM" x="-1" y="16" />
-</Anchors>
-<Color r="0.5" g="0.5" b="0.5" />
-</FontString> 
-
-<FontString name="JocysCom_MiniMenuFrame_FontString" inherits="GameFontHighlightSmall">
-<Anchors>
-<Anchor point="BOTTOM" relativePoint="BOTTOM" x="0" y="-8" />
-</Anchors>
-</FontString>
-
-<FontString name="JocysCom_Speech_FontString" inherits="GameFontHighlightSmall" text="• Enable text-to-speech">
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="65" y="-127" />
-</Anchors>
-<Color r="0.5" g="0.5" b="0.5" />
-</FontString> 
-
-<FontString name="JocysCom_IntroSound_FontString" inherits="GameFontHighlightSmall" text="• Add intro-separation sound">
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="86" y="-140" />
-</Anchors>
-<Color r="0.5" g="0.5" b="0.5" />
-</FontString> 
-
-<FontString name="JocysCom_SayName_FontString" inherits="GameFontHighlightSmall" text="• Add &quot;&lt;CharacterName&gt; says.&quot;">
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="107" y="-153" />
-</Anchors>
-<Color r="0.5" g="0.5" b="0.5" />
-</FontString> 
-
-</Layer>
-</Layers>
-</Frame>
-
-<Frame name="JocysCom_MiniMenuFrameBorder" parent="JocysCom_MiniMenuFrame">
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="0" y="0" />
-<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="0" y="0" />
-</Anchors>
-<Backdrop>
-<EdgeSize>
-<AbsValue val="23"/>
-</EdgeSize>
-</Backdrop>
-</Frame>
-
-<!--******************************************************************************************************-->
- 
-<CheckButton name="JocysCom_DndCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-50" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cff6464ff Show &lt;Busy&gt;|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("Busy");
-</OnEnter>
-<OnClick>
- JocysCom_DndCheckButton_OnClick(self);
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
- 
-<CheckButton name="JocysCom_ObjectivesCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-71" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffefc176 Include QUEST OBJECTIVES|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("Objectives");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton> 
-
-<CheckButton name="JocysCom_StartOnOpenCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-92" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffefc176 START TTS on opening window|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("StartOnOpen");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton> 
-<CheckButton name="JocysCom_StopOnCloseCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-113" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffefc176 STOP TTS on closing window|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("StopOnClose");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_QuestCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-178" />
-</Anchors>
-<Scripts>
-<OnEnter>
-  JocysCom_MiniMenuFrame_Show("Quest");
-</OnEnter>
-<OnClick>
-  JocysCom_CheckButton_OnClick(self, "Quest");
-</OnClick>
-<OnLeave>
-  JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundQuestCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-178" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundQuest");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_NameQuestCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-178" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffefc176 DIALOGUE, BOOK, etc.|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameQuest");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton> 
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_MonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-199" />
-</Anchors>
-<Scripts>
-<OnEnter>
-  JocysCom_MiniMenuFrame_Show("Monster");
-</OnEnter>
-<OnClick>
-  JocysCom_CheckButton_OnClick(self, "Monster");
-</OnClick>
-<OnLeave>
-  JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundMonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-199" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundMonster");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_NameMonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-199" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cfffffb9f NPC Messages|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameMonster");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_EmoteCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-220" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("Emote");
-</OnEnter>
-<OnClick>
- JocysCom_CheckButton_OnClick(self, "Emote");
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundEmoteCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-220" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffff6b26 Emote|r");
- self.text:SetPoint("TOPLEFT", 45, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundEmote");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-
-<CheckButton name="JocysCom_WhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-241" />
-</Anchors>
-<Scripts>
-<OnEnter>
-  JocysCom_MiniMenuFrame_Show("Whisper");
-</OnEnter>
-<OnClick>
-  JocysCom_CheckButton_OnClick(self, "Whisper");
-</OnClick>
-<OnLeave>
-  JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundWhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-241" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundWhisper");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_NameWhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-241" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffffb2eb Whisper|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameWhisper");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_SayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-262" />
-</Anchors>
-<Scripts>
-<OnEnter>
-  JocysCom_MiniMenuFrame_Show("Say");
-</OnEnter>
-<OnClick>
-  JocysCom_CheckButton_OnClick(self, "Say");
-</OnClick>
-<OnLeave>
-  JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundSayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-262" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundSay");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_NameSayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-262" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffffffff Say|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameSay");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_YellCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-283" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("Yell");
-</OnEnter>
-<OnClick>
- JocysCom_CheckButton_OnClick(self, "Yell");
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundYellCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-283" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundYell");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_NameYellCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-283" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffff3f40 Yell|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameYell");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_PartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-304" />
-</Anchors>
-<Scripts>
-<OnEnter>
-  JocysCom_MiniMenuFrame_Show("Party");
-</OnEnter>
-<OnClick>
-  JocysCom_CheckButton_OnClick(self, "Party");
-</OnClick>
-<OnLeave>
-  JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundPartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-304" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundParty");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_NamePartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-304" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffaaa7ff Party|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameParty");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_GuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-325" />
-</Anchors>
-<Scripts>
-<OnEnter>
-  JocysCom_MiniMenuFrame_Show("Guild");
-</OnEnter>
-<OnClick>
-  JocysCom_CheckButton_OnClick(self, "Guild");
-</OnClick>
-<OnLeave>
-  JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundGuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-325" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundGuild");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_NameGuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-325" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cff40fb40 Guild|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameGuild");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_BattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-346" />
-</Anchors>
-<Scripts>
-<OnEnter>
-  JocysCom_MiniMenuFrame_Show("Battleground");
-</OnEnter>
-<OnClick>
-  JocysCom_CheckButton_OnClick(self, "Battleground");
-</OnClick>
-<OnLeave>
-  JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundBattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-346" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundBattleground");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_NameBattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-346" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffff7d00 Battleground|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameBattleground");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_BattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-367" />
-</Anchors>
-<Scripts>
-<OnEnter>
-  JocysCom_MiniMenuFrame_Show("BattlegroundLeader");
-</OnEnter>
-<OnClick>
-  JocysCom_CheckButton_OnClick(self, "BattlegroundLeader");
-</OnClick>
-<OnLeave>
-  JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundBattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-367" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundBattlegroundLeader");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_NameBattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-367" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffff4709 Battleground Leader only|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameBattlegroundLeader");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_RaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-388" />
-</Anchors>
-<Scripts>
-<OnEnter>
-  JocysCom_MiniMenuFrame_Show("Raid");
-</OnEnter>
-<OnClick>
-  JocysCom_CheckButton_OnClick(self, "Raid");
-</OnClick>
-<OnLeave>
-  JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundRaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-388" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundRaid");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_NameRaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-388" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffff7d00 Raid|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameRaid");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_RaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-409" />
-</Anchors>
-<Scripts>
-<OnEnter>
-  JocysCom_MiniMenuFrame_Show("RaidLeader");
-</OnEnter>
-<OnClick>
-  JocysCom_CheckButton_OnClick(self, "RaidLeader");
-</OnClick>
-<OnLeave>
-  JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundRaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-409" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundRaidLeader");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_NameRaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-409" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffff4709 Raid Leader only|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameRaidLeader");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_InstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-430" />
-</Anchors>
-<Scripts>
-<OnEnter>
-  JocysCom_MiniMenuFrame_Show("Instance");
-</OnEnter>
-<OnClick>
-  JocysCom_CheckButton_OnClick(self, "Instance");
-</OnClick>
-<OnLeave>
-  JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundInstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-430" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundInstance");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_NameInstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-430" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffff7d00 Instance|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameInstance");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<!--******************************************************************************************************-->
-
-<CheckButton name="JocysCom_InstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-451" />
-</Anchors>
-<Scripts>
-<OnEnter>
-  JocysCom_MiniMenuFrame_Show("InstanceLeader");
-</OnEnter>
-<OnClick>
-  JocysCom_CheckButton_OnClick(self, "InstanceLeader");
-</OnClick>
-<OnLeave>
-  JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>
-
-<CheckButton name="JocysCom_SoundInstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-451" />
-</Anchors>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("SoundInstanceLeader");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton>  
-
-<CheckButton name="JocysCom_NameInstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-<Size x="26" y="27" />
-<Anchors>
-<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-451" />
-</Anchors>
-<Scripts>
-<OnLoad>
- self.text:SetText("|cffff4709 Instance Leader only|r");
- self.text:SetPoint("TOPLEFT", 24, -8);
-</OnLoad>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show("NameInstanceLeader");
-</OnEnter>
-<OnClick>
- JocysCom_PlaySoundAndSaveSettings();
-</OnClick>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</CheckButton> 
- 
-<!--******************************************************************************************************-->
- 
-</Frames>
-<Scripts>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show();
-</OnEnter>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</Frame>
-</Frames>
-<Scripts>
-<OnLoad>
- self:RegisterForDrag("LeftButton");
-</OnLoad>
-<OnDragStart>
- self:StartMoving();
-</OnDragStart>
-<OnDragStop>
- self:StopMovingOrSizing();
-</OnDragStop>
-<OnEnter>
- JocysCom_MiniMenuFrame_Show();
-</OnEnter>
-<OnLeave>
- JocysCom_MiniMenuFrame_Hide();
-</OnLeave>
-</Scripts>
-</Frame>
+  <Script file="JocysCom-TextToSpeech-WoW-Addon.lua" />
+  <Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parent="UIParent" movable="true" frameLevel="10" enableMouse="true">
+    <Size x="600" y="496" />
+    <Anchors>
+      <Anchor point="CENTER" relativePoint="CENTER" />
+    </Anchors>
+    <TitleRegion>
+      <Anchors>
+        <Anchor point="TOP" relativePoint="CENTER" />
+      </Anchors>
+    </TitleRegion>
+    <Layers>
+      <Layer>
+        <FontString name="JocysCom_MessageForMonitorFrameFontString" inherits="GameFontHighlightSmall">
+          <Anchors>
+            <Anchor point="TOP" y="-127" />
+          </Anchors>
+          <Color r="0.5" g="0.5" b="0.5" />
+        </FontString>
+        <FontString name="JocysCom_ReplaceNameFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
+          <Anchors>
+            <Anchor point="TOPLEFT" x="121" y="-102" />
+          </Anchors>
+          <Color r="0.5" g="0.5" b="0.5" />
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <CheckButton name="JocysCom_LockCheckButton" inherits="UICheckButtonTemplate">
+        <Size x="26" y="27" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-26" />
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            self.text:SetPoint("LEFT", 27, 0);
+          </OnLoad>
+          <OnClick>
+            JocysCom_LockCheckButton_OnClick();
+          </OnClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="JocysCom_MenuCheckButton" inherits="UICheckButtonTemplate">
+        <Size x="26" y="27" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-48" />
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            self.text:SetPoint("LEFT", 27, 0);
+          </OnLoad>
+          <OnClick>
+            JocysCom_MenuCheckButton_OnClick();
+          </OnClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate">
+        <Size x="26" y="27" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-70" />
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            self.text:SetPoint("LEFT", 27, 0);
+          </OnLoad>
+          <OnClick>
+            JocysCom_PlaySoundAndSaveSettings();
+          </OnClick>
+        </Scripts>
+      </CheckButton>
+      <EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate" >
+        <Size x="100" y="20" />
+        <Anchors>
+          <Anchor point="TOPLEFT" x="15" y="-96" />
+        </Anchors>
+        <Scripts>
+          <OnEscapePressed>
+            JocysCom_OptionsButton_OnClick();
+          </OnEscapePressed>
+        </Scripts>
+        <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
+      </EditBox>
+
+      <!-- ******************************************************************************************************************** -->
+
+      <Frame name="JocysCom_MessageFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
+        <Size x="593" y="233" />
+        <Anchors>
+          <Anchor point="TOPLEFT" x="3" y="-142" />
+          <Anchor point="BOTTOMRIGHT" x="-4" y="117" />
+        </Anchors>
+        <Frames>
+          <ScrollFrame name="JocysCom_OptionsFrameScroll" inherits="UIPanelScrollFrameTemplate">
+            <Size x="683" y="91" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="5" y="-4" />
+              <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-26" y="3" />
+            </Anchors>
+            <Frames>
+              <EditBox name="JocysCom_OptionsEditBox" parent="JocysCom_OptionsFrameScroll" letters="10000" multiLine="true" >
+                <Size x="565" y="81" />
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="3" y="-3" />
+                  <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-3" y="3" />
+                </Anchors>
+                <Scripts>
+                  <OnEscapePressed>
+                    JocysCom_OptionsButton_OnClick();
+                  </OnEscapePressed>
+                </Scripts>
+                <TextInsets left="5" right="5" top="5" bottom="5" />
+                <FontString inherits="GameFontHighlightSmall" />
+              </EditBox>
+            </Frames>
+            <Scripts>
+              <OnLoad>
+                self:SetScrollChild(JocysCom_OptionsEditBox);<!--when text in JocysCom_OptionsEditBox is selected, selection backgroud width is limited to parent frame width.-->
+              </OnLoad>
+            </Scripts>
+          </ScrollFrame>
+
+        </Frames>
+        <Scripts>
+          <OnLoad>
+            <!-- self.Bg:SetTexture(0, 0, 0); -->
+          </OnLoad>
+        </Scripts>
+      </Frame>
+      <Frame name="JocysCom_DescriptionFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
+        <Size x="593" y="120" />
+        <Anchors>
+          <Anchor point="TOPLEFT" x="3" y="-380" />
+          <Anchor point="BOTTOMRIGHT" x="-4" y="4" />
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="JocysCom_DescriptionFrameFontString" inherits="GameFontHighlightSmall" justifyV="TOP" justifyH="LEFT">
+              <Size x="706" y="74" />
+              <Anchors>
+                <Anchor point="TOPLEFT" x="10" y="-10" />
+                <Anchor point="BOTTOMRIGHT" x="-10" y="10" />
+              </Anchors>
+              <Color r="0.5" g="0.5" b="0.5" />
+            </FontString>
+          </Layer>
+        </Layers>
+      </Frame>
+    </Frames>
+    <Scripts>
+      <OnLoad>
+        self:RegisterForDrag("LeftButton");
+      </OnLoad>
+      <OnDragStart>
+        self:StartMoving();
+      </OnDragStart>
+      <OnDragStop>
+        self:StopMovingOrSizing();
+      </OnDragStop>
+    </Scripts>
+  </Frame>
+  <Frame name="JocysCom_DialogueMiniFrame" parent="UIParent">
+    <Size x="128" y="32" />
+    <Anchors>
+      <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" />
+    </Anchors>
+    <Frames>
+      <Button name="JocysCom_StopButtonQuest" inherits="UIPanelButtonTemplate" parent="JocysCom_DialogueMiniFrame" text="■">
+        <Size x="31" y="21" />
+        <Anchors>
+          <Anchor point="TOPLEFT" x="53" y="-1" />
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            JocysCom_StopButton_OnClick("Quest");
+          </OnClick>
+        </Scripts>
+        <ButtonText font="Fonts\ARIALN.TTF">
+          <Anchors>
+            <Anchor point="TOP" x="1" />
+          </Anchors>
+          <FontHeight val="18" />
+        </ButtonText>
+      </Button>
+      <Button name="JocysCom_PlayButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_DialogueMiniFrame" text="►">
+        <Size x="31" y="21" />
+        <Anchors>
+          <Anchor point="TOPLEFT" x="83" y="-1" />
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            JocysCom_PlayButtonButton_OnClick(self);
+          </OnClick>
+        </Scripts>
+        <ButtonText font="Fonts\ARIALN.TTF">
+          <Anchors>
+            <Anchor point="TOP" x="2" y="-5" />
+          </Anchors>
+          <FontHeight val="12" />
+        </ButtonText>
+      </Button>
+    </Frames>
+    <Scripts>
+      <OnHide>
+        JocysCom_DialogueMiniFrame_OnHide();
+      </OnHide>
+    </Scripts>
+  </Frame>
+  <Frame name="JocysCom_DialogueScrollFrame" parent="UIParent" movable="true" resizable="true">
+    <Size x="216" y="216" />
+    <Anchors>
+      <Anchor point="TOPLEFT" relativePoint="TOPLEFT" />
+    </Anchors>
+    <ResizeBounds>
+      <minResize x="100" y="100" />
+      <maxResize x="288" y="288" />
+    </ResizeBounds>
+    <Layers>
+      <Layer>      
+        <Texture name="JocysCom_DialogueScrollFrame_Texture">
+          <Color a="0.8" r="0" g="0" b="0" />
+        </Texture>
+      </Layer>
+      <Layer>
+        <FontString name="JocysCom_DialogueScrollFrame_FontString" inherits="GameFontHighlightSmall">
+          <Size x="205" y="202" />
+          <Anchors>
+            <Anchor point="TOPLEFT" x="8" y="-8" />
+            <Anchor point="BOTTOMRIGHT" x="-8" y="8" />
+          </Anchors>
+          <Color r="0.5" g="0.5" b="0.5" />
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button name="JocysCom_DialogueScrollFrameResizeButton" inherits="ResizeButton">
+        <Size x="16" y="16" />
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" />
+        </Anchors>
+        <Scripts>
+          <OnMouseDown>
+            self:GetParent():StartSizing("BOTTOMRIGHT");
+          </OnMouseDown>
+          <OnMouseUp>
+            self:GetParent():StopMovingOrSizing();
+          </OnMouseUp>
+        </Scripts>
+        <NormalTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Up" />
+        <PushedTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Down" />
+        <HighlightTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Highlight" />
+      </Button>
+    </Frames>
+    <Scripts>
+      <OnLoad>
+        self:RegisterForDrag("LeftButton");
+      </OnLoad>
+      <OnDragStart>
+        self:StartMoving();
+      </OnDragStart>
+      <OnDragStop>
+        self:StopMovingOrSizing();
+      </OnDragStop>
+      <OnMouseWheel>
+        JocysCom_DialogueScrollFrame_OnMouseWheel(self, delta);
+      </OnMouseWheel>
+    </Scripts>
+  </Frame>
+  <Frame name="JocysCom_StopButtonFrame" parent="QuickJoinToastButton" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH">
+    <Size x="27" y="72" />
+    <Anchors>
+      <Anchor point="BOTTOM" relativePoint="TOP" />
+    </Anchors>
+    <Layers>
+      <Layer>
+        <Texture name="JocysCom_StopButtonFrame_Texture">
+          <Color a="0.8" r="0" g="0" b="0" />
+        </Texture>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="≡">
+        <Size x="23" y="21" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="2" y="-3" />
+        </Anchors>
+        <Scripts>
+          <OnEnter>
+            JocysCom_OptionsButton:Show();
+            JocysCom_SaveButton:Show();
+            JocysCom_MiniMenuFrame_Show("Options");
+          </OnEnter>
+          <OnClick>
+            JocysCom_OptionsButton_OnClick();
+          </OnClick>
+          <OnLeave>
+            JocysCom_MiniMenuFrame_Hide();
+            JocysCom_OptionsButton:Hide();
+            <!--JocysCom_SaveButton:Hide();-->
+          </OnLeave>
+        </Scripts>
+        <ButtonText font="Fonts\ARIALN.TTF">
+          <Anchors>
+            <Anchor point="CENTER" relativePoint="CENTER" x="0" y="0" />
+          </Anchors>
+          <FontHeight val="18" />
+        </ButtonText>
+      </Button>
+      <Button name="JocysCom_SaveButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="S">
+        <Size x="23" y="21" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="2" y="-25" />
+        </Anchors>
+        <Scripts>
+          <OnEnter>
+            JocysCom_OptionsButton:Show();
+            JocysCom_SaveButton:Show();
+            <!--JocysCom_MiniMenuFrame_Show("Save");-->
+          </OnEnter>
+          <OnClick>
+            JocysCom_SaveButton_OnClick();
+          </OnClick>
+          <OnLeave>
+            JocysCom_OptionsButton:Hide();
+            <!--JocysCom_SaveButton:Hide();-->
+          </OnLeave>
+        </Scripts>
+        <ButtonText font="Fonts\ARIALN.TTF">
+          <Anchors>
+            <Anchor point="CENTER" relativePoint="CENTER" x="1" y="0" />
+          </Anchors>
+          <FontHeight val="12" />
+        </ButtonText>
+      </Button>
+      <Button name="JocysCom_StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="■">
+        <Size x="23" y="21" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="2" y="-47" />
+        </Anchors>
+        <Scripts>
+          <OnEnter>
+            JocysCom_OptionsButton:Show();
+            JocysCom_SaveButton:Show();
+            <!--JocysCom_MiniMenuFrame_Show("Stop");-->
+          </OnEnter>
+          <OnClick>
+            JocysCom_StopButton_OnClick();
+          </OnClick>
+          <OnLeave>
+            JocysCom_OptionsButton:Hide();
+            <!--JocysCom_SaveButton:Hide();-->
+          </OnLeave>
+        </Scripts>
+        <ButtonText font="Fonts\ARIALN.TTF">
+          <Anchors>
+            <Anchor point="TOP" relativePoint="TOP" x="1" />
+          </Anchors>
+          <FontHeight val="18" />
+        </ButtonText>
+      </Button>
+      <Frame name="JocysCom_MiniMenuFrame" parent="JocysCom_StopButtonFrame" enableMouse="true">
+        <Size x="240" y="486" />
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="0" y="-4" />
+        </Anchors>
+
+        <Backdrop tile="true" bgFile="Interface/FrameGeneral/UI-Background-Rock">
+          <TileSize val="350" />
+          <BackgroundInsets left="7" right="3" top="3" bottom="5" />
+        </Backdrop>
+
+        <Layers>
+          <Layer>
+            <Texture>
+              <Anchors>
+                <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-3" />
+                <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-3" y="5" />
+              </Anchors>
+              <Color a="0.6" r="0" g="0" b="0"/>
+            </Texture>
+          </Layer>
+        </Layers>
+        <Frames>
+          <Frame name="JocysCom_MiniMenuFrameHeader" parent="JocysCom_MiniMenuFrame">
+            <Size x="339" y="22" />
+            <Anchors>
+              <Anchor point="TOP" relativePoint="TOP" x="3" y="-14" />
+            </Anchors>
+            <Layers>
+              <Layer>
+
+                <FontString name="JocysCom_Details_FontString" inherits="GameFontHighlightSmall" text="Move mouse over checkbox to see details:">
+                  <Anchors>
+                    <Anchor point="BOTTOM" relativePoint="BOTTOM" x="-1" y="16" />
+                  </Anchors>
+                  <Color r="0.5" g="0.5" b="0.5" />
+                </FontString>
+
+                <FontString name="JocysCom_MiniMenuFrame_FontString" inherits="GameFontHighlightSmall">
+                  <Anchors>
+                    <Anchor point="BOTTOM" relativePoint="BOTTOM" x="0" y="-8" />
+                  </Anchors>
+                </FontString>
+
+                <FontString name="JocysCom_Speech_FontString" inherits="GameFontHighlightSmall" text="• Enable text-to-speech">
+                  <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="65" y="-127" />
+                  </Anchors>
+                  <Color r="0.5" g="0.5" b="0.5" />
+                </FontString>
+
+                <FontString name="JocysCom_IntroSound_FontString" inherits="GameFontHighlightSmall" text="• Add intro-separation sound">
+                  <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="86" y="-140" />
+                  </Anchors>
+                  <Color r="0.5" g="0.5" b="0.5" />
+                </FontString>
+
+                <FontString name="JocysCom_SayName_FontString" inherits="GameFontHighlightSmall" text="• Add &quot;&lt;CharacterName&gt; says.&quot;">
+                  <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="107" y="-153" />
+                  </Anchors>
+                  <Color r="0.5" g="0.5" b="0.5" />
+                </FontString>
+
+              </Layer>
+            </Layers>
+          </Frame>
+
+          <Frame name="JocysCom_MiniMenuFrameBorder" parent="JocysCom_MiniMenuFrame">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="0" y="0" />
+              <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="0" y="0" />
+            </Anchors>
+            <Backdrop>
+              <EdgeSize>
+                <AbsValue val="23"/>
+              </EdgeSize>
+            </Backdrop>
+          </Frame>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_DndCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-50" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cff6464ff Show &lt;Busy&gt;|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Busy");
+              </OnEnter>
+              <OnClick>
+                JocysCom_DndCheckButton_OnClick(self);
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_ObjectivesCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-71" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffefc176 Include QUEST OBJECTIVES|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Objectives");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_StartOnOpenCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-92" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffefc176 START TTS on opening window|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("StartOnOpen");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="JocysCom_StopOnCloseCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-113" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffefc176 STOP TTS on closing window|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("StopOnClose");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_QuestCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-178" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Quest");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Quest");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundQuestCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-178" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundQuest");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NameQuestCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-178" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffefc176 DIALOGUE, BOOK, etc.|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameQuest");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_MonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-199" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Monster");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Monster");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundMonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-199" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundMonster");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NameMonsterCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-199" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cfffffb9f NPC Messages|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameMonster");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_EmoteCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-220" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Emote");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Emote");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundEmoteCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-220" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffff6b26 Emote|r");
+                self.text:SetPoint("TOPLEFT", 45, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundEmote");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+
+          <CheckButton name="JocysCom_WhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-241" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Whisper");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Whisper");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundWhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-241" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundWhisper");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NameWhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-241" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffffb2eb Whisper|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameWhisper");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_SayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-262" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Say");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Say");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundSayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-262" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundSay");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NameSayCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-262" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffffffff Say|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameSay");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_YellCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-283" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Yell");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Yell");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundYellCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-283" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundYell");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NameYellCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-283" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffff3f40 Yell|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameYell");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_PartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-304" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Party");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Party");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundPartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-304" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundParty");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NamePartyCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-304" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffaaa7ff Party|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameParty");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_GuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-325" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Guild");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Guild");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundGuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-325" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundGuild");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NameGuildCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-325" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cff40fb40 Guild|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameGuild");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_BattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-346" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Battleground");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Battleground");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundBattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-346" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundBattleground");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NameBattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-346" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffff7d00 Battleground|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameBattleground");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_BattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-367" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("BattlegroundLeader");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "BattlegroundLeader");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundBattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-367" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundBattlegroundLeader");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NameBattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-367" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffff4709 Battleground Leader only|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameBattlegroundLeader");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_RaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-388" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Raid");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Raid");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundRaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-388" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundRaid");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NameRaidCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-388" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffff7d00 Raid|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameRaid");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_RaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-409" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("RaidLeader");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "RaidLeader");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundRaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-409" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundRaidLeader");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NameRaidLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-409" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffff4709 Raid Leader only|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameRaidLeader");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_InstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-430" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("Instance");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "Instance");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundInstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-430" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundInstance");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NameInstanceCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-430" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffff7d00 Instance|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameInstance");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+          <CheckButton name="JocysCom_InstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="-451" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("InstanceLeader");
+              </OnEnter>
+              <OnClick>
+                JocysCom_CheckButton_OnClick(self, "InstanceLeader");
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_SoundInstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="31" y="-451" />
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("SoundInstanceLeader");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="JocysCom_NameInstanceLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
+            <Size x="26" y="27" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="52" y="-451" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self.text:SetText("|cffff4709 Instance Leader only|r");
+                self.text:SetPoint("TOPLEFT", 24, -8);
+              </OnLoad>
+              <OnEnter>
+                JocysCom_MiniMenuFrame_Show("NameInstanceLeader");
+              </OnEnter>
+              <OnClick>
+                JocysCom_PlaySoundAndSaveSettings();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+              </OnLeave>
+            </Scripts>
+          </CheckButton>
+
+          <!--******************************************************************************************************-->
+
+        </Frames>
+        <Scripts>
+          <OnEnter>
+            JocysCom_MiniMenuFrame_Show();
+          </OnEnter>
+          <OnLeave>
+            JocysCom_MiniMenuFrame_Hide();
+          </OnLeave>
+        </Scripts>
+      </Frame>
+    </Frames>
+    <Scripts>
+      <OnLoad>
+        self:RegisterForDrag("LeftButton");
+      </OnLoad>
+      <OnDragStart>
+        self:StartMoving();
+      </OnDragStart>
+      <OnDragStop>
+        self:StopMovingOrSizing();
+      </OnDragStop>
+      <OnEnter>
+        JocysCom_OptionsButton:Show();
+        JocysCom_SaveButton:Show();
+      </OnEnter>
+      <OnLeave>
+        JocysCom_OptionsButton:Hide();
+        <!--JocysCom_SaveButton:Hide();-->
+      </OnLeave>
+    </Scripts>
+  </Frame>
 </Ui>
