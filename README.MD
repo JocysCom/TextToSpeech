@@ -105,7 +105,7 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 
 <p>8. Click <b>[ Yes ]</b> button.</p>
 
-<blockquote>
+<blockquote style="display: none;">
 <p><b>To run “Monitor” on old OS, like “Windows XP”, you must have installed at least...</b></p>
 <p>1. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06) (for Windows XP only)</a> <br />
 2. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
