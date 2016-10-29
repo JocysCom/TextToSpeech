@@ -1,7 +1,7 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.3.6 (2016-10-27) • Digitally Signed
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.71 (2016-10-27)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.72 (2016-10-29)
 
 <hr />
 
@@ -31,7 +31,7 @@ BETTER text-to-speech voices are developed by <a target="_blank"  href="http://w
 <hr />
 
 <p>Old versions of “Monitor” and “Addon” (2014-08-06) are presented in this video.<br />
-New versions (2015-12-01) with more options can read quests and chat messages.</p>
+New versions (2016-10-29) with more options can read quests and chat messages.</p>
 
 [![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
@@ -105,18 +105,8 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 
 <p>8. Click <b>[ Yes ]</b> button.</p>
 
-<blockquote>
-<p><b>To run “Monitor” on old OS, like “Windows XP”, you must have installed at least...</b></p>
-<p>1. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06) (for Windows XP only)</a> <br />
-2. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
-<p>If you get DirectX error (after trying to run “Monitor”) or no sound, proceed to parts "3" and "4".</p>
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png" /></p>
-<p>3. <a target="_blank"  href="http://www.microsoft.com/en-us/download/details.aspx?id=22">Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)</a><br />
-In Windows 8 and 10: Control Panel > Programs and Features > Turn Windows features on or off
-> enable “.NET Framework 3.5 (includes 2.0 and 3.0)”.<br />
-4. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=8109">Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)</a></p>
 <p>“Monitor Clipboard” option doesn't work and must be [Disabled] in Windows XP.<br />
-“Addon” requires latest version of “World of Warcraft” game.</blockquote>
+“Addon” requires latest version of “World of Warcraft” game.</p>
 
 <p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab (example).</p>
 
@@ -147,7 +137,20 @@ Usual file directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysC
 
 12. <b>[■]</b> (Stop) and <b>[►]</b> (Play) buttons will appear at the bottom of some windows too.</p>
 
-<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_50.png" /></a></p>
+<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_50.png" /></a></p>
+
+<p>13. <b>“Addon”</b> gets genders of targeted (you are interacting with) NPCs. <b>“Addon”</b> also conversations, but not genders of NPCs, who are walking and talking around you. Therefore, If slot is available, <b>“Addon“</b> will create <strong>“NPCSaveJocysComTTS”</strong> macro and will update it during the game, to target nearest or currently talking NPC and save its name, gender and type in <b>“Monitor“</b> (must be running in background) and <b>“Addon“</b> settings. Then, these NPCs will have specific genders (male and female voices) in their conversations. I didn't figure out yet, how to get NPCs genders from their chat event or some database (although, there is no problem with players). Enter <b>/m</b> in chat window to show macros:</p>
+
+<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Macro.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Macro.png" /></a></p>
+
+<blockquote>
+<sub>Usual per-account settings directory, where NPCs are saved:<br />
+#:\Program Files\World of Warcraft\WTF\Account\&lt;AccountName&gt;\SavedVariables\JocysCom-TextToSpeech-WoW.lua<br />
+Usual per-character settings directory, where Addon settings are saved:<br />
+#:\Program Files\World of Warcraft\WTF\Account\&lt;AccountName&gt;\&lt;RealmName&gt;\&lt;CharacterName&gt;\JocysCom-TextToSpeech-WoW.lua<br />
+You can delete these files to reset settings or clear saved NPCs (game must be closed).
+</sub>
+</blockquote>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
