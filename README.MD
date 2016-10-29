@@ -1,7 +1,7 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.3.6 (2016-10-27) • Digitally Signed
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.71 (2016-10-27)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.72 (2016-10-29)
 
 <hr />
 
@@ -137,7 +137,20 @@ Usual file directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysC
 
 12. <b>[■]</b> (Stop) and <b>[►]</b> (Play) buttons will appear at the bottom of some windows too.</p>
 
-<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_50.png" /></a></p>
+<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_50.png" /></a></p>
+
+<p>13. <b>“Addon”</b> gets genders of targeted (you are interacting with) NPCs. <b>“Addon”</b> also conversations, but not genders of NPCs, who are walking and talking around you. Therefore, If slot is available, <b>“Addon“</b> will create <strong>“NPCSaveJocysComTTS”</strong> macro and will update it during the game, to target nearest or currently talking NPC and save its name, gender and type in <b>“Monitor“</b> (must be running in background) and <b>“Addon“</b> settings. Then, these NPCs will have specific genders (male and female voices) in their conversations. I didn't figure out yet, how to get NPCs genders from their chat event or some database (although, there is no problem with players). Enter <b>/m</b> in chat window to show macros:</p>
+
+<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Macro.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Macro.png" /></a></p>
+
+<blockquote>
+<sub>Usual per-account settings directory, where NPCs are saved:<br />
+#:\Program Files\World of Warcraft\WTF\Account\&lt;AccountName&gt;\SavedVariables\JocysCom-TextToSpeech-WoW.lua<br />
+Usual per-character settings directory, where Addon settings are saved:<br />
+#:\Program Files\World of Warcraft\WTF\Account\&lt;AccountName&gt;\&lt;RealmName&gt;\&lt;CharacterName&gt;\JocysCom-TextToSpeech-WoW.lua<br />
+You can delete these files to reset settings or clear saved NPCs (game must be closed).
+</sub>
+</blockquote>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
