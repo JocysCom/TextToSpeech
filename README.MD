@@ -31,7 +31,7 @@ BETTER text-to-speech voices are developed by <a target="_blank"  href="http://w
 <hr />
 
 <p>Old versions of “Monitor” and “Addon” (2014-08-06) are presented in this video.<br />
-New versions (2015-12-01) with more options can read quests and chat messages.</p>
+New versions (2016-10-29) with more options can read quests and chat messages.</p>
 
 [![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
