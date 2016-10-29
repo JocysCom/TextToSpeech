@@ -105,18 +105,8 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 
 <p>8. Click <b>[ Yes ]</b> button.</p>
 
-<blockquote style="display: none;">
-<p><b>To run “Monitor” on old OS, like “Windows XP”, you must have installed at least...</b></p>
-<p>1. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=24">Microsoft Windows XP Service Pack 3 (2008-05-06) (for Windows XP only)</a> <br />
-2. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=17851">Microsoft .NET Framework 4 (2011-02-21)</a></p>
-<p>If you get DirectX error (after trying to run “Monitor”) or no sound, proceed to parts "3" and "4".</p>
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png" /></p>
-<p>3. <a target="_blank"  href="http://www.microsoft.com/en-us/download/details.aspx?id=22">Microsoft .NET Framework 3.5 Service Pack 1 (2008-11-18)</a><br />
-In Windows 8 and 10: Control Panel > Programs and Features > Turn Windows features on or off
-> enable “.NET Framework 3.5 (includes 2.0 and 3.0)”.<br />
-4. <a target="_blank"  href="http://www.microsoft.com/en-gb/download/details.aspx?id=8109">Microsoft DirectX End-User Runtimes (June 2010) 9.29.1974 (2011-04-18)</a></p>
 <p>“Monitor Clipboard” option doesn't work and must be [Disabled] in Windows XP.<br />
-“Addon” requires latest version of “World of Warcraft” game.</blockquote>
+“Addon” requires latest version of “World of Warcraft” game.</p>
 
 <p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab (example).</p>
 
