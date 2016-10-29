@@ -9,6 +9,7 @@
 local DebugEnabled = false;
 
 -- Set variables.
+local addonPrefix = "JocysComTTS";
 local unitName = UnitName("player");
 local realmName = GetRealmName();
 local questMessage = nil;
@@ -55,7 +56,7 @@ function JocysCom_CreateMacro()
         local numglobal, numperchar = GetNumMacros();
         if numperchar < 17 then
             macroIndex = CreateMacro("NPCSaveJocysComTTS", macroIcon, macroMessage, 1);
-            print("Game Menu > Macros > <Name> Specific Macros > JocysComTTS macro created.");
+            print("|cffffff00NPCSaveJocysComTTS|r |cff88aaffmacro in|r |cffffff00" .. unitName .. " Specific Macros|r |cff88aaffcreated.|r");
         end
     end
 end
@@ -63,16 +64,17 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.71 ( 2016-10-27 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.72 ( 2016-10-29 )");
 	-- CheckButtons (Options) text.
-	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon's whisper messages in chat window.|r");
+	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
+    JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon messages|r |cffffffffNo NPC target|r|cff808080 or |r|cffffffffTarget is not NPC|r |cff808080and|r |cffffffff<target> is already in the list|r |cff808080in chat window.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Stop]|r |cff808080button.|r");
 	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on the right side of |cffffffff[Stop]|r |cff808080button. [Unchecked] show menu on the left side.|r");
 	-- Font Strings.
 	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
-	JocysCom_DescriptionFrameFontString:SetText("Text-to-speech voices, pitch, rate, effects, etc. ... you will find all options in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window, |cff77ccffJocys.Com Text to Speech WoW Addon|r creates and sends special whisper message to yourself (message includes dialogue text, character name and effect name). Then, |cff77ccffJocys.Com Text to Speech Monitor|r (which must be running in background) picks-up this message from your network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.");
+	JocysCom_DescriptionFrameFontString:SetText("Text-to-speech voices, pitch, rate, effects, etc. ... you will find all options in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window, |cff77ccffJocys.Com Text to Speech WoW Addon|r creates and sends special addon message to yourself (message includes dialogue text, character name and effect name). Then, |cff77ccffJocys.Com Text to Speech Monitor|r (which must be running in background) picks-up this message from your network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.");
 	JocysCom_ReplaceNameFontString:SetText("Here you can change your name for text to speech from |cff00ff00" .. unitName .. "|r to something else.");
-	JocysCom_MessageForMonitorFrameFontString:SetText("Whisper message for |cff77ccffJocys.Com Text to Speech Monitor|r ... it must be runninng in background:");
+	JocysCom_MessageForMonitorFrameFontString:SetText("Addon message for |cff77ccffJocys.Com Text to Speech Monitor|r ... it must be runninng in background:");
 end
 
 -- Unlock frames.
@@ -114,7 +116,8 @@ function JocysCom_SendChatMessageStop(CloseOrButton, group)
 		messageStop = "<message command=\"stop\" group=\"" .. group .. "\" />";
 	end			
 	if (stopWhenClosing == 1 or group ~= nil or group ~= "") and (JocysCom_StopOnCloseCheckButton:GetChecked() == true or (CloseOrButton == 1 or CloseOrButton == 2)) then
-		SendChatMessage(messageStop, "WHISPER", "Common", unitName);
+		--SendChatMessage(messageStop, "WHISPER", "Common", unitName);
+        SendAddonMessage(addonPrefix, messageStop, "WHISPER", unitName);
 		stopWhenClosing = 0;
 		JocysCom_OptionsEditBox:SetText("|cff808080" .. messageStop .. "|r");
 	end
@@ -122,7 +125,8 @@ end
 
 -- Send sound intro function.
 function JocysCom_SendSoundIntro(group)
-	SendChatMessage("<message command=\"sound\" group=\"" .. group .. "\" />", "WHISPER", "Common", unitName);
+	--SendChatMessage("<message command=\"sound\" group=\"" .. group .. "\" />", "WHISPER", "Common", unitName);
+    SendAddonMessage(addonPrefix, "<message command=\"sound\" group=\"" .. group .. "\" />", "WHISPER", unitName);
 end
 
 -- Register events.
@@ -140,6 +144,8 @@ function JocysCom_RegisterEvents()
 	JocysCom_OptionsFrame:RegisterEvent("ITEM_TEXT_READY"); 
 	-- Close frames.
 	JocysCom_OptionsFrame:RegisterEvent("GOSSIP_CLOSED"); --"QUEST_FINISHED", "QUEST_ACCEPTED"
+    -- Chat ADDON events.
+    JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_ADDON"); 
 	-- Chat MONSTER events.
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_EMOTE");
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_WHISPER");
@@ -178,6 +184,10 @@ function JocysCom_RegisterEvents()
 end
 
 function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
+    if event == "CHAT_MSG_ADDON" and arg1 == addonPrefix and JocysCom_FilterCheckButton:GetChecked() ~= true then
+        print("|cff88aaff" .. arg1 .. "|r " .. arg2);
+    end
+
     if string.find(tostring(arg1), "<messageSaveNPC") ~=nil and (event == "CHAT_MSG_WHISPER_INFORM") then
     JocysCom_SaveButton_OnClick();
     end
@@ -497,7 +507,8 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group)
 				part = string.sub(speakMessage, startIndex);
 				chatMessage = chatMessageSP .. part .. chatMessageE;
 				stopWhenClosing = 1;
-				SendChatMessage(chatMessage, "WHISPER", "Common", unitName);
+				--SendChatMessage(chatMessage, "WHISPER", "Common", unitName);
+                SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
 				if DebugEnabled then print("[" .. tostring(index) .. "] [" .. startIndex .. "] '" .. part .. "'") end
 				break;
 			-- if text length more than 100 then...
@@ -506,7 +517,8 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group)
 				part = string.sub(speakMessage, startIndex, endIndex - 1);
 				chatMessage = chatMessageSA .. part .. chatMessageE;
 				stopWhenClosing = 1;
-				SendChatMessage(chatMessage, "WHISPER", "Common", unitName);
+				--SendChatMessage(chatMessage, "WHISPER", "Common", unitName);
+                SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
 				if DebugEnabled then print("[" .. tostring(index) .. "] [" .. startIndex .. "-" .. (endIndex - 1) .. "] '" .. part .. "'") end
 				startIndex = endIndex;
 				speakMessageRemainingLen = string.len(string.sub(speakMessage, startIndex));
@@ -800,13 +812,17 @@ function JocysCom_SaveButton_OnClick(self)
 
 	--If no target.
     if targetName == nil then
+        if JocysCom_SaveCheckButton:GetChecked() ~= true then
     		print("|cff808080No NPC target.|r");
+        end
 		return;
     end
     
     --If target is not NPC.
     if string.find(tostring(targetName), "(*)") ~= nil then
-		print("|cff808080Target is not NPC.|r");
+        if JocysCom_SaveCheckButton:GetChecked() ~= true then
+		    print("|cff808080Target is not NPC.|r");
+        end
 		return;
     end
 
@@ -826,7 +842,9 @@ function JocysCom_SaveButton_OnClick(self)
 
     --Do not save if NPC is already in the list.
     if setContains(NPCList, targetName) == true then
-        print("|cff808080" .. targetName .. " is already in the list.|r");
+        if JocysCom_SaveCheckButton:GetChecked() ~= true then
+            print("|cff808080" .. targetName .. " is already in the list.|r");
+        end
         return;
     end
     ------------------------------------------------------------------------------------------------------------------------------------
@@ -849,7 +867,8 @@ function JocysCom_SaveButton_OnClick(self)
 	end
 	print("|cffffff20Saved : " .. targetName .. " : " .. targetSex .. " : " .. targetType .. "|r");
 	local saveMessage = "<message command=\"Save\" name=\"" .. targetName .. "\" gender=\"" .. targetSex .. "\" effect=\"" .. targetType .. "\" />";
-	SendChatMessage(saveMessage, "WHISPER", "Common", unitName);
+	--SendChatMessage(saveMessage, "WHISPER", "Common", unitName);
+    SendAddonMessage(addonPrefix, saveMessage, "WHISPER", unitName);
 	JocysCom_OptionsEditBox:SetText("|cff808080" .. saveMessage .. "|r");
     
     --Add NPC to list.
@@ -909,6 +928,7 @@ function JocysCom_LoadTocFileSettings()
 	end
 	-- Set FilterCheckButton and Message filters.
 	if JocysCom_FilterCB == false then JocysCom_FilterCheckButton:SetChecked(false) else JocysCom_FilterCheckButton:SetChecked(true) end
+    if JocysCom_SaveCB == false then JocysCom_SaveCheckButton:SetChecked(false) else JocysCom_SaveCheckButton:SetChecked(true) end
 	-- Add chat message filters.
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", JocysCom_CHAT_MSG_WHISPER_INFORM);
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", JocysCom_CHAT_MSG_WHISPER);
@@ -973,6 +993,7 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_LockCB = JocysCom_LockCheckButton:GetChecked();
 	JocysCom_MenuCB = JocysCom_MenuCheckButton:GetChecked();
 	JocysCom_FilterCB = JocysCom_FilterCheckButton:GetChecked();
+    JocysCom_SaveCB = JocysCom_SaveCheckButton:GetChecked();
 	JocysCom_QuestCB = JocysCom_QuestCheckButton:GetChecked();
 	JocysCom_MonsterCB = JocysCom_MonsterCheckButton:GetChecked();
 	JocysCom_WhisperCB = JocysCom_WhisperCheckButton:GetChecked();
@@ -1023,6 +1044,7 @@ function JocysCom_SaveTocFileSettings()
 end
 
 function JocysCom_SetInterfaceSettings()
+    RegisterAddonMessagePrefix(addonPrefix);
 	-- Attach OnShow and OnHide sripts to WoW frames.
 	QuestLogPopupDetailFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
 	GossipFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);

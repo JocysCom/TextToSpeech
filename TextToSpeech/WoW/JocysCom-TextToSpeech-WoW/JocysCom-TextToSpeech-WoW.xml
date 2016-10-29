@@ -12,15 +12,15 @@
     </TitleRegion>
     <Layers>
       <Layer>
-        <FontString name="JocysCom_MessageForMonitorFrameFontString" inherits="GameFontHighlightSmall">
+        <FontString name="JocysCom_ReplaceNameFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
           <Anchors>
-            <Anchor point="TOP" y="-127" />
+            <Anchor point="TOPLEFT" x="121" y="-124" />
           </Anchors>
           <Color r="0.5" g="0.5" b="0.5" />
         </FontString>
-        <FontString name="JocysCom_ReplaceNameFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
+        <FontString name="JocysCom_MessageForMonitorFrameFontString" inherits="GameFontHighlightSmall">
           <Anchors>
-            <Anchor point="TOPLEFT" x="121" y="-102" />
+            <Anchor point="TOP" y="-149" />
           </Anchors>
           <Color r="0.5" g="0.5" b="0.5" />
         </FontString>
@@ -58,6 +58,21 @@
       <CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-92" />
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            self.text:SetPoint("LEFT", 27, 0);
+          </OnLoad>
+          <OnClick>
+            JocysCom_PlaySoundAndSaveSettings();
+          </OnClick>
+        </Scripts>
+      </CheckButton>
+
+      <CheckButton name="JocysCom_SaveCheckButton" inherits="UICheckButtonTemplate">
+        <Size x="26" y="27" />
+        <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="7" y="-70" />
         </Anchors>
         <Scripts>
@@ -69,10 +84,11 @@
           </OnClick>
         </Scripts>
       </CheckButton>
+
       <EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate" >
         <Size x="100" y="20" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="15" y="-96" />
+          <Anchor point="TOPLEFT" x="15" y="-118" />
         </Anchors>
         <Scripts>
           <OnEscapePressed>
@@ -87,7 +103,7 @@
       <Frame name="JocysCom_MessageFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
         <Size x="593" y="233" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="3" y="-142" />
+          <Anchor point="TOPLEFT" x="3" y="-164" />
           <Anchor point="BOTTOMRIGHT" x="-4" y="117" />
         </Anchors>
         <Frames>
