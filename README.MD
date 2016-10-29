@@ -5,7 +5,7 @@
 
 <hr />
 
-<p><sub>New Addon version creates <character> specific macro (if slot is available) for targeting and saving NPC genders and types around you. You can assign this macro to mouse button or keyboard key and save NPCs to Monitor (must be running in background) and WOW settings. Then, NPCs in chat will have gender (male of female voices).</sub></p>
+<p><sub>New Addon version creates <character> specific macro (if slot is available) for targeting and saving NPC genders and types around you. You can assign this macro to mouse button or keyboard key and save NPCs to Monitor (must be running in background) and WOW settings. Then NPCs will have gender (male of female voices) in chat.</sub></p>
 
 <hr />
 
