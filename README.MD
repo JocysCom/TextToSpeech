@@ -5,6 +5,8 @@
 
 <hr />
 
+New Addon version creates <character> specific macro (if slot is available) for targeting and saving NPC genders and types around you. You can assign this macro to mouse button or keyboard key and save NPCs to Monitor (must be running in background) and WOW settings. Then, NPCs in chat will have gender (male of female voices).
+
 <p align="justify">Reads <i>quests</i> and <i>chat messages</i> with text-to-speech voices.<br />
 How it works: When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, <b>“WoW Addon”</b> sends whisper (chat) message between  <code>&lt;message&gt;...&lt;/message&gt;</code> tags to yourself. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code> and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this text between <code>&lt;message&gt;...&lt;/message&gt;</code> tags from your local network, formats it to SAPI XML and reads it with specific text-to-speech voice.<br />
 
