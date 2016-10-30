@@ -64,7 +64,7 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.75 ( 2016-10-30 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.76 ( 2016-10-30 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
     JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon messages|r |cffffffffNo NPC target|r|cff808080 or |r|cffffffffTarget is not NPC|r |cff808080and|r |cffffffff<target> is already in the list|r |cff808080in chat window.|r");
@@ -578,9 +578,9 @@ function JocysCom_MenuCheckButton_OnClick()
 	PlaySound("igMainMenuOptionCheckBoxOn");
  	JocysCom_MiniMenuFrame:ClearAllPoints();
 	if JocysCom_MenuCheckButton:GetChecked() == true then
-	JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", 0, -4);
+	JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", -4, 0);
 	else
-	JocysCom_MiniMenuFrame:SetPoint("BOTTOMRIGHT", JocysCom_StopButtonFrame, "BOTTOMLEFT", 0, -4);
+	JocysCom_MiniMenuFrame:SetPoint("BOTTOMRIGHT", JocysCom_StopButtonFrame, "BOTTOMLEFT", 0, 0);
 	end
 	JocysCom_SaveTocFileSettings();
 end
@@ -922,9 +922,9 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_MenuCB == false then JocysCom_MenuCheckButton:SetChecked(false) else JocysCom_MenuCheckButton:SetChecked(true) end
 	JocysCom_MiniMenuFrame:ClearAllPoints();
 	if JocysCom_MenuCheckButton:GetChecked() == true then
-	JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", 0, -4);
+	JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", -4, 0);
 	else
-	JocysCom_MiniMenuFrame:SetPoint("BOTTOMRIGHT", JocysCom_StopButtonFrame, "BOTTOMLEFT", 0, -4);
+	JocysCom_MiniMenuFrame:SetPoint("BOTTOMRIGHT", JocysCom_StopButtonFrame, "BOTTOMLEFT", 0, 0);
 	end
 	-- Set FilterCheckButton and Message filters.
 	if JocysCom_FilterCB == false then JocysCom_FilterCheckButton:SetChecked(false) else JocysCom_FilterCheckButton:SetChecked(true) end
