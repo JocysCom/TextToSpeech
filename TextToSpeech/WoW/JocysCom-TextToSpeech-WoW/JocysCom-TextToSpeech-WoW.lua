@@ -64,7 +64,7 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.76 ( 2016-10-30 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.78 ( 2016-11-01 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
     JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon messages|r |cffffffffNo NPC target|r|cff808080 or |r|cffffffffTarget is not NPC|r |cff808080and|r |cffffffff<target> is already in the list|r |cff808080in chat window.|r");
@@ -402,7 +402,7 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group)
             macroMessage = "/targetfriend\n/w " .. unitName .. " <messageSaveNPC/>"; 
         else
             macroIcon = "INV_Misc_GroupLooking";
-            macroMessage = "/target " .. name .. ";\n/w " .. unitName .. " <messageSaveNPC/>";
+            macroMessage = "/target " .. name .. "\n/w " .. unitName .. " <messageSaveNPC/>";
         end
 
         --Update macro if exists.
