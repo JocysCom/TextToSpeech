@@ -1,7 +1,7 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.3.6 (2016-10-27) • Digitally Signed
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.78 (2016-11-01)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.80 (2016-11-04)
 
 <hr />
 
@@ -123,14 +123,14 @@ Number ( from 0 to 100 ) sets, how often voice should be used, relatively to oth
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
 
-<p>11. <b>[■]</b> (Stop) button will appear at the top of WoW's <b>“Social-Friends”</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[S]</b> (Save) and <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> will appear. Move mouse pointer over any <b>check-box</b> and title will show, what it enables/disables.</p>
+<p>11. <b>[■]</b> (Stop) button will appear at the top of WoW's <b>“Social-Friends”</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> will appear. Move mouse pointer over any <b>check-box</b> and title will show, what it enables/disables.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_62.png"/></p>
 
 <blockquote>
 <sub>If “Social-Friends” button is not visible:<br />
 1. Open <i>JocysCom-TextToSpeech-WoW.xml</i> file with Notepad.<br />
-2. Find and change <code>"FriendsMicroButton"</code> to <code>"UIParent"</code><br />
+2. Find and change <code>"QuickJoinToastButton"</code> to <code>"UIParent"</code><br />
 3. Reload WoW. -- [■] (Stop) button should appear at the top-center of your screen. You can unlock [■] (Stop) button in [≡] (Options) and move it to desired position.<br />
 Usual file directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysCom-TextToSpeech-WoW\</sub>
 </blockquote>
@@ -139,7 +139,7 @@ Usual file directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysC
 
 <p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_50.png" /></a></p>
 
-<p>13. <b>“Addon”</b> gets genders of targeted (you are interacting with) NPCs. <b>“Addon”</b> also gets conversations, but not genders of NPCs, who are walking and talking around you. Therefore, If slot is available, <b>“Addon“</b> will create <b>“NPCSaveJocysComTTS”</b> macro and will update it during the game, to target nearest or currently talking NPC and save its name, gender and type in <b>“Monitor“</b> (must be running in background) and in <b>“Addon“</b> settings. Then, these NPCs will have specific genders (male and female voices) in their conversations. I didn't figure out yet, how to get NPCs genders from NPC chat event or some database (although, there is no problem with players). Enter <b>/m</b> in chat window to show macros:</p>
+<p>13. <b>“Addon”</b> gets genders of targeted (you are interacting with) NPCs. <b>“Addon”</b> also gets conversations-chat, but not genders of NPCs, who are walking and talking around you. Therefore, <strong>“Addon”</strong> automatically saves every NPC (name, gender and type), which you are targeting, in <b>“Monitor“</b> (must be running in background). Also, if slot is available, <b>“Addon“</b> will create <strong>“NPCSaveTTSMacro”</strong> and will update it during the game. You can use this macro to target at once up to 9 last chatting NPCs or any nearest friendly NPC (to save them in <b>“Monitor“</b>). Saved in <b>“Monitor“</b> NPCs have genders (male and female voices) in their conversations. I didn't figure out yet, how to get NPCs genders directly from NPC chat event or some database (although, there is no problem with players). For example: If you see two female NPCs chatting, but they have male voices... just click on them (or use macro to target them) and they should get female voices from that moment. Enter <strong>/m</strong> in chat window to show macros:</p>
 
 <p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Macro.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Macro.png" /></a></p>
 
