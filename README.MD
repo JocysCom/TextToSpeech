@@ -122,7 +122,7 @@ Number ( from 0 to 100 ) sets, how often voice should be used, relatively to oth
 
 <p>11. <b>[■]</b> (Stop) button will appear at the top of WoW's <b>“Social-Friends”</b> button. If you will move mouse pointer over this <b>[■]</b> (Stop) button... then <b>[≡]</b> (Options) buttons with various <b>check-boxes</b> will appear. Move mouse pointer over any <b>check-box</b> and title will show, what it enables/disables.</p>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2_2_62.png"/></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png"/></p>
 
 <blockquote>
 <sub>If “Social-Friends” button is not visible:<br />
