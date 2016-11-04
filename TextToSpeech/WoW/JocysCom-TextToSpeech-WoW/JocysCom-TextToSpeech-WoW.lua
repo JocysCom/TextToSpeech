@@ -9,6 +9,7 @@
 local DebugEnabled = false;
 
 -- Set variables.
+local addonName = "JocysCom-TextToSpeech-WoW";
 local addonPrefix = "JocysComTTS";
 local unitName = UnitName("player");
 local realmName = GetRealmName();
@@ -28,46 +29,113 @@ local messageType = nil;
 local messageLeader = nil;
 local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-to-speech is enabled.";
 local messageStop = "<message command=\"stop\" />";
---local NPCList = {};
-local macroIndex = GetMacroIndexByName("NPCSaveJocysComTTS");
+local NPCNames = {};
+local macroName = "NPCSaveTTSMacro"
+local macroIndex = GetMacroIndexByName(macroName);
 local macroIcon = "INV_Misc_GroupNeedMore";
-local macroMessage = "/targetfriend\n/w " .. unitName .. " <messageSaveNPC/>";
+local macroMessage = "/targetfriend";
 
---Saved NPC list.
-function addToSet(set, key, sex, t)
-    set[key] = {sex, t};
-end
-
-function removeFromSet(set, key)
-    set[key] = nil;
-end
-function setContains(set, key)
-    if set[key] == nil then   
-        return nil;
-    else
-        return true;
-    end
-end
-
---Create macro button if it doesn't exist and slot is available.
-function JocysCom_CreateMacro()
-    macroIndex = GetMacroIndexByName("NPCSaveJocysComTTS");
+function JocysCom_UpdateMacro()
+    --Create macro if it doesn't exist and slot is available.
+    macroIndex = GetMacroIndexByName(macroName);
     if macroIndex == 0 then
-        local numglobal, numperchar = GetNumMacros();
-        if numperchar < 17 then
-            macroIndex = CreateMacro("NPCSaveJocysComTTS", macroIcon, macroMessage, 1);
-            print("|cffffff00NPCSaveJocysComTTS|r |cff88aaffmacro in|r |cffffff00" .. unitName .. " Specific Macros|r |cff88aaffcreated.|r");
+        local macroIndexOld = GetMacroIndexByName("NPCSaveJocysComTTS");
+        if macroIndexOld > 0 then 
+            macroIndex = EditMacro(macroIndexOld, macroName, macroIcon, macroMessage, 1);
+        else
+            local numglobal, numperchar = GetNumMacros();
+            if numperchar < 17 then
+                macroIndex = CreateMacro(macroName, macroIcon, macroMessage, 1);
+                print("|cffffff00" .. macroName .. "|r |cff88aaff in|r |cffffff00" .. unitName .. " Specific Macros|r |cff88aaffcreated.|r");
+            end
         end
     end
+    --Update macro if exists.
+    macroIndex = GetMacroIndexByName(macroName);
+    if macroIndex > 0 then
+        --Macro settings.  targetlasttarget 
+        if setCount(NPCNames) > 0 then
+            macroIcon = "INV_Misc_GroupNeedMore";
+            macroMessage = "";
+            for i, v in pairs(NPCNames) do
+                macroMessage = macroMessage .. "/target " .. v .. "\n";
+            end
+            macroMessage = macroMessage .. "/w " ..  unitName .. " <messageMacro/>\n"; 
+        else
+            macroIcon = "INV_Misc_GroupLooking";
+            macroMessage = "/targetfriend";
+        end
+        --Update macro.
+	    macroIndex = EditMacro(macroIndex, macroName, macroIcon, macroMessage, 1);
+    end
+end
+
+function setContainsSaved(s, k)
+    for i, v in pairs(s) do
+        if i == k then
+           return true;
+        end
+    end
+  return nil;
+end
+
+--Count NPCs in the list.
+function setCount(s)
+  local c = 0;
+  for _ in pairs(s) do c = c + 1 end;
+  return c;
+end
+
+--Remove NPC name from the target list.
+function setRemove(s, k)
+    if setCount(s) > 0 then
+        for i, v in pairs(s) do
+            if v == k then
+                table.remove(s, i);
+            end
+        end
+    end
+end
+
+--Add NPC name to the target list (max 9)
+function setInsert(s, k)
+    for i, v in pairs(s) do
+        if v == k then
+            table.remove(s, i);
+        end
+    end
+    table.insert(s, k);
+    if setCount(s) > 9 then
+    table.remove(s, 1);
+    end
+end
+
+--Get name of the last NPC in the list.
+--function getLast(s)
+  --local i = 0;
+  --local l = nil;
+  --if setCount(s) > 0 then
+      --for k, v in pairs(s) do
+        --i = i + 1;
+        --print(tostring(i) .. ". " .. tostring(v));
+        --l = v;
+      --end
+  --end
+    --return l;
+--end
+
+--Save NPC name to list.
+function addToSet(s, k, v1, v2)
+    s[k] = {v1, v2};
 end
 
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.78 ( 2016-11-01 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.80 ( 2016-11-04 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
-    JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon messages|r |cffffffffNo NPC target|r|cff808080 or |r|cffffffffTarget is not NPC|r |cff808080and|r |cffffffff<target> is already in the list|r |cff808080in chat window.|r");
+    JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffffSave in Monitor <NPC>|r |cff808080 " .. macroName .. " related messages.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Stop]|r |cff808080button.|r");
 	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on the right side of |cffffffff[Stop]|r |cff808080button. [Unchecked] show menu on the left side.|r");
 	-- Font Strings.
@@ -179,31 +247,40 @@ function JocysCom_RegisterEvents()
 	-- Chat INSTANCE events.
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_INSTANCE_CHAT");
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_INSTANCE_CHAT_LEADER");
+    -- Target event.
+    JocysCom_OptionsFrame:RegisterEvent("PLAYER_TARGET_CHANGED");
 	-- Logout event.
+    JocysCom_OptionsFrame:RegisterEvent("PLAYER_LEAVING_WORLD");
 	JocysCom_OptionsFrame:RegisterEvent("PLAYER_LOGOUT");
 end
 
 function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
-    if event == "CHAT_MSG_ADDON" and arg1 == addonPrefix and JocysCom_FilterCheckButton:GetChecked() ~= true then
-        print("|cff88aaff" .. arg1 .. "|r " .. arg2);
+    -- don't proceed messages with <message> tags and your own incoming whispers.
+    if event == "CHAT_MSG_WHISPER" and string.find(arg1, "<messageMacro") then
+        NPCNames = {};
+        JocysCom_UpdateMacro();
     end
 
-    if string.find(tostring(arg1), "<messageSaveNPC") ~=nil and (event == "CHAT_MSG_WHISPER_INFORM") then
-    JocysCom_SaveButton_OnClick();
-    end
-	 -- don't proceed messages with <message> tags and your own incoming whispers.
-	if string.find(tostring(arg1), "<message") ~= nil or (event == "CHAT_MSG_WHISPER" and string.find(tostring(arg2), tostring(unitName)) ~= nil) then
+	if string.find(tostring(arg1), "<message") ~= nil then
         return;
     end
-	-- Debug.
-	if DebugEnabled then print("1. " .. event) end
-	-- Events.
-	if event == "ADDON_LOADED" then
+    -- Events.  
+    if event == "ADDON_LOADED" and arg1 == addonName then
 		JocysCom_LoadTocFileSettings();
+        JocysCom_UpdateMacro();
 		return;
 	elseif event == "PLAYER_LOGOUT" then
 		JocysCom_SaveTocFileSettings();
 		return;
+    elseif event == "PLAYER_LEAVING_WORLD" then
+        JocysCom_UpdateMacro();
+        return;
+    elseif event == "PLAYER_TARGET_CHANGED" then
+        JocysCom_SaveNPC();
+		return;    
+    elseif event == "CHAT_MSG_ADDON" and arg1 == addonPrefix and JocysCom_FilterCheckButton:GetChecked() ~= true then
+        print("|cff88aaff" .. arg1 .. "|r " .. arg2);
+        return;
 	elseif JocysCom_DialogueMiniFrame:IsShown() and (string.find(event, "QUEST") ~= nil or event == "GOSSIP_SHOW" or event == "ITEM_TEXT_READY") then
 		group = "Quest";
 		questMessage = nil;
@@ -251,7 +328,7 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 		if JocysCom_SoundMonsterCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameMonsterCheckButton:GetChecked() == true or (event == "CHAT_MSG_MONSTER_EMOTE") then NameIntro = true end
 	elseif JocysCom_WhisperCheckButton:GetChecked() == true and (event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" or event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM") then
-		group = "Whisper";
+        group = "Whisper";
 		if JocysCom_SoundWhisperCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameWhisperCheckButton:GetChecked() == true then NameIntro = true end
 		-- replace friend's real name with character name.
@@ -342,147 +419,112 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 	JocysCom_SpeakMessage(speakMessage, event, arg2, group);
 end
 
+function JocysCom_Replace(r)
+	local m = r .. " ";
+    -- Remove HTML <> tags and text between them.
+    if string.find(m, "HTML") ~= nil then
+	    m = string.gsub(m, "%<(.-)%>", "");
+	    m = string.gsub(m, "\"", "");
+	end
+    --Remove colors.
+    if string.find(m, "|") ~= nil then
+	    m = string.gsub(m, "%|cff(.-)%|h", "");
+	    m = string.gsub(m, "%|h%|r", "");
+	    m = string.gsub(m, "%[", " \"");
+	    m = string.gsub(m, "%]", "\" ");
+	end
+	m = string.gsub(m, "&", " and ");
+	m = string.gsub(m, "%c(%u)", ".%1");
+	m = string.gsub(m, "%c", " ");
+	m = string.gsub(m, "[ ]+", " ");
+	m = string.gsub(m, " %.", ".");
+	m = string.gsub(m, "[(%p)]+", "%1");
+	m = string.gsub(m, "[%!]+", "!");
+	m = string.gsub(m, "[%?]+", "?");
+	m = string.gsub(m, "%!%.", "!");
+	m = string.gsub(m, "%?%.", "?");
+	m = string.gsub(m, "%?%-", "?");
+	m = string.gsub(m, "%?%!%?", "?!");
+	m = string.gsub(m, "%!%?%!", "?!");
+	m = string.gsub(m, "%!%?", "?!");
+	m = string.gsub(m, "%!", "! ");
+	m = string.gsub(m, "%?", "? ");
+	m = string.gsub(m, " %!", "!");
+	m = string.gsub(m, "^%.", "");
+	m = string.gsub(m, ">%.", ".>");
+	m = string.gsub(m, "[%.]+", ". ");
+	m = string.gsub(m, "%? %.", "");
+	m = string.gsub(m, "<", " [comment] ");
+	m = string.gsub(m, ">", " [/comment] ");
+	m = string.gsub(m, "[ ]+", " ");
+	m = string.gsub(m, "%%s", "");
+	m = string.gsub(m, "lvl", "level");
+    return m
+end
+
 --Messages.
 function JocysCom_SpeakMessage(speakMessage, event, name, group)
-	-- Remove HTML <> tags and text between them.
-	if speakMessage ~= nil then
-		if string.find(speakMessage, "HTML") ~= nil then
-			speakMessage = string.gsub(speakMessage, "%<(.-)%>", "");
-			speakMessage = string.gsub(speakMessage, "\"", "");
-			--speakMessage = string.gsub(speakMessage, "%b<>", "");
-		end
-	end	
-	if DebugEnabled then print("2. " .. event) end
-	if speakMessage == nil then return end
-	if string.find(event, "CHAT") ~= nil then
-		if string.find(speakMessage, "|") ~= nil then
-			speakMessage = string.gsub(speakMessage, "%|cff(.-)%|h", "");
-			speakMessage = string.gsub(speakMessage, "%|h%|r", "");
-			speakMessage = string.gsub(speakMessage, "%[", " \"");
-			speakMessage = string.gsub(speakMessage, "%]", "\" ");
-		end
-	else
+    if speakMessage == nil then return end
+	-- Replace player name.
+	local newUnitName = JocysCom_ReplaceNameEditBox:GetText();
+	if string.len(newUnitName) > 1 and newUnitName ~= unitName then
+		speakMessage = string.gsub(speakMessage, unitName, newUnitName);
+	end
+    --Replace text in message.
+    speakMessage = JocysCom_Replace(speakMessage);
+    if speakMessage == nil then return end
+	--If not chat event.
+    local NPCName = nil;
+    local NPCSex = nil;
+    if string.find(event, "CHAT") ~= nil then
+        NPCName = name;
+        if string.find(event, "CHAT_MSG_MONSTER") == nil then
+		    NPCSex = UnitSex(name);
+	    else
+            --Update macro.
+            setInsert(NPCNames, name);             
+            JocysCom_UpdateMacro();
+	    end
+    else
+        NPCName = GetUnitName("npc");
+        NPCSex = UnitSex("npc");
 		if JocysCom_StartOnOpenCheckButton:GetChecked() == true then 	
 			JocysCom_SendChatMessageStop(1); -- Send stop message.
 		end
 		if (string.find(event, "QUEST") ~= nil or event == "GOSSIP_SHOW" or event == "ITEM_TEXT_READY") and JocysCom_SoundQuestCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
 	end
 	-- Set NPC name.
-	local NPCName = nil;
-	if string.find(event, "CHAT") ~= nil then
-		NPCName = name;
-	else
-		NPCName = GetUnitName("npc");
-	end
 	if NPCName == nil then
 		NPCName = "";
 	else
-	NPCName = string.gsub(NPCName, "&", " and ");
-	NPCName = string.gsub(NPCName, "\"", "");
-	NPCName = " name=\"" .. tostring(NPCName) .. "\"";
+	    NPCName = string.gsub(NPCName, "&", " and ");
+	    NPCName = string.gsub(NPCName, "\"", "");
+	    NPCName = " name=\"" .. tostring(NPCName) .. "\"";
 	end
-	-- Set NPC gender (1 = Neutrum / Unknown, 2 = Male, 3 = Female). 
-	NPCSex = nil;
-	if string.find(event, "CHAT") ~= nil and string.find(event, "CHAT_MSG_MONSTER") == nil then
-		NPCSex = UnitSex(name);
-	elseif string.find(event, "CHAT_MSG_MONSTER") ~= nil then
-		--local unitGuid = UnitGUID("target");
-		NPCSex = UnitSex(name);
-
-        local targetName = string.gsub(name, "&", " and ");
-		targetName = string.gsub(targetName, "\"", "");
-
-        ------------------------------------------------------------------------------------------------------------------------------------
-        --Check if macro exists and try to create it, if not.
-        JocysCom_CreateMacro();
-        
-        --Macro settings.                 
-        if setContains(NPCList, targetName) then
-            macroIcon = "INV_Misc_GroupNeedMore";
-            macroMessage = "/targetfriend\n/w " .. unitName .. " <messageSaveNPC/>"; 
-        else
-            macroIcon = "INV_Misc_GroupLooking";
-            macroMessage = "/target " .. name .. "\n/w " .. unitName .. " <messageSaveNPC/>";
-        end
-
-        --Update macro if exists.
-		macroIndex = GetMacroIndexByName("NPCSaveJocysComTTS");
-        if macroIndex > 0 then
-		    macroIndex = EditMacro(macroIndex, nil, macroIcon, macroMessage, 1);
-        end
-
-         if setContains(NPCList, targetName) then
-            local LNPCGender = NPCList[targetName][2];
-            if LNPCGender == "Neutral" then NPCSex = 1 end
-	        if LNPCGender == "Male" then NPCSex = 2 end
-	        if LNPCGender == "Female" then NPCSex = 3 end
-         end
-        ------------------------------------------------------------------------------------------------------------------------------------
-
+	-- Set NPC gender. 
+    if NPCSex == nil then
+		NPCSex = "";
 	else
-		NPCSex = UnitSex("npc");	
+	    if NPCSex == 2 then NPCSex = "Male";
+	    elseif NPCSex == 3 then NPCSex = "Female";
+        else NPCSex = "Neutral" end
+        NPCSex = " gender=\"" .. NPCSex .. "\"";    
 	end
-	NPCGender = nil;
-	if NPCSex == 1 then NPCGender = "Neutral" end
-	if NPCSex == 2 then NPCGender = "Male" end
-	if NPCSex == 3 then NPCGender = "Female" end
-
-	if NPCGender == nil then
-		NPCGender = "";
-	else
-	NPCGender = " gender=\"" .. tostring(NPCGender) .. "\"";
-	end
-	-- Get NPC type (Beast, Dragonkin, Demon, Elemental, Giant, Undead, Humanoid, Critter, Mechanical, Not specified, Totem, Non-combat Pet, Gas Cloud).							
+	-- Set NPC type (Beast, Dragonkin, Demon, Elemental, Giant, Undead, Humanoid, Critter, Mechanical, Not specified, Totem, Non-combat Pet, Gas Cloud).							
 	local NPCType = UnitCreatureType("npc");
 	if NPCType == nil then
 		NPCType = "";
 	else
 		NPCType = " effect=\"" .. tostring(NPCType) .. "\"";
 	end
-	-- Set group value.
-	if group == nil or group == "" then
-	group = "";
+	-- Set group.
+	if group == nil then
+	    group = "";
 	else
-	group = " group=\"" .. group .. "\"";
+	    group = " group=\"" .. group .. "\"";
 	end
-	-- Replace player name.
-	local newUnitName = JocysCom_ReplaceNameEditBox:GetText();
-	if string.len(newUnitName) > 1 and newUnitName ~= unitName then
-		speakMessage = string.gsub(speakMessage, unitName, newUnitName);
-	end
-	-- Replace in speakMessage. %c %p
-	speakMessage = speakMessage .. " ";
-	speakMessage = string.gsub(speakMessage, "&", " and ");
-	speakMessage = string.gsub(speakMessage, "%c(%u)", ".%1");
-	speakMessage = string.gsub(speakMessage, "%c", " ");
-	speakMessage = string.gsub(speakMessage, "[ ]+", " ");
-	speakMessage = string.gsub(speakMessage, " %.", ".");
-	speakMessage = string.gsub(speakMessage, "[(%p)]+", "%1");
-	speakMessage = string.gsub(speakMessage, "[%!]+", "!");
-	speakMessage = string.gsub(speakMessage, "[%?]+", "?");
-	speakMessage = string.gsub(speakMessage, "%!%.", "!");
-	speakMessage = string.gsub(speakMessage, "%?%.", "?");
-	speakMessage = string.gsub(speakMessage, "%?%-", "?");
-	speakMessage = string.gsub(speakMessage, "%?%!%?", "?!");
-	speakMessage = string.gsub(speakMessage, "%!%?%!", "?!");
-	speakMessage = string.gsub(speakMessage, "%!%?", "?!");
-	speakMessage = string.gsub(speakMessage, "%!", "! ");
-	speakMessage = string.gsub(speakMessage, "%?", "? ");
-	speakMessage = string.gsub(speakMessage, " %!", "!");
-	speakMessage = string.gsub(speakMessage, "^%.", "");
-	speakMessage = string.gsub(speakMessage, ">%.", ".>");
-	speakMessage = string.gsub(speakMessage, "[%.]+", ". ");
-	speakMessage = string.gsub(speakMessage, "%? %.", "");
-	speakMessage = string.gsub(speakMessage, "<", " [comment] ");
-	speakMessage = string.gsub(speakMessage, ">", " [/comment] ");
-	speakMessage = string.gsub(speakMessage, "[ ]+", " ");
-	speakMessage = string.gsub(speakMessage, "%%s", "");
-	speakMessage = string.gsub(speakMessage, "lvl", "level");
 	-- Format and send whisper message.
-		local chatMessageSP = "<message command=\"play\"" .. group .. NPCName .. NPCGender .. NPCType .. "><part>";
-		if NPCGender == "" then
-		chatMessageSP = "<message" .. group .. NPCName .. NPCType .. " command=\"play\"><part>";
-		end
+		local chatMessageSP = "<message command=\"play\"" .. group .. NPCName .. NPCSex .. NPCType .. "><part>";
 		local chatMessageSA = "<message command=\"add\"><part>";
 		local chatMessageE = "</part></message>";
 		local chatMessage;
@@ -502,31 +544,29 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group)
 				index = speakMessageLen;
 				endIndex = speakMessageLen + 1; -- 0-1000
 			end
-			-- if text length less than 100 then...
+			-- If text length less than 100 then...
 			if speakMessageRemainingLen <= sizePlay then
 				part = string.sub(speakMessage, startIndex);
 				chatMessage = chatMessageSP .. part .. chatMessageE;
 				stopWhenClosing = 1;
-				--SendChatMessage(chatMessage, "WHISPER", "Common", unitName);
                 SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
 				if DebugEnabled then print("[" .. tostring(index) .. "] [" .. startIndex .. "] '" .. part .. "'") end
 				break;
-			-- if text length more than 100 then...
+			-- If text length more than 100 then...
 			elseif (index - startIndex) > sizeAdd or (index >= speakMessageLen and speakMessageRemainingLen > sizePlay) then
-				-- if space is out of size then...
+				-- If space is out of size then...
 				part = string.sub(speakMessage, startIndex, endIndex - 1);
 				chatMessage = chatMessageSA .. part .. chatMessageE;
 				stopWhenClosing = 1;
-				--SendChatMessage(chatMessage, "WHISPER", "Common", unitName);
                 SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
 				if DebugEnabled then print("[" .. tostring(index) .. "] [" .. startIndex .. "-" .. (endIndex - 1) .. "] '" .. part .. "'") end
 				startIndex = endIndex;
 				speakMessageRemainingLen = string.len(string.sub(speakMessage, startIndex));
 			end
 			-- look for next space.
-				endIndex = index + 1;
+			endIndex = index + 1;
 		end
-		-- FILL EDITBOXES  .. "<" .. event .. " />" ..
+		-- Fill EditBox.
 		local questEditBox = string.gsub(speakMessage, "%[comment]", "|cff808080[comment]|r|cfff7e593");
 		questEditBox = string.gsub(questEditBox, "%[/comment]", "|r|cff808080[/comment]|r");
 		questEditBox = "|cff808080" .. chatMessageSP .. "|r\n" .. questEditBox .. "\n|cff808080" .. chatMessageE .. "|r";
@@ -616,7 +656,7 @@ end
  	local fontString = "";
 	JocysCom_MiniMenuFrame_FontString:Show();
 	if name == "Options" then
-		fontString = "|cffddddddOpen text-to-speech Options window.\n|r";
+		fontString = "|cffddddddMouse over shows Quick Menu.\nMouse click opens Options Window.|r";
 	elseif name == "Save" then
 		fontString = "|cffddddddSave target name, gender, type in Monitor.\n|r";
 	elseif name == "Stop" then
@@ -716,12 +756,6 @@ end
 	else
 		JocysCom_MiniMenuFrame_FontString:Hide();
 	end
-	--JocysCom_MiniMenuFrame:SetBackdrop({
-	----bgFile="Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-MiniMenuFrame-Background",
-	----tile = true,
-	----tileSize = 32,
-	----insets = { left = 0, right = 0, top = 0, bottom = 0 }
-	--});
 	JocysCom_MiniMenuFrame_FontString:SetText(fontString);
 	JocysCom_MiniMenuFrameBorder:SetBackdrop( { edgeFile = "Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-MiniMenuFrame-Border", edgeSize = 23 });
 	JocysCom_MiniMenuFrame:Show();
@@ -784,7 +818,6 @@ end
 
 -- Close all JocysCom frames.
 function JocysCom_DialogueMiniFrame_OnHide()
-	if DebugEnabled then print("MiniFrame Hide") end
 	JocysCom_SendChatMessageStop(0, "Quest");
 end
 
@@ -802,78 +835,36 @@ function JocysCom_OptionsButton_OnClick()
 end
 
 -- [ Save ] button.
-function JocysCom_SaveButton_OnClick(self)
-
-    -- Target Name.
-	local targetName = GetUnitName("target");
-
-    --Check if macro exists and try to create it, if not.
-    JocysCom_CreateMacro();
-
-	--If no target.
-    if targetName == nil then
+function JocysCom_SaveNPC()
+    if UnitIsPlayer("target") or UnitPlayerControlled("target") or GetUnitName("target") == nil or UnitSex("target") == nil then 
         if JocysCom_SaveCheckButton:GetChecked() ~= true then
-    		print("|cff808080No NPC target.|r");
+        print("|cff888888Only uncontrollable by players NPC targets will be saved.|r");
         end
-		return;
-    end
-    
-    --If target is not NPC.
-    if string.find(tostring(targetName), "(*)") ~= nil then
+    else
+        -- Target Name.
+        local name = GetUnitName("target");
+        local targetName = string.gsub(name, "&", " and ");
+	    targetName = string.gsub(targetName, "\"", "");
+        -- Target Gender.
+	    local targetSex = UnitSex("target");
+	    if targetSex == 2 then targetSex = "Male";
+	    elseif targetSex == 3 then targetSex = "Female";
+	    else targetSex = "Neutral"; end
+        -- Target Type.
+        local targetType = UnitCreatureType("target");
+	    if targetType == nil then
+		    targetType = "";
+	    end
+	    local saveMessage = "<message command=\"Save\" name=\"" .. targetName .. "\" gender=\"" .. targetSex .. "\" effect=\"" .. targetType .. "\" />";
+        --Send message for "Monitor".
+        SendAddonMessage(addonPrefix, saveMessage, "WHISPER", unitName);
+        --Fill "Options" window EditBox.
+        JocysCom_OptionsEditBox:SetText("|cff808080" .. saveMessage .. "|r");
+        --Print information in to chat window.
         if JocysCom_SaveCheckButton:GetChecked() ~= true then
-		    print("|cff808080Target is not NPC.|r");
+            print("|cffffff20Save in Monitor: " .. targetName .. " : " .. targetSex .. " : " .. targetType .. "|r");
         end
-		return;
     end
-
-    targetName = string.gsub(targetName, "&", " and ");
-	targetName = string.gsub(targetName, "\"", "");
-
-    ------------------------------------------------------------------------------------------------------------------------------------            
-    --Set macro.
-    macroIcon = "INV_Misc_GroupNeedMore";
-    macroMessage = "/targetfriend\n/w " .. unitName .. " <messageSaveNPC/>"; 
-
-    --Update macro if exists.
-    macroIndex = GetMacroIndexByName("NPCSaveJocysComTTS");
-	if macroIndex > 0 then
-	    macroIndex = EditMacro(macroIndex, nil, macroIcon, macroMessage, 1);
-    end
-
-    --Do not save if NPC is already in the list.
-    if setContains(NPCList, targetName) == true then
-        if JocysCom_SaveCheckButton:GetChecked() ~= true then
-            print("|cff808080" .. targetName .. " is already in the list.|r");
-        end
-        return;
-    end
-    ------------------------------------------------------------------------------------------------------------------------------------
-
-	-- Target Gender.
-	local targetSex = UnitSex("target");
-	if targetSex == 2 then
-		targetSex = "Male";
-	elseif targetSex == 3 then
-		targetSex = "Female";
-	else
-		targetSex = "Neutral";
-	end
-	-- Target Type.
-	local targetType = UnitCreatureType("target");
-	if targetType == nil then
-		local targetTypeValue = "";
-	else
-		local targetTypeValue = targetType
-	end
-	print("|cffffff20Saved : " .. targetName .. " : " .. targetSex .. " : " .. targetType .. "|r");
-	local saveMessage = "<message command=\"Save\" name=\"" .. targetName .. "\" gender=\"" .. targetSex .. "\" effect=\"" .. targetType .. "\" />";
-	--SendChatMessage(saveMessage, "WHISPER", "Common", unitName);
-    SendAddonMessage(addonPrefix, saveMessage, "WHISPER", unitName);
-	JocysCom_OptionsEditBox:SetText("|cff808080" .. saveMessage .. "|r");
-    
-    --Add NPC to list.
-    addToSet(NPCList, targetName, targetSex, targetType);
-
 end
 
 -- [ Play ] button.
@@ -886,15 +877,9 @@ function JocysCom_PlayButtonButton_OnClick(self)
 	JocysCom_SpeakMessage(questMessage, "SROLL_UP_OR_PLAY_BUTTON", "", "Quest");
 end
 
--- Enable message filter.
-function JocysCom_CHAT_MSG_WHISPER_INFORM(self, event, msg)
-	if string.find(msg, "<message") ~= nil then
-		return true;
-	end
-end
 -- Enable/Disable message filter.
 function JocysCom_CHAT_MSG_WHISPER(self, event, msg)
-	if string.find(msg, "<message") ~= nil and JocysCom_FilterCheckButton:GetChecked() == true then
+	if string.find(msg, "<message") ~= nil then
 		return true;
 	end
 end
@@ -930,7 +915,7 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_FilterCB == false then JocysCom_FilterCheckButton:SetChecked(false) else JocysCom_FilterCheckButton:SetChecked(true) end
     if JocysCom_SaveCB == false then JocysCom_SaveCheckButton:SetChecked(false) else JocysCom_SaveCheckButton:SetChecked(true) end
 	-- Add chat message filters.
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", JocysCom_CHAT_MSG_WHISPER_INFORM);
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", JocysCom_CHAT_MSG_WHISPER);
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", JocysCom_CHAT_MSG_WHISPER);
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_DND", JocysCom_CHAT_MSG_DND);
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", JocysCom_CHAT_MSG_SYSTEM);
@@ -982,7 +967,6 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_NRaidLCB == true then JocysCom_NameRaidLeaderCheckButton:SetChecked(true) else JocysCom_NameRaidLeaderCheckButton:SetChecked(false) end
 	if JocysCom_NInstanceCB == true then JocysCom_NameInstanceCheckButton:SetChecked(true) else JocysCom_NameInstanceCheckButton:SetChecked(false) end
 	if JocysCom_NInstanceLCB == true then JocysCom_NameInstanceLeaderCheckButton:SetChecked(true) else JocysCom_NameInstanceLeaderCheckButton:SetChecked(false) end
-    if JocysCom_NPCs == nil then NPCList = {} else NPCList = JocysCom_NPCs end
 end
 
 -- Save settings.
@@ -1040,7 +1024,6 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_NRaidLCB = JocysCom_NameRaidLeaderCheckButton:GetChecked();
 	JocysCom_NInstanceCB = JocysCom_NameInstanceCheckButton:GetChecked();
 	JocysCom_NInstanceLCB = JocysCom_NameInstanceLeaderCheckButton:GetChecked();
-    JocysCom_NPCs = NPCList;
 end
 
 function JocysCom_SetInterfaceSettings()
