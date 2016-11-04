@@ -134,7 +134,7 @@ Usual file directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysC
 
 12. <b>[■]</b> (Stop) and <b>[►]</b> (Play) buttons will appear at the bottom of some windows too.</p>
 
-<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons_2_2_50.png" /></a></p>
+<p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png" /></a></p>
 
 <p>13. <b>“Addon”</b> gets genders of targeted (you are interacting with) NPCs. <b>“Addon”</b> also gets conversations-chat, but not genders of NPCs, who are walking and talking around you. Therefore, <strong>“Addon”</strong> automatically saves every NPC (name, gender and type), which you are targeting, in <b>“Monitor“</b> (must be running in background). Also, if slot is available, <b>“Addon“</b> will create <strong>“NPCSaveTTSMacro”</strong> and will update it during the game. You can use this macro to target at once up to 9 last chatting NPCs or any nearest friendly NPC (to save them in <b>“Monitor“</b>). Saved in <b>“Monitor“</b> NPCs have genders (male and female voices) in their conversations. I didn't figure out yet, how to get NPCs genders directly from NPC chat event or some database (although, there is no problem with players). For example: If you see two female NPCs chatting, but they have male voices... just click on them (or use macro to target them) and they should get female voices from that moment. Enter <strong>/m</strong> in chat window to show macros:</p>
 
