@@ -12,6 +12,8 @@ local DebugEnabled = false;
 local addonName = "JocysCom-TextToSpeech-WoW";
 local addonPrefix = "JocysComTTS";
 local unitName = UnitName("player");
+local unitRace = UnitRace("player");
+local unitClass = UnitClass("player");
 local realmName = GetRealmName();
 local questMessage = nil;
 local speakMessage = nil;
@@ -132,7 +134,7 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.80 ( 2016-11-04 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.81 ( 2016-11-04 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
     JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffffSave in Monitor <NPC>|r |cff808080 " .. macroName .. " related messages.|r");
@@ -432,6 +434,9 @@ function JocysCom_Replace(r)
 	    m = string.gsub(m, "%|h%|r", "");
 	    m = string.gsub(m, "%[", " \"");
 	    m = string.gsub(m, "%]", "\" ");
+		--m = string.gsub(m, "|.[%d]+" .. unitRace, "");
+		--m = string.gsub(m, "|.[%d]+" .. unitClass, "");
+		--m = string.gsub(m, "|.[%d]+", "");
 	end
 	m = string.gsub(m, "&", " and ");
 	m = string.gsub(m, "%c(%u)", ".%1");
