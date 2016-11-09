@@ -428,7 +428,7 @@ function JocysCom_Replace(r)
 	    m = string.gsub(m, "%<(.-)%>", "");
 	    m = string.gsub(m, "\"", "");
 	end
-    --Remove colors.
+    -- Remove colors / class / race.
     if string.find(m, "|") ~= nil then
 	    m = string.gsub(m, "%|cff(.-)%|h", "");
 	    m = string.gsub(m, "%|h%|r", "");
@@ -438,6 +438,7 @@ function JocysCom_Replace(r)
 		--m = string.gsub(m, "|.[%d]+" .. unitClass, "");
 		--m = string.gsub(m, "|.[%d]+", "");
 	end
+	-- Remove / Replace.
 	m = string.gsub(m, "&", " and ");
 	m = string.gsub(m, "%c(%u)", ".%1");
 	m = string.gsub(m, "%c", " ");
