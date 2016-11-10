@@ -55,7 +55,7 @@ namespace JocysCom.TextToSpeech.Monitor.Network
         {
             // Create MemoryStream out of the received bytes.
             MemoryStream memoryStream = new MemoryStream(buffer, index, count);
-            //Vreate a BinaryReader out of the MemoryStream.
+            //Create a BinaryReader out of the MemoryStream.
             BinaryReader binaryReader = new BinaryReader(memoryStream);
             // First byte of the IP header contain version and header length.
             byte versionAndHeaderLength = binaryReader.ReadByte();
@@ -77,7 +77,7 @@ namespace JocysCom.TextToSpeech.Monitor.Network
             _FragmentationOffset = (ushort)(flagsAndOffset & 0x1FFF);
             // Next byte have the TTL value.
             _TTL = binaryReader.ReadByte();
-            // Next byte represnts the protocol encapsulated in the datagram.
+            // Next byte represents the protocol encapsulated in the datagram.
             _Protocol = (ProtocolType)binaryReader.ReadByte();
             // Next 2 bytes have checksum of the header.
             _Checksum = (ushort)IPAddress.NetworkToHostOrder(binaryReader.ReadInt16());
@@ -87,7 +87,7 @@ namespace JocysCom.TextToSpeech.Monitor.Network
             _DestinationAddress = new IPAddress(binaryReader.ReadBytes(4));
             // Calculate data length (total length - header length).
             int dataLength = (int)(TotalLength - _HeaderLength);
-            // Create new arrray to store data.
+            // Create new array to store data.
             _Data = new byte[dataLength];
             // Copy the data carried by the datagram.
             Array.Copy(buffer, _HeaderLength, _Data, 0, dataLength);
@@ -105,7 +105,7 @@ namespace JocysCom.TextToSpeech.Monitor.Network
             node.Nodes.Add("Header Length: " + _HeaderLength);
             node.Nodes.Add("Data Length: " + _Data.Length); 
             node.Nodes.Add("Total Length: " + _TotalLength);
-            node.Nodes.Add(string.Format("Differntiated Services: 0x{0:X2} ({0})", _DifferentiatedServices));
+            node.Nodes.Add(string.Format("Differentiated Services: 0x{0:X2} ({0})", _DifferentiatedServices));
             node.Nodes.Add("Identification: " + _Identification);
             node.Nodes.Add("Flags: " + _Flags);
             node.Nodes.Add("Fragmentation Offset: " + _FragmentationOffset);
