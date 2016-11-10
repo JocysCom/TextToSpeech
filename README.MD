@@ -141,13 +141,17 @@ Usual file directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysC
 <p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Macro.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Macro.png" /></a></p>
 
 <blockquote>
-<sub>Usual per-account settings directory, where NPCs are saved:<br />
+<sub>Usual per-account settings directory:<br />
 #:\Program Files\World of Warcraft\WTF\Account\&lt;AccountName&gt;\SavedVariables\JocysCom-TextToSpeech-WoW.lua<br />
 Usual per-character settings directory, where Addon settings are saved:<br />
 #:\Program Files\World of Warcraft\WTF\Account\&lt;AccountName&gt;\&lt;RealmName&gt;\&lt;CharacterName&gt;\JocysCom-TextToSpeech-WoW.lua<br />
 You can delete these files to reset settings or clear saved NPCs (game must be closed).
 </sub>
 </blockquote>
+
+<p>14. At this moment, <strong>“Monitor”</strong> supports only <em>“Internt Protocol Version 4 (TCP/IPx4)”</em>. If <b>“Monitor</b><strong>”</strong> doesn't get messages from <b>“Addon</b><strong>”</strong>, you can try temporarily to disable <em>“Internet Protocol Version 6 (TCP/IPx4)”</em> in Windows “Ethernet Properties” and check, if this will help:</p>
+
+<p><img src="http://www.jocys.com/Files/Software/Ethernet_Properties.png" style="width: 363px; height: 468px;" /></p>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
