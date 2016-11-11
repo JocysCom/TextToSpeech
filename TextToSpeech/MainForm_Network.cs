@@ -40,15 +40,15 @@ namespace JocysCom.TextToSpeech.Monitor
 				{
 					foreach (IPAddress ip in HosyEntry.AddressList)
 					{
-						if (ip.AddressFamily == AddressFamily.InterNetwork)
-						{
+						//if (ip.AddressFamily == AddressFamily.InterNetwork)
+						//{
 							// If IP address is not in the list then...
 							if (!IpAddresses.Contains(ip))
 							{
 								// Add IP Address.
 								IpAddresses.Add(ip);
 							}
-						}
+						//}
 					}
 				}
 				if (IpAddresses.Count == 0)
@@ -67,12 +67,14 @@ namespace JocysCom.TextToSpeech.Monitor
 					{
 						// For sniffing the socket to monitor the packets has to be a raw socket, with the
 						// address family being of type internetwork, and protocol being IP
-						var socket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.IP);
+						var socket = new Socket(ip.AddressFamily, SocketType.Raw, ProtocolType.IP);
 						//Bind the socket to the selected IP address.
 						// Note: it looks like monitorPort value is ignored and all ports will be monitored.
 						socket.Bind(new IPEndPoint(ip, MonitorItem.FilterDestinationPort));
 						//Set the socket  options: Applies only to TCP packets, Set the include the header, option to true.
-						socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.HeaderIncluded, true);
+						var socketOptionLevel = ip.AddressFamily == AddressFamily.InterNetworkV6
+							? SocketOptionLevel.IPv6 : SocketOptionLevel.IP;
+						socket.SetSocketOption(socketOptionLevel, SocketOptionName.HeaderIncluded, true);
 						// Input data required by the operation. 
 						byte[] optionInValue = new byte[4] { 1, 0, 0, 0 };
 						// Output data returned by the operation. 
