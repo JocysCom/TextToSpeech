@@ -132,7 +132,7 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.83 ( 2016-11-11 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.85 ( 2016-11-11 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffffSave in Monitor <NPC>|r |cff808080 " .. macroName .. " related messages.|r");
@@ -423,7 +423,7 @@ function JocysCom_Replace(m)
 	m = m .. " ";
 	-- Remove HTML <> tags and text between them.
 	if string.find(m, "HTML") ~= nil then
-		m = string.gsub(m, "<(.-)>", "");
+		m = string.gsub(m, "<.->", "");
 		m = string.gsub(m, "\"", "");
 	end
 	-- Remove colors / class / race.
@@ -433,7 +433,7 @@ function JocysCom_Replace(m)
 		m = string.gsub(m, "|c........", "");
 		m = string.gsub(m, "|r", "");
 		-- Remove hyperlinks.
-		m = string.gsub(m, "|H(.-)|h", "");
+		m = string.gsub(m, "|H.-|h", "");
 		m = string.gsub(m, "|h", "");
 		-- Replace brackets.
 		m = string.gsub(m, "%[", " \"");
@@ -444,12 +444,13 @@ function JocysCom_Replace(m)
 	-- Remove / Replace.
 	m = string.gsub(m, "&", " and ");
 	m = string.gsub(m, "%c(%u)", ".%1");
-	m = string.gsub(m, "%c+", " ");
+	m = string.gsub(m, "%c", " ");
 	m = string.gsub(m, "%s", " ");
+    m = string.gsub(m, "%%s ", " ");
 	m = string.gsub(m, "[ ]+", " ");
 	m = string.gsub(m, "%!+", "!");
 	m = string.gsub(m, "%?+", "?");
-	m = string.gsub(m, "[ ]+%.+", ".");
+	m = string.gsub(m, " %.", ".");
 	m = string.gsub(m, "%.+", ".");
 	m = string.gsub(m, "%!%.", "!");
 	m = string.gsub(m, "%?%.", "?");
