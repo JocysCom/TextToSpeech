@@ -1,4 +1,5 @@
 ﻿using JocysCom.TextToSpeech.Monitor.Network;
+using PacketDotNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,13 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 			FilterProtocol = System.Net.Sockets.ProtocolType.Tcp;
 		}
 
-		public override void Load(IIpHeader ipHeader, ITcpUdpHeader tcpHeader)
+		public override void Load(IpPacket ipHeader, TcpPacket tcpHeader)
 		{
 			_IpHeader = ipHeader;
 			_TcpHeader = tcpHeader;
 			// Convert bytes to ASCII text. ASCII encoding is used in order to find property position of <message></message> tags inside byte array.
-			var text = System.Text.Encoding.ASCII.GetString(ipHeader.Data);
-			Load(text, ipHeader.Data);
+			var text = System.Text.Encoding.ASCII.GetString(tcpHeader.PayloadData);
+			Load(text, tcpHeader.PayloadData);
 		}
 
 		public override void Load(string text, byte[] data = null)

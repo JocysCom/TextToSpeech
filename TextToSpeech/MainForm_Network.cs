@@ -1,6 +1,11 @@
 ﻿using JocysCom.ClassLibrary.Runtime;
 using JocysCom.TextToSpeech.Monitor.Network;
 using JocysCom.TextToSpeech.Monitor.PlugIns;
+using PacketDotNet;
+using SharpPcap;
+using SharpPcap.AirPcap;
+using SharpPcap.LibPcap;
+using SharpPcap.WinPcap;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +23,7 @@ namespace JocysCom.TextToSpeech.Monitor
 	{
 
 		// The socket which monitors all incoming packets.
-		private List<Socket> monitoringSockets = new List<Socket>();
+		private List<WinPcapDevice> monitoringSockets = new List<WinPcapDevice>();
 		// A flag to check if packets are to be monitored or not.
 		private bool continueMonitoring = false;
 		List<IPAddress> IpAddresses = new List<IPAddress>();
@@ -42,6 +47,10 @@ namespace JocysCom.TextToSpeech.Monitor
 					{
 						if (ip.AddressFamily == AddressFamily.InterNetwork || ip.AddressFamily == AddressFamily.InterNetworkV6)
 						{
+							if (ip.IsIPv6LinkLocal)
+							{
+								continue;
+							}
 							// If IP address is not in the list then...
 							if (!IpAddresses.Contains(ip))
 							{
@@ -72,44 +81,179 @@ namespace JocysCom.TextToSpeech.Monitor
 				try
 				{
 					continueMonitoring = true;
-					foreach (var ip in IpAddresses)
+					// Retrieve all capture devices
+					var devices = CaptureDeviceList.Instance;
+					// differentiate based upon types
+					foreach (ICaptureDevice dev in devices)
 					{
-						var isIP6 = ip.AddressFamily == AddressFamily.InterNetworkV6;
-						var optionLevel = isIP6 ? SocketOptionLevel.IPv6 : SocketOptionLevel.IP;
-						var protocolType = isIP6 ? ProtocolType.IP : ProtocolType.IP;
-
-						//IPv6MulticastOption multicastOption = new IPv6MulticastOption(IPAddress.Parse("FF02::1:2"));
-						//socket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.AddMembership, multicastOption);
-
-						// For sniffing the socket to monitor the packets has to be a raw socket, with the
-						// address family being of type internetwork, and protocol being IP
-						var socket = new Socket(ip.AddressFamily, SocketType.Raw, protocolType);
-						//Bind the socket to the selected IP address.
-						// Note: it looks like monitorPort value is ignored and all ports will be monitored.
-						socket.Bind(new IPEndPoint(ip, MonitorItem.FilterDestinationPort));
-						//Set the socket  options: Applies only to TCP packets, Set the include the header, option to true.
-						socket.SetSocketOption(optionLevel, SocketOptionName.HeaderIncluded, true);
-						// Input data required by the operation. 
-						byte[] optionInValue = new byte[4] { 1, 0, 0, 0 };
-						// Output data returned by the operation. 
-						byte[] optionOutValue = new byte[4];
-						// Socket.IOControl is analogous to the WSAIoctl method of Winsock 2: Equivalent to SIO_RCVALL constant, of Winsock 2
-						socket.IOControl(IOControlCode.ReceiveAll, optionInValue, optionOutValue);
-						var bufferSize = 0xFFFF;
-						// The default socket buffer size in Windows sockets is 8192 bytes.
-						// Increase the receive buffer to 65535 bytes or some UDP data packets will be lost.
-						socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveBuffer, bufferSize);
-						// Create data buffer where socket will write captured data.
-						var state = new SocketState(socket, bufferSize);
-						// Start receiving the packets asynchronously.
-						socket.BeginReceive(state.Buffer, 0, state.Buffer.Length, SocketFlags.None, new AsyncCallback(BeginReceive_Callback), state);
-						monitoringSockets.Add(socket);
+						if (dev is WinPcapDevice)
+						{
+							var device = dev as WinPcapDevice;
+							device.OnPacketArrival += Wc_OnPacketArrival;
+							device.Open(DeviceMode.Normal);
+							device.Filter = "tcp";
+							// Start the capturing process
+							device.StartCapture();
+						}
 					}
 				}
 				catch (Exception ex)
 				{
 					LastException = ex;
 				}
+			}
+		}
+
+		private void Wc_OnPacketArrival(object sender, CaptureEventArgs e)
+		{
+			if (Disposing || IsDisposed || !IsHandleCreated)
+			{
+				return;
+			}
+			var packet = Packet.ParsePacket(e.Packet.LinkLayerType, e.Packet.Data);
+			var ep = packet as EthernetPacket;
+			if (ep == null) return;
+			if (ep.Type != EthernetPacketType.IpV4 && ep.Type != EthernetPacketType.IpV6) return;
+			var ip = ep.PayloadPacket as IpPacket;
+			if (ip == null) return;
+			var tp = ip.PayloadPacket as TcpPacket;
+			if (tp == null) return;
+			if (tp.PayloadData.Length == 0) return;
+			IPAddress srcIp = ip.SourceAddress;
+			IPAddress dstIp = ip.DestinationAddress;
+			int srcPort = tp.SourcePort;
+			int dstPort = tp.DestinationPort;
+			BeginInvoke((Action)(() =>
+			{
+				lock (PacketsStateStatusLabelLock)
+				{
+					if (ep.Type == EthernetPacketType.IpV6)
+					{
+						Ip6PacketsCount++;
+					}
+					else
+					{
+						Ip4PacketsCount++;
+					}
+
+					PacketsStateStatusLabel.Text = string.Format("Packets: {0} IP4, {1} IP6", Ip4PacketsCount, Ip6PacketsCount);
+				}
+			}));
+			uint sequenceNumber = tp.SequenceNumber;
+			// ---------------------------------------------------------------------------
+			var sourceIsLocal = IpAddresses.Contains(ip.SourceAddress);
+			var destinationIsLocal = IpAddresses.Contains(ip.DestinationAddress);
+			var direction = TrafficDirection.Local;
+			if (sourceIsLocal && !destinationIsLocal)
+			{
+				direction = TrafficDirection.Out;
+			}
+			else if (!sourceIsLocal && destinationIsLocal)
+			{
+				direction = TrafficDirection.In;
+			}
+			// IPHeader.Data stores the data being carried by the IP datagram.
+			if (Properties.Settings.Default.LogEnable)
+			{
+				var index = -1;
+				if (OptionsPanel.SearchPattern != null && OptionsPanel.SearchPattern.Length > 0)
+				{
+					index = ClassLibrary.Text.Helper.IndexOf(tp.PayloadData, OptionsPanel.SearchPattern, 0);
+				}
+				if (index > -1)
+				{
+					// Play "Radio2" sound if "LogEnabled" and "LogSound" check-boxes are checked.
+					if (Properties.Settings.Default.LogSound)
+					{
+						var stream = GetIntroSound("Radio2");
+						if (stream != null)
+						{
+							var player = new System.Media.SoundPlayer();
+							player.Stream = stream;
+							player.Play();
+						}
+					}
+					// ---------------------------------------------
+					var writer = OptionsPanel.Writer;
+					if (writer != null)
+					{
+						writer.WriteLine("{0:HH:mm:ss.fff}: {1} {2}: {3}:{4} -> {5}:{6} Data[{7}]",
+							DateTime.Now,
+							ep.Type.ToString().ToUpper(),
+							destinationIsLocal ? "In" : "Out",
+							ip.SourceAddress,
+							tp.SourcePort,
+							ip.DestinationAddress,
+							tp.DestinationPort,
+							tp.PayloadData.Length
+						);
+						var block = JocysCom.ClassLibrary.Text.Helper.BytesToStringBlock(
+							ep.PayloadData, false, true, true);
+						block = JocysCom.ClassLibrary.Text.Helper.IdentText(4, block, ' ');
+						writer.WriteLine(block);
+						writer.WriteLine("");
+					}
+				}
+			}
+			// ------------------------------------------------------------
+			// If direction specified, but wrong type then return.
+			if (MonitorItem.FilterDirection != TrafficDirection.None && direction != MonitorItem.FilterDirection)
+			{
+				return;
+			}
+			// If port is specified but wrong number then return.
+			if (MonitorItem.FilterDestinationPort > 0 && tp.DestinationPort != MonitorItem.FilterDestinationPort)
+			{
+				return;
+			}
+			// If process name specified.
+			if (!string.IsNullOrEmpty(MonitorItem.FilterProcessName))
+			{
+				//var ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
+				//var tcpListenters = ipGlobalProperties.GetActiveTcpListeners();
+				//var udpListenters = ipGlobalProperties.GetActiveUdpListeners();
+				//var tcpConnInfoArray = ipGlobalProperties.GetActiveTcpConnections();
+				//var myEnum = tcpConnInfoArray.GetEnumerator();
+				//while (myEnum.MoveNext())
+				//{
+				//	var tcpInfo = (TcpConnectionInformation)myEnum.Current;
+				//	Console.WriteLine("Port {0} {1} {2} ", tcpInfo.LocalEndPoint, tcpInfo.RemoteEndPoint, tcpInfo.State);
+				//	//usedPort.Add(TCPInfo.LocalEndPoint.Port);
+				//}
+			}
+			var pluginType = MonitorItem.GetType();
+			var voiceItem = (VoiceListItem)Activator.CreateInstance(pluginType);
+			voiceItem.Load(ip, tp);
+			// If data do not contain XML message then return.
+			if (!voiceItem.IsVoiceItem)
+			{
+				return;
+			}
+			var allowToAdd = true;
+			// If message contains sequence number...
+			if (sequenceNumber > 0)
+			{
+				lock (SequenceNumbersLock)
+				{
+					// Cleanup sequence list by removing oldest numbers..
+					while (SequenceNumbers.Count > 10) SequenceNumbers.RemoveAt(0);
+					// If number is not unique then...
+					if (SequenceNumbers.Contains(sequenceNumber))
+					{
+						// Don't allow to add the message.
+						allowToAdd = false;
+					}
+					else
+					{
+						// Store sequence number for the future checks.
+						SequenceNumbers.Add(sequenceNumber);
+					}
+				}
+			}
+			if (allowToAdd)
+			{
+				// Add wow item to the list. Use Invoke to make it Thread safe.
+				this.Invoke((Action<PlugIns.VoiceListItem>)addVoiceListItem, new object[] { voiceItem });
 			}
 		}
 
@@ -135,230 +279,10 @@ namespace JocysCom.TextToSpeech.Monitor
 		long Ip4PacketsCount = 0;
 		long Ip6PacketsCount = 0;
 
-		private void BeginReceive_Callback(IAsyncResult ar)
-		{
-			try
-			{
-				if (Disposing || IsDisposed || !IsHandleCreated)
-				{
-					return;
-				}
-				var state = (SocketState)ar.AsyncState;
-				var isIp6 = state.Socket.AddressFamily == AddressFamily.InterNetworkV6;
-				BeginInvoke((Action)(() =>
-				{
-					lock (PacketsStateStatusLabelLock)
-					{
-						if (isIp6)
-						{
-							Ip6PacketsCount++;
-
-						}
-						else
-						{
-							Ip4PacketsCount++;
-						}
-
-						PacketsStateStatusLabel.Text = string.Format("Packets: {0} IP4, {1} IP6", Ip4PacketsCount, Ip6PacketsCount);
-					}
-				}));
-				SocketError errorCode;
-				int bytesReceived = state.Socket.EndReceive(ar, out errorCode);
-				if (errorCode == SocketError.Success)
-				{
-					// Analyze the bytes received...
-					ParseData(state.Buffer, bytesReceived);
-				}
-				if (continueMonitoring)
-				{
-					//Another call to BeginReceive so that we continue to receive the incoming packets.
-					state.Socket.BeginReceive(state.Buffer, 0, state.Buffer.Length, SocketFlags.None, new AsyncCallback(BeginReceive_Callback), state);
-				}
-			}
-			catch (ObjectDisposedException)
-			{
-			}
-			catch (Exception ex)
-			{
-				LastException = ex;
-			}
-		}
-
 		BindingList<PlugIns.VoiceListItem> WowMessageList = new BindingList<PlugIns.VoiceListItem>();
 
 		object SequenceNumbersLock = new object();
 		List<uint> SequenceNumbers = new List<uint>();
-
-		private void ParseData(byte[] byteData, int nReceived)
-		{
-			if (nReceived == 0)
-			{
-				return;
-			}
-			// All protocol packets are encapsulated in the IP datagram.
-			// Parse IP header and see what protocol data is being carried by it.
-			var version = (byte)(byteData[0] >> 4);
-			IIpHeader ipHeader = null;
-			if (version == 4)
-			{
-				Ip4Header ip4header;
-				if (!Ip4Header.TryParse(byteData, 0, nReceived, out ip4header))
-				{
-					return;
-				}
-				ipHeader = ip4header;
-			}
-			else if (version == 6)
-			{
-				Ip6Header ip6header;
-				if (!Ip6Header.TryParse(byteData, 0, nReceived, out ip6header))
-				{
-					return;
-				}
-				ipHeader = ip6header;
-			}
-			else
-			{
-				return;
-			}
-			// ------------------------------------------------------------
-			var sourceIsLocal = IpAddresses.Contains(ipHeader.SourceAddress);
-			var destinationIsLocal = IpAddresses.Contains(ipHeader.DestinationAddress);
-			var direction = TrafficDirection.Local;
-			if (sourceIsLocal && !destinationIsLocal)
-			{
-				direction = TrafficDirection.Out;
-			}
-			else if (!sourceIsLocal && destinationIsLocal)
-			{
-				direction = TrafficDirection.In;
-			}
-			ITcpUdpHeader header = null;
-			uint? sequenceNumber = null;
-			if (ipHeader.Protocol == ProtocolType.Tcp)
-			{
-				var tcpHeader = new TcpHeader(ipHeader.Data, 0, ipHeader.Data.Length);
-				sequenceNumber = tcpHeader.SequenceNumber;
-				header = tcpHeader;
-			}
-			else if (ipHeader.Protocol == ProtocolType.Udp)
-			{
-				header = new UdpHeader(ipHeader.Data, 0, ipHeader.Data.Length);
-			}
-			// If IP datagram do not contain TCP or UDP data then return.
-			if (header == null)
-			{
-				return;
-			}
-			// IPHeader.Data stores the data being carried by the IP datagram.
-			if (Properties.Settings.Default.LogEnable)
-			{
-				var index = -1;
-				if (OptionsPanel.SearchPattern != null && OptionsPanel.SearchPattern.Length > 0)
-				{
-					index = JocysCom.ClassLibrary.Text.Helper.IndexOf(header.Data, OptionsPanel.SearchPattern, 0);
-				}
-				if (index > -1)
-				{
-					// Play "Radio2" sound if "LogEnabled" and "LogSound" check-boxes are checked.
-					if (Properties.Settings.Default.LogSound)
-					{
-						var stream = GetIntroSound("Radio2");
-						if (stream != null)
-						{
-							var player = new System.Media.SoundPlayer();
-							player.Stream = stream;
-							player.Play();
-						}
-					}
-					// ---------------------------------------------
-					var writer = OptionsPanel.Writer;
-					if (writer != null)
-					{
-						writer.WriteLine("{0:HH:mm:ss.fff}: {1} {2}: {3}:{4} -> {5}:{6} Data[{7}]",
-							DateTime.Now,
-							ipHeader.Protocol.ToString().ToUpper(),
-							destinationIsLocal ? "In" : "Out",
-							ipHeader.SourceAddress,
-							header.SourcePort,
-							ipHeader.DestinationAddress,
-							header.DestinationPort,
-							header.Data.Length
-						);
-						var block = JocysCom.ClassLibrary.Text.Helper.BytesToStringBlock(
-							header.Data, false, true, true);
-						block = JocysCom.ClassLibrary.Text.Helper.IdentText(4, block, ' ');
-						writer.WriteLine(block);
-						writer.WriteLine("");
-					}
-				}
-			}
-			// ------------------------------------------------------------
-			// If direction specified, but wrong type then return.
-			if (MonitorItem.FilterDirection != TrafficDirection.None && direction != MonitorItem.FilterDirection)
-			{
-				return;
-			}
-			// If port is specified but wrong number then return.
-			if (MonitorItem.FilterDestinationPort > 0 && header.DestinationPort != MonitorItem.FilterDestinationPort)
-			{
-				return;
-			}
-			// If protocol is specified but wrong type then return.
-			if (MonitorItem.FilterProtocol.HasValue && ipHeader.Protocol != MonitorItem.FilterProtocol.Value)
-			{
-				return;
-			}
-			// If process name specified.
-			if (!string.IsNullOrEmpty(MonitorItem.FilterProcessName))
-			{
-				//var ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
-				//var tcpListenters = ipGlobalProperties.GetActiveTcpListeners();
-				//var udpListenters = ipGlobalProperties.GetActiveUdpListeners();
-				//var tcpConnInfoArray = ipGlobalProperties.GetActiveTcpConnections();
-				//var myEnum = tcpConnInfoArray.GetEnumerator();
-				//while (myEnum.MoveNext())
-				//{
-				//	var tcpInfo = (TcpConnectionInformation)myEnum.Current;
-				//	Console.WriteLine("Port {0} {1} {2} ", tcpInfo.LocalEndPoint, tcpInfo.RemoteEndPoint, tcpInfo.State);
-				//	//usedPort.Add(TCPInfo.LocalEndPoint.Port);
-				//}
-			}
-			var pluginType = MonitorItem.GetType();
-			var voiceItem = (VoiceListItem)Activator.CreateInstance(pluginType);
-			voiceItem.Load(ipHeader, header);
-			// If data do not contain XML message then return.
-			if (!voiceItem.IsVoiceItem)
-			{
-				return;
-			}
-			var allowToAdd = true;
-			// If message contains sequence number...
-			if (sequenceNumber.HasValue)
-			{
-				lock (SequenceNumbersLock)
-				{
-					// Cleanup sequence list by removing oldest numbers..
-					while (SequenceNumbers.Count > 10) SequenceNumbers.RemoveAt(0);
-					// If number is not unique then...
-					if (SequenceNumbers.Contains(sequenceNumber.Value))
-					{
-						// Don't allow to add the message.
-						allowToAdd = false;
-					}
-					else
-					{
-						// Store sequence number for the future checks.
-						SequenceNumbers.Add(sequenceNumber.Value);
-					}
-				}
-			}
-			if (allowToAdd)
-			{
-				// Add wow item to the list. Use Invoke to make it Thread safe.
-				this.Invoke((Action<PlugIns.VoiceListItem>)addVoiceListItem, new object[] { voiceItem });
-			}
-		}
 
 		bool ScrollMessagesGrid = false;
 		object ScrollMessagesGridLock = new object();

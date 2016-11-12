@@ -1,4 +1,5 @@
 ﻿using JocysCom.TextToSpeech.Monitor.Network;
+using PacketDotNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 	public class VoiceListItem
 	{
 
-		internal IIpHeader _IpHeader;
-		internal ITcpUdpHeader _TcpHeader;
+		internal IpPacket _IpHeader;
+		internal TcpPacket _TcpHeader;
 
 		#region GridView columns.
 
@@ -21,7 +22,7 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 		public ushort SourcePort { get { return _TcpHeader == null ? (ushort)0 : _TcpHeader.SourcePort; } }
 		public IPAddress DestinationAddress { get { return _IpHeader == null ? IPAddress.None : _IpHeader.DestinationAddress; } }
 		public ushort DestinationPort { get { return _TcpHeader == null ? (ushort)0 : _TcpHeader.DestinationPort; } }
-		public int DataLength { get { return _TcpHeader == null ? 0 : _TcpHeader.Data.Length; } }
+		public int DataLength { get { return _TcpHeader == null ? 0 : _TcpHeader.PayloadData.Length; } }
 
 		#endregion
 
@@ -47,7 +48,7 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 
 		public virtual void Load(string text, byte[] data = null) { }
 
-		public virtual void Load(IIpHeader ipHeader, ITcpUdpHeader tcpHeader) { }
+		public virtual void Load(IpPacket ipHeader, TcpPacket tcpHeader) { }
 
 	}
 
