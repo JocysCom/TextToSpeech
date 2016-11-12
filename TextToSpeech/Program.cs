@@ -13,12 +13,33 @@ namespace JocysCom.TextToSpeech.Monitor
 	{
 		public static MainForm TopForm;
 
+		static byte[] HexToBytes(string hex)
+		{
+			int offset = 0;
+			if ((hex.Length % 2) != 0) return new byte[0];
+			byte[] bytes = new byte[(hex.Length - offset) / 2];
+			for (int i = 0; i < bytes.Length; i++)
+			{
+				bytes[i] = byte.Parse(hex.Substring(offset, 2), System.Globalization.NumberStyles.HexNumber);
+				offset += 2;
+			}
+			return bytes;
+		}
+
+
+
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
 		static void Main()
 		{
+
+			//var h = "6000000000aa06402a020c7fc4218f00cd3b5a2cb0ecc03f2a04e80050192273028cfafffefbf006";
+			//var bytes = HexToBytes(h);
+			//Network.Ip6Header header;
+			//var p = Network.Ip6Header.TryParse(bytes, out header);
+
 			// Update working directory.
 			var fi = new System.IO.FileInfo(Application.ExecutablePath);
 			System.IO.Directory.SetCurrentDirectory(fi.Directory.FullName);

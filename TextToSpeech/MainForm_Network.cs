@@ -40,15 +40,15 @@ namespace JocysCom.TextToSpeech.Monitor
 				{
 					foreach (IPAddress ip in HosyEntry.AddressList)
 					{
-						//if (ip.AddressFamily == AddressFamily.InterNetwork)
-						//{
+						if (ip.AddressFamily == AddressFamily.InterNetwork || ip.AddressFamily == AddressFamily.InterNetworkV6)
+						{
 							// If IP address is not in the list then...
 							if (!IpAddresses.Contains(ip))
 							{
 								// Add IP Address.
 								IpAddresses.Add(ip);
 							}
-						//}
+						}
 					}
 				}
 				if (IpAddresses.Count == 0)
@@ -58,23 +58,37 @@ namespace JocysCom.TextToSpeech.Monitor
 				}
 				else
 				{
-					MonitoringStateStatusLabel.Text = string.Format("Monitoring: {0}", string.Join(", ", IpAddresses));
+					if (IpAddresses.Count == 1)
+					{
+						MonitoringStateStatusLabel.Text = string.Format("Monitoring: {0}", IpAddresses[0]);
+					}
+					else
+					{
+						var ip4c = IpAddresses.Count(x => x.AddressFamily == AddressFamily.InterNetwork);
+						var ip6c = IpAddresses.Count(x => x.AddressFamily == AddressFamily.InterNetworkV6);
+						MonitoringStateStatusLabel.Text = string.Format("Monitoring: {0} IP4, {1} IP6", ip4c, ip6c);
+					}
 				}
 				try
 				{
 					continueMonitoring = true;
 					foreach (var ip in IpAddresses)
 					{
+						var isIP6 = ip.AddressFamily == AddressFamily.InterNetworkV6;
+						var optionLevel = isIP6 ? SocketOptionLevel.IPv6 : SocketOptionLevel.IP;
+						var protocolType = isIP6 ? ProtocolType.IP : ProtocolType.IP;
+
+						//IPv6MulticastOption multicastOption = new IPv6MulticastOption(IPAddress.Parse("FF02::1:2"));
+						//socket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.AddMembership, multicastOption);
+
 						// For sniffing the socket to monitor the packets has to be a raw socket, with the
 						// address family being of type internetwork, and protocol being IP
-						var socket = new Socket(ip.AddressFamily, SocketType.Raw, ProtocolType.IP);
+						var socket = new Socket(ip.AddressFamily, SocketType.Raw, protocolType);
 						//Bind the socket to the selected IP address.
 						// Note: it looks like monitorPort value is ignored and all ports will be monitored.
 						socket.Bind(new IPEndPoint(ip, MonitorItem.FilterDestinationPort));
 						//Set the socket  options: Applies only to TCP packets, Set the include the header, option to true.
-						var socketOptionLevel = ip.AddressFamily == AddressFamily.InterNetworkV6
-							? SocketOptionLevel.IPv6 : SocketOptionLevel.IP;
-						socket.SetSocketOption(socketOptionLevel, SocketOptionName.HeaderIncluded, true);
+						socket.SetSocketOption(optionLevel, SocketOptionName.HeaderIncluded, true);
 						// Input data required by the operation. 
 						byte[] optionInValue = new byte[4] { 1, 0, 0, 0 };
 						// Output data returned by the operation. 
@@ -118,7 +132,8 @@ namespace JocysCom.TextToSpeech.Monitor
 		}
 
 		object PacketsStateStatusLabelLock = new object();
-		long PacketsCount = 0;
+		long Ip4PacketsCount = 0;
+		long Ip6PacketsCount = 0;
 
 		private void BeginReceive_Callback(IAsyncResult ar)
 		{
@@ -128,15 +143,25 @@ namespace JocysCom.TextToSpeech.Monitor
 				{
 					return;
 				}
+				var state = (SocketState)ar.AsyncState;
+				var isIp6 = state.Socket.AddressFamily == AddressFamily.InterNetworkV6;
 				BeginInvoke((Action)(() =>
 				{
 					lock (PacketsStateStatusLabelLock)
 					{
-						PacketsCount++;
-						PacketsStateStatusLabel.Text = string.Format("Packets: {0}", PacketsCount);
+						if (isIp6)
+						{
+							Ip6PacketsCount++;
+
+						}
+						else
+						{
+							Ip4PacketsCount++;
+						}
+
+						PacketsStateStatusLabel.Text = string.Format("Packets: {0} IP4, {1} IP6", Ip4PacketsCount, Ip6PacketsCount);
 					}
 				}));
-				var state = (SocketState)ar.AsyncState;
 				SocketError errorCode;
 				int bytesReceived = state.Socket.EndReceive(ar, out errorCode);
 				if (errorCode == SocketError.Success)
@@ -164,14 +189,38 @@ namespace JocysCom.TextToSpeech.Monitor
 		object SequenceNumbersLock = new object();
 		List<uint> SequenceNumbers = new List<uint>();
 
-
-
-
 		private void ParseData(byte[] byteData, int nReceived)
 		{
+			if (nReceived == 0)
+			{
+				return;
+			}
 			// All protocol packets are encapsulated in the IP datagram.
 			// Parse IP header and see what protocol data is being carried by it.
-			IpHeader ipHeader = new IpHeader(byteData, 0, nReceived);
+			var version = (byte)(byteData[0] >> 4);
+			IIpHeader ipHeader = null;
+			if (version == 4)
+			{
+				Ip4Header ip4header;
+				if (!Ip4Header.TryParse(byteData, 0, nReceived, out ip4header))
+				{
+					return;
+				}
+				ipHeader = ip4header;
+			}
+			else if (version == 6)
+			{
+				Ip6Header ip6header;
+				if (!Ip6Header.TryParse(byteData, 0, nReceived, out ip6header))
+				{
+					return;
+				}
+				ipHeader = ip6header;
+			}
+			else
+			{
+				return;
+			}
 			// ------------------------------------------------------------
 			var sourceIsLocal = IpAddresses.Contains(ipHeader.SourceAddress);
 			var destinationIsLocal = IpAddresses.Contains(ipHeader.DestinationAddress);
@@ -211,19 +260,19 @@ namespace JocysCom.TextToSpeech.Monitor
 				}
 				if (index > -1)
 				{
-                    // Play "Radio2" sound if "LogEnabled" and "LogSound" check-boxes are checked.
-                    if (Properties.Settings.Default.LogSound)
-                    {
-                            var stream = GetIntroSound("Radio2");
-                            if (stream != null)
-                            {
-                                var player = new System.Media.SoundPlayer();
-                                player.Stream = stream;
-                                player.Play();
-                            }
-                    }
-                    // ---------------------------------------------
-                    var writer = OptionsPanel.Writer;
+					// Play "Radio2" sound if "LogEnabled" and "LogSound" check-boxes are checked.
+					if (Properties.Settings.Default.LogSound)
+					{
+						var stream = GetIntroSound("Radio2");
+						if (stream != null)
+						{
+							var player = new System.Media.SoundPlayer();
+							player.Stream = stream;
+							player.Play();
+						}
+					}
+					// ---------------------------------------------
+					var writer = OptionsPanel.Writer;
 					if (writer != null)
 					{
 						writer.WriteLine("{0:HH:mm:ss.fff}: {1} {2}: {3}:{4} -> {5}:{6} Data[{7}]",

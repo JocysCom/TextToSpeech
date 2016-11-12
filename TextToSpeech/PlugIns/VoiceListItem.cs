@@ -11,7 +11,7 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 	public class VoiceListItem
 	{
 
-		internal IpHeader _IpHeader;
+		internal IIpHeader _IpHeader;
 		internal ITcpUdpHeader _TcpHeader;
 
 		#region GridView columns.
@@ -33,6 +33,8 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 
 		public string Name { get; set; }
 
+		public string[] Process { get; set; }
+
 		#region Listen Filter
 
 		public int FilterDestinationPort { get; set; }
@@ -45,7 +47,7 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 
 		public virtual void Load(string text, byte[] data = null) { }
 
-		public virtual void Load(IpHeader ipHeader, ITcpUdpHeader tcpHeader) { }
+		public virtual void Load(IIpHeader ipHeader, ITcpUdpHeader tcpHeader) { }
 
 	}
 

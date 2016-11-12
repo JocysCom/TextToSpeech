@@ -12,13 +12,14 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 		public WowListItem()
 		{
 			Name = "WoW";
+			Process = new string[] { "wow.exe", "wow-64.exe" };
 
 			FilterDestinationPort = 3724;
 			FilterDirection = TrafficDirection.Out;
 			FilterProtocol = System.Net.Sockets.ProtocolType.Tcp;
 		}
 
-		public override void Load(IpHeader ipHeader, ITcpUdpHeader tcpHeader)
+		public override void Load(IIpHeader ipHeader, ITcpUdpHeader tcpHeader)
 		{
 			_IpHeader = ipHeader;
 			_TcpHeader = tcpHeader;
