@@ -184,19 +184,12 @@
     <Compile Include="MainForm_Speech.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Network\IIpHeader.cs" />
-    <Compile Include="Network\Ip4Header.cs" />
-    <Compile Include="Network\Ip6Header.cs" />
-    <Compile Include="Network\IpHeaderFlags.cs" />
     <Compile Include="Audio\JobStatusType.cs" />
     <Compile Include="Common\MainHelper.cs" />
     <Compile Include="Audio\PitchShifter.cs" />
     <Compile Include="Audio\PlayItem.cs" />
     <Compile Include="Common\RuntimePolicyHelper.cs" />
     <Compile Include="Controls\Sounds.cs" />
-    <Compile Include="Network\ITcpUdpHeader.cs" />
-    <Compile Include="Network\TcpHeader.cs" />
-    <Compile Include="Network\TcpHeaderFlags.cs" />
     <Compile Include="Controls\SoundEffectsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -210,7 +203,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Network\UdpHeader.cs" />
     <Compile Include="PlugIns\VoiceListItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
