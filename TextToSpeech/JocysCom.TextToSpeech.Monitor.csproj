@@ -100,6 +100,7 @@
   <ItemGroup>
     <Reference Include="PacketDotNet">
       <HintPath>Resources\SharpPcap\PacketDotNet.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX">
       <HintPath>Resources\SharpDX\SharpDX.dll</HintPath>
@@ -111,6 +112,7 @@
     </Reference>
     <Reference Include="SharpPcap">
       <HintPath>Resources\SharpPcap\SharpPcap.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -379,6 +381,10 @@
     <Content Include="Resources\Images\Windows XP\JocysCom_Monitor_WindowsXP_Installer.png" />
     <Content Include="Resources\Images\Windows XP\JocysCom_Monitor_WindowsXP_WIC.png" />
     <Content Include="Resources\Images\Windows XP\JocysCom_TTS_Monitor_Windows_XP_Exception_Error.png" />
+    <EmbeddedResource Include="Resources\SharpPcap\PacketDotNet.dll" />
+    <EmbeddedResource Include="Resources\SharpPcap\PacketDotNet.xml" />
+    <EmbeddedResource Include="Resources\SharpPcap\SharpPcap.dll" />
+    <EmbeddedResource Include="Resources\SharpPcap\SharpPcap.xml" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Overrides.txt" />
     <Content Include="WoW\Overrides\Settings.Overrides.xml" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Sounds.txt" />

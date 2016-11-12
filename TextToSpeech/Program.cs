@@ -142,6 +142,12 @@ namespace JocysCom.TextToSpeech.Monitor
 			string path = null;
 			switch (dllName)
 			{
+				case "PacketDotNet":
+					path = "Resources.SharpPcap.PacketDotNet.dll";
+					break;
+				case "SharpPcap":
+					path = "Resources.SharpPcap.SharpPcap.dll";
+					break;
 				case "SharpDX":
 					path = "Resources.SharpDX.SharpDX.dll";
 					break;
