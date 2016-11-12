@@ -917,6 +917,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					NativeMethods.RemoveClipboardFormatListener(this.Handle);
 				}
 			}
+			StopNetworkMonitor();
 			DisposeWatcher();
 			SaveSettings();
 			// Save settings

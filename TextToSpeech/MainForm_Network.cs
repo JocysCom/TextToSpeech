@@ -94,6 +94,7 @@ namespace JocysCom.TextToSpeech.Monitor
 							device.Filter = "tcp";
 							// Start the capturing process
 							device.StartCapture();
+							monitoringSockets.Add(device);
 						}
 					}
 				}
@@ -269,6 +270,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				}
 				foreach (var socket in monitoringSockets)
 				{
+					socket.StopCapture();
 					socket.Close();
 				}
 				monitoringSockets.Clear();
