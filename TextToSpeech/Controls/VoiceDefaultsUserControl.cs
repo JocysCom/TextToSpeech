@@ -13,9 +13,9 @@ using JocysCom.ClassLibrary.Controls;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-    public partial class VoicesOverridesUserControl : UserControl
+    public partial class VoicesDefaultsUserControl : UserControl
     {
-        public VoicesOverridesUserControl()
+        public VoicesDefaultsUserControl()
         {
             InitializeComponent();
             VoicesOverridesDataGridView.AutoGenerateColumns = false;

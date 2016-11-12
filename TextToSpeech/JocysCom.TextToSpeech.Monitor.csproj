@@ -174,11 +174,11 @@
     <Compile Include="Controls\SoundsUserControl.Designer.cs">
       <DependentUpon>SoundsUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\VoiceOverridesUserControl.cs">
+    <Compile Include="Controls\VoiceDefaultsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\VoiceOverridesUserControl.Designer.cs">
-      <DependentUpon>VoiceOverridesUserControl.cs</DependentUpon>
+    <Compile Include="Controls\VoiceDefaultsUserControl.Designer.cs">
+      <DependentUpon>VoiceDefaultsUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm_Network.cs">
       <SubType>Form</SubType>
@@ -233,8 +233,8 @@
     <EmbeddedResource Include="Controls\SoundsUserControl.resx">
       <DependentUpon>SoundsUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\VoiceOverridesUserControl.resx">
-      <DependentUpon>VoiceOverridesUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\VoiceDefaultsUserControl.resx">
+      <DependentUpon>VoiceDefaultsUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SoundEffectsControl.resx">
       <DependentUpon>SoundEffectsControl.cs</DependentUpon>

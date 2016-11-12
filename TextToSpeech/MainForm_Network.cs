@@ -75,7 +75,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					{
 						var ip4c = IpAddresses.Count(x => x.AddressFamily == AddressFamily.InterNetwork);
 						var ip6c = IpAddresses.Count(x => x.AddressFamily == AddressFamily.InterNetworkV6);
-						MonitoringStateStatusLabel.Text = string.Format("Monitoring: {0} IP4, {1} IP6", ip4c, ip6c);
+						MonitoringStateStatusLabel.Text = string.Format("Addresses: {0} IPv4, {1} IPv6", ip4c, ip6c);
 					}
 				}
 				try
@@ -136,7 +136,7 @@ namespace JocysCom.TextToSpeech.Monitor
 						Ip4PacketsCount++;
 					}
 
-					PacketsStateStatusLabel.Text = string.Format("Packets: {0} IP4, {1} IP6", Ip4PacketsCount, Ip6PacketsCount);
+					PacketsStateStatusLabel.Text = string.Format("Packets: {0} IPv4, {1} IPv6", Ip4PacketsCount, Ip6PacketsCount);
 				}
 			}));
 			uint sequenceNumber = tp.SequenceNumber;

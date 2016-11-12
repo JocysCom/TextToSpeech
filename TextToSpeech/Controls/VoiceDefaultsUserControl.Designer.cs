@@ -1,6 +1,6 @@
 ﻿namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-	partial class VoicesOverridesUserControl
+	partial class VoicesDefaultsUserControl
 	{
 		/// <summary> 
 		/// Required designer variable.

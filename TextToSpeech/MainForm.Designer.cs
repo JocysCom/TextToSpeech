@@ -55,8 +55,8 @@
 			this.MessagesTabControl = new System.Windows.Forms.TabControl();
 			this.VoicesTabPage = new System.Windows.Forms.TabPage();
 			this.VoiceErrorLabel = new System.Windows.Forms.Label();
-			this.VoiceOverridesTabPage = new System.Windows.Forms.TabPage();
-			this.VoiceOverridesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesOverridesUserControl();
+			this.VoiceDefaultsTabPage = new System.Windows.Forms.TabPage();
+			this.VoiceOverridesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesDefaultsUserControl();
 			this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
 			this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
 			this.SoundsTabPage = new System.Windows.Forms.TabPage();
@@ -105,6 +105,7 @@
 			this.PacketsStateStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.MonitoringStateStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.ErrorToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.ProcessStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.AudioBitsPerSampleComboBox = new System.Windows.Forms.ComboBox();
 			this.AudioBitsPerSampleLabel = new System.Windows.Forms.Label();
 			this.AudioSampleRateComboBox = new System.Windows.Forms.ComboBox();
@@ -143,11 +144,10 @@
 			this.PitchMinComboBox = new System.Windows.Forms.ComboBox();
 			this.RateMinComboBox = new System.Windows.Forms.ComboBox();
 			this.ProgramComboBox = new System.Windows.Forms.ComboBox();
-			this.ProcessStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).BeginInit();
 			this.MessagesTabControl.SuspendLayout();
 			this.VoicesTabPage.SuspendLayout();
-			this.VoiceOverridesTabPage.SuspendLayout();
+			this.VoiceDefaultsTabPage.SuspendLayout();
 			this.EffectsPresetsEditorTabPage.SuspendLayout();
 			this.SoundsTabPage.SuspendLayout();
 			this.OptionsTabPage.SuspendLayout();
@@ -394,7 +394,7 @@
 			this.MessagesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.MessagesTabControl.Controls.Add(this.VoicesTabPage);
-			this.MessagesTabControl.Controls.Add(this.VoiceOverridesTabPage);
+			this.MessagesTabControl.Controls.Add(this.VoiceDefaultsTabPage);
 			this.MessagesTabControl.Controls.Add(this.EffectsPresetsEditorTabPage);
 			this.MessagesTabControl.Controls.Add(this.SoundsTabPage);
 			this.MessagesTabControl.Controls.Add(this.OptionsTabPage);
@@ -434,16 +434,16 @@
 			this.VoiceErrorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.VoiceErrorLabel.Visible = false;
 			// 
-			// VoiceOverridesTabPage
+			// VoiceDefaultsTabPage
 			// 
-			this.VoiceOverridesTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.VoiceOverridesTabPage.Controls.Add(this.VoiceOverridesPanel);
-			this.VoiceOverridesTabPage.ImageKey = "BusinessPeople.png";
-			this.VoiceOverridesTabPage.Location = new System.Drawing.Point(4, 27);
-			this.VoiceOverridesTabPage.Name = "VoiceOverridesTabPage";
-			this.VoiceOverridesTabPage.Size = new System.Drawing.Size(816, 266);
-			this.VoiceOverridesTabPage.TabIndex = 5;
-			this.VoiceOverridesTabPage.Text = "Voice Overrides";
+			this.VoiceDefaultsTabPage.BackColor = System.Drawing.SystemColors.Control;
+			this.VoiceDefaultsTabPage.Controls.Add(this.VoiceOverridesPanel);
+			this.VoiceDefaultsTabPage.ImageKey = "BusinessPeople.png";
+			this.VoiceDefaultsTabPage.Location = new System.Drawing.Point(4, 27);
+			this.VoiceDefaultsTabPage.Name = "VoiceDefaultsTabPage";
+			this.VoiceDefaultsTabPage.Size = new System.Drawing.Size(816, 266);
+			this.VoiceDefaultsTabPage.TabIndex = 5;
+			this.VoiceDefaultsTabPage.Text = "Voice Defaults";
 			// 
 			// VoiceOverridesPanel
 			// 
@@ -1077,6 +1077,12 @@
 			this.ErrorToolStripStatusLabel.Text = "[ErrorToolStripStatusLabel]";
 			this.ErrorToolStripStatusLabel.Visible = false;
 			// 
+			// ProcessStatusLabel
+			// 
+			this.ProcessStatusLabel.Name = "ProcessStatusLabel";
+			this.ProcessStatusLabel.Size = new System.Drawing.Size(104, 19);
+			this.ProcessStatusLabel.Text = "Process: Unknown";
+			// 
 			// AudioBitsPerSampleComboBox
 			// 
 			this.AudioBitsPerSampleComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -1697,12 +1703,6 @@
 			this.ProgramComboBox.Size = new System.Drawing.Size(114, 21);
 			this.ProgramComboBox.TabIndex = 214;
 			// 
-			// ProcessStatusLabel
-			// 
-			this.ProcessStatusLabel.Name = "ProcessStatusLabel";
-			this.ProcessStatusLabel.Size = new System.Drawing.Size(104, 19);
-			this.ProcessStatusLabel.Text = "Process: Unknown";
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1752,7 +1752,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).EndInit();
 			this.MessagesTabControl.ResumeLayout(false);
 			this.VoicesTabPage.ResumeLayout(false);
-			this.VoiceOverridesTabPage.ResumeLayout(false);
+			this.VoiceDefaultsTabPage.ResumeLayout(false);
 			this.EffectsPresetsEditorTabPage.ResumeLayout(false);
 			this.SoundsTabPage.ResumeLayout(false);
 			this.OptionsTabPage.ResumeLayout(false);
@@ -1870,8 +1870,8 @@
         private System.Windows.Forms.WebBrowser UpdateWebBrowser;
         private System.Windows.Forms.Label UpdateLabel;
         private System.Windows.Forms.Button UpdateButton;
-		private System.Windows.Forms.TabPage VoiceOverridesTabPage;
-		private Controls.VoicesOverridesUserControl VoiceOverridesPanel;
+		private System.Windows.Forms.TabPage VoiceDefaultsTabPage;
+		private Controls.VoicesDefaultsUserControl VoiceOverridesPanel;
         private Controls.SoundsUserControl SoundsPanel;
         public System.Windows.Forms.Label MainHelpLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListStatusColumn;
