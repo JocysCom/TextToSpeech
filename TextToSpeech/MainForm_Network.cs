@@ -42,10 +42,10 @@ namespace JocysCom.TextToSpeech.Monitor
 				}
 				try
 				{
+					IpAddresses.Clear();
 					continueMonitoring = true;
 					// Retrieve all capture devices
 					var devices = CaptureDeviceList.Instance.Cast<WinPcapDevice>().ToArray();
-					IpAddresses.Clear();
 					foreach (var device in devices)
 					{
 						device.OnPacketArrival += Wc_OnPacketArrival;
