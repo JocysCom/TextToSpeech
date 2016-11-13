@@ -902,7 +902,8 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			lock (MonitoringClipboardLock)
+            if (IsDesignMode) return;
+            lock (MonitoringClipboardLock)
 			{
 				if (MonitoringClipboard)
 				{

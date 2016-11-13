@@ -111,8 +111,8 @@ namespace JocysCom.TextToSpeech.Monitor
 				Properties.Settings.Default.DefaultIntroSoundComboBox = "Radio";
 				Properties.Settings.Default.PitchMaxComboBoxText = "0";
 				Properties.Settings.Default.PitchMinComboBoxText = "0";
-				Properties.Settings.Default.RateMaxComboBoxText = "1";
-				Properties.Settings.Default.RateMinComboBoxText = "1";
+				Properties.Settings.Default.RateMaxComboBoxText = "2";
+				Properties.Settings.Default.RateMinComboBoxText = "2";
 				Properties.Settings.Default.GenderComboBoxText = "Male";
 				Properties.Settings.Default.MonitorClipboardComboBoxText = "Disabled";
 				Properties.Settings.Default.MonitorPortChecked = true;
