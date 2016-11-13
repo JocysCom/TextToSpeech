@@ -18,14 +18,14 @@ namespace JocysCom.TextToSpeech.Monitor
     {
 
         [NonSerialized]
-        SortableBindingList<message> _Overrides;
+        SortableBindingList<message> _Defaults;
 
         [NonSerialized]
         SortableBindingList<sound> _Sounds;
 
         public SettingsFile()
         {
-            _Overrides = new SortableBindingList<message>();
+            _Defaults = new SortableBindingList<message>();
             _Sounds = new SortableBindingList<sound>();
             FolderPath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\JocysCom TextToSpeech Monitor";
             try { if (!Directory.Exists(FolderPath)) Directory.CreateDirectory(FolderPath); }
@@ -38,7 +38,7 @@ namespace JocysCom.TextToSpeech.Monitor
             get { return _current = _current ?? new SettingsFile(); }
         }
 
-        public SortableBindingList<message> Defaults { get { return _Overrides; } }
+        public SortableBindingList<message> Defaults { get { return _Defaults; } }
         public SortableBindingList<sound> Sounds { get { return _Sounds; } }
 
         public string FolderPath;
@@ -86,7 +86,7 @@ namespace JocysCom.TextToSpeech.Monitor
             var fullName = System.IO.Path.Combine(FolderPath, FileName);
             SettingsFile data = null;
             var defaultData = GetDefault();
-            SortableBindingList<message> overrides;
+            SortableBindingList<message> defaults;
             SortableBindingList<sound> sounds;
             if (System.IO.File.Exists(fullName))
             {
@@ -96,10 +96,10 @@ namespace JocysCom.TextToSpeech.Monitor
                     data = Serializer.DeserializeFromXmlFile<SettingsFile>(fullName);
                 }
             }
-            overrides = data != null && data.Defaults != null && data.Defaults.Count > 0 ? data.Defaults : defaultData.Defaults;
+			defaults = data != null && data.Defaults != null && data.Defaults.Count > 0 ? data.Defaults : defaultData.Defaults;
             sounds = data != null && data.Sounds != null && data.Sounds.Count > 0 ? data.Sounds : defaultData.Sounds;
             Defaults.Clear();
-            if (overrides != null) for (int i = 0; i < overrides.Count; i++) Defaults.Add(overrides[i]);
+            if (defaults != null) for (int i = 0; i < defaults.Count; i++) Defaults.Add(defaults[i]);
             Sounds.Clear();
             if (sounds != null) for (int i = 0; i < sounds.Count; i++) Sounds.Add(sounds[i]);
         }

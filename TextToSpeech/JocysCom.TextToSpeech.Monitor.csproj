@@ -385,8 +385,8 @@
     <EmbeddedResource Include="Resources\SharpPcap\PacketDotNet.xml" />
     <EmbeddedResource Include="Resources\SharpPcap\SharpPcap.dll" />
     <EmbeddedResource Include="Resources\SharpPcap\SharpPcap.xml" />
-    <Content Include="WoW\JocysCom-TextToSpeech-WoW-Overrides.txt" />
-    <Content Include="WoW\Overrides\Settings.Overrides.xml" />
+    <Content Include="WoW\Defaults\Settings.Defaults.xml" />
+    <Content Include="WoW\JocysCom-TextToSpeech-WoW-Defaults.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Sounds.txt" />
     <Content Include="WoW\Sounds\Settings.Sounds.xml" />
     <EmbeddedResource Include="WoW\Settings\Settings.Monitor.xml" />

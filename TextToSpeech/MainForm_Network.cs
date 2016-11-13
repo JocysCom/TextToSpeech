@@ -591,7 +591,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					IncomingPitchTextBox.Text = "";
 					break;
 				case "save":
-					if (!string.IsNullOrEmpty(v.name)) VoiceOverridesPanel.UpsertRecord(v);
+					if (!string.IsNullOrEmpty(v.name)) VoiceDefaultsPanel.UpsertRecord(v);
 					break;
 				default:
 					break;

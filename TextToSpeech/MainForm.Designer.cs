@@ -56,7 +56,7 @@
 			this.VoicesTabPage = new System.Windows.Forms.TabPage();
 			this.VoiceErrorLabel = new System.Windows.Forms.Label();
 			this.VoiceDefaultsTabPage = new System.Windows.Forms.TabPage();
-			this.VoiceOverridesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesDefaultsUserControl();
+			this.VoiceDefaultsPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesDefaultsUserControl();
 			this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
 			this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
 			this.SoundsTabPage = new System.Windows.Forms.TabPage();
@@ -439,7 +439,7 @@
 			// VoiceDefaultsTabPage
 			// 
 			this.VoiceDefaultsTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.VoiceDefaultsTabPage.Controls.Add(this.VoiceOverridesPanel);
+			this.VoiceDefaultsTabPage.Controls.Add(this.VoiceDefaultsPanel);
 			this.VoiceDefaultsTabPage.ImageKey = "BusinessPeople.png";
 			this.VoiceDefaultsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.VoiceDefaultsTabPage.Name = "VoiceDefaultsTabPage";
@@ -447,13 +447,13 @@
 			this.VoiceDefaultsTabPage.TabIndex = 5;
 			this.VoiceDefaultsTabPage.Text = "Voice Defaults";
 			// 
-			// VoiceOverridesPanel
+			// VoiceDefaultsPanel
 			// 
-			this.VoiceOverridesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.VoiceOverridesPanel.Location = new System.Drawing.Point(0, 0);
-			this.VoiceOverridesPanel.Name = "VoiceOverridesPanel";
-			this.VoiceOverridesPanel.Size = new System.Drawing.Size(816, 266);
-			this.VoiceOverridesPanel.TabIndex = 0;
+			this.VoiceDefaultsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.VoiceDefaultsPanel.Location = new System.Drawing.Point(0, 0);
+			this.VoiceDefaultsPanel.Name = "VoiceDefaultsPanel";
+			this.VoiceDefaultsPanel.Size = new System.Drawing.Size(816, 266);
+			this.VoiceDefaultsPanel.TabIndex = 0;
 			// 
 			// EffectsPresetsEditorTabPage
 			// 
@@ -1084,7 +1084,7 @@
 			// EmptyStatusLabel
 			// 
 			this.EmptyStatusLabel.Name = "EmptyStatusLabel";
-			this.EmptyStatusLabel.Size = new System.Drawing.Size(642, 19);
+			this.EmptyStatusLabel.Size = new System.Drawing.Size(744, 19);
 			this.EmptyStatusLabel.Spring = true;
 			// 
 			// StateStatusLabel
@@ -1895,7 +1895,7 @@
         private System.Windows.Forms.Label UpdateLabel;
         private System.Windows.Forms.Button UpdateButton;
 		private System.Windows.Forms.TabPage VoiceDefaultsTabPage;
-		private Controls.VoicesDefaultsUserControl VoiceOverridesPanel;
+		private Controls.VoicesDefaultsUserControl VoiceDefaultsPanel;
         private Controls.SoundsUserControl SoundsPanel;
         public System.Windows.Forms.Label MainHelpLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListStatusColumn;

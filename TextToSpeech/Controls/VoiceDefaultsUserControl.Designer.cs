@@ -48,7 +48,7 @@
 			this.VolumeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.LanguageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.EmptyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.VoicesOverridesToolStrip = new System.Windows.Forms.ToolStrip();
+			this.VoicesDefaultsToolStrip = new System.Windows.Forms.ToolStrip();
 			this.AddButton = new System.Windows.Forms.ToolStripButton();
 			this.DeleteButton = new System.Windows.Forms.ToolStripButton();
 			this.ExportButton = new System.Windows.Forms.ToolStripButton();
@@ -56,7 +56,7 @@
 			this.ImportOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.ExportSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.VoicesDefaultsDataGridView)).BeginInit();
-			this.VoicesOverridesToolStrip.SuspendLayout();
+			this.VoicesDefaultsToolStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// VoicesDefaultsDataGridView
@@ -213,22 +213,22 @@
 			this.EmptyColumn.Name = "EmptyColumn";
 			this.EmptyColumn.ReadOnly = true;
 			// 
-			// VoicesOverridesToolStrip
+			// VoicesDefaultsToolStrip
 			// 
-			this.VoicesOverridesToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.VoicesOverridesToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.VoicesDefaultsToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.VoicesDefaultsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AddButton,
             this.DeleteButton,
             this.ExportButton,
             this.ImportButton});
-			this.VoicesOverridesToolStrip.Location = new System.Drawing.Point(0, 0);
-			this.VoicesOverridesToolStrip.Name = "VoicesOverridesToolStrip";
-			this.VoicesOverridesToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.VoicesOverridesToolStrip.Size = new System.Drawing.Size(551, 25);
-			this.VoicesOverridesToolStrip.TabIndex = 3;
-			this.VoicesOverridesToolStrip.Text = "toolStrip1";
-			this.VoicesOverridesToolStrip.MouseLeave += new System.EventHandler(this.VoicesDefaults_MouseLeave);
-			this.VoicesOverridesToolStrip.MouseHover += new System.EventHandler(this.VoicesDefaults_MouseHover);
+			this.VoicesDefaultsToolStrip.Location = new System.Drawing.Point(0, 0);
+			this.VoicesDefaultsToolStrip.Name = "VoicesDefaultsToolStrip";
+			this.VoicesDefaultsToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.VoicesDefaultsToolStrip.Size = new System.Drawing.Size(551, 25);
+			this.VoicesDefaultsToolStrip.TabIndex = 3;
+			this.VoicesDefaultsToolStrip.Text = "toolStrip1";
+			this.VoicesDefaultsToolStrip.MouseLeave += new System.EventHandler(this.VoicesDefaults_MouseLeave);
+			this.VoicesDefaultsToolStrip.MouseHover += new System.EventHandler(this.VoicesDefaults_MouseHover);
 			// 
 			// AddButton
 			// 
@@ -273,12 +273,12 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.VoicesDefaultsDataGridView);
-			this.Controls.Add(this.VoicesOverridesToolStrip);
+			this.Controls.Add(this.VoicesDefaultsToolStrip);
 			this.Name = "VoicesDefaultsUserControl";
 			this.Size = new System.Drawing.Size(551, 280);
 			((System.ComponentModel.ISupportInitialize)(this.VoicesDefaultsDataGridView)).EndInit();
-			this.VoicesOverridesToolStrip.ResumeLayout(false);
-			this.VoicesOverridesToolStrip.PerformLayout();
+			this.VoicesDefaultsToolStrip.ResumeLayout(false);
+			this.VoicesDefaultsToolStrip.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -287,7 +287,7 @@
 		#endregion
 
 		private System.Windows.Forms.DataGridView VoicesDefaultsDataGridView;
-		private System.Windows.Forms.ToolStrip VoicesOverridesToolStrip;
+		private System.Windows.Forms.ToolStrip VoicesDefaultsToolStrip;
 		private System.Windows.Forms.ToolStripButton AddButton;
 		private System.Windows.Forms.ToolStripButton DeleteButton;
 		private System.Windows.Forms.ToolStripButton ExportButton;
