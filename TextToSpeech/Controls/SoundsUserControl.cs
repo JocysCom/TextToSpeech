@@ -174,7 +174,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
                 }
                 else
                 {
-                    Serializer.SerializeToXmlFile(programs, dialog.FileName, System.Text.Encoding.UTF8);
+                    Serializer.SerializeToXmlFile(programs, dialog.FileName, System.Text.Encoding.UTF8, true);
                 }
             }
         }

@@ -365,6 +365,7 @@
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.DirectSound.xml" />
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.dll" />
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.xml" />
+    <None Include="Resources\Icons\Folder.png" />
     <Content Include="Resources\Images\Copy.png" />
     <Content Include="Resources\Images\JocysCom_TTS_Monitor.png" />
     <Content Include="Resources\Images\JocysCom_TTS_Monitor_IntroSounds.png" />
@@ -385,10 +386,6 @@
     <EmbeddedResource Include="Resources\SharpPcap\PacketDotNet.xml" />
     <EmbeddedResource Include="Resources\SharpPcap\SharpPcap.dll" />
     <EmbeddedResource Include="Resources\SharpPcap\SharpPcap.xml" />
-    <Content Include="WoW\Defaults\Settings.Defaults.xml" />
-    <Content Include="WoW\JocysCom-TextToSpeech-WoW-Defaults.txt" />
-    <Content Include="WoW\JocysCom-TextToSpeech-WoW-Sounds.txt" />
-    <Content Include="WoW\Sounds\Settings.Sounds.xml" />
     <EmbeddedResource Include="WoW\Settings\Settings.Monitor.xml" />
     <Content Include="Resources\Icons\About.ico" />
     <Content Include="Resources\Icons\About.png" />
@@ -423,19 +420,18 @@
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Exclude.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Images.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-Include.txt" />
-    <Content Include="WoW\JocysCom-TextToSpeech-WoW-Presets.txt" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW\JocysCom-TextToSpeech-WoW.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="WoW\Presets\Beast.preset.xml" />
-    <Content Include="WoW\Presets\Default.preset.xml" />
-    <Content Include="WoW\Presets\Demon.preset.xml" />
-    <Content Include="WoW\Presets\Dragonkin.preset.xml" />
-    <Content Include="WoW\Presets\Elemental.preset.xml" />
-    <Content Include="WoW\Presets\Giant.preset.xml" />
-    <Content Include="WoW\Presets\Humanoid.preset.xml" />
-    <Content Include="WoW\Presets\Mechanical.preset.xml" />
-    <Content Include="WoW\Presets\Undead.preset.xml" />
+    <EmbeddedResource Include="WoW\Presets\Beast.Preset.xml" />
+    <EmbeddedResource Include="WoW\Presets\Default.Preset.xml" />
+    <EmbeddedResource Include="WoW\Presets\Demon.Preset.xml" />
+    <EmbeddedResource Include="WoW\Presets\Dragonkin.Preset.xml" />
+    <EmbeddedResource Include="WoW\Presets\Elemental.Preset.xml" />
+    <EmbeddedResource Include="WoW\Presets\Giant.Preset.xml" />
+    <EmbeddedResource Include="WoW\Presets\Humanoid.Preset.xml" />
+    <EmbeddedResource Include="WoW\Presets\Mechanical.Preset.xml" />
+    <EmbeddedResource Include="WoW\Presets\Undead.Preset.xml" />
     <Content Include="app.ico" />
     <None Include="Resources\desktop.ini" />
     <None Include="Controls\MessageBoxFormImages\MessageBoxIcon_Error.ico" />

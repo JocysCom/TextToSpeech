@@ -27,7 +27,10 @@ namespace JocysCom.TextToSpeech.Monitor
         {
             _Defaults = new SortableBindingList<message>();
             _Sounds = new SortableBindingList<sound>();
-            FolderPath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\JocysCom TextToSpeech Monitor";
+			FolderPath = string.Format("{0}\\{1}\\{2}",
+				System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+				Application.CompanyName,
+				Application.ProductName);
             try { if (!Directory.Exists(FolderPath)) Directory.CreateDirectory(FolderPath); }
             catch (Exception) { }
         }
@@ -41,16 +44,20 @@ namespace JocysCom.TextToSpeech.Monitor
         public SortableBindingList<message> Defaults { get { return _Defaults; } }
         public SortableBindingList<sound> Sounds { get { return _Sounds; } }
 
-        public string FolderPath;
-        public string FileName = "Settings.Monitor.xml";
-        object saveReadFileLock = new object();
+		[XmlIgnore]
+		public string FolderPath;
+
+		[XmlIgnore]
+		public string FileName = "Settings.Monitor.xml";
+
+		object saveReadFileLock = new object();
 
         public void Save()
         {
             lock (saveReadFileLock)
             {
                 var fullName = System.IO.Path.Combine(FolderPath, FileName);
-                Serializer.SerializeToXmlFile(this, fullName, System.Text.Encoding.UTF8);
+                Serializer.SerializeToXmlFile(this, fullName, System.Text.Encoding.UTF8, true);
             }
         }
 

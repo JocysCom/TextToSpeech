@@ -146,7 +146,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				}
 				else
 				{
-					Serializer.SerializeToXmlFile(programs, dialog.FileName, System.Text.Encoding.UTF8);
+					Serializer.SerializeToXmlFile(programs, dialog.FileName, System.Text.Encoding.UTF8, true);
 				}
 			}
 		}
@@ -278,6 +278,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			form.MainHelpLabel.Text = "Please download this tool only from trustworthy sources. Make sure that this tool is always signed by verified publisher ( Jocys.com ) with signature issue by trusted certificate authority.";
 		}
 
-
+		private void BrowseButton_Click(object sender, EventArgs e)
+		{
+			MainHelper.OpenUrl(SettingsFile.Current.FolderPath);
+		}
 	}
 }

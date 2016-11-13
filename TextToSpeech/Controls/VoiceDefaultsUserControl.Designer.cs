@@ -49,12 +49,13 @@
 			this.LanguageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.EmptyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.VoicesDefaultsToolStrip = new System.Windows.Forms.ToolStrip();
-			this.AddButton = new System.Windows.Forms.ToolStripButton();
-			this.DeleteButton = new System.Windows.Forms.ToolStripButton();
-			this.ExportButton = new System.Windows.Forms.ToolStripButton();
-			this.ImportButton = new System.Windows.Forms.ToolStripButton();
 			this.ImportOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.ExportSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.AddButton = new System.Windows.Forms.ToolStripButton();
+			this.DeleteButton = new System.Windows.Forms.ToolStripButton();
+			this.BrowseButton = new System.Windows.Forms.ToolStripButton();
+			this.ExportButton = new System.Windows.Forms.ToolStripButton();
+			this.ImportButton = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.VoicesDefaultsDataGridView)).BeginInit();
 			this.VoicesDefaultsToolStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -219,6 +220,7 @@
 			this.VoicesDefaultsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AddButton,
             this.DeleteButton,
+            this.BrowseButton,
             this.ExportButton,
             this.ImportButton});
 			this.VoicesDefaultsToolStrip.Location = new System.Drawing.Point(0, 0);
@@ -247,6 +249,16 @@
 			this.DeleteButton.Size = new System.Drawing.Size(60, 22);
 			this.DeleteButton.Text = "Delete";
 			this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
+			// 
+			// BrowseButton
+			// 
+			this.BrowseButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.BrowseButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Folder;
+			this.BrowseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BrowseButton.Name = "BrowseButton";
+			this.BrowseButton.Size = new System.Drawing.Size(74, 22);
+			this.BrowseButton.Text = "Browse...";
+			this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
 			// 
 			// ExportButton
 			// 
@@ -303,5 +315,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn VolumeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn LanguageColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn EmptyColumn;
+		private System.Windows.Forms.ToolStripButton BrowseButton;
 	}
 }
