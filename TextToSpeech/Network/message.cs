@@ -53,21 +53,45 @@ namespace JocysCom.TextToSpeech.Monitor.Network
         /// <summary>
         /// Set current voice values from other voice object.
         /// </summary>
-        /// <param name="v">voice which will be used as source of values.</param>
-        public void OverrideFrom(message v)
+        /// <param name="v">voice which will be used as a source of values.</param>
+        public void UpdateMissingValuesFrom(message v)
         {
-            if (!string.IsNullOrEmpty(v.language)) language = v.language;
-            if (!string.IsNullOrEmpty(v.gender)) gender = v.gender;
-            if (!string.IsNullOrEmpty(v.effect)) effect = v.effect;
-            if (!string.IsNullOrEmpty(v.pitch)) pitch = v.pitch;
-            if (!string.IsNullOrEmpty(v.rate)) rate = v.rate;
-            if (!string.IsNullOrEmpty(v.group)) volume = v.group;
-            if (!string.IsNullOrEmpty(v.volume)) volume = v.volume;
+			// if value supplied and current is empty then...
+			if (!string.IsNullOrEmpty(v.language) && string.IsNullOrEmpty(language)) language = v.language;
+            if (!string.IsNullOrEmpty(v.gender) && string.IsNullOrEmpty(gender)) gender = v.gender;
+            if (!string.IsNullOrEmpty(v.effect) && string.IsNullOrEmpty(effect)) effect = v.effect;
+            if (!string.IsNullOrEmpty(v.pitch) && string.IsNullOrEmpty(pitch)) pitch = v.pitch;
+            if (!string.IsNullOrEmpty(v.rate) && string.IsNullOrEmpty(rate)) rate = v.rate;
+            if (!string.IsNullOrEmpty(v.group) && string.IsNullOrEmpty(group)) group = v.group;
+            if (!string.IsNullOrEmpty(v.volume) && string.IsNullOrEmpty(volume)) volume = v.volume;
         }
 
-        #region INotifyPropertyChanged
+		public void UpdateMissingAndCangedValuesFrom(message v)
+		{
+			// if value supplied and current is not the same then...
+			if (!string.IsNullOrEmpty(v.language) && language != v.language) language = v.language;
+			if (!string.IsNullOrEmpty(v.gender) && gender != v.gender) gender = v.gender;
+			if (!string.IsNullOrEmpty(v.effect) && effect != v.effect) effect = v.effect;
+			if (!string.IsNullOrEmpty(v.pitch) && pitch != v.pitch) pitch = v.pitch;
+			if (!string.IsNullOrEmpty(v.rate) && rate != v.rate) rate = v.rate;
+			if (!string.IsNullOrEmpty(v.group) && group != v.group) group = v.group;
+			if (!string.IsNullOrEmpty(v.volume) && volume != v.volume) volume = v.volume;
+		}
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		public void UpdateFrom(message v)
+		{
+			language = v.language;
+			gender = v.gender;
+			effect = v.effect;
+			pitch = v.pitch;
+			rate = v.rate;
+			group = v.group;
+			volume = v.volume;
+		}
+
+		#region INotifyPropertyChanged
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged(string propertyName = "")
         {

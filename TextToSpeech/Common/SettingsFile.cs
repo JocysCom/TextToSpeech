@@ -38,7 +38,7 @@ namespace JocysCom.TextToSpeech.Monitor
             get { return _current = _current ?? new SettingsFile(); }
         }
 
-        public SortableBindingList<message> Overrides { get { return _Overrides; } }
+        public SortableBindingList<message> Defaults { get { return _Overrides; } }
         public SortableBindingList<sound> Sounds { get { return _Sounds; } }
 
         public string FolderPath;
@@ -96,10 +96,10 @@ namespace JocysCom.TextToSpeech.Monitor
                     data = Serializer.DeserializeFromXmlFile<SettingsFile>(fullName);
                 }
             }
-            overrides = data != null && data.Overrides != null && data.Overrides.Count > 0 ? data.Overrides : defaultData.Overrides;
+            overrides = data != null && data.Defaults != null && data.Defaults.Count > 0 ? data.Defaults : defaultData.Defaults;
             sounds = data != null && data.Sounds != null && data.Sounds.Count > 0 ? data.Sounds : defaultData.Sounds;
-            Overrides.Clear();
-            if (overrides != null) for (int i = 0; i < overrides.Count; i++) Overrides.Add(overrides[i]);
+            Defaults.Clear();
+            if (overrides != null) for (int i = 0; i < overrides.Count; i++) Defaults.Add(overrides[i]);
             Sounds.Clear();
             if (sounds != null) for (int i = 0; i < sounds.Count; i++) Sounds.Add(sounds[i]);
         }

@@ -425,9 +425,9 @@ namespace JocysCom.TextToSpeech.Monitor
 			var v = Serializer.DeserializeFromXmlString<message>(text);
 			// Override voice values.
 			var name = v.name;
-			var overrideVoice = SettingsFile.Current.Overrides.FirstOrDefault(x => x.name == name);
+			var overrideVoice = SettingsFile.Current.Defaults.FirstOrDefault(x => x.name == name);
 			// if override was not found then...
-			if (overrideVoice != null) v.OverrideFrom(overrideVoice);
+			if (overrideVoice != null) v.UpdateMissingValuesFrom(overrideVoice);
 
 			//Set gender. "Male"(1), "Female"(2), "Neutral"(3).
 			_Gender = string.IsNullOrEmpty(v.gender) || v.gender != "Male" && v.gender != "Female" && v.gender != "Neutral" ? GenderComboBox.Text : v.gender;
