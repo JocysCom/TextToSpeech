@@ -320,8 +320,8 @@ namespace JocysCom.TextToSpeech.Monitor
 				{
 					BeginInvoke((Action)(() =>
 					{
-						ErrorToolStripStatusLabel.Text = value == null ? "" : value.Message;
-						ErrorToolStripStatusLabel.Visible = value != null;
+						ErrorStatusLabel.Text = value == null ? "" : MainHelper.CropText(value.Message, 64);
+						ErrorStatusLabel.Visible = value != null;
 
 					}));
 				}
@@ -534,13 +534,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			StopPlayer();
 		}
 
-		private void MainStatusStrip_Click(object sender, EventArgs e)
-		{
-			if (LastException != null)
-			{
-				MessageBox.Show(LastException.ToString(), "Last Exception");
-			}
-		}
 		private void TextXmlTabControl_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			var en = (TextXmlTabControl.SelectedTab != SapiTabPage);
@@ -1127,6 +1120,54 @@ namespace JocysCom.TextToSpeech.Monitor
 			stopWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStopTrace"));
 			stopWatch.EventArrived += StopWatch_EventArrived;
 			stopWatch.Start();
+			CheckProcessStatus();
+		}
+
+		string GetRunningProcessName()
+		{
+			var names = MonitorItem.Process.Select(x => x.ToLower()).ToArray();
+			string wmiQueryString = "SELECT ExecutablePath FROM Win32_Process WHERE ExecutablePath <> Null";
+			var paths = new List<string>();
+			using (var searcher = new ManagementObjectSearcher(wmiQueryString))
+			{
+				using (var results = searcher.Get())
+				{
+					var mos = results.Cast<ManagementObject>().ToList();
+					foreach (var mo in mos)
+					{
+						if (mo != null)
+						{
+							var path = (string)mo["ExecutablePath"];
+							var name = Path.GetFileName(path).ToLower();
+							paths.Add(name);
+							if (names.Contains(name))
+							{
+								return name;
+							}
+						}
+					}
+				}
+			}
+			return null;
+		}
+
+		void CheckProcessStatus()
+		{
+			var name = GetRunningProcessName();
+			if (string.IsNullOrEmpty(name))
+			{
+				ProcessStatusLabel.Text = "Process: None";
+				//StopNetworkMonitor();
+			}
+			else
+			{
+				ProcessStatusLabel.Text = string.Format("{0}: Running", name);
+				//StartNetworkMonitor();
+			}
+			lock (monitorLock)
+			{
+				SetFilter(MonitorItem);
+			}
 		}
 
 		void DisposeWatcher()
@@ -1145,7 +1186,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			var item = MonitorItem;
 			if (item.Process.Contains(name.ToLower()))
 			{
-				ProcessStatusLabel.Text = string.Format("{0}: Started", name);
+				CheckProcessStatus();
 			}
 		}
 
@@ -1155,7 +1196,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			var item = MonitorItem;
 			if (item.Process.Contains(name.ToLower()))
 			{
-				ProcessStatusLabel.Text = string.Format("{0}: Stopped", name);
+				CheckProcessStatus();
 			}
 		}
 
@@ -1174,5 +1215,15 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 		}
 
+		private void FilterStatusLabel_Click(object sender, EventArgs e)
+		{
+			var filters = string.Join(" and \r\n", LastFilters);
+			MessageBox.Show(filters, "Last Filter");
+		}
+
+		private void ErrorStatusLabel_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show(LastException.ToString(), "Last Exception");
+		}
 	}
 }

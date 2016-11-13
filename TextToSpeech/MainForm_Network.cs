@@ -3,8 +3,6 @@ using JocysCom.TextToSpeech.Monitor.Network;
 using JocysCom.TextToSpeech.Monitor.PlugIns;
 using PacketDotNet;
 using SharpPcap;
-using SharpPcap.AirPcap;
-using SharpPcap.LibPcap;
 using SharpPcap.WinPcap;
 using System;
 using System.Collections.Generic;
@@ -12,7 +10,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Speech.Synthesis;
 using System.Windows.Forms;
@@ -23,7 +20,7 @@ namespace JocysCom.TextToSpeech.Monitor
 	{
 
 		// The socket which monitors all incoming packets.
-		private List<WinPcapDevice> monitoringSockets = new List<WinPcapDevice>();
+		private List<WinPcapDevice> CaptureMonitors = new List<WinPcapDevice>();
 		// A flag to check if packets are to be monitored or not.
 		private bool continueMonitoring = false;
 		List<IPAddress> IpAddresses = new List<IPAddress>();
@@ -33,69 +30,44 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			lock (monitorLock)
 			{
+				if (Disposing || IsDisposed || !IsHandleCreated)
+				{
+					return;
+				}
 				// If monitor is running already then...
-				if (monitoringSockets.Count > 0)
+				if (CaptureMonitors.Count > 0)
 				{
-					MonitoringStateStatusLabel.Text = "Error: Monitoring already. Stop first!";
+					StateStatusLabel.Text = "Error: Monitoring already. Stop first!";
 					return;
-				}
-				IPHostEntry HosyEntry = Dns.GetHostEntry((Dns.GetHostName()));
-				IpAddresses.Clear();
-				if (HosyEntry.AddressList.Length > 0)
-				{
-					foreach (IPAddress ip in HosyEntry.AddressList)
-					{
-						if (ip.AddressFamily == AddressFamily.InterNetwork || ip.AddressFamily == AddressFamily.InterNetworkV6)
-						{
-							if (ip.IsIPv6LinkLocal)
-							{
-								continue;
-							}
-							// If IP address is not in the list then...
-							if (!IpAddresses.Contains(ip))
-							{
-								// Add IP Address.
-								IpAddresses.Add(ip);
-							}
-						}
-					}
-				}
-				if (IpAddresses.Count == 0)
-				{
-					MonitoringStateStatusLabel.Text = "Error: No Interface to monitor the packets!";
-					return;
-				}
-				else
-				{
-					if (IpAddresses.Count == 1)
-					{
-						MonitoringStateStatusLabel.Text = string.Format("Monitoring: {0}", IpAddresses[0]);
-					}
-					else
-					{
-						var ip4c = IpAddresses.Count(x => x.AddressFamily == AddressFamily.InterNetwork);
-						var ip6c = IpAddresses.Count(x => x.AddressFamily == AddressFamily.InterNetworkV6);
-						MonitoringStateStatusLabel.Text = string.Format("Addresses: {0} IPv4, {1} IPv6", ip4c, ip6c);
-					}
 				}
 				try
 				{
 					continueMonitoring = true;
 					// Retrieve all capture devices
-					var devices = CaptureDeviceList.Instance;
-					// differentiate based upon types
-					foreach (ICaptureDevice dev in devices)
+					var devices = CaptureDeviceList.Instance.Cast<WinPcapDevice>().ToArray();
+					foreach (var device in devices)
 					{
-						if (dev is WinPcapDevice)
+						device.OnPacketArrival += Wc_OnPacketArrival;
+						device.Open(DeviceMode.Normal);
+						device.Filter = "ip";
+						foreach (var address in device.Addresses)
 						{
-							var device = dev as WinPcapDevice;
-							device.OnPacketArrival += Wc_OnPacketArrival;
-							device.Open(DeviceMode.Normal);
-							device.Filter = "tcp";
-							// Start the capturing process
-							device.StartCapture();
-							monitoringSockets.Add(device);
+							if (address.Addr != null && address.Addr.ipAddress != null)
+							{
+								IpAddresses.Add(address.Addr.ipAddress);
+							}
 						}
+						CaptureMonitors.Add(device);
+					}
+					// Set default packet filter.
+					SetFilter(MonitorItem);
+					var ip4c = IpAddresses.Count(x => x.AddressFamily == AddressFamily.InterNetwork);
+					var ip6c = IpAddresses.Count(x => x.AddressFamily == AddressFamily.InterNetworkV6);
+					StateStatusLabel.Text = string.Format("Addresses: {0} IPv4, {1} IPv6", ip4c, ip6c);
+					foreach (var device in devices)
+					{
+						// Start the capturing process
+						device.StartCapture();
 					}
 				}
 				catch (Exception ex)
@@ -105,13 +77,88 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 		}
 
+		#region Capture Filters
+
+		List<string> LastFilters = new List<string>();
+		bool IsDetailFilter;
+
+		public void SetFilter(VoiceListItem item, bool detailFilter = false)
+		{
+			LastFilters = GetFilters(item);
+			IsDetailFilter = detailFilter;
+			var filter = string.Join(" and ", LastFilters);
+			foreach (var monitor in CaptureMonitors)
+			{
+				monitor.Filter = filter;
+			}
+			BeginInvoke((MethodInvoker)delegate ()
+			{
+				FilterStatusLabel.Text = string.Format("Filters: {0}", LastFilters.Count);
+			});
+		}
+
+		List<string> GetFilters(VoiceListItem item)
+		{
+			var filters = new List<string>();
+			string f;
+			var defaultItem = MonitorItem;
+			// Protocol type.
+			if (defaultItem.FilterProtocol != ProtocolType.Unspecified)
+			{
+				f = string.Format("{0}", defaultItem.FilterProtocol).ToLower();
+				filters.Add(f);
+			}
+			// UDP/TCP Port.
+			if (defaultItem.SourcePort > 0)
+			{
+				f = string.Format("src port {0}", defaultItem.SourcePort);
+				filters.Add(f);
+			}
+			if (defaultItem.DestinationPort > 0)
+			{
+				f = string.Format("dst port {0}", defaultItem.DestinationPort);
+				filters.Add(f);
+			}
+			// If source address is set and local then...
+			if (item.SourceAddress != null && IpAddresses.Contains(item.SourceAddress))
+			{
+				f = string.Format("src host {0}", item.SourceAddress);
+				filters.Add(f);
+			}
+			// If destination address is set and local then...
+			if (item.DestinationAddress != null && IpAddresses.Contains(item.DestinationAddress))
+			{
+				f = string.Format("dst host {0}", item.DestinationAddress);
+				filters.Add(f);
+			}
+			return filters;
+		}
+
+		#endregion
+
 		private void Wc_OnPacketArrival(object sender, CaptureEventArgs e)
 		{
 			if (Disposing || IsDisposed || !IsHandleCreated)
 			{
 				return;
 			}
-			var packet = Packet.ParsePacket(e.Packet.LinkLayerType, e.Packet.Data);
+			if (e.Packet == null || e.Packet.Data == null || e.Packet.Data.Length == 0)
+			{
+				return;
+			}
+			if (e.Packet.LinkLayerType != LinkLayers.Ethernet)
+			{
+				return;
+			}
+			Packet packet = null;
+			try
+			{
+				packet = Packet.ParsePacket(e.Packet.LinkLayerType, e.Packet.Data);
+			}
+			catch (Exception)
+			{
+				return;
+			}
 			var ep = packet as EthernetPacket;
 			if (ep == null) return;
 			if (ep.Type != EthernetPacketType.IpV4 && ep.Type != EthernetPacketType.IpV6) return;
@@ -137,7 +184,7 @@ namespace JocysCom.TextToSpeech.Monitor
 						Ip4PacketsCount++;
 					}
 
-					PacketsStateStatusLabel.Text = string.Format("Packets: {0} IPv4, {1} IPv6", Ip4PacketsCount, Ip6PacketsCount);
+					PacketsStatusLabel.Text = string.Format("Packets: {0} IPv4, {1} IPv6", Ip4PacketsCount, Ip6PacketsCount);
 				}
 			}));
 			uint sequenceNumber = tp.SequenceNumber;
@@ -253,8 +300,14 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			if (allowToAdd)
 			{
+				// If default capture filter.
+				if (!IsDetailFilter)
+				{
+					// Restrict filter to improve speed.
+					SetFilter(voiceItem, true);
+				}
 				// Add wow item to the list. Use Invoke to make it Thread safe.
-				this.Invoke((Action<PlugIns.VoiceListItem>)addVoiceListItem, new object[] { voiceItem });
+				this.Invoke((Action<VoiceListItem>)addVoiceListItem, new object[] { voiceItem });
 			}
 		}
 
@@ -263,17 +316,17 @@ namespace JocysCom.TextToSpeech.Monitor
 			lock (monitorLock)
 			{
 				// If monitor is not running then...
-				if (monitoringSockets.Count == 0)
+				if (CaptureMonitors.Count == 0)
 				{
-					MonitoringStateStatusLabel.Text = "Error: Not monitoring. Start monitor first!";
+					StateStatusLabel.Text = "Error: Not monitoring. Start monitor first!";
 					return;
 				}
-				foreach (var socket in monitoringSockets)
+				foreach (var socket in CaptureMonitors)
 				{
 					socket.StopCapture();
 					socket.Close();
 				}
-				monitoringSockets.Clear();
+				CaptureMonitors.Clear();
 			}
 		}
 
@@ -281,7 +334,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		long Ip4PacketsCount = 0;
 		long Ip6PacketsCount = 0;
 
-		BindingList<PlugIns.VoiceListItem> WowMessageList = new BindingList<PlugIns.VoiceListItem>();
+		BindingList<VoiceListItem> WowMessageList = new BindingList<VoiceListItem>();
 
 		object SequenceNumbersLock = new object();
 		List<uint> SequenceNumbers = new List<uint>();
@@ -289,7 +342,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		bool ScrollMessagesGrid = false;
 		object ScrollMessagesGridLock = new object();
 
-		private void addVoiceListItem(PlugIns.VoiceListItem wowItem)
+		private void addVoiceListItem(VoiceListItem wowItem)
 		{
 			lock (ScrollMessagesGridLock)
 			{
@@ -344,7 +397,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			if (continueMonitoring)
 			{
-				foreach (var socket in monitoringSockets)
+				foreach (var socket in CaptureMonitors)
 				{
 					socket.Close();
 				}

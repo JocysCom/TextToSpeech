@@ -102,10 +102,12 @@
 			this.PlayListDurationColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.PlayListTextColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.MainStatusStrip = new System.Windows.Forms.StatusStrip();
-			this.PacketsStateStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.MonitoringStateStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.ErrorToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.ProcessStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.ErrorStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.FilterStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.EmptyStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.StateStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.PacketsStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.AudioBitsPerSampleComboBox = new System.Windows.Forms.ComboBox();
 			this.AudioBitsPerSampleLabel = new System.Windows.Forms.Label();
 			this.AudioSampleRateComboBox = new System.Windows.Forms.ComboBox();
@@ -1033,55 +1035,77 @@
 			// MainStatusStrip
 			// 
 			this.MainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.PacketsStateStatusLabel,
-            this.MonitoringStateStatusLabel,
-            this.ErrorToolStripStatusLabel,
-            this.ProcessStatusLabel});
+            this.ProcessStatusLabel,
+            this.ErrorStatusLabel,
+            this.FilterStatusLabel,
+            this.EmptyStatusLabel,
+            this.StateStatusLabel,
+            this.PacketsStatusLabel});
 			this.MainStatusStrip.Location = new System.Drawing.Point(0, 652);
 			this.MainStatusStrip.Name = "MainStatusStrip";
-			this.MainStatusStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
 			this.MainStatusStrip.Size = new System.Drawing.Size(1074, 24);
 			this.MainStatusStrip.SizingGrip = false;
 			this.MainStatusStrip.TabIndex = 17;
 			this.MainStatusStrip.Text = "statusStrip1";
-			this.MainStatusStrip.Click += new System.EventHandler(this.MainStatusStrip_Click);
-			// 
-			// PacketsStateStatusLabel
-			// 
-			this.PacketsStateStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-			this.PacketsStateStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
-			this.PacketsStateStatusLabel.Name = "PacketsStateStatusLabel";
-			this.PacketsStateStatusLabel.Size = new System.Drawing.Size(63, 19);
-			this.PacketsStateStatusLabel.Text = "Packets: 0";
-			// 
-			// MonitoringStateStatusLabel
-			// 
-			this.MonitoringStateStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-			this.MonitoringStateStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
-			this.MonitoringStateStatusLabel.Name = "MonitoringStateStatusLabel";
-			this.MonitoringStateStatusLabel.Size = new System.Drawing.Size(165, 19);
-			this.MonitoringStateStatusLabel.Text = "[MonitoringStateStatusLabel]";
-			// 
-			// ErrorToolStripStatusLabel
-			// 
-			this.ErrorToolStripStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-			this.ErrorToolStripStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
-			this.ErrorToolStripStatusLabel.Name = "ErrorToolStripStatusLabel";
-			this.ErrorToolStripStatusLabel.Size = new System.Drawing.Size(151, 19);
-			this.ErrorToolStripStatusLabel.Text = "[ErrorToolStripStatusLabel]";
-			this.ErrorToolStripStatusLabel.Visible = false;
 			// 
 			// ProcessStatusLabel
 			// 
+			this.ProcessStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.ProcessStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
 			this.ProcessStatusLabel.Name = "ProcessStatusLabel";
-			this.ProcessStatusLabel.Size = new System.Drawing.Size(104, 19);
+			this.ProcessStatusLabel.Size = new System.Drawing.Size(108, 19);
 			this.ProcessStatusLabel.Text = "Process: Unknown";
+			// 
+			// ErrorStatusLabel
+			// 
+			this.ErrorStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.ErrorStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
+			this.ErrorStatusLabel.Name = "ErrorStatusLabel";
+			this.ErrorStatusLabel.Size = new System.Drawing.Size(71, 19);
+			this.ErrorStatusLabel.Text = "Error: None";
+			this.ErrorStatusLabel.Visible = false;
+			this.ErrorStatusLabel.Click += new System.EventHandler(this.ErrorStatusLabel_Click);
+			// 
+			// FilterStatusLabel
+			// 
+			this.FilterStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.FilterStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
+			this.FilterStatusLabel.Name = "FilterStatusLabel";
+			this.FilterStatusLabel.Size = new System.Drawing.Size(72, 19);
+			this.FilterStatusLabel.Text = "Filter: None";
+			this.FilterStatusLabel.Click += new System.EventHandler(this.FilterStatusLabel_Click);
+			// 
+			// EmptyStatusLabel
+			// 
+			this.EmptyStatusLabel.Name = "EmptyStatusLabel";
+			this.EmptyStatusLabel.Size = new System.Drawing.Size(642, 19);
+			this.EmptyStatusLabel.Spring = true;
+			// 
+			// StateStatusLabel
+			// 
+			this.StateStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.StateStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
+			this.StateStatusLabel.Name = "StateStatusLabel";
+			this.StateStatusLabel.Size = new System.Drawing.Size(72, 19);
+			this.StateStatusLabel.Text = "State: None";
+			// 
+			// PacketsStatusLabel
+			// 
+			this.PacketsStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.PacketsStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
+			this.PacketsStatusLabel.Name = "PacketsStatusLabel";
+			this.PacketsStatusLabel.Size = new System.Drawing.Size(63, 19);
+			this.PacketsStatusLabel.Text = "Packets: 0";
 			// 
 			// AudioBitsPerSampleComboBox
 			// 
@@ -1794,7 +1818,7 @@
         private System.Windows.Forms.Label VolumeLabel;
         private System.Windows.Forms.TabControl TextXmlTabControl;
         private System.Windows.Forms.StatusStrip MainStatusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel ErrorToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel ErrorStatusLabel;
         private System.Windows.Forms.TabPage SapiTabPage;
         private System.Windows.Forms.TextBox SapiTextBox;
         private System.Windows.Forms.ContextMenuStrip MessagesContextMenuStrip;
@@ -1809,8 +1833,8 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
-        private System.Windows.Forms.ToolStripStatusLabel MonitoringStateStatusLabel;
-        private System.Windows.Forms.ToolStripStatusLabel PacketsStateStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel StateStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel PacketsStatusLabel;
         private System.Windows.Forms.ComboBox AudioBitsPerSampleComboBox;
         private System.Windows.Forms.Label AudioBitsPerSampleLabel;
         private System.Windows.Forms.ComboBox AudioSampleRateComboBox;
@@ -1890,6 +1914,8 @@
 		private Controls.OptionsControl OptionsPanel;
 		private System.Windows.Forms.ComboBox ProgramComboBox;
 		private System.Windows.Forms.ToolStripStatusLabel ProcessStatusLabel;
+		private System.Windows.Forms.ToolStripStatusLabel EmptyStatusLabel;
+		private System.Windows.Forms.ToolStripStatusLabel FilterStatusLabel;
 	}
 }
 

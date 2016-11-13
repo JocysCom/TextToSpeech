@@ -18,9 +18,9 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 		#region GridView columns.
 
 		public int TotalLength { get { return _IpHeader == null ? 0 : _IpHeader.TotalLength; } }
-		public IPAddress SourceAddress { get { return _IpHeader == null ? IPAddress.None : _IpHeader.SourceAddress; } }
+		public IPAddress SourceAddress { get { return _IpHeader == null ? null : _IpHeader.SourceAddress; } }
 		public ushort SourcePort { get { return _TcpHeader == null ? (ushort)0 : _TcpHeader.SourcePort; } }
-		public IPAddress DestinationAddress { get { return _IpHeader == null ? IPAddress.None : _IpHeader.DestinationAddress; } }
+		public IPAddress DestinationAddress { get { return _IpHeader == null ? null : _IpHeader.DestinationAddress; } }
 		public ushort DestinationPort { get { return _TcpHeader == null ? (ushort)0 : _TcpHeader.DestinationPort; } }
 		public int DataLength { get { return _TcpHeader == null ? 0 : _TcpHeader.PayloadData.Length; } }
 
@@ -41,7 +41,7 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 		public int FilterDestinationPort { get; set; }
 		public int FilterSourcePort { get; set; }
 		public TrafficDirection FilterDirection { get; set; }
-		public ProtocolType? FilterProtocol { get; set; } 
+		public ProtocolType FilterProtocol { get; set; } 
 		public string FilterProcessName { get; set; }
 
 		#endregion

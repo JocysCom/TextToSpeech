@@ -61,6 +61,8 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		#endregion
 
+		#region Text
+
 		public static KeyValue[] SplitText(string s, string[] separators)
 		{
 			var list = new List<KeyValue>();
@@ -110,6 +112,26 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			return list.ToArray();
 		}
+
+
+		public static string CropText(string s, int maxLength)
+		{
+			if (string.IsNullOrEmpty(s) || maxLength == -1)
+				return string.Empty;
+			if (maxLength == 0)
+				return s;
+			if (s.Length > maxLength)
+			{
+				s = s.Substring(0, maxLength - 3);
+				// Find last separator and crop there...
+				int ls = s.LastIndexOf(' ');
+				if (ls > 0) s = s.Substring(0, ls);
+				s += "...";
+			}
+			return s;
+		}
+
+		#endregion
 
 		public static string GetProductFullName()
 		{
