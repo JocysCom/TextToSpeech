@@ -149,7 +149,7 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 </sub>
 </blockquote>
 
-<p>14. At this moment, <strong>“Monitor”</strong> supports only <em>“Internt Protocol Version 4 (TCP/IPx4)”</em>. If <b>“Monitor</b><strong>”</strong> doesn't get messages from <b>“Addon</b><strong>”</strong>, you can try temporarily to disable <em>“Internet Protocol Version 6 (TCP/IPx4)”</em> in Windows “Ethernet Properties” and check, if this will help:</p>
+<p>14. At this moment, <strong>“Monitor”</strong> supports only <em>“Internt Protocol Version 4 (TCP/IPv4)”</em>. If <b>“Monitor</b><strong>”</strong> doesn't get messages from <b>“Addon</b><strong>”</strong>, you can try temporarily to disable <em>“Internet Protocol Version 6 (TCP/IPv6)”</em> in Windows “Ethernet Properties” and check, if this will help:</p>
 
 <p><img src="http://www.jocys.com/Files/Software/Ethernet_Properties.png" style="width: 363px; height: 468px;" /></p>
 
