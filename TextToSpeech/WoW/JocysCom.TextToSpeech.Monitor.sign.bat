@@ -1,7 +1,7 @@
 @ECHO OFF
 ::"$(ProjectDir)Documents\JocysCom.sign.bat" "$(TargetPath)"
 SET file=%~1
-IF "%file%" == "" SET file=..\..\TextToSpeech\bin\Release\JocysCom.TextToSpeech.Monitor.exe
+IF "%file%" == "" SET file=..\..\TextToSpeech\bin\Debug\JocysCom.TextToSpeech.Monitor.exe
 CALL:SIG "%file%"
 pause
 
