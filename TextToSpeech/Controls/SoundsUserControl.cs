@@ -293,6 +293,18 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
         }
 
+		private void BrowseButton_Click(object sender, EventArgs e)
+		{
+			MainHelper.OpenUrl(SettingsFile.Current.FolderPath);
+		}
 
-    }
+		private void ResetButton_Click(object sender, EventArgs e)
+		{
+			var result = MessageBox.Show("Do you want to reset Intro Sounds to default?", "Reset Intro Sounds", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+			if (result == DialogResult.Yes)
+			{
+				SettingsFile.Current.ResetSoundsToDefault();
+			}
+		}
+	}
 }

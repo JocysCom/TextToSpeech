@@ -49,13 +49,13 @@
 			this.LanguageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.EmptyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.VoicesDefaultsToolStrip = new System.Windows.Forms.ToolStrip();
-			this.ImportOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.ExportSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.AddButton = new System.Windows.Forms.ToolStripButton();
 			this.DeleteButton = new System.Windows.Forms.ToolStripButton();
 			this.BrowseButton = new System.Windows.Forms.ToolStripButton();
 			this.ExportButton = new System.Windows.Forms.ToolStripButton();
 			this.ImportButton = new System.Windows.Forms.ToolStripButton();
+			this.ImportOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.ExportSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.VoicesDefaultsDataGridView)).BeginInit();
 			this.VoicesDefaultsToolStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -256,8 +256,8 @@
 			this.BrowseButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Folder;
 			this.BrowseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BrowseButton.Name = "BrowseButton";
-			this.BrowseButton.Size = new System.Drawing.Size(74, 22);
-			this.BrowseButton.Text = "Browse...";
+			this.BrowseButton.Size = new System.Drawing.Size(105, 22);
+			this.BrowseButton.Text = "Show in Folder";
 			this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
 			// 
 			// ExportButton
