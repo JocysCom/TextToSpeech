@@ -45,6 +45,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					continueMonitoring = true;
 					// Retrieve all capture devices
 					var devices = CaptureDeviceList.Instance.Cast<WinPcapDevice>().ToArray();
+					IpAddresses.Clear();
 					foreach (var device in devices)
 					{
 						device.OnPacketArrival += Wc_OnPacketArrival;

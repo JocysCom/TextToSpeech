@@ -25,66 +25,6 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
-        public string RateMinComboBoxText {
-            get {
-                return ((string)(this["RateMinComboBoxText"]));
-            }
-            set {
-                this["RateMinComboBoxText"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public string PitchMinComboBoxText {
-            get {
-                return ((string)(this["PitchMinComboBoxText"]));
-            }
-            set {
-                this["PitchMinComboBoxText"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
-        public string RateMaxComboBoxText {
-            get {
-                return ((string)(this["RateMaxComboBoxText"]));
-            }
-            set {
-                this["RateMaxComboBoxText"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public string PitchMaxComboBoxText {
-            get {
-                return ((string)(this["PitchMaxComboBoxText"]));
-            }
-            set {
-                this["PitchMaxComboBoxText"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Male")]
-        public string GenderComboBoxText {
-            get {
-                return ((string)(this["GenderComboBoxText"]));
-            }
-            set {
-                this["GenderComboBoxText"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string VoicesData {
             get {
@@ -92,18 +32,6 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
             }
             set {
                 this["VoicesData"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Disabled")]
-        public string MonitorClipboardComboBoxText {
-            get {
-                return ((string)(this["MonitorClipboardComboBoxText"]));
-            }
-            set {
-                this["MonitorClipboardComboBoxText"] = value;
             }
         }
         
@@ -128,18 +56,6 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
             }
             set {
                 this["MonitorPortChecked"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Radio")]
-        public string DefaultIntroSoundComboBox {
-            get {
-                return ((string)(this["DefaultIntroSoundComboBox"]));
-            }
-            set {
-                this["DefaultIntroSoundComboBox"] = value;
             }
         }
         
@@ -200,6 +116,90 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
             }
             set {
                 this["LogSound"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RateMinComboBoxText {
+            get {
+                return ((string)(this["RateMinComboBoxText"]));
+            }
+            set {
+                this["RateMinComboBoxText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PitchMinComboBoxText {
+            get {
+                return ((string)(this["PitchMinComboBoxText"]));
+            }
+            set {
+                this["PitchMinComboBoxText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RateMaxComboBoxText {
+            get {
+                return ((string)(this["RateMaxComboBoxText"]));
+            }
+            set {
+                this["RateMaxComboBoxText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PitchMaxComboBoxText {
+            get {
+                return ((string)(this["PitchMaxComboBoxText"]));
+            }
+            set {
+                this["PitchMaxComboBoxText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GenderComboBoxText {
+            get {
+                return ((string)(this["GenderComboBoxText"]));
+            }
+            set {
+                this["GenderComboBoxText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MonitorClipboardComboBoxText {
+            get {
+                return ((string)(this["MonitorClipboardComboBoxText"]));
+            }
+            set {
+                this["MonitorClipboardComboBoxText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultIntroSoundComboBox {
+            get {
+                return ((string)(this["DefaultIntroSoundComboBox"]));
+            }
+            set {
+                this["DefaultIntroSoundComboBox"] = value;
             }
         }
     }
