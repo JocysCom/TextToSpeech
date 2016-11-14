@@ -20,7 +20,7 @@ namespace JocysCom.TextToSpeech.Monitor
 	{
 
 		// The socket which monitors all incoming packets.
-		private List<WinPcapDevice> CaptureMonitors = new List<WinPcapDevice>();
+		private List<ICaptureDevice> CaptureDevices = new List<ICaptureDevice>();
 		// A flag to check if packets are to be monitored or not.
 		private bool continueMonitoring = false;
 		List<IPAddress> IpAddresses = new List<IPAddress>();
@@ -35,7 +35,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					return;
 				}
 				// If monitor is running already then...
-				if (CaptureMonitors.Count > 0)
+				if (CaptureDevices.Count > 0)
 				{
 					StateStatusLabel.Text = "Error: Monitoring already. Stop first!";
 					return;
@@ -45,27 +45,44 @@ namespace JocysCom.TextToSpeech.Monitor
 					IpAddresses.Clear();
 					continueMonitoring = true;
 					// Retrieve all capture devices
-					var devices = CaptureDeviceList.Instance.Cast<WinPcapDevice>().ToArray();
-					foreach (var device in devices)
+					if (Properties.Settings.Default.UseWinCap)
 					{
+						var devices = CaptureDeviceList.Instance.ToArray();
+						var wcaps = devices.OfType<WinPcapDevice>();
+						foreach (var device in wcaps)
+						{
+							device.OnPacketArrival += Wc_OnPacketArrival;
+							device.Open(DeviceMode.Normal);
+							device.Filter = "ip";
+							foreach (var address in device.Addresses)
+							{
+								if (address.Addr != null && address.Addr.ipAddress != null)
+								{
+									IpAddresses.Add(address.Addr.ipAddress);
+								}
+							}
+							CaptureDevices.Add(device);
+						}
+					}
+					else
+					{
+						var device = new SocPcapDevice();
 						device.OnPacketArrival += Wc_OnPacketArrival;
-						device.Open(DeviceMode.Normal);
+						device.Open();
 						device.Filter = "ip";
 						foreach (var address in device.Addresses)
 						{
-							if (address.Addr != null && address.Addr.ipAddress != null)
-							{
-								IpAddresses.Add(address.Addr.ipAddress);
-							}
+							IpAddresses.Add(address);
 						}
-						CaptureMonitors.Add(device);
+						CaptureDevices.Add(device);
 					}
 					// Set default packet filter.
 					SetFilter(MonitorItem);
 					var ip4c = IpAddresses.Count(x => x.AddressFamily == AddressFamily.InterNetwork);
 					var ip6c = IpAddresses.Count(x => x.AddressFamily == AddressFamily.InterNetworkV6);
 					StateStatusLabel.Text = string.Format("Addresses: {0} IPv4, {1} IPv6", ip4c, ip6c);
-					foreach (var device in devices)
+					// Retrieve all capture devices
+					foreach (var device in CaptureDevices)
 					{
 						// Start the capturing process
 						device.StartCapture();
@@ -88,9 +105,9 @@ namespace JocysCom.TextToSpeech.Monitor
 			LastFilters = GetFilters(item);
 			IsDetailFilter = detailFilter;
 			var filter = string.Join(" and ", LastFilters);
-			foreach (var monitor in CaptureMonitors)
+			foreach (var device in CaptureDevices)
 			{
-				monitor.Filter = filter;
+				device.Filter = filter;
 			}
 			BeginInvoke((MethodInvoker)delegate ()
 			{
@@ -317,17 +334,17 @@ namespace JocysCom.TextToSpeech.Monitor
 			lock (monitorLock)
 			{
 				// If monitor is not running then...
-				if (CaptureMonitors.Count == 0)
+				if (CaptureDevices.Count == 0)
 				{
 					StateStatusLabel.Text = "Error: Not monitoring. Start monitor first!";
 					return;
 				}
-				foreach (var socket in CaptureMonitors)
+				foreach (var device in CaptureDevices)
 				{
-					socket.StopCapture();
-					socket.Close();
+					device.StopCapture();
+					device.Close();
 				}
-				CaptureMonitors.Clear();
+				CaptureDevices.Clear();
 			}
 		}
 
@@ -398,9 +415,9 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			if (continueMonitoring)
 			{
-				foreach (var socket in CaptureMonitors)
+				foreach (var device in CaptureDevices)
 				{
-					socket.Close();
+					device.Close();
 				}
 			}
 		}
