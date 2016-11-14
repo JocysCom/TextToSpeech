@@ -181,7 +181,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			catch (Exception ex)
 			{
-				LastException = ex;
+                ex.Data.Add("Voice", "voiceName");
+                LastException = ex;
 				return null;
 			}
 			var spStream = (SpMemoryStream)voice.AudioOutputStream;

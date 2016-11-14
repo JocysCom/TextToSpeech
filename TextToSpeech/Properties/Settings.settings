@@ -27,25 +27,25 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="RateMinComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="PitchMinComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="RateMaxComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="PitchMaxComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="GenderComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Male</Value>
     </Setting>
     <Setting Name="MonitorClipboardComboBoxText" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Disabled</Value>
     </Setting>
     <Setting Name="DefaultIntroSoundComboBox" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Radio</Value>
     </Setting>
     <Setting Name="UseWinCap" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
