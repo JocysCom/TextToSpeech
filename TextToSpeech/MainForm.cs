@@ -1238,10 +1238,10 @@ namespace JocysCom.TextToSpeech.Monitor
             var message = LastException.ToString();
             if (LastException.Data.Contains("Voice"))
             {
-                var voice = (SpeechLib.SpVoice)LastException.Data["Voice"];
+                //var voice = (SpeechLib.SpVoice)LastException.Data["Voice"];
                 message = "Monitor can't use selected voice.\r\n\r\n" + message;
             }
-            MessageBox.Show(LastException.ToString(), "Last Exception");
+            MessageBox.Show(message, "Last Exception");
         }
     }
 }
