@@ -105,16 +105,21 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             SearchPattern = Encoding.ASCII.GetBytes(LoggingTextBox.Text);
             LoggingCheckBox.Checked = Properties.Settings.Default.LogEnable;
             LoggingPlaySoundCheckBox.Checked = Properties.Settings.Default.LogSound;
-            // Update writer settings.
-            UpdateLogSettings();
+			CaptureSocButton.Checked = !Properties.Settings.Default.UseWinCap;
+			CaptureWinButton.Checked = Properties.Settings.Default.UseWinCap;
+			// Update writer settings.
+			UpdateLogSettings();
             // Attach events.
             LoggingTextBox.TextChanged += LoggingTextBox_TextChanged;
             LoggingCheckBox.CheckedChanged += LoggingCheckBox_CheckedChanged;
             LoggingPlaySoundCheckBox.CheckedChanged += LoggingPlaySoundCheckBox_CheckedChanged;
-        }
+			CaptureSocButton.CheckedChanged += CaptureSocButton_CheckedChanged;
+			CaptureWinButton.CheckedChanged += CaptureWinButton_CheckedChanged;
 
-        // Save value
-        private void LoggingPlaySoundCheckBox_CheckedChanged(object sender, EventArgs e)
+		}
+
+		// Save value
+		private void LoggingPlaySoundCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             var value = LoggingPlaySoundCheckBox.Checked;
             Properties.Settings.Default.LogSound = value;
@@ -185,5 +190,20 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             base.Dispose(disposing);
         }
 
-    }
+		private void CaptureSocButton_CheckedChanged(object sender, EventArgs e)
+		{
+			if (CaptureSocButton.Checked)
+			{
+				Properties.Settings.Default.UseWinCap = false;
+			}
+		}
+
+		private void CaptureWinButton_CheckedChanged(object sender, EventArgs e)
+		{
+			if (CaptureWinButton.Checked)
+			{
+				Properties.Settings.Default.UseWinCap = true;
+			}
+		}
+	}
 }

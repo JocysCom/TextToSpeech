@@ -17,9 +17,9 @@
 		{
 			this.AddSilenceGroupBox = new System.Windows.Forms.GroupBox();
 			this.AddSilenceAfterLabel = new System.Windows.Forms.Label();
+			this.SilenceAfterTagLabel = new System.Windows.Forms.Label();
 			this.AddSilenceBeforeLabel = new System.Windows.Forms.Label();
 			this.SilenceBeforeTagLabel = new System.Windows.Forms.Label();
-			this.SilenceAfterTagLabel = new System.Windows.Forms.Label();
 			this.LoggingGroupBox = new System.Windows.Forms.GroupBox();
 			this.LoggingPlaySoundCheckBox = new System.Windows.Forms.CheckBox();
 			this.LogFolderLabel = new System.Windows.Forms.Label();
@@ -33,19 +33,25 @@
 			this.LoggingCheckBox = new System.Windows.Forms.CheckBox();
 			this.AddSilenceAfterNumericUpDown = new System.Windows.Forms.NumericUpDown();
 			this.AddSilcenceBeforeNumericUpDown = new System.Windows.Forms.NumericUpDown();
+			this.CaptureGroupBox = new System.Windows.Forms.GroupBox();
+			this.CaptureWinButton = new System.Windows.Forms.RadioButton();
+			this.CaptureSocButton = new System.Windows.Forms.RadioButton();
 			this.AddSilenceGroupBox.SuspendLayout();
 			this.LoggingGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).BeginInit();
+			this.CaptureGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// AddSilenceGroupBox
 			// 
 			this.AddSilenceGroupBox.Controls.Add(this.AddSilenceAfterLabel);
+			this.AddSilenceGroupBox.Controls.Add(this.SilenceAfterTagLabel);
 			this.AddSilenceGroupBox.Controls.Add(this.AddSilenceBeforeLabel);
+			this.AddSilenceGroupBox.Controls.Add(this.SilenceBeforeTagLabel);
 			this.AddSilenceGroupBox.Location = new System.Drawing.Point(3, 3);
 			this.AddSilenceGroupBox.Name = "AddSilenceGroupBox";
-			this.AddSilenceGroupBox.Size = new System.Drawing.Size(406, 79);
+			this.AddSilenceGroupBox.Size = new System.Drawing.Size(575, 79);
 			this.AddSilenceGroupBox.TabIndex = 0;
 			this.AddSilenceGroupBox.TabStop = false;
 			this.AddSilenceGroupBox.Text = "Silence";
@@ -58,6 +64,17 @@
 			this.AddSilenceAfterLabel.Size = new System.Drawing.Size(261, 13);
 			this.AddSilenceAfterLabel.TabIndex = 6;
 			this.AddSilenceAfterLabel.Text = "Add Silence After Message ( default value is 0 ) [ ms ]:";
+			// 
+			// SilenceAfterTagLabel
+			// 
+			this.SilenceAfterTagLabel.AutoSize = true;
+			this.SilenceAfterTagLabel.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.SilenceAfterTagLabel.ForeColor = System.Drawing.SystemColors.ActiveBorder;
+			this.SilenceAfterTagLabel.Location = new System.Drawing.Point(399, 48);
+			this.SilenceAfterTagLabel.Name = "SilenceAfterTagLabel";
+			this.SilenceAfterTagLabel.Size = new System.Drawing.Size(161, 14);
+			this.SilenceAfterTagLabel.TabIndex = 8;
+			this.SilenceAfterTagLabel.Text = "<silence msec=\"3000\"/>";
 			// 
 			// AddSilenceBeforeLabel
 			// 
@@ -73,28 +90,16 @@
 			this.SilenceBeforeTagLabel.AutoSize = true;
 			this.SilenceBeforeTagLabel.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.SilenceBeforeTagLabel.ForeColor = System.Drawing.SystemColors.ActiveBorder;
-			this.SilenceBeforeTagLabel.Location = new System.Drawing.Point(417, 25);
+			this.SilenceBeforeTagLabel.Location = new System.Drawing.Point(399, 22);
 			this.SilenceBeforeTagLabel.Name = "SilenceBeforeTagLabel";
 			this.SilenceBeforeTagLabel.Size = new System.Drawing.Size(161, 14);
 			this.SilenceBeforeTagLabel.TabIndex = 7;
 			this.SilenceBeforeTagLabel.Text = "<silence msec=\"3000\"/>";
 			// 
-			// SilenceAfterTagLabel
-			// 
-			this.SilenceAfterTagLabel.AutoSize = true;
-			this.SilenceAfterTagLabel.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.SilenceAfterTagLabel.ForeColor = System.Drawing.SystemColors.ActiveBorder;
-			this.SilenceAfterTagLabel.Location = new System.Drawing.Point(417, 51);
-			this.SilenceAfterTagLabel.Name = "SilenceAfterTagLabel";
-			this.SilenceAfterTagLabel.Size = new System.Drawing.Size(161, 14);
-			this.SilenceAfterTagLabel.TabIndex = 8;
-			this.SilenceAfterTagLabel.Text = "<silence msec=\"3000\"/>";
-			// 
 			// LoggingGroupBox
 			// 
-			this.LoggingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.LoggingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.LoggingGroupBox.Controls.Add(this.LoggingPlaySoundCheckBox);
 			this.LoggingGroupBox.Controls.Add(this.LogFolderLabel);
 			this.LoggingGroupBox.Controls.Add(this.FilterTextLabel);
@@ -107,7 +112,7 @@
 			this.LoggingGroupBox.Controls.Add(this.LoggingCheckBox);
 			this.LoggingGroupBox.Location = new System.Drawing.Point(4, 89);
 			this.LoggingGroupBox.Name = "LoggingGroupBox";
-			this.LoggingGroupBox.Size = new System.Drawing.Size(632, 342);
+			this.LoggingGroupBox.Size = new System.Drawing.Size(791, 342);
 			this.LoggingGroupBox.TabIndex = 9;
 			this.LoggingGroupBox.TabStop = false;
 			this.LoggingGroupBox.Text = "Log Network Packets ( Plugin Helper )";
@@ -149,13 +154,13 @@
 			this.LoggingFolderTextBox.Location = new System.Drawing.Point(72, 71);
 			this.LoggingFolderTextBox.Name = "LoggingFolderTextBox";
 			this.LoggingFolderTextBox.ReadOnly = true;
-			this.LoggingFolderTextBox.Size = new System.Drawing.Size(473, 20);
+			this.LoggingFolderTextBox.Size = new System.Drawing.Size(632, 20);
 			this.LoggingFolderTextBox.TabIndex = 7;
 			// 
 			// OpenButton
 			// 
 			this.OpenButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.OpenButton.Location = new System.Drawing.Point(551, 69);
+			this.OpenButton.Location = new System.Drawing.Point(710, 69);
 			this.OpenButton.Name = "OpenButton";
 			this.OpenButton.Size = new System.Drawing.Size(75, 23);
 			this.OpenButton.TabIndex = 5;
@@ -201,7 +206,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.LoggingTextBox.Location = new System.Drawing.Point(72, 45);
 			this.LoggingTextBox.Name = "LoggingTextBox";
-			this.LoggingTextBox.Size = new System.Drawing.Size(473, 20);
+			this.LoggingTextBox.Size = new System.Drawing.Size(632, 20);
 			this.LoggingTextBox.TabIndex = 1;
 			this.LoggingTextBox.Text = "me66age";
 			// 
@@ -257,26 +262,59 @@
 			this.AddSilcenceBeforeNumericUpDown.Value = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.AddSilcenceBeforeMessage;
 			this.AddSilcenceBeforeNumericUpDown.ValueChanged += new System.EventHandler(this.AddSilcenceBeforeNumericUpDown_ValueChanged);
 			// 
+			// CaptureGroupBox
+			// 
+			this.CaptureGroupBox.Controls.Add(this.CaptureWinButton);
+			this.CaptureGroupBox.Controls.Add(this.CaptureSocButton);
+			this.CaptureGroupBox.Location = new System.Drawing.Point(584, 3);
+			this.CaptureGroupBox.Name = "CaptureGroupBox";
+			this.CaptureGroupBox.Size = new System.Drawing.Size(211, 79);
+			this.CaptureGroupBox.TabIndex = 10;
+			this.CaptureGroupBox.TabStop = false;
+			this.CaptureGroupBox.Text = "Packet Capture Librarry";
+			// 
+			// CaptureWinButton
+			// 
+			this.CaptureWinButton.AutoSize = true;
+			this.CaptureWinButton.Location = new System.Drawing.Point(6, 46);
+			this.CaptureWinButton.Name = "CaptureWinButton";
+			this.CaptureWinButton.Size = new System.Drawing.Size(69, 17);
+			this.CaptureWinButton.TabIndex = 0;
+			this.CaptureWinButton.TabStop = true;
+			this.CaptureWinButton.Text = "WinPcap";
+			this.CaptureWinButton.UseVisualStyleBackColor = true;
+			// 
+			// CaptureSocButton
+			// 
+			this.CaptureSocButton.AutoSize = true;
+			this.CaptureSocButton.Location = new System.Drawing.Point(6, 20);
+			this.CaptureSocButton.Name = "CaptureSocButton";
+			this.CaptureSocButton.Size = new System.Drawing.Size(138, 17);
+			this.CaptureSocButton.TabIndex = 0;
+			this.CaptureSocButton.TabStop = true;
+			this.CaptureSocButton.Text = "Microsoft .NET Sockets";
+			this.CaptureSocButton.UseVisualStyleBackColor = true;
+			// 
 			// OptionsControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.CaptureGroupBox);
 			this.Controls.Add(this.LoggingGroupBox);
-			this.Controls.Add(this.SilenceAfterTagLabel);
 			this.Controls.Add(this.AddSilenceAfterNumericUpDown);
 			this.Controls.Add(this.AddSilcenceBeforeNumericUpDown);
-			this.Controls.Add(this.SilenceBeforeTagLabel);
 			this.Controls.Add(this.AddSilenceGroupBox);
 			this.Name = "OptionsControl";
-			this.Size = new System.Drawing.Size(639, 434);
+			this.Size = new System.Drawing.Size(798, 434);
 			this.AddSilenceGroupBox.ResumeLayout(false);
 			this.AddSilenceGroupBox.PerformLayout();
 			this.LoggingGroupBox.ResumeLayout(false);
 			this.LoggingGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).EndInit();
+			this.CaptureGroupBox.ResumeLayout(false);
+			this.CaptureGroupBox.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -300,5 +338,8 @@
         private System.Windows.Forms.Label FilterTextLabel;
         private System.Windows.Forms.Button OpenButton;
         private System.Windows.Forms.CheckBox LoggingPlaySoundCheckBox;
-    }
+		private System.Windows.Forms.GroupBox CaptureGroupBox;
+		private System.Windows.Forms.RadioButton CaptureWinButton;
+		private System.Windows.Forms.RadioButton CaptureSocButton;
+	}
 }
