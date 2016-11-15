@@ -277,15 +277,13 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
         //Tooltip MouseHover.
         private void Sounds_MouseHover(object sender, EventArgs e)
         {
-            var form = (MainForm)ParentForm;
-            form.MainHelpLabel.Text = "Here you can add groups ( like \"Whisper\" ) and assign sounds to them ( like \"Radio\" -- listed in \"Default Intro Sound\" drop-down box ) or set paths to wav files ( like \"C:\\Windows\\Media\\notify.wav\" ).";
+			Program.TopForm.MainHelpLabel.Text = "Here you can add groups ( like \"Whisper\" ) and assign sounds to them ( like \"Radio\" -- listed in \"Default Intro Sound\" drop-down box ) or set paths to wav files ( like \"C:\\Windows\\Media\\notify.wav\" ).";
         }
 
         // Tooltip Main.
         private void Sounds_MouseLeave(object sender, EventArgs e)
         {
-            var form = (MainForm)ParentForm;
-            form.MainHelpLabel.Text = "Please download this tool only from trustworthy sources. Make sure that this tool is always signed by verified publisher ( Jocys.com ) with signature issue by trusted certificate authority.";
+			Program.TopForm.ResetHelpToDefault();
         }
 
         private void SoundsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)

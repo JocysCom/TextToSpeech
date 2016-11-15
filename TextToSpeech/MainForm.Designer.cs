@@ -1202,9 +1202,7 @@
 			this.MainHelpLabel.Padding = new System.Windows.Forms.Padding(32, 7, 6, 6);
 			this.MainHelpLabel.Size = new System.Drawing.Size(1074, 28);
 			this.MainHelpLabel.TabIndex = 1;
-			this.MainHelpLabel.Text = "Please download this tool only from trustworthy sources. Make sure that this tool" +
-    " is always signed by verified publisher ( Jocys.com ) with signature issue by tr" +
-    "usted certificate authority.";
+			this.MainHelpLabel.Text = "MainHelpLabel";
 			// 
 			// MonitorClipboardLabel
 			// 

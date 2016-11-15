@@ -381,6 +381,7 @@ namespace JocysCom.TextToSpeech.Monitor
             AboutRichTextBox.Rtf = sr.ReadToEnd();
             sr.Close();
             InitWatcher();
+			ResetHelpToDefault();
         }
 
         //Make the recognizer ready
@@ -721,10 +722,15 @@ namespace JocysCom.TextToSpeech.Monitor
 
         }
 
-        // ToolTip Main
-        private void MouseLeave_MainHelpLabel(object sender, EventArgs e)
+		public void ResetHelpToDefault()
+		{
+			MainHelpLabel.Text = "Please download this tool only from trustworthy sources. Make sure that this tool is always signed by verified publisher ( Jocys.com ) with signature issued by trusted certificate authority.";
+		}
+
+		// ToolTip Main
+		private void MouseLeave_MainHelpLabel(object sender, EventArgs e)
         {
-            MainHelpLabel.Text = "Please download this tool only from trustworthy sources. Make sure that this tool is always signed by verified publisher ( Jocys.com ) with signature issued by trusted certificate authority.";
+			ResetHelpToDefault();
         }
 
         // ToolTip MouseHover

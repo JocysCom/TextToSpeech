@@ -267,15 +267,13 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		//Tooltip MouseHover.
 		private void VoicesDefaults_MouseHover(object sender, EventArgs e)
 		{
-			var form = (MainForm)ParentForm;
-			form.MainHelpLabel.Text = "Here you can add names and assign values to them. Values in this list have priority over incoming ( submited ) values.";
+			Program.TopForm.MainHelpLabel.Text = "Here you can add names and assign values to them. Values in this list have priority over incoming ( submited ) values.";
 		}
 
 		// Tooltip Main.
 		private void VoicesDefaults_MouseLeave(object sender, EventArgs e)
 		{
-			var form = (MainForm)ParentForm;
-			form.MainHelpLabel.Text = "Please download this tool only from trustworthy sources. Make sure that this tool is always signed by verified publisher ( Jocys.com ) with signature issue by trusted certificate authority.";
+			Program.TopForm.ResetHelpToDefault();
 		}
 
 		private void BrowseButton_Click(object sender, EventArgs e)
