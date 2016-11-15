@@ -347,8 +347,6 @@
     <None Include="WoW\JocysCom-TextToSpeech-WoW\JocysCom-TextToSpeech-WoW.Help-Online.URL" />
     <None Include="WoW\JocysCom-TextToSpeech-WoW\JocysCom-TextToSpeech-WoW.lua" />
     <None Include="WoW\JocysCom-TextToSpeech-WoW\JocysCom-TextToSpeech-WoW.toc" />
-    <None Include="WoW\JocysCom-TextToSpeech-WoW\JocysCom-TextToSpeech-WoW.wowproj" />
-    <None Include="WoW\JocysCom-TextToSpeech-WoW\JocysCom-TextToSpeech-WoW.wowsln" />
     <None Include="WoW\JocysCom.TextToSpeech.Monitor.sign.bat" />
     <None Include="WoW\JocysCom.TextToSpeech.WoW.mklink.bat" />
     <None Include="WoW\MakeLinkToLua.bat" />
