@@ -484,7 +484,7 @@ namespace JocysCom.TextToSpeech.Monitor
             PitchTextBox.Text = pitchIsValid ? PitchTextBox.Text = "" : _Pitch.ToString();
 
             // Set PitchComment.
-            _PitchComment = _Pitch >= 0 ? -4 : 4;
+            _PitchComment = _Pitch >= 0 ? -1 : 1;
 
             // Set rate.
             var rateIsValid = int.TryParse(v.rate, out _Rate);
