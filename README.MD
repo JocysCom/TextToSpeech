@@ -170,8 +170,8 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 ### Desired improvements in “World of Warcraft” game
 <hr />
 
-<p>• Getting <b>UnitSex</b> of NPC from chat and quest log... in order to apply gender.<br />
-• Getting <b>UnitAge</b> of NPC... in order to apply “Child", “Adult” or “Senior” effects.<br />
-• Getting <b>UnitRace</b> of NPC... Sound effects on NPCs are applied by <b>UnitCreatureType</b> now.<br />
-• Getting <b>value</b> if NPC has voice over for all text... in order not to start TTS speech.<br />
+<p>• Getting <b>UnitSex</b> of NPC from chat and quest log -- no need to select it to get gender.<br />
+• Getting <b>UnitAge</b> of NPC (%) -- (1-100) in order to apply “Child", “Adult” or “Senior” effects.<br />
+• Getting <b>UnitRace</b> of NPC -- Sound effects on NPCs are applied by <strong>UnitCreatureType</strong> now.<br />
+• Getting <b>value</b> if NPC has voice over for all text -- in order not to start TTS speech.<br />
 • NPC “talking” animation should loop, depending on length of the text.</p>
