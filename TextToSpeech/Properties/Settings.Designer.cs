@@ -121,7 +121,7 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string RateMinComboBoxText {
             get {
                 return ((string)(this["RateMinComboBoxText"]));
@@ -133,7 +133,7 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string PitchMinComboBoxText {
             get {
                 return ((string)(this["PitchMinComboBoxText"]));
@@ -145,7 +145,7 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string RateMaxComboBoxText {
             get {
                 return ((string)(this["RateMaxComboBoxText"]));
@@ -157,7 +157,7 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string PitchMaxComboBoxText {
             get {
                 return ((string)(this["PitchMaxComboBoxText"]));
@@ -169,7 +169,7 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Male")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string GenderComboBoxText {
             get {
                 return ((string)(this["GenderComboBoxText"]));
@@ -181,7 +181,7 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Disabled")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string MonitorClipboardComboBoxText {
             get {
                 return ((string)(this["MonitorClipboardComboBoxText"]));
@@ -193,7 +193,7 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Radio")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string DefaultIntroSoundComboBox {
             get {
                 return ((string)(this["DefaultIntroSoundComboBox"]));
