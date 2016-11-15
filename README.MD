@@ -118,7 +118,7 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 <br />
 Number ( from 0 to 100 ) sets, how often voice should be used, relatively to other voices in the same category (Male, Female or Neutral). If you have IVONA male and female voices, you can disable “Microsoft (...) Desktop” voices ( as they are quite bad ).<br />
 <br />
-You can try version 2.4.6 (2016-11-15). Also, Monitor can't play voices, if their trial period is expired. You can test, which ones are expired, by enabling one voice at a time and pressing [ Speak ] button in Monitor. Such voices must be disabled in [ Voices ] tab.</sub></p>
+Monitor can't play voices, if their trial period is expired. You can test, which ones are expired, by enabling one voice at a time and pressing [ Speak ] button in Monitor. Such voices must be disabled in [ Voices ] tab.</sub></p>
 </blockquote>
 
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
