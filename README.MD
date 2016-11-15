@@ -1,13 +1,14 @@
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.3.6 (2016-10-27) • Digitally Signed
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.84 (2016-11-11)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.4.6 (2016-14-15) • Digitally Signed
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.85 (2016-11-15)
 
 <hr />
 
 <p align="justify">Reads <i>quests</i> and <i>chat messages</i> with text-to-speech voices.<br />
 <br />
-How it works: When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, <b>“WoW Addon”</b> sends whisper (chat) message between  <code>&lt;message&gt;...&lt;/message&gt;</code> tags to yourself. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>pitch</code>, <code>rate</code>, <code>effect</code>, <code>volume</code> and other values. Then, <b>“Monitor”</b>, <i>which must be running in background, while gaming,</i> picks-up this text between <code>&lt;message&gt;...&lt;/message&gt;</code> tags from your local network, formats it to SAPI XML and reads it with specific text-to-speech voice.<br />
+How it works: When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, WoW <b>“Addon”</b> creates and sends message to you between <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code> tags. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> value. Then, <b>“Monitor”</b>, <em>which must be running in background, while gaming,</em> picks-up this message from your local network traffic, converts it to SAPI XML and reads it with specific text-to-speech voice.
+
 
 <p style="text-align: center; margin: 10px;"><strong>Text-to-Speech Voices by <a href="http://windows.microsoft.com/en-us/windows/language-packs" target="_blank">Microsoft</a> or <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Ivona</a> / <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a></strong></p>
 
@@ -28,7 +29,7 @@ BETTER text-to-speech voices are developed by <a target="_blank"  href="http://w
 <hr />
 
 <p>Old versions of “Monitor” and “Addon” (2014-08-06) are presented in this video.<br />
-New versions (2016-10-29) with more options can read quests and chat messages.</p>
+New versions (2016-11-15) with more options can read quests and chat messages.</p>
 
 [![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
@@ -148,10 +149,6 @@ Usual per-character settings directory, where Addon settings are saved:<br />
 You can delete these files to reset settings or clear saved NPCs (game must be closed).
 </sub>
 </blockquote>
-
-<p>14. At this moment, <strong>“Monitor”</strong> supports only <em>“Internt Protocol Version 4 (TCP/IPv4)”</em>. If <b>“Monitor</b><strong>”</strong> doesn't get messages from <b>“Addon</b><strong>”</strong>, you can try temporarily to disable <em>“Internet Protocol Version 6 (TCP/IPv6)”</em> in Windows “Ethernet Properties” and check, if this will help:</p>
-
-<p><img src="http://www.jocys.com/Files/Software/Ethernet_Properties.png" style="width: 363px; height: 468px;" /></p>
 
 #### “Stop text-to-speech” macro and hotkey setup in “World of Warcraft” game
 <hr />
