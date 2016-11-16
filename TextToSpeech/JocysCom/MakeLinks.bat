@@ -37,7 +37,15 @@ GOTO:EOF
 :: Remote symbolic links: rmdir Skype
 SET upr=C:\Projects\Jocys.com\Class Library
 IF EXIST "D:\Projects\Jocys.com\Class Library" SET upr=D:\Projects\Jocys.com\Class Library
+CALL:MKJ Collections
+CALL:MKJ ComponentModel
 CALL:MKJ Configuration
+CALL:MKJ Controls
+CALL:MKJ IO
+CALL:MKJ Network
+CALL:MKJ Runtime
+CALL:MKJ Text
+CALL:MKJ Win32
 
 pause
 GOTO:EOF

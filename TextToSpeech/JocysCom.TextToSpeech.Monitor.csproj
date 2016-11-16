@@ -196,6 +196,7 @@
     <Compile Include="JocysCom\Network\NetStatInfo.cs" />
     <Compile Include="JocysCom\Runtime\Serializer.cs" />
     <Compile Include="JocysCom\Text\Helper.cs" />
+    <Compile Include="JocysCom\Win32\NativeMethods.user32.cs" />
     <Compile Include="MainForm_Network.cs">
       <SubType>Form</SubType>
     </Compile>
