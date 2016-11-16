@@ -360,8 +360,6 @@
     <None Include="WoW\Resources\Images\JocysCom-DialogueMiniFrame-Background.psd" />
     <None Include="WoW\Resources\Images\JocysCom-MiniMenuFrame-Border.psd" />
     <None Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon.psd" />
-    <None Include="WoW\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.sha" />
-    <None Include="WoW\Downloads\1.0.10.1\JocysCom-WoW-TextToSpeech.zip" />
     <None Include="WoW\FrameXML\UI.xsd">
       <SubType>Designer</SubType>
     </None>
