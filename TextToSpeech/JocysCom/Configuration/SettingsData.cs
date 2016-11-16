@@ -12,7 +12,6 @@ using JocysCom.ClassLibrary.ComponentModel;
 using System.Reflection;
 using System.Linq;
 using System.IO.Compression;
-using JocysCom.ClassLibrary.Controls;
 
 namespace JocysCom.ClassLibrary.Configuration
 {
@@ -120,7 +119,7 @@ namespace JocysCom.ClassLibrary.Configuration
 						}
 						catch (Exception)
 						{
-							var form = new MessageBoxForm();
+							var form = new Controls.MessageBoxForm();
 							var backupFile = _XmlFile.FullName + ".bak";
 							form.StartPosition = FormStartPosition.CenterParent;
 							var text = string.Format("{0} file has become corrupted.\r\n" +
