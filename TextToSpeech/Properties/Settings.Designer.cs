@@ -121,6 +121,18 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseWinCap {
+            get {
+                return ((bool)(this["UseWinCap"]));
+            }
+            set {
+                this["UseWinCap"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string RateMinComboBoxText {
             get {
@@ -200,18 +212,6 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
             }
             set {
                 this["DefaultIntroSoundComboBox"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UseWinCap {
-            get {
-                return ((bool)(this["UseWinCap"]));
-            }
-            set {
-                this["UseWinCap"] = value;
             }
         }
     }

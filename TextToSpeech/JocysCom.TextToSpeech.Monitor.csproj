@@ -118,6 +118,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Speech" />
@@ -184,6 +185,12 @@
     <Compile Include="JocysCom\ComponentModel\PropertyComparer.cs" />
     <Compile Include="JocysCom\ComponentModel\SortableBindingList.cs" />
     <Compile Include="JocysCom\Configuration\SettingsData.cs" />
+    <Compile Include="JocysCom\Configuration\SettingsUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="JocysCom\Configuration\SettingsUserControl.Designer.cs">
+      <DependentUpon>SettingsUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="JocysCom\Controls\ControlsHelper.cs" />
     <Compile Include="JocysCom\Controls\MessageBoxForm.cs">
       <SubType>Form</SubType>
@@ -262,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SoundEffectsControl.resx">
       <DependentUpon>SoundEffectsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JocysCom\Configuration\SettingsUserControl.resx">
+      <DependentUpon>SettingsUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JocysCom\Controls\MessageBoxForm.resx">
       <DependentUpon>MessageBoxForm.cs</DependentUpon>

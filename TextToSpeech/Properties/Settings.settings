@@ -26,6 +26,9 @@
     <Setting Name="LogSound" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="UseWinCap" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="RateMinComboBoxText" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -46,9 +49,6 @@
     </Setting>
     <Setting Name="DefaultIntroSoundComboBox" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="UseWinCap" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>
