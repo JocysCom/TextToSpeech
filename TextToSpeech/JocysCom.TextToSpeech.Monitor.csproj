@@ -139,21 +139,6 @@
     <Compile Include="Common\Crc32.cs" />
     <Compile Include="Common\HiLoUhsort.cs" />
     <Compile Include="Common\InstalledVoiceEx.cs" />
-    <Compile Include="Common\JocysCom\Collections\KeyValue.cs" />
-    <Compile Include="Common\JocysCom\ComponentModel\PropertyComparer.cs" />
-    <Compile Include="Common\JocysCom\ComponentModel\SortableBindingList.cs" />
-    <Compile Include="Common\JocysCom\Configuration\SettingsData.cs" />
-    <Compile Include="Common\JocysCom\Controls\ControlsHelper.cs" />
-    <Compile Include="Common\JocysCom\Controls\MessageBoxForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Common\JocysCom\Controls\MessageBoxForm.Designer.cs">
-      <DependentUpon>MessageBoxForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Common\JocysCom\IO\LogWriter.cs" />
-    <Compile Include="Common\JocysCom\Network\NetStatInfo.cs" />
-    <Compile Include="Common\JocysCom\Runtime\Serializer.cs" />
-    <Compile Include="Common\JocysCom\Text\Helper.cs" />
     <Compile Include="Common\NativeMethods.cs" />
     <Compile Include="Common\SettingsFile.cs" />
     <Compile Include="Common\SettingsManager.cs" />
@@ -195,6 +180,22 @@
     <Compile Include="Controls\VoiceDefaultsUserControl.Designer.cs">
       <DependentUpon>VoiceDefaultsUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="JocysCom\Collections\KeyValue.cs" />
+    <Compile Include="JocysCom\ComponentModel\PropertyComparer.cs" />
+    <Compile Include="JocysCom\ComponentModel\SortableBindingList.cs" />
+    <Compile Include="JocysCom\Configuration\SettingsData.cs" />
+    <Compile Include="JocysCom\Controls\ControlsHelper.cs" />
+    <Compile Include="JocysCom\Controls\MessageBoxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JocysCom\Controls\MessageBoxForm.Designer.cs">
+      <DependentUpon>MessageBoxForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JocysCom\Controls\MessageBoxForm1.Designer.cs" />
+    <Compile Include="JocysCom\IO\LogWriter.cs" />
+    <Compile Include="JocysCom\Network\NetStatInfo.cs" />
+    <Compile Include="JocysCom\Runtime\Serializer.cs" />
+    <Compile Include="JocysCom\Text\Helper.cs" />
     <Compile Include="MainForm_Network.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,9 +238,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <EmbeddedResource Include="Common\JocysCom\Controls\MessageBoxForm.resx">
-      <DependentUpon>MessageBoxForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\AcronymsUserControl.resx">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -264,6 +262,9 @@
     <EmbeddedResource Include="Controls\SoundEffectsControl.resx">
       <DependentUpon>SoundEffectsControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="JocysCom\Controls\MessageBoxForm.resx">
+      <DependentUpon>MessageBoxForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -282,6 +283,7 @@
     <EmbeddedResource Include="Resources\Audio\Radio1.wav" />
     <EmbeddedResource Include="Resources\Icons\Information.png" />
     <EmbeddedResource Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.rtf" />
+    <None Include="JocysCom\MakeLinks.bat" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor.psd" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor_IntroSounds.psd" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor_Voices.psd" />
@@ -399,14 +401,14 @@
     <EmbeddedResource Include="Presets\Mechanical.Preset.xml" />
     <EmbeddedResource Include="Presets\Undead.Preset.xml" />
     <None Include="Resources\Icons\reset_16x16.png" />
-    <Content Include="Common\JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Error.ico" />
-    <Content Include="Common\JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Error_32x32.png" />
-    <Content Include="Common\JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Information.ico" />
-    <Content Include="Common\JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Information_32x32.png" />
-    <Content Include="Common\JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Question.ico" />
-    <Content Include="Common\JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Question_32x32.png" />
-    <Content Include="Common\JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Warning.ico" />
-    <Content Include="Common\JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Warning_32x32.png" />
+    <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Error.ico" />
+    <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Error_32x32.png" />
+    <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Information.ico" />
+    <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Information_32x32.png" />
+    <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Question.ico" />
+    <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Question_32x32.png" />
+    <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Warning.ico" />
+    <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Warning_32x32.png" />
     <Content Include="Resources\Images\Copy.png" />
     <Content Include="Resources\Images\JocysCom_TTS_Monitor.png" />
     <Content Include="Resources\Images\JocysCom_TTS_Monitor_IntroSounds.png" />
