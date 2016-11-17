@@ -1,33 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using JocysCom.ClassLibrary.ComponentModel;
-using JocysCom.ClassLibrary.Runtime;
-using JocysCom.ClassLibrary.Controls;
-using System.Web.UI.Design;
-using System.Windows.Forms.Design;
 using System.Drawing.Design;
-using System.Reflection;
-using System.ComponentModel.Design;
 
 namespace JocysCom.ClassLibrary.Configuration
 {
-	public partial class SettingsUserControl : UserControl, SettingsUserControl.IDataGridView
+
+	public partial class SettingsUserControl : UserControl, IDataGridView
 	{
-		public SettingsUserControl()
-		{
-			InitializeComponent();
-			SettingsDataGridView.AutoGenerateColumns = false;
-		}
-
-
-
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
 		public DataGridView DataGridView
@@ -38,85 +18,16 @@ namespace JocysCom.ClassLibrary.Configuration
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[Editor(typeof(ExtendedDataGridViewColumnCollectionEditor), typeof(UITypeEditor))]
 		[MergableProperty(false)]
-		public DataGridViewColumnCollection MyDataGridColumns
+		public DataGridViewColumnCollection DataGridViewColumns
 		{
 			get { return SettingsDataGridView.Columns; }
 		}
 
-		public interface IDataGridView
+		public SettingsUserControl()
 		{
-			DataGridView DataGridView { get; }
+			InitializeComponent();
+			SettingsDataGridView.AutoGenerateColumns = false;
 		}
-
-		class ExtendedDataGridViewColumnCollectionEditor : UITypeEditor
-		{
-			private Form dataGridViewColumnCollectionDialog;
-
-			private ExtendedDataGridViewColumnCollectionEditor() { }
-
-			private static Form CreateColumnCollectionDialog(IServiceProvider provider)
-			{
-				var assembly = Assembly.Load(typeof(System.Windows.Forms.Design.ControlDesigner).Assembly.ToString());
-				var type = assembly.GetType("System.Windows.Forms.Design.DataGridViewColumnCollectionDialog");
-
-				var ctr = type.GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance)[0];
-				return (Form)ctr.Invoke(new object[] { provider });
-			}
-
-			public static void SetLiveDataGridView(Form form, DataGridView grid)
-			{
-				var mi = form.GetType().GetMethod("SetLiveDataGridView", BindingFlags.NonPublic | BindingFlags.Instance);
-				mi.Invoke(form, new object[] { grid });
-			}
-
-			public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
-			{
-				if (provider != null && context != null)
-				{
-					var service = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
-					if (service == null || context.Instance == null)
-						return value;
-
-					var host = (IDesignerHost)provider.GetService(typeof(IDesignerHost));
-					if (host == null)
-						return value;
-
-					if (dataGridViewColumnCollectionDialog == null)
-						dataGridViewColumnCollectionDialog = CreateColumnCollectionDialog(provider);
-
-					//Unfortunately we had to make property which returns inner datagridview  
-					//to access it here because we need to pass DataGridView into SetLiveDataGridView () method 
-					var grid = ((IDataGridView)context.Instance).DataGridView;
-					//we have to set Site property because it will be accessed inside SetLiveDataGridView () method 
-					//and by default it's usually null, so if we do not set it here, we will get exception inside SetLiveDataGridView () 
-					var oldSite = grid.Site;
-					grid.Site = ((UserControl)context.Instance).Site;
-					//execute SetLiveDataGridView () via reflection 
-					SetLiveDataGridView(dataGridViewColumnCollectionDialog, grid);
-
-					using (var transaction = host.CreateTransaction("DataGridViewColumnCollectionTransaction"))
-					{
-						if (service.ShowDialog(dataGridViewColumnCollectionDialog) == DialogResult.OK)
-							transaction.Commit();
-						else
-							transaction.Cancel();
-					}
-					//we need to set Site property back to the previous value to prevent problems with serializing our control 
-					grid.Site = oldSite;
-				}
-
-				return value;
-			}
-
-			public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
-			{
-				return UITypeEditorEditStyle.Modal;
-			}
-		}
-
-
-
-
 
 		private void SettingsGridView_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
