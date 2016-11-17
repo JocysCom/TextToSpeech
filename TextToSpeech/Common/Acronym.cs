@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace JocysCom.TextToSpeech.Monitor
 {
-    public class Acronym : INotifyPropertyChanged
+	public class Acronym : INotifyPropertyChanged
 	{
 
 		[XmlAttribute, DefaultValue(true)]
