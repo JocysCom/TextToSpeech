@@ -35,7 +35,7 @@
 			// settingsUserControl1
 			// 
 			this.settingsUserControl1.Location = new System.Drawing.Point(24, 12);
-			this.settingsUserControl1.MyDataGridColumns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+			this.settingsUserControl1.DataGridViewColumns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1sdfdsfs});
 			this.settingsUserControl1.Name = "settingsUserControl1";
 			this.settingsUserControl1.Size = new System.Drawing.Size(551, 280);
