@@ -30,7 +30,6 @@
 		{
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.SettingsDataGridView = new System.Windows.Forms.DataGridView();
 			this.SettingsToolStrip = new System.Windows.Forms.ToolStrip();
 			this.SettingsAddButton = new System.Windows.Forms.ToolStripButton();
@@ -52,7 +51,7 @@
 			this.SettingsDataGridView.AllowUserToDeleteRows = false;
 			this.SettingsDataGridView.AllowUserToResizeColumns = false;
 			this.SettingsDataGridView.AllowUserToResizeRows = false;
-			this.SettingsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
+			this.SettingsDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
 			this.SettingsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.SettingsDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.SettingsDataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
@@ -66,14 +65,6 @@
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
 			this.SettingsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.SettingsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ControlLight;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.SettingsDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
 			this.SettingsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.SettingsDataGridView.EnableHeadersVisualStyles = false;
 			this.SettingsDataGridView.GridColor = System.Drawing.SystemColors.Control;
@@ -81,13 +72,12 @@
 			this.SettingsDataGridView.Margin = new System.Windows.Forms.Padding(0);
 			this.SettingsDataGridView.Name = "SettingsDataGridView";
 			this.SettingsDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-			dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.SettingsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.Empty;
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Empty;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Empty;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Empty;
+			this.SettingsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			this.SettingsDataGridView.RowHeadersVisible = false;
 			this.SettingsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.SettingsDataGridView.Size = new System.Drawing.Size(551, 255);
 			this.SettingsDataGridView.TabIndex = 2;

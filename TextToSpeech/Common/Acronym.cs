@@ -11,7 +11,15 @@ namespace JocysCom.TextToSpeech.Monitor
 	public class Acronym : INotifyPropertyChanged
 	{
 
-		[XmlAttribute, DefaultValue(true)]
+		public Acronym()
+		{
+			_Enabled = true;
+			_Group = "";
+			_Key = "";
+			_Value = "";
+		}
+
+		[XmlAttribute]
 		public bool Enabled { get { return _Enabled; } set { _Enabled = value; NotifyPropertyChanged("Enabled"); } }
 		bool _Enabled = true;
 

@@ -2,6 +2,10 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing.Design;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace JocysCom.ClassLibrary.Configuration
 {
@@ -31,16 +35,23 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		private void SettingsGridView_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
-			//if (e.RowIndex < 0) return;
-			//var grid = (DataGridView)sender;
-			//if (e.ColumnIndex == grid.Columns[EnabledColumn.Name].Index)
-			//{
-			//	// var snd = (Setting)grid.Rows[e.RowIndex].DataBoundItem;
-			//	//  snd.Enabled = !snd.Enabled;
-			//	SettingsDataGridView.Invalidate();
-			//}
-			//if (e.ColumnIndex == grid.Columns[GroupColumn.Name].Index) SettingsDataGridView.BeginEdit(true);
-			////if (e.ColumnIndex == grid.Columns[FileColumn.Name].Index) SettingsDataGridView.BeginEdit(true);
+			if (e.RowIndex < 0) return;
+			var grid = (DataGridView)sender;
+			var column = grid.Columns[e.ColumnIndex];
+			if (column.ReadOnly)
+			{
+				return;
+			}
+			if (column is DataGridViewCheckBoxColumn)
+			{
+				var cell = (DataGridViewCheckBoxCell)grid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+				cell.Value = !(bool)cell.FormattedValue;
+				cell.Value = !(bool)cell.FormattedValue;
+			}
+			else
+			{
+				grid.BeginEdit(true);
+			}
 		}
 
 		public void SelectRow(string group)
@@ -63,8 +74,46 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 		}
 
+		object[] GetSelectedActions()
+		{
+			var list = (IList)SettingsDataGridView.DataSource;
+			var selectedActions = SettingsDataGridView
+			.SelectedRows
+			.Cast<DataGridViewRow>()
+			.Select(x => (object)x.DataBoundItem)
+			// Make sure that selected actions are ordered like in the list.
+			.OrderBy(x => list.IndexOf(x))
+			.ToArray();
+			return selectedActions;
+		}
+
 		private void SettingsAddButton_Click(object sender, EventArgs e)
 		{
+			var list = (IList)SettingsDataGridView.DataSource;
+			var type = list.GetType().GenericTypeArguments[0];
+			var selectedActions = GetSelectedActions();
+			var last = selectedActions.LastOrDefault();
+			var insertIndex = (last == null)
+					? -1 : list.IndexOf(last);
+			var action = Activator.CreateInstance(type);
+			// If there are no records or last row is selected then...
+			if (insertIndex == -1 || insertIndex == (list.Count - 1))
+			{
+				list.Add(action);
+			}
+			else
+			{
+				list.Insert(insertIndex + 1, action);
+			}
+			// Select new created item.
+			foreach (DataGridViewRow row in SettingsDataGridView.Rows)
+			{
+				var selected = (action == row.DataBoundItem);
+				if (row.Selected != selected)
+				{
+					row.Selected = selected;
+				}
+			}
 		}
 
 		private void SettingsImportButton_Click(object sender, EventArgs e)
