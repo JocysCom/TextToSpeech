@@ -43,7 +43,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		[NonSerialized]
 		FileInfo _XmlFile;
 
-		public SortableBindingList<T> Items;
+		public SortableBindingList<T> Items  { get; set; }
 
 		/// <summary>
 		/// File Version.

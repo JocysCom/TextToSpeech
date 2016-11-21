@@ -22,6 +22,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		{
 			var list = SettingsManager.Current.Acronyms;
 			SettingsControl.DataGridView.DataSource = SettingsManager.Current.Acronyms.Items;
+			SettingsControl.Data = SettingsManager.Current.Acronyms;
 		}
 	}
 }

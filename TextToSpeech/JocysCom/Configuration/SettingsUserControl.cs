@@ -27,6 +27,13 @@ namespace JocysCom.ClassLibrary.Configuration
 			get { return SettingsDataGridView.Columns; }
 		}
 
+		public ISettingsData Data
+		{
+			get { return _Data; }
+			set { _Data = value; }
+		}
+		ISettingsData _Data;
+
 		public SettingsUserControl()
 		{
 			InitializeComponent();
@@ -299,12 +306,12 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		private void ResetButton_Click(object sender, EventArgs e)
 		{
-			//var result = MessageBox.Show("Do you want to reset Intro Settings to default?", "Reset Intro Settings", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-			//if (result == DialogResult.Yes)
-			//{
-			//	var success = SettingsManager.Current.Settings.ResetToDefault();
-			//	if (success) SettingsManager.Current.Settings.Save();
-			//}
+			var result = MessageBox.Show("Do you want to reset Intro Settings to default?", "Reset Intro Settings", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+			if (result == DialogResult.Yes)
+			{
+				var success = Data.ResetToDefault();
+				if (success) Data.Save();
+			}
 		}
 	}
 }

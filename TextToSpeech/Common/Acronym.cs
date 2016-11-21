@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -24,7 +25,16 @@ namespace JocysCom.TextToSpeech.Monitor
 		bool _Enabled = true;
 
 		[XmlAttribute]
-		public string Key { get { return _Key; } set { _Key = value; NotifyPropertyChanged("Key"); } }
+		public string Key
+		{
+			get { return _Key; }
+			set
+			{
+				_Key = value;
+				_RegexValue = null;
+				NotifyPropertyChanged("Key");
+			}
+		}
 		string _Key;
 
 		[XmlAttribute]
@@ -45,6 +55,21 @@ namespace JocysCom.TextToSpeech.Monitor
 			if (ev == null) return;
 			ev(this, new PropertyChangedEventArgs(propertyName));
 		}
+
+		[XmlIgnore()]
+		public Regex RegexValue
+		{
+			get
+			{
+				if (_RegexValue == null && !string.IsNullOrEmpty(Key))
+				{
+					var options = RegexOptions.IgnoreCase | RegexOptions.Compiled;
+					_RegexValue = new Regex("\\b" + Key + "\\b", options);
+				}
+				return _RegexValue;
+			}
+		}
+		private Regex _RegexValue;
 
 		#endregion
 	}
