@@ -136,38 +136,26 @@ namespace JocysCom.TextToSpeech.Monitor
 			MessageBox.Show(errorText);
 		}
 
+		/// <summary>
+		/// Load referenced libraries which were included as Embedded Resources into current assembly.
+		/// </summary>
 		static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs e)
 		{
-			string dllName = e.Name.Contains(",") ? e.Name.Substring(0, e.Name.IndexOf(',')) : e.Name.Replace(".dll", "");
-			string path = null;
-			switch (dllName)
-			{
-				case "PacketDotNet":
-					path = "Resources.SharpPcap.PacketDotNet.dll";
-					break;
-				case "SharpPcap":
-					path = "Resources.SharpPcap.SharpPcap.dll";
-					break;
-				case "SharpDX":
-					path = "Resources.SharpDX.SharpDX.dll";
-					break;
-				case "SharpDX.DirectSound":
-					path = "Resources.SharpDX.SharpDX.DirectSound.dll";
-					break;
-				default:
-					break;
-			}
-			if (path == null) return null;
+			string dllName = e.Name.Contains(",")
+				? e.Name.Substring(0, e.Name.IndexOf(','))
+				: e.Name.Replace(".dll", "");
+			dllName += ".dll";
 			var assembly = Assembly.GetExecutingAssembly();
-			var sr = assembly.GetManifestResourceStream(typeof(MainForm).Namespace + "." + path);
-			if (sr == null)
+			var names = assembly.GetManifestResourceNames();
+			var resourceName = names.FirstOrDefault(x => x.EndsWith(dllName));
+			if (string.IsNullOrEmpty(resourceName))
 			{
 				return null;
 			}
+			var sr = assembly.GetManifestResourceStream(resourceName);
 			byte[] bytes = new byte[sr.Length];
 			sr.Read(bytes, 0, bytes.Length);
-			var asm = Assembly.Load(bytes);
-			return asm;
+			return Assembly.Load(bytes);
 		}
 
 	}
