@@ -16,7 +16,7 @@ using System.IO.Compression;
 namespace JocysCom.ClassLibrary.Configuration
 {
 	[Serializable, XmlRoot("Data")]
-	public class SettingsData<T>
+	public class SettingsData<T>: ISettingsData
 	{
 
 		public SettingsData() { }
