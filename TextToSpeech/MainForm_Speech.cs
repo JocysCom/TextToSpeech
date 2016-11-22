@@ -62,6 +62,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			w.WriteAttributeString("absspeed", rate.ToString());
 			w.WriteStartElement("pitch");
 			w.WriteAttributeString("absmiddle", (isComment ? _PitchComment : pitch).ToString());
+			// Replace acronyms with full values.
+			text = SettingsManager.Current.ReplaceAcronyms(text);
 			w.WriteRaw(text);
 			w.WriteEndElement();
 			w.WriteEndElement();
