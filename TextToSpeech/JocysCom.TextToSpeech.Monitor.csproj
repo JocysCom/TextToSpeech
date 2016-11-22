@@ -466,6 +466,7 @@
     <Content Include="Resources\Icons\Warning.ico" />
     <Content Include="Resources\Icons\Window.ico" />
     <EmbeddedResource Include="Settings\Settings.Monitor.xml" />
+    <EmbeddedResource Include="Settings\Monitor.Acronyms.xml" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon.png" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon_Buttons.png" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon_MiniFrame.png" />
