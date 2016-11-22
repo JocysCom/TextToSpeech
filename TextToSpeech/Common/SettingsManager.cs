@@ -9,8 +9,14 @@ namespace JocysCom.TextToSpeech.Monitor
 {
 	public class SettingsManager
 	{
+
+		public SettingsManager()
+		{
+			Acronyms = new SettingsData<Acronym>("Monitor.Acronyms.xml");
+		}
+
 		/// <summary>Acronym Settings.</summary>
-		public SettingsData<Acronym> Acronyms = new SettingsData<Acronym>("Monitor.Acronyms.xml");
+		public SettingsData<Acronym> Acronyms;
 
 		public string ReplaceAcronyms(string source)
 		{
