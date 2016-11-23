@@ -102,9 +102,15 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		public void Load()
 		{
+			LoadFrom(_XmlFile.FullName);
+		}
+
+		public void LoadFrom(string fileName)
+		{
 			bool settingsLoaded = false;
+			var fi = new FileInfo(fileName);
 			// If configuration file exists then...
-			if (_XmlFile.Exists)
+			if (fi.Exists)
 			{
 				// Try to read file until success.
 				while (true)
@@ -115,7 +121,34 @@ namespace JocysCom.ClassLibrary.Configuration
 					{
 						try
 						{
-							data = Serializer.DeserializeFromXmlFile<SettingsData<T>>(_XmlFile.FullName);
+							SettingsData<T> xmlItems;
+							if (fi.FullName.EndsWith(".gz"))
+							{
+								var compressedBytes = System.IO.File.ReadAllBytes(fi.FullName);
+								var bytes = SettingsHelper.Decompress(compressedBytes);
+								var xml = Encoding.UTF8.GetString(bytes);
+								xmlItems = Serializer.DeserializeFromXmlString<SettingsData<T>>(xml, Encoding.UTF8);
+							}
+							else
+							{
+								xmlItems = Serializer.DeserializeFromXmlFile<SettingsData<T>>(fi.FullName);
+							}
+							data = xmlItems;
+							//foreach (T item in items.Items)
+							//{
+							//	var oldItem = data.FirstOrDefault(x => x.Group == item.Group);
+							//	// If old item was not found then...
+							//	if (oldItem == null)
+							//	{
+							//		// Add as new.
+							//		SettingsManager.Current.Settings.Items.Add(item);
+							//	}
+							//	else
+							//	{
+							//		// Udate old item.
+							//		oldItem.Group = item.Group;
+							//	}
+							//}
 							if (data != null)
 							{
 								Items.Clear();
@@ -137,25 +170,25 @@ namespace JocysCom.ClassLibrary.Configuration
 						catch (Exception)
 						{
 							var form = new Controls.MessageBoxForm();
-							var backupFile = _XmlFile.FullName + ".bak";
+							var backupFile = fi.FullName + ".bak";
 							form.StartPosition = FormStartPosition.CenterParent;
 							var text = string.Format("{0} file has become corrupted.\r\n" +
 								"Program must reset {0} file in order to continue.\r\n\r\n" +
 								"   Click [Yes] to reset and continue.\r\n" +
 								"   Click [No] if you wish to attempt manual repair.\r\n\r\n" +
-								" File: {1}", _XmlFile.Name, _XmlFile.FullName);
-							var caption = string.Format("Corrupt {0} of {1}", _XmlFile.Name, Application.ProductName);
+								" File: {1}", fi.Name, fi.FullName);
+							var caption = string.Format("Corrupt {0} of {1}", fi.Name, Application.ProductName);
 							var result = form.ShowForm(text, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
 							if (result == DialogResult.Yes)
 							{
 								if (File.Exists(backupFile))
 								{
-									File.Copy(backupFile, _XmlFile.FullName, true);
-									_XmlFile.Refresh();
+									File.Copy(backupFile, fi.FullName, true);
+									fi.Refresh();
 								}
 								else
 								{
-									File.Delete(_XmlFile.FullName);
+									File.Delete(fi.FullName);
 									break;
 								}
 							}

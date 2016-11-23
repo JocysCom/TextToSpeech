@@ -126,57 +126,34 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		private void SettingsImportButton_Click(object sender, EventArgs e)
 		{
-			//         var dialog = SettingsImportOpenFileDialog;
-			//         dialog.DefaultExt = "*.xml";
-			//         dialog.Filter = "Settings (*.xml;*.xml.gz)|*.xml;*.gz|All files (*.*)|*.*";
-			//         dialog.FilterIndex = 1;
-			//dialog.RestoreDirectory = true;
-			//var fi = SettingsManager.Current.Settings.XmlFile;
-			//if (string.IsNullOrEmpty(dialog.FileName)) dialog.FileName = System.IO.Path.GetFileNameWithoutExtension(fi.Name);
-			//         if (string.IsNullOrEmpty(dialog.InitialDirectory)) dialog.InitialDirectory = fi.Directory.FullName;
-			//         dialog.Title = "Import Settings File";
-			//         var result = dialog.ShowDialog();
-			//         if (result == DialogResult.OK)
-			//         {
-			//             List<Setting> items;
-			//             if (dialog.FileName.EndsWith(".gz"))
-			//             {
-			//                 var compressedBytes = System.IO.File.ReadAllBytes(dialog.FileName);
-			//                 var bytes = MainHelper.Decompress(compressedBytes);
-			//                 var xml = Encoding.UTF8.GetString(bytes);
-			//                 items = Serializer.DeserializeFromXmlString<List<Setting>>(xml, System.Text.Encoding.UTF8);
-			//             }
-			//             else
-			//             {
-			//                 items = Serializer.DeserializeFromXmlFile<List<Setting>>(dialog.FileName);
-			//             }
-			//             foreach (var item in items)
-			//             {
-			//                 var oldItem = SettingsManager.Current.Settings.Items.FirstOrDefault(x => x.Group == item.Group);
-			//                 // If old item was not found then...
-			//                 if (oldItem == null)
-			//                 {
-			//                     // Add as new.
-			//                     SettingsManager.Current.Settings.Items.Add(item);
-			//                 }
-			//                 else
-			//                 {
-			//                     // Udate old item.
-			//                     oldItem.Group = item.Group;
-			//                 }
-			//             }
-			//         }
+			var dialog = SettingsImportOpenFileDialog;
+			dialog.SupportMultiDottedExtensions = true;
+			dialog.Filter = "Settings (*.xml;*.xml.gz)|*.xml;*.gz|All files (*.*)|*.*";
+			//dialog.DefaultExt = "*.xml";
+			dialog.FilterIndex = 1;
+			dialog.RestoreDirectory = true;
+			var fi = Data.XmlFile;
+			if (string.IsNullOrEmpty(dialog.FileName)) dialog.FileName = System.IO.Path.GetFileNameWithoutExtension(fi.Name);
+			if (string.IsNullOrEmpty(dialog.InitialDirectory)) dialog.InitialDirectory = fi.Directory.FullName;
+			dialog.Title = "Import Settings File";
+			var result = dialog.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				Data.LoadFrom(dialog.FileName);
+			}
 		}
 
 		private void SettingsExportButton_Click(object sender, EventArgs e)
 		{
 			var dialog = SettingsExportSaveFileDialog;
-			dialog.DefaultExt = "*.xml";
+			dialog.SupportMultiDottedExtensions = true;
 			dialog.Filter = "Settings (*.xml)|*.xml|Compressed Settings (*.xml.gz)|*.xml.gz|All files (*.*)|*.*";
+			//dialog.DefaultExt = "*.xml";
 			dialog.FilterIndex = 1;
 			dialog.RestoreDirectory = true;
-			if (string.IsNullOrEmpty(dialog.FileName)) dialog.FileName = "Settings.Settings";
-			if (string.IsNullOrEmpty(dialog.InitialDirectory)) dialog.InitialDirectory = Data.XmlFile.Directory.FullName;
+			var fi = Data.XmlFile;
+			if (string.IsNullOrEmpty(dialog.FileName)) dialog.FileName = fi.Name;
+			if (string.IsNullOrEmpty(dialog.InitialDirectory)) dialog.InitialDirectory = fi.Directory.FullName;
 			dialog.Title = "Export Settings File";
 			var result = dialog.ShowDialog();
 			if (result == DialogResult.OK)

@@ -9,6 +9,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		void Save();
 		void SaveAs(string fileName);
 		void Load();
+		void LoadFrom(string fileName);
 		void Remove(params object[] items);
 
 		FileInfo XmlFile { get; }
