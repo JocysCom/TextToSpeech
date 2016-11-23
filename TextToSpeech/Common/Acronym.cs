@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JocysCom.ClassLibrary.Configuration;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Xml.Serialization;
 
 namespace JocysCom.TextToSpeech.Monitor
 {
-	public class Acronym : INotifyPropertyChanged
+	public class Acronym : INotifyPropertyChanged, ISettingsItem
 	{
 
 		public Acronym()

@@ -16,7 +16,7 @@ using System.IO.Compression;
 namespace JocysCom.ClassLibrary.Configuration
 {
 	[Serializable, XmlRoot("Data")]
-	public class SettingsData<T>: ISettingsData
+	public class SettingsData<T> : ISettingsData
 	{
 
 		public SettingsData() { }
@@ -43,7 +43,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		[NonSerialized]
 		FileInfo _XmlFile;
 
-		public SortableBindingList<T> Items  { get; set; }
+		public SortableBindingList<T> Items { get; set; }
 
 		/// <summary>
 		/// File Version.
@@ -77,6 +77,13 @@ namespace JocysCom.ClassLibrary.Configuration
 			SaveAs(_XmlFile.FullName);
 		}
 
+		public void Remove(params object[] items)
+		{
+			foreach (var item in items)
+			{
+				Items.Remove((T)item);
+			}
+		}
 
 		public delegate IList<T> FilterListDelegate(IList<T> items);
 

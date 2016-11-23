@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using JocysCom.ClassLibrary.Controls;
 
 namespace JocysCom.ClassLibrary.Configuration
 {
@@ -80,7 +81,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 		}
 
-		object[] GetSelectedActions()
+		object[] GetSelectedItems()
 		{
 			var list = (IList)SettingsDataGridView.DataSource;
 			var selectedActions = SettingsDataGridView
@@ -97,7 +98,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		{
 			var list = (IList)SettingsDataGridView.DataSource;
 			var type = list.GetType().GetGenericArguments()[0];
-			var selectedActions = GetSelectedActions();
+			var selectedActions = GetSelectedItems();
 			var last = selectedActions.LastOrDefault();
 			var insertIndex = (last == null)
 					? -1 : list.IndexOf(last);
@@ -196,54 +197,46 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		private void SettingsDeleteButton_Click(object sender, EventArgs e)
 		{
-			//var grid = SettingsDataGridView;
-			//var selection = ControlsHelper.GetSelection<string>(grid, "group");
-			//var itemsToDelete = SettingsManager.Current.Settings.Items.Where(x => selection.Contains(x.Group)).ToArray();
-			//MessageBoxForm form = new MessageBoxForm();
-			//form.StartPosition = FormStartPosition.CenterParent;
-			//string setting;
-			//if (itemsToDelete.Length == 1)
-			//{
-			//    var item = itemsToDelete[0];
-			//    setting = string.Format("Are you sure you want to delete settings for?\r\n\r\nGroup: {0}",
-			//        item.Group);
-			//}
-			//else
-			//{
-			//    setting = string.Format("Delete {0} setting(s)?", itemsToDelete.Length);
-			//}
-			//var result = form.ShowForm(setting, "Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
-			//if (result == DialogResult.OK)
-			//{
-			//    foreach (var item in itemsToDelete)
-			//    {
-			//        SettingsManager.Current.Settings.Items.Remove(item);
-			//    }
-			//    SettingsManager.Current.Save();
-			//}
+			var items = GetSelectedItems();
+			if (items.Length == 0)
+			{
+				return;
+			}
+			var message = string.Format("Are you sure you want to delete {0} item{1}?",
+					items.Length, items.Length == 1 ? "" : "s");
+			MessageBoxForm form = new MessageBoxForm();
+			form.StartPosition = FormStartPosition.CenterParent;
+			var result = form.ShowForm(message, "Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
+			if (result == DialogResult.OK)
+			{
+				foreach (var item in items)
+				{
+					Data.Remove(item);
+				}
+				Data.Save();
+			}
 		}
 
 		private void SettingsDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			//    if (e.RowIndex == -1) return;
-			//    var grid = (DataGridView)sender;
-			//    var row = grid.Rows[e.RowIndex];
-			//    var snd = (Setting)row.DataBoundItem;
-			//    // If this is not row header then...
-			//    if (e.ColumnIndex > -1)
-			//    {
-			//        var column = SettingsDataGridView.Columns[e.ColumnIndex];
-			//    }
-			//    e.CellStyle.ForeColor = snd.Enabled
-			//        ? SettingsDataGridView.DefaultCellStyle.ForeColor
-			//        : System.Drawing.SystemColors.ControlDark;
-			//    e.CellStyle.SelectionBackColor = snd.Enabled
-			//     ? SettingsDataGridView.DefaultCellStyle.SelectionBackColor
-			//     : System.Drawing.SystemColors.ControlDark;
-			//    row.HeaderCell.Style.SelectionBackColor = snd.Enabled
-			//     ? SettingsDataGridView.DefaultCellStyle.SelectionBackColor
-			//     : System.Drawing.SystemColors.ControlDark;
-
+			if (e.RowIndex == -1) return;
+			var grid = (DataGridView)sender;
+			var row = grid.Rows[e.RowIndex];
+			var enabled = ((ISettingsItem)row.DataBoundItem).Enabled;
+			// If this is not row header then...
+			if (e.ColumnIndex > -1)
+			{
+				var column = grid.Columns[e.ColumnIndex];
+			}
+			e.CellStyle.ForeColor = enabled
+				? grid.DefaultCellStyle.ForeColor
+				: System.Drawing.SystemColors.ControlDark;
+			e.CellStyle.SelectionBackColor = enabled
+				? grid.DefaultCellStyle.SelectionBackColor
+				: System.Drawing.SystemColors.ControlDark;
+			row.HeaderCell.Style.SelectionBackColor = enabled
+				? grid.DefaultCellStyle.SelectionBackColor
+				: System.Drawing.SystemColors.ControlDark;
 		}
 
 		private void SettingsDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -293,14 +286,9 @@ namespace JocysCom.ClassLibrary.Configuration
 			//Program.TopForm.ResetHelpToDefault();
 		}
 
-		private void SettingsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-
-		}
-
 		private void BrowseButton_Click(object sender, EventArgs e)
 		{
-			//MainHelper.OpenUrl(SettingsManager.Current.Settings.XmlFile.Directory.FullName);
+			OpenUrl(Data.XmlFile.Directory.FullName);
 		}
 
 		private void ResetButton_Click(object sender, EventArgs e)
@@ -312,5 +300,26 @@ namespace JocysCom.ClassLibrary.Configuration
 				if (success) Data.Save();
 			}
 		}
+
+		#region HelperFunctions
+
+		public static void OpenUrl(string url)
+		{
+			try
+			{
+				System.Diagnostics.Process.Start(url);
+			}
+			catch (System.ComponentModel.Win32Exception noBrowser)
+			{
+				if (noBrowser.ErrorCode == -2147467259)
+					MessageBox.Show(noBrowser.Message);
+			}
+			catch (System.Exception other)
+			{
+				MessageBox.Show(other.Message);
+			}
+		}
+
+		#endregion
 	}
 }

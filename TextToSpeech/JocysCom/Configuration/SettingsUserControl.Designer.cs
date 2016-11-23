@@ -79,7 +79,6 @@
 			this.SettingsDataGridView.Size = new System.Drawing.Size(551, 255);
 			this.SettingsDataGridView.TabIndex = 2;
 			this.SettingsDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SettingsGridView_CellClick);
-			this.SettingsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SettingsDataGridView_CellContentClick);
 			this.SettingsDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.SettingsDataGridView_CellEndEdit);
 			this.SettingsDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.SettingsDataGridView_CellFormatting);
 			this.SettingsDataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.SettingsDataGridView_CellValidating);

@@ -1,4 +1,5 @@
 ﻿using JocysCom.ClassLibrary.ComponentModel;
+using System.IO;
 
 namespace JocysCom.ClassLibrary.Configuration
 {
@@ -7,6 +8,9 @@ namespace JocysCom.ClassLibrary.Configuration
 		bool ResetToDefault();
 		void Save();
 		void Load();
+		void Remove(params object[] items);
+
+		FileInfo XmlFile { get; }
 
 	}
 }
