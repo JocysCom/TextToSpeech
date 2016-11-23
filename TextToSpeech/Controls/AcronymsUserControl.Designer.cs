@@ -39,6 +39,7 @@
 			// 
 			// SettingsControl
 			// 
+			this.SettingsControl.Data = null;
 			this.SettingsControl.DataGridViewColumns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.EnabledColumn,
             this.GroupColumn,
@@ -57,6 +58,7 @@
 			this.EnabledColumn.DataPropertyName = "Enabled";
 			this.EnabledColumn.HeaderText = "ON";
 			this.EnabledColumn.Name = "EnabledColumn";
+			this.EnabledColumn.ReadOnly = true;
 			this.EnabledColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			this.EnabledColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 			this.EnabledColumn.Width = 32;

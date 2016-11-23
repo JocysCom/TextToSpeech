@@ -28,8 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsUserControl));
 			this.SettingsDataGridView = new System.Windows.Forms.DataGridView();
 			this.SettingsToolStrip = new System.Windows.Forms.ToolStrip();
 			this.SettingsAddButton = new System.Windows.Forms.ToolStripButton();
@@ -56,14 +57,14 @@
 			this.SettingsDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.SettingsDataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
 			this.SettingsDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.SettingsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle9.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
+			dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.SettingsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
 			this.SettingsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.SettingsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.SettingsDataGridView.EnableHeadersVisualStyles = false;
@@ -72,11 +73,7 @@
 			this.SettingsDataGridView.Margin = new System.Windows.Forms.Padding(0);
 			this.SettingsDataGridView.Name = "SettingsDataGridView";
 			this.SettingsDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.Empty;
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Empty;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Empty;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Empty;
-			this.SettingsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			this.SettingsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
 			this.SettingsDataGridView.RowHeadersVisible = false;
 			this.SettingsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.SettingsDataGridView.Size = new System.Drawing.Size(551, 255);
@@ -109,7 +106,7 @@
 			// 
 			// SettingsAddButton
 			// 
-			this.SettingsAddButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Plus;
+			this.SettingsAddButton.Image = ((System.Drawing.Image)(resources.GetObject("SettingsAddButton.Image")));
 			this.SettingsAddButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.SettingsAddButton.Name = "SettingsAddButton";
 			this.SettingsAddButton.Size = new System.Drawing.Size(76, 22);
@@ -118,7 +115,7 @@
 			// 
 			// SettingsDeleteButton
 			// 
-			this.SettingsDeleteButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Delete;
+			this.SettingsDeleteButton.Image = ((System.Drawing.Image)(resources.GetObject("SettingsDeleteButton.Image")));
 			this.SettingsDeleteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.SettingsDeleteButton.Name = "SettingsDeleteButton";
 			this.SettingsDeleteButton.Size = new System.Drawing.Size(60, 22);
@@ -128,7 +125,7 @@
 			// BrowseButton
 			// 
 			this.BrowseButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.BrowseButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Folder;
+			this.BrowseButton.Image = ((System.Drawing.Image)(resources.GetObject("BrowseButton.Image")));
 			this.BrowseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BrowseButton.Name = "BrowseButton";
 			this.BrowseButton.Size = new System.Drawing.Size(105, 22);
@@ -138,7 +135,7 @@
 			// SettingsExportButton
 			// 
 			this.SettingsExportButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.SettingsExportButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Data_Out;
+			this.SettingsExportButton.Image = ((System.Drawing.Image)(resources.GetObject("SettingsExportButton.Image")));
 			this.SettingsExportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.SettingsExportButton.Name = "SettingsExportButton";
 			this.SettingsExportButton.Size = new System.Drawing.Size(69, 22);
@@ -148,7 +145,7 @@
 			// SettingsImportButton
 			// 
 			this.SettingsImportButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.SettingsImportButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Data_Into;
+			this.SettingsImportButton.Image = ((System.Drawing.Image)(resources.GetObject("SettingsImportButton.Image")));
 			this.SettingsImportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.SettingsImportButton.Name = "SettingsImportButton";
 			this.SettingsImportButton.Size = new System.Drawing.Size(72, 22);
@@ -158,7 +155,7 @@
 			// ResetButton
 			// 
 			this.ResetButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.ResetButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.reset_16x16;
+			this.ResetButton.Image = ((System.Drawing.Image)(resources.GetObject("ResetButton.Image")));
 			this.ResetButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ResetButton.Name = "ResetButton";
 			this.ResetButton.Size = new System.Drawing.Size(55, 22);

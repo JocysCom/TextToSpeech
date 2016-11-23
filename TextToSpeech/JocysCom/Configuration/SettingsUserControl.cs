@@ -45,15 +45,14 @@ namespace JocysCom.ClassLibrary.Configuration
 			if (e.RowIndex < 0) return;
 			var grid = (DataGridView)sender;
 			var column = grid.Columns[e.ColumnIndex];
-			if (column.ReadOnly)
-			{
-				return;
-			}
 			if (column is DataGridViewCheckBoxColumn)
 			{
 				var cell = (DataGridViewCheckBoxCell)grid.Rows[e.RowIndex].Cells[e.ColumnIndex];
 				cell.Value = !(bool)cell.FormattedValue;
-				cell.Value = !(bool)cell.FormattedValue;
+			}
+			else if (column.ReadOnly)
+			{
+				return;
 			}
 			else
 			{
@@ -97,7 +96,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		private void SettingsAddButton_Click(object sender, EventArgs e)
 		{
 			var list = (IList)SettingsDataGridView.DataSource;
-			var type = list.GetType().GenericTypeArguments[0];
+			var type = list.GetType().GetGenericArguments()[0];
 			var selectedActions = GetSelectedActions();
 			var last = selectedActions.LastOrDefault();
 			var insertIndex = (last == null)
