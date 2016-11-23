@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using JocysCom.ClassLibrary.Controls;
+using JocysCom.ClassLibrary.Runtime;
 
 namespace JocysCom.ClassLibrary.Configuration
 {
@@ -169,30 +170,19 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		private void SettingsExportButton_Click(object sender, EventArgs e)
 		{
-			//var dialog = SettingsExportSaveFileDialog;
-			//dialog.DefaultExt = "*.xml";
-			//dialog.Filter = "Settings (*.xml)|*.xml|Compressed Settings (*.xml.gz)|*.xml.gz|All files (*.*)|*.*";
-			//dialog.FilterIndex = 1;
-			//dialog.RestoreDirectory = true;
-			//if (string.IsNullOrEmpty(dialog.FileName)) dialog.FileName = "Settings.Settings";
-			//if (string.IsNullOrEmpty(dialog.InitialDirectory)) dialog.InitialDirectory = SettingsManager.Current.Settings.XmlFile.Directory.FullName;
-			//dialog.Title = "Export Settings (Settings) File";
-			//var result = dialog.ShowDialog();
-			//if (result == System.Windows.Forms.DialogResult.OK)
-			//{
-			//    var programs = SettingsManager.Current.Settings.Items.ToList();
-			//    if (dialog.FileName.EndsWith(".gz"))
-			//    {
-			//        var s = Serializer.SerializeToXmlString(programs, System.Text.Encoding.UTF8);
-			//        var bytes = System.Text.Encoding.UTF8.GetBytes(s);
-			//        var compressedBytes = MainHelper.Compress(bytes);
-			//        System.IO.File.WriteAllBytes(dialog.FileName, compressedBytes);
-			//    }
-			//    else
-			//    {
-			//        Serializer.SerializeToXmlFile(programs, dialog.FileName, System.Text.Encoding.UTF8, true);
-			//    }
-			//}
+			var dialog = SettingsExportSaveFileDialog;
+			dialog.DefaultExt = "*.xml";
+			dialog.Filter = "Settings (*.xml)|*.xml|Compressed Settings (*.xml.gz)|*.xml.gz|All files (*.*)|*.*";
+			dialog.FilterIndex = 1;
+			dialog.RestoreDirectory = true;
+			if (string.IsNullOrEmpty(dialog.FileName)) dialog.FileName = "Settings.Settings";
+			if (string.IsNullOrEmpty(dialog.InitialDirectory)) dialog.InitialDirectory = Data.XmlFile.Directory.FullName;
+			dialog.Title = "Export Settings File";
+			var result = dialog.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				Data.SaveAs(dialog.FileName);
+			}
 		}
 
 		private void SettingsDeleteButton_Click(object sender, EventArgs e)

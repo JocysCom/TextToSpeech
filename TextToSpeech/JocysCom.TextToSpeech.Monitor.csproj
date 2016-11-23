@@ -189,6 +189,7 @@
     <Compile Include="JocysCom\Configuration\ISettingsData.cs" />
     <Compile Include="JocysCom\Configuration\ISettingsItem.cs" />
     <Compile Include="JocysCom\Configuration\SettingsData.cs" />
+    <Compile Include="JocysCom\Configuration\SettingsHelper.cs" />
     <Compile Include="JocysCom\Configuration\SettingsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

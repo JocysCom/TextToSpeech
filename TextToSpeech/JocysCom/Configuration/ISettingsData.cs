@@ -7,6 +7,7 @@ namespace JocysCom.ClassLibrary.Configuration
 	{
 		bool ResetToDefault();
 		void Save();
+		void SaveAs(string fileName);
 		void Load();
 		void Remove(params object[] items);
 

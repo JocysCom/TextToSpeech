@@ -10,6 +10,7 @@ using System.Linq;
 using JocysCom.ClassLibrary.ComponentModel;
 using JocysCom.TextToSpeech.Monitor.Network;
 using JocysCom.ClassLibrary.Runtime;
+using JocysCom.ClassLibrary.Configuration;
 
 namespace JocysCom.TextToSpeech.Monitor
 {
@@ -80,7 +81,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					sr.BaseStream.CopyTo(memstream);
 					bytes = memstream.ToArray();
 				}
-				if (compressed) bytes = MainHelper.Decompress(bytes);
+				if (compressed) bytes = SettingsHelper.Decompress(bytes);
 				var xml = System.Text.Encoding.UTF8.GetString(bytes);
 				data = Serializer.DeserializeFromXmlString<SettingsFile>(xml);
 			}

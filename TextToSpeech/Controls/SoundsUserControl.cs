@@ -10,6 +10,7 @@ using JocysCom.TextToSpeech.Monitor.Network;
 using JocysCom.ClassLibrary.ComponentModel;
 using JocysCom.ClassLibrary.Runtime;
 using JocysCom.ClassLibrary.Controls;
+using JocysCom.ClassLibrary.Configuration;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
@@ -124,7 +125,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
                 if (dialog.FileName.EndsWith(".gz"))
                 {
                     var compressedBytes = System.IO.File.ReadAllBytes(dialog.FileName);
-                    var bytes = MainHelper.Decompress(compressedBytes);
+                    var bytes = SettingsHelper.Decompress(compressedBytes);
                     var xml = System.Text.Encoding.UTF8.GetString(bytes);
                     items = Serializer.DeserializeFromXmlString<List<sound>>(xml, System.Text.Encoding.UTF8);
                 }
@@ -169,7 +170,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
                 {
                     var s = Serializer.SerializeToXmlString(programs, System.Text.Encoding.UTF8);
                     var bytes = System.Text.Encoding.UTF8.GetBytes(s);
-                    var compressedBytes = MainHelper.Compress(bytes);
+                    var compressedBytes = SettingsHelper.Compress(bytes);
                     System.IO.File.WriteAllBytes(dialog.FileName, compressedBytes);
                 }
                 else

@@ -7,10 +7,6 @@ using System.ComponentModel;
 namespace JocysCom.ClassLibrary.ComponentModel
 {
 
-	public class SortableBindingList : SortableBindingList<object>
-	{
-	}
-
 	/// <summary>
 	/// Be.Timvw.Framework.ComponentModel
 	/// http://betimvwframework.codeplex.com/

@@ -68,7 +68,17 @@ namespace JocysCom.ClassLibrary.Configuration
 				{
 					fi.Directory.Create();
 				}
-				Serializer.SerializeToXmlFile(this, fileName, Encoding.UTF8, true);
+				if (fi.Name.EndsWith(".gz"))
+				{
+					var s = Serializer.SerializeToXmlString(this, Encoding.UTF8, true);
+					var bytes = Encoding.UTF8.GetBytes(s);
+					var compressedBytes = SettingsHelper.Compress(bytes);
+					File.WriteAllBytes(fi.FullName, compressedBytes);
+				}
+				else
+				{
+					Serializer.SerializeToXmlFile(this, fi.FullName, Encoding.UTF8, true);
+				}
 			}
 		}
 
@@ -196,7 +206,7 @@ namespace JocysCom.ClassLibrary.Configuration
 				if (name.EndsWith(".gz"))
 				{
 
-					bytes = Decompress(bytes);
+					bytes = SettingsHelper.Decompress(bytes);
 				}
 				var xml = Encoding.UTF8.GetString(bytes);
 				var data = Serializer.DeserializeFromXmlString<SettingsData<T>>(xml);
@@ -206,25 +216,6 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 			return success;
 		}
-
-		static byte[] Decompress(byte[] bytes)
-		{
-			int numRead;
-			var srcStream = new MemoryStream(bytes);
-			var dstStream = new MemoryStream();
-			srcStream.Position = 0;
-			var stream = new GZipStream(srcStream, CompressionMode.Decompress);
-			var buffer = new byte[0x1000];
-			while (true)
-			{
-				numRead = stream.Read(buffer, 0, buffer.Length);
-				if (numRead == 0) break;
-				dstStream.Write(buffer, 0, numRead);
-			}
-			dstStream.Close();
-			return dstStream.ToArray();
-		}
-
 
 	}
 }
