@@ -4,10 +4,7 @@ using System.Windows.Forms;
 using System.Drawing.Design;
 using System.Linq;
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using JocysCom.ClassLibrary.Controls;
-using JocysCom.ClassLibrary.Runtime;
 
 namespace JocysCom.ClassLibrary.Configuration
 {

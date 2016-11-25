@@ -15,7 +15,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		public AcronymsUserControl()
 		{
 			InitializeComponent();
-
 		}
 
 		private void SettingsControl_Load(object sender, EventArgs e)

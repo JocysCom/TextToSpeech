@@ -45,6 +45,11 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		public SortableBindingList<T> Items { get; set; }
 
+		public delegate void ApplyOrderDelegate(SettingsData<T> source);
+
+		[XmlIgnore]
+		public ApplyOrderDelegate ApplyOrder;
+
 		/// <summary>
 		/// File Version.
 		/// </summary>
@@ -151,6 +156,10 @@ namespace JocysCom.ClassLibrary.Configuration
 							//}
 							if (data != null)
 							{
+								if (ApplyOrder != null)
+								{
+									ApplyOrder(data);
+								}
 								Items.Clear();
 								if (data != null)
 								{
@@ -167,12 +176,13 @@ namespace JocysCom.ClassLibrary.Configuration
 							}
 							break;
 						}
-						catch (Exception)
+						catch (Exception ex)
 						{
 							var form = new Controls.MessageBoxForm();
 							var backupFile = fi.FullName + ".bak";
 							form.StartPosition = FormStartPosition.CenterParent;
-							var text = string.Format("{0} file has become corrupted.\r\n" +
+							var text = string.Format("{0} file has become corrupted.\r\n\r\n" +
+								"Reason: " + ex.Message + "\r\n\r\n" +
 								"Program must reset {0} file in order to continue.\r\n\r\n" +
 								"   Click [Yes] to reset and continue.\r\n" +
 								"   Click [No] if you wish to attempt manual repair.\r\n\r\n" +

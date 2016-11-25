@@ -13,6 +13,17 @@ namespace JocysCom.TextToSpeech.Monitor
 		public SettingsManager()
 		{
 			Acronyms = new SettingsData<Acronym>("Monitor.Acronyms.xml");
+			Acronyms.ApplyOrder = Acronyms_ApplyOrder;
+		}
+
+		void Acronyms_ApplyOrder(SettingsData<Acronym> source)
+		{
+			var items = source.Items.OrderByDescending(x => x.Group).OrderBy(x => x.Key).ToArray();
+			source.Items.Clear();
+			foreach (var item in items)
+			{
+				source.Items.Add(item);
+			}
 		}
 
 		/// <summary>Acronym Settings.</summary>
