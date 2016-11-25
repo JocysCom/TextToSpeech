@@ -44,7 +44,12 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		private void SettingsGridView_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.RowIndex < 0) return;
+			// If column header clicked then return.
+			if (e.RowIndex < 0)
+				return;
+			// If row header clicked then return.
+			if (e.ColumnIndex < 0)
+				return;
 			var grid = (DataGridView)sender;
 			var column = grid.Columns[e.ColumnIndex];
 			if (column is DataGridViewCheckBoxColumn)
@@ -62,25 +67,25 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 		}
 
-		public void SelectRow(string group)
-		{
-			if (string.IsNullOrEmpty(group))
-			{
-				SettingsDataGridView.ClearSelection();
-				return;
-			}
-			foreach (DataGridViewRow row in SettingsDataGridView.Rows)
-			{
-				//var item = (Setting)row.DataBoundItem;
-				//if (item.Group.ToLower() == group.ToLower() && !row.Selected)
-				//{
-				//    SettingsDataGridView.ClearSelection();
-				//    row.Selected = true;
-				//    SettingsDataGridView.FirstDisplayedCell = row.Cells[0];
-				//    break;
-				//}
-			}
-		}
+		//public void SelectRow(string group)
+		//{
+		//	if (string.IsNullOrEmpty(group))
+		//	{
+		//		SettingsDataGridView.ClearSelection();
+		//		return;
+		//	}
+		//	foreach (DataGridViewRow row in SettingsDataGridView.Rows)
+		//	{
+		//		//var item = (Setting)row.DataBoundItem;
+		//		//if (item.Group.ToLower() == group.ToLower() && !row.Selected)
+		//		//{
+		//		//    SettingsDataGridView.ClearSelection();
+		//		//    row.Selected = true;
+		//		//    SettingsDataGridView.FirstDisplayedCell = row.Cells[0];
+		//		//    break;
+		//		//}
+		//	}
+		//}
 
 		object[] GetSelectedItems()
 		{
@@ -95,7 +100,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			return selectedActions;
 		}
 
-		private void SettingsAddButton_Click(object sender, EventArgs e)
+		private void AddButton_Click(object sender, EventArgs e)
 		{
 			var list = (IList)SettingsDataGridView.DataSource;
 			var type = list.GetType().GetGenericArguments()[0];
@@ -124,7 +129,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 		}
 
-		private void SettingsImportButton_Click(object sender, EventArgs e)
+		private void ImportButton_Click(object sender, EventArgs e)
 		{
 			var dialog = SettingsImportOpenFileDialog;
 			dialog.SupportMultiDottedExtensions = true;
@@ -143,7 +148,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 		}
 
-		private void SettingsExportButton_Click(object sender, EventArgs e)
+		private void ExportButton_Click(object sender, EventArgs e)
 		{
 			var dialog = SettingsExportSaveFileDialog;
 			dialog.SupportMultiDottedExtensions = true;
@@ -162,7 +167,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 		}
 
-		private void SettingsDeleteButton_Click(object sender, EventArgs e)
+		private void DeleteButton_Click(object sender, EventArgs e)
 		{
 			var items = GetSelectedItems();
 			if (items.Length == 0)
@@ -206,34 +211,6 @@ namespace JocysCom.ClassLibrary.Configuration
 				: System.Drawing.SystemColors.ControlDark;
 		}
 
-		private void SettingsDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-		{
-			//var grid = (DataGridView)sender;
-			//var row = grid.Rows[e.RowIndex];
-			//row.ErrorText = "";
-			//// Don't try to validate the 'new row' until finished  
-			//// editing since there is no point in validating its initial values. 
-			//if (row.IsNewRow) { return; }
-			//var snd = (Setting)row.DataBoundItem;
-			//var column = grid.Columns[e.ColumnIndex];
-			//string error = null;
-			//var value = e.FormattedValue.ToString();
-			//// If Group Name changed then...
-			//if (e.ColumnIndex == grid.Columns[GroupColumn.Name].Index && value.ToLower() != snd.Group.ToLower())
-			//{
-			//    var groups = SettingsManager.Current.Settings.Items.Select(x => x.Group.ToLower()).ToArray();
-			//    if (string.IsNullOrEmpty(value) || groups.Contains(value.ToLower()))
-			//    {
-			//        error = "Group field value must be unique and not empty!";
-			//    }
-			//}
-			//if (!string.IsNullOrEmpty(error))
-			//{
-			//    e.Cancel = true;
-			//    row.ErrorText = error;
-			//}
-		}
-
 		private void SettingsDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
 			// Clear the row error in case the user presses ESC.   
@@ -241,26 +218,14 @@ namespace JocysCom.ClassLibrary.Configuration
 			grid.Rows[e.RowIndex].ErrorText = String.Empty;
 		}
 
-		//Tooltip MouseHover.
-		private void Settings_MouseHover(object sender, EventArgs e)
-		{
-			//Program.TopForm.MainHelpLabel.Text = "Here you can add groups ( like \"Whisper\" ) and assign settings to them ( like \"Radio\" -- listed in \"Default Intro Setting\" drop-down box ) or set paths to wav files ( like \"C:\\Windows\\Media\\notify.wav\" ).";
-		}
-
-		// Tooltip Main.
-		private void Settings_MouseLeave(object sender, EventArgs e)
-		{
-			//Program.TopForm.ResetHelpToDefault();
-		}
-
-		private void BrowseButton_Click(object sender, EventArgs e)
+		private void ShowInFolderButton_Click(object sender, EventArgs e)
 		{
 			OpenUrl(Data.XmlFile.Directory.FullName);
 		}
 
 		private void ResetButton_Click(object sender, EventArgs e)
 		{
-			var result = MessageBox.Show("Do you want to reset Intro Settings to default?", "Reset Intro Settings", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+			var result = MessageBox.Show("Do you want to reset settings to default?", "Reset Settings", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
 			if (result == DialogResult.Yes)
 			{
 				var success = Data.ResetToDefault();
@@ -288,5 +253,10 @@ namespace JocysCom.ClassLibrary.Configuration
 		}
 
 		#endregion
+
+		private void SaveButton_Click(object sender, EventArgs e)
+		{
+			Data.Save();
+		}
 	}
 }

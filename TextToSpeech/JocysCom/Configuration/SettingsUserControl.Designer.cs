@@ -28,16 +28,17 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsUserControl));
 			this.SettingsDataGridView = new System.Windows.Forms.DataGridView();
 			this.SettingsToolStrip = new System.Windows.Forms.ToolStrip();
-			this.SettingsAddButton = new System.Windows.Forms.ToolStripButton();
-			this.SettingsDeleteButton = new System.Windows.Forms.ToolStripButton();
-			this.BrowseButton = new System.Windows.Forms.ToolStripButton();
-			this.SettingsExportButton = new System.Windows.Forms.ToolStripButton();
-			this.SettingsImportButton = new System.Windows.Forms.ToolStripButton();
+			this.AddButton = new System.Windows.Forms.ToolStripButton();
+			this.DeleteButton = new System.Windows.Forms.ToolStripButton();
+			this.SaveButton = new System.Windows.Forms.ToolStripButton();
+			this.ShowInFolderButton = new System.Windows.Forms.ToolStripButton();
+			this.ExportButton = new System.Windows.Forms.ToolStripButton();
+			this.ImportButton = new System.Windows.Forms.ToolStripButton();
 			this.ResetButton = new System.Windows.Forms.ToolStripButton();
 			this.SettingsImportOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.SettingsExportSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
@@ -57,14 +58,14 @@
 			this.SettingsDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.SettingsDataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
 			this.SettingsDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle9.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-			dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.SettingsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.SettingsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.SettingsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.SettingsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.SettingsDataGridView.EnableHeadersVisualStyles = false;
@@ -73,26 +74,24 @@
 			this.SettingsDataGridView.Margin = new System.Windows.Forms.Padding(0);
 			this.SettingsDataGridView.Name = "SettingsDataGridView";
 			this.SettingsDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			this.SettingsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
-			this.SettingsDataGridView.RowHeadersVisible = false;
+			this.SettingsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.SettingsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.SettingsDataGridView.Size = new System.Drawing.Size(551, 255);
 			this.SettingsDataGridView.TabIndex = 2;
 			this.SettingsDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SettingsGridView_CellClick);
 			this.SettingsDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.SettingsDataGridView_CellEndEdit);
 			this.SettingsDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.SettingsDataGridView_CellFormatting);
-			this.SettingsDataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.SettingsDataGridView_CellValidating);
-			this.SettingsDataGridView.MouseHover += new System.EventHandler(this.Settings_MouseHover);
 			// 
 			// SettingsToolStrip
 			// 
 			this.SettingsToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.SettingsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SettingsAddButton,
-            this.SettingsDeleteButton,
-            this.BrowseButton,
-            this.SettingsExportButton,
-            this.SettingsImportButton,
+            this.AddButton,
+            this.DeleteButton,
+            this.SaveButton,
+            this.ShowInFolderButton,
+            this.ExportButton,
+            this.ImportButton,
             this.ResetButton});
 			this.SettingsToolStrip.Location = new System.Drawing.Point(0, 0);
 			this.SettingsToolStrip.Name = "SettingsToolStrip";
@@ -100,56 +99,63 @@
 			this.SettingsToolStrip.Size = new System.Drawing.Size(551, 25);
 			this.SettingsToolStrip.TabIndex = 3;
 			this.SettingsToolStrip.Text = "toolStrip1";
-			this.SettingsToolStrip.MouseLeave += new System.EventHandler(this.Settings_MouseLeave);
-			this.SettingsToolStrip.MouseHover += new System.EventHandler(this.Settings_MouseHover);
 			// 
-			// SettingsAddButton
+			// AddButton
 			// 
-			this.SettingsAddButton.Image = ((System.Drawing.Image)(resources.GetObject("SettingsAddButton.Image")));
-			this.SettingsAddButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.SettingsAddButton.Name = "SettingsAddButton";
-			this.SettingsAddButton.Size = new System.Drawing.Size(76, 22);
-			this.SettingsAddButton.Text = "Add New";
-			this.SettingsAddButton.Click += new System.EventHandler(this.SettingsAddButton_Click);
+			this.AddButton.Image = ((System.Drawing.Image)(resources.GetObject("AddButton.Image")));
+			this.AddButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.AddButton.Name = "AddButton";
+			this.AddButton.Size = new System.Drawing.Size(76, 22);
+			this.AddButton.Text = "Add New";
+			this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
 			// 
-			// SettingsDeleteButton
+			// DeleteButton
 			// 
-			this.SettingsDeleteButton.Image = ((System.Drawing.Image)(resources.GetObject("SettingsDeleteButton.Image")));
-			this.SettingsDeleteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.SettingsDeleteButton.Name = "SettingsDeleteButton";
-			this.SettingsDeleteButton.Size = new System.Drawing.Size(60, 22);
-			this.SettingsDeleteButton.Text = "Delete";
-			this.SettingsDeleteButton.Click += new System.EventHandler(this.SettingsDeleteButton_Click);
+			this.DeleteButton.Image = ((System.Drawing.Image)(resources.GetObject("DeleteButton.Image")));
+			this.DeleteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.DeleteButton.Name = "DeleteButton";
+			this.DeleteButton.Size = new System.Drawing.Size(60, 22);
+			this.DeleteButton.Text = "Delete";
+			this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
 			// 
-			// BrowseButton
+			// SaveButton
 			// 
-			this.BrowseButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.BrowseButton.Image = ((System.Drawing.Image)(resources.GetObject("BrowseButton.Image")));
-			this.BrowseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BrowseButton.Name = "BrowseButton";
-			this.BrowseButton.Size = new System.Drawing.Size(105, 22);
-			this.BrowseButton.Text = "Show in Folder";
-			this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
+			this.SaveButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
+			this.SaveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.SaveButton.Name = "SaveButton";
+			this.SaveButton.Size = new System.Drawing.Size(51, 22);
+			this.SaveButton.Text = "Save";
+			this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
 			// 
-			// SettingsExportButton
+			// ShowInFolderButton
 			// 
-			this.SettingsExportButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.SettingsExportButton.Image = ((System.Drawing.Image)(resources.GetObject("SettingsExportButton.Image")));
-			this.SettingsExportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.SettingsExportButton.Name = "SettingsExportButton";
-			this.SettingsExportButton.Size = new System.Drawing.Size(69, 22);
-			this.SettingsExportButton.Text = "Export...";
-			this.SettingsExportButton.Click += new System.EventHandler(this.SettingsExportButton_Click);
+			this.ShowInFolderButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.ShowInFolderButton.Image = ((System.Drawing.Image)(resources.GetObject("ShowInFolderButton.Image")));
+			this.ShowInFolderButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.ShowInFolderButton.Name = "ShowInFolderButton";
+			this.ShowInFolderButton.Size = new System.Drawing.Size(105, 22);
+			this.ShowInFolderButton.Text = "Show in Folder";
+			this.ShowInFolderButton.Click += new System.EventHandler(this.ShowInFolderButton_Click);
 			// 
-			// SettingsImportButton
+			// ExportButton
 			// 
-			this.SettingsImportButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.SettingsImportButton.Image = ((System.Drawing.Image)(resources.GetObject("SettingsImportButton.Image")));
-			this.SettingsImportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.SettingsImportButton.Name = "SettingsImportButton";
-			this.SettingsImportButton.Size = new System.Drawing.Size(72, 22);
-			this.SettingsImportButton.Text = "Import...";
-			this.SettingsImportButton.Click += new System.EventHandler(this.SettingsImportButton_Click);
+			this.ExportButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.ExportButton.Image = ((System.Drawing.Image)(resources.GetObject("ExportButton.Image")));
+			this.ExportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.ExportButton.Name = "ExportButton";
+			this.ExportButton.Size = new System.Drawing.Size(69, 22);
+			this.ExportButton.Text = "Export...";
+			this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
+			// 
+			// ImportButton
+			// 
+			this.ImportButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.ImportButton.Image = ((System.Drawing.Image)(resources.GetObject("ImportButton.Image")));
+			this.ImportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.ImportButton.Name = "ImportButton";
+			this.ImportButton.Size = new System.Drawing.Size(72, 22);
+			this.ImportButton.Text = "Import...";
+			this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
 			// 
 			// ResetButton
 			// 
@@ -180,15 +186,16 @@
 		#endregion
 
         private System.Windows.Forms.ToolStrip SettingsToolStrip;
-		private System.Windows.Forms.ToolStripButton SettingsAddButton;
-		private System.Windows.Forms.ToolStripButton SettingsDeleteButton;
-		private System.Windows.Forms.ToolStripButton SettingsExportButton;
-		private System.Windows.Forms.ToolStripButton SettingsImportButton;
+		private System.Windows.Forms.ToolStripButton AddButton;
+		private System.Windows.Forms.ToolStripButton DeleteButton;
+		private System.Windows.Forms.ToolStripButton ExportButton;
+		private System.Windows.Forms.ToolStripButton ImportButton;
 		private System.Windows.Forms.OpenFileDialog SettingsImportOpenFileDialog;
         private System.Windows.Forms.SaveFileDialog SettingsExportSaveFileDialog;
         private System.Windows.Forms.OpenFileDialog AudioFileOpenFileDialog;
         public System.Windows.Forms.DataGridView SettingsDataGridView;
-		private System.Windows.Forms.ToolStripButton BrowseButton;
+		private System.Windows.Forms.ToolStripButton ShowInFolderButton;
 		private System.Windows.Forms.ToolStripButton ResetButton;
+		private System.Windows.Forms.ToolStripButton SaveButton;
 	}
 }

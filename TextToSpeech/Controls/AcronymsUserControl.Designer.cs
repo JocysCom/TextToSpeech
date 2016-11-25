@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.SettingsControl = new JocysCom.ClassLibrary.Configuration.SettingsUserControl();
 			this.EnabledColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.GroupColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,6 +52,8 @@
 			this.SettingsControl.Size = new System.Drawing.Size(640, 320);
 			this.SettingsControl.TabIndex = 0;
 			this.SettingsControl.Load += new System.EventHandler(this.SettingsControl_Load);
+			this.SettingsControl.MouseLeave += new System.EventHandler(this.SettingsControl_MouseLeave);
+			this.SettingsControl.MouseHover += new System.EventHandler(this.SettingsControl_MouseHover);
 			// 
 			// EnabledColumn
 			// 
@@ -90,8 +92,8 @@
 			// EmptyColumn
 			// 
 			this.EmptyColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-			this.EmptyColumn.DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+			this.EmptyColumn.DefaultCellStyle = dataGridViewCellStyle2;
 			this.EmptyColumn.HeaderText = "";
 			this.EmptyColumn.Name = "EmptyColumn";
 			this.EmptyColumn.ReadOnly = true;
