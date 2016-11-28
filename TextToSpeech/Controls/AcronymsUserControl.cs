@@ -37,7 +37,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			var item = (Acronym)row.DataBoundItem;
 			var column = grid.Columns[e.ColumnIndex];
 			string error = null;
-			var newValue = e.FormattedValue.ToString().ToLower();
+			var newValue = e.FormattedValue.ToString().Trim().ToLower();
+			newValue = string.IsNullOrEmpty(newValue) ? null : newValue;
 			var list = SettingsManager.Current.Acronyms;
 			// If Group Name changed then...
 			if (item.IsEmpty && string.IsNullOrEmpty(newValue))
@@ -45,22 +46,20 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				SettingsControl.Data.Remove(item);
 				return;
 			}
-			if (e.ColumnIndex == GroupColumn.Index && newValue != item.Group.ToLower())
+			if (e.ColumnIndex == GroupColumn.Index && string.Compare(newValue, item.Group, true) != 0)
 			{
-				var key = item.Key.ToLower();
-				if (list.Items.Any(x => x.Group.ToLower() == newValue && x.Key.ToLower() == key))
+				if (list.Items.Any(x => string.Compare(x.Group, newValue, true) == 0 && string.Compare(x.Key, item.Key, true) == 0))
 				{
 					error = "Group/Key must be unique!";
 				}
 			}
-			else if (e.ColumnIndex == KeyColumn.Index && newValue != item.Key.ToLower())
+			else if (e.ColumnIndex == KeyColumn.Index && string.Compare(newValue, item.Key, true) != 0)
 			{
-				var group = item.Group.ToLower();
 				if (string.IsNullOrEmpty(newValue))
 				{
 					error = "Key field must be not empty!";
 				}
-				else if (list.Items.Any(x => x.Group.ToLower() == group && x.Key.ToLower() == newValue))
+				else if (list.Items.Any(x => string.Compare(x.Group, item.Group, true) == 0 && string.Compare(x.Key, newValue, true) == 0))
 				{
 					error = "Group/Key must be unique!";
 				}

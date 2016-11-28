@@ -16,9 +16,6 @@ namespace JocysCom.TextToSpeech.Monitor
 		public Acronym()
 		{
 			_Enabled = true;
-			_Group = "";
-			_Key = "";
-			_Value = "";
 		}
 
 		[XmlAttribute]
@@ -26,19 +23,51 @@ namespace JocysCom.TextToSpeech.Monitor
 		bool _Enabled;
 
 		[XmlAttribute]
-		public string Key { get { return _Key; } set { _Key = value; NotifyPropertyChanged("Key"); } }
+		public string Key
+		{
+			get { return _Key; }
+			set
+			{
+				_Key = string.IsNullOrEmpty((value ?? "").Trim()) ? null : value;
+				NotifyPropertyChanged("Key");
+			}
+		}
 		string _Key;
 
 		[XmlAttribute]
-		public string Value { get { return _Value; } set { _Value = value; NotifyPropertyChanged("Value"); } }
+		public string Value
+		{
+			get { return _Value; }
+			set
+			{
+				_Value = string.IsNullOrEmpty((value ?? "").Trim()) ? null : value;
+				NotifyPropertyChanged("Value");
+			}
+		}
 		string _Value;
 
 		[XmlAttribute]
-		public string Rx { get { return _Rx; } set { _Rx = value; NotifyPropertyChanged("Rx"); } }
+		public string Rx
+		{
+			get { return _Rx; }
+			set
+			{
+				_Rx = string.IsNullOrEmpty((value ?? "").Trim()) ? null : value;
+				NotifyPropertyChanged("Rx");
+			}
+		}
 		string _Rx;
 
 		[XmlAttribute]
-		public string Group { get { return _Group; } set { _Group = value; NotifyPropertyChanged("Group"); } }
+		public string Group
+		{
+			get { return _Group; }
+			set
+			{
+				_Group = string.IsNullOrEmpty((value ?? "").Trim()) ? null : value;
+				NotifyPropertyChanged("Group");
+			}
+		}
 		string _Group;
 
 		[XmlIgnore]
