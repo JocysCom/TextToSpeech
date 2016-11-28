@@ -92,11 +92,13 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				lock (RegexValueLock)
 				{
-					var rx = string.IsNullOrEmpty(_Rx)
-						? _Key : _Rx;
+					var customRx = string.IsNullOrEmpty(_Rx);
+					var rx = customRx ? _Key : _Rx;
 					if (_RegexValue == null && !string.IsNullOrEmpty(rx))
 					{
-						var options = RegexOptions.IgnoreCase | RegexOptions.Compiled;
+						var options = customRx
+							? RegexOptions.Compiled
+							: RegexOptions.IgnoreCase | RegexOptions.Compiled;
 						_RegexValue = new Regex("\\b" + rx + "\\b", options);
 					}
 					return _RegexValue;
