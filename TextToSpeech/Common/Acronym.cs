@@ -23,6 +23,18 @@ namespace JocysCom.TextToSpeech.Monitor
 		bool _Enabled;
 
 		[XmlAttribute]
+		public string Group
+		{
+			get { return _Group; }
+			set
+			{
+				_Group = string.IsNullOrEmpty((value ?? "").Trim()) ? null : value;
+				NotifyPropertyChanged("Group");
+			}
+		}
+		string _Group;
+
+		[XmlAttribute]
 		public string Key
 		{
 			get { return _Key; }
@@ -57,18 +69,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 		}
 		string _Rx;
-
-		[XmlAttribute]
-		public string Group
-		{
-			get { return _Group; }
-			set
-			{
-				_Group = string.IsNullOrEmpty((value ?? "").Trim()) ? null : value;
-				NotifyPropertyChanged("Group");
-			}
-		}
-		string _Group;
 
 		[XmlIgnore]
 		public bool IsEmpty

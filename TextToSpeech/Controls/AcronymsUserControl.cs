@@ -48,10 +48,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			}
 			if (e.ColumnIndex == GroupColumn.Index && string.Compare(newValue, item.Group, true) != 0)
 			{
-				if (list.Items.Any(x => string.Compare(x.Group, newValue, true) == 0 && string.Compare(x.Key, item.Key, true) == 0))
-				{
-					error = "Group/Key must be unique!";
-				}
+				//if (list.Items.Any(x => string.Compare(x.Group, newValue, true) == 0 && string.Compare(x.Key, item.Key, true) == 0))
+				//{
+				//	error = "Group/Key must be unique!";
+				//}
 			}
 			else if (e.ColumnIndex == KeyColumn.Index && string.Compare(newValue, item.Key, true) != 0)
 			{
@@ -59,10 +59,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				{
 					error = "Key field must be not empty!";
 				}
-				else if (list.Items.Any(x => string.Compare(x.Group, item.Group, true) == 0 && string.Compare(x.Key, newValue, true) == 0))
-				{
-					error = "Group/Key must be unique!";
-				}
+				//else if (list.Items.Any(x => string.Compare(x.Group, item.Group, true) == 0 && string.Compare(x.Key, newValue, true) == 0))
+				//{
+				//	error = "Group/Key must be unique!";
+				//}
 			}
 			if (!string.IsNullOrEmpty(error))
 			{
