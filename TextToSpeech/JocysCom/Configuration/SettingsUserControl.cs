@@ -39,6 +39,8 @@ namespace JocysCom.ClassLibrary.Configuration
 			SettingsDataGridView.AutoGenerateColumns = false;
 		}
 
+		public DataGridViewColumn DefaultEditColumn;
+
 		private void SettingsGridView_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
 			// If column header clicked then return.
@@ -99,31 +101,57 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		private void AddButton_Click(object sender, EventArgs e)
 		{
-			var list = (IList)SettingsDataGridView.DataSource;
+			var grid = (DataGridView)SettingsDataGridView;
+			var list = (IList)grid.DataSource;
 			var type = list.GetType().GetGenericArguments()[0];
 			var selectedActions = GetSelectedItems();
 			var last = selectedActions.LastOrDefault();
 			var insertIndex = (last == null)
 					? -1 : list.IndexOf(last);
-			var action = Activator.CreateInstance(type);
+			var item = Activator.CreateInstance(type);
 			// If there are no records or last row is selected then...
 			if (insertIndex == -1 || insertIndex == (list.Count - 1))
 			{
-				list.Add(action);
+				list.Add(item);
 			}
 			else
 			{
-				list.Insert(insertIndex + 1, action);
+				list.Insert(insertIndex + 1, item);
 			}
+			DataGridViewRow rowToEdit = null;
 			// Select new created item.
-			foreach (DataGridViewRow row in SettingsDataGridView.Rows)
+			foreach (DataGridViewRow row in grid.Rows)
 			{
-				var selected = (action == row.DataBoundItem);
+				var selected = (item == row.DataBoundItem);
 				if (row.Selected != selected)
 				{
+					// Select row
 					row.Selected = selected;
+					if (selected)
+					{
+						rowToEdit = row;
+					}
 				}
 			}
+			//BeginInvoke((MethodInvoker)delegate ()
+			//{
+			if (rowToEdit != null)
+			{
+				var column = DefaultEditColumn == null
+					? grid.Columns.Cast<DataGridViewColumn>().FirstOrDefault(x => !x.ReadOnly && x is DataGridViewTextBoxColumn)
+					: DefaultEditColumn;
+				if (column != null)
+				{
+					// Select column
+					var cell = rowToEdit.Cells[column.Name];
+					cell.Selected = true;
+					grid.CurrentCell = cell;
+					// Switch to edit mode.
+					grid.BeginEdit(true);
+				}
+
+			}
+			//});
 		}
 
 		private void ImportButton_Click(object sender, EventArgs e)

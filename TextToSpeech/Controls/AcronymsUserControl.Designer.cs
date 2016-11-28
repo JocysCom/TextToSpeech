@@ -28,12 +28,13 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.SettingsControl = new JocysCom.ClassLibrary.Configuration.SettingsUserControl();
 			this.EnabledColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.GroupColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.KeyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ValueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.RxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.EmptyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.SuspendLayout();
 			// 
@@ -45,6 +46,7 @@
             this.GroupColumn,
             this.KeyColumn,
             this.ValueColumn,
+            this.RxColumn,
             this.EmptyColumn});
 			this.SettingsControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.SettingsControl.Location = new System.Drawing.Point(0, 0);
@@ -89,11 +91,19 @@
 			this.ValueColumn.Name = "ValueColumn";
 			this.ValueColumn.Width = 61;
 			// 
+			// RxColumn
+			// 
+			this.RxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.RxColumn.DataPropertyName = "Rx";
+			this.RxColumn.HeaderText = "RX";
+			this.RxColumn.Name = "RxColumn";
+			this.RxColumn.Width = 49;
+			// 
 			// EmptyColumn
 			// 
 			this.EmptyColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-			this.EmptyColumn.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+			this.EmptyColumn.DefaultCellStyle = dataGridViewCellStyle1;
 			this.EmptyColumn.HeaderText = "";
 			this.EmptyColumn.Name = "EmptyColumn";
 			this.EmptyColumn.ReadOnly = true;
@@ -116,6 +126,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn GroupColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn KeyColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ValueColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn RxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn EmptyColumn;
 	}
 }

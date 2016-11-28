@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -17,8 +16,8 @@ namespace JocysCom.ClassLibrary.Controls
 		}
 
 		public bool PlaySounds { get; set; }
-		private int h;
-		private int w;
+		int h;
+		int w;
 
 		/// <summary>Displays a message box with the specified text, caption, buttons, icon, and default button.</summary>
 		/// <param name="text">The text to display in the message box.</param>
@@ -87,7 +86,6 @@ namespace JocysCom.ClassLibrary.Controls
 					if (PlaySounds) System.Media.SystemSounds.Exclamation.Play();
 					break;
 				case MessageBoxIcon.Information: // Same as 'Asterisk'.
-					image = MessageBoxFormResources.MessageBoxForm.MessageBoxIcon_Information_32x32;
 					if (PlaySounds) System.Media.SystemSounds.Asterisk.Play();
 					break;
 			}
@@ -117,6 +115,7 @@ namespace JocysCom.ClassLibrary.Controls
 		public static System.Windows.Forms.DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
 		{
 			MessageBoxForm form = new MessageBoxForm();
+			form.StartPosition = FormStartPosition.CenterScreen;
 			return form.ShowForm(text, caption, buttons, icon);
 		}
 
@@ -130,6 +129,7 @@ namespace JocysCom.ClassLibrary.Controls
 		public static System.Windows.Forms.DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
 		{
 			MessageBoxForm form = new MessageBoxForm();
+			form.StartPosition = FormStartPosition.CenterScreen;
 			return form.ShowForm(text, caption, buttons, icon, defaultButton);
 		}
 
@@ -176,13 +176,13 @@ namespace JocysCom.ClassLibrary.Controls
 			CancelButton = Button3;
 		}
 
-		private void Button_Click(object sender, EventArgs e)
+		void Button_Click(object sender, EventArgs e)
 		{
 			Button button = (Button)sender;
 			this.DialogResult = button.DialogResult;
 		}
 
-		private void Form_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		void Form_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			if (e.Control & e.KeyCode == Keys.C)
 			{
@@ -200,20 +200,54 @@ namespace JocysCom.ClassLibrary.Controls
 			}
 		}
 
-		private void Message_Resize(System.Object sender, System.EventArgs e)
+		void Message_Resize(System.Object sender, System.EventArgs e)
 		{
 			this.Height = Math.Max(h + TextLabel.Height, this.MinimumSize.Height);
 			this.Width = Math.Max(w + TextLabel.Width, this.MinimumSize.Width);
+			if (TextLabel.Width + 1 >= TextLabel.MaximumSize.Width && TextLabel.Height + 1 >= TextLabel.MaximumSize.Height)
+			{
+				textBox1.Text = TextLabel.Text;
+				textBox1.Size = TextLabel.Size;
+				textBox1.Top = TextLabel.Top;
+				textBox1.Left = TextLabel.Left;
+			}
+			else
+			{
+				textBox1.Text = "";
+				textBox1.Visible = false;
+			}
 		}
 
-		private void MessageBoxForm_Load(System.Object sender, System.EventArgs e)
+		void MessageBoxForm_Load(System.Object sender, System.EventArgs e)
 		{
 			ActiveControl.Select();
 		}
 
-		private void CopyToolStripMenuItem_Click(System.Object sender, System.EventArgs e)
+		void copyToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(this.TextLabel.Text);
+			Clipboard.SetText(TextLabel.Text);
+		}
+
+		void MainLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			OpenUrl(MainLinkLabel.Text);
+		}
+
+		public static void OpenUrl(string url)
+		{
+			try
+			{
+				System.Diagnostics.Process.Start(url);
+			}
+			catch (System.ComponentModel.Win32Exception noBrowser)
+			{
+				if (noBrowser.ErrorCode == -2147467259)
+					MessageBox.Show(noBrowser.Message);
+			}
+			catch (System.Exception other)
+			{
+				MessageBox.Show(other.Message);
+			}
 		}
 
 	}

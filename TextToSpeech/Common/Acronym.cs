@@ -23,19 +23,10 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		[XmlAttribute]
 		public bool Enabled { get { return _Enabled; } set { _Enabled = value; NotifyPropertyChanged("Enabled"); } }
-		bool _Enabled = true;
+		bool _Enabled;
 
 		[XmlAttribute]
-		public string Key
-		{
-			get { return _Key; }
-			set
-			{
-				_Key = value;
-				_RegexValue = null;
-				NotifyPropertyChanged("Key");
-			}
-		}
+		public string Key { get { return _Key; } set { _Key = value; NotifyPropertyChanged("Key"); } }
 		string _Key;
 
 		[XmlAttribute]
@@ -43,8 +34,47 @@ namespace JocysCom.TextToSpeech.Monitor
 		string _Value;
 
 		[XmlAttribute]
+		public string Rx { get { return _Rx; } set { _Rx = value; NotifyPropertyChanged("Rx"); } }
+		string _Rx;
+
+		[XmlAttribute]
 		public string Group { get { return _Group; } set { _Group = value; NotifyPropertyChanged("Group"); } }
 		string _Group;
+
+		[XmlIgnore]
+		public bool IsEmpty
+		{
+			get
+			{
+				return
+					string.IsNullOrEmpty(_Group) &&
+					string.IsNullOrEmpty(_Key) &&
+					string.IsNullOrEmpty(_Value) &&
+					string.IsNullOrEmpty(_Rx);
+			}
+		}
+
+		object RegexValueLock = new object();
+
+		[XmlIgnore]
+		public Regex RegexValue
+		{
+			get
+			{
+				lock (RegexValueLock)
+				{
+					var rx = string.IsNullOrEmpty(_Rx)
+						? _Key : _Rx;
+					if (_RegexValue == null && !string.IsNullOrEmpty(rx))
+					{
+						var options = RegexOptions.IgnoreCase | RegexOptions.Compiled;
+						_RegexValue = new Regex("\\b" + rx + "\\b", options);
+					}
+					return _RegexValue;
+				}
+			}
+		}
+		private Regex _RegexValue;
 
 		#region INotifyPropertyChanged
 
@@ -53,24 +83,18 @@ namespace JocysCom.TextToSpeech.Monitor
 		private void NotifyPropertyChanged(string propertyName = "")
 		{
 			var ev = PropertyChanged;
+			lock (RegexValueLock)
+			{
+				if (propertyName == "Key" || propertyName == "Rx")
+				{
+					_RegexValue = null;
+				}
+			}
 			if (ev == null) return;
 			ev(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		[XmlIgnore()]
-		public Regex RegexValue
-		{
-			get
-			{
-				if (_RegexValue == null && !string.IsNullOrEmpty(Key))
-				{
-					var options = RegexOptions.IgnoreCase | RegexOptions.Compiled;
-					_RegexValue = new Regex("\\b" + Key + "\\b", options);
-				}
-				return _RegexValue;
-			}
-		}
-		private Regex _RegexValue;
+
 
 		#endregion
 	}

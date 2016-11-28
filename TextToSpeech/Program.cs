@@ -65,7 +65,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				var message = "";
 				MainHelper.AddExceptionMessage(ex, ref message);
 				if (ex.InnerException != null) MainHelper.AddExceptionMessage(ex.InnerException, ref message);
-				var box = new Controls.MessageBoxForm();
+				var box = new JocysCom.ClassLibrary.Controls.MessageBoxForm();
 				if (message.Contains("Could not load file or assembly 'Microsoft.DirectX"))
 				{
 					message += "===============================================================\r\n";

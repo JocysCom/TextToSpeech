@@ -15,6 +15,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		public AcronymsUserControl()
 		{
 			InitializeComponent();
+			SettingsControl.DefaultEditColumn = KeyColumn;
 		}
 
 		private void SettingsControl_Load(object sender, EventArgs e)
@@ -39,16 +40,17 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			var newValue = e.FormattedValue.ToString().ToLower();
 			var list = SettingsManager.Current.Acronyms;
 			// If Group Name changed then...
+			if (item.IsEmpty && string.IsNullOrEmpty(newValue))
+			{
+				SettingsControl.Data.Remove(item);
+				return;
+			}
 			if (e.ColumnIndex == GroupColumn.Index && newValue != item.Group.ToLower())
 			{
 				var key = item.Key.ToLower();
-				if (string.IsNullOrEmpty(newValue))
+				if (list.Items.Any(x => x.Group.ToLower() == newValue && x.Key.ToLower() == key))
 				{
-					error = "Group field value must be not empty!";
-				}
-				else if (list.Items.Any(x => x.Group.ToLower() == newValue && x.Key.ToLower() == key))
-				{
-					error = "Group/Key value must be unique!";
+					error = "Group/Key must be unique!";
 				}
 			}
 			else if (e.ColumnIndex == KeyColumn.Index && newValue != item.Key.ToLower())
@@ -56,11 +58,11 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				var group = item.Group.ToLower();
 				if (string.IsNullOrEmpty(newValue))
 				{
-					error = "Key field value must be not empty!";
+					error = "Key field must be not empty!";
 				}
 				else if (list.Items.Any(x => x.Group.ToLower() == group && x.Key.ToLower() == newValue))
 				{
-					error = "Group/Key value must be unique!";
+					error = "Group/Key must be unique!";
 				}
 			}
 			if (!string.IsNullOrEmpty(error))

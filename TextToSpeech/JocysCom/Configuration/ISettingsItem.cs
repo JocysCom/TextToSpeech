@@ -7,5 +7,7 @@ namespace JocysCom.ClassLibrary.Configuration
 	{
 		bool Enabled { get; }
 
+		bool IsEmpty { get; }
+
 	}
 }
