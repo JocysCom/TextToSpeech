@@ -16,7 +16,7 @@ namespace JocysCom.ClassLibrary.Runtime
 		#region Helper Functions
 
 		/// <summary>
-		/// Read file content in multiple attmempts.
+		/// Read file content in multiple attempts.
 		/// </summary>
 		/// <param name="path">The file to open for reading.</param>
 		/// <param name="attempts">Number of attempts to read from the file. Default 2 times.</param>
@@ -45,7 +45,7 @@ namespace JocysCom.ClassLibrary.Runtime
 		}
 
 		/// <summary>
-		/// Write file content in multiple attmempts.
+		/// Write file content in multiple attempts.
 		/// </summary>
 		/// <param name="path">The file to open for writing.</param>
 		/// <param name="bytes">The bytes to write to the file.</param>
