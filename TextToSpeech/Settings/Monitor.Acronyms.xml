@@ -2,5 +2,546 @@
   <Items>
     <Acronym Enabled="true" Key="LM" Value="Lumber Mill" Group="WoW" />
     <Acronym Enabled="true" Key="LOL" Value="laughing out loud" Group="" />
+    <Acronym Enabled="true" Key="1k" Value="1 thousand" Group="" />
+    <Acronym Enabled="true" Key="2k" Regex="([2-9])k" Value="$1 thousands" Group="" />
+    <Acronym Enabled="true" Key="22k" Regex="([1-9][0-9]+)k" Value="$1 thousands" Group="" />
+    <Acronym Enabled="true" Key="^^" Regex="" Value="see above" Group="" />
+    <Acronym Enabled="true" Key="10m" Regex="([0-9]+)m" Value="$1 man" Group="wow" />
+    <Acronym Enabled="true" Key="1h" Value="1 handed" Group="wow" />
+    <Acronym Enabled="true" Key="2h" Value="2 handed" Group="wow" />
+    <Acronym Enabled="true" Key="2w" Value="dual wield" Group="wow" />
+    <Acronym Enabled="true" Key="ab" Value="Arathi Basin" Group="wow" />
+    <Acronym Enabled="true" Key="achi" Value="achievement" Group="wow" />
+    <Acronym Enabled="true" Key="achiev" Value="achievement" Group="wow" />
+    <Acronym Enabled="true" Key="ad" Value="additional" Group="wow" />
+    <Acronym Enabled="true" Key="add" Value="additional" Group="wow" />
+    <Acronym Enabled="true" Key="afaik" Value="as far as I know" Group="" />
+    <Acronym Enabled="true" Key="afk" Value="away from keyboard" Group="" />
+    <Acronym Enabled="true" Key="aggro" Value="aggression" Group="wow" />
+    <Acronym Enabled="true" Key="agi" Value="agility" Group="wow" />
+    <Acronym Enabled="true" Key="ah" Value="Auction House" Group="wow" />
+    <Acronym Enabled="true" Key="alc" Value="alchemist" Group="wow" />
+    <Acronym Enabled="true" Key="alch" Value="alchemist" Group="wow" />
+    <Acronym Enabled="true" Key="alli" Value="Alliance" Group="wow" />
+    <Acronym Enabled="true" Key="ally" Value="Alliance" Group="wow" />
+    <Acronym Enabled="true" Key="alt" Value="alternate character" Group="wow" />
+    <Acronym Enabled="true" Key="alts" Value="alternate characters" Group="wow" />
+    <Acronym Enabled="true" Key="an" Value="Azjol Nerub" Group="wow" />
+    <Acronym Enabled="true" Key="aoe" Value="area of effect" Group="wow" />
+    <Acronym Enabled="true" Key="aop" Value="aspect of the pack" Group="wow" />
+    <Acronym Enabled="true" Key="aotp" Value="aspect of the pack" Group="wow" />
+    <Acronym Enabled="true" Key="ap" Value="attack power" Group="wow" />
+    <Acronym Enabled="true" Key="archi" Value="Archimonde" Group="wow" />
+    <Acronym Enabled="true" Key="archm" Value="Archimonde" Group="wow" />
+    <Acronym Enabled="true" Key="arms" Value="Armory" Group="wow" />
+    <Acronym Enabled="true" Key="asap" Value="as soon as possible" Group="" />
+    <Acronym Enabled="true" Key="atm" Value="at the moment" Group="" />
+    <Acronym Enabled="true" Key="av" Value="Alterac Valley" Group="wow" />
+    <Acronym Enabled="true" Key="azjol" Value="Azjol Nerub" Group="wow" />
+    <Acronym Enabled="true" Key="b4" Value="before" Group="" />
+    <Acronym Enabled="true" Key="bala" Value="balance" Group="" />
+    <Acronym Enabled="true" Key="BB" Value="Booty Bay" Group="wow" />
+    <Acronym Enabled="true" Key="bb" Value="bye bye" Group="" />
+    <Acronym Enabled="true" Key="bbl" Value="be back later" Group="" />
+    <Acronym Enabled="true" Key="bbs" Value="be back soon" Group="" />
+    <Acronym Enabled="true" Key="bc" Value="Burning Crusade" Group="wow" />
+    <Acronym Enabled="true" Key="bd" Value="Black Descent" Group="wow" />
+    <Acronym Enabled="true" Key="be" Value="blood elf" Group="wow" />
+    <Acronym Enabled="true" Key="belf" Value="blood elf" Group="wow" />
+    <Acronym Enabled="true" Key="bem" Value="Blade's Edge Mountains" Group="wow" />
+    <Acronym Enabled="true" Key="BF" Regex="[Bb][F]" Value="Blood Furnace" Group="wow" />
+    <Acronym Enabled="true" Key="bf" Regex="[(Bb])[f]" Value="$1oyfriend" Group="" />
+    <Acronym Enabled="true" Key="bfd" Value="Blackfathom Deeps" Group="wow" />
+    <Acronym Enabled="true" Key="bg" Value="battleground" Group="wow" />
+    <Acronym Enabled="true" Key="bgs" Value="battlegrounds" Group="wow" />
+    <Acronym Enabled="true" Key="bh" Value="Baradin Hold" Group="wow" />
+    <Acronym Enabled="true" Key="bio" Value="biology" Group="" />
+    <Acronym Enabled="true" Key="bis" Value="best in slot" Group="wow" />
+    <Acronym Enabled="true" Key="bl" Value="Blood Lust" Group="wow" />
+    <Acronym Enabled="true" Key="blizz" Value="Blizzard" Group="wow" />
+    <Acronym Enabled="true" Key="blue" Value="Blizzard employee" Group="wow" />
+    <Acronym Enabled="true" Key="boa" Value="bind on account" Group="wow" />
+    <Acronym Enabled="true" Key="boe" Value="bind on equip" Group="wow" />
+    <Acronym Enabled="true" Key="bok" Value="Blessing of Kings" Group="wow" />
+    <Acronym Enabled="true" Key="bom" Value="Blessing of Might" Group="wow" />
+    <Acronym Enabled="true" Key="boomkin" Value="Moonkin" Group="wow" />
+    <Acronym Enabled="true" Key="bop" Value="bind on pickup" Group="wow" />
+    <Acronym Enabled="true" Key="borea" Value="Borean Tundra" Group="wow" />
+    <Acronym Enabled="true" Key="bot" Value="Bastion of Twilight" Group="wow" />
+    <Acronym Enabled="true" Key="bou" Value="bind on use" Group="wow" />
+    <Acronym Enabled="true" Key="brb" Regex="([Bb])rb" Value="be right back" Group="" />
+    <Acronym Enabled="true" Key="brd" Regex="[Bb][Rr][D]" Value="Blackrock Depths" Group="wow" />
+    <Acronym Enabled="true" Key="brd db" Value="Blackrock Depths: Detention Block" Group="wow" />
+    <Acronym Enabled="true" Key="brd uc" Value="Blackrock Depths: Upper City" Group="wow" />
+    <Acronym Enabled="true" Key="bres" Value="battle resurrection" Group="wow" />
+    <Acronym Enabled="true" Key="brn" Value="battle resurrection" Group="wow" />
+    <Acronym Enabled="true" Key="brs" Value="Blackrock Spire" Group="wow" />
+    <Acronym Enabled="true" Key="brt" Value="be right there" Group="" />
+    <Acronym Enabled="true" Key="bs" Regex="([Bb])[Ss]" Value="blacksmith" Group="wow" />
+    <Acronym Enabled="true" Key="BS" Regex="[Bb][S]" Value="Bladestorm" Group="wow" />
+    <Acronym Enabled="true" Key="bt" Value="Black Temple" Group="wow" />
+    <Acronym Enabled="true" Key="btw" Value="by the way" Group="" />
+    <Acronym Enabled="true" Key="buff" Value="beneficial spell" Group="wow" />
+    <Acronym Enabled="true" Key="bwd" Value="Blackwing Descent" Group="wow" />
+    <Acronym Enabled="true" Key="bwl" Value="Blackwing Lair" Group="wow" />
+    <Acronym Enabled="true" Key="cata" Value="Cataclysm" Group="wow" />
+    <Acronym Enabled="true" Key="cath" Value="Cathedral" Group="wow" />
+    <Acronym Enabled="true" Key="cb" Value="coffee break" Group="" />
+    <Acronym Enabled="true" Key="cba" Value="can't be arsed" Group="" />
+    <Acronym Enabled="true" Key="cbask" Value="can't be asked" Group="" />
+    <Acronym Enabled="true" Key="cbt" Value="closed beta test" Group="wow" />
+    <Acronym Enabled="true" Key="cc" Value="crowd control" Group="wow" />
+    <Acronym Enabled="true" Key="cd" Value="cooldown" Group="wow" />
+    <Acronym Enabled="true" Key="char" Value="character" Group="wow" />
+    <Acronym Enabled="true" Key="comp" Value="composition" Group="wow" />
+    <Acronym Enabled="true" Key="conp" Value="conquest points" Group="wow" />
+    <Acronym Enabled="true" Key="cos" Value="Culling of Stratholme" Group="wow" />
+    <Acronym Enabled="true" Key="cot" Value="Caverns of Time" Group="wow" />
+    <Acronym Enabled="true" Key="cow" Value="tauren" Group="wow" />
+    <Acronym Enabled="true" Key="cp" Value="combo points" Group="wow" />
+    <Acronym Enabled="true" Key="cr" Value="combat resurrection" Group="wow" />
+    <Acronym Enabled="true" Key="cres" Value="combat resurrection" Group="wow" />
+    <Acronym Enabled="true" Key="crit" Value="critical hit" Group="wow" />
+    <Acronym Enabled="true" Key="cs" Value="critical strike" Group="wow" />
+    <Acronym Enabled="true" Key="csp" Value="counterspell" Group="wow" />
+    <Acronym Enabled="true" Key="cya" Value="see you" Group="" />
+    <Acronym Enabled="true" Key="dal" Value="Dalaran" Group="wow" />
+    <Acronym Enabled="true" Key="dala" Value="Dalaran" Group="wow" />
+    <Acronym Enabled="true" Key="dally" Value="Dalaran" Group="wow" />
+    <Acronym Enabled="true" Key="dar" Value="Darnassus" Group="wow" />
+    <Acronym Enabled="true" Key="darn" Value="Darnassus" Group="wow" />
+    <Acronym Enabled="true" Key="dc" Value="disconnect" Group="" />
+    <Acronym Enabled="true" Key="dcd" Value="disconnected" Group="" />
+    <Acronym Enabled="true" Key="dcn" Value="disconnection" Group="" />
+    <Acronym Enabled="true" Key="dd" Value="direct damage" Group="wow" />
+    <Acronym Enabled="true" Key="ding" Value="level up" Group="" />
+    <Acronym Enabled="true" Key="disc" Value="discipline priest" Group="wow" />
+    <Acronym Enabled="true" Key="dk" Value="death knight" Group="wow" />
+    <Acronym Enabled="true" Key="dkp" Value="dragon kill points" Group="wow" />
+    <Acronym Enabled="true" Key="dm" Regex="[D][m]" Value="Deadmines" Group="wow" />
+    <Acronym Enabled="true" Key="DM" Regex="[D][M]" Value="Dire Maul" Group="wow" />
+    <Acronym Enabled="true" Key="dm east" Value="Dire Maul: Warpwood Quarter" Group="wow" />
+    <Acronym Enabled="true" Key="dm north" Value="Dire Maul: Gordok Commons" Group="wow" />
+    <Acronym Enabled="true" Key="dm west" Value="Dire Maul: Capital Gardens" Group="wow" />
+    <Acronym Enabled="true" Key="dmg" Value="damage" Group="" />
+    <Acronym Enabled="true" Key="dnd" Value="do not disturb" Group="" />
+    <Acronym Enabled="true" Key="dot" Value="damage over time" Group="wow" />
+    <Acronym Enabled="true" Key="dpm" Value="damage per mana" Group="wow" />
+    <Acronym Enabled="true" Key="dps" Value="damage per second" Group="wow" />
+    <Acronym Enabled="true" Key="drm" Value="Dire Maul" Group="wow" />
+    <Acronym Enabled="true" Key="drood" Value="druid" Group="wow" />
+    <Acronym Enabled="true" Key="dru" Value="druid" Group="wow" />
+    <Acronym Enabled="true" Key="dtps" Value="damage per second" Group="" />
+    <Acronym Enabled="true" Key="dw" Value="don't worry" Group="" />
+    <Acronym Enabled="true" Key="ec" Value="enchanting" Group="wow" />
+    <Acronym Enabled="true" Key="efc" Value="enemy flag carrier" Group="wow" />
+    <Acronym Enabled="true" Key="ele" Value="elemental" Group="wow" />
+    <Acronym Enabled="true" Key="en" Value="enchanter" Group="wow" />
+    <Acronym Enabled="true" Key="enc" Value="enchanter" Group="wow" />
+    <Acronym Enabled="true" Key="enh" Value="enhancement" Group="wow" />
+    <Acronym Enabled="true" Key="enha" Value="enhancement" Group="wow" />
+    <Acronym Enabled="true" Key="eos" Value="Eye of the Storm" Group="wow" />
+    <Acronym Enabled="true" Key="epgp" Value="point-based loot system" Group="" />
+    <Acronym Enabled="true" Key="epl" Value="Eastern Plaguelands" Group="wow" />
+    <Acronym Enabled="true" Key="eq" Value="real quick" Group="" />
+    <Acronym Enabled="true" Key="er" Value="entangling roots" Group="wow" />
+    <Acronym Enabled="true" Key="ex" Value="Exodar" Group="wow" />
+    <Acronym Enabled="true" Key="exd" Value="Exodar" Group="wow" />
+    <Acronym Enabled="true" Key="exp" Value="experience" Group="" />
+    <Acronym Enabled="true" Key="expan" Value="expansion" Group="" />
+    <Acronym Enabled="true" Key="expn" Value="expansion" Group="" />
+    <Acronym Enabled="true" Key="fbg" Value="failed battleground" Group="wow" />
+    <Acronym Enabled="true" Key="fc" Value="flag carrier" Group="wow" />
+    <Acronym Enabled="true" Key="fd" Value="Feign Death" Group="wow" />
+    <Acronym Enabled="true" Key="ffa" Value="free for all" Group="" />
+    <Acronym Enabled="true" Key="ffs" Value="for fuck sake" Group="" />
+    <Acronym Enabled="true" Key="ffss" Value="for fuck's sake" Group="" />
+    <Acronym Enabled="true" Key="fl" Value="Firelands" Group="wow" />
+    <Acronym Enabled="true" Key="flr" Value="flag room" Group="wow" />
+    <Acronym Enabled="true" Key="fm" Value="focus magic" Group="wow" />
+    <Acronym Enabled="true" Key="fml" Value="fuck my life" Group="" />
+    <Acronym Enabled="true" Key="fos" Value="Forge of Souls" Group="wow" />
+    <Acronym Enabled="true" Key="fp" Value="flight point" Group="" />
+    <Acronym Enabled="true" Key="fps" Value="frames per second" Group="" />
+    <Acronym Enabled="true" Key="fr" Value="fire resistance" Group="wow" />
+    <Acronym Enabled="true" Key="frosty" Value="frost mage" Group="wow" />
+    <Acronym Enabled="true" Key="fta" Value="for the Alliance" Group="wow" />
+    <Acronym Enabled="true" Key="fth" Value="for the Horde" Group="wow" />
+    <Acronym Enabled="true" Key="ftk" Value="for the kill" Group="wow" />
+    <Acronym Enabled="true" Key="ftl" Value="for the loss" Group="wow" />
+    <Acronym Enabled="true" Key="ftlog" Value="for the love of god" Group="wow" />
+    <Acronym Enabled="true" Key="ftw" Value="for the win" Group="wow" />
+    <Acronym Enabled="true" Key="g" Value="gold" Group="wow" />
+    <Acronym Enabled="true" Key="g2g" Value="got to go" Group="" />
+    <Acronym Enabled="true" Key="gank" Value="unfairly kill" Group="" />
+    <Acronym Enabled="true" Key="ganked" Value="unfairly killed" Group="" />
+    <Acronym Enabled="true" Key="gb" Value="guild bank" Group="wow" />
+    <Acronym Enabled="true" Key="Gc" Regex="[G][c]" Value="Ghostcrawler" Group="wow" />
+    <Acronym Enabled="true" Key="GC" Regex="[G][C]" Value="guild chat" Group="wow" />
+    <Acronym Enabled="true" Key="gcd" Value="global cooldown" Group="wow" />
+    <Acronym Enabled="true" Key="gd" Value="good duel" Group="" />
+    <Acronym Enabled="true" Key="gdkp" Value="highest bidder gets the best item" Group="" />
+    <Acronym Enabled="true" Key="gf" Value="girlfriend" Group="" />
+    <Acronym Enabled="true" Key="gg" Value="good game" Group="" />
+    <Acronym Enabled="true" Key="gj" Value="good job" Group="" />
+    <Acronym Enabled="true" Key="gl" Regex="[Gg][l]" Value="good luck" Group="" />
+    <Acronym Enabled="true" Key="GL" Regex="[GG][L]" Value="Gruul's Lair" Group="wow" />
+    <Acronym Enabled="true" Key="gm" Regex="[Gg][m]" Value="game master" Group="" />
+    <Acronym Enabled="true" Key="GM" Regex="[Gg][M]" Value="Gold Mine" Group="wow" />
+    <Acronym Enabled="true" Key="gm" Value="guild master" Group="wow" />
+    <Acronym Enabled="true" Key="gn" Value="good night" Group="" />
+    <Acronym Enabled="true" Key="gnome" Value="Gnomeregan" Group="wow" />
+    <Acronym Enabled="true" Key="gnomer" Value="Gnomeregan" Group="wow" />
+    <Acronym Enabled="true" Key="goml" Value="get on my level" Group="" />
+    <Acronym Enabled="true" Key="gr8" Value="great" Group="" />
+    <Acronym Enabled="true" Key="gratz" Value="congratulations" Group="" />
+    <Acronym Enabled="true" Key="grt" Value="great" Group="" />
+    <Acronym Enabled="true" Key="grvyard" Value="Graveyard" Group="wow" />
+    <Acronym Enabled="true" Key="gryv" Value="Graveyard" Group="wow" />
+    <Acronym Enabled="true" Key="gs" Value="gear score" Group="wow" />
+    <Acronym Enabled="true" Key="gtfo" Value="get the fuck out" Group="" />
+    <Acronym Enabled="true" Key="gtg" Value="good to go" Group="" />
+    <Acronym Enabled="true" Key="guildies" Value="guild members" Group="wow" />
+    <Acronym Enabled="true" Key="gy" Value="Graveyard" Group="wow" />
+    <Acronym Enabled="true" Key="gz" Value="congratulations" Group="" />
+    <Acronym Enabled="true" Key="gzz" Value="congratulations" Group="" />
+    <Acronym Enabled="true" Key="h" Value="heroic" Group="wow" />
+    <Acronym Enabled="true" Key="h4x" Value="hacks" Group="" />
+    <Acronym Enabled="true" Key="hax" Value="hacks" Group="" />
+    <Acronym Enabled="true" Key="hc" Value="heroic" Group="wow" />
+    <Acronym Enabled="true" Key="heals" Value="healer" Group="wow" />
+    <Acronym Enabled="true" Key="hero" Value="heroism" Group="wow" />
+    <Acronym Enabled="true" Key="hf" Value="Howling Fjord" Group="wow" />
+    <Acronym Enabled="true" Key="hfc" Value="Hellfire Citadel" Group="wow" />
+    <Acronym Enabled="true" Key="hfp" Value="Hellfire Peninsula" Group="wow" />
+    <Acronym Enabled="true" Key="hh" Value="Honor Hold" Group="wow" />
+    <Acronym Enabled="true" Key="hk" Value="honor kills" Group="wow" />
+    <Acronym Enabled="true" Key="hlp" Value="help" Group="" />
+    <Acronym Enabled="true" Key="hm" Value="hard mode" Group="wow" />
+    <Acronym Enabled="true" Key="hnp" Value="honor points" Group="wow" />
+    <Acronym Enabled="true" Key="hol" Value="Halls of Lightning" Group="wow" />
+    <Acronym Enabled="true" Key="holy" Value="holy paladin" Group="wow" />
+    <Acronym Enabled="true" Key="hor" Value="Halls of Reflection" Group="wow" />
+    <Acronym Enabled="true" Key="hos" Value="Halls of Stone" Group="wow" />
+    <Acronym Enabled="true" Key="hot" Value="heal over time" Group="wow" />
+    <Acronym Enabled="true" Key="hp" Value="hit points" Group="wow" />
+    <Acronym Enabled="true" Key="hp5" Value="heals per 5 seconds" Group="wow" />
+    <Acronym Enabled="true" Key="hps" Value="heals per second" Group="wow" />
+    <Acronym Enabled="true" Key="hr" Value="Hellfire Ramparts" Group="wow" />
+    <Acronym Enabled="true" Key="hramps" Value="Hellfire Ramparts" Group="wow" />
+    <Acronym Enabled="true" Key="hs" Value="hearthstone" Group="wow" />
+    <Acronym Enabled="true" Key="huntard" Value="hunter" Group="wow" />
+    <Acronym Enabled="true" Key="i agree^" Value="I agree with the post above" Group="" />
+    <Acronym Enabled="true" Key="i agree^^" Value="I agree with the post two above" Group="" />
+    <Acronym Enabled="true" Key="iamf" Value="It's all my fault" Group="" />
+    <Acronym Enabled="true" Key="ic" Value="in character" Group="wow" />
+    <Acronym Enabled="true" Key="icc" Value="Icecrown Citadel" Group="wow" />
+    <Acronym Enabled="true" Key="icd" Value="internal cooldown" Group="wow" />
+    <Acronym Enabled="true" Key="idc" Value="I don't care" Group="" />
+    <Acronym Enabled="true" Key="idd" Value="indeed" Group="" />
+    <Acronym Enabled="true" Key="idk" Value="I don't know" Group="" />
+    <Acronym Enabled="true" Key="idm" Value="I don’t mind" Group="" />
+    <Acronym Enabled="true" Key="IF" Regex="[Ii][F]" Value="Ironforge" Group="wow" />
+    <Acronym Enabled="true" Key="iforge" Value="Ironforge" Group="" />
+    <Acronym Enabled="true" Key="iirc" Value="if I remember correctly" Group="" />
+    <Acronym Enabled="true" Key="ik" Value="I know" Group="" />
+    <Acronym Enabled="true" Key="ikr" Value="I know right" Group="" />
+    <Acronym Enabled="true" Key="ikw" Value="I know" Group="" />
+    <Acronym Enabled="true" Key="ilvl" Value="item level" Group="" />
+    <Acronym Enabled="true" Key="imba" Value="imbalanced" Group="" />
+    <Acronym Enabled="true" Key="imho" Value="in my humble opinion" Group="" />
+    <Acronym Enabled="true" Key="imo" Value="in my opinion" Group="" />
+    <Acronym Enabled="true" Key="inc" Value="incoming" Group="" />
+    <Acronym Enabled="true" Key="ins" Value="inscription" Group="wow" />
+    <Acronym Enabled="true" Key="inst" Value="instance" Group="wow" />
+    <Acronym Enabled="true" Key="int" Value="intellect" Group="" />
+    <Acronym Enabled="true" Key="interpt" Value="interrupt" Group="" />
+    <Acronym Enabled="true" Key="intr" Value="interrupt" Group="" />
+    <Acronym Enabled="true" Key="inv" Value="invite" Group="" />
+    <Acronym Enabled="true" Key="irl" Value="in real life" Group="" />
+    <Acronym Enabled="true" Key="jc" Value="jewelcrafting" Group="wow" />
+    <Acronym Enabled="true" Key="jcr" Value="jewelcrafter" Group="wow" />
+    <Acronym Enabled="true" Key="jk" Value="joking" Group="" />
+    <Acronym Enabled="true" Key="jkd" Value="just kidding" Group="" />
+    <Acronym Enabled="true" Key="jking" Value="joking" Group="" />
+    <Acronym Enabled="true" Key="jp" Value="justice points" Group="" />
+    <Acronym Enabled="true" Key="k" Value="ok" Group="" />
+    <Acronym Enabled="true" Key="kay" Value="okay" Group="" />
+    <Acronym Enabled="true" Key="kb" Value="killing blow" Group="wow" />
+    <Acronym Enabled="true" Key="kj" Value="Kil'jaeden" Group="wow" />
+    <Acronym Enabled="true" Key="kk" Value="okay" Group="" />
+    <Acronym Enabled="true" Key="kos" Value="kill on sight" Group="wow" />
+    <Acronym Enabled="true" Key="kt" Value="Kel'Thuzad" Group="wow" />
+    <Acronym Enabled="true" Key="l@u" Value="laughing at you" Group="" />
+    <Acronym Enabled="true" Key="l2" Value="learn to" Group="" />
+    <Acronym Enabled="true" Key="l2p" Value="learn to play" Group="" />
+    <Acronym Enabled="true" Key="l2pyc" Value="learn to play your class" Group="" />
+    <Acronym Enabled="true" Key="l8" Value="late" Group="" />
+    <Acronym Enabled="true" Key="lawl" Value="laugh out loud" Group="" />
+    <Acronym Enabled="true" Key="lbrs" Value="Lower Blackrock Spire" Group="wow" />
+    <Acronym Enabled="true" Key="lf" Value="looking for" Group="" />
+    <Acronym Enabled="true" Key="lf1m" Regex="[Ll][Ff]([0-9]+)[Mm]" Value="looking for $1 more" Group="" />
+    <Acronym Enabled="true" Key="lfd" Value="looking for dungeon finder tool" Group="wow" />
+    <Acronym Enabled="true" Key="lfg" Value="looking for guild" Group="wow" />
+    <Acronym Enabled="true" Key="lfgr" Value="looking for group" Group="wow" />
+    <Acronym Enabled="true" Key="lfm" Value="looking for member" Group="wow" />
+    <Acronym Enabled="true" Key="lfmo" Value="looking for more" Group="wow" />
+    <Acronym Enabled="true" Key="lfr" Value="looking for raid finder tool" Group="wow" />
+    <Acronym Enabled="true" Key="lfw" Value="looking for work" Group="wow" />
+    <Acronym Enabled="true" Key="lib" Value="library" Group="wow" />
+    <Acronym Enabled="true" Key="lk" Value="Lich King" Group="wow" />
+    <Acronym Enabled="true" Key="lm" Value="lumber mill" Group="wow" />
+    <Acronym Enabled="true" Key="lmao" Value="laughing my ass off" Group="" />
+    <Acronym Enabled="true" Key="lockster" Value="warlock" Group="wow" />
+    <Acronym Enabled="true" Key="lol" Value="laugh out loud" Group="" />
+    <Acronym Enabled="true" Key="lom" Value="low on mana" Group="wow" />
+    <Acronym Enabled="true" Key="loom" Value="heirloom" Group="wow" />
+    <Acronym Enabled="true" Key="lore" Value="background story" Group="wow" />
+    <Acronym Enabled="true" Key="los" Value="line of sight" Group="" />
+    <Acronym Enabled="true" Key="lrn2" Value="learn to" Group="" />
+    <Acronym Enabled="true" Key="lvl" Value="level" Group="" />
+    <Acronym Enabled="true" Key="lw" Value="leatherworker" Group="wow" />
+    <Acronym Enabled="true" Key="lwg" Value="leatherworking" Group="wow" />
+    <Acronym Enabled="true" Key="m8" Value="mate" Group="" />
+    <Acronym Enabled="true" Key="mancow" Value="male cow" Group="wow" />
+    <Acronym Enabled="true" Key="mara" Value="Maraudon" Group="wow" />
+    <Acronym Enabled="true" Key="mara oc" Value="Maraudon: Orange Crystals" Group="wow" />
+    <Acronym Enabled="true" Key="mara pc" Value="Maraudon: Purple Crystals" Group="wow" />
+    <Acronym Enabled="true" Key="mara pw" Value="Maraudon: Pristine Waters" Group="wow" />
+    <Acronym Enabled="true" Key="mats" Value="materials" Group="wow" />
+    <Acronym Enabled="true" Key="mb" Value="mana break" Group="wow" />
+    <Acronym Enabled="true" Key="mc" Regex="[Mm][c]" Value="mind control" Group="wow" />
+    <Acronym Enabled="true" Key="MC" Regex="[MM][C]" Value="Molten Core" Group="wow" />
+    <Acronym Enabled="true" Key="md" Value="misdirect" Group="wow" />
+    <Acronym Enabled="true" Key="mdps" Value="melee dps per second" Group="wow" />
+    <Acronym Enabled="true" Key="mgt" Value="Magister's Terrace" Group="wow" />
+    <Acronym Enabled="true" Key="mh" Regex="[Mm][h]" Value="markmanship hunter" Group="wow" />
+    <Acronym Enabled="true" Key="MH" Regex="[MM][H]" Value="Mount Hyjal" Group="wow" />
+    <Acronym Enabled="true" Key="ML" Regex="[Mm][L]" Value="Magtheridon's Lair" Group="wow" />
+    <Acronym Enabled="true" Key="ml" Regex="[Mm][l]" Value="master looter" Group="wow" />
+    <Acronym Enabled="true" Key="mmog" Value="massively multiplayer online game" Group="" />
+    <Acronym Enabled="true" Key="mmorpg" Value="massively multiplayer online role-playing game" Group="" />
+    <Acronym Enabled="true" Key="mob" Value="mobile object" Group="wow" />
+    <Acronym Enabled="true" Key="mop" Value="Mists of Pandaria" Group="wow" />
+    <Acronym Enabled="true" Key="motd" Value="message of the day" Group="wow" />
+    <Acronym Enabled="true" Key="motw" Value="mark of the wild" Group="wow" />
+    <Acronym Enabled="true" Key="mow" Value="mark of the wild" Group="wow" />
+    <Acronym Enabled="true" Key="mvp" Value="most valued poster" Group="wow" />
+    <Acronym Enabled="true" Key="naxx" Value="Naxxaramus" Group="wow" />
+    <Acronym Enabled="true" Key="ne" Value="night elf" Group="wow" />
+    <Acronym Enabled="true" Key="neffy" Value="Nefarion" Group="wow" />
+    <Acronym Enabled="true" Key="nelf" Value="night elf" Group="wow" />
+    <Acronym Enabled="true" Key="nerf" Value="make weaker" Group="" />
+    <Acronym Enabled="true" Key="nm" Value="nothing much" Group="" />
+    <Acronym Enabled="true" Key="nn" Value="night night" Group="" />
+    <Acronym Enabled="true" Key="noty" Value="no thank you" Group="" />
+    <Acronym Enabled="true" Key="np" Value="no problem" Group="" />
+    <Acronym Enabled="true" Key="npc" Value="non-player character" Group="" />
+    <Acronym Enabled="true" Key="nr" Value="nature resistance" Group="wow" />
+    <Acronym Enabled="true" Key="nstv" Value="Northen Stranglethorn Vale" Group="wow" />
+    <Acronym Enabled="true" Key="nty" Value="no thank you" Group="" />
+    <Acronym Enabled="true" Key="nub" Value="noob" Group="" />
+    <Acronym Enabled="true" Key="nvm" Value="never mind" Group="" />
+    <Acronym Enabled="true" Key="nw" Value="no worries" Group="" />
+    <Acronym Enabled="true" Key="nyi" Value="not yet implemented" Group="" />
+    <Acronym Enabled="true" Key="obv" Value="obviously" Group="" />
+    <Acronym Enabled="true" Key="obvs" Value="obviously" Group="" />
+    <Acronym Enabled="true" Key="oc" Value="of course" Group="" />
+    <Acronym Enabled="true" Key="ofc" Value="of course" Group="" />
+    <Acronym Enabled="true" Key="og" Value="Orgrimmar" Group="wow" />
+    <Acronym Enabled="true" Key="omfg" Value="oh my fucking god" Group="" />
+    <Acronym Enabled="true" Key="omg" Value="oh my god" Group="" />
+    <Acronym Enabled="true" Key="omw" Value="oh my word" Group="" />
+    <Acronym Enabled="true" Key="omwy" Value="On my way" Group="" />
+    <Acronym Enabled="true" Key="ony" Value="Onyxia" Group="wow" />
+    <Acronym Enabled="true" Key="ooc" Value="out of character" Group="wow" />
+    <Acronym Enabled="true" Key="oocomt" Value="out of combat" Group="wow" />
+    <Acronym Enabled="true" Key="oom" Value="out of mana" Group="wow" />
+    <Acronym Enabled="true" Key="oor" Value="out of range" Group="wow" />
+    <Acronym Enabled="true" Key="oos" Value="out of sight" Group="wow" />
+    <Acronym Enabled="true" Key="op" Value="original poster" Group="" />
+    <Acronym Enabled="true" Key="opw" Value="overpowered" Group="" />
+    <Acronym Enabled="true" Key="org" Value="Orgrimmar" Group="wow" />
+    <Acronym Enabled="true" Key="orgie" Value="Orgrimmar" Group="wow" />
+    <Acronym Enabled="true" Key="otw" Value="on the way" Group="" />
+    <Acronym Enabled="true" Key="pala" Value="paladin" Group="wow" />
+    <Acronym Enabled="true" Key="pally" Value="paladin" Group="wow" />
+    <Acronym Enabled="true" Key="pat" Value="patrol" Group="" />
+    <Acronym Enabled="true" Key="pc" Value="computer" Group="" />
+    <Acronym Enabled="true" Key="pch" Value="player's character" Group="wow" />
+    <Acronym Enabled="true" Key="peeps" Value="people" Group="" />
+    <Acronym Enabled="true" Key="peps" Value="people" Group="" />
+    <Acronym Enabled="true" Key="pk" Value="player kill" Group="" />
+    <Acronym Enabled="true" Key="pkd" Value="player killed" Group="" />
+    <Acronym Enabled="true" Key="pker" Value="player killer" Group="" />
+    <Acronym Enabled="true" Key="pkr" Value="player killer" Group="" />
+    <Acronym Enabled="true" Key="pl8" Value="plate armour" Group="wow" />
+    <Acronym Enabled="true" Key="plox" Value="please" Group="" />
+    <Acronym Enabled="true" Key="pls" Value="please" Group="" />
+    <Acronym Enabled="true" Key="pm" Value="private message" Group="" />
+    <Acronym Enabled="true" Key="pmsl" Value="peeing my self laughing" Group="" />
+    <Acronym Enabled="true" Key="poly" Value="polymorph" Group="wow" />
+    <Acronym Enabled="true" Key="port" Value="portal" Group="wow" />
+    <Acronym Enabled="true" Key="pos" Value="Pit of Saron" Group="wow" />
+    <Acronym Enabled="true" Key="powned" Value="owned" Group="" />
+    <Acronym Enabled="true" Key="powning" Value="dominating" Group="" />
+    <Acronym Enabled="true" Key="prc" Value="parental control" Group="" />
+    <Acronym Enabled="true" Key="proc" Value="random occurrence" Group="" />
+    <Acronym Enabled="true" Key="prot" Value="protection" Group="wow" />
+    <Acronym Enabled="true" Key="protadin" Value="protection paladin" Group="wow" />
+    <Acronym Enabled="true" Key="protpal" Value="protection paladin" Group="wow" />
+    <Acronym Enabled="true" Key="pug" Value="pick up group" Group="wow" />
+    <Acronym Enabled="true" Key="pve" Value="player versus environment" Group="" />
+    <Acronym Enabled="true" Key="pvp" Value="player versus player" Group="" />
+    <Acronym Enabled="true" Key="pvpve" Value="player versus versus player versus environment" Group="" />
+    <Acronym Enabled="true" Key="pwned" Value="owned" Group="" />
+    <Acronym Enabled="true" Key="pwning" Value="dominating" Group="" />
+    <Acronym Enabled="true" Key="q&amp;a" Value="questions and answers" Group="" />
+    <Acronym Enabled="true" Key="qft" Value="quoted for truth" Group="" />
+    <Acronym Enabled="true" Key="qm" Value="quatermaster" Group="wow" />
+    <Acronym Enabled="true" Key="qq" Value="qry-qry" Group="" />
+    <Acronym Enabled="true" Key="r" Value="are" Group="" />
+    <Acronym Enabled="true" Key="r" Regex="^[Rr]$" Value="ready" Group="" />
+    <Acronym Enabled="true" Key="ramps" Value="Hellfire Ramparts" Group="wow" />
+    <Acronym Enabled="true" Key="rap" Value="ranged attack power" Group="wow" />
+    <Acronym Enabled="true" Key="rbgs" Value="rated battlegrounds" Group="wow" />
+    <Acronym Enabled="true" Key="rdps" Value="ranged damage per second" Group="wow" />
+    <Acronym Enabled="true" Key="rdy" Value="ready" Group="" />
+    <Acronym Enabled="true" Key="re roll" Value="switch to a new main character" Group="wow" />
+    <Acronym Enabled="true" Key="rep" Value="reputation" Group="wow" />
+    <Acronym Enabled="true" Key="res" Value="resurrect" Group="wow" />
+    <Acronym Enabled="true" Key="respec" Value="swap to a different talent tree or specialization" Group="wow" />
+    <Acronym Enabled="true" Key="ress" Value="resurrect" Group="wow" />
+    <Acronym Enabled="true" Key="resto" Value="restoration" Group="wow" />
+    <Acronym Enabled="true" Key="ret" Value="retribution" Group="wow" />
+    <Acronym Enabled="true" Key="retadin" Value="retribution" Group="wow" />
+    <Acronym Enabled="true" Key="rez" Value="resurrect" Group="wow" />
+    <Acronym Enabled="true" Key="rezz" Value="resurrect" Group="wow" />
+    <Acronym Enabled="true" Key="rfc" Value="Ragefire Chasm" Group="wow" />
+    <Acronym Enabled="true" Key="rfd" Value="Razorfen Downs" Group="wow" />
+    <Acronym Enabled="true" Key="rfk" Value="Razorfen Kraul" Group="wow" />
+    <Acronym Enabled="true" Key="rhc" Value="random heroic" Group="wow" />
+    <Acronym Enabled="true" Key="rl" Value="raid leader" Group="wow" />
+    <Acronym Enabled="true" Key="rlf" Value="real life" Group="" />
+    <Acronym Enabled="true" Key="rng" Value="random number generator" Group="" />
+    <Acronym Enabled="true" Key="rof" Value="ring of frost" Group="wow" />
+    <Acronym Enabled="true" Key="rofl" Value="rolling on the floor laughing" Group="" />
+    <Acronym Enabled="true" Key="roflmao" Value="rolling on the floor laughing my ass off" Group="" />
+    <Acronym Enabled="true" Key="rp" Value="role playing" Group="" />
+    <Acronym Enabled="true" Key="rs" Value="The Ruby Sanctum" Group="wow" />
+    <Acronym Enabled="true" Key="rtg" Value="ready to go" Group="" />
+    <Acronym Enabled="true" Key="rw" Value="real world" Group="" />
+    <Acronym Enabled="true" Key="scholo" Value="Scholomance" Group="wow" />
+    <Acronym Enabled="true" Key="sec" Value="second" Group="" />
+    <Acronym Enabled="true" Key="sehs" Value="Sethtek Halls" Group="wow" />
+    <Acronym Enabled="true" Key="sfk" Value="Shadowfang Keep" Group="wow" />
+    <Acronym Enabled="true" Key="sham" Value="shaman" Group="wow" />
+    <Acronym Enabled="true" Key="shammy" Value="shaman" Group="wow" />
+    <Acronym Enabled="true" Key="shat" Value="Shattarah City" Group="wow" />
+    <Acronym Enabled="true" Key="shatt" Value="Shattarah City" Group="wow" />
+    <Acronym Enabled="true" Key="shh" Value="Shattered Halls" Group="wow" />
+    <Acronym Enabled="true" Key="sig" Value="signature" Group="wow" />
+    <Acronym Enabled="true" Key="sigs" Value="signatures" Group="wow" />
+    <Acronym Enabled="true" Key="sm" Value="Scarlet Monastery" Group="wow" />
+    <Acronym Enabled="true" Key="sim" Value="Silvermoon" Group="wow" />
+    <Acronym Enabled="true" Key="sm arm" Value="Scarlet Monastry: The Armory" Group="wow" />
+    <Acronym Enabled="true" Key="sm cath" Value="Scarlet Monastry: The Cathedral" Group="wow" />
+    <Acronym Enabled="true" Key="sm gy" Value="Scarlet Monastry: The Graveyard" Group="wow" />
+    <Acronym Enabled="true" Key="sm lib" Value="Scarlet Monastry: The Library" Group="wow" />
+    <Acronym Enabled="true" Key="smc" Value="Silvermoon City" Group="wow" />
+    <Acronym Enabled="true" Key="smoon" Value="Silvermoon" Group="wow" />
+    <Acronym Enabled="true" Key="smv" Value="Shadow Moon Valley" Group="wow" />
+    <Acronym Enabled="true" Key="soa" Value="Strand of the Ancients" Group="wow" />
+    <Acronym Enabled="true" Key="soz" Value="sorry" Group="" />
+    <Acronym Enabled="true" Key="sp" Value="shadow priest" Group="wow" />
+    <Acronym Enabled="true" Key="spec" Value="talent specialization" Group="wow" />
+    <Acronym Enabled="true" Key="spi" Value="spirit" Group="wow" />
+    <Acronym Enabled="true" Key="spn" Value="spell penetration" Group="wow" />
+    <Acronym Enabled="true" Key="spw" Value="spell power" Group="wow" />
+    <Acronym Enabled="true" Key="srry" Value="sorry" Group="" />
+    <Acronym Enabled="true" Key="ss" Value="screen shot" Group="" />
+    <Acronym Enabled="true" Key="sstv" Value="Southern Stranglethorn Vale" Group="wow" />
+    <Acronym Enabled="true" Key="st" Regex="[Ss][t]" Value="stables" Group="wow" />
+    <Acronym Enabled="true" Key="ST" Regex="[SS][T]" Value="Sunken Temple" Group="wow" />
+    <Acronym Enabled="true" Key="sta" Value="stamina" Group="wow" />
+    <Acronym Enabled="true" Key="stam" Value="stamina" Group="wow" />
+    <Acronym Enabled="true" Key="stfu" Value="shut the fuck up" Group="" />
+    <Acronym Enabled="true" Key="stocks" Value="Stormwind Stockades" Group="wow" />
+    <Acronym Enabled="true" Key="str" Value="strength" Group="wow" />
+    <Acronym Enabled="true" Key="strat" Value="Stratholme" Group="wow" />
+    <Acronym Enabled="true" Key="strat mg" Value="Stratholme: Main Gate" Group="wow" />
+    <Acronym Enabled="true" Key="strat se" Value="Stratholme: Service Entrance" Group="wow" />
+    <Acronym Enabled="true" Key="stv" Value="Stranglethorn Vale" Group="wow" />
+    <Acronym Enabled="true" Key="sub" Value="Subtlety" Group="wow" />
+    <Acronym Enabled="true" Key="sw" Value="Stormwind" Group="wow" />
+    <Acronym Enabled="true" Key="swind" Value="Stormwind" Group="wow" />
+    <Acronym Enabled="true" Key="sws" Value="Stormwind Stockade" Group="wow" />
+    <Acronym Enabled="true" Key="t&amp;s" Value="tank and spank" Group="wow" />
+    <Acronym Enabled="true" Key="t1" Regex="[Tt]([0-9]+)" Value="tier $1" Group="wow" />
+    <Acronym Enabled="true" Key="tab" Value="tabard" Group="wow" />
+    <Acronym Enabled="true" Key="tabby" Value="tabard" Group="wow" />
+    <Acronym Enabled="true" Key="tag" Value="hit a monster first" Group="wow" />
+    <Acronym Enabled="true" Key="tb" Value="Tol Barad" Group="wow" />
+    <Acronym Enabled="true" Key="tbf" Value="to be fair" Group="" />
+    <Acronym Enabled="true" Key="tbh" Value="to be honest" Group="" />
+    <Acronym Enabled="true" Key="tfw" Value="Throne of the Four Winds" Group="wow" />
+    <Acronym Enabled="true" Key="th" Value="Twilight Highlands" Group="wow" />
+    <Acronym Enabled="true" Key="thb" Value="Thunder Bluff" Group="wow" />
+    <Acronym Enabled="true" Key="thx" Value="thank you" Group="" />
+    <Acronym Enabled="true" Key="tic" Value="increment of" Group="" />
+    <Acronym Enabled="true" Key="tick" Value="increment of" Group="" />
+    <Acronym Enabled="true" Key="tldr" Value="too long, didn't read" Group="" />
+    <Acronym Enabled="true" Key="toah" Value="Temple of Atal'Hakkar" Group="wow" />
+    <Acronym Enabled="true" Key="toc" Value="Trial of the Crusader" Group="wow" />
+    <Acronym Enabled="true" Key="togc" Value="Trial of the Grand Crusader" Group="wow" />
+    <Acronym Enabled="true" Key="toon" Value="character" Group="" />
+    <Acronym Enabled="true" Key="tp" Value="Twin Peaks" Group="wow" />
+    <Acronym Enabled="true" Key="tps" Value="threat per second" Group="wow" />
+    <Acronym Enabled="true" Key="tpw" Value="total party wipe" Group="wow" />
+    <Acronym Enabled="true" Key="ts" Value="Teamspeak" Group="" />
+    <Acronym Enabled="true" Key="ttyl" Value="talk to you later" Group="" />
+    <Acronym Enabled="true" Key="ty" Value="thank you" Group="" />
+    <Acronym Enabled="true" Key="tyt" Value="take your time" Group="" />
+    <Acronym Enabled="true" Key="tyvm" Value="thank you very much" Group="" />
+    <Acronym Enabled="true" Key="u" Value="you" Group="" />
+    <Acronym Enabled="true" Key="ubrs" Value="Upper Blackrock Spire" Group="wow" />
+    <Acronym Enabled="true" Key="uc" Value="Undercity" Group="wow" />
+    <Acronym Enabled="true" Key="ucity" Value="Undercity" Group="wow" />
+    <Acronym Enabled="true" Key="ui" Value="user interface" Group="" />
+    <Acronym Enabled="true" Key="uk" Value="Utgarde Keep" Group="wow" />
+    <Acronym Enabled="true" Key="ul" Value="Unlucky" Group="wow" />
+    <Acronym Enabled="true" Key="uld" Value="Ulduar" Group="wow" />
+    <Acronym Enabled="true" Key="ulda" Value="Uldaman" Group="wow" />
+    <Acronym Enabled="true" Key="up" Value="Utgarde Pinnacle" Group="wow" />
+    <Acronym Enabled="true" Key="vanilla" Value="original WoW" Group="wow" />
+    <Acronym Enabled="true" Key="vent" Value="Ventrillo" Group="" />
+    <Acronym Enabled="true" Key="vp" Regex="[Vv][p]" Value="valor points" Group="wow" />
+    <Acronym Enabled="true" Key="VP" Regex="[VV][P]" Value="Vortex Pinnacle" Group="wow" />
+    <Acronym Enabled="true" Key="w2g" Value="way to go" Group="" />
+    <Acronym Enabled="true" Key="w8" Value="wait" Group="" />
+    <Acronym Enabled="true" Key="warr" Value="warrior" Group="wow" />
+    <Acronym Enabled="true" Key="wb" Value="welcome back" Group="" />
+    <Acronym Enabled="true" Key="wc" Value="Wailing Caverns" Group="wow" />
+    <Acronym Enabled="true" Key="wg" Value="Warsong Gulch" Group="wow" />
+    <Acronym Enabled="true" Key="Wg" Value="Wintergrasp" Group="wow" />
+    <Acronym Enabled="true" Key="wlock" Value="warlock" Group="wow" />
+    <Acronym Enabled="true" Key="wotlk" Value="Wrath of the Lich King" Group="wow" />
+    <Acronym Enabled="true" Key="wow" Value="World of Warcraft" Group="wow" />
+    <Acronym Enabled="true" Key="wp" Value="Western Plaguelands" Group="wow" />
+    <Acronym Enabled="true" Key="wsg" Value="Warsong Gulch" Group="wow" />
+    <Acronym Enabled="true" Key="wtb" Value="want to buy" Group="wow" />
+    <Acronym Enabled="true" Key="wtfk" Value="what the fuck" Group="" />
+    <Acronym Enabled="true" Key="wtg" Value="want to give" Group="" />
+    <Acronym Enabled="true" Key="wtgo" Value="way to go" Group="" />
+    <Acronym Enabled="true" Key="wth" Value="what the hell" Group="" />
+    <Acronym Enabled="true" Key="wts" Value="want to sell" Group="wow" />
+    <Acronym Enabled="true" Key="wtsf" Value="want to sell fast" Group="wow" />
+    <Acronym Enabled="true" Key="wtt" Value="want to trade" Group="wow" />
+    <Acronym Enabled="true" Key="xp" Value="experience" Group="" />
+    <Acronym Enabled="true" Key="xpac" Value="expansion" Group="" />
+    <Acronym Enabled="true" Key="yw" Value="you're welcome" Group="" />
+    <Acronym Enabled="true" Key="za" Value="Zul'Aman" Group="wow" />
+    <Acronym Enabled="true" Key="zf" Value="Zul'Farrak" Group="wow" />
+    <Acronym Enabled="true" Key="zg" Value="Zul'Gurub" Group="wow" />
   </Items>
 </Data>
