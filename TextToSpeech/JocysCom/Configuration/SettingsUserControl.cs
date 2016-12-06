@@ -36,6 +36,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		public SettingsUserControl()
 		{
 			InitializeComponent();
+			InitFilterTimer();
 			SettingsDataGridView.AutoGenerateColumns = false;
 		}
 
@@ -283,5 +284,66 @@ namespace JocysCom.ClassLibrary.Configuration
 		{
 			Data.Save();
 		}
+
+		void InitFilterTimer()
+		{
+			FilterTimer = new System.Timers.Timer();
+			FilterTimer.AutoReset = false;
+			FilterTimer.Interval = 520;
+			FilterTimer.Elapsed += FilterTimer_Elapsed;
+		}
+		void DisposeFilterTimer()
+		{
+			lock (FilterTimerLock)
+			{
+				if (FilterTimer != null)
+				{
+					FilterTimer.Dispose();
+					FilterTimer = null;
+				}
+			}
+		}
+
+		System.Timers.Timer FilterTimer;
+		object FilterTimerLock = new object();
+
+		string _CurrentFilter;
+
+		private void FilterTextBox_TextChanged(object sender, EventArgs e)
+		{
+			lock (FilterTimerLock)
+			{
+				if (FilterTimer != null)
+				{
+					FilterTimer.Stop();
+					FilterTimer.Start();
+				}
+			}
+		}
+
+		private void FilterTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+		{
+			var filter = FilterTextBox.Text;
+			if (filter == _CurrentFilter)
+			{
+				return;
+			}
+			// Apply filter.
+		}
+
+		/// <summary> 
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			DisposeFilterTimer();
+			if (disposing && (settings != null))
+			{
+				settings.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
 	}
 }

@@ -7,19 +7,6 @@
 		/// </summary>
 		private System.ComponentModel.IContainer settings = null;
 
-		/// <summary> 
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (settings != null))
-			{
-				settings.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		#region Component Designer generated code
 
 		/// <summary> 
@@ -40,6 +27,7 @@
 			this.ExportButton = new System.Windows.Forms.ToolStripButton();
 			this.ImportButton = new System.Windows.Forms.ToolStripButton();
 			this.ResetButton = new System.Windows.Forms.ToolStripButton();
+			this.FilterTextBox = new System.Windows.Forms.ToolStripTextBox();
 			this.SettingsImportOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.SettingsExportSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.AudioFileOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -76,7 +64,7 @@
 			this.SettingsDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			this.SettingsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.SettingsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.SettingsDataGridView.Size = new System.Drawing.Size(551, 255);
+			this.SettingsDataGridView.Size = new System.Drawing.Size(652, 255);
 			this.SettingsDataGridView.TabIndex = 2;
 			this.SettingsDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SettingsGridView_CellClick);
 			this.SettingsDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.SettingsDataGridView_CellEndEdit);
@@ -92,11 +80,12 @@
             this.ShowInFolderButton,
             this.ExportButton,
             this.ImportButton,
-            this.ResetButton});
+            this.ResetButton,
+            this.FilterTextBox});
 			this.SettingsToolStrip.Location = new System.Drawing.Point(0, 0);
 			this.SettingsToolStrip.Name = "SettingsToolStrip";
 			this.SettingsToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.SettingsToolStrip.Size = new System.Drawing.Size(551, 25);
+			this.SettingsToolStrip.Size = new System.Drawing.Size(652, 25);
 			this.SettingsToolStrip.TabIndex = 3;
 			this.SettingsToolStrip.Text = "toolStrip1";
 			// 
@@ -167,6 +156,13 @@
 			this.ResetButton.Text = "Reset";
 			this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
 			// 
+			// FilterTextBox
+			// 
+			this.FilterTextBox.Name = "FilterTextBox";
+			this.FilterTextBox.Size = new System.Drawing.Size(100, 25);
+			this.FilterTextBox.Visible = false;
+			this.FilterTextBox.TextChanged += new System.EventHandler(this.FilterTextBox_TextChanged);
+			// 
 			// SettingsUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,7 +170,7 @@
 			this.Controls.Add(this.SettingsDataGridView);
 			this.Controls.Add(this.SettingsToolStrip);
 			this.Name = "SettingsUserControl";
-			this.Size = new System.Drawing.Size(551, 280);
+			this.Size = new System.Drawing.Size(652, 280);
 			((System.ComponentModel.ISupportInitialize)(this.SettingsDataGridView)).EndInit();
 			this.SettingsToolStrip.ResumeLayout(false);
 			this.SettingsToolStrip.PerformLayout();
@@ -197,5 +193,6 @@
 		private System.Windows.Forms.ToolStripButton ShowInFolderButton;
 		private System.Windows.Forms.ToolStripButton ResetButton;
 		private System.Windows.Forms.ToolStripButton SaveButton;
+		private System.Windows.Forms.ToolStripTextBox FilterTextBox;
 	}
 }
