@@ -20,10 +20,33 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void SettingsControl_Load(object sender, EventArgs e)
 		{
-			var list = SettingsManager.Current.Acronyms;
-			SettingsControl.DataGridView.DataSource = SettingsManager.Current.Acronyms.Items;
-			SettingsControl.Data = SettingsManager.Current.Acronyms;
+			var data = SettingsManager.Current.Acronyms;
+			SettingsControl.Data = data;
+			//data.Items.ListChanged += Items_ListChanged;
+			ApplyFilter();
 			SettingsControl.SettingsDataGridView.CellValidating += SettingsDataGridView_CellValidating;
+			SettingsControl.FilterChanged += SettingsControl_FilterChanged;
+		}
+
+		private void Items_ListChanged(object sender, ListChangedEventArgs e)
+		{
+			//ApplyFilter();
+		}
+
+		void ApplyFilter()
+		{
+			var text = SettingsControl.FilterTextBox.Text;
+			var items = SettingsManager.Current.Acronyms.Items;
+			var newList = items.Where(x => x.IsMatch(text)).ToArray();
+			var filteredItems = new ClassLibrary.ComponentModel.SortableBindingList<Acronym>(newList);
+			var changed = newList.Count() != items.Count();
+			SettingsControl.UpdateOnly = changed;
+			SettingsControl.DataGridView.DataSource = changed ? filteredItems : items;
+		}
+
+		private void SettingsControl_FilterChanged(object sender, EventArgs e)
+		{
+			ApplyFilter();
 		}
 
 		private void SettingsDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -39,19 +62,11 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			string error = null;
 			var newValue = e.FormattedValue.ToString().Trim().ToLower();
 			newValue = string.IsNullOrEmpty(newValue) ? null : newValue;
-			var list = SettingsManager.Current.Acronyms;
 			// If Group Name changed then...
 			if (item.IsEmpty && string.IsNullOrEmpty(newValue))
 			{
-				SettingsControl.Data.Remove(item);
+				SettingsControl.Data.Items.Remove(item);
 				return;
-			}
-			if (e.ColumnIndex == GroupColumn.Index && string.Compare(newValue, item.Group, true) != 0)
-			{
-				//if (list.Items.Any(x => string.Compare(x.Group, newValue, true) == 0 && string.Compare(x.Key, item.Key, true) == 0))
-				//{
-				//	error = "Group/Key must be unique!";
-				//}
 			}
 			else if (e.ColumnIndex == KeyColumn.Index && string.Compare(newValue, item.Key, true) != 0)
 			{
@@ -59,10 +74,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				{
 					error = "Key field must be not empty!";
 				}
-				//else if (list.Items.Any(x => string.Compare(x.Group, item.Group, true) == 0 && string.Compare(x.Key, newValue, true) == 0))
-				//{
-				//	error = "Group/Key must be unique!";
-				//}
 			}
 			if (!string.IsNullOrEmpty(error))
 			{

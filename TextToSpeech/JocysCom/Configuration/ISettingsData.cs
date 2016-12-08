@@ -1,4 +1,5 @@
 ﻿using JocysCom.ClassLibrary.ComponentModel;
+using System.Collections;
 using System.IO;
 
 namespace JocysCom.ClassLibrary.Configuration
@@ -10,9 +11,8 @@ namespace JocysCom.ClassLibrary.Configuration
 		void SaveAs(string fileName);
 		void Load();
 		void LoadFrom(string fileName);
-		void Remove(params object[] items);
-
 		FileInfo XmlFile { get; }
+		IList Items { get; }
 
 	}
 }

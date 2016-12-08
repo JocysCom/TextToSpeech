@@ -36,7 +36,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		public SettingsUserControl()
 		{
 			InitializeComponent();
-			InitFilterTimer();
+			InitDelayTimer();
 			SettingsDataGridView.AutoGenerateColumns = false;
 		}
 
@@ -89,8 +89,9 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		object[] GetSelectedItems()
 		{
-			var list = (IList)SettingsDataGridView.DataSource;
-			var selectedActions = SettingsDataGridView
+			var grid = SettingsDataGridView;
+			var list = (IList)grid.DataSource;
+			var selectedActions = grid
 			.SelectedRows
 			.Cast<DataGridViewRow>()
 			.Select(x => (object)x.DataBoundItem)
@@ -102,7 +103,7 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		private void AddButton_Click(object sender, EventArgs e)
 		{
-			var grid = (DataGridView)SettingsDataGridView;
+			var grid = SettingsDataGridView;
 			var list = (IList)grid.DataSource;
 			var type = list.GetType().GetGenericArguments()[0];
 			var selectedActions = GetSelectedItems();
@@ -134,8 +135,6 @@ namespace JocysCom.ClassLibrary.Configuration
 					}
 				}
 			}
-			//BeginInvoke((MethodInvoker)delegate ()
-			//{
 			if (rowToEdit != null)
 			{
 				var column = DefaultEditColumn == null
@@ -152,7 +151,6 @@ namespace JocysCom.ClassLibrary.Configuration
 				}
 
 			}
-			//});
 		}
 
 		private void ImportButton_Click(object sender, EventArgs e)
@@ -160,7 +158,6 @@ namespace JocysCom.ClassLibrary.Configuration
 			var dialog = SettingsImportOpenFileDialog;
 			dialog.SupportMultiDottedExtensions = true;
 			dialog.Filter = "Settings (*.xml;*.xml.gz)|*.xml;*.gz|All files (*.*)|*.*";
-			//dialog.DefaultExt = "*.xml";
 			dialog.FilterIndex = 1;
 			dialog.RestoreDirectory = true;
 			var fi = Data.XmlFile;
@@ -195,6 +192,8 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		private void DeleteButton_Click(object sender, EventArgs e)
 		{
+			var grid = SettingsDataGridView;
+			var list = (IList)grid.DataSource;
 			var items = GetSelectedItems();
 			if (items.Length == 0)
 			{
@@ -209,7 +208,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			{
 				foreach (var item in items)
 				{
-					Data.Remove(item);
+					list.Remove(item);
 				}
 				Data.Save();
 			}
@@ -285,51 +284,83 @@ namespace JocysCom.ClassLibrary.Configuration
 			Data.Save();
 		}
 
-		void InitFilterTimer()
+		#region Delay Timer
+
+		System.Timers.Timer DelayTimer;
+		object DelayTimerLock = new object();
+
+		void InitDelayTimer()
 		{
-			FilterTimer = new System.Timers.Timer();
-			FilterTimer.AutoReset = false;
-			FilterTimer.Interval = 520;
-			FilterTimer.Elapsed += FilterTimer_Elapsed;
-		}
-		void DisposeFilterTimer()
-		{
-			lock (FilterTimerLock)
+			DelayTimer = new System.Timers.Timer();
+			DelayTimer.AutoReset = false;
+			DelayTimer.Interval = 520;
+			DelayTimer.Elapsed += DelayTimer_Elapsed;
+			DelayTimer.SynchronizingObject = this;
+			FilterTextBox.TextChanged += delegate (object sender, EventArgs e)
 			{
-				if (FilterTimer != null)
+				ResetDelayTimer();
+			};
+		}
+
+		void DisposeDelayTimer()
+		{
+			lock (DelayTimerLock)
+			{
+				if (DelayTimer != null)
 				{
-					FilterTimer.Dispose();
-					FilterTimer = null;
+					DelayTimer.Dispose();
+					DelayTimer = null;
 				}
 			}
 		}
 
-		System.Timers.Timer FilterTimer;
-		object FilterTimerLock = new object();
+		void ResetDelayTimer()
+		{
+			lock (DelayTimerLock)
+			{
+				if (DelayTimer != null)
+				{
+					DelayTimer.Stop();
+					DelayTimer.Start();
+				}
+			}
+		}
 
 		string _CurrentFilter;
 
-		private void FilterTextBox_TextChanged(object sender, EventArgs e)
-		{
-			lock (FilterTimerLock)
-			{
-				if (FilterTimer != null)
-				{
-					FilterTimer.Stop();
-					FilterTimer.Start();
-				}
-			}
-		}
-
-		private void FilterTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+		private void DelayTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 		{
 			var filter = FilterTextBox.Text;
 			if (filter == _CurrentFilter)
 			{
 				return;
 			}
-			// Apply filter.
+			_CurrentFilter = filter;
+			var ev = FilterChanged;
+			if (ev != null)
+			{
+				ev(this, new EventArgs());
+			}
 		}
+
+		public bool UpdateOnly
+		{
+			set
+			{
+				AddButton.Enabled = !value;
+				DeleteButton.Enabled = !value;
+				ImportButton.Enabled = !value;
+				ExportButton.Enabled = !value;
+				ResetButton.Enabled = !value;
+			}
+		}
+
+
+		public event EventHandler<EventArgs> FilterChanged;
+
+		#endregion
+
+		#region IDisposable
 
 		/// <summary> 
 		/// Clean up any resources being used.
@@ -337,13 +368,15 @@ namespace JocysCom.ClassLibrary.Configuration
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			DisposeFilterTimer();
+			DisposeDelayTimer();
 			if (disposing && (settings != null))
 			{
 				settings.Dispose();
 			}
 			base.Dispose(disposing);
 		}
+
+		#endregion
 
 	}
 }

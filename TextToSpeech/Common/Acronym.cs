@@ -70,6 +70,18 @@ namespace JocysCom.TextToSpeech.Monitor
 		}
 		string _Rx;
 
+		public bool IsMatch(string text)
+		{
+			if (string.IsNullOrEmpty(text))
+			{
+				return true;
+			}
+			var value = text.ToLower();
+			return
+				(!string.IsNullOrEmpty(Key) && Key.ToLower().Contains(value)) ||
+				(!string.IsNullOrEmpty(Value) && Value.ToLower().Contains(value));
+		}
+
 		[XmlIgnore]
 		public bool IsEmpty
 		{

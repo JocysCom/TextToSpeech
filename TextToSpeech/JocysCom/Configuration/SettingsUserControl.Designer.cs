@@ -87,7 +87,7 @@
 			this.SettingsToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.SettingsToolStrip.Size = new System.Drawing.Size(652, 25);
 			this.SettingsToolStrip.TabIndex = 3;
-			this.SettingsToolStrip.Text = "toolStrip1";
+			this.SettingsToolStrip.Text = "MainToolStrip";
 			// 
 			// AddButton
 			// 
@@ -160,8 +160,6 @@
 			// 
 			this.FilterTextBox.Name = "FilterTextBox";
 			this.FilterTextBox.Size = new System.Drawing.Size(100, 25);
-			this.FilterTextBox.Visible = false;
-			this.FilterTextBox.TextChanged += new System.EventHandler(this.FilterTextBox_TextChanged);
 			// 
 			// SettingsUserControl
 			// 
@@ -193,6 +191,6 @@
 		private System.Windows.Forms.ToolStripButton ShowInFolderButton;
 		private System.Windows.Forms.ToolStripButton ResetButton;
 		private System.Windows.Forms.ToolStripButton SaveButton;
-		private System.Windows.Forms.ToolStripTextBox FilterTextBox;
+		public System.Windows.Forms.ToolStripTextBox FilterTextBox;
 	}
 }

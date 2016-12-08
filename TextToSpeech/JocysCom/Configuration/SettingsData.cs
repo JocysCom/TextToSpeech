@@ -45,6 +45,9 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		public SortableBindingList<T> Items { get; set; }
 
+		[XmlIgnore]
+		System.Collections.IList ISettingsData.Items { get { return Items; } }
+
 		public delegate void ApplyOrderDelegate(SettingsData<T> source);
 
 		[XmlIgnore]
@@ -100,6 +103,14 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 		}
 
+		public void Add(params object[] items)
+		{
+			foreach (var item in items)
+			{
+				Items.Add((T)item);
+			}
+		}
+
 		public delegate IList<T> FilterListDelegate(IList<T> items);
 
 		[NonSerialized, XmlIgnore]
@@ -129,7 +140,7 @@ namespace JocysCom.ClassLibrary.Configuration
 							SettingsData<T> xmlItems;
 							if (fi.FullName.EndsWith(".gz"))
 							{
-								var compressedBytes = System.IO.File.ReadAllBytes(fi.FullName);
+								var compressedBytes = File.ReadAllBytes(fi.FullName);
 								var bytes = SettingsHelper.Decompress(compressedBytes);
 								var xml = Encoding.UTF8.GetString(bytes);
 								xmlItems = Serializer.DeserializeFromXmlString<SettingsData<T>>(xml, Encoding.UTF8);
