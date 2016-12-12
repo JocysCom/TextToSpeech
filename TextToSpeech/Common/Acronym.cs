@@ -1,11 +1,6 @@
 ﻿using JocysCom.ClassLibrary.Configuration;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace JocysCom.TextToSpeech.Monitor
@@ -104,14 +99,18 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				lock (RegexValueLock)
 				{
-					var customRx = string.IsNullOrEmpty(_Rx);
-					var rx = customRx ? _Key : _Rx;
+					var customRx = !string.IsNullOrEmpty(_Rx);
+					var rx = customRx ? _Rx : _Key;
 					if (_RegexValue == null && !string.IsNullOrEmpty(rx))
 					{
-						var options = customRx
-							? RegexOptions.Compiled
-							: RegexOptions.IgnoreCase | RegexOptions.Compiled;
-						_RegexValue = new Regex("\\b" + rx + "\\b", options);
+						if (customRx)
+						{
+							_RegexValue = new Regex(rx, RegexOptions.Compiled);
+						}
+						else
+						{
+							_RegexValue = new Regex("\\b" + rx + "\\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+						}
 					}
 					return _RegexValue;
 				}
