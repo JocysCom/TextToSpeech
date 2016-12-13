@@ -1,13 +1,14 @@
 ﻿<Data Version="0">
   <Items>
+    <Acronym Enabled="true" Key="^" Value="post above" Rx="[\^]" />
     <Acronym Enabled="true" Key="^^" Value="two posts above" Rx="[\^][\^]" />
     <Acronym Enabled="true" Group="wow" Key="10m" Value="$1 man" Rx="\b([0-9]+)m\b" />
     <Acronym Enabled="true" Group="wow" Key="1h" Value="1 handed" />
     <Acronym Enabled="true" Key="1k" Value="1 thousand" />
+    <Acronym Enabled="true" Key="22k" Value="$1 thousands" Rx="\b([1-9][0-9]+)k\b" />
     <Acronym Enabled="true" Group="wow" Key="2h" Value="2 handed" />
     <Acronym Enabled="true" Key="2k" Value="$1 thousands" Rx="\b([2-9])k\b" />
     <Acronym Enabled="true" Group="wow" Key="2w" Value="dual wield" />
-    <Acronym Enabled="true" Key="22k" Value="$1 thousands" Rx="\b([1-9][0-9]+)k\b" />
     <Acronym Enabled="true" Group="wow" Key="ab" Value="Arathi Basin" />
     <Acronym Enabled="true" Group="wow" Key="achi" Value="achievement" />
     <Acronym Enabled="true" Group="wow" Key="achiev" Value="achievement" />
@@ -229,7 +230,6 @@
     <Acronym Enabled="true" Group="wow" Key="hramps" Value="Hellfire Ramparts" />
     <Acronym Enabled="true" Group="wow" Key="hs" Value="hearthstone" />
     <Acronym Enabled="true" Group="wow" Key="huntard" Value="hunter" />
-    <Acronym Enabled="true" Key="^" Value="post above" Rx="[\^]" />
     <Acronym Enabled="true" Key="iamf" Value="It's all my fault" />
     <Acronym Enabled="true" Group="wow" Key="ic" Value="in character" />
     <Acronym Enabled="true" Group="wow" Key="icc" Value="Icecrown Citadel" />
