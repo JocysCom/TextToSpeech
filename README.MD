@@ -93,7 +93,7 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 <p align="justify"><sub>You can pin “Monitor” to Windows OS taskbar, if you plan to use it frequently. Administrator rights are required to run this program. Make sure that you are using <i>digitally signed software</i>. Any modification in code of software, after it is signed, <i>invalidates</i> digital signature. <i>Digitally signed software</i> ensures that users can verify origin of software and that no one has tampered with it.</sub></p>
 </blockquote>
 
-<p>7. User Account Control window must show <b>“Verified Publisher: Jocys.com”</b>.</p>
+<p>7. User Account Control window must show <b>“Verified Publisher: Jocys.com”</b> or <b>“Verified Publisher: Evaldas Jocys”</b>.</p>
 
 <blockquote>
 <p>Do not trust executables from <b>“Publisher: Unknown”</b>.</p>
