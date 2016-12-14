@@ -1,6 +1,6 @@
-# Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
+﻿# Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.4.7 (2016-11-15) • Digitally Signed
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.4.8 (2016-12-14) • Digitally Signed
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.85 (2016-11-15)
 
 <hr />
@@ -29,7 +29,7 @@ BETTER text-to-speech voices are developed by <a target="_blank"  href="http://w
 <hr />
 
 <p>Old versions of “Monitor” and “Addon” (2014-08-06) are presented in this video.<br />
-New versions (2016-11-15) with more options can read quests and chat messages.</p>
+New versions (2016-12-14) with more options can read quests and chat messages.</p>
 
 [![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
