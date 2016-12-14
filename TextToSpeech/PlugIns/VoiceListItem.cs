@@ -23,6 +23,8 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 		public IPAddress DestinationAddress { get { return _IpHeader == null ? null : _IpHeader.DestinationAddress; } }
 		public ushort DestinationPort { get { return _TcpHeader == null ? (ushort)0 : _TcpHeader.DestinationPort; } }
 		public int DataLength { get { return _TcpHeader == null ? 0 : _TcpHeader.PayloadData.Length; } }
+		public uint SequenceNumber { get { return _TcpHeader == null ? 0 : _TcpHeader.SequenceNumber; } }
+		public int VoiceXmlLength { get { return string.IsNullOrEmpty(_VoiceXml) ? 0 : _VoiceXml.Length; } }
 
 		#endregion
 
