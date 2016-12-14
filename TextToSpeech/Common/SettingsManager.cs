@@ -31,10 +31,10 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		public string ReplaceAcronyms(string source)
 		{
-			var list = Acronyms.Items.Where(x => x.RegexValue != null).OrderByDescending(x => x.Group).ThenByDescending(x => x.Key);
-			foreach (var item in list)
+            var list = Acronyms.Items.Where(x => x.RegexValue != null && x.Enabled).OrderByDescending(x => x.Group).ThenByDescending(x => x.Key);
+            foreach (var item in list)
 			{
-				source = item.RegexValue.Replace(source, item.Value ?? "");
+                source = item.RegexValue.Replace(source, item.Value ?? "");
 			}
 			return source;
 		}

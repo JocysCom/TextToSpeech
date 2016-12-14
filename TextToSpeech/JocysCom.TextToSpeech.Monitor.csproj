@@ -458,7 +458,9 @@
     <Content Include="Resources\Icons\Triangle_Glass_Blue.ico" />
     <Content Include="Resources\Icons\Warning.ico" />
     <Content Include="Resources\Icons\Window.ico" />
-    <EmbeddedResource Include="Settings\Settings.Monitor.xml" />
+    <EmbeddedResource Include="Settings\Settings.Monitor.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Settings\Monitor.Acronyms.xml" />
     <None Include="Resources\MessageBoxIcon_Error.ico" />
     <None Include="Resources\MessageBoxIcon_Information.ico" />

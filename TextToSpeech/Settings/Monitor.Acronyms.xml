@@ -209,7 +209,7 @@
     <Acronym Enabled="true" Key="hax" Value="hacks" />
     <Acronym Enabled="true" Group="wow" Key="hc" Value="heroic" />
     <Acronym Enabled="true" Group="wow" Key="heals" Value="healer" />
-    <Acronym Enabled="true" Group="wow" Key="hero" Value="heroism" />
+    <Acronym Enabled="false" Group="wow" Key="hero" Value="heroism" />
     <Acronym Enabled="true" Group="wow" Key="hf" Value="Howling Fjord" />
     <Acronym Enabled="true" Group="wow" Key="hfc" Value="Hellfire Citadel" />
     <Acronym Enabled="true" Group="wow" Key="hfp" Value="Hellfire Peninsula" />
