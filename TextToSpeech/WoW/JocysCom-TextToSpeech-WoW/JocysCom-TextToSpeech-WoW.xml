@@ -1442,7 +1442,7 @@
       </OnDragStop>
       <OnEnter>
         JocysCom_OptionsButton:Show();
-        JocysCom_SaveButton:Show();
+        <!--JocysCom_SaveButton:Show();-->
       </OnEnter>
       <OnLeave>
         JocysCom_OptionsButton:Hide();
