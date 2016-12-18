@@ -282,10 +282,10 @@
       </OnMouseWheel>
     </Scripts>
   </Frame>
-  <Frame name="JocysCom_StopButtonFrame" parent="QuickJoinToastButton" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH">
-    <Size x="27" y="50" />
+  <Frame name="JocysCom_StopButtonFrame" parent="UIParent" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH"><!--QuickJoinToastButton-->
+    <Size x="29" y="52" />
     <Anchors>
-      <Anchor point="BOTTOM" relativePoint="TOP" />
+      <Anchor point="CENTER" relativePoint="CENTER" /><!--<Anchor point="BOTTOM" relativePoint="TOP" />-->
     </Anchors>
     <Layers>
       <Layer>
@@ -298,7 +298,7 @@
       <Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="≡">
         <Size x="23" y="21" />
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="2" y="-3" />
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="3" y="-5" />
         </Anchors>
         <Scripts>
           <OnEnter>
@@ -349,7 +349,7 @@
       <Button name="JocysCom_StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="■">
         <Size x="23" y="21" />
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="2" y="-25" />
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="3" y="-26" />
         </Anchors>
         <Scripts>
           <OnEnter>
@@ -375,7 +375,7 @@
       <Frame name="JocysCom_MiniMenuFrame" parent="JocysCom_StopButtonFrame" enableMouse="true">
         <Size x="240" y="486" />
         <Anchors>
-          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="-4" y="0" />
+          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="-6" y="1" />
         </Anchors>
 
         <Backdrop tile="true" bgFile="Interface/FrameGeneral/UI-Background-Rock">
