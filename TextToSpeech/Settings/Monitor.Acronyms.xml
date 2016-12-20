@@ -45,7 +45,7 @@
     <Acronym Enabled="true" Key="bbs" Value="be back soon" />
     <Acronym Enabled="true" Group="wow" Key="bc" Value="Burning Crusade" />
     <Acronym Enabled="true" Group="wow" Key="bd" Value="Black Descent" />
-    <Acronym Enabled="true" Group="wow" Key="be" Value="blood elf" />
+    <Acronym Enabled="false" Group="wow" Key="be" Value="blood elf" />
     <Acronym Enabled="true" Group="wow" Key="belf" Value="blood elf" />
     <Acronym Enabled="true" Group="wow" Key="bem" Value="Blade's Edge Mountains" />
     <Acronym Enabled="true" Key="bf" Value="$1oyfriend" Rx="\b([Bb])[f]\b" />
