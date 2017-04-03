@@ -183,3 +183,29 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 • Getting <b>UnitRace</b> of NPC -- Sound effects on NPCs are applied by <strong>UnitCreatureType</strong> now.<br />
 • Getting <b>value</b> if NPC has voice over for all text -- in order not to start TTS speech.<br />
 • NPC “talking” animation should loop, depending on length of the text.</p>
+
+### Problems and Solutions
+<hr />
+
+<p>Sometimes, “Monitor” doesn't work with “Internet Protocol Version 6” (IPv6).<br />
+To test this, you can temporary disable it on your network card:<p>
+
+<p>1. Close WoW game and “Monitor”.<br />
+2. Click [Win]+[X] keyboard keys together.<br />
+3. Select “Control Panel” from menu.<br />
+4. Select “Small icons” in “View by:” drop-down menu.<br />
+5. Find and select “Network and Sharing Centre”.<br />
+6. Click on “Change adapter settings”.<br />
+7. Click with second mouse button on network card, you are using.<br />
+8. Select “Properties” from menu.<br />
+9. Uncheck (disable) “Internet Protocol Version 6”.<br />
+10. Click [ OK ] button.<br />
+11. Run WoW game and “Monitor”.</p>
+
+<p>Don't forget to enable (check) “Internet Protocol Version 6” again later.</p>
+
+<img src="http://www.jocys.com/Files/Software/Ethernet_Properties_IP6.png" />
+
+
+
+
