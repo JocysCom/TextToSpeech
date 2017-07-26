@@ -177,13 +177,22 @@
       <DependentUpon>VoiceDefaultsUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="JocysCom\Collections\KeyValue.cs" />
+    <Compile Include="JocysCom\Common\Helper.cs" />
+    <Compile Include="JocysCom\Common\TraceFormat.cs" />
     <Compile Include="JocysCom\ComponentModel\PropertyComparer.cs" />
     <Compile Include="JocysCom\ComponentModel\SortableBindingList.cs" />
+    <Compile Include="JocysCom\Configuration\AssemblyInfo.cs" />
     <Compile Include="JocysCom\Configuration\ExtendedDataGridViewColumnCollectionEditor.cs" />
     <Compile Include="JocysCom\Configuration\ISettingsData.cs" />
     <Compile Include="JocysCom\Configuration\ISettingsItem.cs" />
     <Compile Include="JocysCom\Configuration\SettingsData.cs" />
     <Compile Include="JocysCom\Configuration\SettingsHelper.cs" />
+    <Compile Include="JocysCom\Configuration\SettingsItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JocysCom\Configuration\SettingsItemForm.Designer.cs">
+      <DependentUpon>SettingsItemForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="JocysCom\Configuration\SettingsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -200,7 +209,10 @@
     <Compile Include="JocysCom\Controls\MessageBoxForm1.Designer.cs" />
     <Compile Include="JocysCom\IO\LogWriter.cs" />
     <Compile Include="JocysCom\Network\NetStatInfo.cs" />
+    <Compile Include="JocysCom\Runtime\ChangeState.cs" />
+    <Compile Include="JocysCom\Runtime\Helper.cs" />
     <Compile Include="JocysCom\Runtime\Serializer.cs" />
+    <Compile Include="JocysCom\Security\MD5.cs" />
     <Compile Include="JocysCom\Text\Helper.cs" />
     <Compile Include="JocysCom\Win32\NativeMethods.user32.cs" />
     <Compile Include="MainForm_Network.cs">
@@ -264,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SoundEffectsControl.resx">
       <DependentUpon>SoundEffectsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JocysCom\Configuration\SettingsItemForm.resx">
+      <DependentUpon>SettingsItemForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JocysCom\Configuration\SettingsUserControl.resx">
       <DependentUpon>SettingsUserControl.cs</DependentUpon>

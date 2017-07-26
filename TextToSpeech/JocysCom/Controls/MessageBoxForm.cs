@@ -67,22 +67,22 @@ namespace JocysCom.ClassLibrary.Controls
 					EnableButtons(DialogResult.Yes, DialogResult.No, DialogResult.Cancel);
 					break;
 			}
-			Bitmap image = MessageBoxFormResources.MessageBoxForm.MessageBoxIcon_Information_32x32;
+			Bitmap image = Helper.FindResource<Bitmap>("MessageBoxIcon_Information_32x32.png");
 			switch (icon)
 			{
 				case MessageBoxIcon.None:
 					if (PlaySounds) System.Media.SystemSounds.Beep.Play();
 					break;
 				case MessageBoxIcon.Error: // Same as 'Hand' and 'Stop'.
-					image = MessageBoxFormResources.MessageBoxForm.MessageBoxIcon_Error_32x32;
+					image = Helper.FindResource<Bitmap>("MessageBoxIcon_Error_32x32.png");
 					if (PlaySounds) System.Media.SystemSounds.Hand.Play();
 					break;
 				case MessageBoxIcon.Question:
-					image = MessageBoxFormResources.MessageBoxForm.MessageBoxIcon_Question_32x32;
+					image = Helper.FindResource<Bitmap>("MessageBoxIcon_Question_32x32.png");
 					if (PlaySounds) System.Media.SystemSounds.Question.Play();
 					break;
 				case MessageBoxIcon.Warning: // Same as 'Exclamation'.
-					image = MessageBoxFormResources.MessageBoxForm.MessageBoxIcon_Warning_32x32;
+					image = Helper.FindResource<Bitmap>("MessageBoxIcon_Warning_32x32.png");
 					if (PlaySounds) System.Media.SystemSounds.Exclamation.Play();
 					break;
 				case MessageBoxIcon.Information: // Same as 'Asterisk'.
