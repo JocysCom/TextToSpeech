@@ -5,6 +5,7 @@ using System.Drawing.Design;
 using System.Linq;
 using System.Collections;
 using JocysCom.ClassLibrary.Controls;
+using System.Reflection;
 
 namespace JocysCom.ClassLibrary.Configuration
 {
@@ -124,17 +125,21 @@ namespace JocysCom.ClassLibrary.Configuration
             // Select new created item.
             foreach (DataGridViewRow row in grid.Rows)
             {
-                var selected = (item == row.DataBoundItem);
-                if (row.Selected != selected)
-                {
-                    // Select row
-                    row.Selected = selected;
-                    if (selected)
-                    {
-                        rowToEdit = row;
-                    }
-                }
-            }
+				// 
+                var thisIsNewRow = (item == row.DataBoundItem);
+				if (thisIsNewRow)
+				{
+					// If row is not selected then...
+					if (row.Selected != thisIsNewRow)
+					{
+						// Select row
+						row.Selected = thisIsNewRow;
+					}
+					// Mark this row for editing.
+					rowToEdit = row;
+					break;
+				}
+			}
             if (rowToEdit != null)
             {
                 var column = DefaultEditColumn == null
@@ -214,12 +219,19 @@ namespace JocysCom.ClassLibrary.Configuration
             }
         }
 
-        private void SettingsDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		PropertyInfo enabledProperty;
+
+		private void SettingsDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex == -1) return;
             var grid = (DataGridView)sender;
             var row = grid.Rows[e.RowIndex];
-            var enabled = ((ISettingsItem)row.DataBoundItem).Enabled;
+			var item = row.DataBoundItem;
+			if (enabledProperty == null)
+			{
+				enabledProperty = item.GetType().GetProperties().FirstOrDefault(x=>x.Name == "Enabled" || x.Name == "IsEnabled");
+			}
+			var enabled = (bool)enabledProperty.GetValue(item, null);
             // If this is not row header then...
             if (e.ColumnIndex > -1)
             {
