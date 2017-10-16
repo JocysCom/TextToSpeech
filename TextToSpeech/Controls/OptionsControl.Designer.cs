@@ -36,11 +36,14 @@
 			this.CaptureGroupBox = new System.Windows.Forms.GroupBox();
 			this.CaptureWinButton = new System.Windows.Forms.RadioButton();
 			this.CaptureSocButton = new System.Windows.Forms.RadioButton();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.CacheDataCheckBox = new System.Windows.Forms.CheckBox();
 			this.AddSilenceGroupBox.SuspendLayout();
 			this.LoggingGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).BeginInit();
 			this.CaptureGroupBox.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// AddSilenceGroupBox
@@ -112,7 +115,7 @@
 			this.LoggingGroupBox.Controls.Add(this.LoggingCheckBox);
 			this.LoggingGroupBox.Location = new System.Drawing.Point(4, 89);
 			this.LoggingGroupBox.Name = "LoggingGroupBox";
-			this.LoggingGroupBox.Size = new System.Drawing.Size(791, 342);
+			this.LoggingGroupBox.Size = new System.Drawing.Size(574, 342);
 			this.LoggingGroupBox.TabIndex = 9;
 			this.LoggingGroupBox.TabStop = false;
 			this.LoggingGroupBox.Text = "Log Network Packets ( Plugin Helper )";
@@ -154,13 +157,13 @@
 			this.LoggingFolderTextBox.Location = new System.Drawing.Point(72, 71);
 			this.LoggingFolderTextBox.Name = "LoggingFolderTextBox";
 			this.LoggingFolderTextBox.ReadOnly = true;
-			this.LoggingFolderTextBox.Size = new System.Drawing.Size(632, 20);
+			this.LoggingFolderTextBox.Size = new System.Drawing.Size(415, 20);
 			this.LoggingFolderTextBox.TabIndex = 7;
 			// 
 			// OpenButton
 			// 
 			this.OpenButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.OpenButton.Location = new System.Drawing.Point(710, 69);
+			this.OpenButton.Location = new System.Drawing.Point(493, 69);
 			this.OpenButton.Name = "OpenButton";
 			this.OpenButton.Size = new System.Drawing.Size(75, 23);
 			this.OpenButton.TabIndex = 5;
@@ -206,7 +209,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.LoggingTextBox.Location = new System.Drawing.Point(72, 45);
 			this.LoggingTextBox.Name = "LoggingTextBox";
-			this.LoggingTextBox.Size = new System.Drawing.Size(632, 20);
+			this.LoggingTextBox.Size = new System.Drawing.Size(415, 20);
 			this.LoggingTextBox.TabIndex = 1;
 			this.LoggingTextBox.Text = "me66age";
 			// 
@@ -295,10 +298,31 @@
 			this.CaptureSocButton.Text = "Microsoft .NET Sockets";
 			this.CaptureSocButton.UseVisualStyleBackColor = true;
 			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.CacheDataCheckBox);
+			this.groupBox1.Location = new System.Drawing.Point(584, 88);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(211, 49);
+			this.groupBox1.TabIndex = 10;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Other Options";
+			// 
+			// CacheDataCheckBox
+			// 
+			this.CacheDataCheckBox.AutoSize = true;
+			this.CacheDataCheckBox.Location = new System.Drawing.Point(6, 19);
+			this.CacheDataCheckBox.Name = "CacheDataCheckBox";
+			this.CacheDataCheckBox.Size = new System.Drawing.Size(83, 17);
+			this.CacheDataCheckBox.TabIndex = 0;
+			this.CacheDataCheckBox.Text = "Cache Data";
+			this.CacheDataCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// OptionsControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.CaptureGroupBox);
 			this.Controls.Add(this.LoggingGroupBox);
 			this.Controls.Add(this.AddSilenceAfterNumericUpDown);
@@ -314,6 +338,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).EndInit();
 			this.CaptureGroupBox.ResumeLayout(false);
 			this.CaptureGroupBox.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -341,5 +367,7 @@
 		private System.Windows.Forms.GroupBox CaptureGroupBox;
 		private System.Windows.Forms.RadioButton CaptureWinButton;
 		private System.Windows.Forms.RadioButton CaptureSocButton;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.CheckBox CacheDataCheckBox;
 	}
 }

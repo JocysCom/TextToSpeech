@@ -144,6 +144,7 @@ namespace JocysCom.TextToSpeech.Monitor
 							var sampleRate = (int)AudioSampleRateComboBox.SelectedItem;
 							var bitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
 							var channelCount = (int)(AudioChannel)AudioChannelsComboBox.SelectedItem;
+							// Takes WAV bytes witout header.
 							EffectPresetsEditorSoundEffectsControl.LoadSoundFile(pitchedItem.WavData, sampleRate, bitsPerSample, channelCount);
 							EffectPresetsEditorSoundEffectsControl.PlaySound();
 							// Start timer which will reset status to Played
@@ -240,10 +241,43 @@ namespace JocysCom.TextToSpeech.Monitor
 					if (item.Status == JobStatusType.Parsed)
 					{
 						item.Status = JobStatusType.Synthesizing;
-						item.WavData = ConvertSapiXmlToWav(item.Xml);
+						int bitsPerSample = 0;
+						int sampleRate = 0;
+						int channelCount = 0;
+						Invoke((Action)(() =>
+						{
+							channelCount = (int)(AudioChannel)AudioChannelsComboBox.SelectedItem;
+							sampleRate = (int)AudioSampleRateComboBox.SelectedItem;
+							bitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
+						}));
+						item.WavData = ConvertSapiXmlToWav(item.Xml, bitsPerSample, sampleRate, channelCount);
 						item.Status = item.WavData == null
 							? item.Status = JobStatusType.Error
 							: item.Status = JobStatusType.Synthesized;
+						if (Properties.Settings.Default.CacheData)
+						{
+							// Write sound to cache.
+							var encoding = System.Text.Encoding.UTF8;
+							var bytes = encoding.GetBytes(item.Xml);
+							var hash = JocysCom.ClassLibrary.Security.MD5.GetGuid(bytes);
+							var folder = string.Format("{0}\\{1}\\{2}\\Cache",
+									Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+									Application.CompanyName,
+									Application.ProductName);
+							var xmlFile = string.Format("{0:N}.xml", hash);
+							var wavFile = string.Format("{0:N}.wav", hash);
+							var xmlFullPath = Path.Combine(folder, xmlFile);
+							var wavFullPath = Path.Combine(folder, wavFile);
+							System.IO.File.WriteAllText(xmlFullPath, item.Xml, encoding);
+							// Write WAV with the header.
+							var ms = new MemoryStream();
+							var writer = new System.IO.BinaryWriter(ms);
+							AudioHelper.WriteHeader(writer, item.WavData.Length, channelCount, sampleRate, bitsPerSample);
+							writer.Write(item.WavData);
+							bytes = ms.ToArray();
+							// Note: that some player won't be able to play this file.
+							System.IO.File.WriteAllBytes(wavFullPath, bytes);
+						}
 					}
 					if (item.Status == JobStatusType.Synthesized)
 					{

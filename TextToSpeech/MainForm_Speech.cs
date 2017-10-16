@@ -127,18 +127,11 @@ namespace JocysCom.TextToSpeech.Monitor
 			return GetXmlText(text, vi, _Volume, _Pitch, _Rate, isComment);
 		}
 
-		byte[] ConvertSapiXmlToWav(string xml)
+		/// <summary>
+		/// Convert xml to WAV bytes. WAV won't have the header, so you have to add it separatelly.
+		/// </summary>
+		byte[] ConvertSapiXmlToWav(string xml, int bitsPerSample, int sampleRate, int channelCount)
 		{
-			int bitsPerSample = 0;
-			int sampleRate = 0;
-			int channelCount = 0;
-			Invoke((Action)(() =>
-			{
-				LastException = null;
-				channelCount = (int)(AudioChannel)AudioChannelsComboBox.SelectedItem;
-				sampleRate = (int)AudioSampleRateComboBox.SelectedItem;
-				bitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
-			}));
 			SpeechAudioFormatType t = SpeechAudioFormatType.SAFT48kHz16BitMono;
 			switch (channelCount)
 			{
@@ -161,6 +154,12 @@ namespace JocysCom.TextToSpeech.Monitor
 					}
 					break;
 			}
+			byte[] bytes;
+			//var synthesizer = new SpeechSynthesizer();
+			//var ms = new MemoryStream();
+			//synthesizer.SetOutputToWaveStream(ms);
+			//synthesizer.Speak("test");
+			//bytes = ms.ToArray();
 			var voice = new SpeechLib.SpVoice();
 			//// Write to file.
 			//var fileStream = new SpeechLib.SpFileStream();
@@ -183,13 +182,13 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			catch (Exception ex)
 			{
-                ex.Data.Add("Voice", "voiceName");
-                LastException = ex;
+				ex.Data.Add("Voice", "voiceName");
+				LastException = ex;
 				return null;
 			}
 			var spStream = (SpMemoryStream)voice.AudioOutputStream;
 			spStream.Seek(0, SpeechStreamSeekPositionType.SSSPTRelativeToStart);
-			var bytes = (byte[])(object)spStream.GetData();
+			bytes = (byte[])(object)spStream.GetData();
 			return bytes;
 		}
 

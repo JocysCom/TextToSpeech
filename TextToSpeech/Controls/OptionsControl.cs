@@ -104,15 +104,17 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			LoggingTextBox.Text = Properties.Settings.Default.LogText;
 			SearchPattern = Encoding.ASCII.GetBytes(LoggingTextBox.Text);
 			LoggingCheckBox.Checked = Properties.Settings.Default.LogEnable;
+			CacheDataCheckBox.Checked = Properties.Settings.Default.CacheData;
 			UpdateWinCapState();
 			var allowWinCap = Properties.Settings.Default.UseWinCap & MainHelper.GetWinPcapVersion() != null;
 			CaptureSocButton.Checked = !allowWinCap;
 			CaptureWinButton.Checked = allowWinCap;
 			// Update writer settings.
-			UpdateLogSettings();
+			SaveSettings();
 			// Attach events.
 			LoggingTextBox.TextChanged += LoggingTextBox_TextChanged;
 			LoggingCheckBox.CheckedChanged += LoggingCheckBox_CheckedChanged;
+			CacheDataCheckBox.CheckedChanged += CacheDataCheckBox_CheckedChanged;
 			LoggingPlaySoundCheckBox.CheckedChanged += LoggingPlaySoundCheckBox_CheckedChanged;
 			CaptureSocButton.CheckedChanged += CaptureSocButton_CheckedChanged;
 			CaptureWinButton.CheckedChanged += CaptureWinButton_CheckedChanged;
@@ -150,7 +152,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				: Encoding.ASCII.GetBytes(LoggingTextBox.Text);
 		}
 
-		void UpdateLogSettings()
+		void SaveSettings()
 		{
 			Properties.Settings.Default.LogEnable = LoggingCheckBox.Checked;
 			LoggingTextBox.Enabled = !LoggingCheckBox.Checked;
@@ -180,9 +182,14 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			}
 		}
 
+		private void CacheDataCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			Properties.Settings.Default.CacheData = CacheDataCheckBox.Checked;
+		}
+
 		private void LoggingCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			UpdateLogSettings();
+			SaveSettings();
 		}
 
 		/// <summary> 

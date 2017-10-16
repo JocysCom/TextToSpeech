@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
-using System.Xml.Serialization;
 
 namespace JocysCom.ClassLibrary.ComponentModel
 {
@@ -12,9 +10,10 @@ namespace JocysCom.ClassLibrary.ComponentModel
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class SortableBindingList<T> : BindingList<T>, IBindingListView, IRaiseItemChangedEvents
+	public class SortableBindingList<T> : BindingListInvoked<T>, IBindingListView, IRaiseItemChangedEvents
 	{
 		public SortableBindingList() : base() { }
+
 		public SortableBindingList(IList<T> list)
 			: base(list) { }
 
@@ -24,11 +23,6 @@ namespace JocysCom.ClassLibrary.ComponentModel
 		public static SortableBindingList<T> From(IEnumerable<T> list)
 		{
 			return new SortableBindingList<T>(list);
-		}
-
-		public void AddRange(IEnumerable<T> list)
-		{
-			foreach (T item in list) { Add(item); }
 		}
 
 		protected override bool SupportsSearchingCore { get { return true; } }
@@ -217,6 +211,6 @@ namespace JocysCom.ClassLibrary.ComponentModel
 			OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, index));
 		}
 
-	}
+    }
 
 }

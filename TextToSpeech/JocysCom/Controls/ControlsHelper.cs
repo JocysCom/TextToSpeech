@@ -314,6 +314,72 @@ namespace JocysCom.ClassLibrary.Controls
 
 		#endregion
 
+		#region Add grip to SplitContainer 
+
+		public static void ApplySplitterStyle(SplitContainer control)
+		{
+			// Paint 3 dots on the splitter.
+			control.Paint += SplitContainer_Paint;
+			// Remove focus from splitter after it moved.
+			control.SplitterMoved += SplitContainer_SplitterMoved;
+		}
+
+		static void SplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
+		{
+			var s = sender as Control;
+			if (s.CanFocus)
+			{
+				while (true)
+				{
+					s = s.Parent;
+					if (s == null)
+						return;
+					if (s.CanFocus)
+						s.Focus();
+				}
+			}
+		}
+
+		static void SplitContainer_Paint(object sender, PaintEventArgs e)
+		{
+			// base.OnPaint(e);
+			var s = sender as SplitContainer;
+			// Paint the three dots.
+			Point[] points = new Point[3];
+			var w = s.Width;
+			var h = s.Height;
+			var d = s.SplitterDistance;
+			var sW = s.SplitterWidth;
+			int x;
+			int y;
+			int spacing = 10;
+			// Calculate the position of the points.
+			if (s.Orientation == Orientation.Horizontal)
+			{
+				x = (w / 2);
+				y = d + (sW / 2);
+				points[0] = new Point(x, y);
+				points[1] = new Point(x - spacing, y);
+				points[2] = new Point(x + spacing, y);
+			}
+			else
+			{
+				x = d + (sW / 2);
+				y = (h / 2);
+				points[0] = new Point(x, y);
+				points[1] = new Point(x, y - spacing);
+				points[2] = new Point(x, y + spacing);
+			}
+			foreach (Point p in points)
+			{
+				p.Offset(-2, -2);
+				e.Graphics.FillEllipse(SystemBrushes.ControlDark, new Rectangle(p, new Size(3, 3)));
+				p.Offset(1, 1);
+				e.Graphics.FillEllipse(SystemBrushes.ControlLight, new Rectangle(p, new Size(3, 3)));
+			}
+		}
+
+		#endregion
 
 		#region Apply Border Style
 
@@ -326,18 +392,50 @@ namespace JocysCom.ClassLibrary.Controls
 			grid.ColumnHeadersDefaultCellStyle.BackColor = SystemColors.Control;
 			grid.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
 			grid.RowHeadersDefaultCellStyle.BackColor = SystemColors.Control;
-			grid.RowHeadersDefaultCellStyle.SelectionBackColor = grid.DefaultCellStyle.SelectionBackColor;
 			grid.BackColor = SystemColors.Window;
 			grid.DefaultCellStyle.BackColor = SystemColors.Window;
 			grid.CellPainting += Grid_CellPainting;
-			grid.SelectionChanged += Grid_SelectionChanged1;
+			grid.SelectionChanged += Grid_SelectionChanged;
+			grid.CellFormatting += Grid_CellFormatting;
 		}
 
-		private static void Grid_SelectionChanged1(object sender, EventArgs e)
+		private static void Grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			if (e.RowIndex == -1) return;
+
+			var grid = (DataGridView)sender;
+			var row = grid.Rows[e.RowIndex];
+			if (e.RowIndex > -1 && e.ColumnIndex > -1)
+			{
+				var enabled = GetEnabled(row.DataBoundItem);
+				var fore = enabled ? grid.DefaultCellStyle.ForeColor : SystemColors.ControlDark;
+				var selectedBack = enabled ? grid.DefaultCellStyle.SelectionBackColor : SystemColors.ControlDark;
+				// Apply style to row header.
+				if (row.HeaderCell.Style.ForeColor != fore)
+					row.HeaderCell.Style.ForeColor = fore;
+				if (row.HeaderCell.Style.SelectionBackColor != selectedBack)
+					row.HeaderCell.Style.SelectionBackColor = selectedBack;
+				// Apply style to cell
+				var cell = grid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+				if (cell.Style.ForeColor != fore)
+					cell.Style.ForeColor = fore;
+				if (cell.Style.SelectionBackColor != selectedBack)
+					cell.Style.SelectionBackColor = selectedBack;
+			}
+		}
+
+		private static void Grid_SelectionChanged(object sender, EventArgs e)
 		{
 			// Sort issue with paint artifcats.
 			var grid = (DataGridView)sender;
 			grid.Invalidate();
+		}
+
+		static bool GetEnabled(object item)
+		{
+			var enabledProperty = item.GetType().GetProperties().FirstOrDefault(x => x.Name == "Enabled" || x.Name == "IsEnabled");
+			var enabled = enabledProperty == null ? true : (bool)enabledProperty.GetValue(item, null);
+			return enabled;
 		}
 
 		private static void Grid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -346,37 +444,40 @@ namespace JocysCom.ClassLibrary.Controls
 			var grid = (DataGridView)sender;
 			var firstVisibleColumn = grid.Columns.Cast<DataGridViewColumn>().Where(x => x.Displayed).Min(x => x.Index);
 			var lastVisibleColumn = grid.Columns.Cast<DataGridViewColumn>().Where(x => x.Displayed).Max(x => x.Index);
-			var selected = false;
-			if (e.RowIndex > -1)
-			{
-				selected = grid.Rows[e.RowIndex].Selected;
-			}
+			var selected = e.RowIndex > -1 ? grid.Rows[e.RowIndex].Selected : false;
 			e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.Border);
 			var bounds = e.CellBounds;
 			var tl = new Point(bounds.X, bounds.Y);
 			var tr = new Point(bounds.X + bounds.Width - 1, bounds.Y);
 			var bl = new Point(bounds.X, bounds.Y + bounds.Height - 1);
 			var br = new Point(bounds.X + bounds.Width - 1, bounds.Y + bounds.Height - 1);
-			DataGridViewCellStyle style;
-			// If column header then...
+			Color backColor;
+			// If top left corner and column header then...
 			if (e.RowIndex == -1)
-				style = grid.ColumnHeadersDefaultCellStyle;
+			{
+				backColor = selected
+					? grid.ColumnHeadersDefaultCellStyle.SelectionBackColor
+					: grid.ColumnHeadersDefaultCellStyle.BackColor;
+			}
 			// If row header then...
-			else if (e.ColumnIndex == -1)
-				style = grid.RowHeadersDefaultCellStyle;
+			else if (e.ColumnIndex == -1 && e.RowIndex > -1)
+			{
+				var row = grid.Rows[e.RowIndex];
+				backColor = selected
+					? row.HeaderCell.Style.SelectionBackColor
+					: grid.RowHeadersDefaultCellStyle.BackColor;
+			}
 			// If normal cell then...
 			else
 			{
-				var cell = grid.Rows[e.RowIndex].Cells[e.ColumnIndex];
-				style = cell.HasStyle ? cell.InheritedStyle : grid.DefaultCellStyle;
+				var row = grid.Rows[e.RowIndex];
+				var cell = row.Cells[e.ColumnIndex];
+				backColor = selected
+					? cell.InheritedStyle.SelectionBackColor
+					: cell.InheritedStyle.BackColor;
 			}
-			//style = grid.DefaultCellStyle;
-			// If header then
-			var color = selected
-			? style.SelectionBackColor
-			: style.BackColor;
 			// Cell background colour.
-			var back = new Pen(color, 1);
+			var back = new Pen(backColor, 1);
 			// Border colour.
 			var border = new Pen(SystemColors.Control, 1);
 			// Do not draw borders for selected device.
@@ -386,11 +487,11 @@ namespace JocysCom.ClassLibrary.Controls
 			// Left (only if not first)
 			c = !selected && e.ColumnIndex > firstVisibleColumn ? border : back;
 			e.Graphics.DrawLine(c, bl, tl);
-			// Right (only if not last column)
-			c = !selected && e.ColumnIndex < lastVisibleColumn ? back : back;
+			// Right (always)
+			c = back;
 			e.Graphics.DrawLine(c, tr, br);
-			// Bottom (only if not last line or header if no rows)
-			c = !selected && (grid.Rows.Count == 0 || e.RowIndex < grid.RowCount - 1) ? border : back;
+			// Bottom (always)
+			c = border;
 			e.Graphics.DrawLine(c, bl, br);
 			back.Dispose();
 			border.Dispose();

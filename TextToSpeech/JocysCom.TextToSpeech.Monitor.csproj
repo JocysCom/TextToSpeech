@@ -179,6 +179,7 @@
     <Compile Include="JocysCom\Collections\KeyValue.cs" />
     <Compile Include="JocysCom\Common\Helper.cs" />
     <Compile Include="JocysCom\Common\TraceFormat.cs" />
+    <Compile Include="JocysCom\ComponentModel\BindingListInvoked.cs" />
     <Compile Include="JocysCom\ComponentModel\PropertyComparer.cs" />
     <Compile Include="JocysCom\ComponentModel\SortableBindingList.cs" />
     <Compile Include="JocysCom\Configuration\AssemblyInfo.cs" />
