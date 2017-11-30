@@ -130,11 +130,11 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.90 ( 2017-04-03 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.95 ( 2017-11-30 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffffSave in Monitor <NPC>|r |cff808080 " .. macroName .. " related messages.|r");
-	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080buttons.|r");
+	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080buttons. Grab frame by clicking on dark background around buttons.|r");
 	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on the right side of |cffffffff[Options]|r |cff808080button. [Unchecked] show menu on the left side.|r");
 	-- Font Strings.
 	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
@@ -394,7 +394,7 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 		speakMessage = arg1;
 	end
 	-- Remove realm name from name.
-	dashIndex = string.find(arg2, "-");
+    if arg2 ~= nil then dashIndex = string.find(arg2, "-") else dashIndex = nil end
 	if dashIndex ~= nil then arg2 = string.sub(arg2, 1, dashIndex - 1) end
 	-- add leader intro.
 	messageLeader = "";
@@ -588,14 +588,14 @@ end
 
 -- Play sound and save settings.
 function JocysCom_PlaySoundAndSaveSettings()
-	PlaySound("igMainMenuOptionCheckBoxOn");
+	PlaySound(856);
 	JocysCom_SaveTocFileSettings();
 end
 
 -- DND.
 function JocysCom_DndCheckButton_OnClick(self)
 	local DNDIsShown = JocysCom_DialogueMiniFrame:IsShown();
-	PlaySound("igMainMenuOptionCheckBoxOn");
+	PlaySound(856);
 	 -- Disable DND.
 	if JocysCom_DndCheckButton:GetChecked() == false then
 		if UnitIsDND("player") == true then
@@ -611,7 +611,7 @@ end
 
 -- Lock Enable / Disable.
 function JocysCom_LockCheckButton_OnClick()
-	PlaySound("igMainMenuOptionCheckBoxOn");
+	PlaySound(856);
 	if JocysCom_LockCheckButton:GetChecked() == true then
 		JocysCom_StopButtonFrame:RegisterForDrag();
 	else
@@ -622,7 +622,7 @@ end
 
  -- StopButtonFrame position Right or Left.
 function JocysCom_MenuCheckButton_OnClick()
-	PlaySound("igMainMenuOptionCheckBoxOn");
+	PlaySound(856);
  	JocysCom_MiniMenuFrame:ClearAllPoints();
 	if JocysCom_MenuCheckButton:GetChecked() == true then
 	JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", -6, 1);
@@ -634,7 +634,7 @@ end
 
 -- Enable disable speech.
 function JocysCom_CheckButton_OnClick(self, name)
-	PlaySound("igMainMenuOptionCheckBoxOn");
+	PlaySound(856);
 	if self:GetChecked() == true then
 		if name == "Battleground" then
 			JocysCom_BattlegroundLeaderCheckButton:SetChecked(false);
@@ -779,7 +779,7 @@ end
  
 -- [ Stop ] dialog button.
 function JocysCom_StopButton_OnClick(name)
-	PlaySound("igMainMenuOptionCheckBoxOn");
+	PlaySound(856);
 	if name == "Quest" then
 		JocysCom_SendChatMessageStop(2, name);
 	else
