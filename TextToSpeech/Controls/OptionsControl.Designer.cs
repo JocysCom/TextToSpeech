@@ -36,14 +36,16 @@
 			this.CaptureGroupBox = new System.Windows.Forms.GroupBox();
 			this.CaptureWinButton = new System.Windows.Forms.RadioButton();
 			this.CaptureSocButton = new System.Windows.Forms.RadioButton();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.CacheGroupBox = new System.Windows.Forms.GroupBox();
 			this.CacheDataCheckBox = new System.Windows.Forms.CheckBox();
+			this.OpenCacheButton = new System.Windows.Forms.Button();
+			this.CacheLabel = new System.Windows.Forms.Label();
 			this.AddSilenceGroupBox.SuspendLayout();
 			this.LoggingGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).BeginInit();
 			this.CaptureGroupBox.SuspendLayout();
-			this.groupBox1.SuspendLayout();
+			this.CacheGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// AddSilenceGroupBox
@@ -298,31 +300,57 @@
 			this.CaptureSocButton.Text = "Microsoft .NET Sockets";
 			this.CaptureSocButton.UseVisualStyleBackColor = true;
 			// 
-			// groupBox1
+			// CacheGroupBox
 			// 
-			this.groupBox1.Controls.Add(this.CacheDataCheckBox);
-			this.groupBox1.Location = new System.Drawing.Point(584, 88);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(211, 49);
-			this.groupBox1.TabIndex = 10;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Other Options";
+			this.CacheGroupBox.Controls.Add(this.OpenCacheButton);
+			this.CacheGroupBox.Controls.Add(this.CacheDataCheckBox);
+			this.CacheGroupBox.Controls.Add(this.CacheLabel);
+			this.CacheGroupBox.Location = new System.Drawing.Point(584, 88);
+			this.CacheGroupBox.Name = "CacheGroupBox";
+			this.CacheGroupBox.Size = new System.Drawing.Size(211, 100);
+			this.CacheGroupBox.TabIndex = 10;
+			this.CacheGroupBox.TabStop = false;
+			this.CacheGroupBox.Text = "Other Options";
 			// 
 			// CacheDataCheckBox
 			// 
 			this.CacheDataCheckBox.AutoSize = true;
-			this.CacheDataCheckBox.Location = new System.Drawing.Point(6, 19);
+			this.CacheDataCheckBox.Location = new System.Drawing.Point(6, 23);
 			this.CacheDataCheckBox.Name = "CacheDataCheckBox";
-			this.CacheDataCheckBox.Size = new System.Drawing.Size(185, 17);
+			this.CacheDataCheckBox.Size = new System.Drawing.Size(110, 17);
 			this.CacheDataCheckBox.TabIndex = 0;
-			this.CacheDataCheckBox.Text = "Create and cache TTS audio files";
+			this.CacheDataCheckBox.Text = "Cache TTS audio";
 			this.CacheDataCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// OpenCacheButton
+			// 
+			this.OpenCacheButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.OpenCacheButton.Location = new System.Drawing.Point(130, 19);
+			this.OpenCacheButton.Name = "OpenCacheButton";
+			this.OpenCacheButton.Size = new System.Drawing.Size(75, 23);
+			this.OpenCacheButton.TabIndex = 6;
+			this.OpenCacheButton.Text = "Open...";
+			this.OpenCacheButton.UseVisualStyleBackColor = true;
+			this.OpenCacheButton.Click += new System.EventHandler(this.OpenCacheButton_Click);
+			// 
+			// CacheLabel
+			// 
+			this.CacheLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.CacheLabel.ForeColor = System.Drawing.SystemColors.GrayText;
+			this.CacheLabel.Location = new System.Drawing.Point(6, 49);
+			this.CacheLabel.Name = "CacheLabel";
+			this.CacheLabel.Size = new System.Drawing.Size(199, 48);
+			this.CacheLabel.TabIndex = 3;
+			this.CacheLabel.Text = "Create wav files and reuse them when possible to save CPU resources.\r\nContains {0" +
+    "} files ({1})";
 			// 
 			// OptionsControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.groupBox1);
+			this.Controls.Add(this.CacheGroupBox);
 			this.Controls.Add(this.CaptureGroupBox);
 			this.Controls.Add(this.LoggingGroupBox);
 			this.Controls.Add(this.AddSilenceAfterNumericUpDown);
@@ -330,6 +358,7 @@
 			this.Controls.Add(this.AddSilenceGroupBox);
 			this.Name = "OptionsControl";
 			this.Size = new System.Drawing.Size(798, 434);
+			this.Load += new System.EventHandler(this.OptionsControl_Load);
 			this.AddSilenceGroupBox.ResumeLayout(false);
 			this.AddSilenceGroupBox.PerformLayout();
 			this.LoggingGroupBox.ResumeLayout(false);
@@ -338,8 +367,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).EndInit();
 			this.CaptureGroupBox.ResumeLayout(false);
 			this.CaptureGroupBox.PerformLayout();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
+			this.CacheGroupBox.ResumeLayout(false);
+			this.CacheGroupBox.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -367,7 +396,9 @@
 		private System.Windows.Forms.GroupBox CaptureGroupBox;
 		private System.Windows.Forms.RadioButton CaptureWinButton;
 		private System.Windows.Forms.RadioButton CaptureSocButton;
-		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.GroupBox CacheGroupBox;
 		private System.Windows.Forms.CheckBox CacheDataCheckBox;
+		private System.Windows.Forms.Button OpenCacheButton;
+		private System.Windows.Forms.Label CacheLabel;
 	}
 }

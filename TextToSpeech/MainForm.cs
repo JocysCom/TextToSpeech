@@ -260,17 +260,11 @@ namespace JocysCom.TextToSpeech.Monitor
 							var encoding = System.Text.Encoding.UTF8;
 							var bytes = encoding.GetBytes(item.Xml);
 							var hash = JocysCom.ClassLibrary.Security.MD5.GetGuid(bytes);
-							var folder = string.Format("{0}\\{1}\\{2}\\Cache",
-									Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-									Application.CompanyName,
-									Application.ProductName);
-							var dir = new DirectoryInfo(folder);
-							if (!dir.Exists)
-								dir.Create();
+							var dir = MainHelper.GetCreateCacheFolder();
 							var xmlFile = string.Format("{0:N}.xml", hash);
 							var wavFile = string.Format("{0:N}.wav", hash);
-							var xmlFullPath = Path.Combine(folder, xmlFile);
-							var wavFullPath = Path.Combine(folder, wavFile);
+							var xmlFullPath = Path.Combine(dir.FullName, xmlFile);
+							var wavFullPath = Path.Combine(dir.FullName, wavFile);
 							System.IO.File.WriteAllText(xmlFullPath, item.Xml, encoding);
 							// Write WAV with the header.
 							var ms = new MemoryStream();

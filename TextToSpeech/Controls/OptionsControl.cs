@@ -232,5 +232,34 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				Program.TopForm.StartNetworkMonitor();
 			}
 		}
+
+		private void OpenCacheButton_Click(object sender, EventArgs e)
+		{
+			var dir = MainHelper.GetCreateCacheFolder();
+			MainHelper.OpenUrl(dir.FullName);
+		}
+
+		string _CacheMessageFormat;
+
+		static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+		static string SizeSuffix(long value, int decimalPlaces = 0)
+		{
+			if (value < 0)
+			{
+				throw new ArgumentException("Bytes should not be negative", "value");
+			}
+			var mag = (int)Math.Max(0, Math.Log(value, 1024));
+			var adjustedSize = Math.Round(value / Math.Pow(1024, mag), decimalPlaces);
+			return String.Format("{0} {1}", adjustedSize, SizeSuffixes[mag]);
+		}
+
+		private void OptionsControl_Load(object sender, EventArgs e)
+		{
+			_CacheMessageFormat = CacheLabel.Text;
+			var files = MainHelper.GetCreateCacheFolder().GetFiles();
+			var count = files.Count();
+			var size = SizeSuffix(files.Sum(x=>x.Length), 1);
+			CacheLabel.Text = string.Format(_CacheMessageFormat, count, size);
+		}
 	}
 }
