@@ -313,9 +313,9 @@
 			this.CacheDataCheckBox.AutoSize = true;
 			this.CacheDataCheckBox.Location = new System.Drawing.Point(6, 19);
 			this.CacheDataCheckBox.Name = "CacheDataCheckBox";
-			this.CacheDataCheckBox.Size = new System.Drawing.Size(83, 17);
+			this.CacheDataCheckBox.Size = new System.Drawing.Size(185, 17);
 			this.CacheDataCheckBox.TabIndex = 0;
-			this.CacheDataCheckBox.Text = "Cache Data";
+			this.CacheDataCheckBox.Text = "Create and cache TTS audio files";
 			this.CacheDataCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// OptionsControl

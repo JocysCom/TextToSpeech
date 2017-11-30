@@ -264,6 +264,9 @@ namespace JocysCom.TextToSpeech.Monitor
 									Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
 									Application.CompanyName,
 									Application.ProductName);
+							var dir = new DirectoryInfo(folder);
+							if (!dir.Exists)
+								dir.Create();
 							var xmlFile = string.Format("{0:N}.xml", hash);
 							var wavFile = string.Format("{0:N}.wav", hash);
 							var xmlFullPath = Path.Combine(folder, xmlFile);
