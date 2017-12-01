@@ -13,6 +13,10 @@ How it works: When you open window with text (dialogue, quest, book, etc.) or re
 <sub>After Addon update 2.2.88 <b>[■]</b> (Stop text-to-speech) button can appear at the <b>center of the screen</b>. <strong>To move mini frame with [≡][■] buttons:</strong> Click on <b>[≡]</b> (Options) button, to open “Options” window. Unlock mini frame by unchecking first check-box in “Options” window. Move it, wherever you like. Lock it again, by checking the same check-box.</sub>
 </blockquote>
 
+<blockquote>
+We don't mind if code from our WoW Addon will be used to add text-to-speech feature to other addons. How and what messages to send with SendAddonMessage(...) in lua file to Monitor, so Monitor could see them, can be founded in our addon's lua file. These messages can be visible in chat window (if check-box "Hide addon <messages> in chat window" is unchecked in our addon's "Options" window). Messages are also visible in "Options" window itself and in Monitor's [1. Incoming Messages] tab. If other addon will take over one of the text categories, this category can be disabled in our addon, by unchecking corresponding check-box, to avoid text-to-speech duplication.
+</blockquote>
+
 <p style="text-align: center; margin: 10px;"><strong>Text-to-Speech Voices by <a href="http://windows.microsoft.com/en-us/windows/language-packs" target="_blank">Microsoft</a> or <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Ivona</a> / <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a></strong></p>
 
 FREE text-to-speech voices can be installed with <a target="_blank" href="http://windows.microsoft.com/en-us/windows/language-packs">Microsoft language packs</a>.<br />
