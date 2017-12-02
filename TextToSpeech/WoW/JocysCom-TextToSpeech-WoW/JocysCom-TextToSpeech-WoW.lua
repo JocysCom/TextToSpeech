@@ -17,11 +17,14 @@ local objectivesHeader = nil;
 local NameIntro = false;
 local arg1 = nil;
 local arg2 = nil;
+local arg2Number = nil;
+local realName = false;
 local lastArg = nil;
 local NPCSex = nil;
 local NPCGender = nil;
 local stopWhenClosing = 1;
 local dashIndex = nil;
+local hashIndex = nil;
 local group = nil;
 local messageType = nil;
 local messageLeader = nil;
@@ -130,7 +133,7 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.95 ( 2017-11-30 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.2.96 ( 2017-12-02 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffffSave in Monitor <NPC>|r |cff808080 " .. macroName .. " related messages.|r");
@@ -262,6 +265,8 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 	if string.find(tostring(arg1), "<message") ~= nil then
 		return;
 	end
+	-- Reset realName and presenceID.
+	realName = false;
 	-- Events.  
 	if event == "ADDON_LOADED" and arg1 == addonName then
 		JocysCom_LoadTocFileSettings();
@@ -319,28 +324,47 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 		JocysCom_DialogueMiniFrame_Hide();
 		return;
 	-- Chat events.
+
 	elseif JocysCom_MonsterCheckButton:GetChecked() == true and string.find(event, "MSG_MONSTER") ~= nil then	
 		-- don't proceed repetitive NPC messages by the same NPC.
 		if (lastArg == arg2 .. arg1) then return else lastArg = arg2 .. arg1 end
 		group = "Monster";
 		if JocysCom_SoundMonsterCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameMonsterCheckButton:GetChecked() == true or (event == "CHAT_MSG_MONSTER_EMOTE") then NameIntro = true end
-	elseif JocysCom_WhisperCheckButton:GetChecked() == true and (event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" or event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM") then
+	elseif JocysCom_WhisperCheckButton:GetChecked() == true and (event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" or event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM") then --or event == "CHAT_MSG_BN_CONVERSATION"
 		group = "Whisper";
 		if JocysCom_SoundWhisperCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameWhisperCheckButton:GetChecked() == true then NameIntro = true end
 		-- replace friend's real name with character name.
-		if event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM" then
+		if event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM" then --or event == "CHAT_MSG_BN_CONVERSATION"
+		print(tostring(event));
 			-- totalBNet, numBNetOnline = BNGetNumFriends();
-			-- presenceID, presenceName, battleTag, isBattleTagPresence, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, broadcastTime, canSoR = BNGetFriendInfoByID(7);		
-			arg2 = string.gsub(arg2, "|", " ");
-			for i in string.gmatch(arg2, "%S+") do
+			-- presenceID, presenceName, battleTag, isBattleTagPresence, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, broadcastTime, canSoR = BNGetFriendInfoByID(7);	
+			-- bnetIDAccount, accountName, battleTag, isBattleTagPresence, characterName, bnetIDGameAccount, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, messageTime, canSoR, isReferAFriend, canSummonFriend = BNGetFriendInfoByID(bnetIDAccount)
+			-- Extract friend's presenceID.
+			arg2Number = string.gsub(arg2, "|", " ");
+			for i in string.gmatch(arg2Number, "%S+") do
 				if string.find(i, "Kf") ~= nil then
-					arg2 = string.gsub(i, "Kf", "");
+					arg2Number = string.gsub(i, "Kf", "");
 				end
 			end	
-			presenceID, presenceName, battleTag, isBattleTagPresence, toonName = BNGetFriendInfoByID(arg2);
-			arg2 = toonName;
+			--Extract friend's real name and character name (if online).
+			presenceID, presenceName, battleTag, isBattleTagPresence, toonName = BNGetFriendInfoByID(arg2Number);
+			-- Set name.
+			if toonName == nil and battleTag == nil then
+				arg2 = "Your friend";
+				realName = true;
+			end
+			if battleTag ~= nil then
+				arg2 = battleTag;
+				realName = true;
+				if battleTag ~= nil then hashIndex = string.find(battleTag, "#") else hashIndex = nil end
+				if hashIndex ~= nil then arg2 = string.sub(arg2, 1, hashIndex - 1) end
+			end
+			if toonName ~= nil then
+				arg2 = toonName;
+				realName = false;
+			end
 		end	
 	elseif JocysCom_EmoteCheckButton:GetChecked() == true and ((event == "CHAT_MSG_EMOTE") or (event == "CHAT_MSG_TEXT_EMOTE")) then
 		group = "Emote"	
@@ -414,7 +438,7 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 		speakMessage = speakMessage;
 	end
 	NameIntro = false;
-	JocysCom_SpeakMessage(speakMessage, event, arg2, group);
+	JocysCom_SpeakMessage(speakMessage, event, arg2, group, realName);
 end
 
 function JocysCom_Replace(m)
@@ -470,7 +494,7 @@ function JocysCom_Replace(m)
 end
 
 --Messages.
-function JocysCom_SpeakMessage(speakMessage, event, name, group)
+function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 	if speakMessage == nil then return end
 	-- Replace player name.
 	local newUnitName = JocysCom_ReplaceNameEditBox:GetText();
@@ -485,7 +509,7 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group)
 	local NPCSex = nil;
 	if string.find(event, "CHAT") ~= nil then
 		NPCName = name;
-		if string.find(event, "CHAT_MSG_MONSTER") == nil then
+		if string.find(event, "CHAT_MSG_MONSTER") == nil or rName == false then
 			NPCSex = UnitSex(name);
 		else
 			--Update macro.
