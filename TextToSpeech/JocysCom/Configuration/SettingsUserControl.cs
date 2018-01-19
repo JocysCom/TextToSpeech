@@ -88,7 +88,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		//	}
 		//}
 
-		object[] GetSelectedItems()
+		public object[] GetSelectedItems()
 		{
 			var grid = SettingsDataGridView;
 			var list = (IList)grid.DataSource;

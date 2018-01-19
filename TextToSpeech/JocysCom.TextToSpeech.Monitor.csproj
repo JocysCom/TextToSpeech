@@ -431,6 +431,10 @@
     <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Question_32x32.png" />
     <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Warning.ico" />
     <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Warning_32x32.png" />
+    <Content Include="Resources\Icons\CheckBox.png" />
+    <Content Include="Resources\Icons\CheckBox_Unchecked.png" />
+    <Content Include="Resources\Icons\SelectAll.png" />
+    <Content Include="Resources\Icons\SelectNone.png" />
     <Content Include="Resources\Images\Copy.png" />
     <Content Include="Resources\Images\JocysCom_TTS_Monitor.png" />
     <Content Include="Resources\Images\JocysCom_TTS_Monitor_IntroSounds.png" />

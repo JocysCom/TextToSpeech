@@ -26,6 +26,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ApplyFilter();
 			SettingsControl.SettingsDataGridView.CellValidating += SettingsDataGridView_CellValidating;
 			SettingsControl.FilterChanged += SettingsControl_FilterChanged;
+			SettingsControl.SettingsDataGridView.ContextMenuStrip = GridContextMenuStrip;
 		}
 
 		private void Items_ListChanged(object sender, ListChangedEventArgs e)
@@ -90,6 +91,35 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		private void SettingsControl_MouseLeave(object sender, EventArgs e)
 		{
 			Program.TopForm.ResetHelpToDefault();
+		}
+
+		void CheckSelected(bool check)
+		{
+			var items = SettingsControl.GetSelectedItems().Cast<Acronym>().ToArray();
+			foreach (var item in items)
+			{
+				item.Enabled = check;
+			}
+		}
+
+		private void CheckSelectedMenuItem_Click(object sender, EventArgs e)
+		{
+			CheckSelected(true);
+		}
+
+		private void UncheckSelectedMenuItem_Click(object sender, EventArgs e)
+		{
+			CheckSelected(false);
+		}
+
+		private void SelectAllMenuItem_Click(object sender, EventArgs e)
+		{
+			SettingsControl.SettingsDataGridView.SelectAll();
+		}
+
+		private void DelectAllMenuItem_Click(object sender, EventArgs e)
+		{
+			SettingsControl.SettingsDataGridView.ClearSelection();
 		}
 	}
 }
