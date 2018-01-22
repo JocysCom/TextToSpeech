@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using JocysCom.ClassLibrary.Configuration;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
@@ -42,7 +43,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			var filteredItems = new ClassLibrary.ComponentModel.SortableBindingList<Acronym>(newList);
 			var changed = newList.Count() != items.Count();
 			SettingsControl.UpdateOnly = changed;
-			SettingsControl.DataGridView.DataSource = changed ? filteredItems : items;
+			var data = changed ? filteredItems : items;
+			SettingsControl.DataGridView.DataSource = data;
 		}
 
 		private void SettingsControl_FilterChanged(object sender, EventArgs e)
@@ -52,13 +54,14 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void SettingsDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
 		{
-			var grid = (DataGridView)sender;
+			var grid = (VirtualDataGridView)sender;
+			//var grid = SettingsControl.DataGridView;
 			var row = grid.Rows[e.RowIndex];
 			row.ErrorText = "";
 			// Don't try to validate the 'new row' until finished  
 			// editing since there is no point in validating its initial values. 
 			if (row.IsNewRow) { return; }
-			var item = (Acronym)row.DataBoundItem;
+			var item = (Acronym)grid.DataSource[e.RowIndex]; //(Acronym)row.DataBoundItem;
 			var column = grid.Columns[e.ColumnIndex];
 			string error = null;
 			var newValue = e.FormattedValue.ToString().Trim().ToLower();
@@ -100,6 +103,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			{
 				item.Enabled = check;
 			}
+			SettingsControl.InvalidateSelected();
 		}
 
 		private void CheckSelectedMenuItem_Click(object sender, EventArgs e)

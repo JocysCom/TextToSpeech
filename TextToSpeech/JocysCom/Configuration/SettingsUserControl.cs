@@ -14,7 +14,7 @@ namespace JocysCom.ClassLibrary.Configuration
 	{
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
-		public DataGridView DataGridView
+		public VirtualDataGridView DataGridView
 		{
 			get { return SettingsDataGridView; }
 		}
@@ -92,14 +92,27 @@ namespace JocysCom.ClassLibrary.Configuration
 		{
 			var grid = SettingsDataGridView;
 			var list = (IList)grid.DataSource;
-			var selectedActions = grid
+			var items = grid
 			.SelectedRows
 			.Cast<DataGridViewRow>()
-			.Select(x => (object)x.DataBoundItem)
-			// Make sure that selected actions are ordered like in the list.
-			.OrderBy(x => list.IndexOf(x))
+			.Select(x => list[x.Index])
 			.ToArray();
-			return selectedActions;
+			return items;
+		}
+
+		public void InvalidateSelected()
+		{
+			var grid = SettingsDataGridView;
+			var list = (IList)grid.DataSource;
+			var items = grid
+			.SelectedRows
+			.Cast<DataGridViewRow>()
+			.Select(x => x.Index)
+			.ToArray();
+			foreach (var item in items)
+			{
+				grid.InvalidateRow(item);
+			}
 		}
 
 		public event AddingNewEventHandler AddingNew;
@@ -234,7 +247,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			if (e.RowIndex == -1) return;
 			var grid = (DataGridView)sender;
 			var row = grid.Rows[e.RowIndex];
-			var item = row.DataBoundItem;
+			var item = Data.Items[e.RowIndex]; // row.DataBoundItem;
 			if (enabledProperty == null)
 			{
 				enabledProperty = item.GetType().GetProperties().FirstOrDefault(x => x.Name == "Enabled" || x.Name == "IsEnabled");

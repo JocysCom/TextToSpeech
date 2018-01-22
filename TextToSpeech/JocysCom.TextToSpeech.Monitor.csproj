@@ -200,6 +200,9 @@
     <Compile Include="JocysCom\Configuration\SettingsUserControl.Designer.cs">
       <DependentUpon>SettingsUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="JocysCom\Controls\VirtualDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="JocysCom\Controls\ControlsHelper.cs" />
     <Compile Include="JocysCom\Controls\MessageBoxForm.cs">
       <SubType>Form</SubType>
