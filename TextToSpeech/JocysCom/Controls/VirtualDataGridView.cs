@@ -41,6 +41,14 @@ namespace JocysCom.ClassLibrary.Controls
 				{
 					_type = value.GetType().GetGenericArguments()[0];
 				}
+				// If data is bound already.
+				if (_Data != null)
+				{
+					// Remove old event.
+					_Data.ListChanged -= _Data_ListChanged;
+					RowCount = 0;
+					_Data = null;
+				}
 				_Data = value;
 				_Data.ListChanged += _Data_ListChanged;
 				// Set the row count, including the row for new records.

@@ -44,6 +44,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			var filteredItems = new ClassLibrary.ComponentModel.SortableBindingList<Acronym>(newList);
 			var changed = newList.Count() != items.Count();
 			SettingsControl.UpdateOnly = changed;
+
 			var data = changed ? filteredItems : items;
 			data.SynchronizingObject = SettingsControl.DataGridView;
 			SettingsControl.DataGridView.DataSource = data;
