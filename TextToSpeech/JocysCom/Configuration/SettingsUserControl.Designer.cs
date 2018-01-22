@@ -18,7 +18,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsUserControl));
-            this.SettingsDataGridView = new VirtualDataGridView();
+            this.SettingsDataGridView = new Controls.VirtualDataGridView();
             this.SettingsToolStrip = new System.Windows.Forms.ToolStrip();
             this.AddButton = new System.Windows.Forms.ToolStripButton();
             this.EditButton = new System.Windows.Forms.ToolStripButton();
@@ -198,7 +198,7 @@
 		private System.Windows.Forms.OpenFileDialog SettingsImportOpenFileDialog;
         private System.Windows.Forms.SaveFileDialog SettingsExportSaveFileDialog;
         private System.Windows.Forms.OpenFileDialog AudioFileOpenFileDialog;
-        public VirtualDataGridView SettingsDataGridView;
+        public Controls.VirtualDataGridView SettingsDataGridView;
 		private System.Windows.Forms.ToolStripButton ShowInFolderButton;
 		private System.Windows.Forms.ToolStripButton ResetButton;
 		private System.Windows.Forms.ToolStripButton SaveButton;

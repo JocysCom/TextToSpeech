@@ -31,7 +31,7 @@ namespace JocysCom.ClassLibrary.Configuration
 
 	public interface IDataGridView
 	{
-		VirtualDataGridView DataGridView { get; }
+		Controls.VirtualDataGridView DataGridView { get; }
 	}
 
 	public class ExtendedDataGridViewColumnCollectionEditor : UITypeEditor

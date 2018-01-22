@@ -100,21 +100,6 @@ namespace JocysCom.ClassLibrary.Configuration
 			return items;
 		}
 
-		public void InvalidateSelected()
-		{
-			var grid = SettingsDataGridView;
-			var list = (IList)grid.DataSource;
-			var items = grid
-			.SelectedRows
-			.Cast<DataGridViewRow>()
-			.Select(x => x.Index)
-			.ToArray();
-			foreach (var item in items)
-			{
-				grid.InvalidateRow(item);
-			}
-		}
-
 		public event AddingNewEventHandler AddingNew;
 
 		private void AddButton_Click(object sender, EventArgs e)
@@ -142,40 +127,22 @@ namespace JocysCom.ClassLibrary.Configuration
 			{
 				list.Insert(insertIndex + 1, item);
 			}
-			DataGridViewRow rowToEdit = null;
-			// Select new created item.
-			foreach (DataGridViewRow row in grid.Rows)
+			var rowIndex = list.IndexOf(item);
+			var rowToEdit = grid.Rows[rowIndex];
+			// If row is not selected then...
+			if (!rowToEdit.Selected)
+				rowToEdit.Selected = true;
+			var column = DefaultEditColumn == null
+				? grid.Columns.Cast<DataGridViewColumn>().FirstOrDefault(x => !x.ReadOnly && x is DataGridViewTextBoxColumn)
+				: DefaultEditColumn;
+			if (column != null)
 			{
-				// 
-				var thisIsNewRow = (item == row.DataBoundItem);
-				if (thisIsNewRow)
-				{
-					// If row is not selected then...
-					if (row.Selected != thisIsNewRow)
-					{
-						// Select row
-						row.Selected = thisIsNewRow;
-					}
-					// Mark this row for editing.
-					rowToEdit = row;
-					break;
-				}
-			}
-			if (rowToEdit != null)
-			{
-				var column = DefaultEditColumn == null
-					? grid.Columns.Cast<DataGridViewColumn>().FirstOrDefault(x => !x.ReadOnly && x is DataGridViewTextBoxColumn)
-					: DefaultEditColumn;
-				if (column != null)
-				{
-					// Select column
-					var cell = rowToEdit.Cells[column.Name];
-					cell.Selected = true;
-					grid.CurrentCell = cell;
-					// Switch to edit mode.
-					grid.BeginEdit(true);
-				}
-
+				// Select column
+				var cell = rowToEdit.Cells[column.Name];
+				cell.Selected = true;
+				grid.CurrentCell = cell;
+				// Switch to edit mode.
+				grid.BeginEdit(true);
 			}
 		}
 
@@ -221,10 +188,9 @@ namespace JocysCom.ClassLibrary.Configuration
 			var grid = SettingsDataGridView;
 			var list = (IList)grid.DataSource;
 			var items = GetSelectedItems();
+			// Return if nothing to delete.
 			if (items.Length == 0)
-			{
 				return;
-			}
 			var message = string.Format("Are you sure you want to delete {0} item{1}?",
 					items.Length, items.Length == 1 ? "" : "s");
 			MessageBoxForm form = new MessageBoxForm();
@@ -232,10 +198,8 @@ namespace JocysCom.ClassLibrary.Configuration
 			var result = form.ShowForm(message, "Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
 			if (result == DialogResult.OK)
 			{
-				foreach (var item in items)
-				{
-					list.Remove(item);
-				}
+				grid.RemoveItems(items);
+				grid.ClearSelection();
 				Data.Save();
 			}
 		}
@@ -244,10 +208,13 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		private void SettingsDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			if (e.RowIndex == -1) return;
+			if (e.RowIndex == -1)
+				return;
+			if (e.RowIndex >= Data.Items.Count)
+				return;
 			var grid = (DataGridView)sender;
 			var row = grid.Rows[e.RowIndex];
-			var item = Data.Items[e.RowIndex]; // row.DataBoundItem;
+			var item = Data.Items[e.RowIndex];
 			if (enabledProperty == null)
 			{
 				enabledProperty = item.GetType().GetProperties().FirstOrDefault(x => x.Name == "Enabled" || x.Name == "IsEnabled");

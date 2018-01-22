@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using JocysCom.ClassLibrary.Configuration;
+using JocysCom.ClassLibrary.ComponentModel;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
@@ -44,6 +45,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			var changed = newList.Count() != items.Count();
 			SettingsControl.UpdateOnly = changed;
 			var data = changed ? filteredItems : items;
+			data.SynchronizingObject = SettingsControl.DataGridView;
 			SettingsControl.DataGridView.DataSource = data;
 		}
 
@@ -54,14 +56,16 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void SettingsDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
 		{
-			var grid = (VirtualDataGridView)sender;
+			var grid = (ClassLibrary.Controls.VirtualDataGridView)sender;
 			//var grid = SettingsControl.DataGridView;
 			var row = grid.Rows[e.RowIndex];
 			row.ErrorText = "";
 			// Don't try to validate the 'new row' until finished  
 			// editing since there is no point in validating its initial values. 
 			if (row.IsNewRow) { return; }
-			var item = (Acronym)grid.DataSource[e.RowIndex]; //(Acronym)row.DataBoundItem;
+			if (e.RowIndex >= grid.DataSource.Count)
+				return;
+			var item = (Acronym)grid.DataSource[e.RowIndex]; ;
 			var column = grid.Columns[e.ColumnIndex];
 			string error = null;
 			var newValue = e.FormattedValue.ToString().Trim().ToLower();
@@ -69,7 +73,11 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			// If Group Name changed then...
 			if (item.IsEmpty && string.IsNullOrEmpty(newValue))
 			{
-				SettingsControl.Data.Items.Remove(item);
+				// Use begin invoke or removal will fail
+				BeginInvoke((MethodInvoker)delegate ()
+				{
+					SettingsControl.DataGridView.RemoveItems(item);
+				});
 				return;
 			}
 			else if (e.ColumnIndex == KeyColumn.Index && string.Compare(newValue, item.Key, true) != 0)
@@ -103,7 +111,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			{
 				item.Enabled = check;
 			}
-			SettingsControl.InvalidateSelected();
 		}
 
 		private void CheckSelectedMenuItem_Click(object sender, EventArgs e)
