@@ -64,9 +64,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			// Don't try to validate the 'new row' until finished  
 			// editing since there is no point in validating its initial values. 
 			if (row.IsNewRow) { return; }
-			if (e.RowIndex >= grid.DataSource.Count)
+			var list = (IBindingList)grid.DataSource;
+			if (e.RowIndex >= list.Count)
 				return;
-			var item = (Acronym)grid.DataSource[e.RowIndex]; ;
+			var item = (Acronym)list[e.RowIndex]; ;
 			var column = grid.Columns[e.ColumnIndex];
 			string error = null;
 			var newValue = e.FormattedValue.ToString().Trim().ToLower();

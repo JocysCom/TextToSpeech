@@ -91,7 +91,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		public object[] GetSelectedItems()
 		{
 			var grid = SettingsDataGridView;
-			var list = (IList)grid.DataSource;
+			var list = (IBindingList)grid.DataSource;
 			var items = grid
 			.SelectedRows
 			.Cast<DataGridViewRow>()
@@ -105,7 +105,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		private void AddButton_Click(object sender, EventArgs e)
 		{
 			var grid = SettingsDataGridView;
-			var list = (IList)grid.DataSource;
+			var list = (IBindingList)grid.DataSource;
 			var type = list.GetType().GetGenericArguments()[0];
 			var selectedActions = GetSelectedItems();
 			var last = selectedActions.LastOrDefault();
@@ -186,7 +186,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		private void DeleteButton_Click(object sender, EventArgs e)
 		{
 			var grid = SettingsDataGridView;
-			var list = (IList)grid.DataSource;
+			var list = grid.DataSource;
 			var items = GetSelectedItems();
 			// Return if nothing to delete.
 			if (items.Length == 0)
@@ -396,6 +396,28 @@ namespace JocysCom.ClassLibrary.Configuration
 				}
 
 			}
+		}
+
+
+
+		void CheckSelected(bool check)
+		{
+			var items = GetSelectedItems().Cast<ISettingsItem>().ToArray();
+			foreach (var item in items)
+			{
+				item.Enabled = check;
+			}
+		}
+
+		private void CheckSelectedButton_Click(object sender, EventArgs e)
+		{
+			CheckSelected(true);
+
+		}
+
+		private void UncheckSelectedButton_Click(object sender, EventArgs e)
+		{
+			CheckSelected(false);
 		}
 	}
 }

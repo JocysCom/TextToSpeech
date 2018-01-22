@@ -2,7 +2,7 @@
 {
 	public interface ISettingsItem
 	{
-		bool Enabled { get; }
+		bool Enabled { get; set; }
 
 		bool IsEmpty { get; }
 

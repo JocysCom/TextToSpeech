@@ -32,7 +32,7 @@ namespace JocysCom.ClassLibrary.Controls
 		[DefaultValue(null)]
 		[RefreshProperties(RefreshProperties.Repaint)]
 		[IODescriptionAttribute("DataGridViewDataSourceDescr")]
-		public new IBindingList DataSource
+		public new object DataSource
 		{
 			get { return _Data; }
 			set
@@ -49,7 +49,7 @@ namespace JocysCom.ClassLibrary.Controls
 					RowCount = 0;
 					_Data = null;
 				}
-				_Data = value;
+				_Data = (IBindingList)value;
 				_Data.ListChanged += _Data_ListChanged;
 				// Set the row count, including the row for new records.
 				RowCount = _Data.Count;
