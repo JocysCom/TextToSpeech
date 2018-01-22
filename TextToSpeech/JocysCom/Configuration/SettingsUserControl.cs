@@ -419,5 +419,15 @@ namespace JocysCom.ClassLibrary.Configuration
 		{
 			CheckSelected(false);
 		}
-	}
+
+        private void SelectAllButton_Click(object sender, EventArgs e)
+        {
+            DataGridView.SelectAll();
+        }
+
+        private void DeselectAllButton_Click(object sender, EventArgs e)
+        {
+            DataGridView.ClearSelection();
+        }
+    }
 }
