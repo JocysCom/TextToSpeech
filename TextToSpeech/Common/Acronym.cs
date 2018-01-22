@@ -73,7 +73,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			var value = text.ToLower();
 			return
-				(!string.IsNullOrEmpty(Key) && Key.ToLower().Contains(value)) ||
+				(!string.IsNullOrEmpty(Group) && Group.ToLower().Contains(value)) ||
+                (!string.IsNullOrEmpty(Key) && Key.ToLower().Contains(value)) ||
 				(!string.IsNullOrEmpty(Value) && Value.ToLower().Contains(value));
 		}
 
