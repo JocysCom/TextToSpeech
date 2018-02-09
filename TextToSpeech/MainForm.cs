@@ -259,7 +259,7 @@ namespace JocysCom.TextToSpeech.Monitor
 							// Write sound to cache.
 							var encoding = System.Text.Encoding.UTF8;
 							var bytes = encoding.GetBytes(item.Xml);
-							var hash = JocysCom.ClassLibrary.Security.MD5.GetGuid(bytes);
+							var hash = JocysCom.ClassLibrary.Security.MD5Helper.GetGuid(bytes);
 							var dir = MainHelper.GetCreateCacheFolder();
 							var xmlFile = string.Format("{0:N}.xml", hash);
 							var wavFile = string.Format("{0:N}.wav", hash);
