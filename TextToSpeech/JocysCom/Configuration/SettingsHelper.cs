@@ -63,7 +63,7 @@ namespace JocysCom.ClassLibrary.Configuration
 				// Compare checksums.
 				var byteHash = Security.MD5Helper.GetGuid(bytes);
 				var fileHash = Security.MD5Helper.GetGuidFromFile(fi.FullName);
-				isDifferent = !byteHash.Equals(byteHash);
+				isDifferent = !byteHash.Equals(fileHash);
 			}
 			return isDifferent;
 		}
