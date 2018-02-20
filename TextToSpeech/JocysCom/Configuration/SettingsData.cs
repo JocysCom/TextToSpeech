@@ -72,8 +72,13 @@ namespace JocysCom.ClassLibrary.Configuration
 		[XmlIgnore, NonSerialized]
 		object saveReadFileLock = new object();
 
+		public event EventHandler Saving;
+
 		public void SaveAs(string fileName)
 		{
+			var ev = Saving;
+			if (ev != null)
+				ev(this, new EventArgs());
 			lock (saveReadFileLock)
 			{
 				for (int i = 0; i < Items.Count; i++)
@@ -271,8 +276,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			{
 				bytes = SettingsHelper.Decompress(bytes);
 			}
-			var xml = Encoding.UTF8.GetString(bytes);
-			var data = Serializer.DeserializeFromXmlString<SettingsData<T>>(xml);
+			var data = Serializer.DeserializeFromXmlBytes<SettingsData<T>>(bytes);
 			return data;
 		}
 	}

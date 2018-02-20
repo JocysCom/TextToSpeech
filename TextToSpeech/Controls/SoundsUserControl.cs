@@ -126,8 +126,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
                 {
                     var compressedBytes = System.IO.File.ReadAllBytes(dialog.FileName);
                     var bytes = SettingsHelper.Decompress(compressedBytes);
-                    var xml = System.Text.Encoding.UTF8.GetString(bytes);
-                    items = Serializer.DeserializeFromXmlString<List<sound>>(xml, System.Text.Encoding.UTF8);
+                    items = Serializer.DeserializeFromXmlBytes<List<sound>>(bytes);
                 }
                 else
                 {
