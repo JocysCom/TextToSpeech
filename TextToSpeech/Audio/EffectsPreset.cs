@@ -72,7 +72,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				foreach (var name in names)
 				{
 					var stream = MainHelper.GetResource(name);
-					var sr = new StreamReader(stream);
+					var sr = new StreamReader(stream, Encoding.UTF8, true);
 					var xml = sr.ReadToEnd();
 					sr.Close();
 					var preset = Serializer.DeserializeFromXmlString<EffectsPreset>(xml);
@@ -117,8 +117,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var dir = GetPresetsFolder();
 			var fi = dir.GetFiles(name + _fileSufix, System.IO.SearchOption.AllDirectories).FirstOrDefault();
 			if (fi == null) return null;
-			var xml = System.IO.File.ReadAllText(fi.FullName, System.Text.Encoding.UTF8);
-			var preset = Serializer.DeserializeFromXmlString<EffectsPreset>(xml);
+			var preset = Serializer.DeserializeFromXmlFile<EffectsPreset>(fi.FullName);
 			return preset;
 		}
 

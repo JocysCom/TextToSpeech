@@ -82,8 +82,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					bytes = memstream.ToArray();
 				}
 				if (compressed) bytes = SettingsHelper.Decompress(bytes);
-				var xml = System.Text.Encoding.UTF8.GetString(bytes);
-				data = Serializer.DeserializeFromXmlString<SettingsFile>(xml);
+				data = Serializer.DeserializeFromXmlBytes<SettingsFile>(bytes);
 			}
 			return data;
 		}
