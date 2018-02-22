@@ -351,9 +351,11 @@ namespace JocysCom.ClassLibrary.Runtime
 			object result = null;
 			if (typeof(T) == typeof(string))
 			{
-				StreamReader tr = new StreamReader(ms);
+				StreamReader tr = new StreamReader(ms, true);
 				ms.Seek(0, SeekOrigin.Begin);
 				result = tr.ReadToEnd();
+				// can't close here or xw.Close(); will fail.
+				//tr.Dispose();
 			}
 			else
 			{

@@ -261,5 +261,13 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			var size = SizeSuffix(files.Sum(x=>x.Length), 1);
 			CacheLabel.Text = string.Format(_CacheMessageFormat, count, size);
 		}
-	}
+
+        private void CortanaDetailsButton_Click(object sender, EventArgs e)
+        {
+            var frm = new CortanaForm();
+            frm.StartPosition = FormStartPosition.CenterParent;
+            frm.ShowDialog(Program.TopForm);
+            frm.Dispose();
+        }
+    }
 }

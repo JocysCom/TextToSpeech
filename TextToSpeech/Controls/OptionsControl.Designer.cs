@@ -40,12 +40,15 @@
             this.OpenCacheButton = new System.Windows.Forms.Button();
             this.CacheDataCheckBox = new System.Windows.Forms.CheckBox();
             this.CacheLabel = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.CortanaDetailsButton = new System.Windows.Forms.Button();
             this.AddSilenceGroupBox.SuspendLayout();
             this.LoggingGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).BeginInit();
             this.CaptureGroupBox.SuspendLayout();
             this.CacheGroupBox.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // AddSilenceGroupBox
@@ -346,10 +349,32 @@
             this.CacheLabel.Text = "Create wav files and reuse them when possible to save CPU resources.\r\nContains {0" +
     "} files ({1})";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.CortanaDetailsButton);
+            this.groupBox1.Location = new System.Drawing.Point(584, 195);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(211, 53);
+            this.groupBox1.TabIndex = 10;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Cortana Options";
+            // 
+            // CortanaDetailsButton
+            // 
+            this.CortanaDetailsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CortanaDetailsButton.Location = new System.Drawing.Point(130, 19);
+            this.CortanaDetailsButton.Name = "CortanaDetailsButton";
+            this.CortanaDetailsButton.Size = new System.Drawing.Size(75, 23);
+            this.CortanaDetailsButton.TabIndex = 6;
+            this.CortanaDetailsButton.Text = "Details...";
+            this.CortanaDetailsButton.UseVisualStyleBackColor = true;
+            this.CortanaDetailsButton.Click += new System.EventHandler(this.CortanaDetailsButton_Click);
+            // 
             // OptionsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.CacheGroupBox);
             this.Controls.Add(this.CaptureGroupBox);
             this.Controls.Add(this.LoggingGroupBox);
@@ -369,6 +394,7 @@
             this.CaptureGroupBox.PerformLayout();
             this.CacheGroupBox.ResumeLayout(false);
             this.CacheGroupBox.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -400,5 +426,7 @@
 		private System.Windows.Forms.CheckBox CacheDataCheckBox;
 		private System.Windows.Forms.Button OpenCacheButton;
 		private System.Windows.Forms.Label CacheLabel;
-	}
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button CortanaDetailsButton;
+    }
 }

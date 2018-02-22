@@ -152,6 +152,12 @@
     <Compile Include="Controls\AcronymsUserControl.Designer.cs">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CortanaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\CortanaForm.Designer.cs">
+      <DependentUpon>CortanaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MonitorsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -264,6 +270,9 @@
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Controls\AcronymsUserControl.resx">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CortanaForm.resx">
+      <DependentUpon>CortanaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MonitorsUserControl.resx">
       <DependentUpon>MonitorsUserControl.cs</DependentUpon>
