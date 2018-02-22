@@ -26,7 +26,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
             // TTS API voices are installed here:
             // HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens
             // HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\SPEECH\Voices\Tokens
-            var tokens = Registry.LocalMachine.OpenSubKey(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\Voices\Tokens");
+            var tokens = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Speech_OneCore\Voices\Tokens");
             if (tokens == null)
                 return;
             var list = new List<KeyValuePair<string, string>>();
