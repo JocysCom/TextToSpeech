@@ -42,7 +42,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			LoadSettings(voicesEx);
 			foreach (var voiceEx in voicesEx) InstalledVoices.Add(voiceEx);
 			ssmlSynthesizer.Dispose();
-			ssmlSynthesizer = null;
 			VoicesDataGridView.DataSource = InstalledVoices;
 		}
 

@@ -63,6 +63,7 @@
 			this.MobileVoiceLabel = new System.Windows.Forms.Label();
 			this.ImportButton = new System.Windows.Forms.Button();
 			this.RemoveButton = new System.Windows.Forms.Button();
+			this.label8 = new System.Windows.Forms.Label();
 			this.AttributesGroupBox.SuspendLayout();
 			this.MainGroupBox.SuspendLayout();
 			this.SuspendLayout();
@@ -135,6 +136,7 @@
 			// 
 			this.AttributesGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.AttributesGroupBox.Controls.Add(this.label8);
 			this.AttributesGroupBox.Controls.Add(this.label12);
 			this.AttributesGroupBox.Controls.Add(this.LanguageLabel);
 			this.AttributesGroupBox.Controls.Add(this.label11);
@@ -410,6 +412,14 @@
 			this.RemoveButton.UseVisualStyleBackColor = true;
 			this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
 			// 
+			// label8
+			// 
+			this.label8.Location = new System.Drawing.Point(383, 74);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(294, 43);
+			this.label8.TabIndex = 2;
+			this.label8.Text = "Note: You must restart application for [Import] or [Remove] to take effect.";
+			// 
 			// CortanaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -470,5 +480,6 @@
         private System.Windows.Forms.Label MobileVoiceLabel;
 		private System.Windows.Forms.Button ImportButton;
 		private System.Windows.Forms.Button RemoveButton;
+		private System.Windows.Forms.Label label8;
 	}
 }
