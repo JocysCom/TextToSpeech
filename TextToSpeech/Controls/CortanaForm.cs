@@ -22,10 +22,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		// Mobile (Cortana) voices are installed under HKEY_LOCAL_MACHINE:
 		const string mTokens32 = @"SOFTWARE\Microsoft\Speech_OneCore\Voices\Tokens";
-		const string mTokens64 = @"SOFTWARE\WOW6432Node\Microsoft\Speech_OneCore\Voices\Tokens";
+		//const string mTokens64 = @"SOFTWARE\WOW6432Node\Microsoft\Speech_OneCore\Voices\Tokens";
 		// TTS API voices are installed under HKEY_LOCAL_MACHINE:
 		const string aTokens32 = @"SOFTWARE\Microsoft\Speech\Voices\Tokens";
-		const string aTokens64 = @"SOFTWARE\WOW6432Node\Microsoft\SPEECH\Voices\Tokens";
+		//const string aTokens64 = @"SOFTWARE\WOW6432Node\Microsoft\SPEECH\Voices\Tokens";
 
 		private void CortanaForm_Load(object sender, EventArgs e)
 		{
@@ -38,6 +38,13 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				var token = tokens.OpenSubKey(name);
 				var value = (string)token.GetValue(null);
 				var item = new KeyValuePair<string, string>(name, value);
+
+				var voicePath  = string.Format("{0}", token.GetValue("VoicePath"));
+				if (string.IsNullOrEmpty(voicePath))
+					continue;
+				var path = Environment.ExpandEnvironmentVariables(voicePath) + ".APM";
+				if (!System.IO.File.Exists(path))
+					continue;
 				list.Add(item);
 				token.Dispose();
 			}
@@ -160,12 +167,12 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			var sourceKey = string.Format("{0}\\{1}", mTokens32, item.Key);
 			var targetKey = string.Format("{0}\\{1}", aTokens32, item.Key);
 			RegistryHelper.Copy(Registry.LocalMachine, sourceKey, targetKey, true);
-			if (Environment.Is64BitOperatingSystem)
-			{
-				sourceKey = string.Format("{0}\\{1}", mTokens64, item.Key);
-				targetKey = string.Format("{0}\\{1}", aTokens64, item.Key);
-				RegistryHelper.Copy(Registry.LocalMachine, sourceKey, targetKey, true);
-			}
+			//if (Environment.Is64BitOperatingSystem)
+			//{
+			//	sourceKey = string.Format("{0}\\{1}", mTokens64, item.Key);
+			//	targetKey = string.Format("{0}\\{1}", aTokens64, item.Key);
+			//	RegistryHelper.Copy(Registry.LocalMachine, sourceKey, targetKey, true);
+			//}
 			Program.TopForm.RefreshVoicesGrid();
 			UpdateButtons();
 		}
@@ -185,11 +192,11 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			// Do Removal.
 			var targetKey = string.Format("{0}\\{1}", aTokens32, item.Key);
 			Registry.LocalMachine.DeleteSubKeyTree(targetKey);
-			if (Environment.Is64BitOperatingSystem)
-			{
-				targetKey = string.Format("{0}\\{1}", aTokens64, item.Key);
-				Registry.LocalMachine.DeleteSubKeyTree(targetKey);
-			}
+			//if (Environment.Is64BitOperatingSystem)
+			//{
+			//	targetKey = string.Format("{0}\\{1}", aTokens64, item.Key);
+			//	Registry.LocalMachine.DeleteSubKeyTree(targetKey);
+			//}
 			Program.TopForm.RefreshVoicesGrid();
 			UpdateButtons();
 		}
