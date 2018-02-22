@@ -184,6 +184,7 @@
     </Compile>
     <Compile Include="JocysCom\Collections\KeyValue.cs" />
     <Compile Include="JocysCom\Common\Helper.cs" />
+    <Compile Include="JocysCom\Common\RegistryHelper.cs" />
     <Compile Include="JocysCom\Common\TraceFormat.cs" />
     <Compile Include="JocysCom\ComponentModel\BindingListInvoked.cs" />
     <Compile Include="JocysCom\ComponentModel\PropertyComparer.cs" />
