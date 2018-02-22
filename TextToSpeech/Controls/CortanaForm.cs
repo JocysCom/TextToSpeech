@@ -29,7 +29,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void CortanaForm_Load(object sender, EventArgs e)
 		{
-			var tokens = Registry.LocalMachine.OpenSubKey(mTokens32);
+			var lm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+			var tokens = lm.OpenSubKey(mTokens32);
 			if (tokens == null)
 				return;
 			var list = new List<KeyValuePair<string, string>>();
@@ -49,6 +50,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				token.Dispose();
 			}
 			tokens.Dispose();
+			lm.Dispose();
 			MobileVoiceComboBox.DataSource = list;
 			MobileVoiceComboBox.DisplayMember = "Value";
 			MobileVoiceComboBox.ValueMember = "Key";
@@ -83,7 +85,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			if (string.IsNullOrEmpty(item.Key))
 				return;
 			var sourceKey = string.Format("{0}\\{1}", mTokens32, item.Key);
-			var key = Registry.LocalMachine.OpenSubKey(sourceKey);
+			var lm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+			var key = lm.OpenSubKey(sourceKey);
 			if (key == null)
 			{
 				ClearDetails();
@@ -114,6 +117,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				NameTextBox.Text = string.Format("{0}", key.GetValue(LanguageAttributeTextBox.Text));
 			}
 			key.Dispose();
+			lm.Dispose();
 		}
 
 		void ClearDetails()
@@ -142,15 +146,17 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			bool targetExist = false;
 			if (!string.IsNullOrEmpty(item.Key))
 			{
-				var tokens = Registry.LocalMachine.OpenSubKey(aTokens32);
+				var lm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+				var tokens = lm.OpenSubKey(aTokens32);
 				var token = tokens.OpenSubKey(item.Key);
 				targetExist = token != null;
 				tokens.Dispose();
+				lm.Dispose();
 			}
 			ImportButton.Enabled = !targetExist;
 			RemoveButton.Enabled = targetExist;
 		}
-
+		
 		private void ImportButton_Click(object sender, EventArgs e)
 		{
 			var item = (KeyValuePair<string, string>)MobileVoiceComboBox.SelectedItem;
@@ -166,13 +172,17 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			// Do import.
 			var sourceKey = string.Format("{0}\\{1}", mTokens32, item.Key);
 			var targetKey = string.Format("{0}\\{1}", aTokens32, item.Key);
-			RegistryHelper.Copy(Registry.LocalMachine, sourceKey, targetKey, true);
-			//if (Environment.Is64BitOperatingSystem)
-			//{
-			//	sourceKey = string.Format("{0}\\{1}", mTokens64, item.Key);
-			//	targetKey = string.Format("{0}\\{1}", aTokens64, item.Key);
-			//	RegistryHelper.Copy(Registry.LocalMachine, sourceKey, targetKey, true);
-			//}
+			var lm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+			RegistryHelper.Copy(lm, sourceKey, targetKey, true);
+			lm.Dispose();
+			if (Environment.Is64BitOperatingSystem)
+			{
+				lm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+				sourceKey = string.Format("{0}\\{1}", mTokens32, item.Key);
+				targetKey = string.Format("{0}\\{1}", aTokens32, item.Key);
+				RegistryHelper.Copy(lm, sourceKey, targetKey, true);
+				lm.Dispose();
+			}
 			Program.TopForm.RefreshVoicesGrid();
 			UpdateButtons();
 		}
@@ -191,12 +201,16 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				return;
 			// Do Removal.
 			var targetKey = string.Format("{0}\\{1}", aTokens32, item.Key);
-			Registry.LocalMachine.DeleteSubKeyTree(targetKey);
-			//if (Environment.Is64BitOperatingSystem)
-			//{
-			//	targetKey = string.Format("{0}\\{1}", aTokens64, item.Key);
-			//	Registry.LocalMachine.DeleteSubKeyTree(targetKey);
-			//}
+			var lm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+			lm.DeleteSubKeyTree(targetKey);
+			lm.Dispose();
+			if (Environment.Is64BitOperatingSystem)
+			{
+				lm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+				targetKey = string.Format("{0}\\{1}", aTokens32, item.Key);
+				lm.DeleteSubKeyTree(targetKey);
+				lm.Dispose();
+			}
 			Program.TopForm.RefreshVoicesGrid();
 			UpdateButtons();
 		}

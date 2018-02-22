@@ -26,6 +26,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			AudioSampleRateComboBox.DataSource = new int[] { 11025, 22050, 44100, 48000 };
 			AudioSampleRateComboBox.SelectedItem = 22050;
 			AudioBitsPerSampleComboBox.DataSource = new int[] { 16 };
+			AudioBitsPerSampleComboBox.SelectedItem = 16;
 			RefreshVoicesGrid();
 			refreshPresets();
 		}
@@ -33,7 +34,6 @@ namespace JocysCom.TextToSpeech.Monitor
 		public void RefreshVoicesGrid()
 		{
 			InstalledVoices.Clear();
-			AudioBitsPerSampleComboBox.SelectedItem = 16;
 			// Fill grid with voices.
 			// Create synthesizer which will be used to create WAV files from SSML XML.
 			var ssmlSynthesizer = new SpeechSynthesizer();
