@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
@@ -7,10 +6,36 @@ using System.Linq;
 
 namespace JocysCom.ClassLibrary.Controls
 {
+
 	public class VirtualDataGridView : DataGridView
 	{
 
-		Type _type;
+		//https://docs.microsoft.com/en-us/dotnet/framework/winforms/controls/implementing-virtual-mode-wf-datagridview-control
+		// Note: row.DataBoundItem is not assigned when cell formatting.
+		// Must use DataSource in order to access original data item:
+		//
+		//private void VirtualDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		//{
+		//	if (e.RowIndex < 0)
+		//		return;
+		//	var grid = (DataGridView)sender;
+		//	var row = grid.Rows[e.RowIndex];
+		//	var list = (IBindingList)grid.DataSource;
+		//	var item = list[e.RowIndex];
+		//}
+
+		public object GetDataBoundItem(int rowIndex)
+		{
+			if (rowIndex < 0)
+				return null;
+			if (DataSource == null)
+				return null;
+			var list = DataSource as IBindingList;
+			if (list == null)
+				return null;
+			var item = list[rowIndex];
+			return item;
+		}
 
 		public VirtualDataGridView()
 		{
@@ -19,19 +44,20 @@ namespace JocysCom.ClassLibrary.Controls
 			CellValueNeeded += _grid_CellValueNeeded;
 			CellValuePushed += _grid_CellValuePushed;
 			NewRowNeeded += _grid_NewRowNeeded;
-			RowValidated += _grid_RowValidated;
 			RowDirtyStateNeeded += _grid_RowDirtyStateNeeded;
 			CancelRowEdit += _grid_CancelRowEdit;
 			UserDeletingRow += _grid_UserDeletingRow;
 		}
 
+		Type _type;
+
 		/// <summary>
-		/// Override default data souurce.
+		/// Override default data source.
 		/// </summary>
 		[AttributeProvider(typeof(IListSource))]
 		[DefaultValue(null)]
 		[RefreshProperties(RefreshProperties.Repaint)]
-		[IODescriptionAttribute("DataGridViewDataSourceDescr")]
+		[IODescription("DataGridViewDataSourceDescr")]
 		public new object DataSource
 		{
 			get { return _Data; }
@@ -114,8 +140,6 @@ namespace JocysCom.ClassLibrary.Controls
 			}
 		}
 
-		//https://docs.microsoft.com/en-us/dotnet/framework/winforms/controls/implementing-virtual-mode-wf-datagridview-control
-
 		// Declare a Customer object to store data for a row being edited.
 		private object editItem;
 
@@ -161,29 +185,6 @@ namespace JocysCom.ClassLibrary.Controls
 			var item = _Data[e.RowIndex];
 			// Update item value.
 			p.SetValue(item, e.Value, null);
-			//object item = null;
-			//// Store a reference to the Customer object for the row being edited.
-			//if (e.RowIndex < _Data.Count)
-			//{
-			//	// If the user is editing a new row, create a new Customer object.
-			//	if (editItem == null)
-			//	{
-			//		var currentItem = _Data[e.RowIndex];
-			//		editItem = Activator.CreateInstance(_type);
-			//		var ei = _Data[e.RowIndex];
-			//		Runtime.Helper.CopyProperties(ei, editItem);
-			//	}
-			//	item = editItem;
-			//	editIndex = e.RowIndex;
-			//}
-			//else
-			//{
-			//	item = editItem;
-			//}
-			//// Set the cell value to paint using the Customer object retrieved.
-			//var propertyName = Columns[e.ColumnIndex].DataPropertyName;
-			//var p = _type.GetProperty(propertyName);
-			//p.SetValue(item, e.Value, null);
 		}
 
 		/// <summary>
@@ -197,36 +198,6 @@ namespace JocysCom.ClassLibrary.Controls
 			editIndex = Rows.Count - 1;
 		}
 
-
-		/// <summary>
-		/// This event occurs whenever the user changes the current row.
-		/// </summary>
-		private void _grid_RowValidated(object sender, DataGridViewCellEventArgs e)
-		{
-			//// Save row changes if any were made and release the edited 
-			//// Customer object if there is one.
-			//if (e.RowIndex >= _Data.Count &&
-			//	e.RowIndex != Rows.Count - 1)
-			//{
-			//	// Add the new Customer object to the data store.
-			//	_Data.Add(editItem);
-			//	editItem = null;
-			//	editIndex = -1;
-			//}
-			//else if (editItem != null &&
-			//	e.RowIndex < _Data.Count)
-			//{
-			//	// Save the modified Customer object in the data store.
-			//	_Data[e.RowIndex] = editItem;
-			//	editItem = null;
-			//	editIndex = -1;
-			//}
-			//else if (ContainsFocus)
-			//{
-			//	editItem = null;
-			//	editIndex = -1;
-			//}
-		}
 
 		/// <summary>
 		/// This event is useful when the commit scope is determined at run time.
@@ -249,13 +220,13 @@ namespace JocysCom.ClassLibrary.Controls
 			if (editIndex == Rows.Count - 2 &&
 				editIndex == _Data.Count)
 			{
-				// If the user has canceled the edit of a newly created row, 
+				// If the user has cancelled the edit of a newly created row, 
 				// replace the corresponding Customer object with a new, empty one.
 				editItem = Activator.CreateInstance(_type);
 			}
 			else
 			{
-				// If the user has canceled the edit of an existing row, 
+				// If the user has cancelled the edit of an existing row, 
 				// release the corresponding Customer object.
 				editItem = null;
 				editIndex = -1;
