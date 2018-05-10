@@ -128,6 +128,10 @@ Number ( from 0 to 100 ) sets, how often voice should be used, relatively to oth
 Monitor can't play voices, if their trial period is expired. You can test, which ones are expired, by enabling one voice at a time and pressing [ Speak ] button in Monitor. Such voices must be disabled in [ Voices ] tab.</sub></p>
 </blockquote>
 
+Speed of voices can be adjusted in “Monitor's” “Rate” fields. Values can be from “-10” (very slow) to “10” (very fast). Default value is “2”. You can select “1” or “0” in both fields to make voices slower.
+
+<p><img src="https://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Rate_Speed.png" /></p>
+
 <p>10. Run <b>“World of Warcraft”</b> game.<br />
 
 
