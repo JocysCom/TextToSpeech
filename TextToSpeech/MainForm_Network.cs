@@ -248,8 +248,11 @@ namespace JocysCom.TextToSpeech.Monitor
 						var stream = GetIntroSound("Radio2");
 						if (stream != null)
 						{
-							var player = new System.Media.SoundPlayer();
-							player.Stream = stream;
+							//var player = new System.Media.SoundPlayer();
+							//player.Stream = stream;
+							//player.Play();
+							var player = new AudioPlayerApp.AudioPlayer2(Properties.Settings.Default.PlaybackDevice);
+							player.Load(stream);
 							player.Play();
 						}
 					}

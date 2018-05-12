@@ -118,7 +118,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			LoggingPlaySoundCheckBox.CheckedChanged += LoggingPlaySoundCheckBox_CheckedChanged;
 			CaptureSocButton.CheckedChanged += CaptureSocButton_CheckedChanged;
 			CaptureWinButton.CheckedChanged += CaptureWinButton_CheckedChanged;
-
+			EnumeratePlaybackDevices();
+			UpdatePlayBackDevice();
 		}
 
 		public void UpdateWinCapState()
@@ -161,9 +162,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			OpenButton.Enabled = !LoggingCheckBox.Checked;
 			FilterTextLabel.Enabled = !LoggingCheckBox.Checked;
 			LogFolderLabel.Enabled = !LoggingCheckBox.Checked;
-			LoggingLabel1.Enabled = !LoggingCheckBox.Checked;
-			LoggingLabel2.Enabled = !LoggingCheckBox.Checked;
-			LoggingLabel3.Enabled = !LoggingCheckBox.Checked;
 			var path = GetLogsPath(true);
 			path = Path.Combine(path, "log_{0:yyyyMMdd_HHmmss}.txt");
 			lock (WriterLock)
@@ -258,16 +256,71 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			_CacheMessageFormat = CacheLabel.Text;
 			var files = MainHelper.GetCreateCacheFolder().GetFiles();
 			var count = files.Count();
-			var size = SizeSuffix(files.Sum(x=>x.Length), 1);
+			var size = SizeSuffix(files.Sum(x => x.Length), 1);
 			CacheLabel.Text = string.Format(_CacheMessageFormat, count, size);
 		}
 
-        private void CortanaDetailsButton_Click(object sender, EventArgs e)
-        {
-            var frm = new CortanaForm();
-            frm.StartPosition = FormStartPosition.CenterParent;
-            frm.ShowDialog(Program.TopForm);
-            frm.Dispose();
-        }
-    }
+		private void CortanaDetailsButton_Click(object sender, EventArgs e)
+		{
+			var frm = new CortanaForm();
+			frm.StartPosition = FormStartPosition.CenterParent;
+			frm.ShowDialog(Program.TopForm);
+			frm.Dispose();
+		}
+
+		private void HowToButton_Click(object sender, EventArgs e)
+		{
+			var message = "";
+			message += "1. Enable logging.\r\n";
+			message += "2.Enter and send specified text message(for example: me66age) through game or program chat.\r\n";
+			message += "3.Information about found packets with specified text(for example: me66age) will be logged to TXT file.\r\n";
+			MessageBox.Show(message, "How To...");
+		}
+
+		#region Playback Devices
+
+		private void RefreshPlaybackDevices_Click(object sender, EventArgs e)
+		{
+			EnumeratePlaybackDevices();
+			UpdatePlayBackDevice();
+		}
+
+		bool suspendEvents;
+
+		void EnumeratePlaybackDevices()
+		{
+			suspendEvents = true;
+			// Setup our sound listener
+			PlaybackDeviceComboBox.Items.Clear();
+			var player = new AudioPlayerApp.AudioPlayer2();
+			var names = player.GetDeviceNames();
+			player.Dispose();
+			foreach (var name in names)
+				PlaybackDeviceComboBox.Items.Add(name);
+			// Restore audio settings.
+			if (PlaybackDeviceComboBox.Items.Contains(Properties.Settings.Default.PlaybackDevice))
+			{
+				PlaybackDeviceComboBox.SelectedItem = Properties.Settings.Default.PlaybackDevice;
+			}
+			else
+			{
+				PlaybackDeviceComboBox.SelectedIndex = 0;
+			}
+			suspendEvents = false;
+		}
+
+		private void PlaybackDeviceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (suspendEvents) return;
+			Properties.Settings.Default.PlaybackDevice = (string)PlaybackDeviceComboBox.SelectedItem;
+			UpdatePlayBackDevice();
+		}
+
+		void UpdatePlayBackDevice()
+		{
+		}
+
+		#endregion
+
+	}
 }

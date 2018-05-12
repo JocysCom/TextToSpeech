@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JocysCom.TextToSpeech.Monitor</RootNamespace>
     <AssemblyName>JocysCom.TextToSpeech.Monitor</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -110,6 +110,12 @@
       <HintPath>Resources\SharpDX\SharpDX.DirectSound.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="SharpDX.MediaFoundation">
+      <HintPath>Resources\SharpDX\SharpDX.MediaFoundation.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.XAudio2">
+      <HintPath>Resources\SharpDX\SharpDX.XAudio2.dll</HintPath>
+    </Reference>
     <Reference Include="SharpPcap">
       <HintPath>Resources\SharpPcap\SharpPcap.dll</HintPath>
       <Private>False</Private>
@@ -138,7 +144,9 @@
     <Compile Include="Audio\EffectType.cs" />
     <Compile Include="Audio\KeyValue.cs" />
     <Compile Include="Common\Acronym.cs" />
-    <Compile Include="Common\Crc32.cs" />
+    <Compile Include="Common\AudioPlayer.cs" />
+    <Compile Include="Common\AudioPlayer2.cs" />
+    <Compile Include="Common\AudioPlayerState.cs" />
     <Compile Include="Common\HiLoUhsort.cs" />
     <Compile Include="Common\InstalledVoiceEx.cs" />
     <Compile Include="Common\NativeMethods.cs" />
@@ -223,6 +231,7 @@
     <Compile Include="JocysCom\Runtime\ChangeState.cs" />
     <Compile Include="JocysCom\Runtime\Helper.cs" />
     <Compile Include="JocysCom\Runtime\Serializer.cs" />
+    <Compile Include="JocysCom\Security\CRC32.cs" />
     <Compile Include="JocysCom\Security\HashHelper.cs" />
     <Compile Include="JocysCom\Security\MD5Helper.cs" />
     <Compile Include="JocysCom\Text\Helper.cs" />
@@ -504,6 +513,10 @@
     <None Include="Resources\MessageBoxIcon_Information_32x32.png" />
     <None Include="Resources\MessageBoxIcon_Question_32x32.png" />
     <None Include="Resources\MessageBoxIcon_Warning_32x32.png" />
+    <EmbeddedResource Include="Resources\SharpDX\SharpDX.XAudio2.dll" />
+    <EmbeddedResource Include="Resources\SharpDX\SharpDX.XAudio2.xml" />
+    <EmbeddedResource Include="Resources\SharpDX\SharpDX.MediaFoundation.dll" />
+    <EmbeddedResource Include="Resources\SharpDX\SharpDX.MediaFoundation.xml" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon.png" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon_Buttons.png" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon_MiniFrame.png" />

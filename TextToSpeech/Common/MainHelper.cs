@@ -201,7 +201,8 @@ namespace JocysCom.TextToSpeech.Monitor
 		public static int GetNumber(int min, int max, string key, string value)
 		{
 			var s = key + value;
-			var hash = Crc32.ComputeHash(s);
+			var hashBytes = JocysCom.ClassLibrary.Security.CRC32Helper.ComputeHash(s);
+			var hash = System.BitConverter.ToUInt32(hashBytes, 0);
 			var d = ((uint)max - (uint)min);
 			if (d == uint.MaxValue) return (int)hash;
 			return min + (int)(hash % (d + 1));

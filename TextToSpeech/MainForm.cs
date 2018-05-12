@@ -23,7 +23,9 @@ namespace JocysCom.TextToSpeech.Monitor
 			Program.TopForm = this;
 			InitializeComponent();
 			if (IsDesignMode) return;
-			WavPlayer = new System.Media.SoundPlayer();
+			//WavPlayer = new System.Media.SoundPlayer();
+			WavPlayer = new AudioPlayerApp.AudioPlayer2();
+
 			playlist = new BindingList<PlayItem>();
 			playlist.ListChanged += playlist_ListChanged;
 			PlayListDataGridView.AutoGenerateColumns = false;
@@ -59,7 +61,8 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		List<VoiceListItem> PlugIns = new List<VoiceListItem>();
 
-		System.Media.SoundPlayer WavPlayer;
+		//System.Media.SoundPlayer WavPlayer;
+		AudioPlayerApp.AudioPlayer2 WavPlayer;
 
 		void InstalledVoices_ListChanged(object sender, ListChangedEventArgs e)
 		{
@@ -133,7 +136,9 @@ namespace JocysCom.TextToSpeech.Monitor
 							pitchedItem.Duration = (int)duration;
 							// Play.
 							fs.Position = 0;
-							WavPlayer.Stream = fs;
+							//WavPlayer.Stream = fs;
+							WavPlayer.Load(fs);
+							WavPlayer.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
 							WavPlayer.Play();
 							// Start timer which will reset status to Played
 							pitchedItem.StartPlayTimer();
@@ -1111,9 +1116,14 @@ namespace JocysCom.TextToSpeech.Monitor
 			var stream = GetIntroSound(intro);
 			if (stream != null)
 			{
-				var player = new System.Media.SoundPlayer();
-				player.Stream = stream;
+				//var player = new System.Media.SoundPlayer();
+				//player.Stream = stream;
+				//player.Play();
+				var player =  new AudioPlayerApp.AudioPlayer2(Properties.Settings.Default.PlaybackDevice);
+				var names = player.GetDeviceNames();
+				player.Load(stream);
 				player.Play();
+
 			}
 		}
 
