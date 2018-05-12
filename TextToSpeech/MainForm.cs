@@ -150,6 +150,7 @@ namespace JocysCom.TextToSpeech.Monitor
 							var bitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
 							var channelCount = (int)(AudioChannel)AudioChannelsComboBox.SelectedItem;
 							// Takes WAV bytes witout header.
+							EffectPresetsEditorSoundEffectsControl.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
 							EffectPresetsEditorSoundEffectsControl.LoadSoundFile(pitchedItem.WavData, sampleRate, bitsPerSample, channelCount);
 							EffectPresetsEditorSoundEffectsControl.PlaySound();
 							// Start timer which will reset status to Played

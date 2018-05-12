@@ -24,7 +24,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			CurrentPreset = null;
 			var effects = Enum.GetValues(typeof(EffectType)).Cast<EffectType>().Where(x => x != EffectType.None);
 			SetDefaultValues();
-			InitializeDevice();
+			ChangeAudioDevice();
 		}
 
 		public bool IsDesignMode
@@ -47,25 +47,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ResetParamEq();
 			ResetReverb();
 			ResetReverb3d();
-		}
-
-		void InitializeDevice()
-		{
-			var playbackDevices = DirectSound.GetDevices();
-			// Use default device.
-			Guid driverGuid = Guid.Empty;
-			foreach (var device in playbackDevices)
-			{
-				// Pick specific device for the plaback.
-				//if (device.Description.Contains("Sound Blaster"))
-				//	driverGuid = device.DriverGuid;
-			}
-			// Create and set the sound device.
-			ApplicationDevice = new DirectSound(driverGuid);
-			SpeakerConfiguration speakerSet;
-			SpeakerGeometry geometry;
-			ApplicationDevice.GetSpeakerConfiguration(out speakerSet, out geometry);
-			ApplicationDevice.SetCooperativeLevel(this.Handle, CooperativeLevel.Normal);
 		}
 
 		public void LoadSoundFile(byte[] bytes, int sampleRate, int bitsPerSample, int channelCount)
@@ -130,6 +111,35 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		Guid StandardEchoGuid = new Guid("ef3e932c-d40b-4f51-8ccf-3f98f1b29d5d");
 		Guid StandardParameqGuid = new Guid("120ced89-3bf4-4173-a132-3cb406cf3231");
 		Guid StandardDistortionGuid = new Guid("ef114c90-cd1d-484e-96e5-09cfaf912a21");
+
+		string CurrentDeviceName;
+
+		public void ChangeAudioDevice(string deviceName = null)
+		{
+			if (CurrentDeviceName == deviceName && ApplicationDevice != null)
+				return;
+			var playbackDevices = DirectSound.GetDevices();
+			// Use default device.
+			Guid driverGuid = Guid.Empty;
+			foreach (var device in playbackDevices)
+			{
+				// Pick specific device for the plaback.
+				if (string.Compare(device.Description, deviceName, true) == 0)
+					driverGuid = device.DriverGuid;
+			}
+			if (ApplicationDevice != null)
+			{
+				ApplicationDevice.Dispose();
+				ApplicationDevice = null;
+			}
+			// Create and set the sound device.
+			ApplicationDevice = new DirectSound(driverGuid);
+			SpeakerConfiguration speakerSet;
+			SpeakerGeometry geometry;
+			ApplicationDevice.GetSpeakerConfiguration(out speakerSet, out geometry);
+			ApplicationDevice.SetCooperativeLevel(this.Handle, CooperativeLevel.Normal);
+			CurrentDeviceName = deviceName;
+		}
 
 		public void PlaySound()
 		{

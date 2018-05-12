@@ -43,8 +43,7 @@ namespace AudioPlayerApp
 				for (int i = 0; i < count; i++)
 				{
 					var di = xaudio2.GetDeviceDetails(i);
-					var name = string.Format("{0}. {1}", i + 1, di.DisplayName);
-					list.Add(name);
+					list.Add(di.DisplayName);
 				}
 			}
 			return list.ToArray();
@@ -56,15 +55,14 @@ namespace AudioPlayerApp
 		{
 			lock (lockAudio)
 			{
-				if (deviceName == CurrentDeviceName)
+				if (deviceName == CurrentDeviceName && masteringVoice != null)
 					return;
 				int deviceIndex = -1;
 				var count = xaudio2.DeviceCount;
 				for (int i = 0; i < count; i++)
 				{
 					var di = xaudio2.GetDeviceDetails(i);
-					var name = string.Format("{0}. {1}", i + 1, di.DisplayName);
-					if (name == deviceName)
+					if (di.DisplayName == deviceName)
 					{
 						deviceIndex = i;
 						break;
