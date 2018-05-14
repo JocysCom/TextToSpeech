@@ -147,7 +147,7 @@ namespace JocysCom.TextToSpeech.Monitor
 								ms.Write(buf, 0, bytesRead);
 
 							WavPlayer.Load(ms);
-							//WavPlayer.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
+							WavPlayer.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
 							WavPlayer.Play();
 							// Start timer which will reset status to Played
 							pitchedItem.StartPlayTimer();
