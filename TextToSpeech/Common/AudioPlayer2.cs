@@ -20,14 +20,23 @@ namespace AudioPlayerApp
 		private AudioPlayer audioPlayer;
 		private object lockAudio = new object();
 
+		static bool ManagerStarted;
+		static object ManagerLock = new object();
+
+
 		public AudioPlayer2(string deviceName = null)
 		{
-			// This is mandatory when using any of SharpDX.MediaFoundation classes
-			MediaManager.Startup();
+			lock (ManagerLock)
+			{
+				if (!ManagerStarted)
+				{
+					// This is mandatory when using any of SharpDX.MediaFoundation classes
+					MediaManager.Startup();
+					ManagerStarted = true;
+				}
+			}
 			// Starts The XAudio2 engine
 			// Version XAudio2Version.Version27 is required for GetDeviceDetails to work.
-			xaudio2 = new XAudio2(XAudio2Version.Version27);
-			xaudio2.StartEngine();
 			ChangeAudioDevice(deviceName ?? s_DefaultDevice);
 		}
 
@@ -57,6 +66,8 @@ namespace AudioPlayerApp
 			{
 				if (deviceName == CurrentDeviceName && masteringVoice != null)
 					return;
+				xaudio2 = new XAudio2(XAudio2Version.Version27);
+				xaudio2.StartEngine();
 				int deviceIndex = -1;
 				var count = xaudio2.DeviceCount;
 				for (int i = 0; i < count; i++)
@@ -147,7 +158,7 @@ namespace AudioPlayerApp
 			{
 				if (audioPlayer != null)
 				{
-					audioPlayer.Close();
+					//audioPlayer.Close();
 					audioPlayer = null;
 				}
 				if (audioStream != null)

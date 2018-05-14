@@ -137,8 +137,17 @@ namespace JocysCom.TextToSpeech.Monitor
 							// Play.
 							fs.Position = 0;
 							//WavPlayer.Stream = fs;
-							WavPlayer.Load(fs);
-							WavPlayer.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
+							// Make copy of the stream.
+
+							var ms = new MemoryStream();
+							int bufSize = 4096;
+							byte[] buf = new byte[bufSize];
+							int bytesRead = 0;
+							while ((bytesRead = fs.Read(buf, 0, bufSize)) > 0)
+								ms.Write(buf, 0, bytesRead);
+
+							WavPlayer.Load(ms);
+							//WavPlayer.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
 							WavPlayer.Play();
 							// Start timer which will reset status to Played
 							pitchedItem.StartPlayTimer();
@@ -1120,7 +1129,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				//var player = new System.Media.SoundPlayer();
 				//player.Stream = stream;
 				//player.Play();
-				var player =  new AudioPlayerApp.AudioPlayer2(Properties.Settings.Default.PlaybackDevice);
+				var player = new AudioPlayerApp.AudioPlayer2(Properties.Settings.Default.PlaybackDevice);
 				var names = player.GetDeviceNames();
 				player.Load(stream);
 				player.Play();

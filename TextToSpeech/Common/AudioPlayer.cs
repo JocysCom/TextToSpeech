@@ -153,7 +153,6 @@ namespace AudioPlayerApp
 					// The song was paused
 					clock.Start();
 				}
-
 				State = AudioPlayerState.Playing;
 				playEvent.Set();
 
