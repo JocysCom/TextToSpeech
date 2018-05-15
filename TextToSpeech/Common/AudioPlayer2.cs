@@ -6,10 +6,7 @@ using SharpDX.MediaFoundation;
 using SharpDX.XAudio2;
 using System.Linq;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using JocysCom.ClassLibrary.Controls.IssuesControl;
-using JocysCom.ClassLibrary.Win32;
-using JocysCom.ClassLibrary.IO;
 
 namespace AudioPlayerApp
 {
@@ -75,14 +72,9 @@ namespace AudioPlayerApp
 				// If windows 8 +
 				if (version >= new Version(6, 2))
 				{
-					var devices = JocysCom.ClassLibrary.IO.DeviceDetector.GetDevices(
-						DEVCLASS.DEVINTERFACE_AUDIO_RENDER,
-						DIGCF.DIGCF_DEVICEINTERFACE | DIGCF.DIGCF_PRESENT);
-					foreach (var device in devices)
-					{
-						var props = DeviceDetector.GetAllDeviceProperties(device.DeviceId);
-						list.Add(device.FriendlyName);
-					}
+					var devices = SharpDX.DirectSound.DirectSound.GetDevices();
+					var names = devices.Where(x => x.DriverGuid != Guid.Empty).Select(x => x.Description);
+					list.AddRange(names);
 				}
 				else
 				{
@@ -123,15 +115,12 @@ namespace AudioPlayerApp
 				// If windows 8 +
 				if (version >= new Version(6, 2))
 				{
-					
-					var devices = JocysCom.ClassLibrary.IO.DeviceDetector.GetDevices(
-						DEVCLASS.DEVINTERFACE_AUDIO_RENDER,
-						DIGCF.DIGCF_DEVICEINTERFACE | DIGCF.DIGCF_PRESENT);
-					var deviceId =  devices.Where(x => x.FriendlyName == deviceName).Select(x => x.DeviceId).FirstOrDefault();
+					var devices = SharpDX.DirectSound.DirectSound.GetDevices();
+					var deviceId = devices.Where(x => x.Description == deviceName).Select(x => x.ModuleName).FirstOrDefault();
 					// If device found then..
 					masteringVoice = string.IsNullOrEmpty(deviceId)
 						? new MasteringVoice(xaudio2)
-						: new MasteringVoice(xaudio2, 0, 0, deviceId);
+						: new MasteringVoice(xaudio2, 2, 44100, deviceId);
 				}
 				else
 				{

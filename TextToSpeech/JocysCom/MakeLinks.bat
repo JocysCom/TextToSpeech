@@ -47,8 +47,6 @@ CALL:MKJ Network
 CALL:MKJ Security
 CALL:MKJ Runtime
 CALL:MKJ Text
-CALL:MKJ Win32
-
 pause
 GOTO:EOF
 
