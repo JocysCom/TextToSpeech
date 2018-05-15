@@ -112,9 +112,11 @@
     </Reference>
     <Reference Include="SharpDX.MediaFoundation">
       <HintPath>Resources\SharpDX\SharpDX.MediaFoundation.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.XAudio2">
       <HintPath>Resources\SharpDX\SharpDX.XAudio2.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SharpPcap">
       <HintPath>Resources\SharpPcap\SharpPcap.dll</HintPath>
