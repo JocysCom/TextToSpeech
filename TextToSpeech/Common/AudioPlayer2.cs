@@ -6,6 +6,10 @@ using SharpDX.MediaFoundation;
 using SharpDX.XAudio2;
 using System.Linq;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using JocysCom.ClassLibrary.Controls.IssuesControl;
+using JocysCom.ClassLibrary.Win32;
+using JocysCom.ClassLibrary.IO;
 
 namespace AudioPlayerApp
 {
@@ -48,11 +52,46 @@ namespace AudioPlayerApp
 			list.Add(s_DefaultDevice);
 			lock (lockAudio)
 			{
-				var count = xaudio2.DeviceCount;
-				for (int i = 0; i < count; i++)
+				// +-----------------------------------------------------+
+				// |                    |  Platform      | Major | Minor |
+				// +-----------------------------------------------------+
+				// | Windows 95         |  Win32Windows  |   4   |   0   |
+				// | Windows 98         |  Win32Windows  |   4   |  10   |
+				// | Windows Me         |  Win32Windows  |   4   |  90   |
+				// | Windows NT 4.0     |  Win32NT       |   4   |   0   |
+				// | Windows 2000       |  Win32NT       |   5   |   0   |
+				// | Windows XP         |  Win32NT       |   5   |   1   |
+				// | Windows 2003       |  Win32NT       |   5   |   2   |
+				// | Windows Vista      |  Win32NT       |   6   |   0   |
+				// | Windows 2008       |  Win32NT       |   6   |   0   |
+				// | Windows 7          |  Win32NT       |   6   |   1   |
+				// | Windows 2008 R2    |  Win32NT       |   6   |   1   |
+				// | Windows 8          |  Win32NT       |   6   |   2   |
+				// | Windows 8.1        |  Win32NT       |   6   |   3   |
+				// | Windows 10         |  Win32NT       |  10   |   0   |
+				// +-----------------------------------------------------+
+				//
+				var version = IssueHelper.GetRealOSVersion();
+				// If windows 8 +
+				if (version >= new Version(6, 2))
 				{
-					var di = xaudio2.GetDeviceDetails(i);
-					list.Add(di.DisplayName);
+					var devices = JocysCom.ClassLibrary.IO.DeviceDetector.GetDevices(
+						DEVCLASS.DEVINTERFACE_AUDIO_RENDER,
+						DIGCF.DIGCF_DEVICEINTERFACE | DIGCF.DIGCF_PRESENT);
+					foreach (var device in devices)
+					{
+						var props = DeviceDetector.GetAllDeviceProperties(device.DeviceId);
+						list.Add(device.FriendlyName);
+					}
+				}
+				else
+				{
+					var count = xaudio2.DeviceCount;
+					for (int i = 0; i < count; i++)
+					{
+						var di = xaudio2.GetDeviceDetails(i);
+						list.Add(di.DisplayName);
+					}
 				}
 			}
 			return list.ToArray();
@@ -66,32 +105,50 @@ namespace AudioPlayerApp
 			{
 				if (deviceName == CurrentDeviceName && masteringVoice != null)
 					return;
-				xaudio2 = new XAudio2(XAudio2Version.Version27);
-				xaudio2.StartEngine();
-				int deviceIndex = -1;
-				var count = xaudio2.DeviceCount;
-				for (int i = 0; i < count; i++)
+				var version = IssueHelper.GetRealOSVersion();
+				// If windows 8 +
+				if (version >= new Version(6, 2))
 				{
-					var di = xaudio2.GetDeviceDetails(i);
-					if (di.DisplayName == deviceName)
-					{
-						deviceIndex = i;
-						break;
-					}
+					xaudio2 = new XAudio2(XAudio2Version.Version28);
 				}
+				else
+				{
+					xaudio2 = new XAudio2(XAudio2Version.Version27);
+				}
+				xaudio2.StartEngine();
 				if (masteringVoice != null)
 				{
 					Utilities.Dispose(ref masteringVoice);
 				}
-				// If device found then..
-				if (deviceIndex > -1)
+				// If windows 8 +
+				if (version >= new Version(6, 2))
 				{
-					masteringVoice = new MasteringVoice(xaudio2,  0, 0, deviceIndex);
+					
+					var devices = JocysCom.ClassLibrary.IO.DeviceDetector.GetDevices(
+						DEVCLASS.DEVINTERFACE_AUDIO_RENDER,
+						DIGCF.DIGCF_DEVICEINTERFACE | DIGCF.DIGCF_PRESENT);
+					var deviceId =  devices.Where(x => x.FriendlyName == deviceName).Select(x => x.DeviceId).FirstOrDefault();
+					// If device found then..
+					masteringVoice = string.IsNullOrEmpty(deviceId)
+						? new MasteringVoice(xaudio2)
+						: new MasteringVoice(xaudio2, 0, 0, deviceId);
 				}
 				else
 				{
-					// Use default device.
-					masteringVoice = new MasteringVoice(xaudio2);
+					int deviceIndex = -1;
+					var count = xaudio2.DeviceCount;
+					for (int i = 0; i < count; i++)
+					{
+						var di = xaudio2.GetDeviceDetails(i);
+						if (di.DisplayName == deviceName)
+						{
+							deviceIndex = i;
+							break;
+						}
+					}
+					masteringVoice = deviceIndex > -1
+						? new MasteringVoice(xaudio2, 0, 0, deviceIndex)
+						: new MasteringVoice(xaudio2);
 				}
 				CurrentDeviceName = deviceName;
 			}

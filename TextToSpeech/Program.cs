@@ -34,7 +34,6 @@ namespace JocysCom.TextToSpeech.Monitor
 		[STAThread]
 		static void Main()
 		{
-
 			//var h = "6000000000aa06402a020c7fc4218f00cd3b5a2cb0ecc03f2a04e80050192273028cfafffefbf006";
 			//var bytes = HexToBytes(h);
 			//Network.Ip6Header header;
@@ -51,7 +50,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-
 			System.Windows.Forms.Application.ThreadException += Application_ThreadException;
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 			// Check if settings file is valid.
