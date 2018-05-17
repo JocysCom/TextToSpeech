@@ -35,9 +35,8 @@ namespace AudioPlayerApp
 	public class AudioPlayer
 	{
 		private const int WaitPrecision = 1;
-		private XAudio2 xaudio2;
-		private AudioDecoder audioDecoder;
-		private SourceVoice sourceVoice;
+		private XAudio2 _XAudio2;
+		private AudioDecoder _AudioDecoder;
 		private AudioBuffer[] audioBuffersRing;
 		private DataPointer[] memBuffers;
 		private Stopwatch clock;
@@ -49,7 +48,6 @@ namespace AudioPlayerApp
 		private TimeSpan playPositionStart;
 		private Task playingTask;
 		private int playCounter;
-		private float localVolume;
 		private bool IsDisposed;
 
 		/// <summary>
@@ -59,33 +57,30 @@ namespace AudioPlayerApp
 		/// <param name="audioStream">The input audio stream.</param>
 		public AudioPlayer(XAudio2 xaudio2, Stream audioStream)
 		{
-			this.xaudio2 = xaudio2;
-			audioDecoder = new AudioDecoder(audioStream);
-			sourceVoice = new SourceVoice(xaudio2, audioDecoder.WaveFormat);
-			localVolume = 1.0f;
-
-			sourceVoice.BufferEnd += sourceVoice_BufferEnd;
-			sourceVoice.Start();
-
+			// Create Reset events for signaling and locking.
 			bufferEndEvent = new AutoResetEvent(false);
 			playEvent = new ManualResetEvent(false);
 			waitForPlayToOutput = new ManualResetEvent(false);
-
+			// Create playback timer.
 			clock = new Stopwatch();
-
-			// Pre-allocate buffers
+			// Allocate buffers.
 			audioBuffersRing = new AudioBuffer[3];
 			memBuffers = new DataPointer[audioBuffersRing.Length];
 			for (int i = 0; i < audioBuffersRing.Length; i++)
 			{
 				audioBuffersRing[i] = new AudioBuffer();
-				memBuffers[i].Size = 32 * 1024; // default size 32Kb
+				// Default size 32 KBytes.
+				memBuffers[i].Size = 32 * 1024;
 				memBuffers[i].Pointer = Utilities.AllocateMemory(memBuffers[i].Size);
 			}
-
 			// Initialize to stopped
 			State = AudioPlayerState.Stopped;
-
+			// Create player objects.
+			_XAudio2 = xaudio2;
+			_AudioDecoder = new AudioDecoder(audioStream);
+			SourceVoice = new SourceVoice(xaudio2, _AudioDecoder.WaveFormat);
+			SourceVoice.BufferEnd += SourceVoice_BufferEnd;
+			SourceVoice.Start();
 			// Starts the playing thread
 			playingTask = Task.Factory.StartNew(PlayAsync, TaskCreationOptions.LongRunning);
 		}
@@ -93,28 +88,24 @@ namespace AudioPlayerApp
 		/// <summary>
 		/// Gets the XAudio2 <see cref="SourceVoice"/> created by this decoder.
 		/// </summary>
-		/// <value>The source voice.</value>
-		public SourceVoice SourceVoice { get { return sourceVoice; } }
+		public SourceVoice SourceVoice { get; private set; }
 
 		/// <summary>
 		/// Gets the state of this instance.
 		/// </summary>
-		/// <value>The state.</value>
 		public AudioPlayerState State { get; private set; }
 
 		/// <summary>
 		/// Gets the duration in seconds of the current sound.
 		/// </summary>
-		/// <value>The duration.</value>
 		public TimeSpan Duration
 		{
-			get { return audioDecoder.Duration; }
+			get { return _AudioDecoder.Duration; }
 		}
 
 		/// <summary>
 		/// Gets or sets the position in seconds.
 		/// </summary>
-		/// <value>The position.</value>
 		public TimeSpan Position
 		{
 			get { return playPosition; }
@@ -139,42 +130,38 @@ namespace AudioPlayerApp
 		/// </summary>
 		public void Play()
 		{
-			if (State != AudioPlayerState.Playing)
+			// Return if playing already.
+			if (State == AudioPlayerState.Playing)
+				return;
+			bool waitForFirstPlay = false;
+			if (State == AudioPlayerState.Stopped)
 			{
-				bool waitForFirstPlay = false;
-				if (State == AudioPlayerState.Stopped)
-				{
-					playCounter++;
-					waitForPlayToOutput.Reset();
-					waitForFirstPlay = true;
-				}
-				else
-				{
-					// The song was paused
-					clock.Start();
-				}
-				State = AudioPlayerState.Playing;
-				playEvent.Set();
+				playCounter++;
+				waitForPlayToOutput.Reset();
+				waitForFirstPlay = true;
+			}
+			else
+			{
+				// The song was paused
+				clock.Start();
+			}
+			State = AudioPlayerState.Playing;
+			playEvent.Set();
 
-				if (waitForFirstPlay)
-				{
-					waitForPlayToOutput.WaitOne();
-				}
+			if (waitForFirstPlay)
+			{
+				waitForPlayToOutput.WaitOne();
 			}
 		}
 
 		/// <summary>
-		/// Gets or sets the volume.
+		/// Gets or sets the volume. Range from 0.0f to 1.0f.
 		/// </summary>
 		/// <value>The volume.</value>
 		public float Volume
 		{
-			get { return localVolume; }
-			set
-			{
-				localVolume = value;
-				sourceVoice.SetVolume(value);
-			}
+			get { return SourceVoice.Volume; }
+			set { SourceVoice.SetVolume(value); }
 		}
 
 		/// <summary>
@@ -182,12 +169,11 @@ namespace AudioPlayerApp
 		/// </summary>
 		public void Pause()
 		{
-			if (State == AudioPlayerState.Playing)
-			{
-				clock.Stop();
-				State = AudioPlayerState.Paused;
-				playEvent.Reset();
-			}
+			if (State != AudioPlayerState.Playing)
+				return;
+			clock.Stop();
+			State = AudioPlayerState.Paused;
+			playEvent.Reset();
 		}
 
 		/// <summary>
@@ -195,16 +181,15 @@ namespace AudioPlayerApp
 		/// </summary>
 		public void Stop()
 		{
-			if (State != AudioPlayerState.Stopped)
-			{
-				playPosition = TimeSpan.Zero;
-				nextPlayPosition = TimeSpan.Zero;
-				playPositionStart = TimeSpan.Zero;
-				clock.Stop();
-				playCounter++;
-				State = AudioPlayerState.Stopped;
-				playEvent.Reset();
-			}
+			if (State == AudioPlayerState.Stopped)
+				return;
+			playPosition = TimeSpan.Zero;
+			nextPlayPosition = TimeSpan.Zero;
+			playPositionStart = TimeSpan.Zero;
+			clock.Stop();
+			playCounter++;
+			State = AudioPlayerState.Stopped;
+			playEvent.Reset();
 		}
 
 		/// <summary>
@@ -235,7 +220,6 @@ namespace AudioPlayerApp
 		{
 			int currentPlayCounter = 0;
 			int nextBuffer = 0;
-
 			try
 			{
 				while (true)
@@ -246,7 +230,6 @@ namespace AudioPlayerApp
 						if (playEvent.WaitOne(WaitPrecision))
 							break;
 					}
-
 					if (IsDisposed)
 						break;
 
@@ -256,7 +239,7 @@ namespace AudioPlayerApp
 					currentPlayCounter = playCounter;
 
 					// Get the decoded samples from the specified starting position.
-					var sampleIterator = audioDecoder.GetSamples(playPositionStart).GetEnumerator();
+					var sampleIterator = _AudioDecoder.GetSamples(playPositionStart).GetEnumerator();
 
 					bool isFirstTime = true;
 
@@ -284,7 +267,7 @@ namespace AudioPlayerApp
 							break;
 
 						// If ring buffer queued is full, wait for the end of a buffer.
-						while (sourceVoice.State.BuffersQueued == audioBuffersRing.Length && !IsDisposed && State != AudioPlayerState.Stopped)
+						while (SourceVoice.State.BuffersQueued == audioBuffersRing.Length && !IsDisposed && State != AudioPlayerState.Stopped)
 							bufferEndEvent.WaitOne(WaitPrecision);
 
 						// If the player is stopped or disposed, then break of this loop
@@ -338,9 +321,9 @@ namespace AudioPlayerApp
 						playPosition = new TimeSpan(playPositionStart.Ticks + clock.Elapsed.Ticks);
 
 						// Submit the audio buffer to xaudio2
-						sourceVoice.SubmitSourceBuffer(audioBuffersRing[nextBuffer], null);
+						SourceVoice.SubmitSourceBuffer(audioBuffersRing[nextBuffer], null);
 
-						// Go to next entry in the ringg audio buffer
+						// Go to next entry in the ring audio buffer
 						nextBuffer = ++nextBuffer % audioBuffersRing.Length;
 					}
 
@@ -353,26 +336,19 @@ namespace AudioPlayerApp
 			}
 			finally
 			{
-				DisposePlayer();
+				// Dispose player.
+				_AudioDecoder.Dispose();
+				SourceVoice.Dispose();
+				// Dispose buffers.
+				for (int i = 0; i < audioBuffersRing.Length; i++)
+				{
+					Utilities.FreeMemory(memBuffers[i].Pointer);
+					memBuffers[i].Pointer = IntPtr.Zero;
+				}
 			}
 		}
 
-		private void DisposePlayer()
-		{
-			audioDecoder.Dispose();
-			audioDecoder = null;
-
-			sourceVoice.Dispose();
-			sourceVoice = null;
-
-			for (int i = 0; i < audioBuffersRing.Length; i++)
-			{
-				Utilities.FreeMemory(memBuffers[i].Pointer);
-				memBuffers[i].Pointer = IntPtr.Zero;
-			}
-		}
-
-		void sourceVoice_BufferEnd(IntPtr obj)
+		void SourceVoice_BufferEnd(IntPtr obj)
 		{
 			bufferEndEvent.Set();
 		}
