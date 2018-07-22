@@ -205,6 +205,8 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 
 <strong>A)</strong> WoW Main Menu &gt; System &gt; Network &gt; Uncheck check-box on: [ ] Enable IPv6 When Available.</p>
 
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Network.png" style="width: 562px; height: 217px;" /></p>
+
 <hr />
 
 <p>or...<br />
