@@ -203,7 +203,7 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 
 <p>Sometimes, “Monitor” doesn't work with “Internet Protocol Version 6” (IPv6). To test this, you can disable IPv6:<br />
 
-<strong>A)</strong> WoW Main Menu &gt; System &gt; Network &gt; Uncheck check-box on: [ ] Enable IPv6 When Available.</p>
+<strong>A)</strong> WoW Main Menu &gt; System &gt; Network &gt; Uncheck “[ ] Enable IPv6 When Available” check-box.</p>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Network.png" style="width: 562px; height: 217px;" /></p>
 
