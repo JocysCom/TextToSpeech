@@ -3,7 +3,7 @@
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.5.9 (2018-05-15) • Digitally Signed
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.96 (2017-12-02)
  
- * <sub>Monitor 2.5.9 (2018-05-15) and WoW Addon 2.3.0 (2018-05-11) for tests in “Battle for Azeroth” only • [Download](https://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-TEST.zip)</sub>
+ * <sub>Monitor and WoW Addon 2.3.0 (2018-05-11) for tests in “Battle for Azeroth” • [Download](https://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-TEST.zip)</sub>
 
 <hr />
 
