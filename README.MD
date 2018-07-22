@@ -1,9 +1,9 @@
 ﻿# Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.5.9 (2018-05-15) • Digitally Signed
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.2.96 (2017-12-02)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.3.0 (2018-05-11)
  
- * Monitor and WoW Addon 2.3.0 (2018-05-11) for tests in “Battle for Azeroth” • [Download](https://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-TEST.zip)
+ * Old versions: <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2017-12-02.zip">2017-02</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2017-11-30.zip">2017-11</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2017-09-27.zip">2017-09</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2017-04-03.zip">2017-04</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2016-11-01.zip">2016-11</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2016-07-24.zip">2016-07</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2014-08-27.zip">2014-08</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2014-10-16.zip">2014-10</a>
 
 <hr />
 
@@ -201,8 +201,15 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 ### Problems and Solutions
 <hr />
 
-<p>Sometimes, “Monitor” doesn't work with “Internet Protocol Version 6” (IPv6).<br />
-To test this, you can temporary disable it on your network card:<p>
+<p>Sometimes, “Monitor” doesn't work with “Internet Protocol Version 6” (IPv6). To test this, you can disable IPv6:<br />
+
+<strong>A)</strong> WoW Main Menu &gt; System &gt; Network &gt; Uncheck check-box on: [ ] Enable IPv6 When Available.</p>
+
+<hr />
+
+<p>or...<br />
+<br />
+<strong>B)</strong> Temporary disable IPv6 on your network card:</p>
 
 <p>1. Close WoW game and “Monitor”.<br />
 2. Click [Win]+[X] keyboard keys together.<br />
