@@ -1,10 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading; //for assembly name
 using System.Linq;
 
 namespace JocysCom.ClassLibrary.IO
@@ -47,6 +42,32 @@ namespace JocysCom.ClassLibrary.IO
 		{
 			Write(format + "\r\n", args);
 		}
+
+		///// <summary>
+		///// Wipe old files.
+		///// </summary>
+		///// <param name="maxLogFiles">Number of files to keep.</param>
+		//int WipeOldLogFiles(int maxLogFiles, long maxLogBytes)
+		//{
+		//	var fi = new FileInfo(saveFile);
+		//	var di = fi.Directory;
+		//	var prefix = saveFile.Split('\\').Last();
+		//	// Get file list ordered by newest on the top.
+		//	var files = di.GetFiles(prefix + "*" + fi.Extension).OrderByDescending(x => x.CreationTime).ToArray();
+		//	var deleted = 0;
+		//	long totalSize = 0;
+		//	for (int i = 0; i < files.Length; i++)
+		//	{
+		//		totalSize += files[i].Length;
+		//		// If maximum reached then...
+		//		if (i + 1 >= maxLogFiles || totalSize >= maxLogBytes)
+		//		{
+		//			files[i].Delete();
+		//			deleted++;
+		//		}
+		//	}
+		//	return deleted;
+		//}
 
 		public void Write(string format, params object[] args)
 		{

@@ -62,7 +62,7 @@ namespace JocysCom.ClassLibrary.Network
 			{
 				var ni = nics[i];
 				var properties = ni.GetIPProperties();
-				if (ni.OperationalStatus == System.Net.NetworkInformation.OperationalStatus.Up)
+				if (ni.OperationalStatus == OperationalStatus.Up)
 				{
 					// Loop trough IP address properties.
 					for (var a = 0; a < properties.UnicastAddresses.Count; a++)
@@ -88,8 +88,50 @@ namespace JocysCom.ClassLibrary.Network
 			return false;
 		}
 
+		public static bool IsNetworkAvailable(string excludeIps = null)
+		{
+			// If no adapters available then return false;
+			if (!NetworkInterface.GetIsNetworkAvailable())
+				return false;
+			var nics = NetworkInterface.GetAllNetworkInterfaces();
+			var badTypes = new NetworkInterfaceType[] { NetworkInterfaceType.Tunnel, NetworkInterfaceType.Loopback };
+			var goodFamily = new AddressFamily[] { AddressFamily.InterNetwork, AddressFamily.InterNetworkV6 };
+			foreach (var nic in nics)
+			{
+				// If network interface is not up then skip.
+				if (nic.OperationalStatus != OperationalStatus.Up)
+					continue;
+				// If interface type is invalid then skip.
+				if (badTypes.Contains(nic.NetworkInterfaceType))
+					continue;
+				// Get IP4 and IP6 statistics.
+				//var stats = nic.GetIPStatistics();
+				// If no data send or received then skip.
+				//if (stats.BytesSent == 0 || stats.BytesReceived == 0)
+				//	continue;
+				// Loop trough IP address properties.
+				var properties = nic.GetIPProperties();
+				for (var a = 0; a < properties.UnicastAddresses.Count; a++)
+				{
+					var address = properties.UnicastAddresses[a].Address;
+					// If not IP4 or IP6 then continue.
+					if (!goodFamily.Contains(address.AddressFamily))
+						continue;
+					// If loop back then continue.
+					if (IPAddress.IsLoopback(address))
+						continue;
+					// If excluded IP then continue.
+					if (excludeIps != null && IsExcludedIp(address.ToString(), excludeIps))
+						continue;
+					// Address passed availability.
+					return true;
+				}
+			}
+			return false;
+		}
+
 		/// <summary>
-		/// This method is time consuming and would freeze MDT application if you run it on main thread.
+		/// This method is time consuming and would freeze application if you run it on main thread.
 		/// </summary>
 		public static NetworkInfo CheckNetwork(string excludeIps = null)
 		{
@@ -97,11 +139,12 @@ namespace JocysCom.ClassLibrary.Network
 			var nicsList = new List<String>();
 			var nics = NetworkInterface.GetAllNetworkInterfaces();
 			var ips = new List<KeyValuePair<string, int>>();
+			var badTypes = new NetworkInterfaceType[] { NetworkInterfaceType.Tunnel, NetworkInterfaceType.Loopback };
 			for (int i = 0; i < nics.Length; i++)
 			{
 				var ni = nics[i];
-				var badTypes = new NetworkInterfaceType[] { NetworkInterfaceType.Tunnel, NetworkInterfaceType.Loopback };
-				if (badTypes.Contains(ni.NetworkInterfaceType)) continue;
+				if (badTypes.Contains(ni.NetworkInterfaceType))
+					continue;
 				var nicsSb = new StringBuilder();
 				nicsSb.AppendFormat("    Name = {0}, Status = {1}", ni.Name, ni.OperationalStatus);
 				var sb = new StringBuilder();
@@ -113,35 +156,33 @@ namespace JocysCom.ClassLibrary.Network
 					var desc = ni.Description;
 					// If state is still off then...
 					if (!info.IsMobileNicUp)
-					{
 						info.IsMobileNicUp = desc.Contains("HSPA Network");
-					}
 					// If state is still off then...
 					if (!info.IsWirelessNicUp)
-					{
 						info.IsWirelessNicUp = desc.Contains("802.11") || desc.Contains("802.11");
-					}
 					// Loop trough IP address properties.
 					for (var a = 0; a < properties.UnicastAddresses.Count; a++)
 					{
 						var address = properties.UnicastAddresses[a].Address;
-						// Make sure its IP4 version.
-						if (address.AddressFamily == AddressFamily.InterNetwork && !IPAddress.IsLoopback(address))
-						{
-							nicsSb.AppendFormat(", Address = {0}", address);
-							if (excludeIps == null || !IsExcludedIp(address.ToString(), excludeIps))
-							{
-								// Normal IP4 address was found.
-								info.IsNetworkAvailable = true;
-								// More configuration = higher priority of IP address.
-								var priority =
-									properties.GatewayAddresses.Count +
-									properties.DnsAddresses.Count +
-									properties.DhcpServerAddresses.Count +
-									properties.WinsServersAddresses.Count;
-								ips.Add(new KeyValuePair<string, int>(address.ToString(), priority));
-							}
-						}
+						// If not IP4 version then skip.
+						if (address.AddressFamily != AddressFamily.InterNetwork)
+							continue;
+						// If loop-back then skip.
+						if (IPAddress.IsLoopback(address))
+							continue;
+						nicsSb.AppendFormat(", Address = {0}", address);
+						// If excluded then skip.
+						if (excludeIps != null && IsExcludedIp(address.ToString(), excludeIps))
+							continue;
+						// Normal IP4 address was found.
+						info.IsNetworkAvailable = true;
+						// More configuration = higher priority of IP address.
+						var priority =
+							properties.GatewayAddresses.Count +
+							properties.DnsAddresses.Count +
+							properties.DhcpServerAddresses.Count +
+							properties.WinsServersAddresses.Count;
+						ips.Add(new KeyValuePair<string, int>(address.ToString(), priority));
 					}
 				}
 				nicsList.Add(nicsSb.ToString());
