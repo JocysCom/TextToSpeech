@@ -7,6 +7,7 @@ using SharpDX.XAudio2;
 using System.Linq;
 using System.Collections.Generic;
 using JocysCom.ClassLibrary.Controls.IssuesControl;
+using System.Runtime.InteropServices;
 
 namespace AudioPlayerApp
 {
@@ -98,16 +99,19 @@ namespace AudioPlayerApp
 				if (deviceName == CurrentDeviceName && masteringVoice != null)
 					return;
 				var version = IssueHelper.GetRealOSVersion();
+				if (xaudio2 != null)
+					xaudio2.StopEngine();
 				// If windows 8 +
 				if (version >= new Version(6, 2))
 				{
 					xaudio2 = new XAudio2(XAudio2Version.Version28);
+					xaudio2.StartEngine();
 				}
 				else
 				{
 					xaudio2 = new XAudio2(XAudio2Version.Version27);
+					xaudio2.StartEngine();
 				}
-				xaudio2.StartEngine();
 				if (masteringVoice != null)
 				{
 					Utilities.Dispose(ref masteringVoice);
@@ -120,7 +124,8 @@ namespace AudioPlayerApp
 					// If device found then..
 					masteringVoice = string.IsNullOrEmpty(deviceId)
 						? new MasteringVoice(xaudio2)
-						: new MasteringVoice(xaudio2, 2, 44100, deviceId);
+						: new MasteringVoice(xaudio2, XAudio2.DefaultChannels, XAudio2.DefaultSampleRate, deviceId);
+
 				}
 				else
 				{

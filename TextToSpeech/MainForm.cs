@@ -146,9 +146,24 @@ namespace JocysCom.TextToSpeech.Monitor
 							while ((bytesRead = fs.Read(buf, 0, bufSize)) > 0)
 								ms.Write(buf, 0, bytesRead);
 
-							WavPlayer.Load(ms);
-							WavPlayer.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
-							WavPlayer.Play();
+							try
+							{
+								//// Takes WAV bytes witout header.
+								//EffectPresetsEditorSoundEffectsControl.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
+								//EffectPresetsEditorSoundEffectsControl.LoadSoundFile(ms.ToArray(),
+								//	sampleRate, bitsPerSample, channelCount);
+								//EffectPresetsEditorSoundEffectsControl.PlaySound();
+								//// Start timer which will reset status to Played
+								//pitchedItem.StartPlayTimer();
+
+								WavPlayer.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
+								WavPlayer.Load(ms);
+								WavPlayer.Play();
+							}
+							catch (Exception ex)
+							{
+							}
+
 							// Start timer which will reset status to Played
 							pitchedItem.StartPlayTimer();
 						}
