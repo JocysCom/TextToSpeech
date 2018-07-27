@@ -133,7 +133,7 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.1 ( 2018-07-25 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.1 ( 2018-07-27 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffffSave in Monitor <NPC>|r |cff808080 " .. macroName .. " related messages.|r");
@@ -706,7 +706,7 @@ end
  	local fontString = "";
 	JocysCom_MiniMenuFrame_FontString:Show();
 	if name == "Options" then
-		fontString = "|cffddddddMouse over [=] shows Quick Menu.\nMouse click on [=] opens Options Window.|r";
+		fontString = "|cffddddddMouse over [=] shows Quick Menu.\nMouse click opens Options Window.|r";
 	elseif name == "Save" then
 		fontString = "|cffddddddSave target name, gender, type in Monitor.\n|r";
 	elseif name == "Stop" then
