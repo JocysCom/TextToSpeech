@@ -10,8 +10,10 @@
     <sound group="Whisper" file="Private" />
     <sound group="Say" file="Radio" />
     <sound group="Yell" file="Radio" />
-    <sound group="Party" file="Radio" />
     <sound group="Guild" file="Radio" />
+    <sound group="Officer" file="Important" />
+    <sound group="Party" file="Radio" />
+    <sound group="PartyLeader" file="Important" />
     <sound group="Raid" file="Radio" />
     <sound group="RaidLeader" file="Important" />
     <sound group="Battleground" file="Radio" />
