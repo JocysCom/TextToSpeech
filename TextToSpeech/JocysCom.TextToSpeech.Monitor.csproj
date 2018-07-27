@@ -180,6 +180,7 @@
     <Compile Include="Controls\OptionsControl.Designer.cs">
       <DependentUpon>OptionsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SoundEffectsPlayer.cs" />
     <Compile Include="Controls\SoundsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -229,7 +230,7 @@
       <DependentUpon>MessageBoxForm.cs</DependentUpon>
     </Compile>
     <Compile Include="JocysCom\Controls\ToolStripBorderlessRenderer.cs" />
-    <Compile Include="JocysCom\IO\LogWriter.cs" />
+    <Compile Include="JocysCom\IO\LogFileWriter.cs" />
     <Compile Include="JocysCom\Network\NetStatInfo.cs" />
     <Compile Include="JocysCom\Runtime\ChangeState.cs" />
     <Compile Include="JocysCom\Runtime\Helper.cs" />

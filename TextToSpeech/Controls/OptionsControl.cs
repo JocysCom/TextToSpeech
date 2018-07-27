@@ -95,7 +95,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		}
 
 		public byte[] SearchPattern;
-		public JocysCom.ClassLibrary.IO.LogWriter Writer;
+		public JocysCom.ClassLibrary.IO.LogFileWriter Writer;
 		public object WriterLock = new object();
 
 		void LoadSettings()
@@ -162,15 +162,14 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			OpenButton.Enabled = !LoggingCheckBox.Checked;
 			FilterTextLabel.Enabled = !LoggingCheckBox.Checked;
 			LogFolderLabel.Enabled = !LoggingCheckBox.Checked;
-			var path = GetLogsPath(true);
-			path = Path.Combine(path, "log_{0:yyyyMMdd_HHmmss}.txt");
 			lock (WriterLock)
 			{
 				var en = Properties.Settings.Default.LogEnable;
 				if (Writer == null && en && !IsDisposed && !Disposing)
 				{
-					Writer = new ClassLibrary.IO.LogWriter(path, true);
-					Writer.LogAutoFlush = true;
+					Writer = new ClassLibrary.IO.LogFileWriter();
+					Writer.LogFilePrefix = GetLogsPath(true) + "\\log_";
+					Writer.LogFileAutoFlush = true;
 				}
 				else if (Writer != null && !en)
 				{
