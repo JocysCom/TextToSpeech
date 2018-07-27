@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using JocysCom.TextToSpeech.Monitor.Audio;
@@ -20,11 +19,19 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		{
 			// Required for Windows Form Designer support
 			InitializeComponent();
-			if (IsDesignMode) return;
+			if (IsDesignMode)
+				return;
+			Player = new AudioPlayer(Handle);
+			Player.BeforePlay += Player_BeforePlay;
 			CurrentPreset = null;
-			var effects = Enum.GetValues(typeof(EffectType)).Cast<EffectType>().Where(x => x != EffectType.None);
 			SetDefaultValues();
-			ChangeAudioDevice();
+			Player.ChangeAudioDevice();
+		}
+
+		private void Player_BeforePlay(object sender, EventArgs e)
+		{
+			var player = (AudioPlayer)sender;
+			ApplyEffects(player.ApplicationBuffer);
 		}
 
 		public bool IsDesignMode
@@ -32,8 +39,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			get { return DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime; }
 		}
 
-		private SecondarySoundBuffer ApplicationBuffer = null;
-		private DirectSound ApplicationDevice = null;
+		public AudioPlayer Player;
 
 		private void SetDefaultValues()
 		{
@@ -49,32 +55,19 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ResetReverb3d();
 		}
 
-		public void LoadSoundFile(byte[] bytes, int sampleRate, int bitsPerSample, int channelCount)
-		{
-			// Create and set the buffer description.
-			var buffer_desc = new SoundBufferDescription();
-			var format = new SharpDX.Multimedia.WaveFormat(sampleRate, bitsPerSample, channelCount);
-			buffer_desc.Format = format;
-			buffer_desc.Flags =
-				// Play sound even if application loses focus.
-				BufferFlags.GlobalFocus |
-				// This has to be true to use effects.
-				BufferFlags.ControlEffects;
-			buffer_desc.BufferBytes = bytes.Length;
+		Guid StandardFlangerGuid = new Guid("efca3d92-dfd8-4672-a603-7420894bad98");
+		Guid StandardChorusGuid = new Guid("efe6629c-81f7-4281-bd91-c9d604a95af6");
+		Guid StandardCompressorGuid = new Guid("ef011f79-4000-406d-87af-bffb3fc39d57");
+		Guid StandardI3DL2ReverbGuid = new Guid("ef985e71-d5c7-42d4-ba4d-2d073e2e96f4");
+		Guid StandardWavesReverbGuid = new Guid("87fc0268-9a55-4360-95aa-004a1d9de26c");
+		Guid StandardGargleGuid = new Guid("dafd8210-5711-4b91-9fe3-f75b7ae279bf");
+		Guid StandardEchoGuid = new Guid("ef3e932c-d40b-4f51-8ccf-3f98f1b29d5d");
+		Guid StandardParamEqGuid = new Guid("120ced89-3bf4-4173-a132-3cb406cf3231");
+		Guid StandardDistortionGuid = new Guid("ef114c90-cd1d-484e-96e5-09cfaf912a21");
 
-			// Create and set the buffer for playing the sound.
-			ApplicationBuffer = new SecondarySoundBuffer(ApplicationDevice, buffer_desc);
-			ApplicationBuffer.Write(bytes, 0, LockFlags.None);
-			//var ms = new MemoryStream(bytes);
-			//ms.Position = 0;
-			//LoadSoundFile(ms, sampleRate, bitsPerSample, channelCount);
-		}
-
-		public int EffectsCount
+		public void ApplyEffects(SecondarySoundBuffer ab)
 		{
-			get
-			{
-				var boxes = new CheckBox[] {
+			var boxes = new CheckBox[] {
 					ChorusCheckBox,
 					CompressorCheckBox,
 					DistortionCheckBox,
@@ -85,213 +78,102 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 					ReverbCheckBox,
 					Reverb3dCheckBox,
 				};
-				var effectsCount = boxes.Count(x => x.Checked);
-				return effectsCount;
-			}
-		}
-
-		public void StopSound()
-		{
-			// Build the effects array
-			//ApplicationBuffer.Volume = -10000;
-			var ab = ApplicationBuffer;
-			if (ab != null)
-			{
-				ab.Stop();
-			}
-			//ApplicationBuffer.Volume = 0;
-		}
-
-		Guid StandardFlangerGuid = new Guid("efca3d92-dfd8-4672-a603-7420894bad98");
-		Guid StandardChorusGuid = new Guid("efe6629c-81f7-4281-bd91-c9d604a95af6");
-		Guid StandardCompressorGuid = new Guid("ef011f79-4000-406d-87af-bffb3fc39d57");
-		Guid StandardI3DL2ReverbGuid = new Guid("ef985e71-d5c7-42d4-ba4d-2d073e2e96f4");
-		Guid StandardWavesReverbGuid = new Guid("87fc0268-9a55-4360-95aa-004a1d9de26c");
-		Guid StandardGargleGuid = new Guid("dafd8210-5711-4b91-9fe3-f75b7ae279bf");
-		Guid StandardEchoGuid = new Guid("ef3e932c-d40b-4f51-8ccf-3f98f1b29d5d");
-		Guid StandardParameqGuid = new Guid("120ced89-3bf4-4173-a132-3cb406cf3231");
-		Guid StandardDistortionGuid = new Guid("ef114c90-cd1d-484e-96e5-09cfaf912a21");
-
-		string CurrentDeviceName;
-
-		public void ChangeAudioDevice(string deviceName = null)
-		{
-			if (CurrentDeviceName == deviceName && ApplicationDevice != null)
+			var effects = new List<Guid>();
+			// Create array of enabled effects.
+			if (ChorusCheckBox.Checked)
+				effects.Add(StandardChorusGuid);
+			if (CompressorCheckBox.Checked)
+				effects.Add(StandardCompressorGuid);
+			if (DistortionCheckBox.Checked)
+				effects.Add(StandardDistortionGuid);
+			if (EchoCheckBox.Checked)
+				effects.Add(StandardEchoGuid);
+			if (FlangerCheckBox.Checked)
+				effects.Add(StandardFlangerGuid);
+			if (GargleCheckBox.Checked)
+				effects.Add(StandardGargleGuid);
+			if (ParamEqCheckBox.Checked)
+				effects.Add(StandardParamEqGuid);
+			if (ReverbCheckBox.Checked)
+				effects.Add(StandardWavesReverbGuid);
+			if (Reverb3dCheckBox.Checked)
+				effects.Add(StandardI3DL2ReverbGuid);
+			// Set effects.
+			if (effects.Count == 0)
 				return;
-			var playbackDevices = DirectSound.GetDevices();
-			// Use default device.
-			Guid driverGuid = Guid.Empty;
-			foreach (var device in playbackDevices)
+			ab.SetEffect(effects.ToArray());
+			int index;
+			if (ChorusCheckBox.Checked)
 			{
-				// Pick specific device for the plaback.
-				if (string.Compare(device.Description, deviceName, true) == 0)
-					driverGuid = device.DriverGuid;
+				index = effects.IndexOf(StandardChorusGuid);
+				var chorus = ab.GetEffect<Chorus>(index);
+				var chorusParamaters = chorus.AllParameters;
+				ApplyChorusEffect(ref chorusParamaters);
+				chorus.AllParameters = chorusParamaters;
 			}
-			if (ApplicationDevice != null)
+			if (CompressorCheckBox.Checked)
 			{
-				ApplicationDevice.Dispose();
-				ApplicationDevice = null;
+				index = effects.IndexOf(StandardCompressorGuid);
+				var compressor = ab.GetEffect<Compressor>(index);
+				var compressorParamaters = compressor.AllParameters;
+				ApplyCompressorEffect(ref compressorParamaters);
+				compressor.AllParameters = compressorParamaters;
 			}
-			// Create and set the sound device.
-			ApplicationDevice = new DirectSound(driverGuid);
-			SpeakerConfiguration speakerSet;
-			SpeakerGeometry geometry;
-			ApplicationDevice.GetSpeakerConfiguration(out speakerSet, out geometry);
-			ApplicationDevice.SetCooperativeLevel(this.Handle, CooperativeLevel.Normal);
-			CurrentDeviceName = deviceName;
-		}
-
-		public void PlaySound()
-		{
-
-			if (ApplicationBuffer != null)
+			if (DistortionCheckBox.Checked)
 			{
-				if (EffectsCount > 0)
-				{
-					int arrayCount = 0;
-					Guid[] effects = new Guid[EffectsCount];
-					if (ChorusCheckBox.Checked)
-					{
-						effects[arrayCount] = StandardChorusGuid;
-						arrayCount += 1;
-					}
-					if (CompressorCheckBox.Checked)
-					{
-						effects[arrayCount] = StandardCompressorGuid;
-						arrayCount += 1;
-					}
-					if (DistortionCheckBox.Checked)
-					{
-						effects[arrayCount] = StandardDistortionGuid;
-						arrayCount += 1;
-					}
-					if (EchoCheckBox.Checked)
-					{
-						effects[arrayCount] = StandardEchoGuid;
-						arrayCount += 1;
-					}
-					if (FlangerCheckBox.Checked)
-					{
-						effects[arrayCount] = StandardFlangerGuid;
-						arrayCount += 1;
-					}
-					if (GargleCheckBox.Checked)
-					{
-						effects[arrayCount] = StandardGargleGuid;
-						arrayCount += 1;
-					}
-					if (ParamEqCheckBox.Checked)
-					{
-						effects[arrayCount] = StandardParameqGuid;
-						arrayCount += 1;
-					}
-					if (ReverbCheckBox.Checked)
-					{
-						effects[arrayCount] = StandardWavesReverbGuid;
-						arrayCount += 1;
-					}
-					if (Reverb3dCheckBox.Checked)
-					{
-						effects[arrayCount] = StandardI3DL2ReverbGuid;
-						arrayCount += 1;
-					}
-					ApplicationBuffer.SetEffect(effects);
-					arrayCount = 0;
-					if (ChorusCheckBox.Checked)
-					{
-						var chorus = ApplicationBuffer.GetEffect<Chorus>(arrayCount);
-						var chorusParamaters = chorus.AllParameters;
-						ApplyChorusEffect(ref chorusParamaters);
-						chorus.AllParameters = chorusParamaters;
-						arrayCount += 1;
-					}
-					if (CompressorCheckBox.Checked)
-					{
-						var compressor = ApplicationBuffer.GetEffect<Compressor>(arrayCount);
-						var compressorParamaters = compressor.AllParameters;
-						ApplyCompressorEffect(ref compressorParamaters);
-						compressor.AllParameters = compressorParamaters;
-						arrayCount += 1;
-					}
-					if (DistortionCheckBox.Checked)
-					{
-						var distortion = ApplicationBuffer.GetEffect<Distortion>(arrayCount);
-						var distortionParamaters = distortion.AllParameters;
-						ApplyDistortionEffect(ref distortionParamaters);
-						distortion.AllParameters = distortionParamaters;
-						arrayCount += 1;
-					}
-					if (EchoCheckBox.Checked)
-					{
-						var echo = ApplicationBuffer.GetEffect<Echo>(arrayCount);
-						var echoParamaters = echo.AllParameters;
-						ApplyEchoEffect(ref echoParamaters);
-						echo.AllParameters = echoParamaters;
-						arrayCount += 1;
-					}
-					if (FlangerCheckBox.Checked)
-					{
-						var flanger = ApplicationBuffer.GetEffect<Flanger>(arrayCount);
-						var flangerParamaters = flanger.AllParameters;
-						ApplyFlangerEffect(ref flangerParamaters);
-						flanger.AllParameters = flangerParamaters;
-						arrayCount += 1;
-					}
-					if (GargleCheckBox.Checked)
-					{
-						var gargle = ApplicationBuffer.GetEffect<Gargle>(arrayCount);
-						var gargleParamaters = gargle.AllParameters;
-						ApplyGargleEffect(ref gargleParamaters);
-						gargle.AllParameters = gargleParamaters;
-						arrayCount += 1;
-					}
-					if (ParamEqCheckBox.Checked)
-					{
-						var paramEq = ApplicationBuffer.GetEffect<ParametricEqualizer>(arrayCount);
-						var paramEqParamaters = paramEq.AllParameters;
-						ApplyParamEqEffect(ref paramEqParamaters);
-						paramEq.AllParameters = paramEqParamaters;
-						arrayCount += 1;
-					}
-					if (ReverbCheckBox.Checked)
-					{
-						var reverb = ApplicationBuffer.GetEffect<WavesReverb>(arrayCount);
-						var reverbParamaters = reverb.AllParameters;
-						ApplyReverbEffect(ref reverbParamaters);
-						reverb.AllParameters = reverbParamaters;
-						arrayCount += 1;
-					}
-					if (Reverb3dCheckBox.Checked)
-					{
-						var reverb3D = ApplicationBuffer.GetEffect<I3DL2Reverb>(arrayCount);
-						var reverb3DParamaters = reverb3D.AllParameters;
-						ApplyReverb3dEffect(ref reverb3DParamaters);
-						reverb3D.AllParameters = reverb3DParamaters;
-						arrayCount += 1;
-					}
-
-				}
+				index = effects.IndexOf(StandardDistortionGuid);
+				var distortion = ab.GetEffect<Distortion>(index);
+				var distortionParamaters = distortion.AllParameters;
+				ApplyDistortionEffect(ref distortionParamaters);
+				distortion.AllParameters = distortionParamaters;
 			}
-			if (null != ApplicationBuffer)
+			if (EchoCheckBox.Checked)
 			{
-				// If there is no sound then go to "Playback Devices", select your device,
-				// Press [Configure] button, press [Test] button to see if all speaker are producing sound.
-				ApplicationBuffer.Play(0, PlayFlags.None);
+				index = effects.IndexOf(StandardEchoGuid);
+				var echo = ab.GetEffect<Echo>(index);
+				var echoParamaters = echo.AllParameters;
+				ApplyEchoEffect(ref echoParamaters);
+				echo.AllParameters = echoParamaters;
 			}
-		}
-
-		private void mnuStop_Click(object sender, System.EventArgs e)
-		{
-
-			int currentPlayPosition;
-			int currentWritePosition;
-			ApplicationBuffer.GetCurrentPosition(out currentPlayPosition, out currentWritePosition);
-			if (null != ApplicationBuffer && currentPlayPosition != 0)
+			if (FlangerCheckBox.Checked)
 			{
-				ApplicationBuffer.Volume = -10000;
-				ApplicationBuffer.Stop();
-				ApplicationBuffer.CurrentPosition = 0;
-				ApplicationBuffer.Volume = 0;
+				index = effects.IndexOf(StandardFlangerGuid);
+				var flanger = ab.GetEffect<Flanger>(index);
+				var flangerParamaters = flanger.AllParameters;
+				ApplyFlangerEffect(ref flangerParamaters);
+				flanger.AllParameters = flangerParamaters;
+			}
+			if (GargleCheckBox.Checked)
+			{
+				index = effects.IndexOf(StandardGargleGuid);
+				var gargle = ab.GetEffect<Gargle>(index);
+				var gargleParamaters = gargle.AllParameters;
+				ApplyGargleEffect(ref gargleParamaters);
+				gargle.AllParameters = gargleParamaters;
+			}
+			if (ParamEqCheckBox.Checked)
+			{
+				index = effects.IndexOf(StandardParamEqGuid);
+				var paramEq = ab.GetEffect<ParametricEqualizer>(index);
+				var paramEqParamaters = paramEq.AllParameters;
+				ApplyParamEqEffect(ref paramEqParamaters);
+				paramEq.AllParameters = paramEqParamaters;
+			}
+			if (ReverbCheckBox.Checked)
+			{
+				index = effects.IndexOf(StandardWavesReverbGuid);
+				var reverb = ab.GetEffect<WavesReverb>(index);
+				var reverbParamaters = reverb.AllParameters;
+				ApplyReverbEffect(ref reverbParamaters);
+				reverb.AllParameters = reverbParamaters;
+			}
+			if (Reverb3dCheckBox.Checked)
+			{
+				index = effects.IndexOf(StandardI3DL2ReverbGuid);
+				var reverb3D = ab.GetEffect<I3DL2Reverb>(index);
+				var reverb3DParamaters = reverb3D.AllParameters;
+				ApplyReverb3dEffect(ref reverb3DParamaters);
+				reverb3D.AllParameters = reverb3DParamaters;
 			}
 		}
 
@@ -1096,8 +978,11 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			if (disposing && (components != null))
 			{
 				components.Dispose();
-				if (ApplicationDevice != null) ApplicationDevice.Dispose();
-				if (ApplicationBuffer != null) ApplicationBuffer.Dispose();
+				if (Player != null)
+				{
+					Player.Dispose();
+					Player = null;
+				}
 			}
 			base.Dispose(disposing);
 		}

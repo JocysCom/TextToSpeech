@@ -23,8 +23,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			Program.TopForm = this;
 			InitializeComponent();
 			if (IsDesignMode) return;
-			//WavPlayer = new System.Media.SoundPlayer();
-			WavPlayer = new AudioPlayerApp.AudioPlayer2();
+			WavPlayer = new AudioPlayer(Handle);
 
 			playlist = new BindingList<PlayItem>();
 			playlist.ListChanged += playlist_ListChanged;
@@ -62,7 +61,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		List<VoiceListItem> PlugIns = new List<VoiceListItem>();
 
 		//System.Media.SoundPlayer WavPlayer;
-		AudioPlayerApp.AudioPlayer2 WavPlayer;
+		AudioPlayer WavPlayer;
 
 		void InstalledVoices_ListChanged(object sender, ListChangedEventArgs e)
 		{
@@ -122,49 +121,12 @@ namespace JocysCom.TextToSpeech.Monitor
 					{
 						if (pitchedItem.StreamData != null)
 						{
-							var fs = pitchedItem.StreamData;
-							BinaryReader br = new BinaryReader(fs);
-							var length = (int)fs.Length - 8;
-							fs.Position = 22;
-							var channelCount = br.ReadInt16();
-							fs.Position = 24;
-							var sampleRate = br.ReadInt32();
-							fs.Position = 34;
-							var bitsPerSample = br.ReadInt16();
-							var dataLength = (int)fs.Length - 44;
-							var duration = ((decimal)dataLength * 8m) / (decimal)channelCount / (decimal)sampleRate / (decimal)bitsPerSample * 1000m;
-							pitchedItem.Duration = (int)duration;
-							// Play.
-							fs.Position = 0;
-							//WavPlayer.Stream = fs;
-							// Make copy of the stream.
-
-							var ms = new MemoryStream();
-							int bufSize = 4096;
-							byte[] buf = new byte[bufSize];
-							int bytesRead = 0;
-							while ((bytesRead = fs.Read(buf, 0, bufSize)) > 0)
-								ms.Write(buf, 0, bytesRead);
-
-							try
-							{
-								//// Takes WAV bytes witout header.
-								//EffectPresetsEditorSoundEffectsControl.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
-								//EffectPresetsEditorSoundEffectsControl.LoadSoundFile(ms.ToArray(),
-								//	sampleRate, bitsPerSample, channelCount);
-								//EffectPresetsEditorSoundEffectsControl.PlaySound();
-								//// Start timer which will reset status to Played
-								//pitchedItem.StartPlayTimer();
-
-								WavPlayer.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
-								WavPlayer.Load(ms);
-								WavPlayer.Play();
-							}
-							catch (Exception ex)
-							{
-							}
-
+							// Takes WAV bytes witout header.
+							WavPlayer.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
+							var duration = (int)WavPlayer.Load(pitchedItem.StreamData);
+							WavPlayer.Play();
 							// Start timer which will reset status to Played
+							pitchedItem.Duration = duration;
 							pitchedItem.StartPlayTimer();
 						}
 						else
@@ -174,9 +136,9 @@ namespace JocysCom.TextToSpeech.Monitor
 							var bitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
 							var channelCount = (int)(AudioChannel)AudioChannelsComboBox.SelectedItem;
 							// Takes WAV bytes witout header.
-							EffectPresetsEditorSoundEffectsControl.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
-							EffectPresetsEditorSoundEffectsControl.LoadSoundFile(pitchedItem.WavData, sampleRate, bitsPerSample, channelCount);
-							EffectPresetsEditorSoundEffectsControl.PlaySound();
+							EffectPresetsEditorSoundEffectsControl.Player.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
+							EffectPresetsEditorSoundEffectsControl.Player.Load(pitchedItem.WavData, sampleRate, bitsPerSample, channelCount);
+							EffectPresetsEditorSoundEffectsControl.Player.Play();
 							// Start timer which will reset status to Played
 							pitchedItem.StartPlayTimer();
 						}
@@ -589,7 +551,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				resetBuffer();
 				if (token != null) token.Cancel();
-				EffectPresetsEditorSoundEffectsControl.StopSound();
+				EffectPresetsEditorSoundEffectsControl.Player.Stop();
 				WavPlayer.Stop();
 			}
 			if (itemsLeftToPlay > 0)
@@ -1141,14 +1103,10 @@ namespace JocysCom.TextToSpeech.Monitor
 			var stream = GetIntroSound(intro);
 			if (stream != null)
 			{
-				//var player = new System.Media.SoundPlayer();
-				//player.Stream = stream;
-				//player.Play();
-				var player = new AudioPlayerApp.AudioPlayer2(Properties.Settings.Default.PlaybackDevice);
-				var names = player.GetDeviceNames();
+				var player = new AudioPlayer(Handle);
+				player.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
 				player.Load(stream);
 				player.Play();
-
 			}
 		}
 

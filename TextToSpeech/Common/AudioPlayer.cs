@@ -1,356 +1,187 @@
-﻿// Copyright (c) 2010-2011 SharpDX - Alexandre Mutel
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
-using System;
-using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using SharpDX;
-using SharpDX.MediaFoundation;
-using SharpDX.XAudio2;
+using SharpDX.DirectSound;
 
-namespace AudioPlayerApp
+namespace JocysCom.TextToSpeech.Monitor
 {
+
 	/// <summary>
-	/// An audio player able to play audio from several audio and video formats (mp3, wma, avi, mp4... etc.) using XAudio2 and MediaFoundation.
+	/// Summary description for Sound Effects Player.
 	/// </summary>
-	public class AudioPlayer
+	public partial class AudioPlayer : IDisposable
 	{
-		private const int WaitPrecision = 1;
-		private XAudio2 _XAudio2;
-		private AudioDecoder _AudioDecoder;
-		private AudioBuffer[] audioBuffersRing;
-		private DataPointer[] memBuffers;
-		private Stopwatch clock;
-		private ManualResetEvent playEvent;
-		private ManualResetEvent waitForPlayToOutput;
-		private AutoResetEvent bufferEndEvent;
-		private TimeSpan playPosition;
-		private TimeSpan nextPlayPosition;
-		private TimeSpan playPositionStart;
-		private Task playingTask;
-		private int playCounter;
-		private bool IsDisposed;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="AudioPlayer" /> class.
-		/// </summary>
-		/// <param name="xaudio2">The xaudio2 engine.</param>
-		/// <param name="audioStream">The input audio stream.</param>
-		public AudioPlayer(XAudio2 xaudio2, Stream audioStream)
+		public event EventHandler<EventArgs> BeforePlay;
+
+		public AudioPlayer(IntPtr handle)
 		{
-			// Create Reset events for signaling and locking.
-			bufferEndEvent = new AutoResetEvent(false);
-			playEvent = new ManualResetEvent(false);
-			waitForPlayToOutput = new ManualResetEvent(false);
-			// Create playback timer.
-			clock = new Stopwatch();
-			// Allocate buffers.
-			audioBuffersRing = new AudioBuffer[3];
-			memBuffers = new DataPointer[audioBuffersRing.Length];
-			for (int i = 0; i < audioBuffersRing.Length; i++)
-			{
-				audioBuffersRing[i] = new AudioBuffer();
-				// Default size 32 KBytes.
-				memBuffers[i].Size = 32 * 1024;
-				memBuffers[i].Pointer = Utilities.AllocateMemory(memBuffers[i].Size);
-			}
-			// Initialize to stopped
-			State = AudioPlayerState.Stopped;
-			// Create player objects.
-			_XAudio2 = xaudio2;
-			_AudioDecoder = new AudioDecoder(audioStream);
-			SourceVoice = new SourceVoice(xaudio2, _AudioDecoder.WaveFormat);
-			SourceVoice.BufferEnd += SourceVoice_BufferEnd;
-			SourceVoice.Start();
-			// Starts the playing thread
-			playingTask = Task.Factory.StartNew(PlayAsync, TaskCreationOptions.LongRunning);
+			_Handle = handle;
+		}
+
+		IntPtr _Handle;
+		public SecondarySoundBuffer ApplicationBuffer = null;
+		DirectSound ApplicationDevice = null;
+
+		public byte[] GetBytes(Stream stream)
+		{
+			// Play.
+			stream.Position = 0;
+			// Make copy of the stream.
+			var ms = new MemoryStream();
+			int bufSize = 4096;
+			byte[] buf = new byte[bufSize];
+			int bytesRead = 0;
+			while ((bytesRead = stream.Read(buf, 0, bufSize)) > 0)
+				ms.Write(buf, 0, bytesRead);
+			return ms.ToArray();
+		}
+
+		public void GetInfo(byte[] bytes, out int sampleRate, out int bitsPerSample, out int channelCount)
+		{
+			channelCount = BitConverter.ToInt16(bytes, 22);
+			sampleRate = BitConverter.ToInt32(bytes, 24);
+			bitsPerSample = BitConverter.ToInt16(bytes, 34);
 		}
 
 		/// <summary>
-		/// Gets the XAudio2 <see cref="SourceVoice"/> created by this decoder.
+		/// Load sound data.
 		/// </summary>
-		public SourceVoice SourceVoice { get; private set; }
-
-		/// <summary>
-		/// Gets the state of this instance.
-		/// </summary>
-		public AudioPlayerState State { get; private set; }
-
-		/// <summary>
-		/// Gets the duration in seconds of the current sound.
-		/// </summary>
-		public TimeSpan Duration
+		/// <param name="stream"></param>
+		/// <returns>Returns duration.</returns>
+		public decimal Load(Stream stream)
 		{
-			get { return _AudioDecoder.Duration; }
+			int sampleRate;
+			int bitsPerSample;
+			int channelCount;
+			var bytes = GetBytes(stream);
+			GetInfo(bytes, out sampleRate, out bitsPerSample, out channelCount);
+			return Load(bytes, sampleRate, bitsPerSample, channelCount);
 		}
 
 		/// <summary>
-		/// Gets or sets the position in seconds.
+		/// Load sound data.
 		/// </summary>
-		public TimeSpan Position
+		/// <param name="bytes"></param>
+		/// <returns>Returns duration.</returns>
+		public decimal Load(byte[] bytes, int sampleRate, int bitsPerSample, int channelCount)
 		{
-			get { return playPosition; }
-			set
-			{
-				playPosition = value;
-				nextPlayPosition = value;
-				playPositionStart = value;
-				clock.Restart();
-				playCounter++;
-			}
+			// Create and set the buffer description.
+			var buffer_desc = new SoundBufferDescription();
+			var format = new SharpDX.Multimedia.WaveFormat(sampleRate, bitsPerSample, channelCount);
+			buffer_desc.Format = format;
+			buffer_desc.Flags =
+				// Play sound even if application loses focus.
+				BufferFlags.GlobalFocus |
+				// This has to be true to use effects.
+				BufferFlags.ControlEffects;
+			buffer_desc.BufferBytes = bytes.Length;
+			// Create and set the buffer for playing the sound.
+			ApplicationBuffer = new SecondarySoundBuffer(ApplicationDevice, buffer_desc);
+			ApplicationBuffer.Write(bytes, 0, LockFlags.None);
+			var dataLength = (int)bytes.Length - 44;
+			var duration = ((decimal)dataLength * 8m) / (decimal)channelCount / (decimal)sampleRate / (decimal)bitsPerSample * 1000m;
+			return duration;
 		}
 
-		/// <summary>
-		/// Gets or sets a value indicating whether to the sound is looping when the end of the buffer is reached.
-		/// </summary>
-		/// <value><c>true</c> if to loop the sound; otherwise, <c>false</c>.</value>
-		public bool IsRepeating { get; set; }
-
-		/// <summary>
-		/// Plays the sound.
-		/// </summary>
 		public void Play()
 		{
-			// Return if playing already.
-			if (State == AudioPlayerState.Playing)
+			var ab = ApplicationBuffer;
+			if (ab == null)
 				return;
-			bool waitForFirstPlay = false;
-			if (State == AudioPlayerState.Stopped)
-			{
-				playCounter++;
-				waitForPlayToOutput.Reset();
-				waitForFirstPlay = true;
-			}
-			else
-			{
-				// The song was paused
-				clock.Start();
-			}
-			State = AudioPlayerState.Playing;
-			playEvent.Set();
-
-			if (waitForFirstPlay)
-			{
-				waitForPlayToOutput.WaitOne();
-			}
+			// Used to apply effects.
+			var ev = BeforePlay;
+			if (ev != null)
+				ev(this, new EventArgs());
+			// If there is no sound then go to "Playback Devices", select your device,
+			// Press [Configure] button, press [Test] button to see if all speaker are producing sound.
+			ab.Play(0, PlayFlags.None);
 		}
 
-		/// <summary>
-		/// Gets or sets the volume. Range from 0.0f to 1.0f.
-		/// </summary>
-		/// <value>The volume.</value>
-		public float Volume
-		{
-			get { return SourceVoice.Volume; }
-			set { SourceVoice.SetVolume(value); }
-		}
-
-		/// <summary>
-		/// Pauses the sound.
-		/// </summary>
-		public void Pause()
-		{
-			if (State != AudioPlayerState.Playing)
-				return;
-			clock.Stop();
-			State = AudioPlayerState.Paused;
-			playEvent.Reset();
-		}
-
-		/// <summary>
-		/// Stops the sound.
-		/// </summary>
 		public void Stop()
 		{
-			if (State == AudioPlayerState.Stopped)
+			// Build the effects array
+			//ApplicationBuffer.Volume = -10000;
+			var ab = ApplicationBuffer;
+			if (ab != null)
+			{
+				ab.Stop();
+			}
+			//ApplicationBuffer.Volume = 0;
+		}
+
+		string CurrentDeviceName;
+
+		public void ChangeAudioDevice(string deviceName = null)
+		{
+			if (CurrentDeviceName == deviceName && ApplicationDevice != null)
 				return;
-			playPosition = TimeSpan.Zero;
-			nextPlayPosition = TimeSpan.Zero;
-			playPositionStart = TimeSpan.Zero;
-			clock.Stop();
-			playCounter++;
-			State = AudioPlayerState.Stopped;
-			playEvent.Reset();
-		}
-
-		/// <summary>
-		/// Close this audio player.
-		/// </summary>
-		/// <remarks>
-		/// This is similar to call Stop(), Dispose(), Wait().
-		/// </remarks>
-		public void Close()
-		{
-			Stop();
-			IsDisposed = true;
-			Wait();
-		}
-
-		/// <summary>
-		/// Wait that the player is finished.
-		/// </summary>
-		public void Wait()
-		{
-			playingTask.Wait();
-		}
-
-		/// <summary>
-		/// Internal method to play the sound.
-		/// </summary>
-		private void PlayAsync()
-		{
-			int currentPlayCounter = 0;
-			int nextBuffer = 0;
-			try
+			var playbackDevices = DirectSound.GetDevices();
+			// Use default device.
+			Guid driverGuid = Guid.Empty;
+			foreach (var device in playbackDevices)
 			{
-				while (true)
-				{
-					// Check that this instanced is not disposed
-					while (!IsDisposed)
-					{
-						if (playEvent.WaitOne(WaitPrecision))
-							break;
-					}
-					if (IsDisposed)
-						break;
-
-					clock.Restart();
-					playPositionStart = nextPlayPosition;
-					playPosition = playPositionStart;
-					currentPlayCounter = playCounter;
-
-					// Get the decoded samples from the specified starting position.
-					var sampleIterator = _AudioDecoder.GetSamples(playPositionStart).GetEnumerator();
-
-					bool isFirstTime = true;
-
-					bool endOfSong = false;
-
-					// Playing all the samples
-					while (true)
-					{
-						// If the player is stopped or disposed, then break of this loop
-						while (!IsDisposed && State != AudioPlayerState.Stopped)
-						{
-							if (playEvent.WaitOne(WaitPrecision))
-								break;
-						}
-
-						// If the player is stopped or disposed, then break of this loop
-						if (IsDisposed || State == AudioPlayerState.Stopped)
-						{
-							nextPlayPosition = TimeSpan.Zero;
-							break;
-						}
-
-						// If there was a change in the play position, restart the sample iterator.
-						if (currentPlayCounter != playCounter)
-							break;
-
-						// If ring buffer queued is full, wait for the end of a buffer.
-						while (SourceVoice.State.BuffersQueued == audioBuffersRing.Length && !IsDisposed && State != AudioPlayerState.Stopped)
-							bufferEndEvent.WaitOne(WaitPrecision);
-
-						// If the player is stopped or disposed, then break of this loop
-						if (IsDisposed || State == AudioPlayerState.Stopped)
-						{
-							nextPlayPosition = TimeSpan.Zero;
-							break;
-						}
-
-						// Check that there is a next sample
-						if (!sampleIterator.MoveNext())
-						{
-							endOfSong = true;
-							break;
-						}
-
-						// Retrieve a pointer to the sample data
-						var bufferPointer = sampleIterator.Current;
-
-						// If there was a change in the play position, restart the sample iterator.
-						if (currentPlayCounter != playCounter)
-							break;
-
-						// Check that our ring buffer has enough space to store the audio buffer.
-						if (bufferPointer.Size > memBuffers[nextBuffer].Size)
-						{
-							if (memBuffers[nextBuffer].Pointer != IntPtr.Zero)
-								Utilities.FreeMemory(memBuffers[nextBuffer].Pointer);
-
-							memBuffers[nextBuffer].Pointer = Utilities.AllocateMemory(bufferPointer.Size);
-							memBuffers[nextBuffer].Size = bufferPointer.Size;
-						}
-
-						// Copy the memory from MediaFoundation AudioDecoder to the buffer that is going to be played.
-						Utilities.CopyMemory(memBuffers[nextBuffer].Pointer, bufferPointer.Pointer, bufferPointer.Size);
-
-						// Set the pointer to the data.
-						audioBuffersRing[nextBuffer].AudioDataPointer = memBuffers[nextBuffer].Pointer;
-						audioBuffersRing[nextBuffer].AudioBytes = bufferPointer.Size;
-
-						// If this is a first play, restart the clock and notify play method.
-						if (isFirstTime)
-						{
-							clock.Restart();
-							isFirstTime = false;
-
-							waitForPlayToOutput.Set();
-						}
-
-						// Update the current position used for sync
-						playPosition = new TimeSpan(playPositionStart.Ticks + clock.Elapsed.Ticks);
-
-						// Submit the audio buffer to xaudio2
-						SourceVoice.SubmitSourceBuffer(audioBuffersRing[nextBuffer], null);
-
-						// Go to next entry in the ring audio buffer
-						nextBuffer = ++nextBuffer % audioBuffersRing.Length;
-					}
-
-					// If the song is not looping (by default), then stop the audio player.
-					if (endOfSong && !IsRepeating && State == AudioPlayerState.Playing)
-					{
-						Stop();
-					}
-				}
+				// Pick specific device for the plaback.
+				if (string.Compare(device.Description, deviceName, true) == 0)
+					driverGuid = device.DriverGuid;
 			}
-			finally
+			if (ApplicationDevice != null)
 			{
-				// Dispose player.
-				_AudioDecoder.Dispose();
-				SourceVoice.Dispose();
-				// Dispose buffers.
-				for (int i = 0; i < audioBuffersRing.Length; i++)
-				{
-					Utilities.FreeMemory(memBuffers[i].Pointer);
-					memBuffers[i].Pointer = IntPtr.Zero;
-				}
+				ApplicationDevice.Dispose();
+				ApplicationDevice = null;
+			}
+			// Create and set the sound device.
+			ApplicationDevice = new DirectSound(driverGuid);
+			SpeakerConfiguration speakerSet;
+			SpeakerGeometry geometry;
+			ApplicationDevice.GetSpeakerConfiguration(out speakerSet, out geometry);
+			ApplicationDevice.SetCooperativeLevel(_Handle, CooperativeLevel.Normal);
+			CurrentDeviceName = deviceName;
+		}
+
+		public static string s_DefaultDevice = "Default Device";
+
+		public static string[] GetDeviceNames()
+		{
+			var list = new List<string>();
+			list.Add(s_DefaultDevice);
+			var devices = SharpDX.DirectSound.DirectSound.GetDevices();
+			foreach (var device in devices)
+			{
+				if (device.DriverGuid == Guid.Empty)
+					continue;
+				list.Add(device.Description);
+			}
+			return list.ToArray();
+		}
+
+
+		#region IDisposable
+
+		public virtual void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		bool IsDisposing;
+
+		void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+
+				// Don't dispose twice.
+				if (IsDisposing)
+					return;
+				IsDisposing = true;
+				if (ApplicationDevice != null) ApplicationDevice.Dispose();
+				if (ApplicationBuffer != null) ApplicationBuffer.Dispose();
+				_Handle = IntPtr.Zero;
 			}
 		}
 
-		void SourceVoice_BufferEnd(IntPtr obj)
-		{
-			bufferEndEvent.Set();
-		}
+		#endregion
+
 	}
 }

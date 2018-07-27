@@ -146,8 +146,6 @@
     <Compile Include="Audio\EffectType.cs" />
     <Compile Include="Audio\KeyValue.cs" />
     <Compile Include="Common\Acronym.cs" />
-    <Compile Include="Common\AudioPlayer.cs" />
-    <Compile Include="Common\AudioPlayer2.cs" />
     <Compile Include="Common\AudioPlayerState.cs" />
     <Compile Include="Common\HiLoUhsort.cs" />
     <Compile Include="Common\InstalledVoiceEx.cs" />
@@ -180,7 +178,7 @@
     <Compile Include="Controls\OptionsControl.Designer.cs">
       <DependentUpon>OptionsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SoundEffectsPlayer.cs" />
+    <Compile Include="Common\AudioPlayer.cs" />
     <Compile Include="Controls\SoundsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

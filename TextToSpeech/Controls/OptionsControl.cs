@@ -291,9 +291,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			suspendEvents = true;
 			// Setup our sound listener
 			PlaybackDeviceComboBox.Items.Clear();
-			var player = new AudioPlayerApp.AudioPlayer2();
-			var names = player.GetDeviceNames();
-			player.Dispose();
+			var names = AudioPlayer.GetDeviceNames();
 			foreach (var name in names)
 				PlaybackDeviceComboBox.Items.Add(name);
 			// Restore audio settings.
