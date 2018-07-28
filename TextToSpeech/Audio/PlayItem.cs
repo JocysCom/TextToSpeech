@@ -77,7 +77,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			}
 			else
 			{
-				charPath = JocysCom.ClassLibrary.Text.Filters.GetKey(string.Format("{0}_{1}_{2}", Name, Gender, Effect), true);
+				charPath = JocysCom.ClassLibrary.Text.Filters.GetKey(string.Format("{0}_{1}_{2}", Name, Gender ?? "", Effect ?? ""), true);
 				fileName = JocysCom.ClassLibrary.Text.Filters.GetKey(JocysCom.ClassLibrary.Text.Filters.StripHtml(Xml), false);
 				// If file name will be short then...
 				if (fileName.Length >= 64)

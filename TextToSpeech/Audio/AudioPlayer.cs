@@ -42,12 +42,20 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		/// </summary>
 		/// <param name="wavStream"></param>
 		/// <returns>Returns duration.</returns>
-		public decimal Load(Stream wavStream)
+		public decimal Load(Stream stream)
 		{
-			var br = new BinaryReader(wavStream);
-			var bytes = GetBytes(wavStream);
-			var format = new SharpDX.Multimedia.WaveFormat(br);
-			return Load(bytes, format.SampleRate, format.BitsPerSample, format.Channels, AudioHelper.WavHeadSize);
+			var ms = new MemoryStream();
+			var ad = new SharpDX.MediaFoundation.AudioDecoder(stream);
+			var samples = ad.GetSamples();
+			var enumerator = samples.GetEnumerator();
+			while (enumerator.MoveNext())
+			{
+				var sample = enumerator.Current.ToArray();
+				ms.Write(sample, 0, sample.Length);
+			}
+			var format = ad.WaveFormat;
+			var bytes = ms.ToArray();
+			return Load(bytes, format.SampleRate, format.BitsPerSample, format.Channels);
 		}
 
 		/// <summary>
@@ -55,7 +63,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		/// </summary>
 		/// <param name="wavBytes"></param>
 		/// <returns>Returns duration.</returns>
-		public decimal Load(byte[] wavBytes, int sampleRate, int bitsPerSample, int channelCount, int dataOffset = 0)
+		public decimal Load(byte[] wavBytes, int sampleRate, int bitsPerSample, int channelCount)
 		{
 			var format = new SharpDX.Multimedia.WaveFormat(sampleRate, bitsPerSample, channelCount);
 			// Create and set the buffer description.
@@ -66,11 +74,11 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				BufferFlags.GlobalFocus |
 				// This has to be true to use effects.
 				BufferFlags.ControlEffects;
-			desc.BufferBytes = wavBytes.Length - dataOffset;
+			desc.BufferBytes = wavBytes.Length;
 			// Create and set the buffer for playing the sound.
 			ApplicationBuffer = new SecondarySoundBuffer(ApplicationDevice, desc);
-			ApplicationBuffer.Write(wavBytes, dataOffset, wavBytes.Length - dataOffset, 0, LockFlags.None);
-			var duration = AudioHelper.GetDuration(wavBytes.Length - dataOffset, sampleRate, bitsPerSample, channelCount);
+			ApplicationBuffer.Write(wavBytes, 0, LockFlags.None);
+			var duration = AudioHelper.GetDuration(wavBytes.Length, sampleRate, bitsPerSample, channelCount);
 			return duration;
 		}
 

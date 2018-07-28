@@ -295,10 +295,6 @@ namespace JocysCom.TextToSpeech.Monitor
 									xmlFi.Directory.Create();
 								using (Stream stream = new FileStream(wavFi.FullName, FileMode.Create))
 								{
-									//var ad = new SharpDX.MediaFoundation.AudioDecoder(stream);
-									//var samples = ad.GetSamples();
-									//var enumerator = samples.GetEnumerator();
-									//if (enumerator.MoveNext())
 									var headBytes = AudioHelper.GetWavHead(item.WavData.Length, sampleRate, bitsPerSample, channelCount);
 									// Write WAV head.
 									stream.Write(headBytes, 0, headBytes.Length);
@@ -372,7 +368,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			// Add silence at the back to make room for effects.
 			Audio.AudioHelper.WriteSilenceBytes(writer, sampleRate, bitsPerSample, channelCount, silenceEnd);
 			// Add result to play list.
-			item.WavData = ms.GetBuffer();
+			item.WavData = ms.ToArray();
 			//System.IO.File.WriteAllBytes("Temp.wav", item.Data);
 			var duration = ((decimal)bytes.Length * 8m) / (decimal)channelCount / (decimal)sampleRate / (decimal)bitsPerSample * 1000m;
 			duration += (silenceStart + silenceEnd);
