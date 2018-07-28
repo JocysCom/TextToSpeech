@@ -46,7 +46,7 @@ namespace JocysCom.TextToSpeech.Monitor.Network
         public string volume { get { return _volume; } set { _volume = value; NotifyPropertyChanged("volume"); } }
         string _volume;
 
-        [XmlElementAttribute("part")]
+        [XmlElement("part")]
         public string[] parts { get { return _parts; } set { _parts = value; NotifyPropertyChanged("parts"); } }
         string[] _parts;
 
