@@ -10,6 +10,8 @@ local DebugEnabled = false;
 local addonName = "JocysCom-TextToSpeech-WoW";
 local addonPrefix = "JocysComTTS";
 local unitName = UnitName("player");
+local customName = UnitName("player");
+local unitClass = UnitClass("player");
 local realmName = GetRealmName();
 local questMessage = nil;
 local speakMessage = nil;
@@ -28,6 +30,7 @@ local hashIndex = nil;
 local group = nil;
 local messageType = nil;
 local messageLeader = nil;
+local messagePlayer = nil;
 local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-to-speech is enabled.";
 local messageStop = "<message command=\"stop\" />";
 local NPCNames = {};
@@ -133,7 +136,7 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.1 ( 2018-07-27 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.2 ( 2018-07-28 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffffSave in Monitor <NPC>|r |cff808080 " .. macroName .. " related messages.|r");
@@ -511,8 +514,18 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 	-- Replace player name.
 	local newUnitName = JocysCom_ReplaceNameEditBox:GetText();
 	if string.len(newUnitName) > 1 and newUnitName ~= unitName then
+		customName = newUnitName;
 		speakMessage = string.gsub(speakMessage, unitName, newUnitName);
+	else
+		customName = unitName;
 	end
+
+	-- Send player Name, Class and custom Name to Monitor.
+	--if string.find(speakMessage, unitName) ~= nil then
+		messagePlayer = "<message command=\"player\" name=\"" .. unitName .. "," .. customName .. "," .. unitClass ..  "\" />";
+		C_ChatInfo.SendAddonMessage(addonPrefix, messagePlayer, "WHISPER", unitName);
+	--end
+
 	--Replace text in message.
 	speakMessage = JocysCom_Replace(speakMessage);
 	if speakMessage == nil then return end
