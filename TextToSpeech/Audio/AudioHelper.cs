@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace JocysCom.TextToSpeech.Monitor.Audio
 {
@@ -17,29 +14,57 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		static char[] SUBCHUNK2_ID = { 'd', 'a', 't', 'a' };
 		static byte[] AUDIO_FORMAT = new byte[] { 0x01, 0x00 };
 
-		public static void WriteHeader(System.IO.BinaryWriter writer, int byteStreamSize, int channelCount, int sampleRate, int bitsPerSample)
+		/// <summary>44 Bytes</summary>
+		public const int WavHeadSize = 44;
+
+		/// <summary>
+		/// Header size is 44 bytes.
+		/// </summary>
+		public static byte[] GetWavHead(int byteSize, int sampleRate, int bitsPerSample, int channelCount)
 		{
+			var ms = new MemoryStream();
+			var bw = new BinaryWriter(ms);
 			int bytesPerSample = bitsPerSample / 8;
 			int byteRate = sampleRate * channelCount * bytesPerSample;
 			int blockAlign = channelCount * bytesPerSample;
 			int subChunk1Size = 16;
-			writer.Write(CHUNK_ID, 0, CHUNK_ID.Length);
-			writer.Write(PackageInt(byteStreamSize + 42, 4), 0, 4);
-			writer.Write(CHUNK_FORMAT, 0, CHUNK_FORMAT.Length);
-			writer.Write(SUBCHUNK1_ID, 0, SUBCHUNK1_ID.Length);
-			writer.Write(PackageInt(subChunk1Size, 4), 0, 4);
-			writer.Write(AUDIO_FORMAT, 0, AUDIO_FORMAT.Length);
-			writer.Write(PackageInt(channelCount, 2), 0, 2);
-			writer.Write(PackageInt(sampleRate, 4), 0, 4);
-			writer.Write(PackageInt(byteRate, 4), 0, 4);
-			writer.Write(PackageInt(blockAlign, 2), 0, 2);
-			writer.Write(PackageInt(bytesPerSample * 8), 0, 2);
+			bw.Write(CHUNK_ID, 0, CHUNK_ID.Length);
+			bw.Write(PackageInt(byteSize + 42, 4), 0, 4);
+			bw.Write(CHUNK_FORMAT, 0, CHUNK_FORMAT.Length);
+			bw.Write(SUBCHUNK1_ID, 0, SUBCHUNK1_ID.Length);
+			bw.Write(PackageInt(subChunk1Size, 4), 0, 4);
+			bw.Write(AUDIO_FORMAT, 0, AUDIO_FORMAT.Length);
+			bw.Write(PackageInt(channelCount, 2), 0, 2);
+			bw.Write(PackageInt(sampleRate, 4), 0, 4);
+			bw.Write(PackageInt(byteRate, 4), 0, 4);
+			bw.Write(PackageInt(blockAlign, 2), 0, 2);
+			bw.Write(PackageInt(bytesPerSample * 8), 0, 2);
 			//targetStream.Write(PackageInt(0,2), 0, 2); // Extra param size
-			writer.Write(SUBCHUNK2_ID, 0, SUBCHUNK2_ID.Length);
-			writer.Write(PackageInt(byteStreamSize, 4), 0, 4);
+			bw.Write(SUBCHUNK2_ID, 0, SUBCHUNK2_ID.Length);
+			bw.Write(PackageInt(byteSize, 4), 0, 4);
+			var bytes = ms.ToArray();
+			bw.Dispose();
+			return bytes;
 		}
 
-		public static int GetSilenceByteCount(int channelCount, int sampleRate, int bitsPerSample, int milliseconds)
+
+		public static void GetInfo(byte[] wavHead, out int sampleRate, out int bitsPerSample, out int channelCount)
+		{
+			channelCount = BitConverter.ToInt16(wavHead, 22);
+			sampleRate = BitConverter.ToInt32(wavHead, 24);
+			bitsPerSample = BitConverter.ToInt16(wavHead, 34);
+		}
+
+		/// <summary>
+		/// Get duration in miliseconds.
+		/// </summary>
+		public static int GetDuration(int wavDataSize, int sampleRate, int bitsPerSample, int channelCount)
+		{
+			var duration = ((decimal)wavDataSize * 8m) / (decimal)channelCount / (decimal)sampleRate / (decimal)bitsPerSample * 1000m;
+			return (int)duration;
+		}
+
+		public static int GetSilenceByteCount(int sampleRate, int bitsPerSample, int channelCount, int milliseconds)
 		{
 			int bytesPerSample = bitsPerSample / 8;
 			// Get amount of bytes needed to write for audio with one channel and one byte per sample.
@@ -49,16 +74,16 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			return totalBytes;
 		}
 
-		public static int WriteSilenceBytes(System.IO.BinaryWriter writer, int channelCount, int sampleRate, int bitsPerSample, int milliseconds)
+		public static int WriteSilenceBytes(System.IO.BinaryWriter writer, int sampleRate, int bitsPerSample, int channelCount, int milliseconds)
 		{
 			int bytesPerSample = bitsPerSample / 8;
 			// Get amount of bytes needed to write for audio with one channel and one byte per sample.
-			var dataLength = (int)((decimal)sampleRate * ((decimal)milliseconds / 1000));
+			var dataLength = (int)((decimal)sampleRate * ((decimal)milliseconds / 1000m));
 			for (int i = 0; i < dataLength; i++)
 			{
 				if (bytesPerSample == 1)
 				{
-					for (int c = 0; c < channelCount; c++)	Write8bit(writer, 0F, 0F);
+					for (int c = 0; c < channelCount; c++) Write8bit(writer, 0F, 0F);
 				}
 				else
 				{
@@ -77,7 +102,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		}
 
 		/// <summary>Convert a float value into two bytes (use k as conversion value and not Int16.MaxValue to avoid peaks)</summary>
-		public static void  Write8bit(BinaryWriter writer, float value, float k)
+		public static void Write8bit(BinaryWriter writer, float value, float k)
 		{
 			sbyte s = (sbyte)(value * k);
 			// Write byte.

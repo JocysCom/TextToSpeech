@@ -26,6 +26,70 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			_parent = parent;
 		}
 
+		/// <summary>Game Name.</summary>
+		[DefaultValue(null)]
+		public string Game
+		{
+			get { return _Game; }
+			set { _Game = value; NotifyPropertyChanged("Game"); }
+		}
+		string _Game;
+
+		/// <summary>NPC Name.</summary>
+		[DefaultValue(null)]
+		public string Name
+		{
+			get { return _Name; }
+			set { _Name = value; NotifyPropertyChanged("Name"); }
+		}
+		string _Name;
+
+		/// <summary>NPC Gender.</summary>
+		[DefaultValue(null)]
+		public string Gender
+		{
+			get { return _Gender; }
+			set { _Gender = value; NotifyPropertyChanged("Gender"); }
+		}
+		string _Gender;
+
+		/// <summary>NPC Effect.</summary>
+		[DefaultValue(null)]
+		public string Effect
+		{
+			get { return _Effect; }
+			set { _Effect = value; NotifyPropertyChanged("Effect"); }
+		}
+		string _Effect;
+
+		public string GetUniqueFilePath()
+		{
+			var gamePath = JocysCom.ClassLibrary.Text.Filters.GetKey(Game, true);
+			var charPath = "Data";
+			string fileName;
+			var encoding = System.Text.Encoding.UTF8;
+			// If data then...
+			if (string.IsNullOrEmpty(Name))
+			{
+				var bytes = encoding.GetBytes(Xml);
+				var hash = JocysCom.ClassLibrary.Security.MD5Helper.GetGuid(bytes);
+				fileName = string.Format("{0:N}", hash);
+			}
+			else
+			{
+				charPath = JocysCom.ClassLibrary.Text.Filters.GetKey(string.Format("{0}_{1}_{2}", Name, Gender, Effect), true);
+				fileName = JocysCom.ClassLibrary.Text.Filters.GetKey(JocysCom.ClassLibrary.Text.Filters.StripHtml(Xml), false);
+				// If file name will be short then...
+				if (fileName.Length >= 64)
+				{
+					var bytes = encoding.GetBytes(fileName);
+					var hash = ClassLibrary.Security.CRC32Helper.GetHashAsString(bytes);
+					fileName = string.Format("{0}_{1}", fileName.Substring(0, 64), hash);
+				}
+			}
+			return string.Format("{0}\\{1}\\{2}", gamePath, charPath, fileName);
+		}
+
 		public void StartPlayTimer()
 		{
 			if (IsDisposing) return;
@@ -73,12 +137,25 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			set { _Xml = value; NotifyPropertyChanged("Xml"); }
 		}
 
-		byte[] _Data;
+		/// <summary>
+		/// Contains information about the WAV Data.
+		/// </summary>
+		public SharpDX.Multimedia.WaveFormat WavHead
+		{
+			get { return _WavHead; }
+			set { _WavHead = value; NotifyPropertyChanged("WavHead"); }
+		}
+		SharpDX.Multimedia.WaveFormat _WavHead;
+
+		/// <summary>
+		/// Contains WAV data for processing.
+		/// </summary>
 		public byte[] WavData
 		{
-			get { return _Data; }
-			set { _Data = value; NotifyPropertyChanged("Data"); }
+			get { return _WavData; }
+			set { _WavData = value; NotifyPropertyChanged("WavData"); }
 		}
+		byte[] _WavData;
 
 		Stream _StreamData;
 		public Stream StreamData

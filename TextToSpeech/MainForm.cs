@@ -132,9 +132,9 @@ namespace JocysCom.TextToSpeech.Monitor
 						else
 						{
 							// Must be outside begin invoke.
-							var sampleRate = (int)AudioSampleRateComboBox.SelectedItem;
-							var bitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
-							var channelCount = (int)(AudioChannel)AudioChannelsComboBox.SelectedItem;
+							int sampleRate = pitchedItem.WavHead.SampleRate;
+							int bitsPerSample = pitchedItem.WavHead.BitsPerSample;
+							int channelCount = pitchedItem.WavHead.Channels;
 							// Takes WAV bytes witout header.
 							EffectPresetsEditorSoundEffectsControl.Player.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
 							EffectPresetsEditorSoundEffectsControl.Player.Load(pitchedItem.WavData, sampleRate, bitsPerSample, channelCount);
@@ -233,40 +233,87 @@ namespace JocysCom.TextToSpeech.Monitor
 					if (item.Status == JobStatusType.Parsed)
 					{
 						item.Status = JobStatusType.Synthesizing;
-						int bitsPerSample = 0;
-						int sampleRate = 0;
-						int channelCount = 0;
-						Invoke((Action)(() =>
-						{
-							channelCount = (int)(AudioChannel)AudioChannelsComboBox.SelectedItem;
-							sampleRate = (int)AudioSampleRateComboBox.SelectedItem;
-							bitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
-						}));
-						item.WavData = ConvertSapiXmlToWav(item.Xml, bitsPerSample, sampleRate, channelCount);
-						item.Status = item.WavData == null
-							? item.Status = JobStatusType.Error
-							: item.Status = JobStatusType.Synthesized;
+						var encoding = System.Text.Encoding.UTF8;
+						var synthesize = true;
+						FileInfo xmlFi = null;
+						FileInfo wavFi = null;
 						if (Properties.Settings.Default.CacheData)
 						{
 							// Write sound to cache.
-							var encoding = System.Text.Encoding.UTF8;
+							var uniqueName = item.GetUniqueFilePath();
 							var bytes = encoding.GetBytes(item.Xml);
-							var hash = JocysCom.ClassLibrary.Security.MD5Helper.GetGuid(bytes);
 							var dir = MainHelper.GetCreateCacheFolder();
-							var xmlFile = string.Format("{0:N}.xml", hash);
-							var wavFile = string.Format("{0:N}.wav", hash);
+							var xmlFile = string.Format("{0}.xml", uniqueName);
+							var wavFile = string.Format("{0}.wav", uniqueName);
 							var xmlFullPath = Path.Combine(dir.FullName, xmlFile);
 							var wavFullPath = Path.Combine(dir.FullName, wavFile);
-							System.IO.File.WriteAllText(xmlFullPath, item.Xml, encoding);
-							// Write WAV with the header.
-							var ms = new MemoryStream();
-							var writer = new System.IO.BinaryWriter(ms);
-							AudioHelper.WriteHeader(writer, item.WavData.Length, channelCount, sampleRate, bitsPerSample);
-							writer.Write(item.WavData);
-							bytes = ms.ToArray();
-							// Note: that some player won't be able to play this file.
-							System.IO.File.WriteAllBytes(wavFullPath, bytes);
+							xmlFi = new FileInfo(xmlFullPath);
+							wavFi = new FileInfo(wavFullPath);
+							// If both files exists then...
+							if (xmlFi.Exists && wavFi.Exists)
+							{
+								using (Stream stream = new FileStream(wavFi.FullName, FileMode.Open, FileAccess.Read))
+								{
+									var ms = new MemoryStream();
+									var ad = new SharpDX.MediaFoundation.AudioDecoder(stream);
+									var samples = ad.GetSamples();
+									var enumerator = samples.GetEnumerator();
+									while (enumerator.MoveNext())
+									{
+										var sample = enumerator.Current.ToArray();
+										ms.Write(sample, 0, sample.Length);
+									}
+									// Read WAV head.
+									item.WavHead = ad.WaveFormat;
+									// Read WAV data.
+									item.WavData = ms.ToArray();
+									item.Duration = (int)ad.Duration.TotalMilliseconds;
+								}
+								// Load XML.
+								item.Xml = System.IO.File.ReadAllText(xmlFi.FullName);
+								synthesize = false;
+							}
 						}
+						if (synthesize)
+						{
+							int bitsPerSample = 0;
+							int sampleRate = 0;
+							int channelCount = 0;
+							Invoke((Action)(() =>
+							{
+								sampleRate = (int)AudioSampleRateComboBox.SelectedItem;
+								bitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
+								channelCount = (int)(AudioChannel)AudioChannelsComboBox.SelectedItem;
+							}));
+							item.WavData = ConvertSapiXmlToWav(item.Xml, sampleRate, bitsPerSample, channelCount);
+							item.WavHead = new SharpDX.Multimedia.WaveFormat(sampleRate, bitsPerSample, channelCount);
+							item.Duration = AudioHelper.GetDuration(item.WavData.Length, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
+							if (Properties.Settings.Default.CacheData && item.WavData != null)
+							{
+								// Create directory if not exists.
+								if (!xmlFi.Directory.Exists)
+									xmlFi.Directory.Create();
+								using (Stream stream = new FileStream(wavFi.FullName, FileMode.Create))
+								{
+									//var ad = new SharpDX.MediaFoundation.AudioDecoder(stream);
+									//var samples = ad.GetSamples();
+									//var enumerator = samples.GetEnumerator();
+									//if (enumerator.MoveNext())
+									var headBytes = AudioHelper.GetWavHead(item.WavData.Length, sampleRate, bitsPerSample, channelCount);
+									// Write WAV head.
+									stream.Write(headBytes, 0, headBytes.Length);
+									// Write WAV data.
+									stream.Write(item.WavData, 0, item.WavData.Length);
+
+								}
+								// Write XML.
+								System.IO.File.WriteAllText(xmlFi.FullName, item.Xml, encoding);
+							}
+
+						}
+						item.Status = (item.WavHead == null || item.WavData == null)
+							? item.Status = JobStatusType.Error
+							: item.Status = JobStatusType.Synthesized;
 					}
 					if (item.Status == JobStatusType.Synthesized)
 					{
@@ -288,28 +335,27 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		void ApplyPitch(PlayItem item)
 		{
-			var ms = new MemoryStream();
-			var writer = new System.IO.BinaryWriter(ms);
-			int channelCount = 0;
-			int sampleRate = 0;
-			int bitsPerSample = 0;
+			// Get info about the WAV.
+			int sampleRate = item.WavHead.SampleRate;
+			int bitsPerSample = item.WavHead.BitsPerSample;
+			int channelCount = item.WavHead.Channels;
+			// Get info about effects and pitch.
 			bool applyEffects = false;
 			float pitchShift = 1.0F;
 			Invoke((Action)(() =>
 			{
-				channelCount = (int)(AudioChannel)AudioChannelsComboBox.SelectedItem;
-				sampleRate = (int)AudioSampleRateComboBox.SelectedItem;
-				bitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
 				applyEffects = EffectPresetsEditorSoundEffectsControl.GeneralCheckBox.Checked;
 				pitchShift = ((float)EffectPresetsEditorSoundEffectsControl.GeneralPitchTrackBar.Value / 100F);
 
 			}));
+			var ms = new MemoryStream();
+			var writer = new System.IO.BinaryWriter(ms);
 			var bytes = item.WavData;
 			// Add 100 milliseconds at the start.
 			var silenceStart = 100;
 			// Add 200 milliseconds at the end.
 			var silenceEnd = 200;
-			var silenceBytes = AudioHelper.GetSilenceByteCount(channelCount, sampleRate, bitsPerSample, silenceStart + silenceEnd);
+			var silenceBytes = AudioHelper.GetSilenceByteCount(sampleRate, bitsPerSample, channelCount, silenceStart + silenceEnd);
 			// Comment WriteHeader(...) line, because SharpDX don't need that (it creates noise).
 			//AudioHelper.WriteHeader(writer, bytes.Length + silenceBytes, channelCount, sampleRate, bitsPerSample);
 			if (applyEffects)
@@ -321,10 +367,10 @@ namespace JocysCom.TextToSpeech.Monitor
 				if (token.IsCancellationRequested) return;
 			}
 			// Add silence at the start to make room for effects.
-			Audio.AudioHelper.WriteSilenceBytes(writer, channelCount, sampleRate, bitsPerSample, silenceStart);
+			Audio.AudioHelper.WriteSilenceBytes(writer, sampleRate, bitsPerSample, channelCount, silenceStart);
 			writer.Write(bytes);
 			// Add silence at the back to make room for effects.
-			Audio.AudioHelper.WriteSilenceBytes(writer, channelCount, sampleRate, bitsPerSample, silenceEnd);
+			Audio.AudioHelper.WriteSilenceBytes(writer, sampleRate, bitsPerSample, channelCount, silenceEnd);
 			// Add result to play list.
 			item.WavData = ms.GetBuffer();
 			//System.IO.File.WriteAllBytes("Temp.wav", item.Data);
@@ -591,7 +637,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			else
 			{
-				var blocks = AddTextToPlaylist(IncomingTextTextBox.Text, false, "TextBox");
+				var blocks = AddTextToPlaylist(ProgramComboBox.Text, IncomingTextTextBox.Text, false, "TextBox");
 				SapiTextBox.Text = string.Join("\r\n\r\n", blocks.Select(x => x.Xml));
 			}
 		}
@@ -1113,35 +1159,6 @@ namespace JocysCom.TextToSpeech.Monitor
 		private void DefaultIntroSoundComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			PlayCurrentIntroSond();
-		}
-
-		#endregion
-
-		#region Silence
-
-		Stream GetSilence(int milliseconds)
-		{
-			var ms = new MemoryStream();
-			var writer = new System.IO.BinaryWriter(ms);
-			int channelCount = 0;
-			int sampleRate = 0;
-			int bitsPerSample = 0;
-			bool applyEffects = false;
-			float pitchShift = 1.0F;
-			Invoke((Action)(() =>
-			{
-				channelCount = (int)(AudioChannel)AudioChannelsComboBox.SelectedItem;
-				sampleRate = (int)AudioSampleRateComboBox.SelectedItem;
-				bitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
-				applyEffects = EffectPresetsEditorSoundEffectsControl.GeneralCheckBox.Checked;
-				pitchShift = ((float)EffectPresetsEditorSoundEffectsControl.GeneralPitchTrackBar.Value / 100F);
-
-			}));
-			var silenceBytes = AudioHelper.GetSilenceByteCount(channelCount, sampleRate, bitsPerSample, milliseconds);
-			AudioHelper.WriteHeader(writer, silenceBytes, channelCount, sampleRate, bitsPerSample);
-			// Add silence.
-			Audio.AudioHelper.WriteSilenceBytes(writer, channelCount, sampleRate, bitsPerSample, milliseconds);
-			return ms;
 		}
 
 		#endregion

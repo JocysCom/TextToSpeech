@@ -1,4 +1,5 @@
 ﻿using JocysCom.ClassLibrary.Runtime;
+using JocysCom.TextToSpeech.Monitor.Audio;
 using JocysCom.TextToSpeech.Monitor.Network;
 using JocysCom.TextToSpeech.Monitor.PlugIns;
 using PacketDotNet;
@@ -606,14 +607,14 @@ namespace JocysCom.TextToSpeech.Monitor
 					// Add silence before message.
 					int silenceIntBefore = Decimal.ToInt32(OptionsPanel.silenceBefore);
 					string silenceStringBefore = OptionsPanel.silenceBefore.ToString();
-					if (silenceIntBefore > 0) AddTextToPlaylist("<silence msec=\"" + silenceStringBefore + "\" />", true, v.group);
+					if (silenceIntBefore > 0) AddTextToPlaylist(ProgramComboBox.Text, "<silence msec=\"" + silenceStringBefore + "\" />", true, v.group);
 
-					AddTextToPlaylist(decodedText, true, v.group);
+					AddTextToPlaylist(ProgramComboBox.Text, decodedText, true, v.group, v.name, v.gender, v.effect);
 
 					// Add silence after message.
 					int silenceIntAfter = Decimal.ToInt32(OptionsPanel.silenceAfter);
 					string silenceStringAfter = OptionsPanel.silenceAfter.ToString();
-					if (silenceIntAfter > 0) AddTextToPlaylist("<silence msec=\"" + silenceStringAfter + "\" />", true, v.group);
+					if (silenceIntAfter > 0) AddTextToPlaylist(ProgramComboBox.Text, "<silence msec=\"" + silenceStringAfter + "\" />", true, v.group);
 
 
 					break;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using SharpDX.DirectSound;
 
-namespace JocysCom.TextToSpeech.Monitor
+namespace JocysCom.TextToSpeech.Monitor.Audio
 {
 
 	/// <summary>
@@ -37,50 +37,40 @@ namespace JocysCom.TextToSpeech.Monitor
 			return ms.ToArray();
 		}
 
-		public void GetInfo(byte[] bytes, out int sampleRate, out int bitsPerSample, out int channelCount)
-		{
-			channelCount = BitConverter.ToInt16(bytes, 22);
-			sampleRate = BitConverter.ToInt32(bytes, 24);
-			bitsPerSample = BitConverter.ToInt16(bytes, 34);
-		}
-
 		/// <summary>
 		/// Load sound data.
 		/// </summary>
-		/// <param name="stream"></param>
+		/// <param name="wavStream"></param>
 		/// <returns>Returns duration.</returns>
-		public decimal Load(Stream stream)
+		public decimal Load(Stream wavStream)
 		{
-			int sampleRate;
-			int bitsPerSample;
-			int channelCount;
-			var bytes = GetBytes(stream);
-			GetInfo(bytes, out sampleRate, out bitsPerSample, out channelCount);
-			return Load(bytes, sampleRate, bitsPerSample, channelCount);
+			var br = new BinaryReader(wavStream);
+			var bytes = GetBytes(wavStream);
+			var format = new SharpDX.Multimedia.WaveFormat(br);
+			return Load(bytes, format.SampleRate, format.BitsPerSample, format.Channels, AudioHelper.WavHeadSize);
 		}
 
 		/// <summary>
-		/// Load sound data.
+		/// Load sound data. wavData must not contain WAV Head.
 		/// </summary>
-		/// <param name="bytes"></param>
+		/// <param name="wavBytes"></param>
 		/// <returns>Returns duration.</returns>
-		public decimal Load(byte[] bytes, int sampleRate, int bitsPerSample, int channelCount)
+		public decimal Load(byte[] wavBytes, int sampleRate, int bitsPerSample, int channelCount, int dataOffset = 0)
 		{
-			// Create and set the buffer description.
-			var buffer_desc = new SoundBufferDescription();
 			var format = new SharpDX.Multimedia.WaveFormat(sampleRate, bitsPerSample, channelCount);
-			buffer_desc.Format = format;
-			buffer_desc.Flags =
+			// Create and set the buffer description.
+			var desc = new SoundBufferDescription();
+			desc.Format = format;
+			desc.Flags =
 				// Play sound even if application loses focus.
 				BufferFlags.GlobalFocus |
 				// This has to be true to use effects.
 				BufferFlags.ControlEffects;
-			buffer_desc.BufferBytes = bytes.Length;
+			desc.BufferBytes = wavBytes.Length - dataOffset;
 			// Create and set the buffer for playing the sound.
-			ApplicationBuffer = new SecondarySoundBuffer(ApplicationDevice, buffer_desc);
-			ApplicationBuffer.Write(bytes, 0, LockFlags.None);
-			var dataLength = (int)bytes.Length - 44;
-			var duration = ((decimal)dataLength * 8m) / (decimal)channelCount / (decimal)sampleRate / (decimal)bitsPerSample * 1000m;
+			ApplicationBuffer = new SecondarySoundBuffer(ApplicationDevice, desc);
+			ApplicationBuffer.Write(wavBytes, dataOffset, wavBytes.Length - dataOffset, 0, LockFlags.None);
+			var duration = AudioHelper.GetDuration(wavBytes.Length - dataOffset, sampleRate, bitsPerSample, channelCount);
 			return duration;
 		}
 

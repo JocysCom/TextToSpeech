@@ -91,7 +91,12 @@ namespace JocysCom.TextToSpeech.Monitor
 			return returnHtmlText;
 		}
 
-		List<PlayItem> AddTextToPlaylist(string text, bool addToPlaylist, string voiceGroup)
+		List<PlayItem> AddTextToPlaylist(string game, string text, bool addToPlaylist, string voiceGroup,
+			// Optional properties for NPC character.
+			string name = null,
+			string gender = null,
+			string effect = null
+		)
 		{
 			// It will take too long to convert large amount of text to WAV data and apply all filters.
 			// This function will split text into smaller sentences.
@@ -111,6 +116,12 @@ namespace JocysCom.TextToSpeech.Monitor
 				{
 					var item = new PlayItem(this)
 					{
+						Game = game,
+						// Set NPC properties.
+						Name = name,
+						Gender = gender,
+						Effect = effect,
+						// Set data properties.
 						Text = sentence,
 						Xml = ConvertTextToSapiXml(sentence, comment),
 						Status = JobStatusType.Parsed,
@@ -135,7 +146,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		/// <summary>
 		/// Convert xml to WAV bytes. WAV won't have the header, so you have to add it separatelly.
 		/// </summary>
-		byte[] ConvertSapiXmlToWav(string xml, int bitsPerSample, int sampleRate, int channelCount)
+		byte[] ConvertSapiXmlToWav(string xml, int sampleRate, int bitsPerSample, int channelCount)
 		{
 			SpeechAudioFormatType t = SpeechAudioFormatType.SAFT48kHz16BitMono;
 			switch (channelCount)
@@ -160,23 +171,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					break;
 			}
 			byte[] bytes;
-			//var synthesizer = new SpeechSynthesizer();
-			//var ms = new MemoryStream();
-			//synthesizer.SetOutputToWaveStream(ms);
-			//synthesizer.Speak("test");
-			//bytes = ms.ToArray();
 			var voice = new SpeechLib.SpVoice();
-			//// Write to file.
-			//var fileStream = new SpeechLib.SpFileStream();
-			//fileStream.Open("speak.wav", SpeechLib.SpeechStreamFileMode.SSFMCreateForWrite, false);
-			//voice.AudioOutputStream = fileStream;
-			//voice.Voice = voice.GetVoices().Item(0);
-			//voice.Volume = 100;
-			//voice.Speak(xml, SpeechLib.SpeechVoiceSpeakFlags.SVSFDefault);
-			//MessageBox.Show(voice.AudioOutputStream.Format.Type.ToString());
-			//voice = null;
-			//fileStream.Close();
-			//fileStream = null;
 			// Write into memory.
 			var stream = new SpeechLib.SpMemoryStream();
 			stream.Format.Type = t;
@@ -248,7 +243,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			else
 			{
-				AddTextToPlaylist(IncomingTextTextBox.Text, true, "TextBox");
+				AddTextToPlaylist(ProgramComboBox.Text, IncomingTextTextBox.Text, true, "TextBox");
 			}
 		}
 

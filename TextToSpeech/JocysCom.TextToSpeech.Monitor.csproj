@@ -178,7 +178,7 @@
     <Compile Include="Controls\OptionsControl.Designer.cs">
       <DependentUpon>OptionsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Common\AudioPlayer.cs" />
+    <Compile Include="Audio\AudioPlayer.cs" />
     <Compile Include="Controls\SoundsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -236,6 +236,7 @@
     <Compile Include="JocysCom\Security\CRC32.cs" />
     <Compile Include="JocysCom\Security\HashHelper.cs" />
     <Compile Include="JocysCom\Security\MD5Helper.cs" />
+    <Compile Include="JocysCom\Text\Filters.cs" />
     <Compile Include="JocysCom\Text\Helper.cs" />
     <Compile Include="MainForm_Network.cs">
       <SubType>Form</SubType>
