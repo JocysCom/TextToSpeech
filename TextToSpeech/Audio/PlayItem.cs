@@ -73,7 +73,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		/// <returns></returns>
 		public string GetUniqueFilePath(bool generalize = false)
 		{
-			var gamePath = JocysCom.ClassLibrary.Text.Filters.GetKey(Game, true);
+			var gamePath = JocysCom.ClassLibrary.Text.Filters.GetKey(Game, false);
 			var charPath = "Data";
 			string fileName;
 			var encoding = System.Text.Encoding.UTF8;
