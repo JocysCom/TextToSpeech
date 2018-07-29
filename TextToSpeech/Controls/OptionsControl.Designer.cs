@@ -299,7 +299,7 @@
 			this.CacheOptionsGroupBox.Size = new System.Drawing.Size(211, 128);
 			this.CacheOptionsGroupBox.TabIndex = 10;
 			this.CacheOptionsGroupBox.TabStop = false;
-			this.CacheOptionsGroupBox.Text = "Cache Options (Create WAV files)";
+			this.CacheOptionsGroupBox.Text = "Cache Options (Create TTS files)";
 			// 
 			// OpenCacheButton
 			// 
@@ -317,9 +317,9 @@
 			this.CacheDataWriteCheckBox.AutoSize = true;
 			this.CacheDataWriteCheckBox.Location = new System.Drawing.Point(6, 23);
 			this.CacheDataWriteCheckBox.Name = "CacheDataWriteCheckBox";
-			this.CacheDataWriteCheckBox.Size = new System.Drawing.Size(99, 17);
+			this.CacheDataWriteCheckBox.Size = new System.Drawing.Size(109, 17);
 			this.CacheDataWriteCheckBox.TabIndex = 0;
-			this.CacheDataWriteCheckBox.Text = "Write TTS Files";
+			this.CacheDataWriteCheckBox.Text = "Write Files (WAV)";
 			this.CacheDataWriteCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// CacheLabel
@@ -369,9 +369,9 @@
 			this.CacheDataReadCheckBox.AutoSize = true;
 			this.CacheDataReadCheckBox.Location = new System.Drawing.Point(6, 46);
 			this.CacheDataReadCheckBox.Name = "CacheDataReadCheckBox";
-			this.CacheDataReadCheckBox.Size = new System.Drawing.Size(100, 17);
+			this.CacheDataReadCheckBox.Size = new System.Drawing.Size(138, 17);
 			this.CacheDataReadCheckBox.TabIndex = 0;
-			this.CacheDataReadCheckBox.Text = "Read TTS Files";
+			this.CacheDataReadCheckBox.Text = "Read Files (MP3, WAV)";
 			this.CacheDataReadCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// AddSilenceAfterNumericUpDown
