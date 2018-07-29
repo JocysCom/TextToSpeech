@@ -86,7 +86,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			}
 			else
 			{
-				charPath = JocysCom.ClassLibrary.Text.Filters.GetKey(string.Format("{0}_{1}_{2}", Name, Gender ?? "", Effect ?? ""), true);
+				charPath = JocysCom.ClassLibrary.Text.Filters.GetKey(string.Format("{0}_{1}_{2}", Name, Gender ?? "", Effect ?? ""), false);
 				// Generalize text if needed.
 				var text = generalize ? GetGeneralizedText() : Text;
 				fileName = JocysCom.ClassLibrary.Text.Filters.GetKey(text, false);
