@@ -1083,7 +1083,7 @@
             </Anchors>
             <Scripts>
               <OnLoad>
-                self.text:SetText("|cff40fb40 Guild leader|r");
+                self.text:SetText("|cff40fb40 Guild leaders|r");
                 self.text:SetPoint("TOPLEFT", 24, -8);
               </OnLoad>
               <OnEnter>

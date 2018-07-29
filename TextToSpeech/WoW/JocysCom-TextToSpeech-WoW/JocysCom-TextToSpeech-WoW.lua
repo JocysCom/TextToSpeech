@@ -1005,7 +1005,7 @@ function JocysCom_LoadTocFileSettings()
 	-- Set (MiniFrame) CheckButtons.
 	if JocysCom_ReplaceNameEB == "" or JocysCom_ReplaceNameEB == nil then JocysCom_ReplaceNameEB = unitName else JocysCom_ReplaceNameEditBox:SetText(JocysCom_ReplaceNameEB) end
 	if JocysCom_QuestCB == false then JocysCom_QuestCheckButton:SetChecked(false) else JocysCom_QuestCheckButton:SetChecked(true) end
-	if JocysCom_MonsterCB == false then JocysCom_MonsterCheckButton:SetChecked(false) else JocysCom_MonsterCheckButton:SetChecked(true) end
+	if JocysCom_MonsterCB == true then JocysCom_MonsterCheckButton:SetChecked(true) else JocysCom_MonsterCheckButton:SetChecked(false) end
 	if JocysCom_WhisperCB == false then JocysCom_WhisperCheckButton:SetChecked(false) else JocysCom_WhisperCheckButton:SetChecked(true) end
 	if JocysCom_EmoteCB == false then JocysCom_EmoteCheckButton:SetChecked(false) else JocysCom_EmoteCheckButton:SetChecked(true) end
 	if JocysCom_SayCB == false then JocysCom_SayCheckButton:SetChecked(false) else JocysCom_SayCheckButton:SetChecked(true) end
