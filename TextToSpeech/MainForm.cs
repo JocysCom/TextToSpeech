@@ -239,21 +239,34 @@ namespace JocysCom.TextToSpeech.Monitor
 						FileInfo wavFi = null;
 						if (Properties.Settings.Default.CacheData)
 						{
-							// Write sound to cache.
-							var uniqueName = item.GetUniqueFilePath();
-							var bytes = encoding.GetBytes(item.Xml);
 							var dir = MainHelper.GetCreateCacheFolder();
+
+							// Look for generalized file first.
+							var uniqueName = item.GetUniqueFilePath(true);
+							// Get XML file path.
 							var xmlFile = string.Format("{0}.xml", uniqueName);
-							var wavFile = string.Format("{0}.wav", uniqueName);
 							var xmlFullPath = Path.Combine(dir.FullName, xmlFile);
-							var wavFullPath = Path.Combine(dir.FullName, wavFile);
 							xmlFi = new FileInfo(xmlFullPath);
+							// If genrealized file do not exists then...
+							if (!xmlFi.Exists)
+							{
+								// Look for normal file.
+								uniqueName = item.GetUniqueFilePath(false);
+								// Get XML file path.
+								xmlFile = string.Format("{0}.xml", uniqueName);
+								xmlFullPath = Path.Combine(dir.FullName, xmlFile);
+								xmlFi = new FileInfo(xmlFullPath);
+							}
+							// Get WAV file path.
+							var wavFile = string.Format("{0}.wav", uniqueName);
+							var wavFullPath = Path.Combine(dir.FullName, wavFile);
 							wavFi = new FileInfo(wavFullPath);
 							// If both files exists then...
 							if (xmlFi.Exists && wavFi.Exists)
 							{
 								using (Stream stream = new FileStream(wavFi.FullName, FileMode.Open, FileAccess.Read))
 								{
+									// Load existing XML and WAV data into PlayItem.
 									var ms = new MemoryStream();
 									var ad = new SharpDX.MediaFoundation.AudioDecoder(stream);
 									var samples = ad.GetSamples();
@@ -271,6 +284,7 @@ namespace JocysCom.TextToSpeech.Monitor
 								}
 								// Load XML.
 								item.Xml = System.IO.File.ReadAllText(xmlFi.FullName);
+								// Make sure WAV data is not synthesized.
 								synthesize = false;
 							}
 						}

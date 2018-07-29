@@ -44,6 +44,7 @@
 			this.CacheLabel = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.CortanaDetailsButton = new System.Windows.Forms.Button();
+			this.CacheDataGeneralizeCheckBox = new System.Windows.Forms.CheckBox();
 			this.AddSilenceGroupBox.SuspendLayout();
 			this.LoggingGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
@@ -300,7 +301,7 @@
 			this.CaptureGroupBox.Controls.Add(this.CaptureSocButton);
 			this.CaptureGroupBox.Location = new System.Drawing.Point(584, 3);
 			this.CaptureGroupBox.Name = "CaptureGroupBox";
-			this.CaptureGroupBox.Size = new System.Drawing.Size(211, 79);
+			this.CaptureGroupBox.Size = new System.Drawing.Size(211, 70);
 			this.CaptureGroupBox.TabIndex = 10;
 			this.CaptureGroupBox.TabStop = false;
 			this.CaptureGroupBox.Text = "Packet Capture Librarry";
@@ -330,11 +331,12 @@
 			// CacheGroupBox
 			// 
 			this.CacheGroupBox.Controls.Add(this.OpenCacheButton);
+			this.CacheGroupBox.Controls.Add(this.CacheDataGeneralizeCheckBox);
 			this.CacheGroupBox.Controls.Add(this.CacheDataCheckBox);
 			this.CacheGroupBox.Controls.Add(this.CacheLabel);
-			this.CacheGroupBox.Location = new System.Drawing.Point(584, 89);
+			this.CacheGroupBox.Location = new System.Drawing.Point(584, 79);
 			this.CacheGroupBox.Name = "CacheGroupBox";
-			this.CacheGroupBox.Size = new System.Drawing.Size(211, 100);
+			this.CacheGroupBox.Size = new System.Drawing.Size(211, 115);
 			this.CacheGroupBox.TabIndex = 10;
 			this.CacheGroupBox.TabStop = false;
 			this.CacheGroupBox.Text = "Other Options";
@@ -366,9 +368,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.CacheLabel.ForeColor = System.Drawing.SystemColors.GrayText;
-			this.CacheLabel.Location = new System.Drawing.Point(6, 49);
+			this.CacheLabel.Location = new System.Drawing.Point(6, 66);
 			this.CacheLabel.Name = "CacheLabel";
-			this.CacheLabel.Size = new System.Drawing.Size(199, 48);
+			this.CacheLabel.Size = new System.Drawing.Size(199, 45);
 			this.CacheLabel.TabIndex = 3;
 			this.CacheLabel.Text = "Create wav files and reuse them when possible to save CPU resources.\r\nContains {0" +
     "} files ({1})";
@@ -376,9 +378,9 @@
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.CortanaDetailsButton);
-			this.groupBox1.Location = new System.Drawing.Point(584, 195);
+			this.groupBox1.Location = new System.Drawing.Point(584, 200);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(211, 53);
+			this.groupBox1.Size = new System.Drawing.Size(211, 48);
 			this.groupBox1.TabIndex = 10;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Cortana Options";
@@ -393,6 +395,16 @@
 			this.CortanaDetailsButton.Text = "Details...";
 			this.CortanaDetailsButton.UseVisualStyleBackColor = true;
 			this.CortanaDetailsButton.Click += new System.EventHandler(this.CortanaDetailsButton_Click);
+			// 
+			// CacheDataGeneralizeCheckBox
+			// 
+			this.CacheDataGeneralizeCheckBox.AutoSize = true;
+			this.CacheDataGeneralizeCheckBox.Location = new System.Drawing.Point(6, 46);
+			this.CacheDataGeneralizeCheckBox.Name = "CacheDataGeneralizeCheckBox";
+			this.CacheDataGeneralizeCheckBox.Size = new System.Drawing.Size(180, 17);
+			this.CacheDataGeneralizeCheckBox.TabIndex = 0;
+			this.CacheDataGeneralizeCheckBox.Text = "Generalize Class and Name (EN)";
+			this.CacheDataGeneralizeCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// OptionsControl
 			// 
@@ -454,5 +466,6 @@
 		private System.Windows.Forms.Button RefreshPlaybackDevices;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.CheckBox CacheDataGeneralizeCheckBox;
 	}
 }

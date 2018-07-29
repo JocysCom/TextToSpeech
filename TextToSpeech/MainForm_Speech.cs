@@ -95,7 +95,11 @@ namespace JocysCom.TextToSpeech.Monitor
 			// Optional properties for NPC character.
 			string name = null,
 			string gender = null,
-			string effect = null
+			string effect = null,
+				// Optional propertied for player character
+			string playerName = null,
+			string playerNameChanged = null,
+			string playerClass = null
 		)
 		{
 			// It will take too long to convert large amount of text to WAV data and apply all filters.
@@ -117,17 +121,25 @@ namespace JocysCom.TextToSpeech.Monitor
 					var item = new PlayItem(this)
 					{
 						Game = game,
+						// Set Player properties
+						PlayerName = playerName,
+						PlayerNameChanged = playerNameChanged,
+						PlayerClass = playerClass,
 						// Set NPC properties.
 						Name = name,
 						Gender = gender,
 						Effect = effect,
 						// Set data properties.
-						Text = sentence,
-						Xml = ConvertTextToSapiXml(sentence, comment),
 						Status = JobStatusType.Parsed,
 						IsComment = comment,
 						Group = voiceGroup,
 					};
+					item.Text = sentence;
+					if (Properties.Settings.Default.CacheData && Properties.Settings.Default.CacheDataGeneralize)
+					{
+						item.Text = item.GetGeneralizedText();
+					}
+					item.Xml = ConvertTextToSapiXml(item.Text, comment);
 					items.Add(item);
 					if (addToPlaylist) lock (playlistLock) { playlist.Add(item); }
 				};

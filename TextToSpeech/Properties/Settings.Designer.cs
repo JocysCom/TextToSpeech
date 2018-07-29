@@ -238,5 +238,17 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
                 this["PlaybackDevice"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CacheDataGeneralize {
+            get {
+                return ((bool)(this["CacheDataGeneralize"]));
+            }
+            set {
+                this["CacheDataGeneralize"] = value;
+            }
+        }
     }
 }

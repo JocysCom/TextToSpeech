@@ -452,6 +452,10 @@ namespace JocysCom.TextToSpeech.Monitor
 			buffer = "";
 		}
 
+		string _PlayerName;
+		string _PlayerNameChanged;
+		string _PlayerClass;
+
 		void ProcessVoiceTextMessage(string text)
 		{
 			// If <message.
@@ -540,8 +544,18 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				case "copy":
 					break;
+				case "player":
+					if (v.name != null)
+					{
+						var playerNames = v.name.Split(',').Select(x=>x.Trim()).ToArray();
+						_PlayerName = playerNames.FirstOrDefault();
+						_PlayerNameChanged = playerNames.Skip(1).FirstOrDefault();
+						_PlayerClass = playerNames.Skip(2).FirstOrDefault();
+					}
+					break;
 				case "add":
-					if (v.parts != null) buffer += string.Join("", v.parts);
+					if (v.parts != null)
+						buffer += string.Join("", v.parts);
 					break;
 				case "sound":
 					// Get WAV (name), selected as default.
@@ -577,7 +591,8 @@ namespace JocysCom.TextToSpeech.Monitor
 						else
 						{
 							SoundsPanel.SelectRow(Sound.group);
-							if (Sound.enabled == false) break;
+							if (Sound.enabled == false)
+								break;
 							// Get WAV name/path.
 							string wavToPlay = string.IsNullOrEmpty(Sound.file) ? introSound : Sound.file;
 							wavToPlay = MainHelper.ConvertFromSpecialFoldersPattern(wavToPlay);
@@ -597,26 +612,30 @@ namespace JocysCom.TextToSpeech.Monitor
 					}
 					break;
 				case "play":
-					if (v.parts != null) buffer += string.Join("", v.parts);
+					if (v.parts != null)
+						buffer += string.Join("", v.parts);
 					var decodedText = System.Web.HttpUtility.HtmlDecode(buffer);
 					buffer = "";
 					IncomingTextTextBox.Text = decodedText;
-					//TextXmlTabControl.SelectedTab = TextTabPage;
-					// mark text (or audio file) with v.goup value.
-
 					// Add silence before message.
 					int silenceIntBefore = Decimal.ToInt32(OptionsPanel.silenceBefore);
-					string silenceStringBefore = OptionsPanel.silenceBefore.ToString();
-					if (silenceIntBefore > 0) AddTextToPlaylist(ProgramComboBox.Text, "<silence msec=\"" + silenceStringBefore + "\" />", true, v.group);
-
-					AddTextToPlaylist(ProgramComboBox.Text, decodedText, true, v.group, v.name, v.gender, v.effect);
-
+					if (silenceIntBefore > 0)
+					{
+						AddTextToPlaylist(ProgramComboBox.Text, "<silence msec=\"" + silenceIntBefore.ToString() + "\" />", true, v.group);
+					}
+					// Add actual message to the playlist
+					AddTextToPlaylist(ProgramComboBox.Text, decodedText, true, v.group,
+						// Supply NCP properties.
+						v.name, v.gender, v.effect,
+						// Supply Player properties.
+						_PlayerName, _PlayerNameChanged, _PlayerClass
+					);
 					// Add silence after message.
 					int silenceIntAfter = Decimal.ToInt32(OptionsPanel.silenceAfter);
-					string silenceStringAfter = OptionsPanel.silenceAfter.ToString();
-					if (silenceIntAfter > 0) AddTextToPlaylist(ProgramComboBox.Text, "<silence msec=\"" + silenceStringAfter + "\" />", true, v.group);
-
-
+					if (silenceIntAfter > 0)
+					{
+						AddTextToPlaylist(ProgramComboBox.Text, "<silence msec=\"" + silenceIntAfter.ToString() + "\" />", true, v.group);
+					}
 					break;
 				case "stop":
 					text = "";
@@ -625,7 +644,8 @@ namespace JocysCom.TextToSpeech.Monitor
 					IncomingPitchTextBox.Text = "";
 					break;
 				case "save":
-					if (!string.IsNullOrEmpty(v.name)) VoiceDefaultsPanel.UpsertRecord(v);
+					if (!string.IsNullOrEmpty(v.name))
+						VoiceDefaultsPanel.UpsertRecord(v);
 					break;
 				default:
 					break;

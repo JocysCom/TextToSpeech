@@ -32,14 +32,14 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.VoicesDataGridView = new System.Windows.Forms.DataGridView();
 			this.EnabledColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.MaleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -82,6 +82,10 @@
 			this.EffectsPresetsDataGridView = new System.Windows.Forms.DataGridView();
 			this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.MessagesDataGridView = new System.Windows.Forms.DataGridView();
+			this.DestinationAddressColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.SequenceNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.WowDataLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.VoiceXmlColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.MessagesContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.MessagesClearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.RateLabel = new System.Windows.Forms.Label();
@@ -144,10 +148,6 @@
 			this.PitchMinComboBox = new System.Windows.Forms.ComboBox();
 			this.RateMinComboBox = new System.Windows.Forms.ComboBox();
 			this.ProgramComboBox = new System.Windows.Forms.ComboBox();
-			this.DestinationAddressColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.SequenceNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.WowDataLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.VoiceXmlColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).BeginInit();
 			this.MessagesTabControl.SuspendLayout();
 			this.VoicesTabPage.SuspendLayout();
@@ -782,6 +782,51 @@
 			this.MessagesDataGridView.TabIndex = 0;
 			this.MessagesDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.MessagesDataGridView_RowsAdded);
 			this.MessagesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.MessagesDataGridView_RowsRemoved);
+			// 
+			// DestinationAddressColumn
+			// 
+			this.DestinationAddressColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.DestinationAddressColumn.DataPropertyName = "DestinationAddress";
+			dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.DestinationAddressColumn.DefaultCellStyle = dataGridViewCellStyle14;
+			this.DestinationAddressColumn.HeaderText = "Destination";
+			this.DestinationAddressColumn.Name = "DestinationAddressColumn";
+			this.DestinationAddressColumn.ReadOnly = true;
+			this.DestinationAddressColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.DestinationAddressColumn.Width = 68;
+			// 
+			// SequenceNumberColumn
+			// 
+			this.SequenceNumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.SequenceNumberColumn.DataPropertyName = "SequenceNumber";
+			dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.SequenceNumberColumn.DefaultCellStyle = dataGridViewCellStyle15;
+			this.SequenceNumberColumn.HeaderText = "Sequence";
+			this.SequenceNumberColumn.Name = "SequenceNumberColumn";
+			this.SequenceNumberColumn.ReadOnly = true;
+			this.SequenceNumberColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.SequenceNumberColumn.Width = 64;
+			// 
+			// WowDataLength
+			// 
+			this.WowDataLength.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.WowDataLength.DataPropertyName = "VoiceXmlLength";
+			dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.WowDataLength.DefaultCellStyle = dataGridViewCellStyle16;
+			this.WowDataLength.HeaderText = "Size";
+			this.WowDataLength.Name = "WowDataLength";
+			this.WowDataLength.ReadOnly = true;
+			this.WowDataLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.WowDataLength.Width = 35;
+			// 
+			// VoiceXmlColumn
+			// 
+			this.VoiceXmlColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.VoiceXmlColumn.DataPropertyName = "VoiceXml";
+			this.VoiceXmlColumn.HeaderText = "XML";
+			this.VoiceXmlColumn.Name = "VoiceXmlColumn";
+			this.VoiceXmlColumn.ReadOnly = true;
+			this.VoiceXmlColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
 			// MessagesContextMenuStrip
 			// 
@@ -1703,51 +1748,6 @@
 			this.ProgramComboBox.Name = "ProgramComboBox";
 			this.ProgramComboBox.Size = new System.Drawing.Size(114, 21);
 			this.ProgramComboBox.TabIndex = 214;
-			// 
-			// DestinationAddressColumn
-			// 
-			this.DestinationAddressColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.DestinationAddressColumn.DataPropertyName = "DestinationAddress";
-			dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.DestinationAddressColumn.DefaultCellStyle = dataGridViewCellStyle14;
-			this.DestinationAddressColumn.HeaderText = "Destination";
-			this.DestinationAddressColumn.Name = "DestinationAddressColumn";
-			this.DestinationAddressColumn.ReadOnly = true;
-			this.DestinationAddressColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.DestinationAddressColumn.Width = 68;
-			// 
-			// SequenceNumberColumn
-			// 
-			this.SequenceNumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.SequenceNumberColumn.DataPropertyName = "SequenceNumber";
-			dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.SequenceNumberColumn.DefaultCellStyle = dataGridViewCellStyle15;
-			this.SequenceNumberColumn.HeaderText = "Sequence";
-			this.SequenceNumberColumn.Name = "SequenceNumberColumn";
-			this.SequenceNumberColumn.ReadOnly = true;
-			this.SequenceNumberColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.SequenceNumberColumn.Width = 64;
-			// 
-			// WowDataLength
-			// 
-			this.WowDataLength.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.WowDataLength.DataPropertyName = "VoiceXmlLength";
-			dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.WowDataLength.DefaultCellStyle = dataGridViewCellStyle16;
-			this.WowDataLength.HeaderText = "Size";
-			this.WowDataLength.Name = "WowDataLength";
-			this.WowDataLength.ReadOnly = true;
-			this.WowDataLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.WowDataLength.Width = 35;
-			// 
-			// VoiceXmlColumn
-			// 
-			this.VoiceXmlColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.VoiceXmlColumn.DataPropertyName = "VoiceXml";
-			this.VoiceXmlColumn.HeaderText = "XML";
-			this.VoiceXmlColumn.Name = "VoiceXmlColumn";
-			this.VoiceXmlColumn.ReadOnly = true;
-			this.VoiceXmlColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
 			// MainForm
 			// 

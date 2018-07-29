@@ -62,7 +62,16 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		}
 		string _Effect;
 
-		public string GetUniqueFilePath()
+		public string PlayerName { get; set; }
+		public string PlayerNameChanged { get; set; }
+		public string PlayerClass { get; set; }
+
+		/// <summary>
+		/// Generic means with player name and class replaced so it will be usable for all names and classes.
+		/// </summary>
+		/// <param name="generalize">Required when quest is manually voiced and generalized to work for all names and classes</param>
+		/// <returns></returns>
+		public string GetUniqueFilePath(bool generalize = false)
 		{
 			var gamePath = JocysCom.ClassLibrary.Text.Filters.GetKey(Game, true);
 			var charPath = "Data";
@@ -78,17 +87,33 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			else
 			{
 				charPath = JocysCom.ClassLibrary.Text.Filters.GetKey(string.Format("{0}_{1}_{2}", Name, Gender ?? "", Effect ?? ""), true);
-				fileName = JocysCom.ClassLibrary.Text.Filters.GetKey(JocysCom.ClassLibrary.Text.Filters.StripHtml(Xml), false);
+				// Generalize text if needed.
+				var text = generalize ? GetGeneralizedText() : Text;
+				fileName = JocysCom.ClassLibrary.Text.Filters.GetKey(text, false);
 				// If file name will be short then...
 				if (fileName.Length >= 64)
 				{
 					var bytes = encoding.GetBytes(fileName);
 					var hash = ClassLibrary.Security.CRC32Helper.GetHashAsString(bytes);
+					// Return trimmed name with hash.
 					fileName = string.Format("{0}_{1}", fileName.Substring(0, 64), hash);
 				}
 			}
 			return string.Format("{0}\\{1}\\{2}", gamePath, charPath, fileName);
 		}
+
+		public string GetGeneralizedText()
+		{
+			var text = Text;
+			if (!string.IsNullOrEmpty(PlayerName))
+				text = text.Replace(PlayerName, "Traveler");
+			if (!string.IsNullOrEmpty(PlayerNameChanged))
+				text = text.Replace(PlayerNameChanged, "Traveler");
+			if (!string.IsNullOrEmpty(PlayerClass))
+				text = text.Replace(PlayerClass, "Traveler");
+			return text;
+		}
+
 
 		public void StartPlayTimer()
 		{
