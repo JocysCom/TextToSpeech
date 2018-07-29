@@ -99,7 +99,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					fileName = string.Format("{0}_{1}", fileName.Substring(0, 64), hash);
 				}
 			}
-			return string.Format("{0}\\{1}\\{2}", gamePath, charPath, fileName);
+			return string.Format("{0}\\{1}\\{2}\\{3}", gamePath, Group, charPath, fileName);
 		}
 
 		public string GetGeneralizedText()
