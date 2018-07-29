@@ -1,7 +1,7 @@
 ﻿# Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.6.7 (2018-07-27) • Digitally Signed
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.3.1 (2018-07-27)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.6.13 (2018-07-29) • Digitally Signed
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.3.2 (2018-07-29)
  
  * Old versions: <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2017-12-02.zip">2017-02</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2017-11-30.zip">2017-11</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2017-09-27.zip">2017-09</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2017-04-03.zip">2017-04</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2016-11-01.zip">2016-11</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2016-07-24.zip">2016-07</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2014-08-27.zip">2014-08</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2014-10-16.zip">2014-10</a>
 
