@@ -105,7 +105,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			LoggingTextBox.Text = Properties.Settings.Default.LogText;
 			SearchPattern = Encoding.ASCII.GetBytes(LoggingTextBox.Text);
 			LoggingCheckBox.Checked = Properties.Settings.Default.LogEnable;
-			CacheDataCheckBox.Checked = Properties.Settings.Default.CacheData;
+			CacheDataWriteCheckBox.Checked = Properties.Settings.Default.CacheDataWrite;
+			CacheDataReadCheckBox.Checked = Properties.Settings.Default.CacheDataRead;
 			CacheDataGeneralizeCheckBox.Checked = Properties.Settings.Default.CacheDataGeneralize;
 			UpdateWinCapState();
 			var allowWinCap = Properties.Settings.Default.UseWinCap & MainHelper.GetWinPcapVersion() != null;
@@ -116,7 +117,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			// Attach events.
 			LoggingTextBox.TextChanged += LoggingTextBox_TextChanged;
 			LoggingCheckBox.CheckedChanged += LoggingCheckBox_CheckedChanged;
-			CacheDataCheckBox.CheckedChanged += CacheDataCheckBox_CheckedChanged;
+			CacheDataWriteCheckBox.CheckedChanged += CacheDataWriteCheckBox_CheckedChanged;
+			CacheDataReadCheckBox.CheckedChanged += CacheDataReadCheckBox_CheckedChanged;
 			CacheDataGeneralizeCheckBox.CheckedChanged += CacheDataGeneralizeCheckBox_CheckedChanged;
 			LoggingPlaySoundCheckBox.CheckedChanged += LoggingPlaySoundCheckBox_CheckedChanged;
 			CaptureSocButton.CheckedChanged += CaptureSocButton_CheckedChanged;
@@ -182,9 +184,14 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			}
 		}
 
-		private void CacheDataCheckBox_CheckedChanged(object sender, EventArgs e)
+		private void CacheDataWriteCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			Properties.Settings.Default.CacheData = CacheDataCheckBox.Checked;
+			Properties.Settings.Default.CacheDataWrite = CacheDataWriteCheckBox.Checked;
+		}
+
+		private void CacheDataReadCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			Properties.Settings.Default.CacheDataRead = CacheDataReadCheckBox.Checked;
 		}
 
 		private void CacheDataGeneralizeCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -261,7 +268,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		private void OptionsControl_Load(object sender, EventArgs e)
 		{
 			_CacheMessageFormat = CacheLabel.Text;
-			var files = MainHelper.GetCreateCacheFolder().GetFiles();
+			var files = MainHelper.GetCreateCacheFolder().GetFiles("*.*", SearchOption.AllDirectories);
 			var count = files.Count();
 			var size = SizeSuffix(files.Sum(x => x.Length), 1);
 			CacheLabel.Text = string.Format(_CacheMessageFormat, count, size);

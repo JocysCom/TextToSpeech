@@ -237,7 +237,7 @@ namespace JocysCom.TextToSpeech.Monitor
 						var synthesize = true;
 						FileInfo xmlFi = null;
 						FileInfo wavFi = null;
-						if (Properties.Settings.Default.CacheData)
+						if (Properties.Settings.Default.CacheDataRead)
 						{
 							var dir = MainHelper.GetCreateCacheFolder();
 
@@ -302,7 +302,7 @@ namespace JocysCom.TextToSpeech.Monitor
 							item.WavData = ConvertSapiXmlToWav(item.Xml, sampleRate, bitsPerSample, channelCount);
 							item.WavHead = new SharpDX.Multimedia.WaveFormat(sampleRate, bitsPerSample, channelCount);
 							item.Duration = AudioHelper.GetDuration(item.WavData.Length, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
-							if (Properties.Settings.Default.CacheData && item.WavData != null)
+							if (Properties.Settings.Default.CacheDataWrite && item.WavData != null)
 							{
 								// Create directory if not exists.
 								if (!xmlFi.Directory.Exists)

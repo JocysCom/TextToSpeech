@@ -50,7 +50,7 @@
     <Setting Name="DefaultIntroSoundComboBox" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="CacheData" Type="System.Boolean" Scope="User">
+    <Setting Name="CacheDataWrite" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="PlaybackDevice" Type="System.String" Scope="User">
@@ -58,6 +58,9 @@
     </Setting>
     <Setting Name="CacheDataGeneralize" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CacheDataRead" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

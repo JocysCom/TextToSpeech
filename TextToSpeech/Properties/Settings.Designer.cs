@@ -218,12 +218,12 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CacheData {
+        public bool CacheDataWrite {
             get {
-                return ((bool)(this["CacheData"]));
+                return ((bool)(this["CacheDataWrite"]));
             }
             set {
-                this["CacheData"] = value;
+                this["CacheDataWrite"] = value;
             }
         }
         
@@ -248,6 +248,18 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
             }
             set {
                 this["CacheDataGeneralize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CacheDataRead {
+            get {
+                return ((bool)(this["CacheDataRead"]));
+            }
+            set {
+                this["CacheDataRead"] = value;
             }
         }
     }
