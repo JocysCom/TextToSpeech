@@ -13,7 +13,7 @@
     <Acronym Enabled="true" Group="wow" Key="achi" Value="achievement" />
     <Acronym Enabled="true" Group="wow" Key="achiev" Value="achievement" />
     <Acronym Enabled="true" Group="wow" Key="ad" Value="additional" />
-    <Acronym Enabled="true" Group="wow" Key="add" Value="additional" />
+    <Acronym Enabled="false" Group="wow" Key="add" Value="additional" />
     <Acronym Enabled="true" Key="afaik" Value="as far as I know" />
     <Acronym Enabled="true" Key="afk" Value="away from keyboard" />
     <Acronym Enabled="true" Group="wow" Key="aggro" Value="aggression" />
@@ -22,10 +22,10 @@
     <Acronym Enabled="true" Group="wow" Key="alc" Value="alchemist" />
     <Acronym Enabled="true" Group="wow" Key="alch" Value="alchemist" />
     <Acronym Enabled="true" Group="wow" Key="alli" Value="Alliance" />
-    <Acronym Enabled="true" Group="wow" Key="ally" Value="Alliance" />
+    <Acronym Enabled="false" Group="wow" Key="ally" Value="Alliance" />
     <Acronym Enabled="true" Group="wow" Key="alt" Value="alternate character" />
     <Acronym Enabled="true" Group="wow" Key="alts" Value="alternate characters" />
-    <Acronym Enabled="true" Group="wow" Key="an" Value="Azjol Nerub" />
+    <Acronym Enabled="false" Group="wow" Key="an" Value="Azjol Nerub" />
     <Acronym Enabled="true" Group="wow" Key="aoe" Value="area of effect" />
     <Acronym Enabled="true" Group="wow" Key="aop" Value="aspect of the pack" />
     <Acronym Enabled="true" Group="wow" Key="aotp" Value="aspect of the pack" />
@@ -58,7 +58,7 @@
     <Acronym Enabled="true" Group="wow" Key="bis" Value="best in slot" />
     <Acronym Enabled="true" Group="wow" Key="bl" Value="Blood Lust" />
     <Acronym Enabled="true" Group="wow" Key="blizz" Value="Blizzard" />
-    <Acronym Enabled="true" Group="wow" Key="blue" Value="Blizzard employee" />
+    <Acronym Enabled="false" Group="wow" Key="blue" Value="Blizzard employee" />
     <Acronym Enabled="true" Group="wow" Key="boa" Value="bind on account" />
     <Acronym Enabled="true" Group="wow" Key="boe" Value="bind on equip" />
     <Acronym Enabled="true" Group="wow" Key="bok" Value="Blessing of Kings" />
@@ -80,7 +80,7 @@
     <Acronym Enabled="true" Group="wow" Key="BS" Value="Bladestorm" Rx="\b[Bb][S]\b" />
     <Acronym Enabled="true" Group="wow" Key="bt" Value="Black Temple" />
     <Acronym Enabled="true" Key="btw" Value="by the way" />
-    <Acronym Enabled="true" Group="wow" Key="buff" Value="beneficial spell" />
+    <Acronym Enabled="false" Group="wow" Key="buff" Value="beneficial spell" />
     <Acronym Enabled="true" Group="wow" Key="bwd" Value="Blackwing Descent" />
     <Acronym Enabled="true" Group="wow" Key="bwl" Value="Blackwing Lair" />
     <Acronym Enabled="true" Group="wow" Key="cata" Value="Cataclysm" />
@@ -96,7 +96,7 @@
     <Acronym Enabled="true" Group="wow" Key="conp" Value="conquest points" />
     <Acronym Enabled="true" Group="wow" Key="cos" Value="Culling of Stratholme" />
     <Acronym Enabled="true" Group="wow" Key="cot" Value="Caverns of Time" />
-    <Acronym Enabled="true" Group="wow" Key="cow" Value="tauren" />
+    <Acronym Enabled="false" Group="wow" Key="cow" Value="tauren" />
     <Acronym Enabled="true" Group="wow" Key="cp" Value="combo points" />
     <Acronym Enabled="true" Group="wow" Key="cr" Value="combat resurrection" />
     <Acronym Enabled="true" Group="wow" Key="cres" Value="combat resurrection" />
@@ -113,8 +113,8 @@
     <Acronym Enabled="true" Key="dcd" Value="disconnected" />
     <Acronym Enabled="true" Key="dcn" Value="disconnection" />
     <Acronym Enabled="true" Group="wow" Key="dd" Value="direct damage" />
-    <Acronym Enabled="true" Key="ding" Value="level up" />
-    <Acronym Enabled="true" Group="wow" Key="disc" Value="discipline priest" />
+    <Acronym Enabled="false" Key="ding" Value="level up" />
+    <Acronym Enabled="false" Group="wow" Key="disc" Value="discipline priest" />
     <Acronym Enabled="true" Group="wow" Key="dk" Value="death knight" />
     <Acronym Enabled="true" Group="wow" Key="dkp" Value="dragon kill points" />
     <Acronym Enabled="true" Group="wow" Key="dm" Value="Deadmines" Rx="\b[Dd][m]\b" />
@@ -124,7 +124,7 @@
     <Acronym Enabled="true" Group="wow" Key="dm west" Value="Dire Maul: Capital Gardens" />
     <Acronym Enabled="true" Key="dmg" Value="damage" />
     <Acronym Enabled="true" Key="dnd" Value="do not disturb" />
-    <Acronym Enabled="true" Group="wow" Key="dot" Value="damage over time" />
+    <Acronym Enabled="false" Group="wow" Key="dot" Value="damage over time" />
     <Acronym Enabled="true" Group="wow" Key="dpm" Value="damage per mana" />
     <Acronym Enabled="true" Group="wow" Key="dps" Value="damage per second" />
     <Acronym Enabled="true" Group="wow" Key="drm" Value="Dire Maul" />
@@ -189,7 +189,7 @@
     <Acronym Enabled="true" Key="gm" Value="game master" Rx="\b[Gg][m]\b" />
     <Acronym Enabled="true" Group="wow" Key="GM" Value="Gold Mine" Rx="\b[Gg][M]\b" />
     <Acronym Enabled="true" Key="gn" Value="good night" />
-    <Acronym Enabled="true" Group="wow" Key="gnome" Value="Gnomeregan" />
+    <Acronym Enabled="false" Group="wow" Key="gnome" Value="Gnomeregan" />
     <Acronym Enabled="true" Group="wow" Key="gnomer" Value="Gnomeregan" />
     <Acronym Enabled="true" Key="goml" Value="get on my level" />
     <Acronym Enabled="true" Key="gr8" Value="great" />
@@ -208,7 +208,7 @@
     <Acronym Enabled="true" Key="h4x" Value="hacks" />
     <Acronym Enabled="true" Key="hax" Value="hacks" />
     <Acronym Enabled="true" Group="wow" Key="hc" Value="heroic" />
-    <Acronym Enabled="true" Group="wow" Key="heals" Value="healer" />
+    <Acronym Enabled="false" Group="wow" Key="heals" Value="healer" />
     <Acronym Enabled="false" Group="wow" Key="hero" Value="heroism" />
     <Acronym Enabled="true" Group="wow" Key="hf" Value="Howling Fjord" />
     <Acronym Enabled="true" Group="wow" Key="hfc" Value="Hellfire Citadel" />
@@ -219,7 +219,7 @@
     <Acronym Enabled="true" Group="wow" Key="hm" Value="hard mode" />
     <Acronym Enabled="true" Group="wow" Key="hnp" Value="honor points" />
     <Acronym Enabled="true" Group="wow" Key="hol" Value="Halls of Lightning" />
-    <Acronym Enabled="true" Group="wow" Key="holy" Value="holy paladin" />
+    <Acronym Enabled="false" Group="wow" Key="holy" Value="holy paladin" />
     <Acronym Enabled="true" Group="wow" Key="hor" Value="Halls of Reflection" />
     <Acronym Enabled="true" Group="wow" Key="hos" Value="Halls of Stone" />
     <Acronym Enabled="true" Group="wow" Key="hot" Value="heal over time" />
@@ -320,7 +320,7 @@
     <Acronym Enabled="true" Group="wow" Key="ML" Value="Magtheridon's Lair" Rx="\b[Mm][L]\b" />
     <Acronym Enabled="true" Key="mmog" Value="massively multiplayer online game" />
     <Acronym Enabled="true" Key="mmorpg" Value="massively multiplayer online role-playing game" />
-    <Acronym Enabled="true" Group="wow" Key="mob" Value="mobile object" />
+    <Acronym Enabled="false" Group="wow" Key="mob" Value="mobile object" />
     <Acronym Enabled="true" Group="wow" Key="mop" Value="Mists of Pandaria" />
     <Acronym Enabled="true" Group="wow" Key="motd" Value="message of the day" />
     <Acronym Enabled="true" Group="wow" Key="motw" Value="mark of the wild" />
@@ -380,7 +380,7 @@
     <Acronym Enabled="true" Key="pm" Value="private message" />
     <Acronym Enabled="true" Key="pmsl" Value="peeing my self laughing" />
     <Acronym Enabled="true" Group="wow" Key="poly" Value="polymorph" />
-    <Acronym Enabled="true" Group="wow" Key="port" Value="portal" />
+    <Acronym Enabled="false" Group="wow" Key="port" Value="portal" />
     <Acronym Enabled="true" Group="wow" Key="pos" Value="Pit of Saron" />
     <Acronym Enabled="true" Key="powned" Value="owned" />
     <Acronym Enabled="true" Key="powning" Value="dominating" />
@@ -401,7 +401,7 @@
     <Acronym Enabled="true" Key="qq" Value="qry-qry" />
     <Acronym Enabled="true" Key="r" Value="ready" Rx="\b^[Rr]$\b" />
     <Acronym Enabled="true" Key="r" Value="are" />
-    <Acronym Enabled="true" Group="wow" Key="ramps" Value="Hellfire Ramparts" />
+    <Acronym Enabled="true" Group="wow" Key="hramps" Value="Hellfire Ramparts" />
     <Acronym Enabled="true" Group="wow" Key="rap" Value="ranged attack power" />
     <Acronym Enabled="true" Group="wow" Key="rbgs" Value="rated battlegrounds" />
     <Acronym Enabled="true" Group="wow" Key="rdps" Value="ranged damage per second" />
@@ -488,7 +488,7 @@
     <Acronym Enabled="true" Group="wow" Key="thb" Value="Thunder Bluff" />
     <Acronym Enabled="true" Key="thx" Value="thank you" />
     <Acronym Enabled="true" Key="tic" Value="increment of" />
-    <Acronym Enabled="true" Key="tick" Value="increment of" />
+    <Acronym Enabled="false" Key="tick" Value="increment of" />
     <Acronym Enabled="true" Key="tldr" Value="too long, didn't read" />
     <Acronym Enabled="true" Group="wow" Key="toah" Value="Temple of Atal'Hakkar" />
     <Acronym Enabled="true" Group="wow" Key="toc" Value="Trial of the Crusader" />
