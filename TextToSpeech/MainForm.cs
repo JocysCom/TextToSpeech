@@ -257,20 +257,16 @@ namespace JocysCom.TextToSpeech.Monitor
 								xmlFullPath = Path.Combine(dir.FullName, xmlFile);
 								xmlFi = new FileInfo(xmlFullPath);
 							}
-							// If xml file was found then...
-							if (xmlFi.Exists)
+							// Prefer MP3 audio file first (custom recorded file).
+							var wavFile = string.Format("{0}.mp3", uniqueName);
+							var wavFullPath = Path.Combine(dir.FullName, wavFile);
+							wavFi = new FileInfo(wavFullPath);
+							if (!wavFi.Exists)
 							{
-								// Prefer MP3 audio file first (custom recorded file).
-								var wavFile = string.Format("{0}.mp3", uniqueName);
-								var wavFullPath = Path.Combine(dir.FullName, wavFile);
+								// Get WAV file path.
+								wavFile = string.Format("{0}.wav", uniqueName);
+								wavFullPath = Path.Combine(dir.FullName, wavFile);
 								wavFi = new FileInfo(wavFullPath);
-								if (!wavFi.Exists)
-								{
-									// Get WAV file path.
-									wavFile = string.Format("{0}.wav", uniqueName);
-									wavFullPath = Path.Combine(dir.FullName, wavFile);
-									wavFi = new FileInfo(wavFullPath);
-								}
 							}
 							// If both files exists then...
 							if (xmlFi.Exists && wavFi.Exists)
