@@ -147,7 +147,7 @@ Speed of voices can be adjusted in “Monitor's” “Rate” fields. Values can
 <sub><strong>To move mini frame with [≡][■] buttons:</strong> Click on <b>[≡]</b> (Options) button, to open “Options” window. Unlock mini frame by unchecking first check-box in “Options” window. Move it, wherever you like. Lock it again, by checking the same check-box.</sub>
 </blockquote>
 
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame.png"/></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2018_07_27.png"/></p>
 
 <blockquote>
 <sub>If “Social-Friends” button is not visible:<br />
