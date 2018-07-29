@@ -115,8 +115,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				var block = sentences[i];
 				// Combine sentence and separator.
-				var sentence = block.Value + block.Key.Replace(cs, "").Replace(ce, "");
-				if (!string.IsNullOrEmpty(sentence))
+				var sentence = block.Value + block.Key.Replace(cs, "").Replace(ce, "") + "";
+				if (!string.IsNullOrEmpty(sentence.Trim('\r', '\n', ' ')))
 				{
 					var item = new PlayItem(this)
 					{
