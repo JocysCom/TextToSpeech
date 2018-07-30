@@ -28,11 +28,12 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			_Defaults = new SortableBindingList<message>();
 			_Sounds = new SortableBindingList<sound>();
-			FolderPath = string.Format("{0}\\{1}\\{2}",
-				System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-				Application.CompanyName,
-				Application.ProductName);
-			try { if (!Directory.Exists(FolderPath)) Directory.CreateDirectory(FolderPath); }
+			FolderPath = MainHelper.AppDataPath;
+			try
+			{
+				if (!Directory.Exists(FolderPath))
+					Directory.CreateDirectory(FolderPath);
+			}
 			catch (Exception) { }
 		}
 

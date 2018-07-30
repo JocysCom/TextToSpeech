@@ -307,13 +307,21 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		#endregion
 
+		public static string AppDataPath
+		{
+			get
+			{
+				return string.Format("{0}\\{1}\\{2}",
+					Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+					Application.CompanyName,
+					Application.ProductName);
+			}
+		}
+
 		public static DirectoryInfo GetCreateCacheFolder()
 		{
-			var folder = string.Format("{0}\\{1}\\{2}\\Cache",
-				Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-				Application.CompanyName,
-				Application.ProductName);
-			var dir = new DirectoryInfo(folder);
+			var path = Path.Combine(AppDataPath, "Cache");
+			var dir = new DirectoryInfo(path);
 			if (!dir.Exists)
 				dir.Create();
 			return dir;

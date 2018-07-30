@@ -80,13 +80,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		public string GetLogsPath(bool create)
 		{
-			var path = new DirectoryInfo(Application.CommonAppDataPath).Parent.FullName;
-			path = Path.Combine(path, "Logs");
+			var path = Path.Combine(MainHelper.AppDataPath, "Logs"); 
 			if (create && !Directory.Exists(path))
-			{
 				Directory.CreateDirectory(path);
-			}
-
 			return path;
 		}
 
