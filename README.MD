@@ -232,6 +232,19 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 
 <img src="http://www.jocys.com/Files/Software/Ethernet_Properties_IP6.png" />
 
+### Cache Options (Create Text-to-Speech Audio Files)
+<hr />
+
+<p>If you have slow computer, you can use “Monitor's” “Cache Options” to save and re-play audio files. The next time, when you will encounter the same dialogue-text, “Monitor” will not use TTS voices and will not create audio file again, but will play instantly previously created audio file instead.</p>
+
+<p>“Monitor” &gt; [Options] tab &gt; “Cache Options” section</p>
+
+<p><img src="<img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Options.png" style="width: 223px; height: 137px;" /></p>
+
+<p><sub>Usual directory for audio files: C:\ProgramData\Jocys.com\Text to Speech Monitor\Cache\</sub></p>
+
+<p><a href="<img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Folder.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Folder.png" style="width: 600px; height: 203px;" /></a></p>
+
 
 
 
