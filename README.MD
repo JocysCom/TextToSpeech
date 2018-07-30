@@ -239,11 +239,11 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 
 <p>“Monitor” &gt; [Options] tab &gt; “Cache Options” section</p>
 
-<p><img src="<img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Options.png" style="width: 223px; height: 137px;" /></p>
+<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Options.png" style="width: 223px; height: 137px;" /></p>
 
 <p><sub>Usual directory for audio files: C:\ProgramData\Jocys.com\Text to Speech Monitor\Cache\</sub></p>
 
-<p><a href="<img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Folder.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Folder.png" style="width: 600px; height: 203px;" /></a></p>
+<p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Folder.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Folder.png" style="width: 600px; height: 203px;" /></a></p>
 
 
 
