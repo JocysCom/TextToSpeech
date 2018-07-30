@@ -49,7 +49,7 @@ New versions (2016-12-18) with more options can read quests and chat messages.</
 ### Security and concerns
 <hr />
 
-<p align="justify"><sub>This “WoW Addon” and “Monitor” does not give you more power over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between <code>&lt;message&gt;</code> tags or text from your clipboard with installed text-to-speech voices, when you want it. It makes game more involving, fun and interesting... and easier for people with <b>dyslexia</b> too. This project is open source... anyone can check all code at any time. We digitally sign our software and put our real names on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, malware or spyware. Please download this “WoW Addon” and “Monitor” only from trustworthy sources. Make sure that “Monitor” is always <i>signed</i> by verified publisher with signature, issued by trusted certificate authority.</sub></p>
+<p align="justify"><sub>“Monitor” and “WoW Addon” does not give you more power over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between <code>&lt;message&gt;</code> tags or text from your clipboard with installed text-to-speech voices, when you want it. It makes game more involving, fun and interesting... and easier for people with <b>dyslexia</b> or <b>visual impairments</b> too. This project is open source... anyone can check all code at any time. We <b>digitally sign</b> our software and put our <b>real names</b> on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, malware or spyware. Please download this “WoW Addon” and “Monitor” only from trustworthy sources. Make sure that “Monitor” is always <i>signed</i> by verified publisher with signature, issued by trusted certificate authority.</sub></p>
 
 ### Installation • Exit WoW before installing or updating addon.
 <hr />
@@ -235,7 +235,7 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 ### Cache Options (Create Text-to-Speech Audio Files)
 <hr />
 
-<p>If your computer is slow, you can use “Monitor's” “Cache Options” to write and read audio files. The next time, when you will encounter the same dialogue-text, “Monitor” will not use TTS voices and will not create audio file again, but will play instantly previously created audio file instead.</p>
+<p>If your computer is slow, you can use “Monitor's” “Cache Options” to write and read audio files. The next time, when you will encounter the same dialogue-text, “Monitor” will not use TTS voices and will not create audio file again, but will play instantly previously created audio file instead. If you put custom recorded MP3 file with the same name then "Monitor" will play MP3 file, instead of WAV.</p>
 
 <p>“Monitor” &gt; [Options] tab &gt; “Cache Options” section</p>
 
