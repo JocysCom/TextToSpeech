@@ -245,4 +245,4 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 
 <p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Folder.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Folder.png" style="width: 600px; height: 203px;" /></a></p>
 
-<p>Note: If you put custom recorded \*.MP3 file with the same name then "Monitor" will play \*.MP3 file, instead of \*.WAV.</p>
+<p>Note: If you put custom recorded *.MP3 file with the same name then "Monitor" will play *.MP3 file, instead of *.WAV.</p>
