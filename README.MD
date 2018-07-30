@@ -235,7 +235,7 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 ### Cache Options (Create Text-to-Speech Audio Files)
 <hr />
 
-<p>If your computer is slow, you can use “Monitor's” “Cache Options” to write and read audio files. The next time, when you will encounter the same dialogue-text, “Monitor” will not use TTS voices and will not create audio file again, but will play instantly previously created audio file instead (if such file exists).</p>
+<p>If your computer is slow, you can use “Monitor's” “Cache Options” to write and read audio files. The next time, when you will encounter the same dialogue-text, “Monitor” will not use TTS voices and will not create audio file again, but will play instantly previously created audio file instead.</p>
 
 <p>“Monitor” &gt; [Options] tab &gt; “Cache Options” section</p>
 
