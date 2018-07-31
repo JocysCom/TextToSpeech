@@ -16,15 +16,11 @@
 <p>How it works: When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, WoW <b>“Addon”</b> creates and sends message to you between <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code> tags. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> value. Then, <b>“Monitor”</b>, <em>which must be running in background, while gaming,</em> picks-up this message from your local network traffic, converts it to SAPI XML and reads it with specific text-to-speech voice.
 
 <blockquote>
-<sub>After Addon update 2.2.88 <b>[■]</b> (Stop text-to-speech) button can appear at the <b>center of the screen</b>. <strong>To move mini frame with [≡][■] buttons:</strong> Click on <b>[≡]</b> (Options) button, to open “Options” window. Unlock mini frame by unchecking first check-box in “Options” window. Move it, wherever you like. Lock it again, by checking the same check-box.</sub>
+<sub>To move mini frame with [≡][■] buttons: Move mouse pointer over [■] button. [≡] (Options) button will appear. Click on [≡] (Options) button, to open “Options” window. Unlock mini frame by unchecking first check-box in “Options” window. You can move “Options” window out of the way, if it is on top of mini frame with [≡][■] buttons. Move mini frame by clicking on black background around [≡][■] buttons. Lock it again, by checking the same check-box.</sub>
 </blockquote>
 
 <blockquote>
-You can create your own text-to-speech addon (if game supports addons) or send messages directly to “Monitor” from your own game, to add text-to-speech feature to your game.
-</blockquote>
-
-<blockquote>
-We don't mind if code from our WoW Addon will be used to add text-to-speech features to other addons. How and what messages to send with SendAddonMessage(...) in WoW, so “Monitor” could see them, can be founded in our addon's lua file. These messages can be visible in chat window, <i>if check-box “Hide addon &lt;messages&gt; in chat window” is unchecked in our addon's “Options” window</i>. Messages are also visible in “Options” window itself and in “Monitor”'s [1. Incoming Messages] tab. If other addon will take over one of the text categories, this category can be disabled in our addon, by unchecking corresponding check-box, to avoid text-to-speech duplication. There is also help about &lt;messages&gt; with examples in “Monitor”'s [Help] tab.
+You can create your own text-to-speech addon (if game supports addons) or send messages directly to “Monitor” from your own game, to add text-to-speech feature to your game. We don't mind if code from our WoW Addon will be used to add text-to-speech features to other addons. How and what messages to send with SendAddonMessage(...) in WoW, so “Monitor” could see them, can be founded in our addon's lua file. These messages can be visible in chat window, <i>if check-box “Hide addon &lt;messages&gt; in chat window” is unchecked in our addon's “Options” window</i>. Messages are also visible in “Options” window itself and in “Monitor”'s [1. Incoming Messages] tab. If other addon will take over one of the text categories, this category can be disabled in our addon, by unchecking corresponding check-box, to avoid text-to-speech duplication. There is also help about &lt;messages&gt; with examples in “Monitor”'s [Help] tab. About... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8 and 10 • All code is available under open source licence.
 </blockquote>
 
 <p style="text-align: center; margin: 10px;"><strong>Text-to-Speech Voices by <a href="http://windows.microsoft.com/en-us/windows/language-packs" target="_blank">Microsoft</a> or <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Ivona</a> / <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a></strong></p>
@@ -34,17 +30,10 @@ BETTER text-to-speech voices are developed by <a target="_blank"  href="http://w
 
 <p style="text-align: center;"><a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/309_Brian.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Brian_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/308_Amy.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Amy_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/347_Maxim.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Maxim_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/348_Tatyana.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Tatyana_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/304_Hans.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Hans_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/305_Marlene.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Marlene_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/329_Mathieu.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Mathieu_G1.jpg" style="width: 102px; height: 78px;" /></a> <a href="http://dnld.harposoftware.com/6oj4uhk7pn8gmjing/328_Celine.exe"><img alt="" src="http://www.jocys.com/files/software/TTS_Celine_G1.jpg" style="width: 102px; height: 78px;" /></a></p>
 
-<p style="text-align: center;"><strong><a href="http://harposoftware.com/en/content/10-trial" target="_blank">OTHER LANGUAGES...</a></strong></p>
-
-
-<sub>About... <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> • Tested on Windows 8 and 10 • All code is available under open source licence.</sub><br />
-<sup>You can use “Monitor” and create your own text-to-speech addons for games, if they support addons.<sup>
-
 ### YouTube video ...“WoW Addon” (old version) with Ivona voices
 <hr />
 
-<p>Old versions of “Monitor” and “Addon” (2014-08-06) are presented in this video.<br />
-New versions (2016-12-18) with more options can read quests and chat messages.</p>
+<p>Old versions of “Monitor” and “Addon” (2014-08-06) are presented in this video. New versions can read chat messages.</p>
 
 [![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
@@ -146,7 +135,7 @@ Speed of voices can be adjusted in “Monitor's” “Rate” fields. Values can
 <p>11. <b>[■]</b> (Stop text-to-speech) button will appear at the <b>center of the screen</b>. If you will move mouse pointer over <b>[≡]</b> (Options) button, menu with various <b>check-boxes</b> will appear. Move mouse pointer over any <strong>check-box</strong> and title will show, what it enables/disables.</p>
 
 <blockquote>
-<sub><strong>To move mini frame with [≡][■] buttons:</strong> Click on <b>[≡]</b> (Options) button, to open “Options” window. Unlock mini frame by unchecking first check-box in “Options” window. Move it, wherever you like. Lock it again, by checking the same check-box.</sub>
+<sub>To move mini frame with [≡][■] buttons: Move mouse pointer over [■] button. [≡] (Options) button will appear. Click on [≡] (Options) button, to open “Options” window. Unlock mini frame by unchecking first check-box in “Options” window. You can move “Options” window out of the way, if it is on top of mini frame with [≡][■] buttons. Move mini frame by clicking on black background around [≡][■] buttons. Lock it again, by checking the same check-box.</sub>
 </blockquote>
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_MiniFrame_2018_07_27.png"/></p>
@@ -190,15 +179,6 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 8. Click [Exit] button.<br />
 9. Game Menu > [Key Bindings] > [Action Bar]<br />
 10. Bind desired keyboard key to "Action Bar" button with “Stop TTS” macro. After pressing this key on keyboard, text-to-speech will stop.</p>
-
-### Desired improvements in “World of Warcraft” game
-<hr />
-
-<p>• Getting <b>UnitSex</b> of NPC from chat and quest log -- no need to select it to get gender.<br />
-• Getting <b>UnitAge</b> of NPC (%) -- (1-100) in order to apply “Child", “Adult” or “Senior” effects.<br />
-• Getting <b>UnitRace</b> of NPC -- Sound effects on NPCs are applied by <strong>UnitCreatureType</strong> now.<br />
-• Getting <b>value</b> if NPC has voice over for all text -- in order not to start TTS speech.<br />
-• NPC “talking” animation should loop, depending on length of the text.</p>
 
 ### Problems and Solutions
 <hr />
@@ -246,3 +226,12 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 <p><sub>Usual directory for audio files: C:\ProgramData\Jocys.com\Text to Speech Monitor\Cache\</sub></p>
 
 <p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Folder.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Monitor_Cache_Folder.png" style="width: 600px; height: 203px;" /></a></p>
+
+### Desired improvements in “World of Warcraft” game
+<hr />
+
+<p>• Getting <b>UnitSex</b> of NPC from chat and quest log -- no need to select it to get gender.<br />
+• Getting <b>UnitAge</b> of NPC (%) -- (1-100) in order to apply “Child", “Adult” or “Senior” effects.<br />
+• Getting <b>UnitRace</b> of NPC -- Sound effects on NPCs are applied by <strong>UnitCreatureType</strong> now.<br />
+• Getting <b>value</b> if NPC has voice over for all text -- in order not to start TTS speech.<br />
+• NPC “talking” animation should loop, depending on length of the text.</p>
