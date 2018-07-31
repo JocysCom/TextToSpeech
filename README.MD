@@ -37,7 +37,7 @@ BETTER text-to-speech voices are developed by <a target="_blank"  href="http://w
 
 <p style="color: #84e68c; text-align: justify;"><sub>It is not on Curse, because of “Monitor”, which is external program. Blizzard has no control outside the game over “Monitor” and, reasonably, can't take responsibility for it, by allowing it on Curse. Therefore, we keep everything as transparent, as possible. This project is open source and anyone can check all code at any time. We <b>digitally sign</b> our software and put our <b>real names</b> on it, so everyone could know, who to blame, if something will go wrong. “Monitor” and “WoW Addon” does not give you more power over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between <code>&lt;message&gt;</code> tags or text from your clipboard with installed text-to-speech voices, when you want it. It makes game more involving, fun and interesting (especially for those people, who played WoW from the first day, when it was released… like us. It became slightly boring to read all quests after some time). Also, it makes game easier for people with <b>dyslexia</b> or <b>visual impairments</b>. We are grateful, that gods from Pantheon of Blizzard are merciful enough not to block “WoW Addon” and let people use it :). Please download this “WoW Addon” and “Monitor” only from trustworthy sources. <em>Make sure that “Monitor” is always signed by verified publisher with signature, issued by trusted certificate authority</em>.</sub></p>
 
-### Installation • Exit WoW before installing or updating addon.
+### Installation • Exit WoW before installing or updating addon
 <hr />
 
 <p>1. Download <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip">JocysComTextToSpeech-WoW.zip</a> file.<br />
@@ -178,7 +178,7 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 9. Game Menu > [Key Bindings] > [Action Bar]<br />
 10. Bind desired keyboard key to "Action Bar" button with “Stop TTS” macro. After pressing this key on keyboard, text-to-speech will stop.</p>
 
-### Network Problems and Solutions
+### Network problems and solutions
 <hr />
 
 <p>Sometimes, “Monitor” doesn't work with “Internet Protocol Version 6” (IPv6). To test this, you can:<br />
@@ -210,7 +210,7 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 
 <img src="http://www.jocys.com/Files/Software/Ethernet_Properties_IP6.png" />
 
-### Cache Options (Create Text-to-Speech Audio Files)
+### Cache Options in “Monitor” (Create text-to-speech audio files)
 <hr />
 
 <p>If your computer is slow, you can use “Monitor's” “Cache Options” to write and read audio files. The next time, when you will encounter the same dialogue-text, “Monitor” will not use TTS voices and will not create audio file again, but will play instantly previously created audio file instead. If you put custom recorded MP3 file with the same name then "Monitor" will play MP3 file, instead of WAV.</p>
