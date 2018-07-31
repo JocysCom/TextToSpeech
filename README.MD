@@ -61,9 +61,7 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
  1. Right-click the “Start Button” > Control Panel > Language.<br />
  2. Add additional languages like... English (United States) or English (United Kingdom)... etc.<br />
  3. Go to “Options” of each language and... [ Download and install language pack ].</p>
- </blockquote>
- 
-<blockquote>
+
 <p align="justify">Not all languages have text-to-speech voices. To switch between languages in Windows, you can use (Win+Space).</p>
 
 <p><sub>Windows 8.1 language packs and text-to-speech voices (<a target="_blank"  href="http://en.wikipedia.org/wiki/Microsoft_text-to-speech_voices">Wikipedia</a>):</sub></p>
