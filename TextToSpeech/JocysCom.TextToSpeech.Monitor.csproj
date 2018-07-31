@@ -278,11 +278,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Controls\AcronymsUserControl.resx">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
@@ -336,10 +331,6 @@
     <EmbeddedResource Include="Resources\Icons\Information.png" />
     <EmbeddedResource Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.rtf" />
     <None Include="JocysCom\MakeLinks.bat" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <None Include="Resources\Images\JocysCom_TTS_Monitor.psd" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor_IntroSounds.psd" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor_Voices.psd" />
