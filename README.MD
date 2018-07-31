@@ -64,7 +64,7 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
  </blockquote>
  
 <blockquote>
-<p align="justify">When you will run <b>“JocysCom.TextToSpeech.Monitor.exe”</b>, additional text-to-speech voices should be visible now. Not all languages have text-to-speech voices. To switch between languages in Windows, you can use (Win+Space).</p>
+<p align="justify">Not all languages have text-to-speech voices. To switch between languages in Windows, you can use (Win+Space).</p>
 
 <p><sub>Windows 8.1 language packs and text-to-speech voices (<a target="_blank"  href="http://en.wikipedia.org/wiki/Microsoft_text-to-speech_voices">Wikipedia</a>):</sub></p>
 
@@ -82,6 +82,8 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 • Russian - Irina.<br />
 • Spanish - Helena, Sabina.</sub></p>
 </blockquote>
+
+<p>When you will run <b>“JocysCom.TextToSpeech.Monitor.exe”</b>, additional text-to-speech voices should be visible now.</p>
 
 ### 6. Run <b>“JocysCom.TextToSpeech.Monitor.exe”</b> file (file is inside pasted folder).
 <hr />
