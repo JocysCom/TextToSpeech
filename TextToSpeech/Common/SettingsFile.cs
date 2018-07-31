@@ -50,7 +50,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		public string FolderPath;
 
 		[XmlIgnore]
-		public string FileName = "Settings.Monitor.xml";
+		public string FileName = "Monitor.Settings.xml";
 
 		object saveReadFileLock = new object();
 

@@ -50,7 +50,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					IpAddresses.Clear();
 					continueMonitoring = true;
 					// Retrieve all capture devices
-					if (Properties.Settings.Default.UseWinCap)
+					if (SettingsManager.Options.UseWinCap)
 					{
 						var devices = CaptureDeviceList.Instance.ToArray();
 						var wcaps = devices.OfType<WinPcapDevice>();
@@ -234,7 +234,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				direction = TrafficDirection.In;
 			}
 			// IPHeader.Data stores the data being carried by the IP datagram.
-			if (Properties.Settings.Default.LogEnable)
+			if (SettingsManager.Options.LogEnable)
 			{
 				var index = -1;
 				if (OptionsPanel.SearchPattern != null && OptionsPanel.SearchPattern.Length > 0)
@@ -244,13 +244,13 @@ namespace JocysCom.TextToSpeech.Monitor
 				if (index > -1)
 				{
 					// Play "Radio2" sound if "LogEnabled" and "LogSound" check-boxes are checked.
-					if (Properties.Settings.Default.LogSound)
+					if (SettingsManager.Options.LogSound)
 					{
 						var stream = GetIntroSound("Radio2");
 						if (stream != null)
 						{
 							var player = new AudioPlayer(Handle);
-							player.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
+							player.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
 							player.Load(stream);
 							player.Play();
 						}

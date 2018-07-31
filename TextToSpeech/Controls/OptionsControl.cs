@@ -20,6 +20,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		public OptionsControl()
 		{
 			InitializeComponent();
+			AddSilcenceBeforeNumericUpDown.Value = SettingsManager.Options.AddSilcenceBeforeMessage;
+			AddSilenceAfterNumericUpDown.Value = SettingsManager.Options.DelayBeforeValue;
 			LoggingFolderTextBox.Text = GetLogsPath(true);
 			LoadSettings();
 			SilenceBefore();
@@ -98,14 +100,14 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		void LoadSettings()
 		{
 			// Load settings into form.
-			LoggingTextBox.Text = Properties.Settings.Default.LogText;
+			LoggingTextBox.Text = SettingsManager.Options.LogText;
 			SearchPattern = Encoding.ASCII.GetBytes(LoggingTextBox.Text);
-			LoggingCheckBox.Checked = Properties.Settings.Default.LogEnable;
-			CacheDataWriteCheckBox.Checked = Properties.Settings.Default.CacheDataWrite;
-			CacheDataReadCheckBox.Checked = Properties.Settings.Default.CacheDataRead;
-			CacheDataGeneralizeCheckBox.Checked = Properties.Settings.Default.CacheDataGeneralize;
+			LoggingCheckBox.Checked = SettingsManager.Options.LogEnable;
+			CacheDataWriteCheckBox.Checked = SettingsManager.Options.CacheDataWrite;
+			CacheDataReadCheckBox.Checked = SettingsManager.Options.CacheDataRead;
+			CacheDataGeneralizeCheckBox.Checked = SettingsManager.Options.CacheDataGeneralize;
 			UpdateWinCapState();
-			var allowWinCap = Properties.Settings.Default.UseWinCap & MainHelper.GetWinPcapVersion() != null;
+			var allowWinCap = SettingsManager.Options.UseWinCap & MainHelper.GetWinPcapVersion() != null;
 			CaptureSocButton.Checked = !allowWinCap;
 			CaptureWinButton.Checked = allowWinCap;
 			// Update writer settings.
@@ -142,13 +144,13 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		private void LoggingPlaySoundCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			var value = LoggingPlaySoundCheckBox.Checked;
-			Properties.Settings.Default.LogSound = value;
+			SettingsManager.Options.LogSound = value;
 		}
 
 		private void LoggingTextBox_TextChanged(object sender, EventArgs e)
 		{
 			var text = LoggingTextBox.Text;
-			Properties.Settings.Default.LogText = text;
+			SettingsManager.Options.LogText = text;
 			SearchPattern = string.IsNullOrEmpty(text)
 				? null
 				: Encoding.ASCII.GetBytes(LoggingTextBox.Text);
@@ -156,7 +158,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		void SaveSettings()
 		{
-			Properties.Settings.Default.LogEnable = LoggingCheckBox.Checked;
+			SettingsManager.Options.LogEnable = LoggingCheckBox.Checked;
 			LoggingTextBox.Enabled = !LoggingCheckBox.Checked;
 			LoggingPlaySoundCheckBox.Enabled = !LoggingCheckBox.Checked;
 			LoggingFolderTextBox.Enabled = !LoggingCheckBox.Checked;
@@ -165,7 +167,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			LogFolderLabel.Enabled = !LoggingCheckBox.Checked;
 			lock (WriterLock)
 			{
-				var en = Properties.Settings.Default.LogEnable;
+				var en = SettingsManager.Options.LogEnable;
 				if (Writer == null && en && !IsDisposed && !Disposing)
 				{
 					Writer = new ClassLibrary.IO.LogFileWriter();
@@ -182,17 +184,17 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void CacheDataWriteCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			Properties.Settings.Default.CacheDataWrite = CacheDataWriteCheckBox.Checked;
+			SettingsManager.Options.CacheDataWrite = CacheDataWriteCheckBox.Checked;
 		}
 
 		private void CacheDataReadCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			Properties.Settings.Default.CacheDataRead = CacheDataReadCheckBox.Checked;
+			SettingsManager.Options.CacheDataRead = CacheDataReadCheckBox.Checked;
 		}
 
 		private void CacheDataGeneralizeCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			Properties.Settings.Default.CacheDataGeneralize = CacheDataGeneralizeCheckBox.Checked;
+			SettingsManager.Options.CacheDataGeneralize = CacheDataGeneralizeCheckBox.Checked;
 		}
 
 		private void LoggingCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -225,7 +227,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		{
 			if (CaptureSocButton.Checked)
 			{
-				Properties.Settings.Default.UseWinCap = false;
+				SettingsManager.Options.UseWinCap = false;
 				Program.TopForm.StopNetworkMonitor();
 				Program.TopForm.StartNetworkMonitor();
 			}
@@ -235,7 +237,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		{
 			if (CaptureWinButton.Checked)
 			{
-				Properties.Settings.Default.UseWinCap = true;
+				SettingsManager.Options.UseWinCap = true;
 				Program.TopForm.StopNetworkMonitor();
 				Program.TopForm.StartNetworkMonitor();
 			}
@@ -306,9 +308,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			foreach (var name in names)
 				PlaybackDeviceComboBox.Items.Add(name);
 			// Restore audio settings.
-			if (PlaybackDeviceComboBox.Items.Contains(Properties.Settings.Default.PlaybackDevice))
+			if (PlaybackDeviceComboBox.Items.Contains(SettingsManager.Options.PlaybackDevice))
 			{
-				PlaybackDeviceComboBox.SelectedItem = Properties.Settings.Default.PlaybackDevice;
+				PlaybackDeviceComboBox.SelectedItem = SettingsManager.Options.PlaybackDevice;
 			}
 			else
 			{
@@ -320,7 +322,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		private void PlaybackDeviceComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (suspendEvents) return;
-			Properties.Settings.Default.PlaybackDevice = (string)PlaybackDeviceComboBox.SelectedItem;
+			SettingsManager.Options.PlaybackDevice = (string)PlaybackDeviceComboBox.SelectedItem;
 			UpdatePlayBackDevice();
 		}
 

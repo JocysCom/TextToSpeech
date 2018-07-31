@@ -135,7 +135,7 @@ namespace JocysCom.TextToSpeech.Monitor
 						Group = voiceGroup,
 					};
 					item.Text = sentence;
-					if (Properties.Settings.Default.CacheDataGeneralize)
+					if (SettingsManager.Options.CacheDataGeneralize)
 					{
 						item.Text = item.GetGeneralizedText();
 					}

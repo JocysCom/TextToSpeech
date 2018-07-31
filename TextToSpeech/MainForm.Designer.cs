@@ -1514,23 +1514,19 @@
 			// DefaultIntroSoundComboBox
 			// 
 			this.DefaultIntroSoundComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.DefaultIntroSoundComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "DefaultIntroSoundComboBox", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.DefaultIntroSoundComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.DefaultIntroSoundComboBox.FormattingEnabled = true;
 			this.DefaultIntroSoundComboBox.Location = new System.Drawing.Point(954, 404);
 			this.DefaultIntroSoundComboBox.Name = "DefaultIntroSoundComboBox";
 			this.DefaultIntroSoundComboBox.Size = new System.Drawing.Size(114, 21);
 			this.DefaultIntroSoundComboBox.TabIndex = 212;
-			this.DefaultIntroSoundComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.DefaultIntroSoundComboBox;
 			this.DefaultIntroSoundComboBox.SelectedIndexChanged += new System.EventHandler(this.DefaultIntroSoundComboBox_SelectedIndexChanged);
 			// 
 			// MonitorPortCheckBox
 			// 
 			this.MonitorPortCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.MonitorPortCheckBox.AutoSize = true;
-			this.MonitorPortCheckBox.Checked = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.MonitorPortChecked;
 			this.MonitorPortCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.MonitorPortCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "MonitorPortChecked", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.MonitorPortCheckBox.Location = new System.Drawing.Point(887, 352);
 			this.MonitorPortCheckBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
 			this.MonitorPortCheckBox.Name = "MonitorPortCheckBox";
@@ -1545,7 +1541,6 @@
 			// MonitorClipboardComboBox
 			// 
 			this.MonitorClipboardComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.MonitorClipboardComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "MonitorClipboardComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.MonitorClipboardComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.MonitorClipboardComboBox.FormattingEnabled = true;
 			this.MonitorClipboardComboBox.Items.AddRange(new object[] {
@@ -1556,7 +1551,6 @@
 			this.MonitorClipboardComboBox.Name = "MonitorClipboardComboBox";
 			this.MonitorClipboardComboBox.Size = new System.Drawing.Size(114, 21);
 			this.MonitorClipboardComboBox.TabIndex = 5;
-			this.MonitorClipboardComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.MonitorClipboardComboBoxText;
 			this.MonitorClipboardComboBox.SelectedIndexChanged += new System.EventHandler(this.MonitorClipboardComboBox_SelectedIndexChanged);
 			this.MonitorClipboardComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.MonitorClipboardComboBox.MouseHover += new System.EventHandler(this.MouseHover_MonitorClipboardComboBox);
@@ -1564,7 +1558,6 @@
 			// GenderComboBox
 			// 
 			this.GenderComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.GenderComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "GenderComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.GenderComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.GenderComboBox.FormattingEnabled = true;
 			this.GenderComboBox.Items.AddRange(new object[] {
@@ -1575,7 +1568,6 @@
 			this.GenderComboBox.Name = "GenderComboBox";
 			this.GenderComboBox.Size = new System.Drawing.Size(114, 21);
 			this.GenderComboBox.TabIndex = 9;
-			this.GenderComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.GenderComboBoxText;
 			this.GenderComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.GenderComboBox.MouseHover += new System.EventHandler(this.MouseHover_GenderComboBox);
 			// 
@@ -1584,7 +1576,6 @@
 			this.PitchMaxComboBox.AccessibleDescription = "";
 			this.PitchMaxComboBox.AccessibleName = "";
 			this.PitchMaxComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.PitchMaxComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "PitchMaxComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.PitchMaxComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.PitchMaxComboBox.FormattingEnabled = true;
 			this.PitchMaxComboBox.Items.AddRange(new object[] {
@@ -1614,7 +1605,6 @@
 			this.PitchMaxComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.PitchMaxComboBox.Size = new System.Drawing.Size(40, 21);
 			this.PitchMaxComboBox.TabIndex = 12;
-			this.PitchMaxComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.PitchMaxComboBoxText;
 			this.PitchMaxComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.PitchMaxComboBox.MouseHover += new System.EventHandler(this.MouseHover_PitchMax);
 			// 
@@ -1623,7 +1613,6 @@
 			this.RateMaxComboBox.AccessibleDescription = "";
 			this.RateMaxComboBox.AccessibleName = "";
 			this.RateMaxComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.RateMaxComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "RateMaxComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.RateMaxComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.RateMaxComboBox.FormattingEnabled = true;
 			this.RateMaxComboBox.Items.AddRange(new object[] {
@@ -1653,7 +1642,6 @@
 			this.RateMaxComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.RateMaxComboBox.Size = new System.Drawing.Size(40, 21);
 			this.RateMaxComboBox.TabIndex = 15;
-			this.RateMaxComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.RateMaxComboBoxText;
 			this.RateMaxComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.RateMaxComboBox.MouseHover += new System.EventHandler(this.MouseHover_RateMax);
 			// 
@@ -1662,7 +1650,6 @@
 			this.PitchMinComboBox.AccessibleDescription = "";
 			this.PitchMinComboBox.AccessibleName = "";
 			this.PitchMinComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.PitchMinComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "PitchMinComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.PitchMinComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.PitchMinComboBox.FormattingEnabled = true;
 			this.PitchMinComboBox.Items.AddRange(new object[] {
@@ -1692,7 +1679,6 @@
 			this.PitchMinComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.PitchMinComboBox.Size = new System.Drawing.Size(40, 21);
 			this.PitchMinComboBox.TabIndex = 10;
-			this.PitchMinComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.PitchMinComboBoxText;
 			this.PitchMinComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.PitchMinComboBox.MouseHover += new System.EventHandler(this.MouseHover_PitchMin);
 			// 
@@ -1701,7 +1687,6 @@
 			this.RateMinComboBox.AccessibleDescription = "";
 			this.RateMinComboBox.AccessibleName = "";
 			this.RateMinComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.RateMinComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "RateMinComboBoxText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.RateMinComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.RateMinComboBox.FormattingEnabled = true;
 			this.RateMinComboBox.Items.AddRange(new object[] {
@@ -1731,7 +1716,6 @@
 			this.RateMinComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.RateMinComboBox.Size = new System.Drawing.Size(40, 21);
 			this.RateMinComboBox.TabIndex = 13;
-			this.RateMinComboBox.Text = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.RateMinComboBoxText;
 			this.RateMinComboBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.RateMinComboBox.MouseHover += new System.EventHandler(this.MouseHover_RateMin);
 			// 

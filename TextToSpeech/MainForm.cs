@@ -22,9 +22,16 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			Program.TopForm = this;
 			InitializeComponent();
-			if (IsDesignMode) return;
+			if (IsDesignMode)
+				return;
+			MonitorClipboardComboBox.Text = SettingsManager.Options.MonitorClipboardComboBoxText;
+			GenderComboBox.Text = SettingsManager.Options.GenderComboBoxText;
+			PitchMinComboBox.Text = SettingsManager.Options.PitchMinComboBoxText;
+			PitchMaxComboBox.Text = SettingsManager.Options.PitchMaxComboBoxText;
+			RateMinComboBox.Text = SettingsManager.Options.RateMinComboBoxText;
+			RateMaxComboBox.Text = SettingsManager.Options.RateMaxComboBoxText;
+			MonitorPortCheckBox.Checked = SettingsManager.Options.MonitorPortChecked;
 			WavPlayer = new AudioPlayer(Handle);
-
 			playlist = new BindingList<PlayItem>();
 			playlist.ListChanged += playlist_ListChanged;
 			PlayListDataGridView.AutoGenerateColumns = false;
@@ -32,12 +39,13 @@ namespace JocysCom.TextToSpeech.Monitor
 			Text = MainHelper.GetProductFullName();
 			InstalledVoices = new BindingList<InstalledVoiceEx>();
 			DefaultIntroSoundComboBox.DataSource = GetIntroSoundNames();
+			DefaultIntroSoundComboBox.Text = SettingsManager.Options.DefaultIntroSoundComboBox;
 			UpdateLabel.Text = "You are running " + MainHelper.GetProductFullName();
 			// Add supported items.
 			PlugIns.Add(new WowListItem());
 			ProgramComboBox.DataSource = PlugIns;
 			ProgramComboBox.DisplayMember = "Name";
-			var name = Properties.Settings.Default.ProgramComboBoxText;
+			var name = SettingsManager.Options.ProgramComboBoxText;
 			if (!string.IsNullOrEmpty(name))
 			{
 				ProgramComboBox.Text = name;
@@ -121,8 +129,8 @@ namespace JocysCom.TextToSpeech.Monitor
 					{
 						if (pitchedItem.StreamData != null)
 						{
-							// Takes WAV bytes witout header.
-							WavPlayer.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
+							// Takes WAV bytes without header.
+							WavPlayer.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
 							var duration = (int)WavPlayer.Load(pitchedItem.StreamData);
 							WavPlayer.Play();
 							// Start timer which will reset status to Played
@@ -136,7 +144,7 @@ namespace JocysCom.TextToSpeech.Monitor
 							int bitsPerSample = pitchedItem.WavHead.BitsPerSample;
 							int channelCount = pitchedItem.WavHead.Channels;
 							// Takes WAV bytes witout header.
-							EffectPresetsEditorSoundEffectsControl.Player.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
+							EffectPresetsEditorSoundEffectsControl.Player.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
 							EffectPresetsEditorSoundEffectsControl.Player.Load(pitchedItem.WavData, sampleRate, bitsPerSample, channelCount);
 							EffectPresetsEditorSoundEffectsControl.Player.Play();
 							// Start timer which will reset status to Played
@@ -237,7 +245,7 @@ namespace JocysCom.TextToSpeech.Monitor
 						var synthesize = true;
 						FileInfo xmlFi = null;
 						FileInfo wavFi = null;
-						if (Properties.Settings.Default.CacheDataRead)
+						if (SettingsManager.Options.CacheDataRead)
 						{
 							var dir = MainHelper.GetCreateCacheFolder();
 
@@ -247,7 +255,7 @@ namespace JocysCom.TextToSpeech.Monitor
 							var xmlFile = string.Format("{0}.xml", uniqueName);
 							var xmlFullPath = Path.Combine(dir.FullName, xmlFile);
 							xmlFi = new FileInfo(xmlFullPath);
-							// If genrealized file do not exists then...
+							// If generalized file do not exists then...
 							if (!xmlFi.Exists)
 							{
 								// Look for normal file.
@@ -309,7 +317,7 @@ namespace JocysCom.TextToSpeech.Monitor
 							item.WavData = ConvertSapiXmlToWav(item.Xml, sampleRate, bitsPerSample, channelCount);
 							item.WavHead = new SharpDX.Multimedia.WaveFormat(sampleRate, bitsPerSample, channelCount);
 							item.Duration = AudioHelper.GetDuration(item.WavData.Length, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
-							if (Properties.Settings.Default.CacheDataWrite && item.WavData != null)
+							if (SettingsManager.Options.CacheDataWrite && item.WavData != null)
 							{
 								// Create directory if not exists.
 								if (!xmlFi.Directory.Exists)
@@ -1013,9 +1021,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			StopNetworkMonitor();
 			DisposeWatcher();
 			SaveSettings();
-			// Save settings
-			var name = Properties.Settings.Default.ProgramComboBoxText;
-			Properties.Settings.Default.Save();
 		}
 
 
@@ -1027,15 +1032,16 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			if (InstalledVoices == null) return;
 			var xml = Serializer.SerializeToXmlString(InstalledVoices);
-			Properties.Settings.Default.VoicesData = xml;
+			SettingsManager.Options.VoicesData = xml;
 			SettingsFile.Current.Save();
 			SettingsManager.Current.Save();
+			SettingsManager.OptionsData.Save();
 			//Properties.Settings.Default.Save();
 		}
 
 		public void LoadSettings(InstalledVoiceEx[] voices)
 		{
-			var xml = Properties.Settings.Default.VoicesData;
+			var xml = SettingsManager.Options.VoicesData;
 			InstalledVoiceEx[] savedVoices = null;
 			if (!string.IsNullOrEmpty(xml))
 			{
@@ -1167,7 +1173,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			if (stream != null)
 			{
 				var player = new AudioPlayer(Handle);
-				player.ChangeAudioDevice(Properties.Settings.Default.PlaybackDevice);
+				player.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
 				player.Load(stream);
 				player.Play();
 			}
@@ -1295,7 +1301,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				var item = (VoiceListItem)ProgramComboBox.SelectedItem;
 				MonitorItem = item;
-				Properties.Settings.Default.ProgramComboBoxText = item.Name;
+				SettingsManager.Options.ProgramComboBoxText = item.Name;
 			}
 		}
 

@@ -81,8 +81,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			try
 			{
 				// Load default settings.
-				Properties.Settings.Default.Reload();
-				var isSettignsValid = !string.IsNullOrEmpty(Properties.Settings.Default.PitchMaxComboBoxText);
+				var isSettignsValid = !string.IsNullOrEmpty(SettingsManager.Options.PitchMaxComboBoxText);
 			}
 			catch (ConfigurationErrorsException)
 			{
@@ -104,19 +103,19 @@ namespace JocysCom.TextToSpeech.Monitor
 					//Process.GetCurrentProcess().Kill();
 				}
 			}
-			if (string.IsNullOrEmpty(Properties.Settings.Default.PitchMaxComboBoxText))
+			if (string.IsNullOrEmpty(SettingsManager.Options.PitchMaxComboBoxText))
 			{
-				Properties.Settings.Default.DefaultIntroSoundComboBox = "Radio";
-				Properties.Settings.Default.PitchMaxComboBoxText = "0";
-				Properties.Settings.Default.PitchMinComboBoxText = "0";
-				Properties.Settings.Default.RateMaxComboBoxText = "2";
-				Properties.Settings.Default.RateMinComboBoxText = "2";
-				Properties.Settings.Default.GenderComboBoxText = "Male";
-				Properties.Settings.Default.MonitorClipboardComboBoxText = "Disabled";
-				Properties.Settings.Default.MonitorPortChecked = true;
-				Properties.Settings.Default.ProgramComboBoxText = new PlugIns.WowListItem().Name;
-                Properties.Settings.Default.LogText = "me66age";
-                Properties.Settings.Default.Save();
+				SettingsManager.Options.DefaultIntroSoundComboBox = "Radio";
+				SettingsManager.Options.PitchMaxComboBoxText = "0";
+				SettingsManager.Options.PitchMinComboBoxText = "0";
+				SettingsManager.Options.RateMaxComboBoxText = "2";
+				SettingsManager.Options.RateMinComboBoxText = "2";
+				SettingsManager.Options.GenderComboBoxText = "Male";
+				SettingsManager.Options.MonitorClipboardComboBoxText = "Disabled";
+				SettingsManager.Options.MonitorPortChecked = true;
+				SettingsManager.Options.ProgramComboBoxText = new PlugIns.WowListItem().Name;
+				SettingsManager.Options.LogText = "me66age";
+				SettingsManager.OptionsData.Save();
             }
 
 			return true;

@@ -376,7 +376,6 @@
             // 
             // AddSilenceAfterNumericUpDown
             // 
-            this.AddSilenceAfterNumericUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "DelayBeforeValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AddSilenceAfterNumericUpDown.Increment = new decimal(new int[] {
             100,
             0,
@@ -392,12 +391,10 @@
             this.AddSilenceAfterNumericUpDown.Size = new System.Drawing.Size(114, 20);
             this.AddSilenceAfterNumericUpDown.TabIndex = 5;
             this.AddSilenceAfterNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.AddSilenceAfterNumericUpDown.Value = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.DelayBeforeValue;
             this.AddSilenceAfterNumericUpDown.ValueChanged += new System.EventHandler(this.AddSilenceAfterNumericUpDown_ValueChanged);
             // 
             // AddSilcenceBeforeNumericUpDown
             // 
-            this.AddSilcenceBeforeNumericUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default, "AddSilcenceBeforeMessage", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AddSilcenceBeforeNumericUpDown.Increment = new decimal(new int[] {
             100,
             0,
@@ -413,7 +410,6 @@
             this.AddSilcenceBeforeNumericUpDown.Size = new System.Drawing.Size(114, 20);
             this.AddSilcenceBeforeNumericUpDown.TabIndex = 5;
             this.AddSilcenceBeforeNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.AddSilcenceBeforeNumericUpDown.Value = global::JocysCom.TextToSpeech.Monitor.Properties.Settings.Default.AddSilcenceBeforeMessage;
             this.AddSilcenceBeforeNumericUpDown.ValueChanged += new System.EventHandler(this.AddSilcenceBeforeNumericUpDown_ValueChanged);
             // 
             // OptionsControl
