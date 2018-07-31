@@ -192,9 +192,7 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 
 <p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Network.png" style="width: 562px; height: 217px;" /></p>
 
-<hr />
-
-<p>or...<br />
+<p>...OR...<br />
 <br />
 <strong>B)</strong> Temporary disable IPv6 on your network card:</p>
 
