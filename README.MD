@@ -55,8 +55,8 @@ BETTER text-to-speech voices are developed by <a target="_blank"  href="http://w
 <p>5. Install additional text-to-speech voices, if needed.</p>
 
 <blockquote>
-<p align="justify">BETTER are Ivona text-to-speech voices (<a href="http://harposoftware.com/en" target="_blank">$45 each</a>). Test voices online (developer): <a href="http://www.ivona.com" target="_blank">Ivona.com</a><br />
-Download and test voices 30 days for free (distributor): <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harposoftware.com/en/content/10-trial</a><br />
+<p>BETTER text-to-speech voices are developed by <a href="http://www.ivona.com" target="_blank">Ivona</a> and distributed (~$45 each) by <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a>.</p>
+<p>Download and test voices 30 days for free from distributor <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a>.<br />
 Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. Some other voices are not bad too. If you know free of charge text-to-speech voices as good, as voices by Ivona, please, write us.</p>
 </blockquote>
 
