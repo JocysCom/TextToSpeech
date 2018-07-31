@@ -33,7 +33,7 @@ BETTER text-to-speech voices are developed by <a target="_blank"  href="http://w
 ### YouTube video ...“WoW Addon” (old version) with Ivona voices
 <hr />
 
-<p>Old versions of “Monitor” and “Addon” (2014-08-06) are presented in this video. New versions can read chat messages.</p>
+<p>“WoW Addon” ( very old 2014-08-06 version ) with Ivona voices.</p>
 
 [![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
