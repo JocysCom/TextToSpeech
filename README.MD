@@ -12,7 +12,6 @@
 
 <p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_1.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small_2018_07_29.png" /></a></p>
 
-
 <p>How it works: When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, WoW <b>“Addon”</b> creates and sends message to you between <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code> tags. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> value. Then, <b>“Monitor”</b>, <em>which must be running in background, while gaming,</em> picks-up this message from your local network traffic, converts it to SAPI XML and reads it with specific text-to-speech voice.
 
 <blockquote>
@@ -37,10 +36,10 @@ BETTER text-to-speech voices are developed by <a target="_blank"  href="http://w
 
 [![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
-### Security and concerns
+### Security and concerns • Why it is not on Curse?
 <hr />
 
-<p align="justify"><sub>“Monitor” and “WoW Addon” does not give you more power over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between <code>&lt;message&gt;</code> tags or text from your clipboard with installed text-to-speech voices, when you want it. It makes game more involving, fun and interesting... and easier for people with <b>dyslexia</b> or <b>visual impairments</b> too. This project is open source... anyone can check all code at any time. We <b>digitally sign</b> our software and put our <b>real names</b> on it, so everyone could know, who to blame, if something will go wrong. It is not in our interest to ruin our reputation with hacks, exploits, malware or spyware. Please download this “WoW Addon” and “Monitor” only from trustworthy sources. Make sure that “Monitor” is always <i>signed</i> by verified publisher with signature, issued by trusted certificate authority.</sub></p>
+<p style="color: #84e68c; text-align: justify;"><sub>It is not on Curse, because of “Monitor”, which is external program. Blizzard has no control outside the game over “Monitor” and, reasonably, can't take responsibility for it, by allowing it on Curse. Therefore, we keep everything as transparent, as possible. This project is open source and anyone can check all code at any time. We <b>digitally sign</b> our software and put our <b>real names</b> on it, so everyone could know, who to blame, if something will go wrong. “Monitor” and “WoW Addon” does not give you more power over NPCs or other players in game. It does not send data back to game or anywhere else. It only reads local network messages between <code>&lt;message&gt;</code> tags or text from your clipboard with installed text-to-speech voices, when you want it. It makes game more involving, fun and interesting (especially for those people, who played WoW from the first day, when it was released… like us. It became slightly boring to read all quests after some time). Also, it makes game easier for people with <b>dyslexia</b> or <b>visual impairments</b>. We are grateful, that gods from Pantheon of Blizzard are merciful enough not to block “WoW Addon” and let people use it :). Please download this “WoW Addon” and “Monitor” only from trustworthy sources. <em>Make sure that “Monitor” is always signed by verified publisher with signature, issued by trusted certificate authority</em>.</sub></p>
 
 ### Installation • Exit WoW before installing or updating addon.
 <hr />
