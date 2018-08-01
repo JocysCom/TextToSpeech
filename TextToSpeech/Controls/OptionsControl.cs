@@ -20,12 +20,19 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		public OptionsControl()
 		{
 			InitializeComponent();
+			if (IsDesignMode)
+				return;
 			AddSilcenceBeforeNumericUpDown.Value = SettingsManager.Options.AddSilcenceBeforeMessage;
 			AddSilenceAfterNumericUpDown.Value = SettingsManager.Options.DelayBeforeValue;
 			LoggingFolderTextBox.Text = GetLogsPath(true);
 			LoadSettings();
 			SilenceBefore();
 			SilenceAfter();
+		}
+
+		public bool IsDesignMode
+		{
+			get { return DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime; }
 		}
 
 		private void SilenceBefore()
@@ -270,14 +277,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			var count = files.Count();
 			var size = SizeSuffix(files.Sum(x => x.Length), 1);
 			CacheLabel.Text = string.Format(_CacheMessageFormat, count, size);
-		}
-
-		private void CortanaDetailsButton_Click(object sender, EventArgs e)
-		{
-			var frm = new CortanaForm();
-			frm.StartPosition = FormStartPosition.CenterParent;
-			frm.ShowDialog(Program.TopForm);
-			frm.Dispose();
 		}
 
 		private void HowToButton_Click(object sender, EventArgs e)

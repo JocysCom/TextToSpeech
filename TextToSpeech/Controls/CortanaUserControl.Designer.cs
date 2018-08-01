@@ -1,6 +1,6 @@
 ﻿namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-    partial class CortanaForm
+    partial class CortanaUserControl
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CortanaForm));
 			this.label1 = new System.Windows.Forms.Label();
 			this.DefaultTextBox = new System.Windows.Forms.TextBox();
 			this.LanguageIdTextBox = new System.Windows.Forms.TextBox();
@@ -37,6 +36,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.AttributesGroupBox = new System.Windows.Forms.GroupBox();
+			this.label8 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
 			this.LanguageLabel = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
@@ -63,7 +63,6 @@
 			this.MobileVoiceLabel = new System.Windows.Forms.Label();
 			this.ImportButton = new System.Windows.Forms.Button();
 			this.RemoveButton = new System.Windows.Forms.Button();
-			this.label8 = new System.Windows.Forms.Label();
 			this.AttributesGroupBox.SuspendLayout();
 			this.MainGroupBox.SuspendLayout();
 			this.SuspendLayout();
@@ -84,7 +83,7 @@
 			this.DefaultTextBox.Location = new System.Drawing.Point(84, 19);
 			this.DefaultTextBox.Name = "DefaultTextBox";
 			this.DefaultTextBox.ReadOnly = true;
-			this.DefaultTextBox.Size = new System.Drawing.Size(593, 20);
+			this.DefaultTextBox.Size = new System.Drawing.Size(335, 20);
 			this.DefaultTextBox.TabIndex = 1;
 			// 
 			// LanguageIdTextBox
@@ -102,7 +101,7 @@
 			this.ClsidTextBox.Location = new System.Drawing.Point(206, 45);
 			this.ClsidTextBox.Name = "ClsidTextBox";
 			this.ClsidTextBox.ReadOnly = true;
-			this.ClsidTextBox.Size = new System.Drawing.Size(471, 20);
+			this.ClsidTextBox.Size = new System.Drawing.Size(213, 20);
 			this.ClsidTextBox.TabIndex = 1;
 			// 
 			// label2
@@ -159,6 +158,14 @@
 			this.AttributesGroupBox.TabIndex = 2;
 			this.AttributesGroupBox.TabStop = false;
 			this.AttributesGroupBox.Text = "Attributes";
+			// 
+			// label8
+			// 
+			this.label8.Location = new System.Drawing.Point(383, 74);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(294, 43);
+			this.label8.TabIndex = 2;
+			this.label8.Text = "Note: You must restart application for [Import] or [Remove] to take effect.";
 			// 
 			// label12
 			// 
@@ -348,7 +355,7 @@
 			this.VoicePathTextBox.Location = new System.Drawing.Point(84, 123);
 			this.VoicePathTextBox.Name = "VoicePathTextBox";
 			this.VoicePathTextBox.ReadOnly = true;
-			this.VoicePathTextBox.Size = new System.Drawing.Size(593, 20);
+			this.VoicePathTextBox.Size = new System.Drawing.Size(335, 20);
 			this.VoicePathTextBox.TabIndex = 1;
 			// 
 			// LangDataPathTextBox
@@ -358,7 +365,7 @@
 			this.LangDataPathTextBox.Location = new System.Drawing.Point(84, 97);
 			this.LangDataPathTextBox.Name = "LangDataPathTextBox";
 			this.LangDataPathTextBox.ReadOnly = true;
-			this.LangDataPathTextBox.Size = new System.Drawing.Size(593, 20);
+			this.LangDataPathTextBox.Size = new System.Drawing.Size(335, 20);
 			this.LangDataPathTextBox.TabIndex = 1;
 			// 
 			// NameTextBox
@@ -368,7 +375,7 @@
 			this.NameTextBox.Location = new System.Drawing.Point(84, 71);
 			this.NameTextBox.Name = "NameTextBox";
 			this.NameTextBox.ReadOnly = true;
-			this.NameTextBox.Size = new System.Drawing.Size(593, 20);
+			this.NameTextBox.Size = new System.Drawing.Size(335, 20);
 			this.NameTextBox.TabIndex = 1;
 			// 
 			// MobileVoiceComboBox
@@ -412,28 +419,18 @@
 			this.RemoveButton.UseVisualStyleBackColor = true;
 			this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
 			// 
-			// label8
-			// 
-			this.label8.Location = new System.Drawing.Point(383, 74);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(294, 43);
-			this.label8.TabIndex = 2;
-			this.label8.Text = "Note: You must restart application for [Import] or [Remove] to take effect.";
-			// 
-			// CortanaForm
+			// CortanaUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(707, 338);
 			this.Controls.Add(this.RemoveButton);
 			this.Controls.Add(this.ImportButton);
 			this.Controls.Add(this.MobileVoiceLabel);
 			this.Controls.Add(this.MobileVoiceComboBox);
 			this.Controls.Add(this.MainGroupBox);
 			this.Controls.Add(this.AttributesGroupBox);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Name = "CortanaForm";
-			this.Text = "Cortana Details";
+			this.Name = "CortanaUserControl";
+			this.Size = new System.Drawing.Size(707, 338);
 			this.Load += new System.EventHandler(this.CortanaForm_Load);
 			this.AttributesGroupBox.ResumeLayout(false);
 			this.AttributesGroupBox.PerformLayout();

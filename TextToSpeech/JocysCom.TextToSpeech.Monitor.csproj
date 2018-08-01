@@ -151,6 +151,7 @@
     <Compile Include="Common\InstalledVoiceEx.cs" />
     <Compile Include="Common\NativeMethods.cs" />
     <Compile Include="Common\Options.cs" />
+    <Compile Include="Common\Options.Google.cs" />
     <Compile Include="Common\SettingsFile.cs" />
     <Compile Include="Common\SettingsManager.cs" />
     <Compile Include="Common\SocketState.cs" />
@@ -161,11 +162,11 @@
     <Compile Include="Controls\AcronymsUserControl.Designer.cs">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CortanaForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Controls\CortanaUserControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\CortanaForm.Designer.cs">
-      <DependentUpon>CortanaForm.cs</DependentUpon>
+    <Compile Include="Controls\CortanaUserControl.Designer.cs">
+      <DependentUpon>CortanaUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MonitorsUserControl.cs">
       <SubType>UserControl</SubType>
@@ -191,6 +192,12 @@
     </Compile>
     <Compile Include="Controls\VoiceDefaultsUserControl.Designer.cs">
       <DependentUpon>VoiceDefaultsUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Google\GoogleOptionsUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Google\GoogleOptionsUserControl.Designer.cs">
+      <DependentUpon>GoogleOptionsUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Google\ListResponse.cs" />
     <Compile Include="Google\SsmlVoiceGender.cs" />
@@ -282,8 +289,8 @@
     <EmbeddedResource Include="Controls\AcronymsUserControl.resx">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\CortanaForm.resx">
-      <DependentUpon>CortanaForm.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CortanaUserControl.resx">
+      <DependentUpon>CortanaUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MonitorsUserControl.resx">
       <DependentUpon>MonitorsUserControl.cs</DependentUpon>
@@ -301,6 +308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SoundEffectsControl.resx">
       <DependentUpon>SoundEffectsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Google\GoogleOptionsUserControl.resx">
+      <DependentUpon>GoogleOptionsUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JocysCom\Configuration\SettingsItemForm.resx">
       <DependentUpon>SettingsItemForm.cs</DependentUpon>

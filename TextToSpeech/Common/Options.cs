@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace JocysCom.TextToSpeech.Monitor
 {
-	public class Options : INotifyPropertyChanged
+	public partial class Options : INotifyPropertyChanged
 	{
 		public Options()
 		{
