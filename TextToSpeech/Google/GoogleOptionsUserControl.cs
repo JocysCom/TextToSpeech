@@ -38,7 +38,11 @@ namespace JocysCom.TextToSpeech.Monitor.Google
 		private void TestButton_Click(object sender, EventArgs e)
 		{
 			var client = new Google.TextToSpeechClient();
-			//client.ReceiveToken()
+			//var key = client.ReceiveToken(
+			//	"",
+			//	SettingsManager.Options.GoogleWebAppClientId,
+			//	SettingsManager.Options.GoogleWebAppClientSecret
+			//);
 		}
 	}
 }

@@ -28,14 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.label1 = new System.Windows.Forms.Label();
-			this.DefaultTextBox = new System.Windows.Forms.TextBox();
 			this.LanguageIdTextBox = new System.Windows.Forms.TextBox();
 			this.ClsidTextBox = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
-			this.AttributesGroupBox = new System.Windows.Forms.GroupBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
 			this.LanguageLabel = new System.Windows.Forms.Label();
@@ -63,32 +60,12 @@
 			this.MobileVoiceLabel = new System.Windows.Forms.Label();
 			this.ImportButton = new System.Windows.Forms.Button();
 			this.RemoveButton = new System.Windows.Forms.Button();
-			this.AttributesGroupBox.SuspendLayout();
 			this.MainGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 22);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(41, 13);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Default";
-			// 
-			// DefaultTextBox
-			// 
-			this.DefaultTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.DefaultTextBox.Location = new System.Drawing.Point(84, 19);
-			this.DefaultTextBox.Name = "DefaultTextBox";
-			this.DefaultTextBox.ReadOnly = true;
-			this.DefaultTextBox.Size = new System.Drawing.Size(335, 20);
-			this.DefaultTextBox.TabIndex = 1;
-			// 
 			// LanguageIdTextBox
 			// 
-			this.LanguageIdTextBox.Location = new System.Drawing.Point(84, 45);
+			this.LanguageIdTextBox.Location = new System.Drawing.Point(84, 19);
 			this.LanguageIdTextBox.Name = "LanguageIdTextBox";
 			this.LanguageIdTextBox.ReadOnly = true;
 			this.LanguageIdTextBox.Size = new System.Drawing.Size(72, 20);
@@ -96,9 +73,7 @@
 			// 
 			// ClsidTextBox
 			// 
-			this.ClsidTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.ClsidTextBox.Location = new System.Drawing.Point(206, 45);
+			this.ClsidTextBox.Location = new System.Drawing.Point(206, 19);
 			this.ClsidTextBox.Name = "ClsidTextBox";
 			this.ClsidTextBox.ReadOnly = true;
 			this.ClsidTextBox.Size = new System.Drawing.Size(213, 20);
@@ -107,7 +82,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(162, 48);
+			this.label2.Location = new System.Drawing.Point(162, 22);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(38, 13);
 			this.label2.TabIndex = 0;
@@ -116,7 +91,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(6, 100);
+			this.label3.Location = new System.Drawing.Point(6, 48);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(55, 13);
 			this.label3.TabIndex = 0;
@@ -125,61 +100,33 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(6, 126);
+			this.label4.Location = new System.Drawing.Point(6, 74);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(59, 13);
 			this.label4.TabIndex = 0;
 			this.label4.Text = "Voice Path";
 			// 
-			// AttributesGroupBox
-			// 
-			this.AttributesGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.AttributesGroupBox.Controls.Add(this.label8);
-			this.AttributesGroupBox.Controls.Add(this.label12);
-			this.AttributesGroupBox.Controls.Add(this.LanguageLabel);
-			this.AttributesGroupBox.Controls.Add(this.label11);
-			this.AttributesGroupBox.Controls.Add(this.label7);
-			this.AttributesGroupBox.Controls.Add(this.label10);
-			this.AttributesGroupBox.Controls.Add(this.GenderLabel);
-			this.AttributesGroupBox.Controls.Add(this.SharedPronunciationLabel);
-			this.AttributesGroupBox.Controls.Add(this.AgeLabel);
-			this.AttributesGroupBox.Controls.Add(this.DataVersionAttributeTextBox);
-			this.AttributesGroupBox.Controls.Add(this.LanguageAttributeTextBox);
-			this.AttributesGroupBox.Controls.Add(this.VendorAttributeTextBox);
-			this.AttributesGroupBox.Controls.Add(this.VersionAttributeTextBox);
-			this.AttributesGroupBox.Controls.Add(this.NameAttributeTextBox);
-			this.AttributesGroupBox.Controls.Add(this.GenderAttributeTextBox);
-			this.AttributesGroupBox.Controls.Add(this.SharedPronunciationAttributeTextBox);
-			this.AttributesGroupBox.Controls.Add(this.AgeAttributeTextBox);
-			this.AttributesGroupBox.Location = new System.Drawing.Point(12, 198);
-			this.AttributesGroupBox.Name = "AttributesGroupBox";
-			this.AttributesGroupBox.Size = new System.Drawing.Size(683, 127);
-			this.AttributesGroupBox.TabIndex = 2;
-			this.AttributesGroupBox.TabStop = false;
-			this.AttributesGroupBox.Text = "Attributes";
-			// 
 			// label8
 			// 
-			this.label8.Location = new System.Drawing.Point(383, 74);
+			this.label8.Location = new System.Drawing.Point(425, 97);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(294, 43);
+			this.label8.Size = new System.Drawing.Size(252, 43);
 			this.label8.TabIndex = 2;
 			this.label8.Text = "Note: You must restart application for [Import] or [Remove] to take effect.";
 			// 
 			// label12
 			// 
 			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(162, 74);
+			this.label12.Location = new System.Drawing.Point(162, 152);
 			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(68, 13);
+			this.label12.Size = new System.Drawing.Size(30, 13);
 			this.label12.TabIndex = 0;
-			this.label12.Text = "Data Version";
+			this.label12.Text = "Data";
 			// 
 			// LanguageLabel
 			// 
 			this.LanguageLabel.AutoSize = true;
-			this.LanguageLabel.Location = new System.Drawing.Point(6, 74);
+			this.LanguageLabel.Location = new System.Drawing.Point(6, 152);
 			this.LanguageLabel.Name = "LanguageLabel";
 			this.LanguageLabel.Size = new System.Drawing.Size(55, 13);
 			this.LanguageLabel.TabIndex = 0;
@@ -188,7 +135,7 @@
 			// label11
 			// 
 			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(162, 22);
+			this.label11.Location = new System.Drawing.Point(162, 100);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(41, 13);
 			this.label11.TabIndex = 0;
@@ -197,7 +144,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(162, 100);
+			this.label7.Location = new System.Drawing.Point(162, 178);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(42, 13);
 			this.label7.TabIndex = 0;
@@ -206,7 +153,7 @@
 			// label10
 			// 
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(162, 48);
+			this.label10.Location = new System.Drawing.Point(162, 126);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(35, 13);
 			this.label10.TabIndex = 0;
@@ -215,7 +162,7 @@
 			// GenderLabel
 			// 
 			this.GenderLabel.AutoSize = true;
-			this.GenderLabel.Location = new System.Drawing.Point(6, 48);
+			this.GenderLabel.Location = new System.Drawing.Point(6, 126);
 			this.GenderLabel.Name = "GenderLabel";
 			this.GenderLabel.Size = new System.Drawing.Size(42, 13);
 			this.GenderLabel.TabIndex = 0;
@@ -224,7 +171,7 @@
 			// SharedPronunciationLabel
 			// 
 			this.SharedPronunciationLabel.AutoSize = true;
-			this.SharedPronunciationLabel.Location = new System.Drawing.Point(6, 100);
+			this.SharedPronunciationLabel.Location = new System.Drawing.Point(6, 178);
 			this.SharedPronunciationLabel.Name = "SharedPronunciationLabel";
 			this.SharedPronunciationLabel.Size = new System.Drawing.Size(72, 13);
 			this.SharedPronunciationLabel.TabIndex = 0;
@@ -233,7 +180,7 @@
 			// AgeLabel
 			// 
 			this.AgeLabel.AutoSize = true;
-			this.AgeLabel.Location = new System.Drawing.Point(6, 22);
+			this.AgeLabel.Location = new System.Drawing.Point(6, 100);
 			this.AgeLabel.Name = "AgeLabel";
 			this.AgeLabel.Size = new System.Drawing.Size(26, 13);
 			this.AgeLabel.TabIndex = 0;
@@ -241,15 +188,15 @@
 			// 
 			// DataVersionAttributeTextBox
 			// 
-			this.DataVersionAttributeTextBox.Location = new System.Drawing.Point(233, 71);
+			this.DataVersionAttributeTextBox.Location = new System.Drawing.Point(206, 149);
 			this.DataVersionAttributeTextBox.Name = "DataVersionAttributeTextBox";
 			this.DataVersionAttributeTextBox.ReadOnly = true;
-			this.DataVersionAttributeTextBox.Size = new System.Drawing.Size(144, 20);
+			this.DataVersionAttributeTextBox.Size = new System.Drawing.Size(213, 20);
 			this.DataVersionAttributeTextBox.TabIndex = 1;
 			// 
 			// LanguageAttributeTextBox
 			// 
-			this.LanguageAttributeTextBox.Location = new System.Drawing.Point(84, 71);
+			this.LanguageAttributeTextBox.Location = new System.Drawing.Point(84, 149);
 			this.LanguageAttributeTextBox.Name = "LanguageAttributeTextBox";
 			this.LanguageAttributeTextBox.ReadOnly = true;
 			this.LanguageAttributeTextBox.Size = new System.Drawing.Size(72, 20);
@@ -257,35 +204,31 @@
 			// 
 			// VendorAttributeTextBox
 			// 
-			this.VendorAttributeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.VendorAttributeTextBox.Location = new System.Drawing.Point(233, 19);
+			this.VendorAttributeTextBox.Location = new System.Drawing.Point(206, 97);
 			this.VendorAttributeTextBox.Name = "VendorAttributeTextBox";
 			this.VendorAttributeTextBox.ReadOnly = true;
-			this.VendorAttributeTextBox.Size = new System.Drawing.Size(444, 20);
+			this.VendorAttributeTextBox.Size = new System.Drawing.Size(213, 20);
 			this.VendorAttributeTextBox.TabIndex = 1;
 			// 
 			// VersionAttributeTextBox
 			// 
-			this.VersionAttributeTextBox.Location = new System.Drawing.Point(233, 97);
+			this.VersionAttributeTextBox.Location = new System.Drawing.Point(206, 175);
 			this.VersionAttributeTextBox.Name = "VersionAttributeTextBox";
 			this.VersionAttributeTextBox.ReadOnly = true;
-			this.VersionAttributeTextBox.Size = new System.Drawing.Size(144, 20);
+			this.VersionAttributeTextBox.Size = new System.Drawing.Size(213, 20);
 			this.VersionAttributeTextBox.TabIndex = 1;
 			// 
 			// NameAttributeTextBox
 			// 
-			this.NameAttributeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.NameAttributeTextBox.Location = new System.Drawing.Point(233, 45);
+			this.NameAttributeTextBox.Location = new System.Drawing.Point(206, 123);
 			this.NameAttributeTextBox.Name = "NameAttributeTextBox";
 			this.NameAttributeTextBox.ReadOnly = true;
-			this.NameAttributeTextBox.Size = new System.Drawing.Size(444, 20);
+			this.NameAttributeTextBox.Size = new System.Drawing.Size(213, 20);
 			this.NameAttributeTextBox.TabIndex = 1;
 			// 
 			// GenderAttributeTextBox
 			// 
-			this.GenderAttributeTextBox.Location = new System.Drawing.Point(84, 45);
+			this.GenderAttributeTextBox.Location = new System.Drawing.Point(84, 123);
 			this.GenderAttributeTextBox.Name = "GenderAttributeTextBox";
 			this.GenderAttributeTextBox.ReadOnly = true;
 			this.GenderAttributeTextBox.Size = new System.Drawing.Size(72, 20);
@@ -293,7 +236,7 @@
 			// 
 			// SharedPronunciationAttributeTextBox
 			// 
-			this.SharedPronunciationAttributeTextBox.Location = new System.Drawing.Point(84, 97);
+			this.SharedPronunciationAttributeTextBox.Location = new System.Drawing.Point(84, 175);
 			this.SharedPronunciationAttributeTextBox.Name = "SharedPronunciationAttributeTextBox";
 			this.SharedPronunciationAttributeTextBox.ReadOnly = true;
 			this.SharedPronunciationAttributeTextBox.Size = new System.Drawing.Size(72, 20);
@@ -301,7 +244,7 @@
 			// 
 			// AgeAttributeTextBox
 			// 
-			this.AgeAttributeTextBox.Location = new System.Drawing.Point(84, 19);
+			this.AgeAttributeTextBox.Location = new System.Drawing.Point(84, 97);
 			this.AgeAttributeTextBox.Name = "AgeAttributeTextBox";
 			this.AgeAttributeTextBox.ReadOnly = true;
 			this.AgeAttributeTextBox.Size = new System.Drawing.Size(72, 20);
@@ -311,21 +254,36 @@
 			// 
 			this.MainGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.MainGroupBox.Controls.Add(this.label1);
+			this.MainGroupBox.Controls.Add(this.label8);
 			this.MainGroupBox.Controls.Add(this.label5);
+			this.MainGroupBox.Controls.Add(this.label12);
 			this.MainGroupBox.Controls.Add(this.label2);
+			this.MainGroupBox.Controls.Add(this.LanguageLabel);
 			this.MainGroupBox.Controls.Add(this.LanguageIdTextBox);
+			this.MainGroupBox.Controls.Add(this.label11);
 			this.MainGroupBox.Controls.Add(this.label6);
+			this.MainGroupBox.Controls.Add(this.label7);
 			this.MainGroupBox.Controls.Add(this.label3);
+			this.MainGroupBox.Controls.Add(this.label10);
 			this.MainGroupBox.Controls.Add(this.ClsidTextBox);
+			this.MainGroupBox.Controls.Add(this.GenderLabel);
 			this.MainGroupBox.Controls.Add(this.label4);
-			this.MainGroupBox.Controls.Add(this.DefaultTextBox);
+			this.MainGroupBox.Controls.Add(this.SharedPronunciationLabel);
 			this.MainGroupBox.Controls.Add(this.VoicePathTextBox);
+			this.MainGroupBox.Controls.Add(this.AgeLabel);
 			this.MainGroupBox.Controls.Add(this.LangDataPathTextBox);
+			this.MainGroupBox.Controls.Add(this.DataVersionAttributeTextBox);
 			this.MainGroupBox.Controls.Add(this.NameTextBox);
+			this.MainGroupBox.Controls.Add(this.LanguageAttributeTextBox);
+			this.MainGroupBox.Controls.Add(this.AgeAttributeTextBox);
+			this.MainGroupBox.Controls.Add(this.VendorAttributeTextBox);
+			this.MainGroupBox.Controls.Add(this.SharedPronunciationAttributeTextBox);
+			this.MainGroupBox.Controls.Add(this.VersionAttributeTextBox);
+			this.MainGroupBox.Controls.Add(this.GenderAttributeTextBox);
+			this.MainGroupBox.Controls.Add(this.NameAttributeTextBox);
 			this.MainGroupBox.Location = new System.Drawing.Point(12, 39);
 			this.MainGroupBox.Name = "MainGroupBox";
-			this.MainGroupBox.Size = new System.Drawing.Size(683, 153);
+			this.MainGroupBox.Size = new System.Drawing.Size(683, 203);
 			this.MainGroupBox.TabIndex = 2;
 			this.MainGroupBox.TabStop = false;
 			this.MainGroupBox.Text = "Main";
@@ -333,7 +291,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(6, 48);
+			this.label5.Location = new System.Drawing.Point(6, 22);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(69, 13);
 			this.label5.TabIndex = 0;
@@ -342,7 +300,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(6, 74);
+			this.label6.Location = new System.Drawing.Point(425, 22);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(35, 13);
 			this.label6.TabIndex = 0;
@@ -352,30 +310,30 @@
 			// 
 			this.VoicePathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.VoicePathTextBox.Location = new System.Drawing.Point(84, 123);
+			this.VoicePathTextBox.Location = new System.Drawing.Point(84, 71);
 			this.VoicePathTextBox.Name = "VoicePathTextBox";
 			this.VoicePathTextBox.ReadOnly = true;
-			this.VoicePathTextBox.Size = new System.Drawing.Size(335, 20);
+			this.VoicePathTextBox.Size = new System.Drawing.Size(593, 20);
 			this.VoicePathTextBox.TabIndex = 1;
 			// 
 			// LangDataPathTextBox
 			// 
 			this.LangDataPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.LangDataPathTextBox.Location = new System.Drawing.Point(84, 97);
+			this.LangDataPathTextBox.Location = new System.Drawing.Point(84, 45);
 			this.LangDataPathTextBox.Name = "LangDataPathTextBox";
 			this.LangDataPathTextBox.ReadOnly = true;
-			this.LangDataPathTextBox.Size = new System.Drawing.Size(335, 20);
+			this.LangDataPathTextBox.Size = new System.Drawing.Size(593, 20);
 			this.LangDataPathTextBox.TabIndex = 1;
 			// 
 			// NameTextBox
 			// 
 			this.NameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.NameTextBox.Location = new System.Drawing.Point(84, 71);
+			this.NameTextBox.Location = new System.Drawing.Point(466, 19);
 			this.NameTextBox.Name = "NameTextBox";
 			this.NameTextBox.ReadOnly = true;
-			this.NameTextBox.Size = new System.Drawing.Size(335, 20);
+			this.NameTextBox.Size = new System.Drawing.Size(211, 20);
 			this.NameTextBox.TabIndex = 1;
 			// 
 			// MobileVoiceComboBox
@@ -428,12 +386,9 @@
 			this.Controls.Add(this.MobileVoiceLabel);
 			this.Controls.Add(this.MobileVoiceComboBox);
 			this.Controls.Add(this.MainGroupBox);
-			this.Controls.Add(this.AttributesGroupBox);
 			this.Name = "CortanaUserControl";
-			this.Size = new System.Drawing.Size(707, 338);
+			this.Size = new System.Drawing.Size(707, 250);
 			this.Load += new System.EventHandler(this.CortanaForm_Load);
-			this.AttributesGroupBox.ResumeLayout(false);
-			this.AttributesGroupBox.PerformLayout();
 			this.MainGroupBox.ResumeLayout(false);
 			this.MainGroupBox.PerformLayout();
 			this.ResumeLayout(false);
@@ -442,15 +397,11 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox DefaultTextBox;
         private System.Windows.Forms.TextBox LanguageIdTextBox;
         private System.Windows.Forms.TextBox ClsidTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.GroupBox AttributesGroupBox;
         private System.Windows.Forms.GroupBox MainGroupBox;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label LanguageLabel;

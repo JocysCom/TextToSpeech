@@ -31,16 +31,18 @@
 			this.WebAppClientIdLabel = new System.Windows.Forms.Label();
 			this.WebAppClientIdTextBox = new System.Windows.Forms.TextBox();
 			this.AuthenticationGroupBox = new System.Windows.Forms.GroupBox();
-			this.WebAppClientSecretTextBox = new System.Windows.Forms.TextBox();
-			this.WebAppClientSecretLabel = new System.Windows.Forms.Label();
 			this.TestButton = new System.Windows.Forms.Button();
+			this.WebAppClientSecretLabel = new System.Windows.Forms.Label();
+			this.WebAppClientSecretTextBox = new System.Windows.Forms.TextBox();
+			this.CodeTextBox = new System.Windows.Forms.TextBox();
+			this.CodeLabel = new System.Windows.Forms.Label();
 			this.AuthenticationGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// WebAppClientIdLabel
 			// 
 			this.WebAppClientIdLabel.AutoSize = true;
-			this.WebAppClientIdLabel.Location = new System.Drawing.Point(6, 22);
+			this.WebAppClientIdLabel.Location = new System.Drawing.Point(6, 48);
 			this.WebAppClientIdLabel.Name = "WebAppClientIdLabel";
 			this.WebAppClientIdLabel.Size = new System.Drawing.Size(135, 13);
 			this.WebAppClientIdLabel.TabIndex = 12;
@@ -48,7 +50,7 @@
 			// 
 			// WebAppClientIdTextBox
 			// 
-			this.WebAppClientIdTextBox.Location = new System.Drawing.Point(167, 19);
+			this.WebAppClientIdTextBox.Location = new System.Drawing.Point(167, 45);
 			this.WebAppClientIdTextBox.Name = "WebAppClientIdTextBox";
 			this.WebAppClientIdTextBox.Size = new System.Drawing.Size(392, 20);
 			this.WebAppClientIdTextBox.TabIndex = 11;
@@ -57,8 +59,10 @@
 			// 
 			this.AuthenticationGroupBox.Controls.Add(this.TestButton);
 			this.AuthenticationGroupBox.Controls.Add(this.WebAppClientSecretLabel);
+			this.AuthenticationGroupBox.Controls.Add(this.CodeLabel);
 			this.AuthenticationGroupBox.Controls.Add(this.WebAppClientIdLabel);
 			this.AuthenticationGroupBox.Controls.Add(this.WebAppClientSecretTextBox);
+			this.AuthenticationGroupBox.Controls.Add(this.CodeTextBox);
 			this.AuthenticationGroupBox.Controls.Add(this.WebAppClientIdTextBox);
 			this.AuthenticationGroupBox.Location = new System.Drawing.Point(3, 3);
 			this.AuthenticationGroupBox.Name = "AuthenticationGroupBox";
@@ -67,31 +71,47 @@
 			this.AuthenticationGroupBox.TabStop = false;
 			this.AuthenticationGroupBox.Text = "Authentication";
 			// 
-			// WebAppClientSecretTextBox
-			// 
-			this.WebAppClientSecretTextBox.Location = new System.Drawing.Point(167, 45);
-			this.WebAppClientSecretTextBox.Name = "WebAppClientSecretTextBox";
-			this.WebAppClientSecretTextBox.Size = new System.Drawing.Size(392, 20);
-			this.WebAppClientSecretTextBox.TabIndex = 11;
-			// 
-			// WebAppClientSecretLabel
-			// 
-			this.WebAppClientSecretLabel.AutoSize = true;
-			this.WebAppClientSecretLabel.Location = new System.Drawing.Point(6, 48);
-			this.WebAppClientSecretLabel.Name = "WebAppClientSecretLabel";
-			this.WebAppClientSecretLabel.Size = new System.Drawing.Size(155, 13);
-			this.WebAppClientSecretLabel.TabIndex = 12;
-			this.WebAppClientSecretLabel.Text = "Google Web App Client Secret:";
-			// 
 			// TestButton
 			// 
-			this.TestButton.Location = new System.Drawing.Point(167, 71);
+			this.TestButton.Location = new System.Drawing.Point(167, 97);
 			this.TestButton.Name = "TestButton";
 			this.TestButton.Size = new System.Drawing.Size(75, 23);
 			this.TestButton.TabIndex = 13;
 			this.TestButton.Text = "Test";
 			this.TestButton.UseVisualStyleBackColor = true;
 			this.TestButton.Click += new System.EventHandler(this.TestButton_Click);
+			// 
+			// WebAppClientSecretLabel
+			// 
+			this.WebAppClientSecretLabel.AutoSize = true;
+			this.WebAppClientSecretLabel.Location = new System.Drawing.Point(6, 74);
+			this.WebAppClientSecretLabel.Name = "WebAppClientSecretLabel";
+			this.WebAppClientSecretLabel.Size = new System.Drawing.Size(155, 13);
+			this.WebAppClientSecretLabel.TabIndex = 12;
+			this.WebAppClientSecretLabel.Text = "Google Web App Client Secret:";
+			// 
+			// WebAppClientSecretTextBox
+			// 
+			this.WebAppClientSecretTextBox.Location = new System.Drawing.Point(167, 71);
+			this.WebAppClientSecretTextBox.Name = "WebAppClientSecretTextBox";
+			this.WebAppClientSecretTextBox.Size = new System.Drawing.Size(392, 20);
+			this.WebAppClientSecretTextBox.TabIndex = 11;
+			// 
+			// CodeTextBox
+			// 
+			this.CodeTextBox.Location = new System.Drawing.Point(167, 19);
+			this.CodeTextBox.Name = "CodeTextBox";
+			this.CodeTextBox.Size = new System.Drawing.Size(392, 20);
+			this.CodeTextBox.TabIndex = 11;
+			// 
+			// CodeLabel
+			// 
+			this.CodeLabel.AutoSize = true;
+			this.CodeLabel.Location = new System.Drawing.Point(6, 22);
+			this.CodeLabel.Name = "CodeLabel";
+			this.CodeLabel.Size = new System.Drawing.Size(72, 13);
+			this.CodeLabel.TabIndex = 12;
+			this.CodeLabel.Text = "Google Code:";
 			// 
 			// GoogleOptionsUserControl
 			// 
@@ -115,5 +135,7 @@
 		private System.Windows.Forms.Label WebAppClientSecretLabel;
 		private System.Windows.Forms.TextBox WebAppClientSecretTextBox;
 		private System.Windows.Forms.Button TestButton;
+		private System.Windows.Forms.Label CodeLabel;
+		private System.Windows.Forms.TextBox CodeTextBox;
 	}
 }

@@ -87,7 +87,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				return;
 			}
 			// Get main details.
-			DefaultTextBox.Text = string.Format("{0}", key.GetValue(null));
+			//DefaultTextBox.Text = string.Format("{0}", key.GetValue(null));
 			ClsidTextBox.Text = string.Format("{0}", key.GetValue("CLSID"));
 			LangDataPathTextBox.Text = string.Format("{0}", key.GetValue("LangDataPath"));
 			VoicePathTextBox.Text = string.Format("{0}", key.GetValue("VoicePath"));
@@ -117,7 +117,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		void ClearDetails()
 		{
 			// Clear Main.
-			DefaultTextBox.Clear();
+			//DefaultTextBox.Clear();
 			LanguageIdTextBox.Clear();
 			ClsidTextBox.Clear();
 			NameTextBox.Clear();

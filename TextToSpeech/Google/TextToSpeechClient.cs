@@ -17,11 +17,23 @@ namespace JocysCom.TextToSpeech.Monitor.Google
 		string _GoogleWebAppClientSecret;
 		string _Token;
 
-
 		// https://developers.google.com/api-client-library/dotnet/get_started
 		// https://cloud.google.com/text-to-speech/docs/reference/rest/
 		// https://developers.google.com/discovery/v1/reference/apis
 		// https://cloud.google.com/text-to-speech/docs/ssml
+
+		// Step 1: Login to Google Account https://console.developers.google.com
+		//
+		// Step 2: Go to resource manager https://console.developers.google.com/cloud-resource-manager
+		// Create API Project:
+		//     Project Name: GoogleTTS
+		//     Project ID: monitor-tts
+		// 
+		// Step 3: Go to Project dashboard
+		// https://console.developers.google.com/home/dashboard?project=monitor-tts
+		// Click on Enable APIs and get credentials such as keys 
+		// Find "Cloud Text-to-Speech API" and Enable it.
+		// https://console.developers.google.com/apis/library/texttospeech.googleapis.com?q=text&project=monitor-tts
 
 		public TextToSpeechClient(string uriString = "https://texttospeech.googleapis.com")
 		{
@@ -81,6 +93,8 @@ namespace JocysCom.TextToSpeech.Monitor.Google
 			var result = responseStreamReader.ReadToEnd();
 			return result;
 		}
+
+		//https://code.google.com/apis/console
 
 		public string ReceiveToken(string code, string googleWebAppClientID, string googleWebAppClientSecret, string redirectUrl)
 		{
