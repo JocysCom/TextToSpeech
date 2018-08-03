@@ -50,6 +50,7 @@
 			this.CacheTabPage = new System.Windows.Forms.TabPage();
 			this.GoogleCloudTabPage = new System.Windows.Forms.TabPage();
 			this.MicrosoftCortanaTabPage = new System.Windows.Forms.TabPage();
+			this.googleOptionsUserControl1 = new JocysCom.TextToSpeech.Monitor.Google.GoogleOptionsUserControl();
 			this.cortanaUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.CortanaUserControl();
 			this.AddSilenceGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
@@ -61,6 +62,7 @@
 			this.GeneralTabPage.SuspendLayout();
 			this.NetworkTabPage.SuspendLayout();
 			this.CacheTabPage.SuspendLayout();
+			this.GoogleCloudTabPage.SuspendLayout();
 			this.MicrosoftCortanaTabPage.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -80,7 +82,7 @@
 			this.AddSilenceGroupBox.Controls.Add(this.SilenceBeforeTagLabel);
 			this.AddSilenceGroupBox.Location = new System.Drawing.Point(6, 6);
 			this.AddSilenceGroupBox.Name = "AddSilenceGroupBox";
-			this.AddSilenceGroupBox.Size = new System.Drawing.Size(721, 103);
+			this.AddSilenceGroupBox.Size = new System.Drawing.Size(734, 103);
 			this.AddSilenceGroupBox.TabIndex = 0;
 			this.AddSilenceGroupBox.TabStop = false;
 			this.AddSilenceGroupBox.Text = "Audio Options";
@@ -93,14 +95,14 @@
 			this.PlaybackDeviceComboBox.FormattingEnabled = true;
 			this.PlaybackDeviceComboBox.Location = new System.Drawing.Point(91, 71);
 			this.PlaybackDeviceComboBox.Name = "PlaybackDeviceComboBox";
-			this.PlaybackDeviceComboBox.Size = new System.Drawing.Size(448, 21);
+			this.PlaybackDeviceComboBox.Size = new System.Drawing.Size(461, 21);
 			this.PlaybackDeviceComboBox.TabIndex = 33;
 			this.PlaybackDeviceComboBox.SelectedIndexChanged += new System.EventHandler(this.PlaybackDeviceComboBox_SelectedIndexChanged);
 			// 
 			// RefreshPlaybackDevices
 			// 
 			this.RefreshPlaybackDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.RefreshPlaybackDevices.Location = new System.Drawing.Point(545, 70);
+			this.RefreshPlaybackDevices.Location = new System.Drawing.Point(558, 70);
 			this.RefreshPlaybackDevices.Name = "RefreshPlaybackDevices";
 			this.RefreshPlaybackDevices.Size = new System.Drawing.Size(75, 23);
 			this.RefreshPlaybackDevices.TabIndex = 5;
@@ -206,8 +208,8 @@
 			// 
 			// LoggingGroupBox
 			// 
-			this.LoggingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+			this.LoggingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.LoggingGroupBox.Controls.Add(this.LoggingPlaySoundCheckBox);
 			this.LoggingGroupBox.Controls.Add(this.LogFolderLabel);
 			this.LoggingGroupBox.Controls.Add(this.FilterTextLabel);
@@ -218,7 +220,7 @@
 			this.LoggingGroupBox.Controls.Add(this.LoggingCheckBox);
 			this.LoggingGroupBox.Location = new System.Drawing.Point(6, 115);
 			this.LoggingGroupBox.Name = "LoggingGroupBox";
-			this.LoggingGroupBox.Size = new System.Drawing.Size(721, 128);
+			this.LoggingGroupBox.Size = new System.Drawing.Size(734, 128);
 			this.LoggingGroupBox.TabIndex = 9;
 			this.LoggingGroupBox.TabStop = false;
 			this.LoggingGroupBox.Text = "Log Network Packets Test ( Plugin Helper )";
@@ -260,13 +262,13 @@
 			this.LoggingFolderTextBox.Location = new System.Drawing.Point(91, 58);
 			this.LoggingFolderTextBox.Name = "LoggingFolderTextBox";
 			this.LoggingFolderTextBox.ReadOnly = true;
-			this.LoggingFolderTextBox.Size = new System.Drawing.Size(543, 20);
+			this.LoggingFolderTextBox.Size = new System.Drawing.Size(556, 20);
 			this.LoggingFolderTextBox.TabIndex = 7;
 			// 
 			// HowToButton
 			// 
 			this.HowToButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.HowToButton.Location = new System.Drawing.Point(640, 16);
+			this.HowToButton.Location = new System.Drawing.Point(653, 16);
 			this.HowToButton.Name = "HowToButton";
 			this.HowToButton.Size = new System.Drawing.Size(75, 23);
 			this.HowToButton.TabIndex = 5;
@@ -277,7 +279,7 @@
 			// OpenButton
 			// 
 			this.OpenButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.OpenButton.Location = new System.Drawing.Point(640, 56);
+			this.OpenButton.Location = new System.Drawing.Point(653, 56);
 			this.OpenButton.Name = "OpenButton";
 			this.OpenButton.Size = new System.Drawing.Size(75, 23);
 			this.OpenButton.TabIndex = 5;
@@ -424,7 +426,7 @@
 			this.GeneralTabPage.Location = new System.Drawing.Point(4, 22);
 			this.GeneralTabPage.Name = "GeneralTabPage";
 			this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.GeneralTabPage.Size = new System.Drawing.Size(733, 313);
+			this.GeneralTabPage.Size = new System.Drawing.Size(746, 341);
 			this.GeneralTabPage.TabIndex = 0;
 			this.GeneralTabPage.Text = "General";
 			// 
@@ -434,7 +436,7 @@
 			this.NetworkTabPage.Controls.Add(this.CaptureGroupBox);
 			this.NetworkTabPage.Location = new System.Drawing.Point(4, 22);
 			this.NetworkTabPage.Name = "NetworkTabPage";
-			this.NetworkTabPage.Size = new System.Drawing.Size(733, 313);
+			this.NetworkTabPage.Size = new System.Drawing.Size(746, 341);
 			this.NetworkTabPage.TabIndex = 4;
 			this.NetworkTabPage.Text = "Network";
 			// 
@@ -445,16 +447,17 @@
 			this.CacheTabPage.Location = new System.Drawing.Point(4, 22);
 			this.CacheTabPage.Name = "CacheTabPage";
 			this.CacheTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.CacheTabPage.Size = new System.Drawing.Size(733, 313);
+			this.CacheTabPage.Size = new System.Drawing.Size(746, 341);
 			this.CacheTabPage.TabIndex = 1;
 			this.CacheTabPage.Text = "Cache";
 			// 
 			// GoogleCloudTabPage
 			// 
 			this.GoogleCloudTabPage.BackColor = System.Drawing.SystemColors.Control;
+			this.GoogleCloudTabPage.Controls.Add(this.googleOptionsUserControl1);
 			this.GoogleCloudTabPage.Location = new System.Drawing.Point(4, 22);
 			this.GoogleCloudTabPage.Name = "GoogleCloudTabPage";
-			this.GoogleCloudTabPage.Size = new System.Drawing.Size(733, 313);
+			this.GoogleCloudTabPage.Size = new System.Drawing.Size(746, 341);
 			this.GoogleCloudTabPage.TabIndex = 2;
 			this.GoogleCloudTabPage.Text = "Google Cloud";
 			// 
@@ -467,6 +470,14 @@
 			this.MicrosoftCortanaTabPage.Size = new System.Drawing.Size(746, 341);
 			this.MicrosoftCortanaTabPage.TabIndex = 3;
 			this.MicrosoftCortanaTabPage.Text = "Microsoft Cortana";
+			// 
+			// googleOptionsUserControl1
+			// 
+			this.googleOptionsUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.googleOptionsUserControl1.Location = new System.Drawing.Point(0, 0);
+			this.googleOptionsUserControl1.Name = "googleOptionsUserControl1";
+			this.googleOptionsUserControl1.Size = new System.Drawing.Size(746, 341);
+			this.googleOptionsUserControl1.TabIndex = 0;
 			// 
 			// cortanaUserControl1
 			// 
@@ -498,6 +509,7 @@
 			this.GeneralTabPage.ResumeLayout(false);
 			this.NetworkTabPage.ResumeLayout(false);
 			this.CacheTabPage.ResumeLayout(false);
+			this.GoogleCloudTabPage.ResumeLayout(false);
 			this.MicrosoftCortanaTabPage.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -541,5 +553,6 @@
 		private System.Windows.Forms.TabPage MicrosoftCortanaTabPage;
 		private System.Windows.Forms.TabPage NetworkTabPage;
 		private CortanaUserControl cortanaUserControl1;
+		private Google.GoogleOptionsUserControl googleOptionsUserControl1;
 	}
 }

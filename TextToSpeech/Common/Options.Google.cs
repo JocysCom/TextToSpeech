@@ -15,5 +15,8 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue("")]
 		public string GoogleWebAppClientSecret { get; set; }
 
+		[DefaultValue("")]
+		public string GoogleTtsApiKey { get; set; }
+
 	}
 }

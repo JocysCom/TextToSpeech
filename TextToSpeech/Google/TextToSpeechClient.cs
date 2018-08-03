@@ -8,14 +8,12 @@ namespace JocysCom.TextToSpeech.Monitor.Google
 {
 	public class TextToSpeechClient
 	{
-		public WebClient Client;
 		public Uri Url;
-
 
 		string _Code;
 		string _GoogleWebAppClientID;
 		string _GoogleWebAppClientSecret;
-		string _Token;
+		public string ApiKey { get; set; }
 
 		// https://developers.google.com/api-client-library/dotnet/get_started
 		// https://cloud.google.com/text-to-speech/docs/reference/rest/
@@ -34,6 +32,13 @@ namespace JocysCom.TextToSpeech.Monitor.Google
 		// Click on Enable APIs and get credentials such as keys 
 		// Find "Cloud Text-to-Speech API" and Enable it.
 		// https://console.developers.google.com/apis/library/texttospeech.googleapis.com?q=text&project=monitor-tts
+		//
+		// Step 4: Create credentials.
+		// Go to https://console.cloud.google.com/apis/credentials?project=monitor-tts
+		// And follow the wizard.
+		// Select "Cloud Text-to-Speech API" as answer to "Which API are you using?"
+
+		//https://aaronparecki.com/oauth-2-simplified/
 
 		public TextToSpeechClient(string uriString = "https://texttospeech.googleapis.com")
 		{
@@ -46,26 +51,44 @@ namespace JocysCom.TextToSpeech.Monitor.Google
 		}
 
 		// https://cloud.google.com/text-to-speech/docs/reference/rest/v1beta1/voices/list
-		void List()
+		public string List()
 		{
 			var response = Call<string>("v1beta1/voices");
+			return response;
 		}
 
 		T Call<T>(string methodPath, object request = null)
 		{
-			if (_Token == null)
+			if (ApiKey == null)
 			{
-				_Token = ReceiveToken(_Code, _GoogleWebAppClientID, _GoogleWebAppClientSecret, "");
+				ApiKey = ReceiveToken(_Code, _GoogleWebAppClientID, _GoogleWebAppClientSecret, "");
 			}
 			T o = default(T);
-			var data = new System.Collections.Specialized.NameValueCollection();
-			data.Add("key", _Token);
+			var data = HttpUtility.ParseQueryString("");
+			data.Add("key", ApiKey);
 			//data.Add("languageCode", "en-GB");
 			var client = new WebClient();
-			var url = Url.AbsoluteUri + "/" + methodPath;
-			byte[] responseBytes = Client.UploadValues(url, "GET", data);
-			string responseBody = Encoding.UTF8.GetString(responseBytes);
-			o = JocysCom.ClassLibrary.Runtime.Serializer.DeserializeFromJson<T>(responseBody);
+			var url = Url.AbsoluteUri + methodPath;
+			var webRequest = (HttpWebRequest)WebRequest.Create(url);
+			webRequest.ContentType = "application/x-www-form-urlencoded";
+			if (request == null)
+			{
+				webRequest.Method = "GET";
+			}
+			else
+			{
+				webRequest.Method = "POST";
+				var encoding = Encoding.UTF8;
+				var bytes = encoding.GetBytes(data.ToString());
+				webRequest.ContentLength = bytes.Length;
+				var os = webRequest.GetRequestStream();
+				os.Write(bytes, 0, bytes.Length);
+			}
+			var webResponse = (HttpWebResponse)webRequest.GetResponse();
+			var responseStream = webResponse.GetResponseStream();
+			var responseStreamReader = new StreamReader(responseStream);
+			var result = responseStreamReader.ReadToEnd();
+			o = JocysCom.ClassLibrary.Runtime.Serializer.DeserializeFromJson<T>(result);
 			return o;
 		}
 
@@ -106,7 +129,7 @@ namespace JocysCom.TextToSpeech.Monitor.Google
 			data.Add("grant_type", "authorization_code");
 			var client = new WebClient();
 			var url = "https://accounts.google.com/o/oauth2/token";
-			byte[] responseBytes = Client.UploadValues(url, "GET", data);
+			byte[] responseBytes = client.UploadValues(url, "GET", data);
 			string responseBody = Encoding.UTF8.GetString(responseBytes);
 			return responseBody;
 		}
