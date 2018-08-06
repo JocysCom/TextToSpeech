@@ -14,16 +14,16 @@ namespace JocysCom.TextToSpeech.Monitor
 		/// <summary>
 		/// Avoid deserialization duplicates by using separate method.
 		/// </summary>
-		public void InitDefaults()
+		public void InitDefaults(bool onlyIfNull = false)
 		{
-			JocysCom.ClassLibrary.Runtime.Helper.ResetPropertiesToDefault(this);
+			JocysCom.ClassLibrary.Runtime.Helper.ResetPropertiesToDefault(this, onlyIfNull);
 		}
 
 		[DefaultValue("")]
 		public string VoicesData { get; set; }
 
 		
-		[DefaultValue("")]
+		[DefaultValue("WoW")]
 		public string ProgramComboBoxText { get; set; }
 		
 		[DefaultValue(true)]
@@ -47,25 +47,25 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(false)]
 		public bool UseWinCap { get; set; }
 		
-		[DefaultValue("")]
+		[DefaultValue("0")]
 		public string RateMinComboBoxText { get; set; }
 		
-		[DefaultValue("")]
+		[DefaultValue("0")]
 		public string PitchMinComboBoxText { get; set; }
 		
-		[DefaultValue("")]
+		[DefaultValue("0")]
 		public string RateMaxComboBoxText { get; set; }
 		
-		[DefaultValue("")]
+		[DefaultValue("0")]
 		public string PitchMaxComboBoxText { get; set; }
 		
-		[DefaultValue("")]
+		[DefaultValue("Male")]
 		public string GenderComboBoxText { get; set; }
 	
-		[DefaultValue("")]
+		[DefaultValue("Disable")]
 		public string MonitorClipboardComboBoxText { get; set; }
 		
-		[DefaultValue("")]
+		[DefaultValue("Radio")]
 		public string DefaultIntroSoundComboBox { get; set; }
 
 		[DefaultValue("")]

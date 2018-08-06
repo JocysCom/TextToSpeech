@@ -283,7 +283,7 @@ namespace JocysCom.ClassLibrary.Runtime
 		/// Assign property values from their [DefaultValueAttribute] value.
 		/// </summary>
 		/// <param name="o">Object to reset properties on.</param>
-		public static void ResetPropertiesToDefault(object o)
+		public static void ResetPropertiesToDefault(object o, bool onlyIfNull = false)
 		{
 			if (o == null)
 				return;
@@ -291,6 +291,8 @@ namespace JocysCom.ClassLibrary.Runtime
 			var properties = type.GetProperties();
 			foreach (var p in properties)
 			{
+				if (p.CanRead && onlyIfNull && p.GetValue(o, null) != null)
+					continue;
 				if (!p.CanWrite)
 					continue;
 				var da = p.GetCustomAttributes(typeof(DefaultValueAttribute), false);

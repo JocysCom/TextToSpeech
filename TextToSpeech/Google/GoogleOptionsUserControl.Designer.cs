@@ -31,6 +31,7 @@
 			this.WebAppClientIdLabel = new System.Windows.Forms.Label();
 			this.WebAppClientIdTextBox = new System.Windows.Forms.TextBox();
 			this.AuthenticationGroupBox = new System.Windows.Forms.GroupBox();
+			this.GetKeyButton = new System.Windows.Forms.Button();
 			this.TestButton = new System.Windows.Forms.Button();
 			this.ApiKeyLabel = new System.Windows.Forms.Label();
 			this.WebAppClientSecretLabel = new System.Windows.Forms.Label();
@@ -38,7 +39,7 @@
 			this.ApiKeyTextBox = new System.Windows.Forms.TextBox();
 			this.WebAppClientSecretTextBox = new System.Windows.Forms.TextBox();
 			this.CodeTextBox = new System.Windows.Forms.TextBox();
-			this.GetKeyButton = new System.Windows.Forms.Button();
+			this.GetCredentialsButton = new System.Windows.Forms.Button();
 			this.AuthenticationGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -60,6 +61,7 @@
 			// 
 			// AuthenticationGroupBox
 			// 
+			this.AuthenticationGroupBox.Controls.Add(this.GetCredentialsButton);
 			this.AuthenticationGroupBox.Controls.Add(this.GetKeyButton);
 			this.AuthenticationGroupBox.Controls.Add(this.TestButton);
 			this.AuthenticationGroupBox.Controls.Add(this.ApiKeyLabel);
@@ -77,9 +79,19 @@
 			this.AuthenticationGroupBox.TabStop = false;
 			this.AuthenticationGroupBox.Text = "Authentication";
 			// 
+			// GetKeyButton
+			// 
+			this.GetKeyButton.Location = new System.Drawing.Point(167, 97);
+			this.GetKeyButton.Name = "GetKeyButton";
+			this.GetKeyButton.Size = new System.Drawing.Size(75, 23);
+			this.GetKeyButton.TabIndex = 13;
+			this.GetKeyButton.Text = "Get Key";
+			this.GetKeyButton.UseVisualStyleBackColor = true;
+			this.GetKeyButton.Click += new System.EventHandler(this.GetKeyButton_Click);
+			// 
 			// TestButton
 			// 
-			this.TestButton.Location = new System.Drawing.Point(248, 97);
+			this.TestButton.Location = new System.Drawing.Point(329, 97);
 			this.TestButton.Name = "TestButton";
 			this.TestButton.Size = new System.Drawing.Size(75, 23);
 			this.TestButton.TabIndex = 13;
@@ -135,15 +147,15 @@
 			this.CodeTextBox.Size = new System.Drawing.Size(392, 20);
 			this.CodeTextBox.TabIndex = 11;
 			// 
-			// GetKeyButton
+			// GetCredentialsButton
 			// 
-			this.GetKeyButton.Location = new System.Drawing.Point(167, 97);
-			this.GetKeyButton.Name = "GetKeyButton";
-			this.GetKeyButton.Size = new System.Drawing.Size(75, 23);
-			this.GetKeyButton.TabIndex = 13;
-			this.GetKeyButton.Text = "Get Key";
-			this.GetKeyButton.UseVisualStyleBackColor = true;
-			this.GetKeyButton.Click += new System.EventHandler(this.GetKeyButton_Click);
+			this.GetCredentialsButton.Location = new System.Drawing.Point(248, 97);
+			this.GetCredentialsButton.Name = "GetCredentialsButton";
+			this.GetCredentialsButton.Size = new System.Drawing.Size(75, 23);
+			this.GetCredentialsButton.TabIndex = 13;
+			this.GetCredentialsButton.Text = "Get Cred";
+			this.GetCredentialsButton.UseVisualStyleBackColor = true;
+			this.GetCredentialsButton.Click += new System.EventHandler(this.GetCredentialsButton_Click);
 			// 
 			// GoogleOptionsUserControl
 			// 
@@ -172,5 +184,6 @@
 		private System.Windows.Forms.Label ApiKeyLabel;
 		private System.Windows.Forms.TextBox ApiKeyTextBox;
 		private System.Windows.Forms.Button GetKeyButton;
+		private System.Windows.Forms.Button GetCredentialsButton;
 	}
 }

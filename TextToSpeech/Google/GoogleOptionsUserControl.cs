@@ -69,5 +69,14 @@ namespace JocysCom.TextToSpeech.Monitor.Google
 				""
 			);
 		}
+
+		private void GetCredentialsButton_Click(object sender, EventArgs e)
+		{
+			var client = new Google.TextToSpeechClient();
+			var list = client.ReceiveClientCredentials(
+				SettingsManager.Options.GoogleWebAppClientId,
+				SettingsManager.Options.GoogleWebAppClientSecret
+			);
+		}
 	}
 }

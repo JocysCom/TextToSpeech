@@ -105,18 +105,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			if (string.IsNullOrEmpty(SettingsManager.Options.PitchMaxComboBoxText))
 			{
-				SettingsManager.Options.DefaultIntroSoundComboBox = "Radio";
-				SettingsManager.Options.PitchMaxComboBoxText = "0";
-				SettingsManager.Options.PitchMinComboBoxText = "0";
-				SettingsManager.Options.RateMaxComboBoxText = "2";
-				SettingsManager.Options.RateMinComboBoxText = "2";
-				SettingsManager.Options.GenderComboBoxText = "Male";
-				SettingsManager.Options.MonitorClipboardComboBoxText = "Disabled";
-				SettingsManager.Options.MonitorPortChecked = true;
-				SettingsManager.Options.ProgramComboBoxText = new PlugIns.WowListItem().Name;
-				SettingsManager.Options.LogText = "me66age";
-				SettingsManager.OptionsData.Save();
-            }
+				SettingsManager.Current.OptionsData.ResetToDefault();
+			}
 
 			return true;
 		}

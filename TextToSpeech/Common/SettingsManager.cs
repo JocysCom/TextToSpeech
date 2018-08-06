@@ -14,6 +14,16 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			Acronyms = new SettingsData<Acronym>("Monitor.Acronyms.xml");
 			Acronyms.ApplyOrder = Acronyms_ApplyOrder;
+			Acronyms.Load();
+			OptionsData = new SettingsData<Options>("Monitor.Options.xml");
+			OptionsData.Load();
+			OptionsData.Items[0].InitDefaults(true);
+			if (OptionsData.Items.Count == 0)
+			{
+				var o = new Options();
+				OptionsData.Items.Add(o);
+				OptionsData.Items[0].InitDefaults();
+			}
 		}
 
 		void Acronyms_ApplyOrder(SettingsData<Acronym> source)
@@ -29,33 +39,10 @@ namespace JocysCom.TextToSpeech.Monitor
 		/// <summary>Acronym Settings.</summary>
 		public SettingsData<Acronym> Acronyms;
 
-		static object OptionsLock = new object();
-		static SettingsData<Options> _OptionsData;
-
 		/// <summary>Options</summary>
-		public static SettingsData<Options> OptionsData
-		{
-			get
-			{
-				lock (OptionsLock)
-				{
-					if (_OptionsData == null)
-					{
-						_OptionsData = new SettingsData<Options>("Monitor.Options.xml");
-						_OptionsData.Load();
-						if (_OptionsData.Items.Count == 0)
-						{
-							var o = new Options();
-							_OptionsData.Items.Add(o);
-						}
-						_OptionsData.Items[0].InitDefaults();
-					}
-					return _OptionsData;
-				}
-			}
-		}
+		public SettingsData<Options> OptionsData;
 
-		public static Options Options { get { return OptionsData.Items[0]; } }
+		public static Options Options { get { return Current.OptionsData.Items[0]; } }
 
 		public string ReplaceAcronyms(string source)
 		{
@@ -82,11 +69,12 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		static object saveReadFileLock = new object();
 
-		public void Save(bool updateGameDatabase = false)
+		public void Save()
 		{
 			lock (saveReadFileLock)
 			{
 				Acronyms.Save();
+				OptionsData.Save();
 			}
 		}
 	}

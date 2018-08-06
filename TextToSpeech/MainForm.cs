@@ -450,7 +450,6 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			if (IsDesignMode) return;
 			SettingsFile.Current.Load();
-			SettingsManager.Current.Acronyms.Load();
 			LastException = null;
 			VoicesDataGridView.AutoGenerateColumns = false;
 			MessagesDataGridView.AutoGenerateColumns = false;
@@ -1035,7 +1034,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			SettingsManager.Options.VoicesData = xml;
 			SettingsFile.Current.Save();
 			SettingsManager.Current.Save();
-			SettingsManager.OptionsData.Save();
 			//Properties.Settings.Default.Save();
 		}
 

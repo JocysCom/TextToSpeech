@@ -92,6 +92,32 @@ namespace JocysCom.TextToSpeech.Monitor.Google
 			return o;
 		}
 
+		public string ReceiveClientCredentials(string googleWebAppClientID, string googleWebAppClientSecret)
+		{
+			//var data = HttpUtility.ParseQueryString("");
+			var data = new System.Collections.Specialized.NameValueCollection();
+			data.Add("client_id", googleWebAppClientID);
+			data.Add("client_secret", googleWebAppClientSecret);
+			data.Add("grant_type", "client_credentials");
+			string url = "https://accounts.google.com/o/oauth2/token";
+			//string url = "https://accounts.google.com/o/oauth2/auth";
+			//string url = "https://www.googleapis.com/oauth2/v3/token";
+			var request = (HttpWebRequest)WebRequest.Create(url);
+			request.Method = "POST";
+			request.Headers.Add("cache-control", "no-cache");
+			request.ContentType = "application/x-www-form-urlencoded";
+			var encoding = Encoding.UTF8;
+			var bytes = encoding.GetBytes(data.ToString());
+			request.ContentLength = bytes.Length;
+			var os = request.GetRequestStream();
+			os.Write(bytes, 0, bytes.Length);
+			var webResponse = (HttpWebResponse)request.GetResponse();
+			var responseStream = webResponse.GetResponseStream();
+			var responseStreamReader = new StreamReader(responseStream);
+			var result = responseStreamReader.ReadToEnd();
+			return result;
+		}
+
 		public string ReceiveToken2(string code, string googleWebAppClientID, string googleWebAppClientSecret, string redirectUrl)
 		{
 			// HttpUtility.ParseQueryString() will return System.Web.HttpValueCollection.
