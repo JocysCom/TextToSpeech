@@ -94,20 +94,20 @@ namespace JocysCom.TextToSpeech.Monitor.Google
 
 		public string ReceiveClientCredentials(string googleWebAppClientID, string googleWebAppClientSecret)
 		{
-			//var data = HttpUtility.ParseQueryString("");
-			var data = new System.Collections.Specialized.NameValueCollection();
+			var data = HttpUtility.ParseQueryString("");
+			//var data = new System.Collections.Specialized.NameValueCollection();
 			data.Add("client_id", googleWebAppClientID);
 			data.Add("client_secret", googleWebAppClientSecret);
-			data.Add("grant_type", "client_credentials");
-			string url = "https://accounts.google.com/o/oauth2/token";
-			//string url = "https://accounts.google.com/o/oauth2/auth";
-			//string url = "https://www.googleapis.com/oauth2/v3/token";
+			data.Add("grant_type", "authorization_code");
+			//data.Add("grant_type", "client_credentials");
+			string url = "https://accounts.google.com/o/oauth2/auth";
 			var request = (HttpWebRequest)WebRequest.Create(url);
 			request.Method = "POST";
 			request.Headers.Add("cache-control", "no-cache");
-			request.ContentType = "application/x-www-form-urlencoded";
+			request.ContentType = "application/x-www-form-urlencoded"; // "text/html";
 			var encoding = Encoding.UTF8;
-			var bytes = encoding.GetBytes(data.ToString());
+			var body = data.ToString();
+			var bytes = encoding.GetBytes(body);
 			request.ContentLength = bytes.Length;
 			var os = request.GetRequestStream();
 			os.Write(bytes, 0, bytes.Length);
