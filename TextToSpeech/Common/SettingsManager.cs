@@ -17,13 +17,13 @@ namespace JocysCom.TextToSpeech.Monitor
 			Acronyms.Load();
 			OptionsData = new SettingsData<Options>("Monitor.Options.xml");
 			OptionsData.Load();
-			OptionsData.Items[0].InitDefaults(true);
 			if (OptionsData.Items.Count == 0)
 			{
 				var o = new Options();
 				OptionsData.Items.Add(o);
 				OptionsData.Items[0].InitDefaults();
 			}
+			OptionsData.Items[0].InitDefaults(true);
 		}
 
 		void Acronyms_ApplyOrder(SettingsData<Acronym> source)

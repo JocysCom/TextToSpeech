@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using JocysCom.ClassLibrary.IO;
 using JocysCom.TextToSpeech.Monitor.Audio;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
@@ -22,6 +18,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			InitializeComponent();
 			if (IsDesignMode)
 				return;
+			// Make Google Cloud invisible, because it is not finished yet.
+			OptionsTabControl.TabPages.Remove(GoogleCloudTabPage);
 			AddSilcenceBeforeNumericUpDown.Value = SettingsManager.Options.AddSilcenceBeforeMessage;
 			AddSilenceAfterNumericUpDown.Value = SettingsManager.Options.DelayBeforeValue;
 			LoggingFolderTextBox.Text = GetLogsPath(true);
