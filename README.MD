@@ -3,8 +3,6 @@
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.6.13 (2018-07-29) • Digitally Signed
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.3.2 (2018-07-29)
  
- * Old versions: <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2017-12-02.zip">2017-02</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2017-11-30.zip">2017-11</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2017-09-27.zip">2017-09</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2017-04-03.zip">2017-04</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2016-11-01.zip">2016-11</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2016-07-24.zip">2016-07</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2014-08-27.zip">2014-08</a> • <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW-2014-10-16.zip">2014-10</a>
-
 <hr />
 
 <p align="justify">Reads <i>quests</i> and <i>chat messages</i> with text-to-speech voices. Makes game more immersive and you will not miss messages in chat. If “Monitor” doesn't work, you may need to disable IPv6 in WoW game. Read... <em><a href="#problems-and-solutions">Problems and Solutions</a></em>.</p>
@@ -17,6 +15,17 @@
 <blockquote>
  <sub>To move mini frame with [≡][■] buttons: Move mouse pointer over [■] button. [≡] (Options) button will appear. Click on [≡] (Options) button, to open “Options” window. Unlock mini frame by unchecking first check-box in “Options” window. You can move “Options” window out of the way, if it is on top of mini frame with [≡][■] buttons. Move mini frame by clicking on black background around [≡][■] buttons. Lock it again, by checking the same check-box.</sub>
 </blockquote>
+
+<p style="text-align: center;">Old “Monitor” and “WoW Addon” versions. To extract WoW ( <u>Version</u> / <u>Interface</u> ) paste in chat: <i>/run print((select(4, GetBuildInfo())));</i></p>
+
+ * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2017-12-02.zip">2017-12-02 (70300 / 7.3.2)</a><br /> 
+ * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2017-11-30.zip">2017-11-30 (70300 / 7.3.2)</a><br />  
+ * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2017-09-27.zip">2017-09-27 (70300 / 7.3.0)</a><br />  
+ * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2017-04-03.zip">2017-04-03 (70200 / 7.2.0)</a><br />  
+ * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2016-11-01.zip">2016-11-01 (70100 / 7.1.0)</a><br />  
+ * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2016-07-24.zip">2016-07-24 (70000 / 7.0.3)</a><br />  
+ * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2014-10-16.zip">2014-10-16 (60000 / 6.0.5)</a><br /> 
+ * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2014-08-27.zip">2014-08-27 (50400 / #.#.#)</a>
 
 <blockquote>
 You can create your own text-to-speech addon (if game supports addons) or send messages directly to “Monitor” from your own game, to add text-to-speech feature to your game. We don't mind if code from our WoW Addon will be used to add text-to-speech features to other addons. How and what messages to send with SendAddonMessage(...) in WoW, so “Monitor” could see them, can be founded in our addon's lua file. These messages can be visible in chat window, <i>if check-box “Hide addon &lt;messages&gt; in chat window” is unchecked in our addon's “Options” window</i>. Messages are also visible in “Options” window itself and in “Monitor”'s [1. Incoming Messages] tab. If other addon will take over one of the text categories, this category can be disabled in our addon, by unchecking corresponding check-box, to avoid text-to-speech duplication. There is also help about &lt;messages&gt; with examples in “Monitor”'s [Help] tab or <a href="http://www.jocys.com/files/software/JocysCom.TextToSpeech.Monitor.rtf">JocysCom.TextToSpeech.Monitor.rtf</a> document • Tested on Windows 8 and 10 • All code is available under open source licence.
