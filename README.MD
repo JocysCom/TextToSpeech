@@ -16,7 +16,8 @@
  <sub>To move mini frame with [≡][■] buttons: Move mouse pointer over [■] button. [≡] (Options) button will appear. Click on [≡] (Options) button, to open “Options” window. Unlock mini frame by unchecking first check-box in “Options” window. You can move “Options” window out of the way, if it is on top of mini frame with [≡][■] buttons. Move mini frame by clicking on black background around [≡][■] buttons. Lock it again, by checking the same check-box.</sub>
 </blockquote>
 
-<p style="text-align: center;">Old “Monitor” and “WoW Addon” versions. To extract WoW ( <u>Version</u> / <u>Interface</u> ) paste in chat: <i>/run print((select(4, GetBuildInfo())));</i></p>
+<p style="text-align: center;">Old “Monitor” and “WoW Addon” versions.<br />
+To extract WoW ( <u>Version</u> / <u>Interface</u> ) paste in chat: <i>/run print((select(4, GetBuildInfo())));</i></p>
 
  * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2017-12-02.zip">2017-12-02 (70300 / 7.3.2)</a><br /> 
  * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2017-11-30.zip">2017-11-30 (70300 / 7.3.2)</a><br />  
