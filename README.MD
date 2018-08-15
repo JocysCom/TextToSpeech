@@ -17,7 +17,7 @@
 </blockquote>
 
 <p style="text-align: center;">Old “Monitor” and “WoW Addon” versions.<br />
-To extract WoW's ( <u>Version</u> / <u>Interface</u> )... paste in chat: <i>/run print((select(4, GetBuildInfo())));</i></p>
+To show WoW's ( <u>Version</u> / <u>Interface</u> )... paste in chat: <i>/run print((select(4, GetBuildInfo())));</i></p>
 
  * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2017-12-02.zip">2017-12-02 (70300 / 7.3.2)</a><br /> 
  * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2017-11-30.zip">2017-11-30 (70300 / 7.3.2)</a><br />  
