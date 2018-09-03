@@ -483,9 +483,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			// Set pitch.
 			var pitchIsValid = int.TryParse(v.pitch, out _Pitch);
 			if (!pitchIsValid)
-			{
 				_Pitch = MainHelper.GetNumber(SettingsManager.Options.PitchMin, SettingsManager.Options.PitchMax, "pitch", v.name);
-			}
 			if (_Pitch < -10) _Pitch = -10;
 			if (_Pitch > 10) _Pitch = 10;
 			IncomingPitchTextBox.Text = pitchIsValid ? "pitch=\"" + _Pitch + "\"" : "";
@@ -497,9 +495,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			// Set rate.
 			var rateIsValid = int.TryParse(v.rate, out _Rate);
 			if (!rateIsValid)
-			{
 				_Rate = MainHelper.GetNumber(SettingsManager.Options.RateMin, SettingsManager.Options.RateMax, "rate", v.name);
-			}
 			if (_Rate < -10) _Rate = -10;
 			if (_Rate > 10) _Rate = 10;
 			IncomingRateTextBox.Text = rateIsValid ? "rate=\"" + _Rate + "\"" : "";
@@ -512,9 +508,10 @@ namespace JocysCom.TextToSpeech.Monitor
 
 			// Set volume.
 			var volumeIsValid = int.TryParse(v.volume, out _Volume);
+			if (!volumeIsValid)
+				_Volume = SettingsManager.Options.Volume;
 			if (_Volume < 0) _Volume = 0;
 			if (_Volume > 100) _Volume = 100;
-			if (!volumeIsValid) _Volume = SettingsManager.Options.Volume;
 			IncomingVolumeTextBox.Text = volumeIsValid ? "volume=\"" + _Volume + "\"" : "";
 
 			// Set group.
