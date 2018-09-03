@@ -81,7 +81,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			try
 			{
 				// Load default settings.
-				var isSettignsValid = !string.IsNullOrEmpty(SettingsManager.Options.PitchMaxComboBoxText);
+				var isSettignsValid = !string.IsNullOrEmpty(SettingsManager.Options.ProgramComboBoxText);
 			}
 			catch (ConfigurationErrorsException)
 			{
@@ -103,7 +103,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					//Process.GetCurrentProcess().Kill();
 				}
 			}
-			if (string.IsNullOrEmpty(SettingsManager.Options.PitchMaxComboBoxText))
+			if (string.IsNullOrEmpty(SettingsManager.Options.ProgramComboBoxText))
 			{
 				SettingsManager.Current.OptionsData.ResetToDefault();
 			}

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
-using System.Linq;
+using System.Speech.AudioFormat;
 
 namespace JocysCom.TextToSpeech.Monitor
 {
@@ -9,6 +9,7 @@ namespace JocysCom.TextToSpeech.Monitor
 	{
 		public Options()
 		{
+			JocysCom.ClassLibrary.Runtime.Helper.ResetPropertiesToDefault(this, false);
 		}
 
 		/// <summary>
@@ -29,10 +30,10 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(true)]
 		public bool MonitorPortChecked { get; set; }
 		
-		[DefaultValue(typeof(Decimal), "0")]
+		[DefaultValue(typeof(decimal), "0")]
 		public decimal DelayBeforeValue { get; set; }
 		
-		[DefaultValue(typeof(Decimal), "0")]
+		[DefaultValue(typeof(decimal), "0")]
 		public decimal AddSilcenceBeforeMessage { get; set; }
 		
 		[DefaultValue(false)]
@@ -47,17 +48,17 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(false)]
 		public bool UseWinCap { get; set; }
 		
-		[DefaultValue("0")]
-		public string RateMinComboBoxText { get; set; }
-		
-		[DefaultValue("0")]
-		public string PitchMinComboBoxText { get; set; }
-		
-		[DefaultValue("0")]
-		public string RateMaxComboBoxText { get; set; }
-		
-		[DefaultValue("0")]
-		public string PitchMaxComboBoxText { get; set; }
+		[DefaultValue(0)]
+		public int PitchMin { get; set; }
+
+		[DefaultValue(0)]
+		public int PitchMax { get; set; }
+
+		[DefaultValue(0)]
+		public int RateMin { get; set; }
+
+		[DefaultValue(0)]
+		public int RateMax { get; set; }
 		
 		[DefaultValue("Male")]
 		public string GenderComboBoxText { get; set; }
@@ -80,6 +81,17 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(false)]
 		public bool CacheDataWrite { get; set; }
 
+		[DefaultValue(100)]
+		public int Volume { get; set; }
+
+		[DefaultValue(AudioChannel.Mono)]
+		public AudioChannel AudioChannels { get; set; }
+
+		[DefaultValue(22050)]
+		public int AudioSampleRate { get; set; }
+
+		[DefaultValue(16)]
+		public int AudioBitsPerSample { get; set; }
 
 		#region INotifyPropertyChanged
 

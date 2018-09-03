@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Speech.AudioFormat;
 using System.Speech.Synthesis;
 using System.Threading;
 using System.Windows.Forms;
@@ -21,12 +20,6 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		void InitializeSpeech()
 		{
-			AudioChannelsComboBox.DataSource = Enum.GetValues(typeof(AudioChannel));
-			AudioChannelsComboBox.SelectedItem = AudioChannel.Mono;
-			AudioSampleRateComboBox.DataSource = new int[] { 11025, 22050, 44100, 48000 };
-			AudioSampleRateComboBox.SelectedItem = 22050;
-			AudioBitsPerSampleComboBox.DataSource = new int[] { 16 };
-			AudioBitsPerSampleComboBox.SelectedItem = 16;
 			RefreshVoicesGrid();
 			refreshPresets();
 		}

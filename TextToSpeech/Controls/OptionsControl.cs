@@ -63,13 +63,13 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			}
 		}
 
-		public Decimal silenceBefore
+		public decimal silenceBefore
 		{
 			get { return AddSilcenceBeforeNumericUpDown.Value; }
 			set { AddSilcenceBeforeNumericUpDown.Value = value; }
 		}
 
-		public Decimal silenceAfter
+		public decimal silenceAfter
 		{
 			get { return AddSilenceAfterNumericUpDown.Value; }
 			set { AddSilenceAfterNumericUpDown.Value = value; }

@@ -1,4 +1,5 @@
-﻿using JocysCom.ClassLibrary.Runtime;
+﻿using JocysCom.ClassLibrary.Controls;
+using JocysCom.ClassLibrary.Runtime;
 using JocysCom.TextToSpeech.Monitor.Audio;
 using JocysCom.TextToSpeech.Monitor.PlugIns;
 using System;
@@ -24,13 +25,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			InitializeComponent();
 			if (IsDesignMode)
 				return;
-			MonitorClipboardComboBox.Text = SettingsManager.Options.MonitorClipboardComboBoxText;
-			GenderComboBox.Text = SettingsManager.Options.GenderComboBoxText;
-			PitchMinComboBox.Text = SettingsManager.Options.PitchMinComboBoxText;
-			PitchMaxComboBox.Text = SettingsManager.Options.PitchMaxComboBoxText;
-			RateMinComboBox.Text = SettingsManager.Options.RateMinComboBoxText;
-			RateMaxComboBox.Text = SettingsManager.Options.RateMaxComboBoxText;
-			MonitorPortCheckBox.Checked = SettingsManager.Options.MonitorPortChecked;
+			LoadSettings();
 			WavPlayer = new AudioPlayer(Handle);
 			playlist = new BindingList<PlayItem>();
 			playlist.ListChanged += playlist_ListChanged;
@@ -38,8 +33,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			PlayListDataGridView.DataSource = playlist;
 			Text = MainHelper.GetProductFullName();
 			InstalledVoices = new BindingList<InstalledVoiceEx>();
-			DefaultIntroSoundComboBox.DataSource = GetIntroSoundNames();
-			DefaultIntroSoundComboBox.Text = SettingsManager.Options.DefaultIntroSoundComboBox;
 			UpdateLabel.Text = "You are running " + MainHelper.GetProductFullName();
 			// Add supported items.
 			PlugIns.Add(new WowListItem());
@@ -65,6 +58,133 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			get { return DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime; }
 		}
+
+		#region Settings
+
+		void LoadSettings()
+		{
+			// Monitor Port.
+			MonitorPortCheckBox.Checked = SettingsManager.Options.MonitorPortChecked;
+			MonitorPortCheckBox.CheckedChanged += MonitorPortCheckBox_CheckedChanged;
+			// Monitor Clipboard
+			MonitorClipboardComboBox.DataSource = new string[] { "Disabled", "For<message> tags", "For all text" };
+			ControlsHelper.SetSelectedItem(MonitorClipboardComboBox, SettingsManager.Options.MonitorClipboardComboBoxText);
+			MonitorClipboardComboBox.SelectedIndexChanged += MonitorClipboardComboBox_SelectedIndexChanged;
+			// Default Intro sound.
+			DefaultIntroSoundComboBox.DataSource = GetIntroSoundNames();
+			ControlsHelper.SetSelectedItem(DefaultIntroSoundComboBox, SettingsManager.Options.DefaultIntroSoundComboBox);
+			DefaultIntroSoundComboBox.SelectedIndexChanged += DefaultIntroSoundComboBox_SelectedIndexChanged;
+			// Audio Channels.
+			AudioChannelsComboBox.DataSource = Enum.GetValues(typeof(AudioChannel));
+			ControlsHelper.SetSelectedItem(AudioChannelsComboBox, SettingsManager.Options.AudioChannels);
+			AudioChannelsComboBox.SelectedIndexChanged += AudioChannelsComboBox_SelectedIndexChanged;
+			// Audio Sample Rate.
+			AudioSampleRateComboBox.DataSource = new int[] { 11025, 22050, 44100, 48000 };
+			ControlsHelper.SetSelectedItem(AudioSampleRateComboBox, SettingsManager.Options.AudioSampleRate);
+			AudioSampleRateComboBox.SelectedIndexChanged += AudioSampleRateComboBox_SelectedIndexChanged;
+			// Audio Bits Per Sample.
+			AudioBitsPerSampleComboBox.DataSource = new int[] { 16 };
+			ControlsHelper.SetSelectedItem(AudioBitsPerSampleComboBox, SettingsManager.Options.AudioSampleRate);
+			AudioBitsPerSampleComboBox.SelectedIndexChanged += AudioBitsPerSampleComboBox_SelectedIndexChanged;
+			// Gender.
+			GenderComboBox.DataSource = new string[] { "Male", "Female", "Neutral" };
+			ControlsHelper.SetSelectedItem(GenderComboBox, SettingsManager.Options.GenderComboBoxText);
+			GenderComboBox.SelectedIndexChanged += GenderComboBox_SelectedIndexChanged;
+			// Pitch Min.
+			PitchMinComboBox.DataSource = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10 };
+			ControlsHelper.SetSelectedItem(PitchMinComboBox, SettingsManager.Options.PitchMin);
+			PitchMinComboBox.SelectedIndexChanged += PitchMinComboBox_SelectedIndexChanged;
+			// Pitch Max.
+			PitchMaxComboBox.DataSource = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10 };
+			ControlsHelper.SetSelectedItem(PitchMaxComboBox, SettingsManager.Options.PitchMax);
+			PitchMaxComboBox.SelectedIndexChanged += PitchMaxComboBox_SelectedIndexChanged;
+			// Rate Min.
+			RateMinComboBox.DataSource = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10 };
+			ControlsHelper.SetSelectedItem(RateMinComboBox, SettingsManager.Options.RateMin);
+			RateMinComboBox.SelectedIndexChanged += RateMinComboBox_SelectedIndexChanged;
+			// Rate Max.
+			RateMaxComboBox.DataSource = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10 };
+			ControlsHelper.SetSelectedItem(RateMaxComboBox, SettingsManager.Options.RateMax);
+			RateMaxComboBox.SelectedIndexChanged += RateMaxComboBox_SelectedIndexChanged;
+			// Volume.
+			VolumeTrackBar.Value = SettingsManager.Options.Volume;
+			VolumeTrackBar.ValueChanged += VolumeTrackBar_ValueChanged;
+			VolumeTrackBar_ValueChanged(null, null);
+		}
+
+		private void MonitorPortCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Options.MonitorPortChecked = MonitorPortCheckBox.Checked;
+			UpdateMonitor();
+		}
+
+		private void MonitorClipboardComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Options.MonitorClipboardComboBoxText = MonitorClipboardComboBox.Text;
+			UpdateClipboardMonitor();
+		}
+
+		private void DefaultIntroSoundComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Options.DefaultIntroSoundComboBox = DefaultIntroSoundComboBox.Text;
+			PlayCurrentIntroSond();
+		}
+
+		private void AudioChannelsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Options.AudioChannels = (AudioChannel)AudioChannelsComboBox.SelectedItem;
+		}
+
+		private void AudioSampleRateComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Options.AudioSampleRate = (int)AudioSampleRateComboBox.SelectedItem;
+		}
+
+		private void AudioBitsPerSampleComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Options.AudioSampleRate = (int)AudioBitsPerSampleComboBox.SelectedItem;
+		}
+
+		private void GenderComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Options.GenderComboBoxText = (string)GenderComboBox.SelectedItem;
+		}
+
+		private void PitchMinComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Options.PitchMin = (int)PitchMinComboBox.SelectedItem;
+			if (SettingsManager.Options.PitchMin > SettingsManager.Options.PitchMax)
+				ControlsHelper.SetSelectedItem(PitchMaxComboBox, SettingsManager.Options.PitchMin);
+		}
+
+		private void PitchMaxComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Options.PitchMax = (int)PitchMaxComboBox.SelectedItem;
+			if (SettingsManager.Options.PitchMax < SettingsManager.Options.PitchMin)
+				ControlsHelper.SetSelectedItem(PitchMinComboBox, SettingsManager.Options.PitchMax);
+		}
+
+		private void RateMinComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Options.RateMin = (int)RateMinComboBox.SelectedItem;
+			if (SettingsManager.Options.RateMin > SettingsManager.Options.RateMax)
+				ControlsHelper.SetSelectedItem(RateMaxComboBox, SettingsManager.Options.RateMin);
+		}
+
+		private void RateMaxComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Options.RateMax = (int)RateMaxComboBox.SelectedItem;
+			if (SettingsManager.Options.RateMax < SettingsManager.Options.RateMin)
+				ControlsHelper.SetSelectedItem(RateMinComboBox, SettingsManager.Options.RateMax);
+		}
+
+		private void VolumeTrackBar_ValueChanged(object sender, EventArgs e)
+		{
+			SettingsManager.Options.Volume = VolumeTrackBar.Value;
+			VolumeTextBox.Text = string.Format("{0}%", SettingsManager.Options.Volume);
+		}
+
+		#endregion
 
 		List<VoiceListItem> PlugIns = new List<VoiceListItem>();
 
@@ -642,7 +762,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			RateMaxComboBox.Enabled = en;
 			PitchMinComboBox.Enabled = en;
 			PitchMaxComboBox.Enabled = en;
-			_Volume = VolumeTrackBar.Value;
+			_Volume = SettingsManager.Options.Volume;
 			VolumeTrackBar.Enabled = en;
 			VoicesDataGridView.Enabled = en;
 			VoicesDataGridView.DefaultCellStyle.SelectionBackColor = en
@@ -914,12 +1034,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			MainHelpLabel.Text = "Disable or enable monitoring. Uncheck to edit.";
 		}
 
-		// Volume TrackBar value changed
-		private void VolumeTrackBar_ValueChanged(object sender, EventArgs e)
-		{
-			VolumeTextBox.Text = VolumeTrackBar.Value.ToString() + "%";
-		}
-
 		private void UpdateButton_Click(object sender, EventArgs e)
 		{
 			UpdateWebBrowser.Navigate("http://www.jocys.com/files/updates/JocysCom.TextToSpeech.Monitor.html");
@@ -959,11 +1073,6 @@ namespace JocysCom.TextToSpeech.Monitor
 					// do something with it
 				}
 			}
-		}
-
-		private void MonitorClipboardComboBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			UpdateClipboardMonitor();
 		}
 
 		bool MonitoringClipboard;
@@ -1034,7 +1143,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			SettingsManager.Options.VoicesData = xml;
 			SettingsFile.Current.Save();
 			SettingsManager.Current.Save();
-			//Properties.Settings.Default.Save();
 		}
 
 		public void LoadSettings(InstalledVoiceEx[] voices)
@@ -1113,11 +1221,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			e.Cancel = true;
 		}
 
-		private void MonitorPortCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			UpdateMonitor();
-		}
-
 		void UpdateMonitor()
 		{
 			ProgramComboBox.Enabled = !MonitorPortCheckBox.Checked;
@@ -1144,7 +1247,8 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		Stream GetIntroSound(string name)
 		{
-			if (string.IsNullOrEmpty(name)) return null;
+			if (string.IsNullOrEmpty(name))
+				return null;
 			var suffix = (".Audio." + name + ".wav").ToLower();
 			var assembly = Assembly.GetExecutingAssembly();
 			var fullResourceName = assembly.GetManifestResourceNames().FirstOrDefault(x => x.ToLower().EndsWith(suffix));
@@ -1166,8 +1270,8 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		void PlayCurrentIntroSond()
 		{
-			var intro = (string)DefaultIntroSoundComboBox.SelectedItem;
-			var stream = GetIntroSound(intro);
+			var introSound = SettingsManager.Options.DefaultIntroSoundComboBox.ToLower();
+			var stream = GetIntroSound(introSound);
 			if (stream != null)
 			{
 				var player = new AudioPlayer(Handle);
@@ -1175,11 +1279,6 @@ namespace JocysCom.TextToSpeech.Monitor
 				player.Load(stream);
 				player.Play();
 			}
-		}
-
-		private void DefaultIntroSoundComboBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			PlayCurrentIntroSond();
 		}
 
 		#endregion

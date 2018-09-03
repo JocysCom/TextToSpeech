@@ -484,14 +484,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			var pitchIsValid = int.TryParse(v.pitch, out _Pitch);
 			if (!pitchIsValid)
 			{
-				if (int.Parse(PitchMinComboBox.Text) > int.Parse(PitchMaxComboBox.Text))
-				{
-					_Pitch = MainHelper.GetNumber(int.Parse(PitchMaxComboBox.Text), int.Parse(PitchMinComboBox.Text), "pitch", v.name);
-				}
-				else
-				{
-					_Pitch = MainHelper.GetNumber(int.Parse(PitchMinComboBox.Text), int.Parse(PitchMaxComboBox.Text), "pitch", v.name);
-				}
+				_Pitch = MainHelper.GetNumber(SettingsManager.Options.PitchMin, SettingsManager.Options.PitchMax, "pitch", v.name);
 			}
 			if (_Pitch < -10) _Pitch = -10;
 			if (_Pitch > 10) _Pitch = 10;
@@ -505,14 +498,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			var rateIsValid = int.TryParse(v.rate, out _Rate);
 			if (!rateIsValid)
 			{
-				if (int.Parse(RateMinComboBox.Text) > int.Parse(RateMaxComboBox.Text))
-				{
-					_Rate = MainHelper.GetNumber(int.Parse(RateMaxComboBox.Text), int.Parse(RateMinComboBox.Text), "rate", v.name);
-				}
-				else
-				{
-					_Rate = MainHelper.GetNumber(int.Parse(RateMinComboBox.Text), int.Parse(RateMaxComboBox.Text), "rate", v.name);
-				}
+				_Rate = MainHelper.GetNumber(SettingsManager.Options.RateMin, SettingsManager.Options.RateMax, "rate", v.name);
 			}
 			if (_Rate < -10) _Rate = -10;
 			if (_Rate > 10) _Rate = 10;
@@ -528,7 +514,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			var volumeIsValid = int.TryParse(v.volume, out _Volume);
 			if (_Volume < 0) _Volume = 0;
 			if (_Volume > 100) _Volume = 100;
-			if (!volumeIsValid) _Volume = VolumeTrackBar.Value;
+			if (!volumeIsValid) _Volume = SettingsManager.Options.Volume;
 			IncomingVolumeTextBox.Text = volumeIsValid ? "volume=\"" + _Volume + "\"" : "";
 
 			// Set group.
@@ -547,7 +533,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				case "player":
 					if (v.name != null)
 					{
-						var playerNames = v.name.Split(',').Select(x=>x.Trim()).ToArray();
+						var playerNames = v.name.Split(',').Select(x => x.Trim()).ToArray();
 						_PlayerName = playerNames.FirstOrDefault();
 						_PlayerNameChanged = playerNames.Skip(1).FirstOrDefault();
 						_PlayerClass = playerNames.Skip(2).FirstOrDefault();
@@ -559,7 +545,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					break;
 				case "sound":
 					// Get WAV (name), selected as default.
-					string introSound = (string)DefaultIntroSoundComboBox.SelectedItem.ToString().ToLower();
+					string introSound = SettingsManager.Options.DefaultIntroSoundComboBox;
 					// If group is not submitted.
 					if (string.IsNullOrEmpty(v.group))
 					{
