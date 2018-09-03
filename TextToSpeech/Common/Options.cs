@@ -48,16 +48,16 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(false)]
 		public bool UseWinCap { get; set; }
 		
-		[DefaultValue(0)]
+		[DefaultValue(-2)]
 		public int PitchMin { get; set; }
 
-		[DefaultValue(0)]
+		[DefaultValue(2)]
 		public int PitchMax { get; set; }
 
-		[DefaultValue(0)]
+		[DefaultValue(2)]
 		public int RateMin { get; set; }
 
-		[DefaultValue(0)]
+		[DefaultValue(2)]
 		public int RateMax { get; set; }
 		
 		[DefaultValue("Male")]
