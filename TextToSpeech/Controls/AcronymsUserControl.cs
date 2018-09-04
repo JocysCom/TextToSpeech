@@ -17,11 +17,20 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		public AcronymsUserControl()
 		{
 			InitializeComponent();
+			if (IsDesignMode)
+				return;
 			SettingsControl.DefaultEditColumn = KeyColumn;
+		}
+
+		public bool IsDesignMode
+		{
+			get { return DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime; }
 		}
 
 		private void SettingsControl_Load(object sender, EventArgs e)
 		{
+			if (IsDesignMode)
+				return;
 			var data = SettingsManager.Current.Acronyms;
 			SettingsControl.Data = data;
 			//data.Items.ListChanged += Items_ListChanged;

@@ -48,10 +48,12 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(false)]
 		public bool UseWinCap { get; set; }
 		
-		[DefaultValue(-2)]
+		// Non default pitch adds noise.
+		[DefaultValue(0)]
 		public int PitchMin { get; set; }
 
-		[DefaultValue(2)]
+		// Non default pitch adds noise.
+		[DefaultValue(0)]
 		public int PitchMax { get; set; }
 
 		[DefaultValue(2)]

@@ -510,12 +510,11 @@
 			// 
 			// EffectPresetsEditorSoundEffectsControl
 			// 
-			this.EffectPresetsEditorSoundEffectsControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.EffectPresetsEditorSoundEffectsControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
 			this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
 			this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-			this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(192, 266);
+			this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
 			this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
 			this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
 			// 
