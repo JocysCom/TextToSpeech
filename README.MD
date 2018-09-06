@@ -5,7 +5,7 @@
  
 <hr />
 
-<p align="justify">Reads <i>quests</i> and <i>chat messages</i> with text-to-speech voices. Makes game more immersive and you will not miss messages in chat. If “Monitor” doesn't work, you may need to disable IPv6 in WoW game. Read... <em><a href="#problems-and-solutions">Problems and Solutions</a></em>.</p>
+<p align="justify">Reads <i>quests</i> and <i>chat messages</i> with text-to-speech voices. Applies special audio effects to text-to-speech voices. Makes game more immersive and you will not miss messages in chat. If “Monitor” doesn't work, you may need to disable IPv6 in WoW game. Read... <em><a href="#problems-and-solutions">Problems and Solutions</a></em>.</p>
 
 
 <p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_1.png" /></a> <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Small_2018_07_29.png" /></a></p>
