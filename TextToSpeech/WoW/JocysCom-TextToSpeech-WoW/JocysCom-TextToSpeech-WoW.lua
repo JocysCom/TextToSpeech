@@ -136,7 +136,7 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.2 ( 2018-07-29 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.3 ( 2018-09-24 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffffSave in Monitor <NPC>|r |cff808080 " .. macroName .. " related messages.|r");
@@ -398,7 +398,7 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 		if JocysCom_SoundOfficerCheckButton:GetChecked() == true then	JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameOfficerCheckButton:GetChecked() == true then NameIntro = true end
 	-- RAID.
-	elseif JocysCom_RaidCheckButton:GetChecked() == true and (event == "MSG_RAID") then group = "Raid";
+	elseif JocysCom_RaidCheckButton:GetChecked() == true and (event == "CHAT_MSG_RAID") then group = "Raid";
 		if JocysCom_SoundRaidCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameRaidCheckButton:GetChecked() == true then NameIntro = true end
 	elseif JocysCom_RaidLeaderCheckButton:GetChecked() == true and (event == "CHAT_MSG_RAID_LEADER" or event == "CHAT_MSG_RAID_WARNING") then group = "RaidLeader";
@@ -419,7 +419,7 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 		-- if JocysCom_SoundBattlegroundLeaderCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
 		-- if JocysCom_NameBattlegroundLeaderCheckButton:GetChecked() == true then NameIntro = true end
 	-- INSTANCE.
-	elseif JocysCom_InstanceCheckButton:GetChecked() == true and (event == "MSG_INSTANCE") then group = "Instance";
+	elseif JocysCom_InstanceCheckButton:GetChecked() == true and (event == "CHAT_MSG_INSTANCE_CHAT") then group = "Instance";
 		if JocysCom_SoundInstanceCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameInstanceCheckButton:GetChecked() == true then NameIntro = true end
 	elseif JocysCom_InstanceLeaderCheckButton:GetChecked() == true and (event == "CHAT_MSG_INSTANCE_CHAT_LEADER") then group = "InstanceLeader";
