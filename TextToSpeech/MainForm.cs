@@ -1418,5 +1418,10 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			MessageBox.Show(message, "Last Exception");
 		}
-	}
+
+        private void UpdateTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

@@ -464,7 +464,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			// Override voice values.
 			var name = v.name;
 			var overrideVoice = SettingsFile.Current.Defaults.FirstOrDefault(x => x.name == name);
-			// if override was not found then...
+			// if override was found and enabled then...
 			if (overrideVoice != null) v.UpdateMissingValuesFrom(overrideVoice);
 
 			//Set gender. "Male"(1), "Female"(2), "Neutral"(3).

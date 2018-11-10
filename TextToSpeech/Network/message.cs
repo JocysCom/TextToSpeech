@@ -15,6 +15,10 @@ namespace JocysCom.TextToSpeech.Monitor.Network
         string _name;
 
         [XmlAttribute]
+        public string voice { get { return _voice; } set { _voice = value; NotifyPropertyChanged("voice"); } }
+        string _voice;
+
+        [XmlAttribute]
         public string language { get { return _language; } set { _language = value; NotifyPropertyChanged("language"); } }
         string _language;
 
@@ -56,7 +60,9 @@ namespace JocysCom.TextToSpeech.Monitor.Network
         /// <param name="v">voice which will be used as a source of values.</param>
         public void UpdateMissingValuesFrom(message v)
         {
-			// if value supplied and current is empty then...
+            
+            if (v.enabled) { 
+            // if value supplied and current is empty then...
 			if (!string.IsNullOrEmpty(v.language) && string.IsNullOrEmpty(language)) language = v.language;
             if (!string.IsNullOrEmpty(v.gender) && string.IsNullOrEmpty(gender)) gender = v.gender;
             if (!string.IsNullOrEmpty(v.effect) && string.IsNullOrEmpty(effect)) effect = v.effect;
@@ -64,6 +70,8 @@ namespace JocysCom.TextToSpeech.Monitor.Network
             if (!string.IsNullOrEmpty(v.rate) && string.IsNullOrEmpty(rate)) rate = v.rate;
             if (!string.IsNullOrEmpty(v.group) && string.IsNullOrEmpty(group)) group = v.group;
             if (!string.IsNullOrEmpty(v.volume) && string.IsNullOrEmpty(volume)) volume = v.volume;
+            if (!string.IsNullOrEmpty(v.voice) && string.IsNullOrEmpty(voice)) name = v.voice;
+            }
         }
 
 		public void UpdateMissingAndCangedValuesFrom(message v)

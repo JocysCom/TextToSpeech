@@ -40,7 +40,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			if (e.ColumnIndex == grid.Columns[RateColumn.Name].Index) VoicesDefaultsDataGridView.BeginEdit(true);
 			if (e.ColumnIndex == grid.Columns[VolumeColumn.Name].Index) VoicesDefaultsDataGridView.BeginEdit(true);
 			if (e.ColumnIndex == grid.Columns[LanguageColumn.Name].Index) VoicesDefaultsDataGridView.BeginEdit(true);
-		}
+            if (e.ColumnIndex == grid.Columns[VoiceColumn.Name].Index) VoicesDefaultsDataGridView.BeginEdit(true);
+        }
 
 		public void UpsertRecord(message v)
 		{
@@ -253,7 +254,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			{
 				e.Cancel = true;
 				row.ErrorText = error;
-
 			}
 		}
 
@@ -280,5 +280,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		{
 			MainHelper.OpenUrl(SettingsFile.Current.FolderPath);
 		}
-	}
+
+        private void ExportSaveFileDialog_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+    }
 }
