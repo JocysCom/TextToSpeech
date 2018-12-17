@@ -7,10 +7,12 @@ using System.Data;
 using System.Runtime.Serialization;
 using System.Data.Objects.DataClasses;
 using System.ComponentModel;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace JocysCom.ClassLibrary.Runtime
 {
-	public partial class Helper
+	public partial class RuntimeHelper
 	{
 
 		public static bool IsKnownType(Type type)
@@ -333,7 +335,7 @@ namespace JocysCom.ClassLibrary.Runtime
 		/// <returns></returns>
 		public static System.Data.EntityState GetClassChangeState(object item1, object item2)
 		{
-			List<ChangeState> list = Helper.CompareProperties(item1, item2);
+			List<ChangeState> list = RuntimeHelper.CompareProperties(item1, item2);
 			EntityState state = EntityState.Unchanged;
 			List<EntityState> states = list.Select(x => x.State).Distinct().ToList();
 			states.Remove(EntityState.Unchanged);
@@ -382,7 +384,193 @@ namespace JocysCom.ClassLibrary.Runtime
 			return list;
 		}
 
+		#region Convert: Object <-> Bytes
 
+		// Note: Similar as "Structure <-> Bytes", but with ability to convert variable strings.
+
+		public static byte[] ObjectToBytes<T>(T o)
+		{
+			using (var ms = new MemoryStream())
+			{
+				var flags = BindingFlags.Instance | BindingFlags.Public;
+				var props = typeof(T).GetProperties(flags);
+				var writer = new BinaryWriter(ms);
+				foreach (var p in props)
+				{
+					var value = p.GetValue(o);
+					writer.Write((dynamic)value);
+				}
+				ms.Flush();
+				ms.Seek(0, SeekOrigin.Begin);
+				return ms.ToArray();
+			}
+		}
+
+		public static T BytesToObject<T>(byte[] bytes)
+		{
+			using (var ms = new MemoryStream(bytes))
+			{
+				var o = Activator.CreateInstance<T>();
+				var flags = BindingFlags.Instance | BindingFlags.Public;
+				var props = typeof(T).GetProperties(flags);
+				var reader = new BinaryReader(ms);
+				foreach (var p in props)
+				{
+					var typeCode = Type.GetTypeCode(p.PropertyType);
+					object v;
+					switch (typeCode)
+					{
+						case TypeCode.Boolean: v = reader.ReadBoolean(); break;
+						case TypeCode.Char: v = reader.ReadChar(); break;
+						case TypeCode.DBNull: v = DBNull.Value; break;
+						case TypeCode.DateTime: v = new DateTime(reader.ReadInt64()); break;
+						case TypeCode.Decimal: v = reader.ReadDecimal(); break;
+						case TypeCode.Double: v = reader.ReadDouble(); break;
+						case TypeCode.Empty: v = null; break;
+						case TypeCode.SByte: v = reader.ReadSByte(); break;
+						case TypeCode.Int16: v = reader.ReadInt16(); break;
+						case TypeCode.Int32: v = reader.ReadInt32(); break;
+						case TypeCode.Int64: v = reader.ReadInt64(); break;
+						case TypeCode.Single: v = reader.ReadSingle(); break;
+						case TypeCode.String: v = reader.ReadString(); break;
+						case TypeCode.Byte: v = reader.ReadByte(); break;
+						case TypeCode.UInt16: v = reader.ReadUInt16(); break;
+						case TypeCode.UInt32: v = reader.ReadUInt32(); break;
+						case TypeCode.UInt64: v = reader.ReadUInt64(); break;
+						default: throw new Exception("Non Serializable Object: " + p.PropertyType);
+					}
+					p.SetValue(o, v);
+				}
+				return o;
+			}
+		}
+
+		#endregion
+
+		#region Convert: Structure <-> Bytes
+
+		/// <summary>
+		/// Convert structure to byte array (unmanaged block of memory).
+		/// </summary>
+		public static byte[] StructureToBytes<T>(T value) where T : struct
+		{
+			var size = Marshal.SizeOf(value);
+			var bytes = new byte[size];
+			var handle = default(GCHandle);
+			try
+			{
+				handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+				Marshal.StructureToPtr(value, handle.AddrOfPinnedObject(), false);
+			}
+			finally
+			{
+				if (handle.IsAllocated)
+					handle.Free();
+			}
+			return bytes;
+		}
+
+		public static T BytesToStructure<T>(byte[] bytes) where T : struct
+		{
+			return (T)BytesToStructure(bytes, typeof(T));
+		}
+
+		/// <summary>
+		/// Convert byte array (unmanaged block of memory) to structure.
+		/// </summary>
+		public static object BytesToStructure(byte[] bytes, Type type)
+		{
+			var value = type.IsValueType ? Activator.CreateInstance(type) : null;
+			var handle = default(GCHandle);
+			try
+			{
+				handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+				value = Marshal.PtrToStructure(handle.AddrOfPinnedObject(), type);
+			}
+			finally
+			{
+				if (handle.IsAllocated)
+					handle.Free();
+			}
+			return value;
+		}
+
+		#endregion
+
+		#region Try Parse
+
+		/// <summary>
+		/// Tries to convert the specified string representation of a logical value to
+		/// its type T equivalent. A return value indicates whether the conversion
+		/// succeeded or failed.
+		/// </summary>
+		/// <typeparam name="T">The type to try and convert to.</typeparam>
+		/// <param name="value">A string containing the value to try and convert.</param>
+		/// <param name="result">If the conversion was successful, the converted value of type T.</param>
+		/// <returns>If value was converted successfully, true; otherwise false.</returns>
+		public static bool TryParse<T>(string value, out T result)
+		{
+			var t = typeof(T);
+			if (IsNullable(t))
+				t = Nullable.GetUnderlyingType(t) ?? t;
+			//var converter = System.ComponentModel.TypeDescriptor.GetConverter(typeof(T));
+			//if (converter.IsValid(value))
+			//{
+			//	result = (T)converter.ConvertFromString(value);
+			//	return true;
+			//}
+			if (t.IsEnum)
+			{
+				var retValue = value == null ? false : Enum.IsDefined(t, value);
+				result = retValue ? (T)Enum.Parse(t, value) : default(T);
+				return retValue;
+			}
+			var tryParseMethod = t.GetMethod("TryParse",
+				BindingFlags.Static | BindingFlags.Public, null,
+				new[] { typeof(string), t.MakeByRefType() }, null);
+			var parameters = new object[] { value, null };
+			var retVal = (bool)tryParseMethod.Invoke(null, parameters);
+			result = (T)parameters[1];
+			return retVal;
+		}
+
+		/// <summary>
+		/// Tries to convert the specified string representation of a logical value to
+		/// its type T equivalent. Returns default value if conversion failed.
+		/// </summary>
+		public static T TryParse<T>(string value, T defaultValue = default(T))
+		{
+			T result = default(T);
+			return TryParse(value, out result)
+				? result
+				: defaultValue;
+		}
+
+		/// <summary>
+		/// Tries to convert the specified string representation of a logical value to
+		/// its type T equivalent. Returns default value if conversion failed.
+		/// </summary>
+		public static bool CanParse<T>(string value)
+		{
+			T result;
+			return TryParse(value, out result);
+		}
+
+		public static bool IsNullable(Type t)
+		{
+			// Throw exception if type not supplied.
+			if (t == null) throw new ArgumentNullException("t");
+			// Special Handling - known cases where Exceptions would be thrown
+			else if (t == typeof(void)) throw new Exception("There is no Nullable version of void");
+			// If this is not a value type, it is a reference type, so it is automatically nullable.
+			// (NOTE: All forms of Nullable<T> are value types)
+			if (!t.IsValueType) return true;
+			// Return true if underlying Type exists (this is faster than line above).
+			return Nullable.GetUnderlyingType(t) != null;
+		}
+
+
+		#endregion
 
 	}
 }

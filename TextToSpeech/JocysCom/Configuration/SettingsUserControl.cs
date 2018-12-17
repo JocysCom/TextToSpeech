@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections;
 using JocysCom.ClassLibrary.Controls;
 using System.Reflection;
+using JocysCom.ClassLibrary.Runtime;
 
 namespace JocysCom.ClassLibrary.Configuration
 {
@@ -387,14 +388,13 @@ namespace JocysCom.ClassLibrary.Configuration
 				var form = new SettingsItemForm();
 				form.StartPosition = FormStartPosition.CenterParent;
 				var newItem = Activator.CreateInstance(item.GetType());
-				Runtime.Helper.CopyProperties(item, newItem);
+				RuntimeHelper.CopyProperties(item, newItem);
 				form.MainPropertyGrid.SelectedObject = newItem;
 				var result = form.ShowDialog();
 				if (result == DialogResult.OK)
 				{
-					Runtime.Helper.CopyProperties(newItem, item);
+					RuntimeHelper.CopyProperties(newItem, item);
 				}
-
 			}
 		}
 

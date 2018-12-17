@@ -18,7 +18,6 @@ namespace JocysCom.ClassLibrary.IO
 	{
 
 		object streamWriterLock = new object();
-		object lockerCurrent = new object();
 
 		public string LogFilePrefix { get; set; }
 		public string LogFilePattern { get; set; }
@@ -31,7 +30,7 @@ namespace JocysCom.ClassLibrary.IO
 
 		StreamWriter tw;
 		bool _LogFileAutoFlush;
-		public bool IsEnabled;
+
 		public bool LogFileAutoFlush
 		{
 			get { return _LogFileAutoFlush; }
@@ -59,19 +58,6 @@ namespace JocysCom.ClassLibrary.IO
 			LogFilePrefix = ParseString("LogFilePrefix", "Logs\\" + asmName + "_");
 			// Initialize pattern
 			LogFilePattern = ParseString("LogFilePattern", "{0:yyyyMMdd_HHmmss}.txt");
-			IsEnabled = true;
-		}
-
-
-		void InitFileName()
-		{
-			// If log file name is already set then return it.
-			if (!string.IsNullOrEmpty(LogFileName))
-				return;
-			// Set log file name.
-			var now = DateTime.Now;
-			LogFileName = LogFilePrefix + string.Format(LogFilePattern, now);
-			LogFileDate = now;
 		}
 
 		#region Parse Configuration Values
@@ -110,7 +96,6 @@ namespace JocysCom.ClassLibrary.IO
 			return (v == null) ? defaultValue : long.Parse(v);
 		}
 
-
 		#endregion
 
 		public void WriteLine(string format, params object[] args)
@@ -125,12 +110,11 @@ namespace JocysCom.ClassLibrary.IO
 			{
 				if (IsDisposing)
 					return;
-				var now = DateTime.Now;
 				// If log file exists and can expire then...
 				if (tw != null && LogFileTimeout.Ticks > 0)
 				{
 					// If log file expired then...
-					if (now.Subtract(LogFileDate) > LogFileTimeout)
+					if (DateTime.Now.Subtract(LogFileDate) > LogFileTimeout)
 					{
 						// Flush and dispose old file.
 						tw.Flush();
@@ -149,10 +133,13 @@ namespace JocysCom.ClassLibrary.IO
 						var maxLogFiles = ParseInt("LogFileMaxFiles", 0);
 						var maxLogBytes = ParseLong("LogFileMaxBytes", 0);
 						WipeOldLogFiles(LogFilePrefix, maxLogFiles, maxLogBytes);
-						InitFileName();
+						// Create new possible file name.
+						LogFileDate = DateTime.Now;
+						LogFileName = LogFilePrefix + string.Format(LogFilePattern, LogFileDate);
 						// Try to...
 						try
 						{
+							// Create directory for new file.
 							var fi = new FileInfo(LogFileName);
 							if (!fi.Directory.Exists)
 								fi.Directory.Create();
@@ -167,7 +154,11 @@ namespace JocysCom.ClassLibrary.IO
 							break;
 						// If took more than one second already then break.
 						if (watch.ElapsedMilliseconds > 1200)
-							break;
+						{
+							var ex = new Exception("Timeout when creating Log file!");
+							ex.Data.Add("FullPath", LogFileName);
+							throw ex;
+						}
 						// Wait a little bit before trying again.
 						new ManualResetEvent(false).WaitOne(50);
 					}
@@ -176,7 +167,7 @@ namespace JocysCom.ClassLibrary.IO
 				}
 				if (tw.AutoFlush != LogFileAutoFlush)
 					tw.AutoFlush = LogFileAutoFlush;
-				var datePrefix = string.Format("{0:yyyy-MM-dd HH:mm:ss} ", now);
+				var datePrefix = string.Format("{0:yyyy-MM-dd HH:mm:ss} ", DateTime.Now);
 				message = datePrefix + message;
 				tw.Write(message);
 			}

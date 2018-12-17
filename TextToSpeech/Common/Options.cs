@@ -9,7 +9,7 @@ namespace JocysCom.TextToSpeech.Monitor
 	{
 		public Options()
 		{
-			JocysCom.ClassLibrary.Runtime.Helper.ResetPropertiesToDefault(this, false);
+			JocysCom.ClassLibrary.Runtime.RuntimeHelper.ResetPropertiesToDefault(this, false);
 		}
 
 		/// <summary>
@@ -17,7 +17,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		/// </summary>
 		public void InitDefaults(bool onlyIfNull = false)
 		{
-			JocysCom.ClassLibrary.Runtime.Helper.ResetPropertiesToDefault(this, onlyIfNull);
+			JocysCom.ClassLibrary.Runtime.RuntimeHelper.ResetPropertiesToDefault(this, onlyIfNull);
 		}
 
 		[DefaultValue("")]

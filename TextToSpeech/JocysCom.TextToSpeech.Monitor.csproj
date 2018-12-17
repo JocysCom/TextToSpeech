@@ -98,6 +98,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="PacketDotNet">
       <HintPath>Resources\SharpPcap\PacketDotNet.dll</HintPath>
       <Private>False</Private>
@@ -241,8 +242,9 @@
     <Compile Include="JocysCom\Controls\ToolStripBorderlessRenderer.cs" />
     <Compile Include="JocysCom\IO\LogFileWriter.cs" />
     <Compile Include="JocysCom\Network\NetStatInfo.cs" />
+    <Compile Include="JocysCom\Runtime\Attributes.cs" />
     <Compile Include="JocysCom\Runtime\ChangeState.cs" />
-    <Compile Include="JocysCom\Runtime\Helper.cs" />
+    <Compile Include="JocysCom\Runtime\RuntimeHelper.cs" />
     <Compile Include="JocysCom\Runtime\Serializer.cs" />
     <Compile Include="JocysCom\Security\CRC32.cs" />
     <Compile Include="JocysCom\Security\HashHelper.cs" />
