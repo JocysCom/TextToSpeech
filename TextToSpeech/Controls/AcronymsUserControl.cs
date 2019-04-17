@@ -55,7 +55,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			SettingsControl.UpdateOnly = changed;
 
 			var data = changed ? filteredItems : items;
-			data.SynchronizingObject = SettingsControl.DataGridView;
+			var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+			data.SynchronizingObject = scheduler;
 			SettingsControl.DataGridView.DataSource = data;
 		}
 

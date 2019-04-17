@@ -1,20 +1,84 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Objects.DataClasses;
-using System.Windows.Forms;
-using System.Linq;
 using System.Drawing;
-using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Collections;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace JocysCom.ClassLibrary.Controls
 {
 	public partial class ControlsHelper
 	{
 		private const int WM_SETREDRAW = 0x000B;
+
+		#region Invoke and BeginInvoke
+
+		/// <summary>
+		/// Call this method from main form constructor for BeginInvoke to work.
+		/// </summary>
+		public static void InitInvokeContext()
+		{
+			if (MainTaskScheduler != null)
+				return;
+			MainThreadId = Thread.CurrentThread.ManagedThreadId;
+			MainTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+		}
+
+		static TaskScheduler MainTaskScheduler;
+		static int MainThreadId;
+
+		public static bool InvokeRequired()
+		{
+			return MainThreadId != Thread.CurrentThread.ManagedThreadId;
+		}
+
+		/// <summary>Executes the specified action delegate asynchronously on main User Interface (UI) Thread.</summary>
+		/// <param name="action">The action delegate to execute asynchronously.</param>
+		/// <returns>The started System.Threading.Tasks.Task.</returns>
+		public static Task BeginInvoke(Action action)
+		{
+			InitInvokeContext();
+			return Task.Factory.StartNew(action,
+				CancellationToken.None, TaskCreationOptions.DenyChildAttach, MainTaskScheduler);
+		}
+
+		/// <summary>Executes the specified action delegate asynchronously on main User Interface (UI) Thread.</summary>
+		/// <param name="action">The action delegate to execute asynchronously.</param>
+		/// <returns>The started System.Threading.Tasks.Task.</returns>
+		public static Task BeginInvoke(Delegate method, params object[] args)
+		{
+			InitInvokeContext();
+			return Task.Factory.StartNew(() => { method.DynamicInvoke(args); },
+				CancellationToken.None, TaskCreationOptions.DenyChildAttach, MainTaskScheduler);
+		}
+
+		/// <summary>Executes the specified action delegate synchronously on main User Interface (UI) Thread.</summary>
+		/// <param name="action">The action delegate to execute synchronously.</param>
+		public static void Invoke(Action action)
+		{
+			InitInvokeContext();
+			var t = new Task(action);
+			t.RunSynchronously(MainTaskScheduler);
+		}
+
+		/// <summary>Executes the specified action delegate synchronously on main User Interface (UI) Thread.</summary>
+		/// <param name="action">The delegate to execute synchronously.</param>
+		public static object Invoke(Delegate method, params object[] args)
+		{
+			InitInvokeContext();
+			var t = new Task<object>(() => method.DynamicInvoke(args));
+			t.RunSynchronously(MainTaskScheduler);
+			return t.Result;
+		}
+
+		#endregion
 
 		internal class NativeMethods
 		{
@@ -93,8 +157,11 @@ namespace JocysCom.ClassLibrary.Controls
 		/// <param name="primaryKeyPropertyName">Primary key name.</param>
 		public static List<T> GetSelection<T>(DataGridView grid, string primaryKeyPropertyName = null)
 		{
-			List<T> list = new List<T>();
+			var list = new List<T>();
 			var rows = grid.SelectedRows.Cast<DataGridViewRow>().ToArray();
+			// If nothing selected then try to get rows from cells.
+			if (rows.Length == 0)
+				rows = grid.SelectedCells.Cast<DataGridViewCell>().Select(x => x.OwningRow).Distinct().ToArray();
 			// If nothing selected then return.
 			if (rows.Length == 0)
 				return list;

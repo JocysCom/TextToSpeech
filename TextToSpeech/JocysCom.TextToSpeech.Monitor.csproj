@@ -206,7 +206,6 @@
     <Compile Include="JocysCom\Collections\KeyValue.cs" />
     <Compile Include="JocysCom\Common\Helper.cs" />
     <Compile Include="JocysCom\Common\RegistryHelper.cs" />
-    <Compile Include="JocysCom\Common\TraceFormat.cs" />
     <Compile Include="JocysCom\ComponentModel\BindingListInvoked.cs" />
     <Compile Include="JocysCom\ComponentModel\PropertyComparer.cs" />
     <Compile Include="JocysCom\ComponentModel\SortableBindingList.cs" />
@@ -249,6 +248,7 @@
     <Compile Include="JocysCom\Security\CRC32.cs" />
     <Compile Include="JocysCom\Security\HashHelper.cs" />
     <Compile Include="JocysCom\Security\MD5Helper.cs" />
+    <Compile Include="JocysCom\Security\SHA256Helper.cs" />
     <Compile Include="JocysCom\Text\Filters.cs" />
     <Compile Include="JocysCom\Text\Helper.cs" />
     <Compile Include="MainForm_Network.cs">

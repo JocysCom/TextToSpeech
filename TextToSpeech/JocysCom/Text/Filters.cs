@@ -115,6 +115,7 @@ namespace JocysCom.ClassLibrary.Text
 		{
 			return StripHtml(s, false);
 		}
+
 		public static string StripUnsafeHtml(string s)
 		{
 			return StripUnsafeHtml(s, null);
@@ -128,7 +129,6 @@ namespace JocysCom.ClassLibrary.Text
 			string stringPattern = @"<\/?(?(?=" + acceptable + @")notag|[a-z0-9]+:?[a-z0-9]+?)(?:\s[a-z0-9\-]+=?(?:(["",']?).*?\1?)?)*\s*\/?>";
 			return Regex.Replace(s, stringPattern, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		}
-
 
 		List<string> Honors;
 		List<string> Prefixes;

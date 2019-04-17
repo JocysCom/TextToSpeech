@@ -176,7 +176,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				if (Writer == null && en && !IsDisposed && !Disposing)
 				{
 					Writer = new ClassLibrary.IO.LogFileWriter();
-					Writer.LogFilePrefix = GetLogsPath(true) + "\\log_";
+					Writer.LogFileName = GetLogsPath(true) + "\\log_";
 					Writer.LogFileAutoFlush = true;
 				}
 				else if (Writer != null && !en)
