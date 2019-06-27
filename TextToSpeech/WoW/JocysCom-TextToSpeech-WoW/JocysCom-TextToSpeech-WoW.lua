@@ -367,11 +367,6 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
             arg2Number = string.match(arg2, "|K.(%d*)|k");
             _, accountName, battleTag, _, characterName = BNGetFriendInfo(arg2Number);
 
-			print(arg2Number);
-			print(accountName); 
-			print(battleTag);
-			print(characterName);
-
 			-- Set name.
 			if characterName ~= nil then
 				arg2 = characterName;
