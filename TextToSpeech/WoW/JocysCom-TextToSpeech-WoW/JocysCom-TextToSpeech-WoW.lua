@@ -9,8 +9,8 @@ local DebugEnabled = false;
 -- Set variables.
 local addonName = "JocysCom-TextToSpeech-WoW";
 local addonPrefix = "JocysComTTS";
-local unitName = UnitName("player");
-local customName = UnitName("player");
+local unitName = GetUnitName("player");
+local customName = GetUnitName("player");
 local unitClass = UnitClass("player");
 local realmName = GetRealmName();
 local questMessage = nil;
@@ -20,6 +20,7 @@ local NameIntro = false;
 local arg1 = nil;
 local arg2 = nil;
 local arg2Number = nil;
+local arg2Name = nil;
 local realName = false;
 local lastArg = nil;
 local NPCSex = nil;
@@ -136,7 +137,7 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.3 ( 2018-09-24 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.4 ( 2019-06-26 )");
 	-- CheckButtons (Options) text.
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffffSave in Monitor <NPC>|r |cff808080 " .. macroName .. " related messages.|r");
@@ -351,34 +352,40 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 		if JocysCom_SoundWhisperCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameWhisperCheckButton:GetChecked() == true then NameIntro = true end
 		-- replace friend's real name with character name.
-		if event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM" then --or event == "CHAT_MSG_BN_CONVERSATION"
-		print(tostring(event));
-			-- totalBNet, numBNetOnline = BNGetNumFriends();
-			-- presenceID, presenceName, battleTag, isBattleTagPresence, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, broadcastTime, canSoR = BNGetFriendInfoByID(7);	
-			-- bnetIDAccount, accountName, battleTag, isBattleTagPresence, characterName, bnetIDGameAccount, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, messageTime, canSoR, isReferAFriend, canSummonFriend = BNGetFriendInfoByID(bnetIDAccount)
-			-- Extract friend's presenceID.
-			arg2Number = string.gsub(arg2, "|", " ");
-			for i in string.gmatch(arg2Number, "%S+") do
-				if string.find(i, "Kf") ~= nil then
-					arg2Number = string.gsub(i, "Kf", "");
-				end
-			end	
-			--Extract friend's real name and character name (if online).
-			presenceID, presenceName, battleTag, isBattleTagPresence, toonName = BNGetFriendInfoByID(arg2Number);
+		if event == "CHAT_MSG_BN_WHISPER_INFORM" then
+			-- print(tostring(event));
+			arg2 = GetUnitName("player");
+		elseif event == "CHAT_MSG_BN_WHISPER" then --or event == "CHAT_MSG_BN_CONVERSATION"
+			-- print(tostring(event));
+			-- bnetIDAccount, accountName, battleTag, isBattleTagPresence, characterName, bnetIDGameAccount, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, messageTime, canSoR, isReferAFriend, canSummonFriend = BNGetFriendInfo(friendIndex)
+			-- Extract friend's presenceID "|Kg00|kTestas|k".
+			-- |K[gsf][0-9]+|k[0]+|k
+			-- The 3rd character indicates given name, surname, or full name.
+			-- The number which follows it represents the friend's Bnet Presence ID.
+			-- The zeros between the |k form a string of the same length as the name which will replace it. E.g. if your first name is John and your presence id is 30, your given name (John) would be represented by the string |Kg30|k0000|k
+
+            arg2Number = string.match(arg2, "|K.(%d*)|k");
+            _, accountName, battleTag, _, characterName = BNGetFriendInfo(arg2Number);
+
+			print(arg2Number);
+			print(accountName); 
+			print(battleTag);
+			print(characterName);
+
 			-- Set name.
-			if toonName == nil and battleTag == nil then
+			if characterName ~= nil then
+				arg2 = characterName;
+				realName = false;
+			elseif accountName ~= nil then
+				arg2 = accountName;
+				realName = true;
+			elseif battleTag ~= nil then
+				hashIndex = string.find(battleTag, "#");
+				if hashIndex ~= nil then arg2 = string.sub(arg2, 1, hashIndex - 1) end
+				realName = true;
+			else
 				arg2 = "Your friend";
 				realName = true;
-			end
-			if battleTag ~= nil then
-				arg2 = battleTag;
-				realName = true;
-				if battleTag ~= nil then hashIndex = string.find(battleTag, "#") else hashIndex = nil end
-				if hashIndex ~= nil then arg2 = string.sub(arg2, 1, hashIndex - 1) end
-			end
-			if toonName ~= nil then
-				arg2 = toonName;
-				realName = false;
 			end
 		end	
 	elseif JocysCom_EmoteCheckButton:GetChecked() == true and ((event == "CHAT_MSG_EMOTE") or (event == "CHAT_MSG_TEXT_EMOTE")) then group = "Emote";	
