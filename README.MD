@@ -1,4 +1,4 @@
-Note: It seems like WoW started to encrypt messages after last major patch. It is good for player's security, but Text-To-Speech Monitor stopped working, because it can't recognise network messages and turn them into speech.
+# Note: It seems like WoW started to encrypt messages after last major patch. It is good for player's security, but Text-To-Speech Monitor stopped working, because it can't recognise network messages and turn them into speech.
 
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
