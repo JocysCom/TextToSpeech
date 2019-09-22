@@ -1,12 +1,14 @@
-﻿using System;
+﻿using JocysCom.ClassLibrary.Controls;
+using JocysCom.ClassLibrary.Drawing;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using JocysCom.ClassLibrary.Controls;
-using JocysCom.ClassLibrary.Drawing;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
@@ -85,24 +87,75 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		#endregion
 
-		byte[] prefixBytes = System.Text.Encoding.ASCII.GetBytes("TextToSpeech");
+		byte[] GetPrefixRgbColorBytes()
+		{
+			var rx = new Regex("#[0-9AF]{6}", RegexOptions.IgnoreCase);
+			var text = ColorPrefixTextBox.Text;
+			byte[] prefixBytes;
+			var matches = rx.Matches(ColorPrefixTextBox.Text);
+			if (string.IsNullOrEmpty(text))
+			{
+				prefixBytes = System.Text.Encoding.ASCII.GetBytes("TextToSpeech");
+			}
+			else if (matches.Count > 0)
+			{
+				var ms = new MemoryStream();
+				var bw = new BinaryWriter(ms);
+				foreach (Match match in matches)
+				{
+					var hex = match.Value;
+					var v = int.Parse(hex.Substring(1, 6), System.Globalization.NumberStyles.HexNumber);
+					var c = Color.FromArgb(v);
+					// Native bitmap color byte order for 32bpp: [B,G,R,A...], 24bpp: [B,G,R...].
+					bw.Write(c.B);
+					bw.Write(c.G);
+					bw.Write(c.R);
+				}
+				prefixBytes = ms.ToArray();
+			}
+			else
+			{
+				prefixBytes = System.Text.Encoding.ASCII.GetBytes(text);
+			}
+			return prefixBytes;
+		}
+
+		int x = 0;
 
 		private void CreateImageButton_Click(object sender, EventArgs e)
 		{
 			var image = new Bitmap(ImagePictureBox.Width, ImagePictureBox.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 			var g = Graphics.FromImage(image);
-			g.Dispose();
+			// Create object to write.
+			var prefixBytes = GetPrefixRgbColorBytes();
+			x += 0x20;
+			var messageBytes = AddMessageTextCheckBox.Checked
+				? System.Text.Encoding.Unicode.GetBytes(TestTextBox.Text)
+				: new byte[] { (byte)(x & 0xFF) };
+			// Add pixels.
 			var ms = new MemoryStream();
 			var br = new System.IO.BinaryWriter(ms);
 			br.Write(prefixBytes);
-			var messageBytes = System.Text.Encoding.Unicode.GetBytes(TestTextBox.Text);
 			br.Write(messageBytes.Length);
 			br.Write(messageBytes);
+
 			var allBytes = image.PixelFormat == System.Drawing.Imaging.PixelFormat.Format32bppArgb
-				? JocysCom.ClassLibrary.Drawing.Effects.RgbToAlphaBytes(ms.ToArray())
+				? JocysCom.ClassLibrary.Drawing.Basic.BppFrom24To32Bit(ms.ToArray())
 				: ms.ToArray();
-			Basic.SetImageBytes(image, allBytes);
-			var bytes = Basic.GetImageBytes(image);
+
+			var imageBytes = Basic.GetImageBytes(image);
+
+			var colors = Basic.BytesToColors(allBytes, true);
+			var boxSize = (int)BoxSizeUpDown.Value;
+			for (int c = 0; c < colors.Length; c++)
+			{
+				var x = c * boxSize;
+				var pen = new SolidBrush(colors[c]);
+				g.FillRectangle(pen, x, 0, boxSize, boxSize);
+			}
+
+			//Basic.SetImageBytes(image, imageBytes);
+			g.Dispose();
 			ImagePictureBox.Image = image;
 		}
 
@@ -111,10 +164,43 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void CaptureImageButton_Click(object sender, EventArgs e)
 		{
+
+
+			// Create a task and supply a user delegate by using a lambda expression. 
+			var taskA = new Task(() =>
+			{
+				Invoke((Action)(() =>
+				{
+					StatusTextBox.Text = "Test Start...";
+				}));
+				var watch = new System.Diagnostics.Stopwatch();
+				watch.Start();
+				int z = 0;
+				while (watch.ElapsedMilliseconds < 10000)
+				{
+					var image = Basic.CaptureImage(10, 10, 32, 4);
+					var bytes = Basic.GetImageBytes(image);
+					z++;
+				}
+				Invoke((Action)(() =>
+				{
+					StatusTextBox.Text = string.Format("Test End... {0} - {1}ms ", z, watch.ElapsedMilliseconds / z);
+				}));
+
+			});
+			taskA.Start();
+			var a = 1;
+			if (a == 1)
+				return;
+			// Start the task.
+			//taskA.Start();
+
+
 			StatusTextBox.Text = "Capturing...";
 			var w = ImagePictureBox.Width;
 			var h = ImagePictureBox.Height;
 			var b = Basic.CaptureImage(currentX, currentY, w, h);
+			var prefixBytes = GetPrefixRgbColorBytes();
 			var prefix = Basic.GetImageBytes(b, prefixBytes.Length);
 			if (!prefix.SequenceEqual(prefixBytes))
 			{
@@ -151,6 +237,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			}
 		}
 
-	
+		private void EnableCapturingCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

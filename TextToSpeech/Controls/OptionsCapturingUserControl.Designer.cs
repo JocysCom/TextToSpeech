@@ -42,8 +42,14 @@
 			this.CaptureImageButton = new System.Windows.Forms.Button();
 			this.ResultsTextBox = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
+			this.ColorPrefixTextBox = new System.Windows.Forms.TextBox();
+			this.ColorPrefixLabel = new System.Windows.Forms.Label();
+			this.BoxSizeUpDown = new System.Windows.Forms.NumericUpDown();
+			this.BoxSizeLabel = new System.Windows.Forms.Label();
+			this.AddMessageTextCheckBox = new System.Windows.Forms.CheckBox();
 			this.CaptureGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.BoxSizeUpDown)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// CaptureGroupBox
@@ -93,7 +99,7 @@
 			// 
 			// CreateImageButton
 			// 
-			this.CreateImageButton.Location = new System.Drawing.Point(58, 138);
+			this.CreateImageButton.Location = new System.Drawing.Point(85, 165);
 			this.CreateImageButton.Name = "CreateImageButton";
 			this.CreateImageButton.Size = new System.Drawing.Size(99, 23);
 			this.CreateImageButton.TabIndex = 13;
@@ -103,15 +109,16 @@
 			// 
 			// ImagePictureBox
 			// 
-			this.ImagePictureBox.Location = new System.Drawing.Point(381, 112);
+			this.ImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.ImagePictureBox.Location = new System.Drawing.Point(411, 162);
 			this.ImagePictureBox.Name = "ImagePictureBox";
-			this.ImagePictureBox.Size = new System.Drawing.Size(32, 32);
+			this.ImagePictureBox.Size = new System.Drawing.Size(64, 16);
 			this.ImagePictureBox.TabIndex = 14;
 			this.ImagePictureBox.TabStop = false;
 			// 
 			// TestTextBox
 			// 
-			this.TestTextBox.Location = new System.Drawing.Point(58, 112);
+			this.TestTextBox.Location = new System.Drawing.Point(85, 139);
 			this.TestTextBox.Name = "TestTextBox";
 			this.TestTextBox.Size = new System.Drawing.Size(317, 20);
 			this.TestTextBox.TabIndex = 15;
@@ -120,7 +127,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(17, 115);
+			this.label1.Location = new System.Drawing.Point(51, 142);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(28, 13);
 			this.label1.TabIndex = 16;
@@ -129,17 +136,18 @@
 			// EnableCapturingCheckBox
 			// 
 			this.EnableCapturingCheckBox.AutoSize = true;
-			this.EnableCapturingCheckBox.Location = new System.Drawing.Point(268, 142);
+			this.EnableCapturingCheckBox.Location = new System.Drawing.Point(295, 169);
 			this.EnableCapturingCheckBox.Name = "EnableCapturingCheckBox";
 			this.EnableCapturingCheckBox.Size = new System.Drawing.Size(107, 17);
 			this.EnableCapturingCheckBox.TabIndex = 17;
 			this.EnableCapturingCheckBox.Text = "Enable Capturing";
 			this.EnableCapturingCheckBox.UseVisualStyleBackColor = true;
+			this.EnableCapturingCheckBox.CheckedChanged += new System.EventHandler(this.EnableCapturingCheckBox_CheckedChanged);
 			// 
 			// StatusTextBox
 			// 
 			this.StatusTextBox.BackColor = System.Drawing.SystemColors.Control;
-			this.StatusTextBox.Location = new System.Drawing.Point(58, 167);
+			this.StatusTextBox.Location = new System.Drawing.Point(85, 194);
 			this.StatusTextBox.Name = "StatusTextBox";
 			this.StatusTextBox.Size = new System.Drawing.Size(317, 20);
 			this.StatusTextBox.TabIndex = 15;
@@ -147,7 +155,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(10, 170);
+			this.label2.Location = new System.Drawing.Point(42, 197);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(37, 13);
 			this.label2.TabIndex = 16;
@@ -155,7 +163,7 @@
 			// 
 			// CaptureImageButton
 			// 
-			this.CaptureImageButton.Location = new System.Drawing.Point(163, 138);
+			this.CaptureImageButton.Location = new System.Drawing.Point(190, 165);
 			this.CaptureImageButton.Name = "CaptureImageButton";
 			this.CaptureImageButton.Size = new System.Drawing.Size(99, 23);
 			this.CaptureImageButton.TabIndex = 13;
@@ -166,7 +174,7 @@
 			// ResultsTextBox
 			// 
 			this.ResultsTextBox.BackColor = System.Drawing.SystemColors.Control;
-			this.ResultsTextBox.Location = new System.Drawing.Point(58, 193);
+			this.ResultsTextBox.Location = new System.Drawing.Point(85, 220);
 			this.ResultsTextBox.Name = "ResultsTextBox";
 			this.ResultsTextBox.Size = new System.Drawing.Size(317, 20);
 			this.ResultsTextBox.TabIndex = 15;
@@ -174,32 +182,87 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(10, 196);
+			this.label3.Location = new System.Drawing.Point(37, 223);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(42, 13);
 			this.label3.TabIndex = 16;
 			this.label3.Text = "Results";
 			// 
+			// ColorPrefixTextBox
+			// 
+			this.ColorPrefixTextBox.Location = new System.Drawing.Point(85, 113);
+			this.ColorPrefixTextBox.Name = "ColorPrefixTextBox";
+			this.ColorPrefixTextBox.Size = new System.Drawing.Size(317, 20);
+			this.ColorPrefixTextBox.TabIndex = 15;
+			this.ColorPrefixTextBox.Text = "#200000,#002000,#000020,#200000,#002000,#000020";
+			// 
+			// ColorPrefixLabel
+			// 
+			this.ColorPrefixLabel.AutoSize = true;
+			this.ColorPrefixLabel.Location = new System.Drawing.Point(19, 116);
+			this.ColorPrefixLabel.Name = "ColorPrefixLabel";
+			this.ColorPrefixLabel.Size = new System.Drawing.Size(60, 13);
+			this.ColorPrefixLabel.TabIndex = 16;
+			this.ColorPrefixLabel.Text = "Color Prefix";
+			// 
+			// BoxSizeUpDown
+			// 
+			this.BoxSizeUpDown.Location = new System.Drawing.Point(462, 113);
+			this.BoxSizeUpDown.Name = "BoxSizeUpDown";
+			this.BoxSizeUpDown.Size = new System.Drawing.Size(41, 20);
+			this.BoxSizeUpDown.TabIndex = 18;
+			this.BoxSizeUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.BoxSizeUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// BoxSizeLabel
+			// 
+			this.BoxSizeLabel.AutoSize = true;
+			this.BoxSizeLabel.Location = new System.Drawing.Point(408, 116);
+			this.BoxSizeLabel.Name = "BoxSizeLabel";
+			this.BoxSizeLabel.Size = new System.Drawing.Size(48, 13);
+			this.BoxSizeLabel.TabIndex = 16;
+			this.BoxSizeLabel.Text = "Box Size";
+			// 
+			// AddMessageTextCheckBox
+			// 
+			this.AddMessageTextCheckBox.AutoSize = true;
+			this.AddMessageTextCheckBox.Location = new System.Drawing.Point(411, 139);
+			this.AddMessageTextCheckBox.Name = "AddMessageTextCheckBox";
+			this.AddMessageTextCheckBox.Size = new System.Drawing.Size(115, 17);
+			this.AddMessageTextCheckBox.TabIndex = 17;
+			this.AddMessageTextCheckBox.Text = "Add Message Text";
+			this.AddMessageTextCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// OptionsCapturingUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.BoxSizeUpDown);
+			this.Controls.Add(this.AddMessageTextCheckBox);
 			this.Controls.Add(this.EnableCapturingCheckBox);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label2);
+			this.Controls.Add(this.BoxSizeLabel);
+			this.Controls.Add(this.ColorPrefixLabel);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.ResultsTextBox);
 			this.Controls.Add(this.StatusTextBox);
+			this.Controls.Add(this.ColorPrefixTextBox);
 			this.Controls.Add(this.TestTextBox);
 			this.Controls.Add(this.ImagePictureBox);
 			this.Controls.Add(this.CaptureImageButton);
 			this.Controls.Add(this.CreateImageButton);
 			this.Controls.Add(this.CaptureGroupBox);
 			this.Name = "OptionsCapturingUserControl";
-			this.Size = new System.Drawing.Size(521, 223);
+			this.Size = new System.Drawing.Size(623, 266);
 			this.CaptureGroupBox.ResumeLayout(false);
 			this.CaptureGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.BoxSizeUpDown)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -221,5 +284,10 @@
 		private System.Windows.Forms.Button CaptureImageButton;
 		private System.Windows.Forms.TextBox ResultsTextBox;
 		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.TextBox ColorPrefixTextBox;
+		private System.Windows.Forms.Label ColorPrefixLabel;
+		private System.Windows.Forms.NumericUpDown BoxSizeUpDown;
+		private System.Windows.Forms.Label BoxSizeLabel;
+		private System.Windows.Forms.CheckBox AddMessageTextCheckBox;
 	}
 }
