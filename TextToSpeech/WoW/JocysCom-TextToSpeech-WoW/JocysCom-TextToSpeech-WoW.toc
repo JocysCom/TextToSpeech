@@ -4,7 +4,18 @@
 ## Title: |cff77ccffJocys.com|r Text to Speech
 ## Version: 8.2.0
 ## SavedVariables:
-## SavedVariablesPerCharacter: JocysCom_ReplaceNameEB, JocysCom_DndCB, JocysCom_FilterCB, JocysCom_SaveCB JocysCom_LockCB, JocysCom_MenuCB, JocysCom_ObjectivesCB, JocysCom_QuestCB, JocysCom_MonsterCB, JocysCom_WhisperCB, JocysCom_EmoteCB, JocysCom_SEmoteCB, JocysCom_SayCB, JocysCom_YellCB, JocysCom_PartyCB, JocysCom_PartyLCB, JocysCom_GuildCB, JocysCom_OfficerCB, JocysCom_RaidCB, JocysCom_RaidLCB, JocysCom_InstanceCB, JocysCom_InstanceLCB, JocysCom_SQuestCB, JocysCom_SMonsterCB, JocysCom_SWhisperCB, JocysCom_SSayCB, JocysCom_SYellCB, JocysCom_SPartyCB, JocysCom_SPartyLCB, JocysCom_SGuildCB, JocysCom_SOfficerCB, JocysCom_SRaidCB, JocysCom_SRaidLCB, JocysCom_SInstanceCB, JocysCom_SInstanceLCB, JocysCom_NQuestCB, JocysCom_NMonsterCB, JocysCom_NWhisperCB, JocysCom_NSayCB, JocysCom_NYellCB, JocysCom_NPartyCB, JocysCom_NPartyLCB, JocysCom_NGuildCB, JocysCom_NOfficerCB, JocysCom_NRaidCB, JocysCom_NRaidLCB, JocysCom_NInstanceCB, JocysCom_NInstanceLCB, JocysCom_StartOnOpenCB, JocysCom_StopOnCloseCB
+
+# Options:
+## SavedVariablesPerCharacter: JocysCom_ReplaceNameEB, JocysCom_ColorMessagePixelXEB, JocysCom_ColorMessagePixelYEB
+## SavedVariablesPerCharacter: JocysCom_ColorMessageCB, JocysCom_LockCB, JocysCom_MenuCB, JocysCom_FilterCB, JocysCom_SaveCB
+
+# Mini Frame:
+## SavedVariablesPerCharacter: JocysCom_DndCB, JocysCom_ObjectivesCB, JocysCom_StartOnOpenCB, JocysCom_StopOnCloseCB
+## SavedVariablesPerCharacter: JocysCom_QuestCB,  JocysCom_MonsterCB,  JocysCom_WhisperCB,  JocysCom_SayCB,  JocysCom_YellCB,  JocysCom_PartyCB,  JocysCom_PartyLCB,  JocysCom_GuildCB,  JocysCom_OfficerCB,  JocysCom_RaidCB,  JocysCom_RaidLCB,  JocysCom_InstanceCB,  JocysCom_InstanceLCB, JocysCom_EmoteCB
+## SavedVariablesPerCharacter: JocysCom_SQuestCB, JocysCom_SMonsterCB, JocysCom_SWhisperCB, JocysCom_SSayCB, JocysCom_SYellCB, JocysCom_SPartyCB, JocysCom_SPartyLCB, JocysCom_SGuildCB, JocysCom_SOfficerCB, JocysCom_SRaidCB, JocysCom_SRaidLCB, JocysCom_SInstanceCB, JocysCom_SInstanceLCB, JocysCom_SEmoteCB
+## SavedVariablesPerCharacter: JocysCom_NQuestCB, JocysCom_NMonsterCB, JocysCom_NWhisperCB, JocysCom_NSayCB, JocysCom_NYellCB, JocysCom_NPartyCB, JocysCom_NPartyLCB, JocysCom_NGuildCB, JocysCom_NOfficerCB, JocysCom_NRaidCB, JocysCom_NRaidLCB, JocysCom_NInstanceCB, JocysCom_NInstanceLCB
+
+#Show errors (1) or hide errors (0): /console scriptErrors 1
 #Extract current TOC Version (Interface) in chat window: /run print((select(4, GetBuildInfo())));
 JocysCom-TextToSpeech-WoW.xml
 JocysCom-TextToSpeech-WoW.lua

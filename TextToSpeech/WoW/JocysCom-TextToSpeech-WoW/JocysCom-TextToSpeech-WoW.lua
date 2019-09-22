@@ -39,6 +39,10 @@ local macroName = "NPCSaveTTSMacro"
 local macroIndex = GetMacroIndexByName(macroName);
 local macroIcon = "INV_Misc_GroupNeedMore";
 local macroMessage = "/targetfriend";
+local messageColor = 0;
+local messageColorT = 0;
+local pixelX = 0;
+local pixelY = 0;
 
 function JocysCom_UpdateMacro()
 	--Create macro if it doesn't exist and slot is available.
@@ -137,24 +141,27 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.4 ( 2019-06-26 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.5 ( 2019-09-22 )");
 	-- CheckButtons (Options) text.
+	JocysCom_ColorMessagePixelXFontString:SetText("|cff808080 Color pixel for \"Monitor\" position left:|r");
+	JocysCom_ColorMessagePixelYFontString:SetText("|cff808080 Top:|r");
+	JocysCom_ColorMessageCheckButton.text:SetText("|cff808080 Send messages using|r |cffffffffClipboard|r|cff808080.|r");
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffffSave in Monitor <NPC>|r |cff808080 " .. macroName .. " related messages.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080buttons. Grab frame by clicking on dark background around buttons.|r");
 	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on the right side of |cffffffff[Options]|r |cff808080button. [Unchecked] show menu on the left side.|r");
 	-- Font Strings.
 	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
-	JocysCom_DescriptionFrameFontString:SetText("Text-to-speech voices, pitch, rate, effects, etc. ... you will find all options in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window, |cff77ccffJocys.Com Text to Speech WoW Addon|r creates and sends special addon message to yourself (message includes dialogue text, character name and effect name). Then, |cff77ccffJocys.Com Text to Speech Monitor|r (which must be running in background) picks-up this message from your network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.");
-	JocysCom_ReplaceNameFontString:SetText("Here you can change your name for text to speech from |cff00ff00" .. unitName .. "|r to something else.");
-	JocysCom_MessageForMonitorFrameFontString:SetText("Addon message for |cff77ccffJocys.Com Text to Speech Monitor|r ... it must be runninng in background:");
+	JocysCom_DescriptionFrameFontString:SetText("|cff808080 Text-to-speech voices, pitch, rate, effects, etc. ... you will find all options in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window, |cff77ccffJocys.Com Text to Speech WoW Addon|r creates and sends special addon message to yourself (message includes dialogue text, character name and effect name). Then, |cff77ccffJocys.Com Text to Speech Monitor|r (which must be running in background) picks-up this message from your network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.|r");
+	JocysCom_ReplaceNameFontString:SetText("|cff808080 Here you can change your name for text to speech from |cff00ff00" .. unitName .. "|r to something else.|r");
+	JocysCom_MessageForMonitorFrameFontString:SetText("|cff808080 Addon message for |cff77ccffJocys.Com Text to Speech Monitor|r ... it must be runninng in background:|r");
 end
 
 -- Unlock frames.
 function JocysCom_OptionsFrame_OnShow()
-	JocysCom_StopButtonFrame_Texture:SetVertexColor(0, 0, 0, 0.8);
+	JocysCom_StopButtonFrame_Texture:SetColorTexture(0, 0, 0, 0.8);
 	JocysCom_DialogueScrollFrame:EnableMouse(true);
-	JocysCom_DialogueScrollFrame_Texture:SetVertexColor(0, 0, 0, 0.8);
+	JocysCom_DialogueScrollFrame_Texture:SetColorTexture(0, 0, 0, 0.8);
 	JocysCom_DialogueScrollFrame_FontString:Show();
 	JocysCom_DialogueScrollFrameResizeButton:Show();
 end
@@ -164,9 +171,9 @@ function JocysCom_OptionsFrame_OnHide()
 	if string.len(JocysCom_ReplaceNameEditBox:GetText()) < 2 then
 		JocysCom_ReplaceNameEditBox:SetText(unitName);
 	end
-	JocysCom_StopButtonFrame_Texture:SetVertexColor(0, 0, 0, 0);
+	JocysCom_StopButtonFrame_Texture:SetColorTexture(0, 0, 0, 0);
 	JocysCom_DialogueScrollFrame:EnableMouse(false);
-	JocysCom_DialogueScrollFrame_Texture:SetVertexColor(0, 0, 0, 0);
+	JocysCom_DialogueScrollFrame_Texture:SetColorTexture(0, 0, 0, 0);
 	JocysCom_DialogueScrollFrame_FontString:Hide();
 	JocysCom_DialogueScrollFrameResizeButton:Hide();
 end
@@ -191,6 +198,8 @@ function JocysCom_SendChatMessageStop(CloseOrButton, group)
 	if (stopWhenClosing == 1 or group ~= nil or group ~= "") and (JocysCom_StopOnCloseCheckButton:GetChecked() == true or (CloseOrButton == 1 or CloseOrButton == 2)) then
 		--SendChatMessage(messageStop, "WHISPER", "Common", unitName);
 		C_ChatInfo.SendAddonMessage(addonPrefix, messageStop, "WHISPER", unitName);
+		--Send color message.
+		JocysCom_SendColorMessage(messageStop);
 		stopWhenClosing = 0;
 		JocysCom_OptionsEditBox:SetText("|cff808080" .. messageStop .. "|r");
 	end
@@ -199,7 +208,10 @@ end
 -- Send sound intro function.
 function JocysCom_SendSoundIntro(group)
 	--SendChatMessage("<message command=\"sound\" group=\"" .. group .. "\" />", "WHISPER", "Common", unitName);
-	C_ChatInfo.SendAddonMessage(addonPrefix, "<message command=\"sound\" group=\"" .. group .. "\" />", "WHISPER", unitName);
+	messageGroup = "<message command=\"sound\" group=\"" .. group .. "\" />";
+	C_ChatInfo.SendAddonMessage(addonPrefix, messageGroup, "WHISPER", unitName);
+	--Send color message.
+	JocysCom_SendColorMessage(messageGroup);
 end
 
 -- Register events.
@@ -526,6 +538,8 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 	if string.find(speakMessage, customName) ~= nil or string.find(string.lower(speakMessage), string.lower(unitClass)) ~= nil  then
 		messagePlayer = "<message command=\"player\" name=\"" .. unitName .. "," .. customName .. "," .. unitClass ..  "\" />";
 		C_ChatInfo.SendAddonMessage(addonPrefix, messagePlayer, "WHISPER", unitName);
+		--Send color message.
+		JocysCom_SendColorMessage(messagePlayer);
 	end
 
 	--Replace text in message.
@@ -608,6 +622,8 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 				chatMessage = chatMessageSP .. part .. chatMessageE;
 				stopWhenClosing = 1;
 				C_ChatInfo.SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
+				--Send color message.
+				JocysCom_SendColorMessage(chatMessage);
 				if DebugEnabled then print("[" .. tostring(index) .. "] [" .. startIndex .. "] '" .. part .. "'") end
 				break;
 			-- If text length more than 100 then...
@@ -617,6 +633,8 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 				chatMessage = chatMessageSA .. part .. chatMessageE;
 				stopWhenClosing = 1;
 				C_ChatInfo.SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
+				--Send color message.
+				JocysCom_SendColorMessage(chatMessage);
 				if DebugEnabled then print("[" .. tostring(index) .. "] [" .. startIndex .. "-" .. (endIndex - 1) .. "] '" .. part .. "'") end
 				startIndex = endIndex;
 				speakMessageRemainingLen = string.len(string.sub(speakMessage, startIndex));
@@ -945,10 +963,44 @@ function JocysCom_SaveNPC()
 		C_ChatInfo.SendAddonMessage(addonPrefix, saveMessage, "WHISPER", unitName);
 		--Fill "Options" window EditBox.
 		JocysCom_OptionsEditBox:SetText("|cff808080" .. saveMessage .. "|r");
+		--Send color message.
+		JocysCom_SendColorMessage(saveMessage);
 		--Print information in to chat window.
 		if JocysCom_SaveCheckButton:GetChecked() ~= true then
 		print("|cffffff20Save in Monitor: " .. targetName .. " : " .. targetSex .. " : " .. targetType .. "|r");
 		end
+	end
+end
+
+--function JocysCom_Wait(seconds)
+	--local _start = os.time()
+	--local _end = _start+seconds
+	--while (_end ~= os.time()) do
+	--end
+--end
+
+-- Lock Enable / Disable.
+function JocysCom_ColorMessageCheckButton_OnClick()
+	PlaySound(856);
+	JocysCom_SaveTocFileSettings();
+end
+
+--Send color message.
+function JocysCom_SendColorMessage(message)
+	if JocysCom_ColorMessageCheckButton:GetChecked() == true then
+	pixelX = JocysCom_ColorMessagePixelXEditBox:GetNumber();
+	pixelY = JocysCom_ColorMessagePixelYEditBox:GetNumber();
+	if pixelY > 0 then
+	pixelY = pixelY * -1;
+	end
+	JocysCom_MessageColorFrame:ClearAllPoints();
+	JocysCom_MessageColorFrame:SetPoint("TOPLEFT", pixelX, pixelY);
+	JocysCom_MessageColorFrame:Show();
+		JocysCom_MessageColorEditBox:SetText(message);
+		JocysCom_MessageColorEditBox:HighlightText();
+		messageColor = messageColor + 0.1;
+		if messageColor > 1 then messageColor = 0 end
+		JocysCom_MessageColorFrame_Texture:SetColorTexture(messageColor, messageColor, messageColor, 1.0);
 	end
 end
 
@@ -985,6 +1037,7 @@ end
 function JocysCom_LoadTocFileSettings()
 	-- Set (Options) CheckButtons.
 	if JocysCom_DndCB == false then JocysCom_DndCheckButton:SetChecked(false) else JocysCom_DndCheckButton:SetChecked(true) end
+	if JocysCom_ColorMessageCB == false then JocysCom_ColorMessageCheckButton:SetChecked(false) else JocysCom_ColorMessageCheckButton:SetChecked(true) end
 	-- Set LockCheckButton and StopButtonFrame.
 	if JocysCom_LockCB == true then JocysCom_LockCheckButton:SetChecked(true) else JocysCom_LockCheckButton:SetChecked(false) end
 	if JocysCom_LockCheckButton:GetChecked() == true then JocysCom_StopButtonFrame:RegisterForDrag() else JocysCom_StopButtonFrame:RegisterForDrag("LeftButton") end
@@ -1004,8 +1057,11 @@ function JocysCom_LoadTocFileSettings()
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", JocysCom_CHAT_MSG_WHISPER);
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_DND", JocysCom_CHAT_MSG_DND);
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", JocysCom_CHAT_MSG_SYSTEM);
+	-- Set (Options) EditBoxes.
+	if JocysCom_ColorMessagePixelXEB == "" or JocysCom_ColorMessagePixelXEB == nil then JocysCom_ColorMessagePixelXEB = 0; JocysCom_ColorMessagePixelXEditBox:SetNumber(JocysCom_ColorMessagePixelXEB); else JocysCom_ColorMessagePixelXEditBox:SetNumber(JocysCom_ColorMessagePixelXEB) end
+	if JocysCom_ColorMessagePixelYEB == "" or JocysCom_ColorMessagePixelYEB == nil then JocysCom_ColorMessagePixelYEB = 0; JocysCom_ColorMessagePixelYEditBox:SetNumber(JocysCom_ColorMessagePixelYEB); else JocysCom_ColorMessagePixelYEditBox:SetNumber(JocysCom_ColorMessagePixelYEB) end
+	if JocysCom_ReplaceNameEB == "" or JocysCom_ReplaceNameEB == nil then JocysCom_ReplaceNameEB = unitName; JocysCom_ReplaceNameEditBox:SetText(JocysCom_ReplaceNameEB); else JocysCom_ReplaceNameEditBox:SetText(JocysCom_ReplaceNameEB) end
 	-- Set (MiniFrame) CheckButtons.
-	if JocysCom_ReplaceNameEB == "" or JocysCom_ReplaceNameEB == nil then JocysCom_ReplaceNameEB = unitName else JocysCom_ReplaceNameEditBox:SetText(JocysCom_ReplaceNameEB) end
 	if JocysCom_QuestCB == false then JocysCom_QuestCheckButton:SetChecked(false) else JocysCom_QuestCheckButton:SetChecked(true) end
 	if JocysCom_MonsterCB == true then JocysCom_MonsterCheckButton:SetChecked(true) else JocysCom_MonsterCheckButton:SetChecked(false) end
 	if JocysCom_WhisperCB == false then JocysCom_WhisperCheckButton:SetChecked(false) else JocysCom_WhisperCheckButton:SetChecked(true) end
@@ -1063,7 +1119,10 @@ end
 -- Save settings.
 function JocysCom_SaveTocFileSettings()
 	-- Save check buttons.
+	JocysCom_ColorMessagePixelXEB = JocysCom_ColorMessagePixelXEditBox:GetNumber();
+	JocysCom_ColorMessagePixelYEB = JocysCom_ColorMessagePixelYEditBox:GetNumber();
 	JocysCom_ReplaceNameEB = JocysCom_ReplaceNameEditBox:GetText();
+	JocysCom_ColorMessageCB = JocysCom_ColorMessageCheckButton:GetChecked();
 	JocysCom_DndCB = JocysCom_DndCheckButton:GetChecked();
 	JocysCom_LockCB = JocysCom_LockCheckButton:GetChecked();
 	JocysCom_MenuCB = JocysCom_MenuCheckButton:GetChecked();
