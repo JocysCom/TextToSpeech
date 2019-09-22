@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using JocysCom.TextToSpeech.Monitor.Network;
+using JocysCom.TextToSpeech.Monitor.Capturing;
 using JocysCom.ClassLibrary.ComponentModel;
 using JocysCom.ClassLibrary.Runtime;
 using JocysCom.ClassLibrary.Controls;

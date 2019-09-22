@@ -1,6 +1,6 @@
 ﻿using JocysCom.ClassLibrary.Runtime;
 using JocysCom.TextToSpeech.Monitor.Audio;
-using JocysCom.TextToSpeech.Monitor.Network;
+using JocysCom.TextToSpeech.Monitor.Capturing;
 using JocysCom.TextToSpeech.Monitor.PlugIns;
 using PacketDotNet;
 using SharpPcap;
@@ -50,7 +50,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					IpAddresses.Clear();
 					continueMonitoring = true;
 					// Retrieve all capture devices
-					if (SettingsManager.Options.UseWinCap)
+					if (SettingsManager.Options.CapturingType == CapturingType.WinPcap)
 					{
 						var devices = CaptureDeviceList.Instance.ToArray();
 						var wcaps = devices.OfType<WinPcapDevice>();
@@ -69,7 +69,7 @@ namespace JocysCom.TextToSpeech.Monitor
 							CaptureDevices.Add(device);
 						}
 					}
-					else
+					else if (SettingsManager.Options.CapturingType == CapturingType.SocPcap)
 					{
 						var device = new SocPcapDevice();
 						device.OnPacketArrival += Wc_OnPacketArrival;
@@ -80,6 +80,10 @@ namespace JocysCom.TextToSpeech.Monitor
 							IpAddresses.Add(address);
 						}
 						CaptureDevices.Add(device);
+					}
+					else
+					{
+
 					}
 					// Set default packet filter.
 					SetFilter(MonitorItem);

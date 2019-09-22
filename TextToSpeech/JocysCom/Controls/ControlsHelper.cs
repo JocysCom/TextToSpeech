@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Objects.DataClasses;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -28,6 +29,8 @@ namespace JocysCom.ClassLibrary.Controls
 			if (MainTaskScheduler != null)
 				return;
 			MainThreadId = Thread.CurrentThread.ManagedThreadId;
+			// Create a TaskScheduler that wraps the SynchronizationContext returned from
+			// System.Threading.SynchronizationContext.Current
 			MainTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
 		}
 
@@ -76,6 +79,40 @@ namespace JocysCom.ClassLibrary.Controls
 			var t = new Task<object>(() => method.DynamicInvoke(args));
 			t.RunSynchronously(MainTaskScheduler);
 			return t.Result;
+		}
+
+		/// <summary>
+		/// Raise event on same thread as the target of delegate.
+		/// </summary>
+		/// <param name="theEvent"></param>
+		/// <param name="e"></param>
+		//[Obsolete("Use ControlsHelper.BeginInvoke to raise events on main User Interface (UI) Thread.")]
+		public static void RaiseEventOnTargetThread(Delegate theEvent, object sender, EventArgs e)
+		{
+			if (theEvent == null)
+				return;
+			foreach (var d in theEvent.GetInvocationList())
+			{
+				var scheduler = d.Target as TaskScheduler;
+				var args = new object[] { sender, e };
+				if (scheduler != null)
+				{
+					Task.Factory.StartNew(
+						() => { d.DynamicInvoke(args); },
+						CancellationToken.None, TaskCreationOptions.DenyChildAttach, scheduler);
+					continue;
+				}
+				var invoker = d.Target as System.ComponentModel.ISynchronizeInvoke;
+				if (invoker != null)
+				{
+					var c = d.Target as System.Windows.Forms.Control;
+					if (c != null && (c.Disposing || c.IsDisposed || !c.IsHandleCreated))
+						continue;
+					c.BeginInvoke(d, args);
+					continue;
+				}
+				d.DynamicInvoke(args);
+			}
 		}
 
 		#endregion
@@ -529,7 +566,7 @@ namespace JocysCom.ClassLibrary.Controls
 
 		#region Apply Grid Border Style
 
-		public static void ApplyBorderStyle(DataGridView grid)
+		public static void ApplyBorderStyle(DataGridView grid, bool updateEnabledProperty = false)
 		{
 			grid.BackgroundColor = Color.White;
 			grid.BorderStyle = BorderStyle.None;
@@ -543,13 +580,35 @@ namespace JocysCom.ClassLibrary.Controls
 			grid.CellPainting += Grid_CellPainting;
 			grid.SelectionChanged += Grid_SelectionChanged;
 			grid.CellFormatting += Grid_CellFormatting;
+			if (updateEnabledProperty)
+				grid.CellClick += Grid_CellClick;
 		}
 
-		private static void Grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		static void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
 			if (e.RowIndex < 0 || e.ColumnIndex < 0)
 				return;
 			var grid = (DataGridView)sender;
+			// If add new record row.
+			if (grid.AllowUserToAddRows && e.RowIndex + 1 == grid.Rows.Count)
+				return;
+			var column = grid.Columns[e.ColumnIndex];
+			var item = grid.Rows[e.RowIndex].DataBoundItem;
+			if (column.DataPropertyName == "Enabled" || column.DataPropertyName == "IsEnabled")
+			{
+				SetEnabled(item, !GetEnabled(item));
+				grid.Invalidate();
+			}
+		}
+
+		static void Grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			if (e.RowIndex < 0 || e.ColumnIndex < 0)
+				return;
+			var grid = (DataGridView)sender;
+			// If add new record row.
+			if (grid.AllowUserToAddRows && e.RowIndex + 1 == grid.Rows.Count)
+				return;
 			var row = grid.Rows[e.RowIndex];
 			if (e.RowIndex > -1 && e.ColumnIndex > -1)
 			{
@@ -580,12 +639,22 @@ namespace JocysCom.ClassLibrary.Controls
 			}
 		}
 
-		private static void Grid_SelectionChanged(object sender, EventArgs e)
+		static void Grid_SelectionChanged(object sender, EventArgs e)
 		{
 			// Sort issue with paint artifcats.
 			var grid = (DataGridView)sender;
 			grid.Invalidate();
 		}
+
+		static void SetEnabled(object item, bool enabled)
+		{
+			var enabledProperty = item.GetType().GetProperties().FirstOrDefault(x => x.Name == "Enabled" || x.Name == "IsEnabled");
+			if (enabledProperty != null)
+			{
+				enabledProperty.SetValue(item, enabled, null);
+			}
+		}
+
 
 		static bool GetEnabled(object item)
 		{
@@ -594,7 +663,7 @@ namespace JocysCom.ClassLibrary.Controls
 			return enabled;
 		}
 
-		private static void Grid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+		static void Grid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
 		{
 			// Header and cell borders must be set to "Single" style.
 			var grid = (DataGridView)sender;
@@ -695,7 +764,18 @@ namespace JocysCom.ClassLibrary.Controls
 
 		#endregion
 
-		#region Bind Lists
+		#region Binding
+
+		public static Binding AddDataBinding<Cs, Cp, Ds, Dp>(
+			Cs control, Expression<Func<Cs, Cp>> controlProperty,
+			Ds data, Expression<Func<Ds, Dp>> dataProperty) where Cs : IBindableComponent
+		{
+			var propertyBody = (MemberExpression)controlProperty.Body;
+			var propertyName = propertyBody.Member.Name;
+			var dataMemberBody = (MemberExpression)dataProperty.Body;
+			var dataMemberName = dataMemberBody.Member.Name;
+			return control.DataBindings.Add(propertyName, data, dataMemberName);
+		}
 
 		/// <summary>
 		/// Bing Enum to ComboBox.

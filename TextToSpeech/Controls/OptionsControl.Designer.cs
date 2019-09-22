@@ -35,32 +35,23 @@
 			this.OpenButton = new System.Windows.Forms.Button();
 			this.LoggingTextBox = new System.Windows.Forms.TextBox();
 			this.LoggingCheckBox = new System.Windows.Forms.CheckBox();
-			this.CaptureGroupBox = new System.Windows.Forms.GroupBox();
-			this.CaptureWinButton = new System.Windows.Forms.RadioButton();
-			this.CaptureSocButton = new System.Windows.Forms.RadioButton();
-			this.CacheOptionsGroupBox = new System.Windows.Forms.GroupBox();
-			this.OpenCacheButton = new System.Windows.Forms.Button();
-			this.CacheDataGeneralizeCheckBox = new System.Windows.Forms.CheckBox();
-			this.CacheDataReadCheckBox = new System.Windows.Forms.CheckBox();
-			this.CacheDataWriteCheckBox = new System.Windows.Forms.CheckBox();
-			this.CacheLabel = new System.Windows.Forms.Label();
 			this.OptionsTabControl = new System.Windows.Forms.TabControl();
 			this.GeneralTabPage = new System.Windows.Forms.TabPage();
-			this.NetworkTabPage = new System.Windows.Forms.TabPage();
+			this.CapturingTabPage = new System.Windows.Forms.TabPage();
 			this.CacheTabPage = new System.Windows.Forms.TabPage();
 			this.GoogleCloudTabPage = new System.Windows.Forms.TabPage();
 			this.MicrosoftCortanaTabPage = new System.Windows.Forms.TabPage();
-			this.googleOptionsUserControl1 = new JocysCom.TextToSpeech.Monitor.Google.GoogleOptionsUserControl();
-			this.cortanaUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.CortanaUserControl();
+			this.CapturingPanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsCapturingUserControl();
+			this.CachePanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsCacheUserControl();
+			this.GoogleCloudPanel = new JocysCom.TextToSpeech.Monitor.Google.OptionsGoogleCloudUserControl();
+			this.MicrosoftCortanaPanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsMicrosoftCortanaUserControl();
 			this.AddSilenceGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).BeginInit();
 			this.LoggingGroupBox.SuspendLayout();
-			this.CaptureGroupBox.SuspendLayout();
-			this.CacheOptionsGroupBox.SuspendLayout();
 			this.OptionsTabControl.SuspendLayout();
 			this.GeneralTabPage.SuspendLayout();
-			this.NetworkTabPage.SuspendLayout();
+			this.CapturingTabPage.SuspendLayout();
 			this.CacheTabPage.SuspendLayout();
 			this.GoogleCloudTabPage.SuspendLayout();
 			this.MicrosoftCortanaTabPage.SuspendLayout();
@@ -305,109 +296,10 @@
 			this.LoggingCheckBox.Text = "Enable";
 			this.LoggingCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// CaptureGroupBox
-			// 
-			this.CaptureGroupBox.Controls.Add(this.CaptureWinButton);
-			this.CaptureGroupBox.Controls.Add(this.CaptureSocButton);
-			this.CaptureGroupBox.Location = new System.Drawing.Point(3, 3);
-			this.CaptureGroupBox.Name = "CaptureGroupBox";
-			this.CaptureGroupBox.Size = new System.Drawing.Size(211, 70);
-			this.CaptureGroupBox.TabIndex = 10;
-			this.CaptureGroupBox.TabStop = false;
-			this.CaptureGroupBox.Text = "Packet Capture Librarry";
-			// 
-			// CaptureWinButton
-			// 
-			this.CaptureWinButton.AutoSize = true;
-			this.CaptureWinButton.Location = new System.Drawing.Point(6, 46);
-			this.CaptureWinButton.Name = "CaptureWinButton";
-			this.CaptureWinButton.Size = new System.Drawing.Size(69, 17);
-			this.CaptureWinButton.TabIndex = 0;
-			this.CaptureWinButton.TabStop = true;
-			this.CaptureWinButton.Text = "WinPcap";
-			this.CaptureWinButton.UseVisualStyleBackColor = true;
-			// 
-			// CaptureSocButton
-			// 
-			this.CaptureSocButton.AutoSize = true;
-			this.CaptureSocButton.Location = new System.Drawing.Point(6, 20);
-			this.CaptureSocButton.Name = "CaptureSocButton";
-			this.CaptureSocButton.Size = new System.Drawing.Size(138, 17);
-			this.CaptureSocButton.TabIndex = 0;
-			this.CaptureSocButton.TabStop = true;
-			this.CaptureSocButton.Text = "Microsoft .NET Sockets";
-			this.CaptureSocButton.UseVisualStyleBackColor = true;
-			// 
-			// CacheOptionsGroupBox
-			// 
-			this.CacheOptionsGroupBox.Controls.Add(this.OpenCacheButton);
-			this.CacheOptionsGroupBox.Controls.Add(this.CacheDataGeneralizeCheckBox);
-			this.CacheOptionsGroupBox.Controls.Add(this.CacheDataReadCheckBox);
-			this.CacheOptionsGroupBox.Controls.Add(this.CacheDataWriteCheckBox);
-			this.CacheOptionsGroupBox.Controls.Add(this.CacheLabel);
-			this.CacheOptionsGroupBox.Location = new System.Drawing.Point(6, 6);
-			this.CacheOptionsGroupBox.Name = "CacheOptionsGroupBox";
-			this.CacheOptionsGroupBox.Size = new System.Drawing.Size(211, 128);
-			this.CacheOptionsGroupBox.TabIndex = 10;
-			this.CacheOptionsGroupBox.TabStop = false;
-			this.CacheOptionsGroupBox.Text = "Cache Options (Create TTS files)";
-			// 
-			// OpenCacheButton
-			// 
-			this.OpenCacheButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.OpenCacheButton.Location = new System.Drawing.Point(130, 19);
-			this.OpenCacheButton.Name = "OpenCacheButton";
-			this.OpenCacheButton.Size = new System.Drawing.Size(75, 23);
-			this.OpenCacheButton.TabIndex = 6;
-			this.OpenCacheButton.Text = "Open...";
-			this.OpenCacheButton.UseVisualStyleBackColor = true;
-			this.OpenCacheButton.Click += new System.EventHandler(this.OpenCacheButton_Click);
-			// 
-			// CacheDataGeneralizeCheckBox
-			// 
-			this.CacheDataGeneralizeCheckBox.AutoSize = true;
-			this.CacheDataGeneralizeCheckBox.Location = new System.Drawing.Point(6, 69);
-			this.CacheDataGeneralizeCheckBox.Name = "CacheDataGeneralizeCheckBox";
-			this.CacheDataGeneralizeCheckBox.Size = new System.Drawing.Size(198, 17);
-			this.CacheDataGeneralizeCheckBox.TabIndex = 0;
-			this.CacheDataGeneralizeCheckBox.Text = "Replace Class && Name to \"Traveler\"";
-			this.CacheDataGeneralizeCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// CacheDataReadCheckBox
-			// 
-			this.CacheDataReadCheckBox.AutoSize = true;
-			this.CacheDataReadCheckBox.Location = new System.Drawing.Point(6, 46);
-			this.CacheDataReadCheckBox.Name = "CacheDataReadCheckBox";
-			this.CacheDataReadCheckBox.Size = new System.Drawing.Size(138, 17);
-			this.CacheDataReadCheckBox.TabIndex = 0;
-			this.CacheDataReadCheckBox.Text = "Read Files (MP3, WAV)";
-			this.CacheDataReadCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// CacheDataWriteCheckBox
-			// 
-			this.CacheDataWriteCheckBox.AutoSize = true;
-			this.CacheDataWriteCheckBox.Location = new System.Drawing.Point(6, 23);
-			this.CacheDataWriteCheckBox.Name = "CacheDataWriteCheckBox";
-			this.CacheDataWriteCheckBox.Size = new System.Drawing.Size(109, 17);
-			this.CacheDataWriteCheckBox.TabIndex = 0;
-			this.CacheDataWriteCheckBox.Text = "Write Files (WAV)";
-			this.CacheDataWriteCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// CacheLabel
-			// 
-			this.CacheLabel.AutoSize = true;
-			this.CacheLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.CacheLabel.ForeColor = System.Drawing.SystemColors.GrayText;
-			this.CacheLabel.Location = new System.Drawing.Point(3, 112);
-			this.CacheLabel.Name = "CacheLabel";
-			this.CacheLabel.Size = new System.Drawing.Size(91, 13);
-			this.CacheLabel.TabIndex = 3;
-			this.CacheLabel.Text = "Size: {0} files ({1})";
-			// 
 			// OptionsTabControl
 			// 
 			this.OptionsTabControl.Controls.Add(this.GeneralTabPage);
-			this.OptionsTabControl.Controls.Add(this.NetworkTabPage);
+			this.OptionsTabControl.Controls.Add(this.CapturingTabPage);
 			this.OptionsTabControl.Controls.Add(this.CacheTabPage);
 			this.OptionsTabControl.Controls.Add(this.GoogleCloudTabPage);
 			this.OptionsTabControl.Controls.Add(this.MicrosoftCortanaTabPage);
@@ -430,20 +322,20 @@
 			this.GeneralTabPage.TabIndex = 0;
 			this.GeneralTabPage.Text = "General";
 			// 
-			// NetworkTabPage
+			// CapturingTabPage
 			// 
-			this.NetworkTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.NetworkTabPage.Controls.Add(this.CaptureGroupBox);
-			this.NetworkTabPage.Location = new System.Drawing.Point(4, 22);
-			this.NetworkTabPage.Name = "NetworkTabPage";
-			this.NetworkTabPage.Size = new System.Drawing.Size(746, 341);
-			this.NetworkTabPage.TabIndex = 4;
-			this.NetworkTabPage.Text = "Network";
+			this.CapturingTabPage.BackColor = System.Drawing.SystemColors.Control;
+			this.CapturingTabPage.Controls.Add(this.CapturingPanel);
+			this.CapturingTabPage.Location = new System.Drawing.Point(4, 22);
+			this.CapturingTabPage.Name = "CapturingTabPage";
+			this.CapturingTabPage.Size = new System.Drawing.Size(746, 341);
+			this.CapturingTabPage.TabIndex = 4;
+			this.CapturingTabPage.Text = "Capturing";
 			// 
 			// CacheTabPage
 			// 
 			this.CacheTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.CacheTabPage.Controls.Add(this.CacheOptionsGroupBox);
+			this.CacheTabPage.Controls.Add(this.CachePanel);
 			this.CacheTabPage.Location = new System.Drawing.Point(4, 22);
 			this.CacheTabPage.Name = "CacheTabPage";
 			this.CacheTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -454,7 +346,7 @@
 			// GoogleCloudTabPage
 			// 
 			this.GoogleCloudTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.GoogleCloudTabPage.Controls.Add(this.googleOptionsUserControl1);
+			this.GoogleCloudTabPage.Controls.Add(this.GoogleCloudPanel);
 			this.GoogleCloudTabPage.Location = new System.Drawing.Point(4, 22);
 			this.GoogleCloudTabPage.Name = "GoogleCloudTabPage";
 			this.GoogleCloudTabPage.Size = new System.Drawing.Size(746, 341);
@@ -464,28 +356,44 @@
 			// MicrosoftCortanaTabPage
 			// 
 			this.MicrosoftCortanaTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.MicrosoftCortanaTabPage.Controls.Add(this.cortanaUserControl1);
+			this.MicrosoftCortanaTabPage.Controls.Add(this.MicrosoftCortanaPanel);
 			this.MicrosoftCortanaTabPage.Location = new System.Drawing.Point(4, 22);
 			this.MicrosoftCortanaTabPage.Name = "MicrosoftCortanaTabPage";
 			this.MicrosoftCortanaTabPage.Size = new System.Drawing.Size(746, 341);
 			this.MicrosoftCortanaTabPage.TabIndex = 3;
 			this.MicrosoftCortanaTabPage.Text = "Microsoft Cortana";
 			// 
-			// googleOptionsUserControl1
+			// CapturingPanel
 			// 
-			this.googleOptionsUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.googleOptionsUserControl1.Location = new System.Drawing.Point(0, 0);
-			this.googleOptionsUserControl1.Name = "googleOptionsUserControl1";
-			this.googleOptionsUserControl1.Size = new System.Drawing.Size(746, 341);
-			this.googleOptionsUserControl1.TabIndex = 0;
+			this.CapturingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.CapturingPanel.Location = new System.Drawing.Point(0, 0);
+			this.CapturingPanel.Name = "CapturingPanel";
+			this.CapturingPanel.Size = new System.Drawing.Size(746, 341);
+			this.CapturingPanel.TabIndex = 0;
 			// 
-			// cortanaUserControl1
+			// CachePanel
 			// 
-			this.cortanaUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.cortanaUserControl1.Location = new System.Drawing.Point(0, 0);
-			this.cortanaUserControl1.Name = "cortanaUserControl1";
-			this.cortanaUserControl1.Size = new System.Drawing.Size(746, 341);
-			this.cortanaUserControl1.TabIndex = 0;
+			this.CachePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.CachePanel.Location = new System.Drawing.Point(3, 3);
+			this.CachePanel.Name = "CachePanel";
+			this.CachePanel.Size = new System.Drawing.Size(740, 335);
+			this.CachePanel.TabIndex = 0;
+			// 
+			// GoogleCloudPanel
+			// 
+			this.GoogleCloudPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.GoogleCloudPanel.Location = new System.Drawing.Point(0, 0);
+			this.GoogleCloudPanel.Name = "GoogleCloudPanel";
+			this.GoogleCloudPanel.Size = new System.Drawing.Size(746, 341);
+			this.GoogleCloudPanel.TabIndex = 0;
+			// 
+			// MicrosoftCortanaPanel
+			// 
+			this.MicrosoftCortanaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.MicrosoftCortanaPanel.Location = new System.Drawing.Point(0, 0);
+			this.MicrosoftCortanaPanel.Name = "MicrosoftCortanaPanel";
+			this.MicrosoftCortanaPanel.Size = new System.Drawing.Size(746, 341);
+			this.MicrosoftCortanaPanel.TabIndex = 0;
 			// 
 			// OptionsControl
 			// 
@@ -494,20 +402,15 @@
 			this.Controls.Add(this.OptionsTabControl);
 			this.Name = "OptionsControl";
 			this.Size = new System.Drawing.Size(754, 367);
-			this.Load += new System.EventHandler(this.OptionsControl_Load);
 			this.AddSilenceGroupBox.ResumeLayout(false);
 			this.AddSilenceGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).EndInit();
 			this.LoggingGroupBox.ResumeLayout(false);
 			this.LoggingGroupBox.PerformLayout();
-			this.CaptureGroupBox.ResumeLayout(false);
-			this.CaptureGroupBox.PerformLayout();
-			this.CacheOptionsGroupBox.ResumeLayout(false);
-			this.CacheOptionsGroupBox.PerformLayout();
 			this.OptionsTabControl.ResumeLayout(false);
 			this.GeneralTabPage.ResumeLayout(false);
-			this.NetworkTabPage.ResumeLayout(false);
+			this.CapturingTabPage.ResumeLayout(false);
 			this.CacheTabPage.ResumeLayout(false);
 			this.GoogleCloudTabPage.ResumeLayout(false);
 			this.MicrosoftCortanaTabPage.ResumeLayout(false);
@@ -532,27 +435,20 @@
         private System.Windows.Forms.Label FilterTextLabel;
         private System.Windows.Forms.Button OpenButton;
         private System.Windows.Forms.CheckBox LoggingPlaySoundCheckBox;
-		private System.Windows.Forms.GroupBox CaptureGroupBox;
-		private System.Windows.Forms.RadioButton CaptureWinButton;
-		private System.Windows.Forms.RadioButton CaptureSocButton;
-		private System.Windows.Forms.GroupBox CacheOptionsGroupBox;
-		private System.Windows.Forms.CheckBox CacheDataWriteCheckBox;
-		private System.Windows.Forms.Button OpenCacheButton;
-		private System.Windows.Forms.Label CacheLabel;
 		private System.Windows.Forms.Button HowToButton;
 		private System.Windows.Forms.ComboBox PlaybackDeviceComboBox;
 		private System.Windows.Forms.Button RefreshPlaybackDevices;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.CheckBox CacheDataGeneralizeCheckBox;
-		private System.Windows.Forms.CheckBox CacheDataReadCheckBox;
 		private System.Windows.Forms.TabControl OptionsTabControl;
 		private System.Windows.Forms.TabPage GeneralTabPage;
 		private System.Windows.Forms.TabPage CacheTabPage;
 		private System.Windows.Forms.TabPage GoogleCloudTabPage;
 		private System.Windows.Forms.TabPage MicrosoftCortanaTabPage;
-		private System.Windows.Forms.TabPage NetworkTabPage;
-		private CortanaUserControl cortanaUserControl1;
-		private Google.GoogleOptionsUserControl googleOptionsUserControl1;
+		private System.Windows.Forms.TabPage CapturingTabPage;
+		private OptionsMicrosoftCortanaUserControl MicrosoftCortanaPanel;
+		private Google.OptionsGoogleCloudUserControl GoogleCloudPanel;
+		private OptionsCacheUserControl CachePanel;
+		private OptionsCapturingUserControl CapturingPanel;
 	}
 }

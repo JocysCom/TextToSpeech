@@ -146,6 +146,9 @@
     <Compile Include="Audio\EffectsPreset.cs" />
     <Compile Include="Audio\EffectType.cs" />
     <Compile Include="Audio\KeyValue.cs" />
+    <Compile Include="Capturing\CapturingType.cs" />
+    <Compile Include="Capturing\DisPcapDevice.cs" />
+    <Compile Include="Capturing\WinPcapHelper.cs" />
     <Compile Include="Common\Acronym.cs" />
     <Compile Include="Common\AudioPlayerState.cs" />
     <Compile Include="Common\HiLoUhsort.cs" />
@@ -163,11 +166,23 @@
     <Compile Include="Controls\AcronymsUserControl.Designer.cs">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CortanaUserControl.cs">
+    <Compile Include="Controls\OptionsCacheUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\CortanaUserControl.Designer.cs">
-      <DependentUpon>CortanaUserControl.cs</DependentUpon>
+    <Compile Include="Controls\OptionsCacheUserControl.Designer.cs">
+      <DependentUpon>OptionsCacheUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OptionsCapturingUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\OptionsCapturingUserControl.Designer.cs">
+      <DependentUpon>OptionsCapturingUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OptionsMicrosoftCortanaUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\OptionsMicrosoftCortanaUserControl.Designer.cs">
+      <DependentUpon>OptionsMicrosoftCortanaUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MonitorsUserControl.cs">
       <SubType>UserControl</SubType>
@@ -194,11 +209,11 @@
     <Compile Include="Controls\VoiceDefaultsUserControl.Designer.cs">
       <DependentUpon>VoiceDefaultsUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Google\GoogleOptionsUserControl.cs">
+    <Compile Include="Google\OptionsGoogleCloudUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Google\GoogleOptionsUserControl.Designer.cs">
-      <DependentUpon>GoogleOptionsUserControl.cs</DependentUpon>
+    <Compile Include="Google\OptionsGoogleCloudUserControl.Designer.cs">
+      <DependentUpon>OptionsGoogleCloudUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Google\ListResponse.cs" />
     <Compile Include="Google\SsmlVoiceGender.cs" />
@@ -239,6 +254,8 @@
       <DependentUpon>MessageBoxForm.cs</DependentUpon>
     </Compile>
     <Compile Include="JocysCom\Controls\ToolStripBorderlessRenderer.cs" />
+    <Compile Include="JocysCom\Drawing\Basic.cs" />
+    <Compile Include="JocysCom\Drawing\Effects\Common.cs" />
     <Compile Include="JocysCom\IO\LogFileWriter.cs" />
     <Compile Include="JocysCom\Network\NetStatInfo.cs" />
     <Compile Include="JocysCom\Runtime\Attributes.cs" />
@@ -276,11 +293,11 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Network\SocPcapDevice.cs" />
+    <Compile Include="Capturing\SocPcapDevice.cs" />
     <Compile Include="PlugIns\VoiceListItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Network\message.cs" />
+    <Compile Include="Capturing\message.cs" />
     <Compile Include="PlugIns\WowListItem.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -291,8 +308,14 @@
     <EmbeddedResource Include="Controls\AcronymsUserControl.resx">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\CortanaUserControl.resx">
-      <DependentUpon>CortanaUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\OptionsCacheUserControl.resx">
+      <DependentUpon>OptionsCacheUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\OptionsCapturingUserControl.resx">
+      <DependentUpon>OptionsCapturingUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\OptionsMicrosoftCortanaUserControl.resx">
+      <DependentUpon>OptionsMicrosoftCortanaUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MonitorsUserControl.resx">
       <DependentUpon>MonitorsUserControl.cs</DependentUpon>
@@ -312,8 +335,8 @@
     <EmbeddedResource Include="Controls\SoundEffectsControl.resx">
       <DependentUpon>SoundEffectsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Google\GoogleOptionsUserControl.resx">
-      <DependentUpon>GoogleOptionsUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="Google\OptionsGoogleCloudUserControl.resx">
+      <DependentUpon>OptionsGoogleCloudUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JocysCom\Configuration\SettingsItemForm.resx">
       <DependentUpon>SettingsItemForm.cs</DependentUpon>

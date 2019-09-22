@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace JocysCom.TextToSpeech.Monitor.Network
+namespace JocysCom.TextToSpeech.Monitor.Capturing
 {
     public class sound : INotifyPropertyChanged
     {

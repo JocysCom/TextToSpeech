@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Linq;
 using JocysCom.ClassLibrary.ComponentModel;
-using JocysCom.TextToSpeech.Monitor.Network;
+using JocysCom.TextToSpeech.Monitor.Capturing;
 using JocysCom.ClassLibrary.Runtime;
 using JocysCom.ClassLibrary.Configuration;
 

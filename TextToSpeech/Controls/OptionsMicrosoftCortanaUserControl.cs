@@ -7,9 +7,9 @@ using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-	public partial class CortanaUserControl : UserControl
+	public partial class OptionsMicrosoftCortanaUserControl : UserControl
 	{
-		public CortanaUserControl()
+		public OptionsMicrosoftCortanaUserControl()
 		{
 			InitializeComponent();
 		}

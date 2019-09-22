@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor.Google
 {
-	public partial class GoogleOptionsUserControl : UserControl
+	public partial class OptionsGoogleCloudUserControl : UserControl
 	{
-		public GoogleOptionsUserControl()
+		public OptionsGoogleCloudUserControl()
 		{
 			InitializeComponent();
 			if (IsDesignMode)

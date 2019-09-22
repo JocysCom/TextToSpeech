@@ -1,6 +1,6 @@
 ﻿namespace JocysCom.TextToSpeech.Monitor.Google
 {
-	partial class GoogleOptionsUserControl
+	partial class OptionsGoogleCloudUserControl
 	{
 		/// <summary> 
 		/// Required designer variable.

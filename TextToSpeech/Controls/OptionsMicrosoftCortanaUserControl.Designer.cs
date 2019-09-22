@@ -1,6 +1,6 @@
 ﻿namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-    partial class CortanaUserControl
+    partial class OptionsMicrosoftCortanaUserControl
     {
         /// <summary>
         /// Required designer variable.

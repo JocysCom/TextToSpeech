@@ -42,6 +42,7 @@ CALL:MKJ Common
 CALL:MKJ ComponentModel
 CALL:MKJ Configuration
 CALL:MKJ Controls
+CALL:MKJ Drawing
 CALL:MKJ IO
 CALL:MKJ Network
 CALL:MKJ Security

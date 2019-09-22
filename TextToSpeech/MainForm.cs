@@ -26,6 +26,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			if (IsDesignMode)
 				return;
 			LoadSettings();
+			SettingsManager.Options.PropertyChanged += Options_PropertyChanged;
 			WavPlayer = new AudioPlayer(Handle);
 			playlist = new BindingList<PlayItem>();
 			playlist.ListChanged += playlist_ListChanged;
@@ -53,6 +54,14 @@ namespace JocysCom.TextToSpeech.Monitor
 			ProgramComboBox.SelectedIndexChanged += ProgramComboBox_SelectedIndexChanged;
 		}
 
+		private void Options_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(SettingsManager.Options.CapturingType))
+			{
+				Program.TopForm.StopNetworkMonitor();
+				Program.TopForm.StartNetworkMonitor();
+			}
+		}
 
 		public bool IsDesignMode
 		{
