@@ -228,7 +228,7 @@
         </Anchors>
         <Scripts>
           <OnClick>
-            JocysCom_StopButton_OnClick("Quest");
+            JocysCom_StopButton_OnClick("Quest");       
           </OnClick>
         </Scripts>
         <ButtonText font="Fonts\ARIALN.TTF">
@@ -238,14 +238,14 @@
           <FontHeight val="18" />
         </ButtonText>
       </Button>
-      <Button name="JocysCom_PlayButtonButton" inherits="UIPanelButtonTemplate" parent="JocysCom_DialogueMiniFrame" text="►">
+      <Button name="JocysCom_PlayButton" inherits="UIPanelButtonTemplate" parent="JocysCom_DialogueMiniFrame" text="►">
         <Size x="31" y="21" />
         <Anchors>
           <Anchor point="TOPLEFT" x="83" y="-1" />
         </Anchors>
         <Scripts>
           <OnClick>
-            JocysCom_PlayButtonButton_OnClick(self);
+            JocysCom_PlayButton_OnClick(self);
           </OnClick>
         </Scripts>
         <ButtonText font="Fonts\ARIALN.TTF">
@@ -334,6 +334,14 @@
           <Color a="0.8" r="0" g="0" b="0" />
         </Texture>
       </Layer>
+        <Layer>
+          <FontString name="JocysCom_ClipboardMessageSLeftFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
+            <Anchors>
+              <Anchor point="LEFT" relativePoint="RIGHT" x="0" y="-11" />
+            </Anchors>
+            <Color a="0.5" r="1" g="1" b="1" />
+          </FontString>
+        </Layer>
     </Layers>
     <Frames>
       <Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="≡">
@@ -395,24 +403,52 @@
         <Scripts>
           <OnEnter>
             JocysCom_OptionsButton:Show();
-            <!--JocysCom_SaveButton:Show();-->
-            <!--JocysCom_MiniMenuFrame_Show("Stop");-->
           </OnEnter>
           <OnClick>
             JocysCom_StopButton_OnClick();
+            JocysCom_ClipboardMessageEditBoxSetFocus();
           </OnClick>
           <OnLeave>
             JocysCom_OptionsButton:Hide();
-            <!--JocysCom_SaveButton:Hide();-->
           </OnLeave>
         </Scripts>
         <ButtonText font="Fonts\ARIALN.TTF">
           <Anchors>
-            <Anchor point="TOP" x="1" />
+            <Anchor point="TOP" x="1" y="-0.5" />
           </Anchors>
           <FontHeight val="18" />
         </ButtonText>
       </Button>
+
+      <Button name="JocysCom_ContinueButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="►">
+        <Size x="23" y="21" />
+        <Anchors>
+          <Anchor point="TOPLEFT" x="3" y="-26" />
+        </Anchors>       
+        <Scripts>
+          <OnLoad>
+            self:Hide();
+          </OnLoad>
+          <OnEnter>
+            JocysCom_OptionsButton:Show();
+          </OnEnter>
+          <OnClick>
+            self:Hide();
+            JocysCom_StopButton:Show();
+            JocysCom_ClipboardMessageEditBoxSetFocus();
+          </OnClick>
+          <OnLeave>
+            JocysCom_OptionsButton:Hide();
+          </OnLeave>
+        </Scripts>
+        <ButtonText font="Fonts\ARIALN.TTF">
+          <Anchors>
+            <Anchor point="CENTER" x="1" y="" />
+          </Anchors>
+          <FontHeight val="13" />
+        </ButtonText>
+      </Button>
+
       <Frame name="JocysCom_MiniMenuFrame" parent="JocysCom_StopButtonFrame" enableMouse="true">
         <Size x="240" y="486" />
         <Anchors>

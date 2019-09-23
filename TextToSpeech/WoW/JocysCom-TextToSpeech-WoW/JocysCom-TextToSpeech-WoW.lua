@@ -907,7 +907,7 @@ end
 -- ScrollFrame - scroll-up or scroll-down.
 function JocysCom_DialogueScrollFrame_OnMouseWheel(self, delta)
 	if delta == 1 then
-			JocysCom_PlayButtonButton_OnClick();
+			JocysCom_PlayButton_OnClick();
 		else
 			JocysCom_SendChatMessageStop(2, "Quest");
 		end
@@ -1011,6 +1011,11 @@ end
 -- Add message to table for Clipboard.
 function JocysCom_AddMessageToTable(message1)
 	table.insert(messagesTable, message1);
+	if #messagesTable > 0 then
+		JocysCom_ClipboardMessageSLeftFontString:SetText(#messagesTable);
+	else
+		JocysCom_ClipboardMessageSLeftFontString:SetText("");
+	end
 	if DebugEnabled then print("Messages: " .. #messagesTable); end
 	if timerEnabled == false then
 		timerEnabled = true;
@@ -1020,6 +1025,8 @@ end
 
 -- Send messages from table for Clipboard.
 function JocysCom_SendMessagesFromTable()
+	JocysCom_ButtonFlashing();
+	if JocysCom_ClipboardMessageEditBox:HasFocus() then 
 		if DebugEnabled then print("Sending: " .. #messagesTable); end
 		-- Set message.
 		JocysCom_ClipboardMessageEditBox:SetText(messagesTable[1]);
@@ -1040,6 +1047,27 @@ function JocysCom_SendMessagesFromTable()
 		-- Remove sent message after * second.
 		--<PREFIX>_wait(delay, func [, param [,param [,...]]])
 		JocysCom_wait(0.2, JocysCom_RemoveMessageFromTable);
+	else
+		JocysCom_wait(0.2, JocysCom_SendMessagesFromTable);
+	end
+end
+
+function JocysCom_ButtonFlashing()
+	if JocysCom_ClipboardMessageEditBox:HasFocus() then
+		if UIFrameIsFading(JocysCom_ContinueButton) then
+			UIFrameFlashRemoveFrame(JocysCom_ContinueButton);
+		end
+		JocysCom_ContinueButton:Hide();
+		JocysCom_StopButton:Show();
+	else	
+		UIFrameFlash(JocysCom_ContinueButton, 1, 1, 10, true, 0, 0)
+		JocysCom_ContinueButton:Show();
+		JocysCom_StopButton:Hide();
+	end
+end
+
+function JocysCom_ClipboardMessageEditBoxSetFocus()
+	JocysCom_ClipboardMessageEditBox:SetFocus();
 end
 
 function JocysCom_RemoveMessageFromTable()
@@ -1051,6 +1079,11 @@ function JocysCom_RemoveMessageFromTable()
 		else
 			timerEnabled = false;
 			if DebugEnabled then print("Left: " .. #messagesTable); end
+		end
+		if #messagesTable > 0 then
+			JocysCom_ClipboardMessageSLeftFontString:SetText(#messagesTable);
+		else
+			JocysCom_ClipboardMessageSLeftFontString:SetText("");
 		end
 end
 
@@ -1086,7 +1119,7 @@ function JocysCom_wait(delay, func, ...)
 end
 
 -- [ Play ] button.
-function JocysCom_PlayButtonButton_OnClick(self)
+function JocysCom_PlayButton_OnClick(self)
 	if QuestLogPopupDetailFrame:IsShown() or WorldMapFrame:IsShown() then
 		local questDescription, questObjectives = GetQuestLogQuestText();
 		questMessage = questObjectives .. " Description. " .. questDescription;
