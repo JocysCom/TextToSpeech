@@ -6,8 +6,8 @@
 ## SavedVariables:
 
 # Options:
-## SavedVariablesPerCharacter: JocysCom_ReplaceNameEB, JocysCom_ColorMessagePixelXEB, JocysCom_ColorMessagePixelYEB
-## SavedVariablesPerCharacter: JocysCom_ColorMessageCB, JocysCom_LockCB, JocysCom_MenuCB, JocysCom_FilterCB, JocysCom_SaveCB
+## SavedVariablesPerCharacter: JocysCom_ReplaceNameEB, JocysCom_ClipboardMessagePixelXEB, JocysCom_ClipboardMessagePixelYEB
+## SavedVariablesPerCharacter: JocysCom_ClipboardMessageCB, JocysCom_LockCB, JocysCom_MenuCB, JocysCom_FilterCB, JocysCom_SaveCB
 
 # Mini Frame:
 ## SavedVariablesPerCharacter: JocysCom_DndCB, JocysCom_ObjectivesCB, JocysCom_StartOnOpenCB, JocysCom_StopOnCloseCB

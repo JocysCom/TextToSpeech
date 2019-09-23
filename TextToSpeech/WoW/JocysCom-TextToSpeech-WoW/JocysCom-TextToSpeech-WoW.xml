@@ -16,14 +16,14 @@
     </Layers>
     <Frames>
       <!--Message change pixel position-->
-      <EditBox name="JocysCom_ColorMessagePixelXEditBox" inherits="InputBoxTemplate" numeric="true">
+      <EditBox name="JocysCom_ClipboardMessagePixelXEditBox" inherits="InputBoxTemplate" numeric="true">
         <Size x="50" y="20" />
         <Anchors>
           <Anchor point="TOPRIGHT" x="-100" y="-29" />
         </Anchors>
         <Layers>
           <Layer>
-            <FontString name="JocysCom_ColorMessagePixelXFontString" inherits="GameFontHighlightSmall">
+            <FontString name="JocysCom_ClipboardMessagePixelXFontString" inherits="GameFontHighlightSmall">
               <Anchors>
                 <Anchor point="RIGHT" relativePoint="LEFT" x="-8" />
               </Anchors>
@@ -37,14 +37,14 @@
         </Scripts>
         <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
       </EditBox>
-      <EditBox name="JocysCom_ColorMessagePixelYEditBox" inherits="InputBoxTemplate" numeric="true">
+      <EditBox name="JocysCom_ClipboardMessagePixelYEditBox" inherits="InputBoxTemplate" numeric="true">
         <Size x="50" y="20" />
         <Anchors>
           <Anchor point="TOPRIGHT" x="-13" y="-29" />
         </Anchors>
         <Layers>
           <Layer>
-            <FontString name="JocysCom_ColorMessagePixelYFontString" inherits="GameFontHighlightSmall">
+            <FontString name="JocysCom_ClipboardMessagePixelYFontString" inherits="GameFontHighlightSmall">
               <Anchors>
                 <Anchor point="RIGHT" relativePoint="LEFT" x="-8" />
               </Anchors>
@@ -59,14 +59,14 @@
         <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
       </EditBox>
       <!--Checkboxes-->
-      <CheckButton name="JocysCom_ColorMessageCheckButton" inherits="UICheckButtonTemplate">
+      <CheckButton name="JocysCom_ClipboardMessageCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
           <Anchor point="TOPLEFT" x="7" y="-26" />
         </Anchors>
         <Scripts>
           <OnClick>
-            JocysCom_ColorMessageCheckButton();
+            JocysCom_ClipboardMessageCheckButton();
           </OnClick>
         </Scripts>
       </CheckButton>
@@ -1620,7 +1620,7 @@
     </Scripts>
   </Frame>
 
-  <Frame name="JocysCom_MessageColorFrame" parent="UIParent" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH">
+  <Frame name="JocysCom_ClipboardMessageFrame" parent="UIParent" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH">
     <Size x="1080" y="10" />
     <Anchors>
       <Anchor point="TOPLEFT" />
@@ -1676,7 +1676,7 @@
           <size x="2" y="2"/>
           <Color a="1" r="1" g="0" b="0" />
         </Texture>
-        <Texture name="JocysCom_MessageColorFrame_Texture">
+        <Texture name="JocysCom_ClipboardMessageFrame_Texture">
           <Anchors>
             <Anchor point="LEFT" x="14" />
           </Anchors>
@@ -1688,14 +1688,14 @@
       </Layer>
     </Layers>
     <Frames>
-      <EditBox name="JocysCom_MessageColorEditBox" parent="JocysCom_MessageColorFrame" letters="10000" multiLine="false">
+      <EditBox name="JocysCom_ClipboardMessageEditBox" parent="JocysCom_ClipboardMessageFrame" letters="10000" multiLine="false">
         <Anchors>
           <Anchor point="TOPLEFT" x="18" y="-1" />
           <Anchor point="BOTTOMRIGHT"  x="0" y="1" />
         </Anchors>
         <Layers>
           <Layer>
-            <Texture name="JocysCom_MessageColorFrame_Texture">
+            <Texture name="JocysCom_ClipboardMessageFrame_Texture">
               <Color a="0.5" r="0.0" g="0" b="0" />
             </Texture>
           </Layer>

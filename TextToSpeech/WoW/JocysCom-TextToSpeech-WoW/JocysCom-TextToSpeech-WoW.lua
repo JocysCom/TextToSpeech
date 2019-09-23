@@ -39,10 +39,12 @@ local macroName = "NPCSaveTTSMacro"
 local macroIndex = GetMacroIndexByName(macroName);
 local macroIcon = "INV_Misc_GroupNeedMore";
 local macroMessage = "/targetfriend";
-local messageColor = 0;
-local messageColorT = 0;
+local clipboardMessageColor = 0;
 local pixelX = 0;
 local pixelY = 0;
+local chatMessageLimit = 240;
+local messagesTable = {};
+local timerEnabled = false;
 
 function JocysCom_UpdateMacro()
 	--Create macro if it doesn't exist and slot is available.
@@ -143,9 +145,9 @@ function JocysCom_Text_EN()
 	-- OptionsFrame title.
 	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.5 ( 2019-09-22 )");
 	-- CheckButtons (Options) text.
-	JocysCom_ColorMessagePixelXFontString:SetText("|cff808080 Color pixel for \"Monitor\" position left:|r");
-	JocysCom_ColorMessagePixelYFontString:SetText("|cff808080 Top:|r");
-	JocysCom_ColorMessageCheckButton.text:SetText("|cff808080 Send messages using|r |cffffffffClipboard|r|cff808080.|r");
+	JocysCom_ClipboardMessagePixelXFontString:SetText("|cff808080 Color pixel for \"Monitor\" position left:|r");
+	JocysCom_ClipboardMessagePixelYFontString:SetText("|cff808080 Top:|r");
+	JocysCom_ClipboardMessageCheckButton.text:SetText("|cff808080 Send messages using|r |cffffffffClipboard|r|cff808080.|r");
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffffSave in Monitor <NPC>|r |cff808080 " .. macroName .. " related messages.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080buttons. Grab frame by clicking on dark background around buttons.|r");
@@ -197,9 +199,12 @@ function JocysCom_SendChatMessageStop(CloseOrButton, group)
 	end			
 	if (stopWhenClosing == 1 or group ~= nil or group ~= "") and (JocysCom_StopOnCloseCheckButton:GetChecked() == true or (CloseOrButton == 1 or CloseOrButton == 2)) then
 		--SendChatMessage(messageStop, "WHISPER", "Common", unitName);
-		C_ChatInfo.SendAddonMessage(addonPrefix, messageStop, "WHISPER", unitName);
-		--Send color message.
-		JocysCom_SendColorMessage(messageStop);
+		--Send message.
+		if JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+			JocysCom_AddMessageToTable(messageStop);
+		else
+			C_ChatInfo.SendAddonMessage(addonPrefix, messageStop, "WHISPER", unitName);
+		end
 		stopWhenClosing = 0;
 		JocysCom_OptionsEditBox:SetText("|cff808080" .. messageStop .. "|r");
 	end
@@ -209,9 +214,12 @@ end
 function JocysCom_SendSoundIntro(group)
 	--SendChatMessage("<message command=\"sound\" group=\"" .. group .. "\" />", "WHISPER", "Common", unitName);
 	messageGroup = "<message command=\"sound\" group=\"" .. group .. "\" />";
-	C_ChatInfo.SendAddonMessage(addonPrefix, messageGroup, "WHISPER", unitName);
-	--Send color message.
-	JocysCom_SendColorMessage(messageGroup);
+	--Send message.
+	if JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+		JocysCom_AddMessageToTable(messageGroup);
+	else
+		C_ChatInfo.SendAddonMessage(addonPrefix, messageGroup, "WHISPER", unitName);
+	end
 end
 
 -- Register events.
@@ -537,9 +545,12 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 	-- Send player Name, Class and custom Name to Monitor.
 	if string.find(speakMessage, customName) ~= nil or string.find(string.lower(speakMessage), string.lower(unitClass)) ~= nil  then
 		messagePlayer = "<message command=\"player\" name=\"" .. unitName .. "," .. customName .. "," .. unitClass ..  "\" />";
-		C_ChatInfo.SendAddonMessage(addonPrefix, messagePlayer, "WHISPER", unitName);
-		--Send color message.
-		JocysCom_SendColorMessage(messagePlayer);
+	--Send color message.
+		if	JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+			JocysCom_AddMessageToTable(messagePlayer);
+		else
+			C_ChatInfo.SendAddonMessage(addonPrefix, messagePlayer, "WHISPER", unitName);
+		end
 	end
 
 	--Replace text in message.
@@ -600,7 +611,11 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 		local chatMessageSA = "<message command=\"add\"><part>";
 		local chatMessageE = "</part></message>";
 		local chatMessage;
-		local chatMessageLimit = 240;
+		if JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+			chatMessageLimit = 10000;
+		else
+			chatMessageLimit = 240;
+		end
 		local sizeAdd = chatMessageLimit - string.len(chatMessageSA) - string.len(chatMessageE) - string.len(addonPrefix);
 		local sizePlay = chatMessageLimit - string.len(chatMessageSP) - string.len(chatMessageE) - string.len(addonPrefix);
 		if DebugEnabled then print("Add message size: " ..  sizeAdd .. " Play message size: " .. sizePlay) end	
@@ -616,25 +631,31 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 				index = speakMessageLen;
 				endIndex = speakMessageLen + 1; -- 0-1000
 			end
-			-- If text length less than 100 then...
+			-- If text length less than max then...
 			if speakMessageRemainingLen <= sizePlay then
 				part = string.sub(speakMessage, startIndex);
 				chatMessage = chatMessageSP .. part .. chatMessageE;
 				stopWhenClosing = 1;
-				C_ChatInfo.SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
-				--Send color message.
-				JocysCom_SendColorMessage(chatMessage);
+				--Send message.
+				if JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+					JocysCom_AddMessageToTable(chatMessage);
+				else
+					C_ChatInfo.SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
+				end
 				if DebugEnabled then print("[" .. tostring(index) .. "] [" .. startIndex .. "] '" .. part .. "'") end
 				break;
-			-- If text length more than 100 then...
+			-- If text length more than max then...
 			elseif (index - startIndex) > sizeAdd or (index >= speakMessageLen and speakMessageRemainingLen > sizePlay) then
 				-- If space is out of size then...
 				part = string.sub(speakMessage, startIndex, endIndex - 1);
 				chatMessage = chatMessageSA .. part .. chatMessageE;
 				stopWhenClosing = 1;
-				C_ChatInfo.SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
-				--Send color message.
-				JocysCom_SendColorMessage(chatMessage);
+				--Send message.
+				if JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+					JocysCom_AddMessageToTable(chatMessage);
+				else
+					C_ChatInfo.SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
+				end
 				if DebugEnabled then print("[" .. tostring(index) .. "] [" .. startIndex .. "-" .. (endIndex - 1) .. "] '" .. part .. "'") end
 				startIndex = endIndex;
 				speakMessageRemainingLen = string.len(string.sub(speakMessage, startIndex));
@@ -959,12 +980,14 @@ function JocysCom_SaveNPC()
 			targetType = "";
 		end
 		local saveMessage = "<message command=\"Save\" name=\"" .. targetName .. "\" gender=\"" .. targetSex .. "\" effect=\"" .. targetType .. "\" />";
-		--Send message for "Monitor".
-		C_ChatInfo.SendAddonMessage(addonPrefix, saveMessage, "WHISPER", unitName);
+		--Send message.
+		if	JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+			JocysCom_AddMessageToTable(saveMessage);
+		else
+			C_ChatInfo.SendAddonMessage(addonPrefix, saveMessage, "WHISPER", unitName);
+		end
 		--Fill "Options" window EditBox.
 		JocysCom_OptionsEditBox:SetText("|cff808080" .. saveMessage .. "|r");
-		--Send color message.
-		JocysCom_SendColorMessage(saveMessage);
 		--Print information in to chat window.
 		if JocysCom_SaveCheckButton:GetChecked() ~= true then
 		print("|cffffff20Save in Monitor: " .. targetName .. " : " .. targetSex .. " : " .. targetType .. "|r");
@@ -980,28 +1003,86 @@ end
 --end
 
 -- Lock Enable / Disable.
-function JocysCom_ColorMessageCheckButton_OnClick()
+function JocysCom_ClipboardMessageCheckButton_OnClick()
 	PlaySound(856);
 	JocysCom_SaveTocFileSettings();
 end
 
---Send color message.
-function JocysCom_SendColorMessage(message)
-	if JocysCom_ColorMessageCheckButton:GetChecked() == true then
-	pixelX = JocysCom_ColorMessagePixelXEditBox:GetNumber();
-	pixelY = JocysCom_ColorMessagePixelYEditBox:GetNumber();
-	if pixelY > 0 then
-	pixelY = pixelY * -1;
+-- Add message to table for Clipboard.
+function JocysCom_AddMessageToTable(message1)
+	table.insert(messagesTable, message1);
+	if DebugEnabled then print("Messages: " .. #messagesTable); end
+	if timerEnabled == false then
+		timerEnabled = true;
+		JocysCom_SendMessagesFromTable();
 	end
-	JocysCom_MessageColorFrame:ClearAllPoints();
-	JocysCom_MessageColorFrame:SetPoint("TOPLEFT", pixelX, pixelY);
-	JocysCom_MessageColorFrame:Show();
-		JocysCom_MessageColorEditBox:SetText(message);
-		JocysCom_MessageColorEditBox:HighlightText();
-		messageColor = messageColor + 0.1;
-		if messageColor > 1 then messageColor = 0 end
-		JocysCom_MessageColorFrame_Texture:SetColorTexture(messageColor, messageColor, messageColor, 1.0);
-	end
+end
+
+-- Send messages from table for Clipboard.
+function JocysCom_SendMessagesFromTable()
+		if DebugEnabled then print("Sending: " .. #messagesTable); end
+		-- Set message.
+		JocysCom_ClipboardMessageEditBox:SetText(messagesTable[1]);
+		JocysCom_ClipboardMessageEditBox:HighlightText();
+		-- Set Clipboard pixel position.
+		pixelX = JocysCom_ClipboardMessagePixelXEditBox:GetNumber();
+		pixelY = JocysCom_ClipboardMessagePixelYEditBox:GetNumber();
+		if pixelY > 0 then
+			pixelY = pixelY * -1;
+		end
+		JocysCom_ClipboardMessageFrame:ClearAllPoints();
+		JocysCom_ClipboardMessageFrame:SetPoint("TOPLEFT", pixelX, pixelY);
+		JocysCom_ClipboardMessageFrame:Show();
+		-- Set pixel color.
+		clipboardMessageColor = clipboardMessageColor + 0.1;
+		if clipboardMessageColor > 1 then clipboardMessageColor = 0 end
+		JocysCom_ClipboardMessageFrame_Texture:SetColorTexture(clipboardMessageColor, clipboardMessageColor, clipboardMessageColor, 1.0);
+		-- Remove sent message after * second.
+		--<PREFIX>_wait(delay, func [, param [,param [,...]]])
+		JocysCom_wait(0.2, JocysCom_RemoveMessageFromTable);
+end
+
+function JocysCom_RemoveMessageFromTable()
+		table.remove(messagesTable, 1);
+		-- Repeat if there are messages in table.
+		if #messagesTable > 0 then
+			if DebugEnabled then print("Left: " .. #messagesTable); end
+			JocysCom_SendMessagesFromTable();
+		else
+			timerEnabled = false;
+			if DebugEnabled then print("Left: " .. #messagesTable); end
+		end
+end
+
+local waitTable = {};
+local waitFrame = nil;
+
+function JocysCom_wait(delay, func, ...)
+  if(type(delay)~="number" or type(func)~="function") then
+    return false;
+  end
+  if(waitFrame == nil) then
+    waitFrame = CreateFrame("Frame","WaitFrame", UIParent);
+    waitFrame:SetScript("onUpdate",function (self,elapse)
+      local count = #waitTable;
+      local i = 1;
+      while(i<=count) do
+        local waitRecord = tremove(waitTable,i);
+        local d = tremove(waitRecord,1);
+        local f = tremove(waitRecord,1);
+        local p = tremove(waitRecord,1);
+        if(d>elapse) then
+          tinsert(waitTable,i,{d-elapse,f,p});
+          i = i + 1;
+        else
+          count = count - 1;
+          f(unpack(p));
+        end
+      end
+    end);
+  end
+  tinsert(waitTable,{delay,func,{...}});
+  return true;
 end
 
 -- [ Play ] button.
@@ -1037,7 +1118,7 @@ end
 function JocysCom_LoadTocFileSettings()
 	-- Set (Options) CheckButtons.
 	if JocysCom_DndCB == false then JocysCom_DndCheckButton:SetChecked(false) else JocysCom_DndCheckButton:SetChecked(true) end
-	if JocysCom_ColorMessageCB == false then JocysCom_ColorMessageCheckButton:SetChecked(false) else JocysCom_ColorMessageCheckButton:SetChecked(true) end
+	if JocysCom_ClipboardMessageCB == false then JocysCom_ClipboardMessageCheckButton:SetChecked(false) else JocysCom_ClipboardMessageCheckButton:SetChecked(true) end
 	-- Set LockCheckButton and StopButtonFrame.
 	if JocysCom_LockCB == true then JocysCom_LockCheckButton:SetChecked(true) else JocysCom_LockCheckButton:SetChecked(false) end
 	if JocysCom_LockCheckButton:GetChecked() == true then JocysCom_StopButtonFrame:RegisterForDrag() else JocysCom_StopButtonFrame:RegisterForDrag("LeftButton") end
@@ -1058,8 +1139,8 @@ function JocysCom_LoadTocFileSettings()
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_DND", JocysCom_CHAT_MSG_DND);
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", JocysCom_CHAT_MSG_SYSTEM);
 	-- Set (Options) EditBoxes.
-	if JocysCom_ColorMessagePixelXEB == "" or JocysCom_ColorMessagePixelXEB == nil then JocysCom_ColorMessagePixelXEB = 0; JocysCom_ColorMessagePixelXEditBox:SetNumber(JocysCom_ColorMessagePixelXEB); else JocysCom_ColorMessagePixelXEditBox:SetNumber(JocysCom_ColorMessagePixelXEB) end
-	if JocysCom_ColorMessagePixelYEB == "" or JocysCom_ColorMessagePixelYEB == nil then JocysCom_ColorMessagePixelYEB = 0; JocysCom_ColorMessagePixelYEditBox:SetNumber(JocysCom_ColorMessagePixelYEB); else JocysCom_ColorMessagePixelYEditBox:SetNumber(JocysCom_ColorMessagePixelYEB) end
+	if JocysCom_ClipboardMessagePixelXEB == "" or JocysCom_ClipboardMessagePixelXEB == nil then JocysCom_ClipboardMessagePixelXEB = 0; JocysCom_ClipboardMessagePixelXEditBox:SetNumber(JocysCom_ClipboardMessagePixelXEB); else JocysCom_ClipboardMessagePixelXEditBox:SetNumber(JocysCom_ClipboardMessagePixelXEB) end
+	if JocysCom_ClipboardMessagePixelYEB == "" or JocysCom_ClipboardMessagePixelYEB == nil then JocysCom_ClipboardMessagePixelYEB = 0; JocysCom_ClipboardMessagePixelYEditBox:SetNumber(JocysCom_ClipboardMessagePixelYEB); else JocysCom_ClipboardMessagePixelYEditBox:SetNumber(JocysCom_ClipboardMessagePixelYEB) end
 	if JocysCom_ReplaceNameEB == "" or JocysCom_ReplaceNameEB == nil then JocysCom_ReplaceNameEB = unitName; JocysCom_ReplaceNameEditBox:SetText(JocysCom_ReplaceNameEB); else JocysCom_ReplaceNameEditBox:SetText(JocysCom_ReplaceNameEB) end
 	-- Set (MiniFrame) CheckButtons.
 	if JocysCom_QuestCB == false then JocysCom_QuestCheckButton:SetChecked(false) else JocysCom_QuestCheckButton:SetChecked(true) end
@@ -1119,10 +1200,10 @@ end
 -- Save settings.
 function JocysCom_SaveTocFileSettings()
 	-- Save check buttons.
-	JocysCom_ColorMessagePixelXEB = JocysCom_ColorMessagePixelXEditBox:GetNumber();
-	JocysCom_ColorMessagePixelYEB = JocysCom_ColorMessagePixelYEditBox:GetNumber();
+	JocysCom_ClipboardMessagePixelXEB = JocysCom_ClipboardMessagePixelXEditBox:GetNumber();
+	JocysCom_ClipboardMessagePixelYEB = JocysCom_ClipboardMessagePixelYEditBox:GetNumber();
 	JocysCom_ReplaceNameEB = JocysCom_ReplaceNameEditBox:GetText();
-	JocysCom_ColorMessageCB = JocysCom_ColorMessageCheckButton:GetChecked();
+	JocysCom_ClipboardMessageCB = JocysCom_ClipboardMessageCheckButton:GetChecked();
 	JocysCom_DndCB = JocysCom_DndCheckButton:GetChecked();
 	JocysCom_LockCB = JocysCom_LockCheckButton:GetChecked();
 	JocysCom_MenuCB = JocysCom_MenuCheckButton:GetChecked();
