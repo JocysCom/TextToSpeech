@@ -306,6 +306,7 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 	-- Events.  
 	if event == "ADDON_LOADED" and arg1 == addonName then
 		JocysCom_LoadTocFileSettings();
+		JocysCom_MenuCheckButton_OnClick();
 		JocysCom_UpdateMacro();
 		return;
 	elseif event == "PLAYER_LOGOUT" then
@@ -1166,16 +1167,6 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_LockCheckButton:GetChecked() == true then JocysCom_StopButtonFrame:RegisterForDrag() else JocysCom_StopButtonFrame:RegisterForDrag("LeftButton") end
 	-- Set MenuCheckButton and MiniMenuFrame.
 	if JocysCom_MenuCB == false then JocysCom_MenuCheckButton:SetChecked(false) else JocysCom_MenuCheckButton:SetChecked(true) end
-	-- Set MiniFrame position.
-	JocysCom_MiniMenuFrame:ClearAllPoints();
-	JocysCom_ClipboardMessageSLeftFontString:ClearAllPoints(); 
-	if JocysCom_MenuCheckButton:GetChecked() == true then
-		JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", -6, 1);
-		JocysCom_ClipboardMessageSLeftFontString:SetPoint("LEFT", JocysCom_StopButtonFrame, "RIGHT", 0, -11); 
-	else
-		JocysCom_MiniMenuFrame:SetPoint("BOTTOMRIGHT", JocysCom_StopButtonFrame, "BOTTOMLEFT", 2, 1);
-		JocysCom_ClipboardMessageSLeftFontString:SetPoint("RIGHT", JocysCom_StopButtonFrame, "LEFT", 0, -11); 
-	end
 	-- Set FilterCheckButton and Message filters.
 	if JocysCom_FilterCB == false then JocysCom_FilterCheckButton:SetChecked(false) else JocysCom_FilterCheckButton:SetChecked(true) end
 	if JocysCom_SaveCB == false then JocysCom_SaveCheckButton:SetChecked(false) else JocysCom_SaveCheckButton:SetChecked(true) end
