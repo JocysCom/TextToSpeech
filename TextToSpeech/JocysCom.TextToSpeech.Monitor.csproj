@@ -266,6 +266,7 @@
     <Compile Include="JocysCom\Security\HashHelper.cs" />
     <Compile Include="JocysCom\Security\MD5Helper.cs" />
     <Compile Include="JocysCom\Security\SHA256Helper.cs" />
+    <Compile Include="JocysCom\Text\EncodingType.cs" />
     <Compile Include="JocysCom\Text\Filters.cs" />
     <Compile Include="JocysCom\Text\Helper.cs" />
     <Compile Include="MainForm_Network.cs">

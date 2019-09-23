@@ -1,11 +1,13 @@
 ﻿using JocysCom.ClassLibrary.Controls;
 using JocysCom.ClassLibrary.Drawing;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -120,18 +122,70 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			return prefixBytes;
 		}
 
-		int x = 0;
+		int changeValue = 0;
+
+		//Dictionary<string, string> numbers = new Dictionary<string, string>()
+		//{
+		//	{"0", "00" }, {"1", "20" }, {"2", "40" }, {"3", "60" },
+		//	{"4", "80" }, {"5", "A0" }, {"6", "C0" }, {"7", "E0" },
+		//};
+
+		/// <summary>
+		/// Convert value 0-511 value to RGB.
+		/// </summary>
+		/// <param name=""></param>
+		int GetColor(int v)
+		{
+			// DEC   OCT   HEX 
+			// ---   ---   ------
+			//   0 =   0 =     00
+			//   1 =   1 =     20
+			//   2 =   2 =     40
+			//   3 =   3 =     60
+			//   4 =   4 =     80
+			//   5 =   5 =     A0
+			//   6 =   6 =     C0
+			//   7 =   7 =     E0
+			//   8 =  10 =   2000
+			//   9 =  11 =   2020
+			// ...   ...   ......
+			// 511 = 777 = E0E0E0
+			var num = Convert.ToString(v, 8);
+			var rgb = num.Select(x => int.Parse(x.ToString()) * 0x20).ToArray();
+			var r = rgb.Length > 2 ? rgb[2] : 0;
+			var g = rgb.Length > 1 ? rgb[1] : 0;
+			var b = rgb.Length > 0 ? rgb[0] : 0;
+			var c = (0xFF << 24) | (r << 16) | (g << 8) | b;
+			return c;
+		}
+
+		void GetValue(int v)
+		{
+		}
+
 
 		private void CreateImageButton_Click(object sender, EventArgs e)
 		{
+			var cols = new List<string>();
+			for (int i = 0; i < 512; i++)
+			{
+				var x = GetColor(i).ToString("X6");
+				cols.Add(x);
+			}
+			MessageBox.Show(string.Join(" ", cols));
+
+			// image: prefix[6] + change[1] + encoding[1] + [size[1] + message[X]]
+			// if encoding = 0, then clipboard.
 			var image = new Bitmap(ImagePictureBox.Width, ImagePictureBox.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 			var g = Graphics.FromImage(image);
 			// Create object to write.
 			var prefixBytes = GetPrefixRgbColorBytes();
-			x += 0x20;
+			changeValue += 0x20;
+			//var encodingCode = (int)JocysCom.ClassLibrary.Text.EncodingType.UCS2LE * 0x20;
 			var messageBytes = AddMessageTextCheckBox.Checked
 				? System.Text.Encoding.Unicode.GetBytes(TestTextBox.Text)
-				: new byte[] { (byte)(x & 0xFF) };
+				// Add RGB pixel.
+				: new byte[] { (byte)(changeValue & 0xFF), 0x00, 0x00 };
 			// Add pixels.
 			var ms = new MemoryStream();
 			var br = new System.IO.BinaryWriter(ms);
