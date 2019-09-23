@@ -212,7 +212,6 @@
       </OnDragStop>
     </Scripts>
   </Frame>
-
   <Frame name="JocysCom_DialogueMiniFrame" parent="UIParent">
     <Size x="128" y="32" />
     <Anchors>
@@ -446,18 +445,15 @@
           <FontHeight val="13" />
         </ButtonText>
       </Button>
-
       <Frame name="JocysCom_MiniMenuFrame" parent="JocysCom_StopButtonFrame" enableMouse="true">
         <Size x="240" y="486" />
         <Anchors>
           <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="-6" y="1" />
         </Anchors>
-
         <Backdrop tile="true" bgFile="Interface/FrameGeneral/UI-Background-Rock">
           <TileSize val="350" />
           <BackgroundInsets left="7" right="3" top="3" bottom="5" />
         </Backdrop>
-
         <Layers>
           <Layer>
             <Texture>
@@ -471,7 +467,6 @@
         </Layers>
 
         <Frames>
-
           <Frame name="JocysCom_MiniMenuFrameHeader" parent="JocysCom_MiniMenuFrame">
             <Size x="339" y="22" />
             <Anchors>
@@ -517,7 +512,6 @@
               </Layer>
             </Layers>
           </Frame>
-
           <Frame name="JocysCom_MiniMenuFrameBorder" parent="JocysCom_MiniMenuFrame">
             <Anchors>
               <Anchor point="TOPLEFT" />
@@ -1653,7 +1647,6 @@
       </OnLeave>
     </Scripts>
   </Frame>
-
   <Frame name="JocysCom_ClipboardMessageFrame" parent="UIParent" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH">
     <Size x="1080" y="10" />
     <Anchors>
@@ -1754,5 +1747,4 @@
       </OnDragStop>
     </Scripts>
   </Frame>
-
 </Ui>
