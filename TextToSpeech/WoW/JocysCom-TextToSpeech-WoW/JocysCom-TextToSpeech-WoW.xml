@@ -1,7 +1,7 @@
 ﻿<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd" xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="JocysCom-TextToSpeech-WoW-Addon.lua" />
   <Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parent="UIParent" movable="true" frameLevel="10" enableMouse="true">
-    <Size x="600" y="496" />
+    <Size x="600" y="600" />
     <Anchors>
       <Anchor point="CENTER" />
     </Anchors>
@@ -9,7 +9,7 @@
       <Layer>
         <FontString name="JocysCom_MessageForMonitorFrameFontString" inherits="GameFontHighlightSmall">
           <Anchors>
-            <Anchor point="TOP" y="-171" />
+            <Anchor point="TOP" y="-215" />
           </Anchors>
         </FontString>
       </Layer>
@@ -17,19 +17,10 @@
     <Frames>
       <!--Message change pixel position-->
       <EditBox name="JocysCom_ClipboardMessagePixelXEditBox" inherits="InputBoxTemplate" numeric="true">
-        <Size x="50" y="20" />
+        <Size x="40" y="20" />
         <Anchors>
-          <Anchor point="TOPRIGHT" x="-100" y="-29" />
+          <Anchor point="TOPLEFT" x="15" y="-75" />
         </Anchors>
-        <Layers>
-          <Layer>
-            <FontString name="JocysCom_ClipboardMessagePixelXFontString" inherits="GameFontHighlightSmall">
-              <Anchors>
-                <Anchor point="RIGHT" relativePoint="LEFT" x="-8" />
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
         <Scripts>
           <OnEscapePressed>
             JocysCom_OptionsButton_OnClick();
@@ -38,15 +29,15 @@
         <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
       </EditBox>
       <EditBox name="JocysCom_ClipboardMessagePixelYEditBox" inherits="InputBoxTemplate" numeric="true">
-        <Size x="50" y="20" />
+        <Size x="40" y="20" />
         <Anchors>
-          <Anchor point="TOPRIGHT" x="-13" y="-29" />
+          <Anchor point="TOPLEFT" x="65" y="-75" />
         </Anchors>
         <Layers>
           <Layer>
             <FontString name="JocysCom_ClipboardMessagePixelYFontString" inherits="GameFontHighlightSmall">
               <Anchors>
-                <Anchor point="RIGHT" relativePoint="LEFT" x="-8" />
+                <Anchor point="LEFT" relativePoint="RIGHT" x="2" />
               </Anchors>
             </FontString>
           </Layer>
@@ -58,22 +49,33 @@
         </Scripts>
         <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
       </EditBox>
-      <!--Checkboxes-->
-      <CheckButton name="JocysCom_ClipboardMessageCheckButton" inherits="UICheckButtonTemplate">
+      <!--CheckButtons-->
+      <CheckButton name="JocysCom_NetworkMessageCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
           <Anchor point="TOPLEFT" x="7" y="-26" />
         </Anchors>
         <Scripts>
           <OnClick>
-            JocysCom_ClipboardMessageCheckButton();
+            JocysCom_NetworkMessageCheckButton_OnClick();
           </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="JocysCom_LockCheckButton" inherits="UICheckButtonTemplate">
+      <CheckButton name="JocysCom_ClipboardMessageCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
           <Anchor point="TOPLEFT" x="7" y="-48" />
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            JocysCom_ClipboardMessageCheckButton_OnClick();
+          </OnClick>
+        </Scripts>
+      </CheckButton> 
+      <CheckButton name="JocysCom_LockCheckButton" inherits="UICheckButtonTemplate">
+        <Size x="26" y="27" />
+        <Anchors>
+          <Anchor point="TOPLEFT" x="7" y="-95" />
         </Anchors>
         <Scripts>
           <OnClick>
@@ -84,7 +86,7 @@
       <CheckButton name="JocysCom_MenuCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="7" y="-70" />
+          <Anchor point="TOPLEFT" x="7" y="-117" />
         </Anchors>
         <Scripts>
           <OnClick>
@@ -95,7 +97,7 @@
       <CheckButton name="JocysCom_SaveCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="7" y="-92" />
+          <Anchor point="TOPLEFT" x="7" y="-139" />
         </Anchors>
         <Scripts>
           <OnClick>
@@ -106,7 +108,7 @@
       <CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="7" y="-114" />
+          <Anchor point="TOPLEFT" x="7" y="-161" />
         </Anchors>
         <Scripts>
           <OnClick>
@@ -117,7 +119,7 @@
       <EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate" >
         <Size x="100" y="20" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="15" y="-140" />
+          <Anchor point="TOPLEFT" x="15" y="-188" />
         </Anchors>
         <Layers>
           <Layer>
@@ -138,26 +140,31 @@
 
       <!-- ******************************************************************************************************************** -->
 
-      <Frame name="JocysCom_MessageFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
-        <Size x="593" y="211" />
+      <Frame name="JocysCom_MessageFrame" inherits="InsetFrameTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" x="3" y="-186" />
-          <Anchor point="BOTTOMRIGHT" x="-4" y="117" />
+          <Anchor point="TOPLEFT" x="3" y="-232" />
+          <Anchor point="BOTTOMRIGHT" x="-3" y="142" />
         </Anchors>
+        <Layers>
+          <Layer>
+            <Texture>
+              <Anchors>
+                <Anchor point="TOPLEFT" x="2" y="-2" />
+                <Anchor point="BOTTOMRIGHT" x="-2" y="2" />
+              </Anchors>
+              <Color a="0.5" r="0" g="0" b="0" />
+            </Texture>
+          </Layer>
+        </Layers>
         <Frames>
           <ScrollFrame name="JocysCom_OptionsFrameScroll" inherits="UIPanelScrollFrameTemplate">
-            <Size x="683" y="91" />
             <Anchors>
               <Anchor point="TOPLEFT" x="5" y="-4" />
               <Anchor point="BOTTOMRIGHT" x="-26" y="3" />
             </Anchors>
             <Frames>
-              <EditBox name="JocysCom_OptionsEditBox" parent="JocysCom_OptionsFrameScroll" letters="10000" multiLine="true" >
-                <Size x="565" y="81" />
-                <Anchors>
-                  <Anchor point="TOPLEFT" x="3" y="-3" />
-                  <Anchor point="BOTTOMRIGHT" x="-3" y="3" />
-                </Anchors>
+              <EditBox name="JocysCom_OptionsEditBox" letters="10000" multiLine="true" >
+                <Size x="565" />
                 <Scripts>
                   <OnEscapePressed>
                     JocysCom_OptionsButton_OnClick();
@@ -169,30 +176,22 @@
             </Frames>
             <Scripts>
               <OnLoad>
-                self:SetScrollChild(JocysCom_OptionsEditBox);<!--when text in JocysCom_OptionsEditBox is selected, selection backgroud width is limited to parent frame width.-->
+                self:SetScrollChild(JocysCom_OptionsEditBox);<!--EditBox is limited to parent ScrollFrame.-->
               </OnLoad>
             </Scripts>
           </ScrollFrame>
-
         </Frames>
-        <Scripts>
-          <OnLoad>
-            <!-- self.Bg:SetTexture(0, 0, 0); -->
-          </OnLoad>
-        </Scripts>
       </Frame>
-      <Frame name="JocysCom_DescriptionFrame" inherits="InsetFrameTemplate" parent="JocysCom_OptionsFrame">
-        <Size x="593" y="120" />
+      <Frame name="JocysCom_DescriptionFrame" inherits="InsetFrameTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" x="3" y="-380" />
-          <Anchor point="BOTTOMRIGHT" x="-4" y="4" />
+          <Anchor point="TOPLEFT" x="3" y="-460" />
+          <Anchor point="BOTTOMRIGHT" x="-5" y="4" />
         </Anchors>
         <Layers>
-          <Layer level="OVERLAY">
-            <FontString name="JocysCom_DescriptionFrameFontString" inherits="GameFontHighlightSmall" justifyV="TOP" justifyH="LEFT">
-              <Size x="706" y="74" />
+          <Layer>
+            <FontString name="JocysCom_DescriptionFrameFontString" inherits="GameFontHighlightSmall" justifyV="CENTER" justifyH="LEFT" multiline="true">           
               <Anchors>
-                <Anchor point="TOPLEFT" x="10" y="-10" />
+                <Anchor point="TOPLEFT" x="10" y="-8" />
                 <Anchor point="BOTTOMRIGHT" x="-10" y="10" />
               </Anchors>
               <Color r="0.5" g="0.5" b="0.5" />
@@ -201,7 +200,6 @@
         </Layers>
       </Frame>
     </Frames>
-
     <Scripts>
       <OnLoad>
         self:RegisterForDrag("LeftButton");

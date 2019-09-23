@@ -145,18 +145,18 @@ function JocysCom_Text_EN()
 	-- OptionsFrame title.
 	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.5 ( 2019-09-22 )");
 	-- CheckButtons (Options) text.
-	JocysCom_ClipboardMessagePixelXFontString:SetText("|cff808080 Color pixel for \"Monitor\" position left:|r");
-	JocysCom_ClipboardMessagePixelYFontString:SetText("|cff808080 Top:|r");
-	JocysCom_ClipboardMessageCheckButton.text:SetText("|cff808080 Send messages using|r |cffffffffClipboard|r|cff808080.|r");
+	JocysCom_ClipboardMessagePixelYFontString:SetText("|cff808080 [LEFT] and [TOP] position of pixels for|r |cff77ccffMonitor|r|cff808080. Default values [0] and [0].|r");
+	JocysCom_ClipboardMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffClipboard|r|cff808080 method.|r \|cff77ccffMonitor Clipboard: [For <message> tags]|r |cff808080in|r |cff77ccffMonitor|r |cff808080must be selected. |r");
+	JocysCom_NetworkMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffNetwork|r|cff808080 method.|r |cff77ccffMonitor Clipboard: [Disabled]|r |cff808080in|r |cff77ccffMonitor|r |cff808080can be selected.|r");
 	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r");
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffffSave in Monitor <NPC>|r |cff808080 " .. macroName .. " related messages.|r");
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock mini frame with |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080buttons. Grab frame by clicking on dark background around buttons.|r");
 	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on the right side of |cffffffff[Options]|r |cff808080button. [Unchecked] show menu on the left side.|r");
 	-- Font Strings.
 	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH");
-	JocysCom_DescriptionFrameFontString:SetText("|cff808080 Text-to-speech voices, pitch, rate, effects, etc. ... you will find all options in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window, |cff77ccffJocys.Com Text to Speech WoW Addon|r creates and sends special addon message to yourself (message includes dialogue text, character name and effect name). Then, |cff77ccffJocys.Com Text to Speech Monitor|r (which must be running in background) picks-up this message from your network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.|r");
+	JocysCom_DescriptionFrameFontString:SetText("|cff808080 Text-to-speech voices, pitch, rate, effects, etc. ... you will find all options in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window or receive chat message, |cff77ccffJocys.Com Text to Speech WoW Addon|r creates special message. If |cffffffffCliboard|r method is selected, |cff77ccffAddon|r puts message into textbox, selects it and changes color of few pixel on screen. If |cffffffffNetwork|r method is selected, |cff77ccffAddon|r sends special addon message to your character. Message can include dialogue text, character name, effect name, etc.. Then, |cff77ccffJocys.Com Text to Speech Monitor|r (which must be running in background) picks-up this message from Clipboard or your Network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.|r");
 	JocysCom_ReplaceNameFontString:SetText("|cff808080 Here you can change your name for text to speech from |cff00ff00" .. unitName .. "|r to something else.|r");
-	JocysCom_MessageForMonitorFrameFontString:SetText("|cff808080 Addon message for |cff77ccffJocys.Com Text to Speech Monitor|r ... it must be runninng in background:|r");
+	JocysCom_MessageForMonitorFrameFontString:SetText("|cff808080 Latest message for|r |cff77ccffJocys.Com Text to Speech Monitor|r |cff808080... it must be runninng in background:|r");
 end
 
 -- Unlock frames.
@@ -713,11 +713,14 @@ end
  -- StopButtonFrame position Right or Left.
 function JocysCom_MenuCheckButton_OnClick()
 	PlaySound(856);
- 	JocysCom_MiniMenuFrame:ClearAllPoints();
+	JocysCom_MiniMenuFrame:ClearAllPoints();
+	JocysCom_ClipboardMessageSLeftFontString:ClearAllPoints(); 
 	if JocysCom_MenuCheckButton:GetChecked() == true then
-	JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", -6, 1);
+		JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", -6, 1);
+		JocysCom_ClipboardMessageSLeftFontString:SetPoint("LEFT", JocysCom_StopButtonFrame, "RIGHT", 0, -11); 
 	else
-	JocysCom_MiniMenuFrame:SetPoint("BOTTOMRIGHT", JocysCom_StopButtonFrame, "BOTTOMLEFT", 2, 1);
+		JocysCom_MiniMenuFrame:SetPoint("BOTTOMRIGHT", JocysCom_StopButtonFrame, "BOTTOMLEFT", 2, 1);
+		JocysCom_ClipboardMessageSLeftFontString:SetPoint("RIGHT", JocysCom_StopButtonFrame, "LEFT", 0, -11); 
 	end
 	JocysCom_SaveTocFileSettings();
 end
@@ -935,7 +938,7 @@ function JocysCom_AttachAndShowFrames(frame)
 	-- Set MiniFrame.		
 	JocysCom_DialogueMiniFrame:ClearAllPoints();
 	JocysCom_DialogueMiniFrame:SetParent(frame);
-	JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", 0, 0);
+	JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", 0, 1);
 	JocysCom_DialogueMiniFrame:SetBackdrop( { bgFile="Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-DialogueMiniFrame-Background" });
 	JocysCom_DialogueMiniFrame:Show();
 end
@@ -995,16 +998,21 @@ function JocysCom_SaveNPC()
 	end
 end
 
---function JocysCom_Wait(seconds)
-	--local _start = os.time()
-	--local _end = _start+seconds
-	--while (_end ~= os.time()) do
-	--end
---end
-
--- Lock Enable / Disable.
+-- Clipboard method Enable / Disable.
 function JocysCom_ClipboardMessageCheckButton_OnClick()
 	PlaySound(856);
+	if JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+		JocysCom_NetworkMessageCheckButton:SetChecked(false);
+	end
+	JocysCom_SaveTocFileSettings();
+end
+
+-- Nwtwork method Enable / Disable.
+function JocysCom_NetworkMessageCheckButton_OnClick()
+	PlaySound(856);
+	if JocysCom_NetworkMessageCheckButton:GetChecked() == true then
+		JocysCom_ClipboardMessageCheckButton:SetChecked(false);
+	end
 	JocysCom_SaveTocFileSettings();
 end
 
@@ -1151,17 +1159,22 @@ end
 function JocysCom_LoadTocFileSettings()
 	-- Set (Options) CheckButtons.
 	if JocysCom_DndCB == false then JocysCom_DndCheckButton:SetChecked(false) else JocysCom_DndCheckButton:SetChecked(true) end
+	if JocysCom_NetworkMessageCB == true then JocysCom_NetworkMessageCheckButton:SetChecked(true) else JocysCom_NetworkMessageCheckButton:SetChecked(false) end
 	if JocysCom_ClipboardMessageCB == false then JocysCom_ClipboardMessageCheckButton:SetChecked(false) else JocysCom_ClipboardMessageCheckButton:SetChecked(true) end
 	-- Set LockCheckButton and StopButtonFrame.
 	if JocysCom_LockCB == true then JocysCom_LockCheckButton:SetChecked(true) else JocysCom_LockCheckButton:SetChecked(false) end
 	if JocysCom_LockCheckButton:GetChecked() == true then JocysCom_StopButtonFrame:RegisterForDrag() else JocysCom_StopButtonFrame:RegisterForDrag("LeftButton") end
 	-- Set MenuCheckButton and MiniMenuFrame.
 	if JocysCom_MenuCB == false then JocysCom_MenuCheckButton:SetChecked(false) else JocysCom_MenuCheckButton:SetChecked(true) end
+	-- Set MiniFrame position.
 	JocysCom_MiniMenuFrame:ClearAllPoints();
+	JocysCom_ClipboardMessageSLeftFontString:ClearAllPoints(); 
 	if JocysCom_MenuCheckButton:GetChecked() == true then
-	JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", -6, 1);
+		JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", -6, 1);
+		JocysCom_ClipboardMessageSLeftFontString:SetPoint("LEFT", JocysCom_StopButtonFrame, "RIGHT", 0, -11); 
 	else
-	JocysCom_MiniMenuFrame:SetPoint("BOTTOMRIGHT", JocysCom_StopButtonFrame, "BOTTOMLEFT", 2, 1);
+		JocysCom_MiniMenuFrame:SetPoint("BOTTOMRIGHT", JocysCom_StopButtonFrame, "BOTTOMLEFT", 2, 1);
+		JocysCom_ClipboardMessageSLeftFontString:SetPoint("RIGHT", JocysCom_StopButtonFrame, "LEFT", 0, -11); 
 	end
 	-- Set FilterCheckButton and Message filters.
 	if JocysCom_FilterCB == false then JocysCom_FilterCheckButton:SetChecked(false) else JocysCom_FilterCheckButton:SetChecked(true) end
@@ -1236,6 +1249,7 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_ClipboardMessagePixelXEB = JocysCom_ClipboardMessagePixelXEditBox:GetNumber();
 	JocysCom_ClipboardMessagePixelYEB = JocysCom_ClipboardMessagePixelYEditBox:GetNumber();
 	JocysCom_ReplaceNameEB = JocysCom_ReplaceNameEditBox:GetText();
+	JocysCom_NetworkMessageCB = JocysCom_NetworkMessageCheckButton:GetChecked();
 	JocysCom_ClipboardMessageCB = JocysCom_ClipboardMessageCheckButton:GetChecked();
 	JocysCom_DndCB = JocysCom_DndCheckButton:GetChecked();
 	JocysCom_LockCB = JocysCom_LockCheckButton:GetChecked();
