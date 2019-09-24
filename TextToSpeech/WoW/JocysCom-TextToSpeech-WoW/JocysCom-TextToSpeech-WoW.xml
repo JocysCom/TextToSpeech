@@ -332,7 +332,7 @@
         </Texture>
       </Layer>
         <Layer>
-          <FontString name="JocysCom_ClipboardMessageSLeftFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
+          <FontString name="JocysCom_ClipboardMessagesLeftFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
             <Anchors>
               <Anchor point="LEFT" relativePoint="RIGHT" x="0" y="-11" />
             </Anchors>
@@ -541,7 +541,7 @@
                 JocysCom_OptionsButton:Show();
               </OnEnter>
               <OnClick>
-                JocysCom_DndCheckButton_OnClick(self);
+                JocysCom_DndCheckButton_OnClick();
               </OnClick>
               <OnLeave>
                 JocysCom_MiniMenuFrame_Hide();
