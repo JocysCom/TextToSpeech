@@ -1,5 +1,6 @@
 ﻿using JocysCom.ClassLibrary.Controls;
 using JocysCom.ClassLibrary.Runtime;
+using JocysCom.ClassLibrary.Win32;
 using JocysCom.TextToSpeech.Monitor.Audio;
 using JocysCom.TextToSpeech.Monitor.PlugIns;
 using System;

@@ -47,6 +47,7 @@
 			this.BoxSizeUpDown = new System.Windows.Forms.NumericUpDown();
 			this.BoxSizeLabel = new System.Windows.Forms.Label();
 			this.AddMessageTextCheckBox = new System.Windows.Forms.CheckBox();
+			this.CopyWowTextButton = new System.Windows.Forms.Button();
 			this.CaptureGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxSizeUpDown)).BeginInit();
@@ -237,6 +238,16 @@
 			this.AddMessageTextCheckBox.Text = "Add Message Text";
 			this.AddMessageTextCheckBox.UseVisualStyleBackColor = true;
 			// 
+			// CopyWowTextButton
+			// 
+			this.CopyWowTextButton.Location = new System.Drawing.Point(411, 192);
+			this.CopyWowTextButton.Name = "CopyWowTextButton";
+			this.CopyWowTextButton.Size = new System.Drawing.Size(99, 23);
+			this.CopyWowTextButton.TabIndex = 13;
+			this.CopyWowTextButton.Text = "Copy WoW Text";
+			this.CopyWowTextButton.UseVisualStyleBackColor = true;
+			this.CopyWowTextButton.Click += new System.EventHandler(this.CopyWowTextButton_Click);
+			// 
 			// OptionsCapturingUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,6 +266,7 @@
 			this.Controls.Add(this.TestTextBox);
 			this.Controls.Add(this.ImagePictureBox);
 			this.Controls.Add(this.CaptureImageButton);
+			this.Controls.Add(this.CopyWowTextButton);
 			this.Controls.Add(this.CreateImageButton);
 			this.Controls.Add(this.CaptureGroupBox);
 			this.Name = "OptionsCapturingUserControl";
@@ -289,5 +301,6 @@
 		private System.Windows.Forms.NumericUpDown BoxSizeUpDown;
 		private System.Windows.Forms.Label BoxSizeLabel;
 		private System.Windows.Forms.CheckBox AddMessageTextCheckBox;
+		private System.Windows.Forms.Button CopyWowTextButton;
 	}
 }

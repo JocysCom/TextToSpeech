@@ -153,7 +153,6 @@
     <Compile Include="Common\AudioPlayerState.cs" />
     <Compile Include="Common\HiLoUhsort.cs" />
     <Compile Include="Common\InstalledVoiceEx.cs" />
-    <Compile Include="Common\NativeMethods.cs" />
     <Compile Include="Common\Options.cs" />
     <Compile Include="Common\Options.Google.cs" />
     <Compile Include="Common\SettingsFile.cs" />
@@ -269,6 +268,8 @@
     <Compile Include="JocysCom\Text\EncodingType.cs" />
     <Compile Include="JocysCom\Text\Filters.cs" />
     <Compile Include="JocysCom\Text\Helper.cs" />
+    <Compile Include="JocysCom\Win32\NativeMethods.user32.cs" />
+    <Compile Include="JocysCom\Win32\RECT.cs" />
     <Compile Include="MainForm_Network.cs">
       <SubType>Form</SubType>
     </Compile>
