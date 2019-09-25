@@ -334,8 +334,7 @@
     </Scripts>
   </Frame>
   <Frame name="JocysCom_StopButtonFrame" parent="UIParent" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH">
-    <!--QuickJoinToastButton-->
-    <Size x="29" y="52" />
+    <Size x="33" y="56" />
     <Anchors>
       <Anchor point="CENTER" />
     </Anchors>
@@ -355,46 +354,66 @@
       </Layer>
     </Layers>
     <Frames>
-      <Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="≡" hidden="true">
-        <Size x="23" y="21" />
+
+      <Frame name="JocysCom_OptionsButtonFrame" hidden="true">
+        <Size x="25" y="21" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="3" y="-5" />
-        </Anchors>
+          <Anchor point="TOP" y="-7" />
+        </Anchors>      
+        <Frames>
+          <Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" text="≡">
+            <Size x="23" y="21" />
+            <Anchors>
+              <Anchor point="CENTER"/>
+            </Anchors>
+            <Scripts>
+              <OnEnter>
+                JocysCom_OptionsButtonFrame:Show();
+                JocysCom_MiniMenuFrame_Show("Options");
+              </OnEnter>
+              <OnClick>
+                JocysCom_OptionsButton_OnClick();
+              </OnClick>
+              <OnLeave>
+                JocysCom_MiniMenuFrame_Hide();
+                JocysCom_OptionsButtonFrame:Hide();
+              </OnLeave>
+            </Scripts>
+            <ButtonText font="Fonts\ARIALN.TTF">
+              <Anchors>
+                <Anchor point="CENTER" y="-1" />
+              </Anchors>
+              <FontHeight val="18" />
+            </ButtonText>
+          </Button>
+        </Frames>
         <Scripts>
           <OnEnter>
-            JocysCom_OptionsButton:Show();
+            JocysCom_OptionsButtonFrame:Show();
             JocysCom_MiniMenuFrame_Show("Options");
           </OnEnter>
-          <OnClick>
-            JocysCom_OptionsButton_OnClick();
-          </OnClick>
           <OnLeave>
             JocysCom_MiniMenuFrame_Hide();
-            JocysCom_OptionsButton:Hide();
+            JocysCom_OptionsButtonFrame:Hide();
           </OnLeave>
         </Scripts>
-        <ButtonText font="Fonts\ARIALN.TTF">
-          <Anchors>
-            <Anchor point="CENTER" />
-          </Anchors>
-          <FontHeight val="18" />
-        </ButtonText>
-      </Button>
-      <Button name="JocysCom_StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="■">
+      </Frame>
+      
+      <Button name="JocysCom_StopButton" inherits="UIPanelButtonTemplate" text="■">
         <Size x="23" y="21" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="3" y="-26" />
+          <Anchor point="TOP" y="-28" />
         </Anchors>
         <Scripts>
           <OnEnter>
-            JocysCom_OptionsButton:Show();
+            JocysCom_OptionsButtonFrame:Show();
           </OnEnter>
           <OnClick>
             JocysCom_StopButton_OnClick();
             JocysCom_ClipboardMessageEditBoxSetFocus();
           </OnClick>
           <OnLeave>
-            JocysCom_OptionsButton:Hide();
+            JocysCom_OptionsButtonFrame:Hide();
           </OnLeave>
         </Scripts>
         <ButtonText font="Fonts\ARIALN.TTF">
@@ -404,18 +423,17 @@
           <FontHeight val="18" />
         </ButtonText>
       </Button>
-
-      <Button name="JocysCom_ContinueButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="►">
+      <Button name="JocysCom_ContinueButton" inherits="UIPanelButtonTemplate" text="►">
         <Size x="23" y="21" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="3" y="-26" />
+          <Anchor point="TOP" y="-29" />
         </Anchors>
         <Scripts>
           <OnLoad>
             self:Hide();
           </OnLoad>
           <OnEnter>
-            JocysCom_OptionsButton:Show();
+            JocysCom_OptionsButtonFrame:Show();
           </OnEnter>
           <OnClick>
             self:Hide();
@@ -423,7 +441,7 @@
             JocysCom_ClipboardMessageEditBoxSetFocus();
           </OnClick>
           <OnLeave>
-            JocysCom_OptionsButton:Hide();
+            JocysCom_OptionsButtonFrame:Hide();
           </OnLeave>
         </Scripts>
         <ButtonText font="Fonts\ARIALN.TTF">
@@ -434,11 +452,8 @@
         </ButtonText>
       </Button>
 
-      <Frame name="JocysCom_MiniMenuFrame" parent="JocysCom_StopButtonFrame" enableMouse="true" hidden="true">
+      <Frame name="JocysCom_MiniMenuFrame" enableMouse="true" hidden="true">
         <Size x="240" y="486" />
-        <Anchors>
-          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="-6" y="1" />
-        </Anchors>
         <Backdrop tile="true" bgFile="Interface/FrameGeneral/UI-Background-Rock">
           <TileSize val="350" />
           <BackgroundInsets left="7" right="3" top="3" bottom="5" />
@@ -456,7 +471,6 @@
         </Layers>
 
         <Frames>
-
           <Frame>
             <Anchors>
               <Anchor point="TOPLEFT" />
@@ -469,15 +483,13 @@
             </Scripts>
           </Frame>
 
-
-          <Frame name="JocysCom_MiniMenuFrameHeader" parent="JocysCom_MiniMenuFrame">
+          <Frame name="JocysCom_MiniMenuFrameHeader">
             <Size x="339" y="22" />
             <Anchors>
               <Anchor point="TOP" x="3" y="-14" />
             </Anchors>
             <Layers>
               <Layer>
-
                 <FontString name="JocysCom_Details_FontString" inherits="GameFontHighlightSmall" text="Move mouse over checkbox to see details:">
                   <Anchors>
                     <Anchor point="BOTTOM" x="-1" y="16" />
@@ -531,7 +543,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Busy");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_DndCheckButton_OnClick();
@@ -554,7 +566,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Objectives");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -577,7 +589,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("StartOnOpen");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -600,7 +612,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("StopOnClose");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -621,7 +633,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Quest");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "Quest");
@@ -640,7 +652,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundQuest");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -663,7 +675,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NameQuest");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -684,7 +696,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Monster");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "Monster");
@@ -703,7 +715,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundMonster");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -726,7 +738,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NameMonster");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -747,7 +759,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Emote");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "Emote");
@@ -770,7 +782,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundEmote");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -792,7 +804,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Whisper");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "Whisper");
@@ -811,7 +823,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundWhisper");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -834,7 +846,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NameWhisper");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -855,7 +867,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Say");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "Say");
@@ -874,7 +886,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundSay");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -897,7 +909,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NameSay");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -918,7 +930,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Yell");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "Yell");
@@ -937,7 +949,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundYell");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -960,7 +972,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NameYell");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -981,7 +993,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("PartyLeader");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "PartyLeader");
@@ -1000,7 +1012,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundPartyLeader");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1023,7 +1035,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NamePartyLeader");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1045,7 +1057,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Party");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "Party");
@@ -1064,7 +1076,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundParty");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1087,7 +1099,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NameParty");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1108,7 +1120,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Officer");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "Officer");
@@ -1127,7 +1139,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundOfficer");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1150,7 +1162,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NameOfficer");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1171,7 +1183,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Guild");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "Guild");
@@ -1190,7 +1202,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundGuild");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1213,7 +1225,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NameGuild");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1234,7 +1246,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("RaidLeader");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "RaidLeader");
@@ -1253,7 +1265,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundRaidLeader");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1276,7 +1288,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NameRaidLeader");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1297,7 +1309,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Raid");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "Raid");
@@ -1316,7 +1328,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundRaid");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1339,7 +1351,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NameRaid");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1360,7 +1372,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("InstanceLeader");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "InstanceLeader");
@@ -1379,7 +1391,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundInstanceLeader");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1402,7 +1414,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NameInstanceLeader");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1423,7 +1435,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("Instance");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_CheckButton_OnClick(self, "Instance");
@@ -1442,7 +1454,7 @@
             <Scripts>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("SoundInstance");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1465,7 +1477,7 @@
               </OnLoad>
               <OnEnter>
                 JocysCom_MiniMenuFrame_Show("NameInstance");
-                JocysCom_OptionsButton:Show();
+                JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
                 JocysCom_PlaySoundAndSaveSettings();
@@ -1476,19 +1488,17 @@
             </Scripts>
           </CheckButton>
 
-
           <!--******************************************************************************************************-->
 
         </Frames>
-
         <Scripts>
           <OnEnter>
-            JocysCom_MiniMenuFrame_Show();
-            JocysCom_OptionsButton:Show();
+            JocysCom_MiniMenuFrame_Show("Options");
+            JocysCom_OptionsButtonFrame:Show();
           </OnEnter>
           <OnLeave>
             JocysCom_MiniMenuFrame_Hide();
-            JocysCom_OptionsButton:Hide();
+            JocysCom_OptionsButtonFrame:Hide();
           </OnLeave>
         </Scripts>
 
@@ -1505,11 +1515,11 @@
         self:StopMovingOrSizing();
       </OnDragStop>
       <OnEnter>
-        JocysCom_OptionsButton:Show();
+        JocysCom_OptionsButtonFrame:Show();
         <!--JocysCom_SaveButton:Show();-->
       </OnEnter>
       <OnLeave>
-        JocysCom_OptionsButton:Hide();
+        JocysCom_OptionsButtonFrame:Hide();
         <!--JocysCom_SaveButton:Hide();-->
       </OnLeave>
     </Scripts>

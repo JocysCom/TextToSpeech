@@ -181,9 +181,9 @@ function JocysCom_SendChatMessageStop(CloseOrButton, group)
 	else
 		messageStop = "<message command=\"stop\" group=\"" .. group .. "\" />";
 	end			
-	if (stopWhenClosing == 1 or group ~= nil or group ~= "") and (JocysCom_StopOnCloseCheckButton:GetChecked() == true or (CloseOrButton == 1 or CloseOrButton == 2)) then
+	if (stopWhenClosing == 1 or group ~= nil or group ~= "") and (JocysCom_StopOnCloseCheckButton:GetChecked() or (CloseOrButton == 1 or CloseOrButton == 2)) then
 		--Send message.
-		if JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+		if JocysCom_ClipboardMessageCheckButton:GetChecked() then
 			JocysCom_AddMessageToTable(messageStop);
 		else
 			C_ChatInfo.SendAddonMessage(addonPrefix, messageStop, "WHISPER", unitName);
@@ -197,7 +197,7 @@ end
 function JocysCom_SendSoundIntro(group)
 	messageGroup = "<message command=\"sound\" group=\"" .. group .. "\" />";
 	--Send message.
-	if JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+	if JocysCom_ClipboardMessageCheckButton:GetChecked() then
 		JocysCom_AddMessageToTable(messageGroup);
 	else
 		C_ChatInfo.SendAddonMessage(addonPrefix, messageGroup, "WHISPER", unitName);
@@ -267,7 +267,6 @@ function JocysCom_RegisterEvents()
 end
 
 function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
-print(event);
 	-- Reset realName and presenceID.
 	realName = false;
 	-- Set MiniFrame and Scrollframe
@@ -324,7 +323,7 @@ print(event);
 				objectivesHeader = string.gsub(objectivesHeader, "Quest ", "Your ");
 				objectivesHeader = objectivesHeader .. ".";
 			end
-			if JocysCom_ObjectivesCheckButton:GetChecked() == true then		
+			if JocysCom_ObjectivesCheckButton:GetChecked() then		
 				questMessage = GetQuestText() .. " " .. objectivesHeader .. " " .. GetObjectiveText();
 			else
 				questMessage = GetQuestText();
@@ -337,7 +336,7 @@ print(event);
 			questMessage = ItemTextGetText();
 		end
 		arg2 = GetUnitName("npc");
-		if JocysCom_NameQuestCheckButton:GetChecked() == true and arg2 ~= nil then
+		if JocysCom_NameQuestCheckButton:GetChecked() and arg2 ~= nil then
 			NameIntro = true
 			questMessage = arg2 .. " says. " .. questMessage;
 		end	
@@ -346,16 +345,16 @@ print(event);
 	elseif event == "GOSSIP_CLOSED" then
 		return;
 	-- Chat events.
-	elseif JocysCom_MonsterCheckButton:GetChecked() == true and string.find(event, "MSG_MONSTER") ~= nil then	
+	elseif JocysCom_MonsterCheckButton:GetChecked() and string.find(event, "MSG_MONSTER") ~= nil then	
 		-- don't proceed repetitive NPC messages by the same NPC.
 		if (lastArg == arg2 .. arg1) then return else lastArg = arg2 .. arg1 end
 		group = "Monster";
-		if JocysCom_SoundMonsterCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
-		if JocysCom_NameMonsterCheckButton:GetChecked() == true or (event == "CHAT_MSG_MONSTER_EMOTE") then NameIntro = true end
-	elseif JocysCom_WhisperCheckButton:GetChecked() == true and (event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" or event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM") then --or event == "CHAT_MSG_BN_CONVERSATION"
+		if JocysCom_SoundMonsterCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
+		if JocysCom_NameMonsterCheckButton:GetChecked() or (event == "CHAT_MSG_MONSTER_EMOTE") then NameIntro = true end
+	elseif JocysCom_WhisperCheckButton:GetChecked() and (event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" or event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM") then --or event == "CHAT_MSG_BN_CONVERSATION"
 		group = "Whisper";
-		if JocysCom_SoundWhisperCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
-		if JocysCom_NameWhisperCheckButton:GetChecked() == true then NameIntro = true end
+		if JocysCom_SoundWhisperCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
+		if JocysCom_NameWhisperCheckButton:GetChecked() then NameIntro = true end
 		-- replace friend's real name with character name.
 		if event == "CHAT_MSG_BN_WHISPER_INFORM" then
 			-- print(tostring(event));
@@ -386,43 +385,43 @@ print(event);
 				realName = true;
 			end
 		end	
-	elseif JocysCom_EmoteCheckButton:GetChecked() == true and ((event == "CHAT_MSG_EMOTE") or (event == "CHAT_MSG_TEXT_EMOTE")) then group = "Emote";	
-		if JocysCom_SoundEmoteCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
+	elseif JocysCom_EmoteCheckButton:GetChecked() and ((event == "CHAT_MSG_EMOTE") or (event == "CHAT_MSG_TEXT_EMOTE")) then group = "Emote";	
+		if JocysCom_SoundEmoteCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 		if (event == "CHAT_MSG_EMOTE") then NameIntro = true end
-	elseif JocysCom_SayCheckButton:GetChecked() == true and (event == "CHAT_MSG_SAY") then group = "Say";
-		if JocysCom_SoundSayCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
-		if JocysCom_NameSayCheckButton:GetChecked() == true then NameIntro = true end
-	elseif JocysCom_YellCheckButton:GetChecked() == true and (event == "CHAT_MSG_YELL") then group = "Yell";
-		if JocysCom_SoundYellCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
-		if JocysCom_NameYellCheckButton:GetChecked() == true then NameIntro = true end
+	elseif JocysCom_SayCheckButton:GetChecked() and (event == "CHAT_MSG_SAY") then group = "Say";
+		if JocysCom_SoundSayCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
+		if JocysCom_NameSayCheckButton:GetChecked() then NameIntro = true end
+	elseif JocysCom_YellCheckButton:GetChecked() and (event == "CHAT_MSG_YELL") then group = "Yell";
+		if JocysCom_SoundYellCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
+		if JocysCom_NameYellCheckButton:GetChecked() then NameIntro = true end
 	-- GUILD / OFFICER.
-	elseif JocysCom_GuildCheckButton:GetChecked() == true and (event == "CHAT_MSG_GUILD") then group = "Guild";
-		if JocysCom_SoundGuildCheckButton:GetChecked() == true then	JocysCom_SendSoundIntro(group) end
-		if JocysCom_NameGuildCheckButton:GetChecked() == true then NameIntro = true end
-	elseif JocysCom_OfficerCheckButton:GetChecked() == true and (event == "CHAT_MSG_OFFICER") then group = "Officer";
-		if JocysCom_SoundOfficerCheckButton:GetChecked() == true then	JocysCom_SendSoundIntro(group) end
-		if JocysCom_NameOfficerCheckButton:GetChecked() == true then NameIntro = true end
+	elseif JocysCom_GuildCheckButton:GetChecked() and (event == "CHAT_MSG_GUILD") then group = "Guild";
+		if JocysCom_SoundGuildCheckButton:GetChecked() then	JocysCom_SendSoundIntro(group) end
+		if JocysCom_NameGuildCheckButton:GetChecked() then NameIntro = true end
+	elseif JocysCom_OfficerCheckButton:GetChecked() and (event == "CHAT_MSG_OFFICER") then group = "Officer";
+		if JocysCom_SoundOfficerCheckButton:GetChecked() then	JocysCom_SendSoundIntro(group) end
+		if JocysCom_NameOfficerCheckButton:GetChecked() then NameIntro = true end
 	-- RAID.
-	elseif JocysCom_RaidCheckButton:GetChecked() == true and (event == "CHAT_MSG_RAID") then group = "Raid";
-		if JocysCom_SoundRaidCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
-		if JocysCom_NameRaidCheckButton:GetChecked() == true then NameIntro = true end
-	elseif JocysCom_RaidLeaderCheckButton:GetChecked() == true and (event == "CHAT_MSG_RAID_LEADER" or event == "CHAT_MSG_RAID_WARNING") then group = "RaidLeader";
-		if JocysCom_SoundRaidLeaderCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
-		if JocysCom_NameRaidLeaderCheckButton:GetChecked() == true then NameIntro = true end
+	elseif JocysCom_RaidCheckButton:GetChecked() and (event == "CHAT_MSG_RAID") then group = "Raid";
+		if JocysCom_SoundRaidCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
+		if JocysCom_NameRaidCheckButton:GetChecked() then NameIntro = true end
+	elseif JocysCom_RaidLeaderCheckButton:GetChecked() and (event == "CHAT_MSG_RAID_LEADER" or event == "CHAT_MSG_RAID_WARNING") then group = "RaidLeader";
+		if JocysCom_SoundRaidLeaderCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
+		if JocysCom_NameRaidLeaderCheckButton:GetChecked() then NameIntro = true end
 	-- PARTY.	
-	elseif JocysCom_PartyCheckButton:GetChecked() == true and (event == "CHAT_MSG_PARTY") then group = "Party";
-		if JocysCom_SoundPartyCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
-		if JocysCom_NamePartyCheckButton:GetChecked() == true then NameIntro = true end
-	elseif JocysCom_PartyLeaderCheckButton:GetChecked() == true and (event == "CHAT_MSG_PARTY_LEADER") then group = "PartyLeader";
-		if JocysCom_SoundPartyLeaderCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
-		if JocysCom_NamePartyLeaderCheckButton:GetChecked() == true then NameIntro = true end
+	elseif JocysCom_PartyCheckButton:GetChecked() and (event == "CHAT_MSG_PARTY") then group = "Party";
+		if JocysCom_SoundPartyCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
+		if JocysCom_NamePartyCheckButton:GetChecked() then NameIntro = true end
+	elseif JocysCom_PartyLeaderCheckButton:GetChecked() and (event == "CHAT_MSG_PARTY_LEADER") then group = "PartyLeader";
+		if JocysCom_SoundPartyLeaderCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
+		if JocysCom_NamePartyLeaderCheckButton:GetChecked() then NameIntro = true end
 	-- INSTANCE.
-	elseif JocysCom_InstanceCheckButton:GetChecked() == true and (event == "CHAT_MSG_INSTANCE_CHAT") then group = "Instance";
-		if JocysCom_SoundInstanceCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
-		if JocysCom_NameInstanceCheckButton:GetChecked() == true then NameIntro = true end
-	elseif JocysCom_InstanceLeaderCheckButton:GetChecked() == true and (event == "CHAT_MSG_INSTANCE_CHAT_LEADER") then group = "InstanceLeader";
-		if JocysCom_SoundInstanceLeaderCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
-		if JocysCom_NameInstanceLeaderCheckButton:GetChecked() == true then NameIntro = true end
+	elseif JocysCom_InstanceCheckButton:GetChecked() and (event == "CHAT_MSG_INSTANCE_CHAT") then group = "Instance";
+		if JocysCom_SoundInstanceCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
+		if JocysCom_NameInstanceCheckButton:GetChecked() then NameIntro = true end
+	elseif JocysCom_InstanceLeaderCheckButton:GetChecked() and (event == "CHAT_MSG_INSTANCE_CHAT_LEADER") then group = "InstanceLeader";
+		if JocysCom_SoundInstanceLeaderCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
+		if JocysCom_NameInstanceLeaderCheckButton:GetChecked() then NameIntro = true end
 	else
 		return;
 	end
@@ -520,7 +519,7 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 	if string.find(speakMessage, customName) ~= nil or string.find(string.lower(speakMessage), string.lower(unitClass)) ~= nil  then
 		messagePlayer = "<message command=\"player\" name=\"" .. unitName .. "," .. customName .. "," .. unitClass ..  "\" />";
 	--Send color message.
-		if	JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+		if	JocysCom_ClipboardMessageCheckButton:GetChecked() then
 			JocysCom_AddMessageToTable(messagePlayer);
 		else
 			C_ChatInfo.SendAddonMessage(addonPrefix, messagePlayer, "WHISPER", unitName);
@@ -544,10 +543,10 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 	else
 		NPCName = GetUnitName("npc");
 		NPCSex = UnitSex("npc");
-		if JocysCom_StartOnOpenCheckButton:GetChecked() == true then 	
+		if JocysCom_StartOnOpenCheckButton:GetChecked() then 	
 			JocysCom_SendChatMessageStop(1); -- Send stop message.
 		end
-		if (string.find(event, "QUEST") ~= nil or event == "GOSSIP_SHOW" or event == "ITEM_TEXT_READY") and JocysCom_SoundQuestCheckButton:GetChecked() == true then JocysCom_SendSoundIntro(group) end
+		if (string.find(event, "QUEST") ~= nil or event == "GOSSIP_SHOW" or event == "ITEM_TEXT_READY") and JocysCom_SoundQuestCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 	end
 	-- Set NPC name.
 	if NPCName == nil then
@@ -584,7 +583,7 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 		local chatMessageSA = "<message command=\"add\"><part>";
 		local chatMessageE = "</part></message>";
 		local chatMessage;
-		if JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+		if JocysCom_ClipboardMessageCheckButton:GetChecked() then
 			chatMessageLimit = 10000;
 		else
 			chatMessageLimit = 240;
@@ -610,7 +609,7 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 				chatMessage = chatMessageSP .. part .. chatMessageE;
 				stopWhenClosing = 1;
 				--Send message.
-				if JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+				if JocysCom_ClipboardMessageCheckButton:GetChecked() then
 					JocysCom_AddMessageToTable(chatMessage);
 				else
 					C_ChatInfo.SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
@@ -624,7 +623,7 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 				chatMessage = chatMessageSA .. part .. chatMessageE;
 				stopWhenClosing = 1;
 				--Send message.
-				if JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+				if JocysCom_ClipboardMessageCheckButton:GetChecked() then
 					JocysCom_AddMessageToTable(chatMessage);
 				else
 					C_ChatInfo.SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
@@ -645,7 +644,7 @@ end
 
 -- DND Check.
 function JocysCom_DndCheck()
-	if JocysCom_DndCheckButton:GetChecked() and JocysCom_DialogueMiniFrame:IsVisible() == true then
+	if JocysCom_DndCheckButton:GetChecked() and JocysCom_DialogueMiniFrame:IsVisible() then
 		if not UnitIsDND("player") then SendChatMessage("<" .. unitName .. ">: " .. messageDoNotDisturb, "DND") end;
 	else
 		if UnitIsDND("player") then SendChatMessage("", "DND") end;
@@ -668,7 +667,7 @@ end
 -- Lock Enable / Disable.
 function JocysCom_LockCheckButton_OnClick()
 	PlaySound(856);
-	if JocysCom_LockCheckButton:GetChecked() == true then
+	if JocysCom_LockCheckButton:GetChecked() then
 		JocysCom_StopButtonFrame:RegisterForDrag();
 	else
 		JocysCom_StopButtonFrame:RegisterForDrag("LeftButton");
@@ -681,11 +680,11 @@ function JocysCom_MenuCheckButton_OnClick()
 	PlaySound(856);
 	JocysCom_MiniMenuFrame:ClearAllPoints();
 	JocysCom_ClipboardMessagesLeftFontString:ClearAllPoints(); 
-	if JocysCom_MenuCheckButton:GetChecked() == true then
-		JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", -6, 1);
+	if JocysCom_MenuCheckButton:GetChecked() then
+		JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", -8, 3);
 		JocysCom_ClipboardMessagesLeftFontString:SetPoint("LEFT", JocysCom_StopButtonFrame, "RIGHT", 0, -11); 
 	else
-		JocysCom_MiniMenuFrame:SetPoint("BOTTOMRIGHT", JocysCom_StopButtonFrame, "BOTTOMLEFT", 2, 1);
+		JocysCom_MiniMenuFrame:SetPoint("BOTTOMRIGHT", JocysCom_StopButtonFrame, "BOTTOMLEFT", 4, 3);
 		JocysCom_ClipboardMessagesLeftFontString:SetPoint("RIGHT", JocysCom_StopButtonFrame, "LEFT", 0, -11); 
 	end
 	JocysCom_SaveTocFileSettings();
@@ -847,7 +846,7 @@ function JocysCom_AttachAndShowFrames()
 	JocysCom_DialogueMiniFrame:ClearAllPoints();
 	JocysCom_DialogueScrollFrame:ClearAllPoints();
 	-- Different ScrollFrame position and size if frame is WorldMapFrame.
-	if WorldMapFrame:IsVisible() == true then
+	if WorldMapFrame:IsVisible() then
 		-- ScrollFrame.
 		local width = QuestMapDetailsScrollFrame:GetWidth();
 		JocysCom_DialogueScrollFrame:SetParent(QuestMapDetailsScrollFrame);
@@ -909,7 +908,7 @@ function JocysCom_SaveNPC()
 		end
 		local saveMessage = "<message command=\"Save\" name=\"" .. targetName .. "\" gender=\"" .. targetSex .. "\" effect=\"" .. targetType .. "\" />";
 		--Send message.
-		if	JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+		if	JocysCom_ClipboardMessageCheckButton:GetChecked() then
 			JocysCom_AddMessageToTable(saveMessage);
 		else
 			C_ChatInfo.SendAddonMessage(addonPrefix, saveMessage, "WHISPER", unitName);
@@ -926,19 +925,27 @@ end
 -- Clipboard method Enable / Disable.
 function JocysCom_ClipboardMessageCheckButton_OnClick()
 	PlaySound(856);
-	if JocysCom_ClipboardMessageCheckButton:GetChecked() == true then
+	if JocysCom_ClipboardMessageCheckButton:GetChecked() then
 		JocysCom_NetworkMessageCheckButton:SetChecked(false);
 	end
+	JocysCom_ClearForm();
 	JocysCom_SaveTocFileSettings();
 end
 
 -- Nwtwork method Enable / Disable.
 function JocysCom_NetworkMessageCheckButton_OnClick()
 	PlaySound(856);
-	if JocysCom_NetworkMessageCheckButton:GetChecked() == true then
+	if JocysCom_NetworkMessageCheckButton:GetChecked() then
 		JocysCom_ClipboardMessageCheckButton:SetChecked(false);
 	end
+	JocysCom_ClearForm();
 	JocysCom_SaveTocFileSettings();
+end
+
+function JocysCom_ClearForm()
+	JocysCom_StopButton_OnClick();
+	JocysCom_OptionsEditBox:SetText("");
+	JocysCom_ClipboardMessageEditBox:SetText("");
 end
 
 -- Add message to table for Clipboard.
@@ -1059,13 +1066,13 @@ function JocysCom_CHAT_MSG_WHISPER(self, event, msg)
 end
 -- Enable/Disable message filter
 function JocysCom_CHAT_MSG_DND(self, event, msg)
-	if string.find(msg, "<" .. unitName .. ">: ") ~= nil and JocysCom_FilterCheckButton:GetChecked() == true then
+	if string.find(msg, "<" .. unitName .. ">: ") ~= nil and JocysCom_FilterCheckButton:GetChecked() then
 		return true;
 	end
 end
 -- Enable/Disable message filter
 function JocysCom_CHAT_MSG_SYSTEM(self, event, msg)
-	if string.find(msg, "You are no") ~= nil and JocysCom_FilterCheckButton:GetChecked() == true then
+	if string.find(msg, "You are no") ~= nil and JocysCom_FilterCheckButton:GetChecked() then
 		return true;
 	end
 end
@@ -1078,7 +1085,7 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_ClipboardMessageCB == false then JocysCom_ClipboardMessageCheckButton:SetChecked(false) else JocysCom_ClipboardMessageCheckButton:SetChecked(true) end
 	-- Set LockCheckButton and StopButtonFrame.
 	if JocysCom_LockCB == true then JocysCom_LockCheckButton:SetChecked(true) else JocysCom_LockCheckButton:SetChecked(false) end
-	if JocysCom_LockCheckButton:GetChecked() == true then JocysCom_StopButtonFrame:RegisterForDrag() else JocysCom_StopButtonFrame:RegisterForDrag("LeftButton") end
+	if JocysCom_LockCheckButton:GetChecked() then JocysCom_StopButtonFrame:RegisterForDrag() else JocysCom_StopButtonFrame:RegisterForDrag("LeftButton") end
 	-- Set MenuCheckButton and MiniMenuFrame.
 	if JocysCom_MenuCB == false then JocysCom_MenuCheckButton:SetChecked(false) else JocysCom_MenuCheckButton:SetChecked(true) end
 	-- Set FilterCheckButton and Message filters.
