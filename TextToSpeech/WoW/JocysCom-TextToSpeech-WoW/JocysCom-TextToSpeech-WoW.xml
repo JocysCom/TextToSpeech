@@ -1,6 +1,5 @@
 ﻿<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd" xmlns="http://www.blizzard.com/wow/ui/">
-  <Script file="JocysCom-TextToSpeech-WoW-Addon.lua" />
-  <Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parent="UIParent" movable="true" frameLevel="10" enableMouse="true">
+  <Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parent="UIParent" movable="true" frameLevel="10" enableMouse="true" hidden="true">
     <Size x="600" y="600" />
     <Anchors>
       <Anchor point="CENTER" />
@@ -15,7 +14,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <!--Message change pixel position-->
+      <!--Cliboard message pixel for Monitor-->
       <EditBox name="JocysCom_ClipboardMessagePixelXEditBox" inherits="InputBoxTemplate" numeric="true">
         <Size x="40" y="20" />
         <Anchors>
@@ -161,8 +160,9 @@
             <Anchors>
               <Anchor point="TOPLEFT" x="5" y="-4" />
               <Anchor point="BOTTOMRIGHT" x="-26" y="3" />
-            </Anchors>
-            <Frames>
+            </Anchors>         
+            <ScrollChild>           
+            <!--<Frames>-->
               <EditBox name="JocysCom_OptionsEditBox" letters="10000" multiLine="true" >
                 <Size x="565" />
                 <Scripts>
@@ -173,12 +173,13 @@
                 <TextInsets left="5" right="5" top="5" bottom="5" />
                 <FontString inherits="GameFontHighlightSmall" />
               </EditBox>
-            </Frames>
-            <Scripts>
+            <!--</Frames>-->
+            <!--<Scripts>
               <OnLoad>
-                self:SetScrollChild(JocysCom_OptionsEditBox);<!--EditBox is limited to parent ScrollFrame.-->
+                self:SetScrollChild(JocysCom_OptionsEditBox);--><!--EditBox is limited to parent ScrollFrame.--><!--
               </OnLoad>
-            </Scripts>
+            </Scripts>-->
+            </ScrollChild>
           </ScrollFrame>
         </Frames>
       </Frame>
@@ -204,6 +205,12 @@
       <OnLoad>
         self:RegisterForDrag("LeftButton");
       </OnLoad>
+      <OnShow>
+        JocysCom_OptionsFrame_OnShow();
+      </OnShow>
+      <OnHide>
+        JocysCom_OptionsFrame_OnHide();
+      </OnHide>
       <OnDragStart>
         self:StartMoving();
       </OnDragStart>
@@ -212,11 +219,12 @@
       </OnDragStop>
     </Scripts>
   </Frame>
-  <Frame name="JocysCom_DialogueMiniFrame" parent="UIParent">
+  <Frame name="JocysCom_DialogueMiniFrame" parent="UIParent" hidden="true">
     <Size x="128" y="32" />
     <Anchors>
       <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" />
     </Anchors>
+    <Backdrop bgFile="Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-DialogueMiniFrame-Background" />
     <Frames>
       <Button name="JocysCom_StopButtonQuest" inherits="UIPanelButtonTemplate" parent="JocysCom_DialogueMiniFrame" text="■">
         <Size x="31" y="21" />
@@ -242,7 +250,7 @@
         </Anchors>
         <Scripts>
           <OnClick>
-            JocysCom_PlayButton_OnClick(self);
+            JocysCom_PlayButton_OnClick();
           </OnClick>
         </Scripts>
         <ButtonText font="Fonts\ARIALN.TTF">
@@ -254,12 +262,16 @@
       </Button>
     </Frames>
     <Scripts>
+      <OnShow>
+        JocysCom_DndCheck();
+      </OnShow>
       <OnHide>
+        JocysCom_DndCheck();
         JocysCom_DialogueMiniFrame_OnHide();
       </OnHide>
     </Scripts>
   </Frame>
-  <Frame name="JocysCom_DialogueScrollFrame" parent="UIParent" movable="true" resizable="true">
+  <Frame name="JocysCom_DialogueScrollFrame" parent="UIParent" movable="true" resizable="true" hidden="true">
     <Size x="216" y="216" />
     <Anchors>
       <Anchor point="TOPLEFT" />
@@ -341,7 +353,7 @@
         </Layer>
     </Layers>
     <Frames>
-      <Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="≡">
+      <Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="≡" hidden="true">
         <Size x="23" y="21" />
         <Anchors>
           <Anchor point="TOPLEFT" x="3" y="-5" />
@@ -349,7 +361,6 @@
         <Scripts>
           <OnEnter>
             JocysCom_OptionsButton:Show();
-            <!--JocysCom_SaveButton:Show();-->
             JocysCom_MiniMenuFrame_Show("Options");
           </OnEnter>
           <OnClick>
@@ -358,7 +369,6 @@
           <OnLeave>
             JocysCom_MiniMenuFrame_Hide();
             JocysCom_OptionsButton:Hide();
-            <!--JocysCom_SaveButton:Hide();-->
           </OnLeave>
         </Scripts>
         <ButtonText font="Fonts\ARIALN.TTF">
@@ -368,30 +378,6 @@
           <FontHeight val="18" />
         </ButtonText>
       </Button>
-      <!--<Button name="JocysCom_SaveButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="S">
-        <Size x="23" y="21" />
-        <Anchors>
-          <Anchor point="TOPLEFT" x="2" y="-25" />
-        </Anchors>
-        <Scripts>
-          <OnEnter>
-            JocysCom_OptionsButton:Show();
-            JocysCom_SaveButton:Show();
-          </OnEnter>
-          <OnClick>
-            JocysCom_SaveNPC();
-          </OnClick>
-          <OnLeave>
-            JocysCom_OptionsButton:Hide();
-          </OnLeave>
-        </Scripts>
-        <ButtonText font="Fonts\ARIALN.TTF">
-          <Anchors>
-            <Anchor point="CENTER" x="1" />
-          </Anchors>
-          <FontHeight val="12" />
-        </ButtonText>
-      </Button>-->
       <Button name="JocysCom_StopButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="■">
         <Size x="23" y="21" />
         <Anchors>
@@ -445,7 +431,8 @@
           <FontHeight val="13" />
         </ButtonText>
       </Button>
-      <Frame name="JocysCom_MiniMenuFrame" parent="JocysCom_StopButtonFrame" enableMouse="true">
+      
+      <Frame name="JocysCom_MiniMenuFrame" parent="JocysCom_StopButtonFrame" enableMouse="true" hidden="true">
         <Size x="240" y="486" />
         <Anchors>
           <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="-6" y="1" />
@@ -453,7 +440,7 @@
         <Backdrop tile="true" bgFile="Interface/FrameGeneral/UI-Background-Rock">
           <TileSize val="350" />
           <BackgroundInsets left="7" right="3" top="3" bottom="5" />
-        </Backdrop>
+        </Backdrop>       
         <Layers>
           <Layer>
             <Texture>
@@ -467,6 +454,20 @@
         </Layers>
 
         <Frames>
+
+          <Frame>
+            <Anchors>
+              <Anchor point="TOPLEFT" />
+              <Anchor point="BOTTOMRIGHT" />
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                self:SetBackdrop( { edgeFile = "Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-MiniMenuFrame-Border", edgeSize = 23 });
+              </OnLoad>
+            </Scripts>
+          </Frame>
+          
+          
           <Frame name="JocysCom_MiniMenuFrameHeader" parent="JocysCom_MiniMenuFrame">
             <Size x="339" y="22" />
             <Anchors>
@@ -512,17 +513,7 @@
               </Layer>
             </Layers>
           </Frame>
-          <Frame name="JocysCom_MiniMenuFrameBorder" parent="JocysCom_MiniMenuFrame">
-            <Anchors>
-              <Anchor point="TOPLEFT" />
-              <Anchor point="BOTTOMRIGHT" />
-            </Anchors>
-            <Backdrop>
-              <EdgeSize>
-                <AbsValue val="23"/>
-              </EdgeSize>
-            </Backdrop>
-          </Frame>
+
 
           <!--******************************************************************************************************-->
 
@@ -1230,132 +1221,6 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-
-          <!--******************************************************************************************************-->
-
-          <!--<CheckButton name="JocysCom_BattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-            <Size x="26" y="27" />
-            <Anchors>
-              <Anchor point="TOPLEFT" x="10" y="-346" />
-            </Anchors>
-            <Scripts>
-              <OnEnter>
-                JocysCom_MiniMenuFrame_Show("Battleground");
-                JocysCom_OptionsButton:Show();
-              </OnEnter>
-              <OnClick>
-                JocysCom_CheckButton_OnClick(self, "Battleground");
-              </OnClick>
-              <OnLeave>
-                JocysCom_MiniMenuFrame_Hide();
-              </OnLeave>
-            </Scripts>
-          </CheckButton>
-
-          <CheckButton name="JocysCom_SoundBattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-            <Size x="26" y="27" />
-            <Anchors>
-              <Anchor point="TOPLEFT" x="31" y="-346" />
-            </Anchors>
-            <Scripts>
-              <OnEnter>
-                JocysCom_MiniMenuFrame_Show("SoundBattleground");
-                JocysCom_OptionsButton:Show();
-              </OnEnter>
-              <OnClick>
-                JocysCom_PlaySoundAndSaveSettings();
-              </OnClick>
-              <OnLeave>
-                JocysCom_MiniMenuFrame_Hide();
-              </OnLeave>
-            </Scripts>
-          </CheckButton>
-
-          <CheckButton name="JocysCom_NameBattlegroundCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-            <Size x="26" y="27" />
-            <Anchors>
-              <Anchor point="TOPLEFT" x="52" y="-346" />
-            </Anchors>
-            <Scripts>
-              <OnLoad>
-                self.text:SetText("|cffff7d00 Battleground Members|r");
-                self.text:SetPoint("TOPLEFT", 24, -8);
-              </OnLoad>
-              <OnEnter>
-                JocysCom_MiniMenuFrame_Show("NameBattleground");
-                JocysCom_OptionsButton:Show();
-              </OnEnter>
-              <OnClick>
-                JocysCom_PlaySoundAndSaveSettings();
-              </OnClick>
-              <OnLeave>
-                JocysCom_MiniMenuFrame_Hide();
-              </OnLeave>
-            </Scripts>
-          </CheckButton>-->
-
-          <!--******************************************************************************************************-->
-
-          <!--<CheckButton name="JocysCom_BattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-            <Size x="26" y="27" />
-            <Anchors>
-              <Anchor point="TOPLEFT" x="10" y="-367" />
-            </Anchors>
-            <Scripts>
-              <OnEnter>
-                JocysCom_MiniMenuFrame_Show("BattlegroundLeader");
-                JocysCom_OptionsButton:Show();
-              </OnEnter>
-              <OnClick>
-                JocysCom_CheckButton_OnClick(self, "BattlegroundLeader");
-              </OnClick>
-              <OnLeave>
-                JocysCom_MiniMenuFrame_Hide();
-              </OnLeave>
-            </Scripts>
-          </CheckButton>
-
-          <CheckButton name="JocysCom_SoundBattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-            <Size x="26" y="27" />
-            <Anchors>
-              <Anchor point="TOPLEFT" x="31" y="-367" />
-            </Anchors>
-            <Scripts>
-              <OnEnter>
-                JocysCom_MiniMenuFrame_Show("SoundBattlegroundLeader");
-                JocysCom_OptionsButton:Show();
-              </OnEnter>
-              <OnClick>
-                JocysCom_PlaySoundAndSaveSettings();
-              </OnClick>
-              <OnLeave>
-                JocysCom_MiniMenuFrame_Hide();
-              </OnLeave>
-            </Scripts>
-          </CheckButton>
-
-          <CheckButton name="JocysCom_NameBattlegroundLeaderCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
-            <Size x="26" y="27" />
-            <Anchors>
-              <Anchor point="TOPLEFT" x="52" y="-367" />
-            </Anchors>
-            <Scripts>
-              <OnLoad>
-                self.text:SetText("|cffff4709 Battleground Leader|r");
-                self.text:SetPoint("TOPLEFT", 24, -8);
-              </OnLoad>
-              <OnEnter>
-                JocysCom_MiniMenuFrame_Show("NameBattlegroundLeader");
-                JocysCom_OptionsButton:Show();
-              </OnEnter>
-              <OnClick>
-                JocysCom_PlaySoundAndSaveSettings();
-              </OnClick>
-              <OnLeave>
-                JocysCom_MiniMenuFrame_Hide();
-              </OnLeave>
-            </Scripts>
-          </CheckButton>-->
 
           <!--******************************************************************************************************-->
 

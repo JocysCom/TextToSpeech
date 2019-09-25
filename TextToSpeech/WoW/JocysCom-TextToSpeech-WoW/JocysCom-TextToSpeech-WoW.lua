@@ -129,7 +129,7 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 2.3.5 ( 2019-09-22 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 8.2.5.1 ( 2019-09-22 )");
 	-- CheckButtons (Options) text.
 	JocysCom_ClipboardMessagePixelYFontString:SetText("|cff808080 [LEFT] and [TOP] position of pixels for|r |cff77ccffMonitor|r|cff808080. Default values [0] and [0].|r");
 	JocysCom_ClipboardMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffClipboard|r|cff808080 method.|r \|cff77ccffMonitor Clipboard: [For <message> tags]|r |cff808080in|r |cff77ccffMonitor|r |cff808080must be selected. |r");
@@ -206,43 +206,38 @@ end
 
 -- Register events.
 function JocysCom_RegisterEvents()
+	-- Addon message prefix.
+	C_ChatInfo.RegisterAddonMessagePrefix(addonPrefix);
+	-- Register events to JocysCom_OptionsFrame.
 	JocysCom_OptionsFrame:SetScript("OnEvent", JocysCom_OptionsFrame_OnEvent);
 	-- Addon loaded event.
 	JocysCom_OptionsFrame:RegisterEvent("ADDON_LOADED");
-
 	-- Chat GOSSIP / Dialogue open frames events.
 	JocysCom_OptionsFrame:RegisterEvent("GOSSIP_SHOW");
-	
 	-- Chat QUEST events.
 	JocysCom_OptionsFrame:RegisterEvent("QUEST_GREETING");
 	JocysCom_OptionsFrame:RegisterEvent("QUEST_DETAIL");
 	JocysCom_OptionsFrame:RegisterEvent("QUEST_PROGRESS");
 	JocysCom_OptionsFrame:RegisterEvent("QUEST_COMPLETE");
 	JocysCom_OptionsFrame:RegisterEvent("QUEST_LOG_UPDATE");
-
 	-- Books, scrolls, saved copies of mail messages, plaques, gravestones events.
 	JocysCom_OptionsFrame:RegisterEvent("ITEM_TEXT_READY");
-	
 	-- Chat GOSSIP / Dialogue close frames.
 	JocysCom_OptionsFrame:RegisterEvent("GOSSIP_CLOSED"); --"QUEST_FINISHED", "QUEST_ACCEPTED"
-
 	-- Chat ADDON events.
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_ADDON"); 
-
 	-- Chat MONSTER events.
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_EMOTE");
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_PARTY");
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_SAY");
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_WHISPER");
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
-	
+	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_YELL");	
 	-- Chat WHISPER events.
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_WHISPER");
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_WHISPER_INFORM");
 	-- Chat WHISPER_BN events.
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_BN_WHISPER");
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_BN_WHISPER_INFORM");
-
 	-- Chat EMOTE events.
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_EMOTE");
 	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_TEXT_EMOTE");
@@ -272,6 +267,9 @@ function JocysCom_RegisterEvents()
 end
 
 function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
+print(event);
+	-- Reset realName and presenceID.
+	realName = false;
 	-- Set MiniFrame and Scrollframe
 	if string.find(event, "GOSSIP") ~= nil or string.find(event, "QUEST") ~=nil or string.find(event, "ITEM") ~= nil then
 		JocysCom_AttachAndShowFrames();
@@ -285,14 +283,17 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 	if string.find(tostring(arg1), "<message") ~= nil then
 		return;
 	end
-	-- Reset realName and presenceID.
-	realName = false;
-	-- Events.  
+		-- Events.  
 	if event == "ADDON_LOADED" and arg1 == addonName then
-		JocysCom_LoadTocFileSettings();
-		JocysCom_UpdateMacro();
-			-- Set MiniMenu position.
+	JocysCom_LoadTocFileSettings();
+	-- Create macro if it doesn't exist and slot is available.
+	JocysCom_UpdateMacro();
+	-- Set MiniMenuFrame on left or right side.
 	JocysCom_MenuCheckButton_OnClick();
+	-- Set DialogueScrollFrame and make it transparent.
+	JocysCom_OptionsFrame_OnHide();
+	-- Set text of elements.
+	JocysCom_Text_EN();
 		return;
 	elseif event == "PLAYER_LOGOUT" then
 		JocysCom_SaveTocFileSettings();
@@ -306,15 +307,15 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 	elseif event == "CHAT_MSG_ADDON" and arg1 == addonPrefix and JocysCom_FilterCheckButton:GetChecked() ~= true then
 		print("|cff88aaff" .. arg1 .. "|r " .. arg2);
 		return;
-	elseif JocysCom_DialogueMiniFrame:IsVisible() and (string.find(event, "QUEST") ~= nil or event == "GOSSIP_SHOW" or event == "ITEM_TEXT_READY") then
+	elseif string.find(event, "QUEST") ~= nil or event == "GOSSIP_SHOW" or event == "ITEM_TEXT_READY" then
 		group = "Quest";
 		questMessage = nil;
 		speakMessage = nil;
 		objectivesHeader = nil;
-		if event == "QUEST_GREETING" then 
-			speakMessage = GetGreetingText();
-		elseif GossipFrame:IsVisible() and event == "GOSSIP_SHOW" then
-			speakMessage = GetGossipText();
+		if event == "GOSSIP_SHOW" then
+			questMessage = GetGossipText();
+		elseif event == "QUEST_GREETING" then 
+			questMessage = GetGreetingText();
 		elseif event == "QUEST_DETAIL" then
 			objectivesHeader = QuestInfoObjectivesHeader:GetText();
 			if (objectivesHeader == nil) then
@@ -324,28 +325,27 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 				objectivesHeader = objectivesHeader .. ".";
 			end
 			if JocysCom_ObjectivesCheckButton:GetChecked() == true then		
-				speakMessage = GetQuestText() .. " " .. objectivesHeader .. " " .. GetObjectiveText();
+				questMessage = GetQuestText() .. " " .. objectivesHeader .. " " .. GetObjectiveText();
 			else
-				speakMessage = GetQuestText();
+				questMessage = GetQuestText();
 			end
 		elseif event == "QUEST_PROGRESS" then
-			speakMessage = GetProgressText();
+			questMessage = GetProgressText();
 		elseif event == "QUEST_COMPLETE" then
-			speakMessage = GetRewardText();
+			questMessage = GetRewardText();
 		elseif event == "ITEM_TEXT_READY" then
-			speakMessage = ItemTextGetText();
-		end	
+			questMessage = ItemTextGetText();
+		end
 		arg2 = GetUnitName("npc");
-		questMessage = speakMessage;
-		if JocysCom_NameQuestCheckButton:GetChecked() == true then
+		if JocysCom_NameQuestCheckButton:GetChecked() == true and arg2 ~= nil then
 			NameIntro = true
-			questMessage = arg2 .. " says. " .. speakMessage;
+			questMessage = arg2 .. " says. " .. questMessage;
 		end	
+		speakMessage = questMessage;
 		if JocysCom_QuestCheckButton:GetChecked() ~= true then return end -- Don't proceed if "auto-start" speech check-box is disabled.
 	elseif event == "GOSSIP_CLOSED" then
 		return;
 	-- Chat events.
-
 	elseif JocysCom_MonsterCheckButton:GetChecked() == true and string.find(event, "MSG_MONSTER") ~= nil then	
 		-- don't proceed repetitive NPC messages by the same NPC.
 		if (lastArg == arg2 .. arg1) then return else lastArg = arg2 .. arg1 end
@@ -443,7 +443,6 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 	if string.find(event, "QUEST") ~= nil or event == "GOSSIP_SHOW" or event == "ITEM_TEXT_READY" or (string.find(event, "CHAT") ~= nil and string.find(event, "EMOTE") == nil) then messageType = " says. " end
 	if string.find(event, "WHISPER") ~= nil then messageType = " whispers. " end
 	if string.find(event, "YELL") ~= nil then messageType = " yells. " end
-
 	-- Final message.
 	if (NameIntro == true) then
 		speakMessage = messageLeader .. arg2 .. " " .. messageType .. speakMessage;
@@ -517,7 +516,6 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 	else
 		customName = unitName;
 	end
-
 	-- Send player Name, Class and custom Name to Monitor.
 	if string.find(speakMessage, customName) ~= nil or string.find(string.lower(speakMessage), string.lower(unitClass)) ~= nil  then
 		messagePlayer = "<message command=\"player\" name=\"" .. unitName .. "," .. customName .. "," .. unitClass ..  "\" />";
@@ -528,7 +526,6 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 			C_ChatInfo.SendAddonMessage(addonPrefix, messagePlayer, "WHISPER", unitName);
 		end
 	end
-
 	--Replace text in message.
 	speakMessage = JocysCom_Replace(speakMessage);
 	if speakMessage == nil then return end
@@ -809,7 +806,6 @@ end
 		JocysCom_MiniMenuFrame_FontString:Hide();
 	end
 	JocysCom_MiniMenuFrame_FontString:SetText(fontString);
-	JocysCom_MiniMenuFrameBorder:SetBackdrop( { edgeFile = "Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-MiniMenuFrame-Border", edgeSize = 23 });
 	JocysCom_MiniMenuFrame:Show();
  end
 
@@ -828,12 +824,21 @@ function JocysCom_StopButton_OnClick(name)
 	end
 end
 
+-- [ Play ] button.
+function JocysCom_PlayButton_OnClick()
+	if GossipFrame:IsVisible() ~=true then
+		local questDescription, questObjectives = GetQuestLogQuestText();
+		questMessage = questObjectives .. " Description. " .. questDescription;
+	end
+	JocysCom_SpeakMessage(questMessage, "SROLL_UP_OR_PLAY_BUTTON", "", "Quest");
+end
+
 -- ScrollFrame - scroll-up or scroll-down.
 function JocysCom_DialogueScrollFrame_OnMouseWheel(self, delta)
 	if delta == 1 then
 		JocysCom_PlayButton_OnClick();
 	else
-		JocysCom_SendChatMessageStop(2, "Quest");
+		JocysCom_StopButton_OnClick("Quest");
 	end
 end
 
@@ -863,8 +868,8 @@ function JocysCom_AttachAndShowFrames()
 	end
 	-- ScrollFrame.
 	JocysCom_DialogueScrollFrame:SetFrameLevel(100);
-	-- MiniFrame.		
-	JocysCom_DialogueMiniFrame:SetBackdrop( { bgFile="Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-DialogueMiniFrame-Background" });
+	JocysCom_DialogueMiniFrame:Show();
+	JocysCom_DialogueScrollFrame:Show();
 end
 
 -- Close all JocysCom frames.
@@ -1046,16 +1051,6 @@ function JocysCom_wait(delay, func, ...)
   return true;
 end
 
--- [ Play ] button.
-function JocysCom_PlayButton_OnClick(self)
-	if QuestLogPopupDetailFrame:IsVisible() or WorldMapFrame:IsVisible() then
-		local questDescription, questObjectives = GetQuestLogQuestText();
-		questMessage = questObjectives .. " Description. " .. questDescription;
-		-- questPortrait, questPortraitText, questPortraitName = GetQuestLogPortraitGiver();
-	end
-	JocysCom_SpeakMessage(questMessage, "SROLL_UP_OR_PLAY_BUTTON", "", "Quest");
-end
-
 -- Enable/Disable message filter.
 function JocysCom_CHAT_MSG_WHISPER(self, event, msg)
 	if string.find(msg, "<message") ~= nil then
@@ -1207,27 +1202,5 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_NInstanceCB = JocysCom_NameInstanceCheckButton:GetChecked();
 	JocysCom_NInstanceLCB = JocysCom_NameInstanceLeaderCheckButton:GetChecked();
 end
-
-function JocysCom_SetInterfaceSettings()
-	C_ChatInfo.RegisterAddonMessagePrefix(addonPrefix);
-	-- Options frame.
-	JocysCom_OptionsFrame:SetScript("OnShow", JocysCom_OptionsFrame_OnShow);
-	JocysCom_OptionsFrame:SetScript("OnHide", JocysCom_OptionsFrame_OnHide);
-	JocysCom_DialogueMiniFrame:SetScript("OnShow", JocysCom_DndCheck);
-	JocysCom_DialogueMiniFrame:SetScript("OnHide", JocysCom_DndCheck);
-
-	-- Attach DialogueScroll and DialogueMini frames to WoW GossipFrame frame.
-	JocysCom_AttachAndShowFrames(GossipFrame);
-	-- Hide frames.
-	JocysCom_OptionsFrame:Hide();
-	JocysCom_MiniMenuFrame:Hide();
-	JocysCom_OptionsButton:Hide();
-	-- Load descriptions.
-	JocysCom_Text_EN();	
-end
-
--- Load UI settings.
-JocysCom_SetInterfaceSettings();
-
--- Register events (and on ADDON_LOADED event load toc file values and set them).
-JocysCom_RegisterEvents();
+--Load events and settings.
+JocysCom_RegisterEvents(); 
