@@ -9,7 +9,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -126,67 +125,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		int changeValue = 0;
 
-		/// <summary>
-		/// Convert value 0-511 value to RGB.
-		/// </summary>
-		/// <param name=""></param>
-		static int GetColor(int v)
-		{
-			// DEC   OCT   HEX 
-			// ---   ---   ------
-			//   0 =   0 =     00
-			//   1 =   1 =     20
-			//   2 =   2 =     40
-			//   3 =   3 =     60
-			//   4 =   4 =     80
-			//   5 =   5 =     A0
-			//   6 =   6 =     C0
-			//   7 =   7 =     E0
-			//   8 =  10 =   2000
-			//   9 =  11 =   2020
-			//  10 =  12 =   2040
-			// ...   ...   ......
-			// 511 = 777 = E0E0E0
-			var num = Convert.ToString(v, 8);
-			var rgb = num.Select(x => int.Parse(x.ToString()) * 0x20).ToArray();
-			Array.Reverse(rgb);
-			var b = rgb.Length > 0 ? rgb[0] : 0;
-			var g = rgb.Length > 1 ? rgb[1] : 0;
-			var r = rgb.Length > 2 ? rgb[2] : 0;
-			var c = (0xFF << 24) | (r << 16) | (g << 8) | b;
-			return c;
-		}
-
-		static int GetValue(int color)
-		{
-			var r = (color >> 16) & 0xFF;
-			var g = (color >> 8) & 0xFF;
-			var b = color & 0xFF; ;
-			// Round.
-			var r8 = Math.Round((decimal)r / (decimal)0x20, 0);
-			var g8 = Math.Round((decimal)g / (decimal)0x20, 0);
-			var b8 = Math.Round((decimal)b / (decimal)0x20, 0);
-			var oct = string.Format("{0}{1}{2}", r8, g8, b8).TrimStart('0');
-			if (oct == "")
-				oct = "0";
-			var v = Convert.ToInt32(oct, 8);
-			return v;
-		}
+		
 
 		private void CreateImageButton_Click(object sender, EventArgs e)
 		{
-			var cols = new List<string>();
-			for (int i = 0; i < 512; i++)
-				cols.Add(GetColor(i).ToString("X6"));
-			MessageBox.Show(string.Join(" ", cols));
-
-			var vals = new List<int>();
-			for (int i = 0; i < cols.Count; i++)
-			{
-				var hi = Convert.ToInt32(cols[i], 16);
-				vals.Add(GetValue(hi));
-			}
-			MessageBox.Show(string.Join(" ", vals));
 
 			// Image: prefix[6] + change[1] + encoding[1] + [size[1] + message[X]]
 			// 

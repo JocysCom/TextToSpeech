@@ -48,9 +48,13 @@
 			this.BoxSizeLabel = new System.Windows.Forms.Label();
 			this.AddMessageTextCheckBox = new System.Windows.Forms.CheckBox();
 			this.CopyWowTextButton = new System.Windows.Forms.Button();
+			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
 			this.CaptureGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxSizeUpDown)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// CaptureGroupBox
@@ -248,10 +252,38 @@
 			this.CopyWowTextButton.UseVisualStyleBackColor = true;
 			this.CopyWowTextButton.Click += new System.EventHandler(this.CopyWowTextButton_Click);
 			// 
+			// numericUpDown1
+			// 
+			this.numericUpDown1.Location = new System.Drawing.Point(509, 113);
+			this.numericUpDown1.Name = "numericUpDown1";
+			this.numericUpDown1.Size = new System.Drawing.Size(41, 20);
+			this.numericUpDown1.TabIndex = 18;
+			this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// numericUpDown2
+			// 
+			this.numericUpDown2.Location = new System.Drawing.Point(556, 113);
+			this.numericUpDown2.Name = "numericUpDown2";
+			this.numericUpDown2.Size = new System.Drawing.Size(41, 20);
+			this.numericUpDown2.TabIndex = 18;
+			this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numericUpDown2.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
 			// OptionsCapturingUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.numericUpDown2);
+			this.Controls.Add(this.numericUpDown1);
 			this.Controls.Add(this.BoxSizeUpDown);
 			this.Controls.Add(this.AddMessageTextCheckBox);
 			this.Controls.Add(this.EnableCapturingCheckBox);
@@ -275,6 +307,8 @@
 			this.CaptureGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxSizeUpDown)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -302,5 +336,7 @@
 		private System.Windows.Forms.Label BoxSizeLabel;
 		private System.Windows.Forms.CheckBox AddMessageTextCheckBox;
 		private System.Windows.Forms.Button CopyWowTextButton;
+		private System.Windows.Forms.NumericUpDown numericUpDown1;
+		private System.Windows.Forms.NumericUpDown numericUpDown2;
 	}
 }
