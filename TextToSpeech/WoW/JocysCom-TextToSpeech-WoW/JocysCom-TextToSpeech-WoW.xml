@@ -4,7 +4,7 @@
     <Anchors>
       <Anchor point="CENTER" />
     </Anchors>
-    <Layers>     
+    <Layers>
       <Layer>
         <FontString name="JocysCom_MessageForMonitorFrameFontString" inherits="GameFontHighlightSmall">
           <Anchors>
@@ -70,7 +70,7 @@
             JocysCom_ClipboardMessageCheckButton_OnClick();
           </OnClick>
         </Scripts>
-      </CheckButton> 
+      </CheckButton>
       <CheckButton name="JocysCom_LockCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
@@ -122,11 +122,11 @@
         </Anchors>
         <Layers>
           <Layer>
-        <FontString name="JocysCom_ReplaceNameFontString" inherits="GameFontHighlightSmall">
-          <Anchors>
-            <Anchor point="LEFT" relativePoint="RIGHT" x="2" />
-          </Anchors>
-        </FontString>
+            <FontString name="JocysCom_ReplaceNameFontString" inherits="GameFontHighlightSmall">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT" x="2" />
+              </Anchors>
+            </FontString>
           </Layer>
         </Layers>
         <Scripts>
@@ -160,9 +160,9 @@
             <Anchors>
               <Anchor point="TOPLEFT" x="5" y="-4" />
               <Anchor point="BOTTOMRIGHT" x="-26" y="3" />
-            </Anchors>         
-            <ScrollChild>           
-            <!--<Frames>-->
+            </Anchors>
+            <ScrollChild>
+              <!--<Frames>-->
               <EditBox name="JocysCom_OptionsEditBox" letters="10000" multiLine="true" >
                 <Size x="565" />
                 <Scripts>
@@ -173,10 +173,12 @@
                 <TextInsets left="5" right="5" top="5" bottom="5" />
                 <FontString inherits="GameFontHighlightSmall" />
               </EditBox>
-            <!--</Frames>-->
-            <!--<Scripts>
+              <!--</Frames>-->
+              <!--<Scripts>
               <OnLoad>
-                self:SetScrollChild(JocysCom_OptionsEditBox);--><!--EditBox is limited to parent ScrollFrame.--><!--
+                self:SetScrollChild(JocysCom_OptionsEditBox);-->
+              <!--EditBox is limited to parent ScrollFrame.-->
+              <!--
               </OnLoad>
             </Scripts>-->
             </ScrollChild>
@@ -190,7 +192,7 @@
         </Anchors>
         <Layers>
           <Layer>
-            <FontString name="JocysCom_DescriptionFrameFontString" inherits="GameFontHighlightSmall" justifyV="CENTER" justifyH="LEFT" multiline="true">           
+            <FontString name="JocysCom_DescriptionFrameFontString" inherits="GameFontHighlightSmall" justifyV="MIDDLE" justifyH="LEFT" wordwrap="true">
               <Anchors>
                 <Anchor point="TOPLEFT" x="10" y="-8" />
                 <Anchor point="BOTTOMRIGHT" x="-10" y="10" />
@@ -233,7 +235,7 @@
         </Anchors>
         <Scripts>
           <OnClick>
-            JocysCom_StopButton_OnClick("Quest");       
+            JocysCom_StopButton_OnClick("Quest");
           </OnClick>
         </Scripts>
         <ButtonText font="Fonts\ARIALN.TTF">
@@ -343,14 +345,14 @@
           <Color a="0.8" r="0" g="0" b="0" />
         </Texture>
       </Layer>
-        <Layer>
-          <FontString name="JocysCom_ClipboardMessagesLeftFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
-            <Anchors>
-              <Anchor point="LEFT" relativePoint="RIGHT" x="0" y="-11" />
-            </Anchors>
-            <Color a="0.5" r="1" g="1" b="1" />
-          </FontString>
-        </Layer>
+      <Layer>
+        <FontString name="JocysCom_ClipboardMessagesLeftFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
+          <Anchors>
+            <Anchor point="LEFT" relativePoint="RIGHT" x="0" y="-11" />
+          </Anchors>
+          <Color a="0.5" r="1" g="1" b="1" />
+        </FontString>
+      </Layer>
     </Layers>
     <Frames>
       <Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" parent="JocysCom_StopButtonFrame" text="≡" hidden="true">
@@ -407,7 +409,7 @@
         <Size x="23" y="21" />
         <Anchors>
           <Anchor point="TOPLEFT" x="3" y="-26" />
-        </Anchors>       
+        </Anchors>
         <Scripts>
           <OnLoad>
             self:Hide();
@@ -426,12 +428,12 @@
         </Scripts>
         <ButtonText font="Fonts\ARIALN.TTF">
           <Anchors>
-            <Anchor point="CENTER" x="1" y="" />
+            <Anchor point="CENTER" x="1" />
           </Anchors>
           <FontHeight val="13" />
         </ButtonText>
       </Button>
-      
+
       <Frame name="JocysCom_MiniMenuFrame" parent="JocysCom_StopButtonFrame" enableMouse="true" hidden="true">
         <Size x="240" y="486" />
         <Anchors>
@@ -440,7 +442,7 @@
         <Backdrop tile="true" bgFile="Interface/FrameGeneral/UI-Background-Rock">
           <TileSize val="350" />
           <BackgroundInsets left="7" right="3" top="3" bottom="5" />
-        </Backdrop>       
+        </Backdrop>
         <Layers>
           <Layer>
             <Texture>
@@ -466,8 +468,8 @@
               </OnLoad>
             </Scripts>
           </Frame>
-          
-          
+
+
           <Frame name="JocysCom_MiniMenuFrameHeader" parent="JocysCom_MiniMenuFrame">
             <Size x="339" y="22" />
             <Anchors>
@@ -1523,60 +1525,58 @@
           <Anchors>
             <Anchor point="LEFT" />
           </Anchors>
-          <size x="2" y="2"/>
+          <Size x="2" y="2"/>
           <Color a="1" r="1" g="0" b="0" />
         </Texture>
         <Texture>
           <Anchors>
             <Anchor point="LEFT" x="2" />
           </Anchors>
-          <size x="2" y="2"/>
+          <Size x="2" y="2"/>
           <Color a="1" r="0" g="1" b="0" />
         </Texture>
         <Texture>
           <Anchors>
             <Anchor point="LEFT" x="4" />
           </Anchors>
-          <size x="2" y="2"/>
+          <Size x="2" y="2"/>
           <Color a="1" r="0" g="0" b="1" />
         </Texture>
         <Texture>
           <Anchors>
             <Anchor point="LEFT" x="6" />
           </Anchors>
-          <size x="2" y="2"/>
+          <Size x="2" y="2"/>
           <Color a="1" r="1" g="0" b="0" />
         </Texture>
         <Texture>
           <Anchors>
             <Anchor point="LEFT" x="8" />
           </Anchors>
-          <size x="2" y="2"/>
+          <Size x="2" y="2"/>
           <Color a="1" r="0" g="1" b="0" />
         </Texture>
         <Texture>
           <Anchors>
             <Anchor point="LEFT" x="10" />
           </Anchors>
-          <size x="2" y="2"/>
+          <Size x="2" y="2"/>
           <Color a="1" r="0" g="0" b="1" />
         </Texture>
         <Texture>
           <Anchors>
             <Anchor point="LEFT" x="12" />
           </Anchors>
-          <size x="2" y="2"/>
+          <Size x="2" y="2"/>
           <Color a="1" r="1" g="0" b="0" />
         </Texture>
         <Texture name="JocysCom_ClipboardMessageFrame_Texture">
           <Anchors>
             <Anchor point="LEFT" x="14" />
           </Anchors>
-          <size x="2" y="2"/>
+          <Size x="2" y="2"/>
           <Color a="1" r="0" g="0" b="0" />
         </Texture>
-      </Layer>
-      <Layer>
       </Layer>
     </Layers>
     <Frames>

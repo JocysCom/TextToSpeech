@@ -1020,9 +1020,9 @@ function JocysCom_RemoveMessageFromTable()
 		end
 end
 
+-- Send messages with delay.
 local waitTable = {};
 local waitFrame = nil;
-
 function JocysCom_wait(delay, func, ...)
   if(type(delay)~="number" or type(func)~="function") then
     return false;
