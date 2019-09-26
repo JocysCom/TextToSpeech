@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace JocysCom.TextToSpeech.Monitor.Capturing
 {
@@ -98,6 +101,25 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 				oct = "0";
 			var v = Convert.ToInt32(oct, 8);
 			return v;
+		}
+
+		public static int[] ColorsFromRgbs(string text)
+		{
+			var rx = new Regex("[0-9A-F]{6}", RegexOptions.IgnoreCase);
+			var matches = rx.Matches(text);
+			var values = new List<int>();
+			if (matches.Count > 0)
+			{
+				var ms = new MemoryStream();
+				var bw = new BinaryWriter(ms);
+				foreach (Match match in matches)
+				{
+					var hex = match.Value;
+					var v = int.Parse(hex, System.Globalization.NumberStyles.HexNumber);
+					values.Add(v);
+				}
+			}
+			return values.ToArray();
 		}
 
 		//private void button1_Click(object sender, EventArgs e)

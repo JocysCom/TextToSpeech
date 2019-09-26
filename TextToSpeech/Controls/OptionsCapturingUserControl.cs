@@ -1,15 +1,14 @@
 ﻿using JocysCom.ClassLibrary.Controls;
 using JocysCom.ClassLibrary.Drawing;
 using JocysCom.ClassLibrary.Win32;
+using JocysCom.TextToSpeech.Monitor.Capturing;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -27,6 +26,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			WinPcapRadioButton.CheckedChanged += WinPcapRadioButton_CheckedChanged;
 			SocPcapRadioButton.CheckedChanged += WinPcapRadioButton_CheckedChanged;
 			DisplayRadioButton.CheckedChanged += WinPcapRadioButton_CheckedChanged;
+			ColorPrefixTextBox_TextChanged(null, null);
 		}
 
 		private void WinPcapRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -92,47 +92,29 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		byte[] GetPrefixRgbColorBytes()
 		{
-			var rx = new Regex("#[0-9AF]{6}", RegexOptions.IgnoreCase);
 			var text = ColorPrefixTextBox.Text;
 			byte[] prefixBytes;
-			var matches = rx.Matches(ColorPrefixTextBox.Text);
 			if (string.IsNullOrEmpty(text))
 			{
 				prefixBytes = System.Text.Encoding.ASCII.GetBytes("TextToSpeech");
+				return prefixBytes;
 			}
-			else if (matches.Count > 0)
+			var intColors = DisPcapDevice.ColorsFromRgbs(text);
+			if (intColors.Length > 0)
 			{
-				var ms = new MemoryStream();
-				var bw = new BinaryWriter(ms);
-				foreach (Match match in matches)
-				{
-					var hex = match.Value;
-					var v = int.Parse(hex.Substring(1, 6), System.Globalization.NumberStyles.HexNumber);
-					var c = Color.FromArgb(v);
-					// Native bitmap color byte order for 32bpp: [B,G,R,A...], 24bpp: [B,G,R...].
-					bw.Write(c.B);
-					bw.Write(c.G);
-					bw.Write(c.R);
-				}
-				prefixBytes = ms.ToArray();
+				prefixBytes = Basic.ColorsToBytes(intColors);
+				return prefixBytes;
 			}
-			else
-			{
-				prefixBytes = System.Text.Encoding.ASCII.GetBytes(text);
-			}
+			prefixBytes = System.Text.Encoding.ASCII.GetBytes(text);
 			return prefixBytes;
 		}
 
 		int changeValue = 0;
 
-		
-
 		private void CreateImageButton_Click(object sender, EventArgs e)
 		{
 
 			// Image: prefix[6] + change[1] + encoding[1] + [size[1] + message[X]]
-			// 
-
 
 			// if encoding = 0, then clipboard.
 			var image = new Bitmap(ImagePictureBox.Width, ImagePictureBox.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -172,39 +154,36 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ImagePictureBox.Image = image;
 		}
 
-		int currentX;
-		int currentY;
-
 		private void CaptureImageButton_Click(object sender, EventArgs e)
 		{
 
 
-			// Create a task and supply a user delegate by using a lambda expression. 
-			var taskA = new Task(() =>
-			{
-				Invoke((Action)(() =>
-				{
-					StatusTextBox.Text = "Test Start...";
-				}));
-				var watch = new System.Diagnostics.Stopwatch();
-				watch.Start();
-				int z = 0;
-				while (watch.ElapsedMilliseconds < 10000)
-				{
-					var image = Basic.CaptureImage(10, 10, 32, 4);
-					var bytes = Basic.GetImageBytes(image);
-					z++;
-				}
-				Invoke((Action)(() =>
-				{
-					StatusTextBox.Text = string.Format("Test End... {0} - {1}ms ", z, watch.ElapsedMilliseconds / z);
-				}));
+			//// Create a task and supply a user delegate by using a lambda expression. 
+			//var taskA = new Task(() =>
+			//{
+			//	Invoke((Action)(() =>
+			//	{
+			//		StatusTextBox.Text = "Test Start...";
+			//	}));
+			//	var watch = new System.Diagnostics.Stopwatch();
+			//	watch.Start();
+			//	int z = 0;
+			//	while (watch.ElapsedMilliseconds < 10000)
+			//	{
+			//		var image = Basic.CaptureImage(10, 10, 32, 4);
+			//		var bytes = Basic.GetImageBytes(image);
+			//		z++;
+			//	}
+			//	Invoke((Action)(() =>
+			//	{
+			//		StatusTextBox.Text = string.Format("Test End... {0} - {1}ms ", z, watch.ElapsedMilliseconds / z);
+			//	}));
 
-			});
-			taskA.Start();
-			var a = 1;
-			if (a == 1)
-				return;
+			//});
+			//taskA.Start();
+			//var a = 1;
+			//if (a == 1)
+			//	return;
 			// Start the task.
 			//taskA.Start();
 
@@ -212,7 +191,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			StatusTextBox.Text = "Capturing...";
 			var w = ImagePictureBox.Width;
 			var h = ImagePictureBox.Height;
-			var b = Basic.CaptureImage(currentX, currentY, w, h);
+			var b = Basic.CaptureImage((int)BoxXUpDown.Value, (int)BoxYUpDown.Value, w, h);
 			var prefixBytes = GetPrefixRgbColorBytes();
 			var prefix = Basic.GetImageBytes(b, prefixBytes.Length);
 			if (!prefix.SequenceEqual(prefixBytes))
@@ -230,8 +209,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				{
 					var x = index % sw;
 					var y = (index - x) / sw;
-					currentX = x;
-					currentY = y;
+					BoxXUpDown.Value = x;
+					BoxYUpDown.Value = y;
 					StatusTextBox.Text += string.Format(" [{0}:{1}]", x, y);
 				}
 			}
@@ -289,5 +268,13 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		}
 
 		#endregion
+
+		private void ColorPrefixTextBox_TextChanged(object sender, EventArgs e)
+		{
+			var hexColors = ColorPrefixTextBox.Text;
+			var intColors = DisPcapDevice.ColorsFromRgbs(hexColors);
+			var values = intColors.Select(x => DisPcapDevice.GetValue(x));
+			ColorPrefixValueTextBox.Text = string.Join(",", values);
+		}
 	}
 }

@@ -20,6 +20,7 @@ namespace JocysCom.TextToSpeech.Monitor
 {
 	public partial class MainForm : Form
 	{
+
 		public MainForm()
 		{
 			Program.TopForm = this;
@@ -1429,9 +1430,9 @@ namespace JocysCom.TextToSpeech.Monitor
 			MessageBox.Show(message, "Last Exception");
 		}
 
-        private void UpdateTabPage_Click(object sender, EventArgs e)
-        {
+		private void UpdateTabPage_Click(object sender, EventArgs e)
+		{
 
-        }
-    }
+		}
+	}
 }
