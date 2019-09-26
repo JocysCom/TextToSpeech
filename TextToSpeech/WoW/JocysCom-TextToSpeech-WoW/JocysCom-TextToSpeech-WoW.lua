@@ -12,7 +12,6 @@ local addonPrefix = "JocysComTTS";
 local unitName = GetUnitName("player");
 local customName = GetUnitName("player");
 local unitClass = UnitClass("player");
-local realmName = GetRealmName();
 local questMessage = nil;
 local speakMessage = nil;
 local objectivesHeader = nil;
@@ -20,11 +19,9 @@ local NameIntro = false;
 local arg1 = nil;
 local arg2 = nil;
 local arg2Number = nil;
-local arg2Name = nil;
 local realName = false;
 local lastArg = nil;
 local NPCSex = nil;
-local NPCGender = nil;
 local stopWhenClosing = 1;
 local dashIndex = nil;
 local hashIndex = nil;
@@ -34,7 +31,6 @@ local messageLeader = nil;
 local messagePlayer = nil;
 local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-to-speech is enabled.";
 local messageStop = "<message command=\"stop\" />";
-local NPCNames = {};
 local macroName = "NPCSaveTTSMacro"
 local macroIndex = GetMacroIndexByName(macroName);
 local macroIcon = "INV_Misc_GroupNeedMore";
@@ -44,10 +40,11 @@ local pixelX = 0;
 local pixelY = 0;
 local chatMessageLimit = 240;
 local messagesTable = {};
+local NPCNamesTable = {};
 local timerEnabled = false;
 
 function JocysCom_UpdateMacro()
-	--Create macro if it doesn't exist and slot is available.
+	-- Create macro if it doesn't exist and slot is available.
 	macroIndex = GetMacroIndexByName(macroName);
 	if macroIndex == 0 then
 		local macroIndexOld = GetMacroIndexByName("NPCSaveJocysComTTS");
@@ -61,69 +58,63 @@ function JocysCom_UpdateMacro()
 			end
 		end
 	end
-	--Update macro if exists.
+	-- Update macro if exists.
 	macroIndex = GetMacroIndexByName(macroName);
 	if macroIndex > 0 then
-		--Macro settings.  targetlasttarget 
-		if setCount(NPCNames) > 0 then
+		if #NPCNamesTable > 0 then
 			macroIcon = "INV_Misc_GroupNeedMore";
 			macroMessage = "";
-			for i, v in pairs(NPCNames) do
-				macroMessage = macroMessage .. "/target " .. v .. "\n";
+			for i, n in pairs(NPCNamesTable) do
+				macroMessage = macroMessage .. "/target " .. n .. "\n" .. "/w " ..  unitName .. " <messageMacro/>\n";
 			end
-			macroMessage = macroMessage .. "/w " ..  unitName .. " <messageMacro/>\n"; 
 		else
 			macroIcon = "INV_Misc_GroupLooking";
-			macroMessage = "/targetfriend";
+			macroMessage = "/targetfriend"
 		end
-		--Update macro.
 		macroIndex = EditMacro(macroIndex, macroName, macroIcon, macroMessage, 1);
-	end
-end
-
-function setContainsSaved(s, k)
-	for i, v in pairs(s) do
-		if i == k then
-			return true;
-		end
-	end
-  return nil;
-end
-
---Count NPCs in the list.
-function setCount(s)
-  local c = 0;
-  for _ in pairs(s) do c = c + 1 end;
-  return c;
-end
-
---Remove NPC name from the target list.
-function setRemove(s, k)
-	if setCount(s) > 0 then
-		for i, v in pairs(s) do
-			if v == k then
-				table.remove(s, i);
+		-- Print NPC name list.
+		if DebugEnabled then
+			local number = 0;
+			if #NPCNamesTable > 0 then
+				repeat
+				number = number +1;
+				print(number .. ". " .. NPCNamesTable[number]);
+				until (number == #NPCNamesTable);
+			else
+				print("NPC name [Empty]: /targetfriend");
 			end
 		end
 	end
 end
 
---Add NPC name to the target list (max 9)
-function setInsert(s, k)
-	for i, v in pairs(s) do
-		if v == k then
-			table.remove(s, i);
+-- Add NPC name to NPCNamesTable (max 9).
+function JocysCom_AddNPCNameToTable(name)
+	-- Do not add NPC name if it is already in NPCNamesTable.
+	if #NPCNamesTable > 0 then
+		for i, n in pairs(NPCNamesTable) do
+			if string.find(n, name) then
+				if DebugEnabled then print("NPC name [Exists]: " .. name); end
+				return;
+			end
 		end
 	end
-	table.insert(s, k);
-	if setCount(s) > 9 then
-	table.remove(s, 1);
+	-- Add NPC name to NPCNamesTable.
+	table.insert(NPCNamesTable, name);
+	if DebugEnabled then print("NPC name [Added]: " .. name); end
+	if #NPCNamesTable > 9 then
+		repeat table.remove(NPCNamesTable, 1);
+		until (#NPCNamesTable < 10);
 	end
+	JocysCom_UpdateMacro();
 end
 
---Save NPC name to list.
-function addToSet(s, k, v1, v2)
-	s[k] = {v1, v2};
+-- Remove (targeted) NPC name from NPCNamesTable.
+function JocysCom_Remove1NPCNameFromTable()
+	if #NPCNamesTable > 0 then
+		if DebugEnabled then print("NPC name [Removed]: " .. NPCNamesTable[1]); end
+		table.remove(NPCNamesTable, 1);
+		JocysCom_UpdateMacro();
+	end
 end
 
 -- Set text.
@@ -274,12 +265,11 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 	if string.find(event, "GOSSIP") ~= nil or string.find(event, "QUEST") ~=nil or string.find(event, "ITEM") ~= nil then
 		JocysCom_AttachAndShowFrames();
 	end
-	-- don't proceed messages with <message> tags and your own incoming whispers.
-	if event == "CHAT_MSG_WHISPER" and string.find(arg1, "<messageMacro") then
-		NPCNames = {};
-		JocysCom_UpdateMacro();
+	if event == "CHAT_MSG_WHISPER" and string.find(arg1, "<messageMacro") then	
+			-- Remove targeted NPC's name from NPCNamesTable.
+			JocysCom_Remove1NPCNameFromTable(name);
 	end
-
+	-- don't proceed messages with <message> tags and your own incoming whispers.
 	if string.find(tostring(arg1), "<message") ~= nil then
 		return;
 	end
@@ -299,7 +289,7 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 		JocysCom_SaveTocFileSettings();
 		return;
 	elseif event == "PLAYER_LEAVING_WORLD" then
-		JocysCom_UpdateMacro();
+		--JocysCom_UpdateMacro();
 		return;
 	elseif event == "PLAYER_TARGET_CHANGED" then
 		JocysCom_SaveNPC();
@@ -348,7 +338,14 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 	-- Chat events.
 	elseif JocysCom_MonsterCheckButton:GetChecked() and string.find(event, "MSG_MONSTER") ~= nil then	
 		-- don't proceed repetitive NPC messages by the same NPC.
-		if (lastArg == arg2 .. arg1) then return else lastArg = arg2 .. arg1 end
+		if (lastArg == arg2 .. arg1) then
+			if DebugEnabled then print("Repetitive message ignored."); end
+			return;
+		else
+			lastArg = arg2 .. arg1
+		end
+			-- Add NPC name to NPCNamesTable.
+			JocysCom_AddNPCNameToTable(arg2);
 		group = "Monster";
 		if JocysCom_SoundMonsterCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameMonsterCheckButton:GetChecked() or (event == "CHAT_MSG_MONSTER_EMOTE") then NameIntro = true end
@@ -358,10 +355,8 @@ function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
 		if JocysCom_NameWhisperCheckButton:GetChecked() then NameIntro = true end
 		-- replace friend's real name with character name.
 		if event == "CHAT_MSG_BN_WHISPER_INFORM" then
-			-- print(tostring(event));
 			arg2 = GetUnitName("player");
 		elseif event == "CHAT_MSG_BN_WHISPER" then --or event == "CHAT_MSG_BN_CONVERSATION"
-			-- print(tostring(event));
 			-- bnetIDAccount, accountName, battleTag, isBattleTagPresence, characterName, bnetIDGameAccount, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, messageTime, canSoR, isReferAFriend, canSummonFriend = BNGetFriendInfo(friendIndex)
 			-- Extract friend's presenceID "|Kg00|kTestas|k".
 			-- |K[gsf][0-9]+|k[0]+|k
@@ -536,10 +531,6 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 		NPCName = name;
 		if string.find(event, "CHAT_MSG_MONSTER") == nil or rName == false then
 			NPCSex = UnitSex(name);
-		else
-			--Update macro.
-			setInsert(NPCNames, name);
-			JocysCom_UpdateMacro();
 		end
 	else
 		NPCName = GetUnitName("npc");
@@ -680,13 +671,13 @@ end
 function JocysCom_MenuCheckButton_OnClick()
 	PlaySound(856);
 	JocysCom_MiniMenuFrame:ClearAllPoints();
-	JocysCom_ClipboardMessagesLeftFontString:ClearAllPoints(); 
+	JocysCom_ClipboardMessagesCountFontString:ClearAllPoints(); 
 	if JocysCom_MenuCheckButton:GetChecked() then
 		JocysCom_MiniMenuFrame:SetPoint("BOTTOMLEFT", JocysCom_StopButtonFrame, "BOTTOMRIGHT", -8, 3);
-		JocysCom_ClipboardMessagesLeftFontString:SetPoint("LEFT", JocysCom_StopButtonFrame, "RIGHT", 0, -11); 
+		JocysCom_ClipboardMessagesCountFontString:SetPoint("LEFT", JocysCom_StopButtonFrame, "RIGHT", 0, -11); 
 	else
 		JocysCom_MiniMenuFrame:SetPoint("BOTTOMRIGHT", JocysCom_StopButtonFrame, "BOTTOMLEFT", 4, 3);
-		JocysCom_ClipboardMessagesLeftFontString:SetPoint("RIGHT", JocysCom_StopButtonFrame, "LEFT", 0, -11); 
+		JocysCom_ClipboardMessagesCountFontString:SetPoint("RIGHT", JocysCom_StopButtonFrame, "LEFT", 0, -11); 
 	end
 	JocysCom_SaveTocFileSettings();
 end
@@ -817,6 +808,9 @@ end
 -- [ Stop ] dialog button.
 function JocysCom_StopButton_OnClick(name)
 	PlaySound(856);
+	if JocysCom_ClipboardMessageCheckButton:GetChecked() and JocysCom_ClipboardMessageFrame:IsVisible() == false then
+	JocysCom_ClipboardMessageEditBoxSetFocus();
+	end
 	if name == "Quest" then
 		JocysCom_SendChatMessageStop(2, name);
 	else
@@ -826,6 +820,9 @@ end
 
 -- [ Play ] button.
 function JocysCom_PlayButton_OnClick()
+	if JocysCom_ClipboardMessageCheckButton:GetChecked() and JocysCom_ClipboardMessageFrame:IsVisible() == false then
+	JocysCom_ClipboardMessageEditBoxSetFocus();
+	end
 	if WorldMapFrame:IsVisible() then
 		local questDescription, questObjectives = GetQuestLogQuestText();
 		questMessage = questObjectives .. " Description. " .. questDescription;
@@ -967,12 +964,12 @@ end
 function JocysCom_AddMessageToTable(messageT)
 	messageT = string.gsub(messageT, "<message ", "<message position=\"" .. pixelX .. "," .. pixelY .. "\" "); 
 	table.insert(messagesTable, messageT);
+	if DebugEnabled then print("Message added [" .. #messagesTable .. "]"); end
 	if #messagesTable > 0 then
-		JocysCom_ClipboardMessagesLeftFontString:SetText(#messagesTable);
+		JocysCom_ClipboardMessagesCountFontString:SetText(#messagesTable);
 	else
-		JocysCom_ClipboardMessagesLeftFontString:SetText("");
+		JocysCom_ClipboardMessagesCountFontString:SetText("");
 	end
-	if DebugEnabled then print("Messages: " .. #messagesTable); end
 	if timerEnabled == false then
 		timerEnabled = true;
 		JocysCom_SendMessagesFromTable();
@@ -980,12 +977,14 @@ function JocysCom_AddMessageToTable(messageT)
 end
 
 function JocysCom_MessageForEditBox(messageEditBox)
-	if string.find(messageEditBox, "command=\"sound\"") == nil and string.find(messageEditBox, "command=\"player\"") == nil and string.find(messageEditBox, "command=\"save\"") == nil then
-	messageEditBox = string.gsub(messageEditBox, "%[comment]", "|cff808080[comment]|r|cfff7e593");
-	messageEditBox = string.gsub(messageEditBox, "%[/comment]", "|r|cff808080[/comment]|r");
-	messageEditBox = string.gsub(messageEditBox, "<", "|cff808080<");
-	messageEditBox = string.gsub(messageEditBox, ">", ">|r");
-	JocysCom_OptionsEditBox:SetText(messageEditBox);
+	if string.find(messageEditBox, "command=\"sound\"") ~= nil or string.find(messageEditBox, "command=\"player\"") ~= nil or string.find(messageEditBox, "command=\"save\"") ~= nil then
+		return;
+	else
+		messageEditBox = string.gsub(messageEditBox, "%[comment]", "|cff808080[comment]|r|cfff7e593");
+		messageEditBox = string.gsub(messageEditBox, "%[/comment]", "|r|cff808080[/comment]|r");
+		messageEditBox = string.gsub(messageEditBox, "<", "|cff808080<");
+		messageEditBox = string.gsub(messageEditBox, ">", ">|r");
+		JocysCom_OptionsEditBox:SetText(messageEditBox);
 	end
 end
 
@@ -993,7 +992,6 @@ end
 function JocysCom_SendMessagesFromTable()
 	JocysCom_ButtonFlashing();
 	if JocysCom_ClipboardMessageEditBox:HasFocus() then 
-		if DebugEnabled then print("Sending: " .. #messagesTable); end
 		-- Set message.
 		JocysCom_ClipboardMessageEditBox:SetText(messagesTable[1]);
 		JocysCom_ClipboardMessageEditBox:HighlightText();
@@ -1034,23 +1032,24 @@ function JocysCom_ButtonFlashing()
 end
 
 function JocysCom_ClipboardMessageEditBoxSetFocus()
+    JocysCom_ClipboardMessageFrame:Show();
 	JocysCom_ClipboardMessageEditBox:SetFocus();
 end
 
 function JocysCom_RemoveMessageFromTable()
+		if DebugEnabled then print("Message sent [" .. #messagesTable .. "]"); end
 		table.remove(messagesTable, 1);
+		if DebugEnabled then print("Messages left [" .. #messagesTable .. "]"); end
 		-- Repeat if there are messages in table.
 		if #messagesTable > 0 then
-			if DebugEnabled then print("Left: " .. #messagesTable); end
 			JocysCom_SendMessagesFromTable();
 		else
 			timerEnabled = false;
-			if DebugEnabled then print("Left: " .. #messagesTable); end
 		end
 		if #messagesTable > 0 then
-			JocysCom_ClipboardMessagesLeftFontString:SetText(#messagesTable);
+			JocysCom_ClipboardMessagesCountFontString:SetText(#messagesTable);
 		else
-			JocysCom_ClipboardMessagesLeftFontString:SetText("");
+			JocysCom_ClipboardMessagesCountFontString:SetText("");
 		end
 end
 

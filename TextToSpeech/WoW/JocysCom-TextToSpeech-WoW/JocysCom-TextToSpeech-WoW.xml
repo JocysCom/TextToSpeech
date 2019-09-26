@@ -23,6 +23,7 @@
         <Scripts>
           <OnEscapePressed>
             JocysCom_OptionsButton_OnClick();
+            self:SetAutoFocus(false);
           </OnEscapePressed>
         </Scripts>
         <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
@@ -44,6 +45,7 @@
         <Scripts>
           <OnEscapePressed>
             JocysCom_OptionsButton_OnClick();
+            self:SetAutoFocus(false);
           </OnEscapePressed>
         </Scripts>
         <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
@@ -132,6 +134,7 @@
         <Scripts>
           <OnEscapePressed>
             JocysCom_OptionsButton_OnClick();
+            self:SetAutoFocus(false);
           </OnEscapePressed>
         </Scripts>
         <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
@@ -168,6 +171,7 @@
                 <Scripts>
                   <OnEscapePressed>
                     JocysCom_OptionsButton_OnClick();
+                    self:SetAutoFocus(false);
                   </OnEscapePressed>
                 </Scripts>
                 <TextInsets left="5" right="5" top="5" bottom="5" />
@@ -337,7 +341,7 @@
         </Texture>
       </Layer>
       <Layer>
-        <FontString name="JocysCom_ClipboardMessagesLeftFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
+        <FontString name="JocysCom_ClipboardMessagesCountFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
           <Anchors>
             <Anchor point="LEFT" relativePoint="RIGHT" x="0" y="-11" />
           </Anchors>
@@ -402,7 +406,6 @@
           </OnEnter>
           <OnClick>
             JocysCom_StopButton_OnClick();
-            JocysCom_ClipboardMessageEditBoxSetFocus();
           </OnClick>
           <OnLeave>
             JocysCom_OptionsButtonFrame:Hide();
@@ -415,7 +418,7 @@
           <FontHeight val="18" />
         </ButtonText>
       </Button>
-      <Button name="JocysCom_ContinueButton" inherits="UIPanelButtonTemplate" text="►">
+      <Button name="JocysCom_ContinueButton" inherits="UIPanelButtonTemplate" text="►" hidden="true">
         <Size x="23" y="21" />
         <Anchors>
           <Anchor point="TOP" y="-29" />
@@ -428,9 +431,9 @@
             JocysCom_OptionsButtonFrame:Show();
           </OnEnter>
           <OnClick>
+            JocysCom_StopButton_OnClick(name)
             self:Hide();
             JocysCom_StopButton:Show();
-            JocysCom_ClipboardMessageEditBoxSetFocus();
           </OnClick>
           <OnLeave>
             JocysCom_OptionsButtonFrame:Hide();
