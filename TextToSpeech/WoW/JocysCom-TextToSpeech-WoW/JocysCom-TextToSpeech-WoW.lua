@@ -129,7 +129,7 @@ end
 -- Set text.
 function JocysCom_Text_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 8.2.5.1 ( 2019-09-22 )");
+	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 8.2.5.1 ( 2019-09-26 )");
 	-- CheckButtons (Options) text.
 	JocysCom_ClipboardMessagePixelYFontString:SetText("|cff808080 [LEFT] and [TOP] position of pixels for|r |cff77ccffMonitor|r|cff808080. Default values [0] and [0].|r");
 	JocysCom_ClipboardMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffClipboard|r|cff808080 method.|r \|cff77ccffMonitor Clipboard: [For <message> tags]|r |cff808080in|r |cff77ccffMonitor|r |cff808080must be selected. |r");
@@ -183,13 +183,13 @@ function JocysCom_SendChatMessageStop(CloseOrButton, group)
 	end			
 	if (stopWhenClosing == 1 or group ~= nil or group ~= "") and (JocysCom_StopOnCloseCheckButton:GetChecked() or (CloseOrButton == 1 or CloseOrButton == 2)) then
 		--Send message.
-		if JocysCom_ClipboardMessageCheckButton:GetChecked() then
-			JocysCom_AddMessageToTable(messageStop);
-		else
+		if JocysCom_NetworkMessageCheckButton:GetChecked() then
 			C_ChatInfo.SendAddonMessage(addonPrefix, messageStop, "WHISPER", unitName);
+			JocysCom_MessageForEditBox(messageStop);
+		else
+			JocysCom_AddMessageToTable(messageStop);
 		end
 		stopWhenClosing = 0;
-		JocysCom_OptionsEditBox:SetText("|cff808080" .. messageStop .. "|r");
 	end
 end
 
@@ -197,10 +197,10 @@ end
 function JocysCom_SendSoundIntro(group)
 	messageGroup = "<message command=\"sound\" group=\"" .. group .. "\" />";
 	--Send message.
-	if JocysCom_ClipboardMessageCheckButton:GetChecked() then
-		JocysCom_AddMessageToTable(messageGroup);
-	else
+	if JocysCom_NetworkMessageCheckButton:GetChecked() then
 		C_ChatInfo.SendAddonMessage(addonPrefix, messageGroup, "WHISPER", unitName);
+	else
+		JocysCom_AddMessageToTable(messageGroup);
 	end
 end
 
@@ -267,6 +267,7 @@ function JocysCom_RegisterEvents()
 end
 
 function JocysCom_OptionsFrame_OnEvent(self, event, arg1, arg2)
+	if DebugEnabled then print(event); end
 	-- Reset realName and presenceID.
 	realName = false;
 	-- Set MiniFrame and Scrollframe
@@ -519,10 +520,10 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 	if string.find(speakMessage, customName) ~= nil or string.find(string.lower(speakMessage), string.lower(unitClass)) ~= nil  then
 		messagePlayer = "<message command=\"player\" name=\"" .. unitName .. "," .. customName .. "," .. unitClass ..  "\" />";
 	--Send color message.
-		if	JocysCom_ClipboardMessageCheckButton:GetChecked() then
-			JocysCom_AddMessageToTable(messagePlayer);
-		else
+		if	JocysCom_NetworkMessageCheckButton:GetChecked() then
 			C_ChatInfo.SendAddonMessage(addonPrefix, messagePlayer, "WHISPER", unitName);
+		else		
+			JocysCom_AddMessageToTable(messagePlayer);
 		end
 	end
 	--Replace text in message.
@@ -583,10 +584,10 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 		local chatMessageSA = "<message command=\"add\"><part>";
 		local chatMessageE = "</part></message>";
 		local chatMessage;
-		if JocysCom_ClipboardMessageCheckButton:GetChecked() then
-			chatMessageLimit = 10000;
-		else
+		if JocysCom_NetworkMessageCheckButton:GetChecked() then
 			chatMessageLimit = 240;
+		else
+			chatMessageLimit = 10000;
 		end
 		local sizeAdd = chatMessageLimit - string.len(chatMessageSA) - string.len(chatMessageE) - string.len(addonPrefix);
 		local sizePlay = chatMessageLimit - string.len(chatMessageSP) - string.len(chatMessageE) - string.len(addonPrefix);
@@ -609,10 +610,11 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 				chatMessage = chatMessageSP .. part .. chatMessageE;
 				stopWhenClosing = 1;
 				--Send message.
-				if JocysCom_ClipboardMessageCheckButton:GetChecked() then
-					JocysCom_AddMessageToTable(chatMessage);
-				else
+				if JocysCom_NetworkMessageCheckButton:GetChecked() then
 					C_ChatInfo.SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
+					JocysCom_MessageForEditBox(chatMessage);
+				else
+					JocysCom_AddMessageToTable(chatMessage);
 				end
 				if DebugEnabled then print("[" .. tostring(index) .. "] [" .. startIndex .. "] '" .. part .. "'") end
 				break;
@@ -623,10 +625,10 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 				chatMessage = chatMessageSA .. part .. chatMessageE;
 				stopWhenClosing = 1;
 				--Send message.
-				if JocysCom_ClipboardMessageCheckButton:GetChecked() then
-					JocysCom_AddMessageToTable(chatMessage);
-				else
+				if JocysCom_NetworkMessageCheckButton:GetChecked() then
 					C_ChatInfo.SendAddonMessage(addonPrefix, chatMessage, "WHISPER", unitName);
+				else
+					JocysCom_AddMessageToTable(chatMessage);
 				end
 				if DebugEnabled then print("[" .. tostring(index) .. "] [" .. startIndex .. "-" .. (endIndex - 1) .. "] '" .. part .. "'") end
 				startIndex = endIndex;
@@ -635,11 +637,10 @@ function JocysCom_SpeakMessage(speakMessage, event, name, group, rName)
 			-- look for next space.
 			endIndex = index + 1;
 		end
-		-- Fill EditBox.
-		local questEditBox = string.gsub(speakMessage, "%[comment]", "|cff808080[comment]|r|cfff7e593");
-		questEditBox = string.gsub(questEditBox, "%[/comment]", "|r|cff808080[/comment]|r");
-		questEditBox = "|cff808080" .. chatMessageSP .. "|r\n" .. questEditBox .. "\n|cff808080" .. chatMessageE .. "|r";
-		JocysCom_OptionsEditBox:SetText(questEditBox);
+		-- Set MessageForEditBox.
+		if JocysCom_NetworkMessageCheckButton:GetChecked() then
+			JocysCom_MessageForEditBox(chatMessageSP .. speakMessage .. chatMessageE);
+		end
 end
 
 -- DND Check.
@@ -825,7 +826,7 @@ end
 
 -- [ Play ] button.
 function JocysCom_PlayButton_OnClick()
-	if GossipFrame:IsVisible() ~=true then
+	if WorldMapFrame:IsVisible() then
 		local questDescription, questObjectives = GetQuestLogQuestText();
 		questMessage = questObjectives .. " Description. " .. questDescription;
 	end
@@ -843,10 +844,24 @@ end
 
 -- Show or Hide JocysCom frames.
 function JocysCom_AttachAndShowFrames()
+--	QuestLogPopupDetailFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames);
+--	QuestMapDetailsScrollFrame:SetScript("OnHide", JocysCom_DialogueMiniFrame_Hide);
+--	QuestMapDetailsScrollFrame:SetScript("OnShow", function()
+		local frame = GossipFrame;
+		if GossipFrame:IsVisible() then
+			frame = GossipFrame;
+		elseif QuestFrame:IsVisible() then 
+			frame = QuestFrame;
+		elseif WorldMapFrame:IsVisible() then 
+			frame = WorldMapFrame;
+		elseif ItemTextFrame:IsVisible() then 
+			frame = ItemTextFrame;
+		end
+		if DebugEnabled then print(frame:GetName()); end
 	JocysCom_DialogueMiniFrame:ClearAllPoints();
 	JocysCom_DialogueScrollFrame:ClearAllPoints();
 	-- Different ScrollFrame position and size if frame is WorldMapFrame.
-	if WorldMapFrame:IsVisible() then
+	if frame == WorldMapFrame then
 		-- ScrollFrame.
 		local width = QuestMapDetailsScrollFrame:GetWidth();
 		JocysCom_DialogueScrollFrame:SetParent(QuestMapDetailsScrollFrame);
@@ -857,13 +872,13 @@ function JocysCom_AttachAndShowFrames()
 		JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", WorldMapFrame, "BOTTOMRIGHT", 0, 1);
 	else
 		-- ScrollFrame.
-		local width = GossipFrame:GetWidth();
-		JocysCom_DialogueScrollFrame:SetParent(GossipFrame);
+		local width = frame:GetWidth();
+		JocysCom_DialogueScrollFrame:SetParent(frame);
 		JocysCom_DialogueScrollFrame:SetWidth(width - 50);
 		JocysCom_DialogueScrollFrame:SetPoint("TOPLEFT", 12, -67);
 		-- MiniFrame.
-		JocysCom_DialogueMiniFrame:SetParent(GossipFrame);
-		JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", GossipFrame, "BOTTOMRIGHT", 0, 1);
+		JocysCom_DialogueMiniFrame:SetParent(frame);
+		JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", 0, 1);
 	end
 	-- ScrollFrame.
 	JocysCom_DialogueScrollFrame:SetFrameLevel(100);
@@ -906,15 +921,15 @@ function JocysCom_SaveNPC()
 		if targetType == nil then
 			targetType = "";
 		end
-		local saveMessage = "<message command=\"Save\" name=\"" .. targetName .. "\" gender=\"" .. targetSex .. "\" effect=\"" .. targetType .. "\" />";
+		local saveMessage = "<message command=\"save\" name=\"" .. targetName .. "\" gender=\"" .. targetSex .. "\" effect=\"" .. targetType .. "\" />";
 		--Send message.
-		if	JocysCom_ClipboardMessageCheckButton:GetChecked() then
-			JocysCom_AddMessageToTable(saveMessage);
-		else
+		messageEditBox = "|cff808080" .. saveMessage .. "|r";
+		if	JocysCom_NetworkMessageCheckButton:GetChecked() then
 			C_ChatInfo.SendAddonMessage(addonPrefix, saveMessage, "WHISPER", unitName);
+			JocysCom_MessageForEditBox(saveMessage);		
+		else
+			JocysCom_AddMessageToTable(saveMessage);
 		end
-		--Fill "Options" window EditBox.
-		JocysCom_OptionsEditBox:SetText("|cff808080" .. saveMessage .. "|r");
 		--Print information in to chat window.
 		if JocysCom_SaveCheckButton:GetChecked() ~= true then
 		print("|cffffff20Save in Monitor: " .. targetName .. " : " .. targetSex .. " : " .. targetType .. "|r");
@@ -949,8 +964,9 @@ function JocysCom_ClearForm()
 end
 
 -- Add message to table for Clipboard.
-function JocysCom_AddMessageToTable(message1)
-	table.insert(messagesTable, message1);
+function JocysCom_AddMessageToTable(messageT)
+	messageT = string.gsub(messageT, "<message ", "<message position=\"" .. pixelX .. "," .. pixelY .. "\" "); 
+	table.insert(messagesTable, messageT);
 	if #messagesTable > 0 then
 		JocysCom_ClipboardMessagesLeftFontString:SetText(#messagesTable);
 	else
@@ -963,6 +979,16 @@ function JocysCom_AddMessageToTable(message1)
 	end
 end
 
+function JocysCom_MessageForEditBox(messageEditBox)
+	if string.find(messageEditBox, "command=\"sound\"") == nil and string.find(messageEditBox, "command=\"player\"") == nil and string.find(messageEditBox, "command=\"save\"") == nil then
+	messageEditBox = string.gsub(messageEditBox, "%[comment]", "|cff808080[comment]|r|cfff7e593");
+	messageEditBox = string.gsub(messageEditBox, "%[/comment]", "|r|cff808080[/comment]|r");
+	messageEditBox = string.gsub(messageEditBox, "<", "|cff808080<");
+	messageEditBox = string.gsub(messageEditBox, ">", ">|r");
+	JocysCom_OptionsEditBox:SetText(messageEditBox);
+	end
+end
+
 -- Send messages from table for Clipboard.
 function JocysCom_SendMessagesFromTable()
 	JocysCom_ButtonFlashing();
@@ -971,6 +997,7 @@ function JocysCom_SendMessagesFromTable()
 		-- Set message.
 		JocysCom_ClipboardMessageEditBox:SetText(messagesTable[1]);
 		JocysCom_ClipboardMessageEditBox:HighlightText();
+		JocysCom_MessageForEditBox(messagesTable[1]);
 		-- Set Clipboard pixel position.
 		pixelX = JocysCom_ClipboardMessagePixelXEditBox:GetNumber();
 		pixelY = JocysCom_ClipboardMessagePixelYEditBox:GetNumber();

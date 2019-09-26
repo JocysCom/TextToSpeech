@@ -171,16 +171,8 @@
                   </OnEscapePressed>
                 </Scripts>
                 <TextInsets left="5" right="5" top="5" bottom="5" />
-                <FontString inherits="GameFontHighlightSmall" />
+                <FontString inherits="GameFontHighlightSmall" /><!--GameFontDarkGraySmall-->
               </EditBox>
-              <!--</Frames>-->
-              <!--<Scripts>
-              <OnLoad>
-                self:SetScrollChild(JocysCom_OptionsEditBox);-->
-              <!--EditBox is limited to parent ScrollFrame.-->
-              <!--
-              </OnLoad>
-            </Scripts>-->
             </ScrollChild>
           </ScrollFrame>
         </Frames>
