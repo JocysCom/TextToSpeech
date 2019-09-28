@@ -1,19 +1,32 @@
 ﻿namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-    partial class MonitorsUserControl
+    partial class MonitorUdpPortUserControl
     {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        #region Component Designer generated code
+		/// <summary> 
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
+		#region Component Designer generated code
+
+		/// <summary> 
+		/// Required method for Designer support - do not modify 
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
         {
             this.UdpEnabledCheckBox = new System.Windows.Forms.CheckBox();
             this.UdpPortNumberNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -43,7 +56,6 @@
             this.UdpEnabledCheckBox.TabIndex = 0;
             this.UdpEnabledCheckBox.Text = "Enable";
             this.UdpEnabledCheckBox.UseVisualStyleBackColor = true;
-            this.UdpEnabledCheckBox.CheckedChanged += new System.EventHandler(this.MonitorUdpPortCheckBox_CheckedChanged);
             // 
             // UdpPortNumberNumericUpDown
             // 

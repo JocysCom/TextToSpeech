@@ -24,6 +24,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		public MainForm()
 		{
 			Program.TopForm = this;
+			ControlsHelper.InitInvokeContext();
 			InitializeComponent();
 			if (IsDesignMode)
 				return;

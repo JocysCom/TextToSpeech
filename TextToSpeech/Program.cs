@@ -1,7 +1,4 @@
-﻿using JocysCom.ClassLibrary.Runtime;
-using JocysCom.TextToSpeech.Monitor.Audio;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
@@ -9,7 +6,7 @@ using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor
 {
-	static class Program
+	static partial class Program
 	{
 		public static MainForm TopForm;
 
@@ -25,8 +22,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			return bytes;
 		}
-
-
 
 		/// <summary>
 		/// The main entry point for the application.
@@ -50,12 +45,14 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			System.Windows.Forms.Application.ThreadException += Application_ThreadException;
+			Application.ThreadException += Application_ThreadException;
+			Application.ApplicationExit += Application_ApplicationExit;
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 			// Check if settings file is valid.
 			if (!CheckSettings()) return;
 			try
 			{
+				InitMonitors();
 				Application.Run(new MainForm());
 			}
 			catch (Exception ex)
@@ -74,6 +71,12 @@ namespace JocysCom.TextToSpeech.Monitor
 				var result = box.ShowForm(message, "Exception!", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
 				if (result == DialogResult.Cancel) Application.Exit();
 			}
+		}
+
+		private static void Application_ApplicationExit(object sender, EventArgs e)
+		{
+
+
 		}
 
 		public static bool CheckSettings()

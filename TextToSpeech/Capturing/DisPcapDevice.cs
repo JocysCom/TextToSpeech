@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace JocysCom.TextToSpeech.Monitor.Capturing
 {
-	public class DisPcapDevice //: ICaptureDevice
+	public class DisPcapDevice
 	{
 
 		Stopwatch sw = new Stopwatch();

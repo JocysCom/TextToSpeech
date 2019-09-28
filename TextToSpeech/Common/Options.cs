@@ -1,7 +1,5 @@
 ﻿using JocysCom.TextToSpeech.Monitor.Capturing;
-using System;
 using System.ComponentModel;
-using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Speech.AudioFormat;
 
@@ -32,6 +30,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(true)]
 		public bool MonitorPortChecked { get; set; }
 
+
 		[DefaultValue(typeof(decimal), "0")]
 		public decimal DelayBeforeValue { get; set; }
 
@@ -46,6 +45,30 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		[DefaultValue(true)]
 		public bool LogSound { get; set; }
+
+		#region UDP Monitor Settings
+
+		[DefaultValue(false)]
+		public bool UdpMonitorEnabled { get { return _UdpMonitorEnabled; } set { _UdpMonitorEnabled = value; OnPropertyChanged(); } }
+		bool _UdpMonitorEnabled;
+
+		[DefaultValue(42500)]
+		public int UdpMonitorPort { get { return _UdpMonitorPort; } set { _UdpMonitorPort = value; OnPropertyChanged(); } }
+		int _UdpMonitorPort;
+
+		#endregion
+
+		#region Clipboard Monitor Settings
+
+		[DefaultValue(false)]
+		public bool ClipboardMonitorEnabled { get { return _ClipboardMonitorEnabled; } set { _ClipboardMonitorEnabled = value; OnPropertyChanged(); } }
+		bool _ClipboardMonitorEnabled;
+
+		[DefaultValue(200)]
+		public int ClipboardMonitorInterval { get { return _ClipboardMonitorInterval; } set { _ClipboardMonitorInterval = value; OnPropertyChanged(); } }
+		int _ClipboardMonitorInterval;
+
+		#endregion
 
 		[DefaultValue(CapturingType.Display)]
 		public CapturingType CapturingType { get { return _CapturingType; } set { _CapturingType = value; OnPropertyChanged(); } }

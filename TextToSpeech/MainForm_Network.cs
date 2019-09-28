@@ -76,14 +76,15 @@ namespace JocysCom.TextToSpeech.Monitor
 						device.Open();
 						device.Filter = "ip";
 						foreach (var address in device.Addresses)
-						{
 							IpAddresses.Add(address);
-						}
 						CaptureDevices.Add(device);
 					}
-					else
+					else if (SettingsManager.Options.CapturingType == CapturingType.Display)
 					{
-
+						var device = new DisPcapDevice();
+						//device.OnPacketArrival += Wc_OnPacketArrival;
+						//device.Open();
+						//CaptureDevices.Add(device);
 					}
 					// Set default packet filter.
 					SetFilter(MonitorItem);
@@ -176,17 +177,11 @@ namespace JocysCom.TextToSpeech.Monitor
 		private void Wc_OnPacketArrival(object sender, CaptureEventArgs e)
 		{
 			if (Disposing || IsDisposed || !IsHandleCreated)
-			{
 				return;
-			}
 			if (e.Packet == null || e.Packet.Data == null || e.Packet.Data.Length == 0)
-			{
 				return;
-			}
 			if (e.Packet.LinkLayerType != LinkLayers.Ethernet)
-			{
 				return;
-			}
 			Packet packet = null;
 			try
 			{
@@ -197,13 +192,17 @@ namespace JocysCom.TextToSpeech.Monitor
 				return;
 			}
 			var ep = packet as EthernetPacket;
-			if (ep == null) return;
+			if (ep == null)
+				return;
 			if (ep.Type != EthernetPacketType.IpV4 && ep.Type != EthernetPacketType.IpV6) return;
 			var ip = ep.PayloadPacket as IpPacket;
-			if (ip == null) return;
+			if (ip == null)
+				return;
 			var tp = ip.PayloadPacket as TcpPacket;
-			if (tp == null) return;
-			if (tp.PayloadData.Length == 0) return;
+			if (tp == null)
+				return;
+			if (tp.PayloadData.Length == 0)
+				return;
 			IPAddress srcIp = ip.SourceAddress;
 			IPAddress dstIp = ip.DestinationAddress;
 			int srcPort = tp.SourcePort;
@@ -213,30 +212,22 @@ namespace JocysCom.TextToSpeech.Monitor
 				lock (PacketsStateStatusLabelLock)
 				{
 					if (ep.Type == EthernetPacketType.IpV6)
-					{
 						Ip6PacketsCount++;
-					}
 					else
-					{
 						Ip4PacketsCount++;
-					}
-
 					PacketsStatusLabel.Text = string.Format("Packets: {0} IPv4, {1} IPv6", Ip4PacketsCount, Ip6PacketsCount);
 				}
 			}));
-			uint sequenceNumber = tp.SequenceNumber;
+			var sequenceNumber = tp.SequenceNumber;
 			// ---------------------------------------------------------------------------
 			var sourceIsLocal = IpAddresses.Contains(ip.SourceAddress);
 			var destinationIsLocal = IpAddresses.Contains(ip.DestinationAddress);
 			var direction = TrafficDirection.Local;
+			// Determine packet direction.
 			if (sourceIsLocal && !destinationIsLocal)
-			{
 				direction = TrafficDirection.Out;
-			}
 			else if (!sourceIsLocal && destinationIsLocal)
-			{
 				direction = TrafficDirection.In;
-			}
 			// IPHeader.Data stores the data being carried by the IP datagram.
 			if (SettingsManager.Options.LogEnable)
 			{
@@ -284,14 +275,10 @@ namespace JocysCom.TextToSpeech.Monitor
 			// ------------------------------------------------------------
 			// If direction specified, but wrong type then return.
 			if (MonitorItem.FilterDirection != TrafficDirection.None && direction != MonitorItem.FilterDirection)
-			{
 				return;
-			}
 			// If port is specified but wrong number then return.
 			if (MonitorItem.FilterDestinationPort > 0 && tp.DestinationPort != MonitorItem.FilterDestinationPort)
-			{
 				return;
-			}
 			// If process name specified.
 			if (!string.IsNullOrEmpty(MonitorItem.FilterProcessName))
 			{

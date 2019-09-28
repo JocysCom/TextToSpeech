@@ -767,14 +767,25 @@ namespace JocysCom.ClassLibrary.Controls
 		#region Binding
 
 		public static Binding AddDataBinding<Cs, Cp, Ds, Dp>(
-			Cs control, Expression<Func<Cs, Cp>> controlProperty,
-			Ds data, Expression<Func<Ds, Dp>> dataProperty) where Cs : IBindableComponent
+				Cs control, Expression<Func<Cs, Cp>> controlProperty,
+				Ds data, Expression<Func<Ds, Dp>> dataProperty,
+				bool formattingEnabled = false,
+				DataSourceUpdateMode updateMode = DataSourceUpdateMode.OnValidation,
+				object nullValue = null,
+				string formatString = null,
+				IFormatProvider formatInfo = null
+			) where Cs : IBindableComponent
 		{
 			var propertyBody = (MemberExpression)controlProperty.Body;
 			var propertyName = propertyBody.Member.Name;
 			var dataMemberBody = (MemberExpression)dataProperty.Body;
 			var dataMemberName = dataMemberBody.Member.Name;
-			return control.DataBindings.Add(propertyName, data, dataMemberName);
+			return control.DataBindings.Add(propertyName, data, dataMemberName,
+				formattingEnabled,
+				updateMode,
+				nullValue,
+				formatString,
+				formatInfo);
 		}
 
 		/// <summary>

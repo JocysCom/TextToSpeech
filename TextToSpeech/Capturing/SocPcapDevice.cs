@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 
 namespace JocysCom.TextToSpeech.Monitor.Capturing
 {
@@ -223,124 +223,40 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 			}
 		}
 
-		public void Open(DeviceMode mode)
-		{
-			throw new NotImplementedException();
-		}
+		public void Open(DeviceMode mode) { throw new NotImplementedException(); }
 
-		public void Open(DeviceMode mode, int read_timeout)
-		{
-			throw new NotImplementedException();
-		}
+		public void Open(DeviceMode mode, int read_timeout) { throw new NotImplementedException(); }
 
-		public void Capture()
-		{
-			throw new NotImplementedException();
-		}
+		public void Capture() { throw new NotImplementedException(); }
 
-		public RawCapture GetNextPacket()
-		{
-			throw new NotImplementedException();
-		}
+		public RawCapture GetNextPacket() { throw new NotImplementedException(); }
 
-		public int GetNextPacketPointers(ref IntPtr header, ref IntPtr data)
-		{
-			throw new NotImplementedException();
-		}
+		public int GetNextPacketPointers(ref IntPtr header, ref IntPtr data) { throw new NotImplementedException(); }
 
-		public void SendPacket(Packet p)
-		{
-			throw new NotImplementedException();
-		}
+		public void SendPacket(Packet p) { throw new NotImplementedException(); }
 
-		public void SendPacket(Packet p, int size)
-		{
-			throw new NotImplementedException();
-		}
+		public void SendPacket(Packet p, int size) { throw new NotImplementedException(); }
 
-		public void SendPacket(byte[] p)
-		{
-			throw new NotImplementedException();
-		}
+		public void SendPacket(byte[] p) { throw new NotImplementedException(); }
 
-		public void SendPacket(byte[] p, int size)
-		{
-			throw new NotImplementedException();
-		}
+		public void SendPacket(byte[] p, int size) { throw new NotImplementedException(); }
 
-		public ReadOnlyCollection<IPAddress> Addresses
-		{
-			get
-			{
-				return new ReadOnlyCollection<IPAddress>(IpAddresses);
-			}
-		}
+		public ReadOnlyCollection<IPAddress> Addresses { get { return new ReadOnlyCollection<IPAddress>(IpAddresses); } }
 
-		public string Name
-		{
-			get
-			{
-				return null;
-			}
-		}
+		public string Name { get { return null; } }
 
-		public string Description
-		{
-			get
-			{
-				return null;
-			}
-		}
+		public string Description { get { return null; } }
 
-		public string LastError
-		{
-			get
-			{
-				return null;
-			}
-		}
+		public string LastError { get { return null; } }
 
-		public ICaptureStatistics Statistics
-		{
-			get
-			{
-				return null;
-			}
-		}
+		public ICaptureStatistics Statistics { get { return null; } }
 
-		public PhysicalAddress MacAddress
-		{
-			get
-			{
-				return null;
-			}
-		}
+		public PhysicalAddress MacAddress { get { return null; } }
 
-		public bool Started
-		{
-			get
-			{
-				return false;
-			}
-		}
+		public bool Started { get { return false; } }
 
-		public TimeSpan StopCaptureTimeout
-		{
-			get
-			{
-				return new TimeSpan();
-			}
-			set
-			{
-			}
-		}
+		public TimeSpan StopCaptureTimeout { get { return new TimeSpan(); } set { } }
 
-		public LinkLayers LinkType
-		{
-			get
-			{
-				return LinkLayers.Null;
-			}
-		}
+		public LinkLayers LinkType { get { return LinkLayers.Null; } }
 	}
 }

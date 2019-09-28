@@ -147,7 +147,11 @@
     <Compile Include="Audio\EffectType.cs" />
     <Compile Include="Audio\KeyValue.cs" />
     <Compile Include="Capturing\CapturingType.cs" />
+    <Compile Include="Capturing\ClipboardMonitor.cs" />
     <Compile Include="Capturing\DisPcapDevice.cs" />
+    <Compile Include="Capturing\IMonitor.cs" />
+    <Compile Include="Capturing\MonitorBase.cs" />
+    <Compile Include="Capturing\UdpMonitor.cs" />
     <Compile Include="Capturing\WinPcapHelper.cs" />
     <Compile Include="Common\Acronym.cs" />
     <Compile Include="Common\AudioPlayerState.cs" />
@@ -165,17 +169,29 @@
     <Compile Include="Controls\AcronymsUserControl.Designer.cs">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MonitorClipboardUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MonitorClipboardUserControl.Designer.cs">
+      <DependentUpon>MonitorClipboardUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MonitorDisplayUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MonitorDisplayUserControl.Designer.cs">
+      <DependentUpon>MonitorDisplayUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OptionsCacheUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\OptionsCacheUserControl.Designer.cs">
       <DependentUpon>OptionsCacheUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\OptionsCapturingUserControl.cs">
+    <Compile Include="Controls\MonitorNetworkUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\OptionsCapturingUserControl.Designer.cs">
-      <DependentUpon>OptionsCapturingUserControl.cs</DependentUpon>
+    <Compile Include="Controls\MonitorNetworkUserControl.Designer.cs">
+      <DependentUpon>MonitorNetworkUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\OptionsMicrosoftCortanaUserControl.cs">
       <SubType>UserControl</SubType>
@@ -183,11 +199,11 @@
     <Compile Include="Controls\OptionsMicrosoftCortanaUserControl.Designer.cs">
       <DependentUpon>OptionsMicrosoftCortanaUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MonitorsUserControl.cs">
+    <Compile Include="Controls\MonitorUdpPortUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\MonitorsUserControl.Designer.cs">
-      <DependentUpon>MonitorsUserControl.cs</DependentUpon>
+    <Compile Include="Controls\MonitorUdpPortUserControl.Designer.cs">
+      <DependentUpon>MonitorUdpPortUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\OptionsControl.cs">
       <SubType>UserControl</SubType>
@@ -218,6 +234,7 @@
     <Compile Include="Google\SsmlVoiceGender.cs" />
     <Compile Include="Google\TextToSpeechClient.cs" />
     <Compile Include="JocysCom\Collections\KeyValue.cs" />
+    <Compile Include="JocysCom\Common\EventArgs.cs" />
     <Compile Include="JocysCom\Common\Helper.cs" />
     <Compile Include="JocysCom\Common\RegistryHelper.cs" />
     <Compile Include="JocysCom\ComponentModel\BindingListInvoked.cs" />
@@ -257,6 +274,9 @@
     <Compile Include="JocysCom\Drawing\Effects\Common.cs" />
     <Compile Include="JocysCom\IO\LogFileWriter.cs" />
     <Compile Include="JocysCom\Network\NetStatInfo.cs" />
+    <Compile Include="JocysCom\Processes\CURSORINFO.cs" />
+    <Compile Include="JocysCom\Processes\KeyboardHelper.cs" />
+    <Compile Include="JocysCom\Processes\MouseHelper.cs" />
     <Compile Include="JocysCom\Runtime\Attributes.cs" />
     <Compile Include="JocysCom\Runtime\ChangeState.cs" />
     <Compile Include="JocysCom\Runtime\RuntimeHelper.cs" />
@@ -268,6 +288,7 @@
     <Compile Include="JocysCom\Text\EncodingType.cs" />
     <Compile Include="JocysCom\Text\Filters.cs" />
     <Compile Include="JocysCom\Text\Helper.cs" />
+    <Compile Include="JocysCom\Win32\ICONINFO.cs" />
     <Compile Include="JocysCom\Win32\NativeMethods.user32.cs" />
     <Compile Include="JocysCom\Win32\RECT.cs" />
     <Compile Include="MainForm_Network.cs">
@@ -298,6 +319,7 @@
     <Compile Include="Capturing\SocPcapDevice.cs" />
     <Compile Include="PlugIns\VoiceListItem.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Program.Monitors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Capturing\message.cs" />
     <Compile Include="PlugIns\WowListItem.cs" />
@@ -310,17 +332,23 @@
     <EmbeddedResource Include="Controls\AcronymsUserControl.resx">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MonitorClipboardUserControl.resx">
+      <DependentUpon>MonitorClipboardUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MonitorDisplayUserControl.resx">
+      <DependentUpon>MonitorDisplayUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\OptionsCacheUserControl.resx">
       <DependentUpon>OptionsCacheUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\OptionsCapturingUserControl.resx">
-      <DependentUpon>OptionsCapturingUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\MonitorNetworkUserControl.resx">
+      <DependentUpon>MonitorNetworkUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\OptionsMicrosoftCortanaUserControl.resx">
       <DependentUpon>OptionsMicrosoftCortanaUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MonitorsUserControl.resx">
-      <DependentUpon>MonitorsUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\MonitorUdpPortUserControl.resx">
+      <DependentUpon>MonitorUdpPortUserControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\OptionsControl.resx">

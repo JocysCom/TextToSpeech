@@ -65,8 +65,6 @@
 			this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
 			this.OptionsTabPage = new System.Windows.Forms.TabPage();
 			this.OptionsPanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsControl();
-			this.MonitoringTabPage = new System.Windows.Forms.TabPage();
-			this.monitorsUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.MonitorsUserControl();
 			this.HelpTabPage = new System.Windows.Forms.TabPage();
 			this.AboutRichTextBox = new System.Windows.Forms.RichTextBox();
 			this.UpdateTabPage = new System.Windows.Forms.TabPage();
@@ -156,7 +154,6 @@
 			this.AcronymsTabPage.SuspendLayout();
 			this.EffectsPresetsEditorTabPage.SuspendLayout();
 			this.OptionsTabPage.SuspendLayout();
-			this.MonitoringTabPage.SuspendLayout();
 			this.HelpTabPage.SuspendLayout();
 			this.UpdateTabPage.SuspendLayout();
 			this.EffectTabControl.SuspendLayout();
@@ -405,7 +402,6 @@
 			this.MessagesTabControl.Controls.Add(this.AcronymsTabPage);
 			this.MessagesTabControl.Controls.Add(this.EffectsPresetsEditorTabPage);
 			this.MessagesTabControl.Controls.Add(this.OptionsTabPage);
-			this.MessagesTabControl.Controls.Add(this.MonitoringTabPage);
 			this.MessagesTabControl.Controls.Add(this.HelpTabPage);
 			this.MessagesTabControl.Controls.Add(this.UpdateTabPage);
 			this.MessagesTabControl.ImageList = this.TabsImageList;
@@ -546,25 +542,6 @@
             0});
 			this.OptionsPanel.Size = new System.Drawing.Size(816, 266);
 			this.OptionsPanel.TabIndex = 0;
-			// 
-			// MonitoringTabPage
-			// 
-			this.MonitoringTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.MonitoringTabPage.Controls.Add(this.monitorsUserControl1);
-			this.MonitoringTabPage.ImageKey = "eye.png";
-			this.MonitoringTabPage.Location = new System.Drawing.Point(4, 27);
-			this.MonitoringTabPage.Name = "MonitoringTabPage";
-			this.MonitoringTabPage.Size = new System.Drawing.Size(816, 266);
-			this.MonitoringTabPage.TabIndex = 6;
-			this.MonitoringTabPage.Text = "Monitoring";
-			// 
-			// monitorsUserControl1
-			// 
-			this.monitorsUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.monitorsUserControl1.Location = new System.Drawing.Point(0, 0);
-			this.monitorsUserControl1.Name = "monitorsUserControl1";
-			this.monitorsUserControl1.Size = new System.Drawing.Size(816, 266);
-			this.monitorsUserControl1.TabIndex = 2;
 			// 
 			// HelpTabPage
 			// 
@@ -1687,7 +1664,6 @@
 			this.AcronymsTabPage.ResumeLayout(false);
 			this.EffectsPresetsEditorTabPage.ResumeLayout(false);
 			this.OptionsTabPage.ResumeLayout(false);
-			this.MonitoringTabPage.ResumeLayout(false);
 			this.HelpTabPage.ResumeLayout(false);
 			this.UpdateTabPage.ResumeLayout(false);
 			this.EffectTabControl.ResumeLayout(false);
@@ -1806,8 +1782,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListDurationColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListTextColumn;
         private System.Windows.Forms.TextBox IncomingGroupTextBox;
-        private System.Windows.Forms.TabPage MonitoringTabPage;
-        private Controls.MonitorsUserControl monitorsUserControl1;
 		private System.Windows.Forms.CheckBox MonitorPortCheckBox;
         private System.Windows.Forms.TextBox IncomingLanguageTextBox;
         private System.Windows.Forms.TabPage SoundsTabPage;
