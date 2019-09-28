@@ -8,6 +8,9 @@
 ## Version: 8.2.5
 ## SavedVariables:
 
+# Debug:
+## SavedVariablesPerCharacter: JocysCom_DebugEnabled
+
 # Options:
 ## SavedVariablesPerCharacter: JocysCom_ReplaceNameEB, JocysCom_ClipboardMessagePixelXEB, JocysCom_ClipboardMessagePixelYEB
 ## SavedVariablesPerCharacter: JocysCom_NetworkMessageCB, JocysCom_ClipboardMessageCB, JocysCom_LockCB, JocysCom_MenuCB, JocysCom_FilterCB, JocysCom_SaveCB

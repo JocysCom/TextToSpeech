@@ -21,6 +21,9 @@
           <Anchor point="TOPLEFT" x="15" y="-75" />
         </Anchors>
         <Scripts>
+          <OnLoad>
+            self:SetAutoFocus(false);
+          </OnLoad>
           <OnEscapePressed>
             JocysCom_OptionsButton_OnClick();
             self:SetAutoFocus(false);
@@ -43,6 +46,9 @@
           </Layer>
         </Layers>
         <Scripts>
+          <OnLoad>
+            self:SetAutoFocus(false);
+          </OnLoad>
           <OnEscapePressed>
             JocysCom_OptionsButton_OnClick();
             self:SetAutoFocus(false);
@@ -117,7 +123,7 @@
           </OnClick>
         </Scripts>
       </CheckButton>
-      <EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate" >
+      <EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate">
         <Size x="100" y="20" />
         <Anchors>
           <Anchor point="TOPLEFT" x="15" y="-188" />
@@ -132,6 +138,9 @@
           </Layer>
         </Layers>
         <Scripts>
+          <OnLoad>
+            self:SetAutoFocus(false);
+          </OnLoad>
           <OnEscapePressed>
             JocysCom_OptionsButton_OnClick();
             self:SetAutoFocus(false);
@@ -166,16 +175,20 @@
             </Anchors>
             <ScrollChild>
               <!--<Frames>-->
-              <EditBox name="JocysCom_OptionsEditBox" letters="10000" multiLine="true" >
+              <EditBox name="JocysCom_OptionsEditBox" letters="10000" multiLine="true">
                 <Size x="565" />
                 <Scripts>
+                  <OnLoad>
+                    self:SetAutoFocus(false);
+                  </OnLoad>
                   <OnEscapePressed>
                     JocysCom_OptionsButton_OnClick();
                     self:SetAutoFocus(false);
                   </OnEscapePressed>
                 </Scripts>
                 <TextInsets left="5" right="5" top="5" bottom="5" />
-                <FontString inherits="GameFontHighlightSmall" /><!--GameFontDarkGraySmall-->
+                <FontString inherits="GameFontHighlightSmall" />
+                <!--GameFontDarkGraySmall-->
               </EditBox>
             </ScrollChild>
           </ScrollFrame>
@@ -257,6 +270,7 @@
           </Anchors>
           <FontHeight val="12" />
         </ButtonText>
+
       </Button>
     </Frames>
     <Scripts>
@@ -355,12 +369,12 @@
         <Size x="25" y="21" />
         <Anchors>
           <Anchor point="TOP" y="-7" />
-        </Anchors>      
+        </Anchors>
         <Frames>
           <Button name="JocysCom_OptionsButton" inherits="UIPanelButtonTemplate" text="≡">
             <Size x="23" y="21" />
             <Anchors>
-              <Anchor point="CENTER"/>
+              <Anchor point="CENTER" />
             </Anchors>
             <Scripts>
               <OnEnter>
@@ -394,7 +408,7 @@
           </OnLeave>
         </Scripts>
       </Frame>
-      
+
       <Button name="JocysCom_StopButton" inherits="UIPanelButtonTemplate" text="■">
         <Size x="23" y="21" />
         <Anchors>
@@ -431,7 +445,7 @@
             JocysCom_OptionsButtonFrame:Show();
           </OnEnter>
           <OnClick>
-            JocysCom_StopButton_OnClick(name)
+            JocysCom_PlayButton_OnClick();
             self:Hide();
             JocysCom_StopButton:Show();
           </OnClick>
@@ -460,7 +474,7 @@
                 <Anchor point="TOPLEFT" x="7" y="-3" />
                 <Anchor point="BOTTOMRIGHT" x="-3" y="5" />
               </Anchors>
-              <Color a="0.6" r="0" g="0" b="0"/>
+              <Color a="0.6" r="0" g="0" b="0" />
             </Texture>
           </Layer>
         </Layers>
@@ -518,11 +532,9 @@
                   </Anchors>
                   <Color r="0.5" g="0.5" b="0.5" />
                 </FontString>
-
               </Layer>
             </Layers>
           </Frame>
-
 
           <!--******************************************************************************************************-->
 
@@ -790,7 +802,6 @@
 
           <!--******************************************************************************************************-->
 
-
           <CheckButton name="JocysCom_WhisperCheckButton" inherits="UICheckButtonTemplate" parent="JocysCom_MiniMenuFrame">
             <Size x="26" y="27" />
             <Anchors>
@@ -1040,7 +1051,6 @@
               </OnLeave>
             </Scripts>
           </CheckButton>
-
 
           <!--******************************************************************************************************-->
 
@@ -1484,7 +1494,6 @@
           </CheckButton>
 
           <!--******************************************************************************************************-->
-
         </Frames>
         <Scripts>
           <OnEnter>
@@ -1496,7 +1505,6 @@
             JocysCom_OptionsButtonFrame:Hide();
           </OnLeave>
         </Scripts>
-
       </Frame>
     </Frames>
     <Scripts>
@@ -1522,7 +1530,7 @@
   <Frame name="JocysCom_ClipboardMessageFrame" parent="UIParent" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH">
     <Size x="1080" y="10" />
     <Anchors>
-      <Anchor point="TOPLEFT" />
+      <Anchor point="TOPLEFT" relativePoint="TOPLEFT" />
     </Anchors>
     <Layers>
       <Layer>
@@ -1530,62 +1538,62 @@
           <Anchors>
             <Anchor point="LEFT" />
           </Anchors>
-          <Size x="2" y="2"/>
+          <Size x="2" y="2" />
           <Color a="1" r="1" g="0" b="0" />
         </Texture>
         <Texture>
           <Anchors>
             <Anchor point="LEFT" x="2" />
           </Anchors>
-          <Size x="2" y="2"/>
+          <Size x="2" y="2" />
           <Color a="1" r="0" g="1" b="0" />
         </Texture>
         <Texture>
           <Anchors>
             <Anchor point="LEFT" x="4" />
           </Anchors>
-          <Size x="2" y="2"/>
+          <Size x="2" y="2" />
           <Color a="1" r="0" g="0" b="1" />
         </Texture>
         <Texture>
           <Anchors>
             <Anchor point="LEFT" x="6" />
           </Anchors>
-          <Size x="2" y="2"/>
+          <Size x="2" y="2" />
           <Color a="1" r="1" g="0" b="0" />
         </Texture>
         <Texture>
           <Anchors>
             <Anchor point="LEFT" x="8" />
           </Anchors>
-          <Size x="2" y="2"/>
+          <Size x="2" y="2" />
           <Color a="1" r="0" g="1" b="0" />
         </Texture>
         <Texture>
           <Anchors>
             <Anchor point="LEFT" x="10" />
           </Anchors>
-          <Size x="2" y="2"/>
+          <Size x="2" y="2" />
           <Color a="1" r="0" g="0" b="1" />
         </Texture>
         <Texture>
           <Anchors>
             <Anchor point="LEFT" x="12" />
           </Anchors>
-          <Size x="2" y="2"/>
+          <Size x="2" y="2" />
           <Color a="1" r="1" g="0" b="0" />
         </Texture>
         <Texture name="JocysCom_ClipboardMessageFrame_Texture">
           <Anchors>
             <Anchor point="LEFT" x="14" />
           </Anchors>
-          <Size x="2" y="2"/>
+          <Size x="2" y="2" />
           <Color a="1" r="0" g="0" b="0" />
         </Texture>
       </Layer>
     </Layers>
     <Frames>
-      <EditBox name="JocysCom_ClipboardMessageEditBox" parent="JocysCom_ClipboardMessageFrame" letters="10000" multiLine="false">
+      <EditBox name="JocysCom_ClipboardMessageEditBox" letters="10000" multiLine="false">
         <Anchors>
           <Anchor point="TOPLEFT" x="18" y="-1" />
           <Anchor point="BOTTOMRIGHT"  x="0" y="1" />
@@ -1614,6 +1622,7 @@
       </OnDragStart>
       <OnDragStop>
         self:StopMovingOrSizing();
+        JocysCom_PixelPositionInOptions();
       </OnDragStop>
     </Scripts>
   </Frame>
