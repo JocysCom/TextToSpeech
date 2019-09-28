@@ -15,7 +15,8 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 			set
 			{
 				var isRunning = IsRunning;
-				Stop();
+				if (isRunning)
+					Stop();
 				_PortNumber = value;
 				if (isRunning)
 					Start();

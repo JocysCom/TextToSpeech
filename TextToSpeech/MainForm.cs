@@ -1058,20 +1058,25 @@ namespace JocysCom.TextToSpeech.Monitor
 		/// </summary>
 		private const int WM_CLIPBOARDUPDATE = 0x031D;
 
+		string _lastData;
+
 		protected override void WndProc(ref Message m)
 		{
 			base.WndProc(ref m);
 
 			if (m.Msg == WM_CLIPBOARDUPDATE)
 			{
-				IDataObject iData = Clipboard.GetDataObject();      // Clipboard's data.
-
+				// Clipboard's data.
+				var iData = Clipboard.GetDataObject();      
 				/* Depending on the clipboard's current data format we can process the data differently.
 				 * Feel free to add more checks if you want to process more formats. */
 				if (iData.GetDataPresent(DataFormats.Text))
 				{
-					string text = (string)iData.GetData(DataFormats.Text);
-
+					var text = (string)iData.GetData(DataFormats.Text);
+					// Do not process same data.
+					if (text == _lastData)
+						return;
+					_lastData = text;
 					if (MonitorClipboardComboBox.SelectedIndex == 2 && !text.Contains("<message")) text = "<message command=\"Play\"><part>" + text + "</part></message>";
 					if (string.IsNullOrEmpty(text) || !text.Contains("<message")) return;
 					var voiceItem = (VoiceListItem)Activator.CreateInstance(MonitorItem.GetType());
