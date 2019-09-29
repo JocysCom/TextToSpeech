@@ -1610,12 +1610,16 @@
             self:GetParent():Hide();
           </OnEscapePressed>
         </Scripts>
-        <FontString inherits="GameFontHighlightSmall" justifyH="LEFT"/>
+        <FontString justifyH="LEFT" font="Interface/AddOns/JocysCom-TextToSpeech-WoW/Fonts/Arial.ttf">
+          <FontHeight val="1"/>
+        </FontString>
+        <!--inherits="GameFontHighlightSmall"-->
       </EditBox>
     </Frames>
     <Scripts>
       <OnLoad>
         self:RegisterForDrag("LeftButton");
+        <!--self:SetBackdrop=""( { edgeFile = "Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-MiniMenuFrame-Border", edgeSize = "23" });-->
       </OnLoad>
       <OnDragStart>
         self:StartMoving();

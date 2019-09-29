@@ -9,8 +9,8 @@ local DebugEnabled = false
 -- Set variables.
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
-local unitName = GetUnitName("player")
-local customName = GetUnitName("player")
+local unitName = UnitName("player") -- GetUnitName()
+local customName = UnitName("player")
 local unitClass = UnitClass("player")
 local questMessage = nil
 local speakMessage = nil
@@ -257,6 +257,8 @@ function JocysCom_RegisterEvents()
 	JocysCom_OptionsFrame:RegisterEvent("ADDON_LOADED")
 	-- Add or edit macro on PLAYER_ENTERING_WORLD event.
 	JocysCom_OptionsFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	-- Save unit name, gender and type on mouse over event.
+	JocysCom_OptionsFrame:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 	-- Chat GOSSIP / Dialogue open frames events.
 	JocysCom_OptionsFrame:RegisterEvent("GOSSIP_SHOW")
 	-- Chat QUEST events.
@@ -310,41 +312,24 @@ function JocysCom_RegisterEvents()
 	JocysCom_OptionsFrame:RegisterEvent("PLAYER_LOGOUT")
 end
 
-function JocysCom_OptionsFrame_OnEvent(self, event, ...)
-local text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons = ...
-local group = ""
 
-	-- Do not show Blizzard_TimeManager and Blizzard_CombatLog addon loaded.
+printResult = ""
+function JocysCom_OptionsFrame_OnEvent(self, ...)
+local event, text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons = ...
+	-- Ignore other addons.
 	if event == "ADDON_LOADED" and text ~= addonName then return end
-
 	-- don't proceed messages with <message> tags and your own incoming whispers.
 	if string.find(tostring(text), "<message") ~= nil then return end
 
-	-- Get Data about NPC.
-	if DebugEnabled and string.find(event, "CHAT_MSG_MONSTER") then
-		print("|cff77ccff------------------------------------------------------------------------------------|r")
-		print("|cffffff551. text: |r"					.. tostring(text)) -------------------string	
-		print("|cffffff552. playerName: |r"				.. tostring(playerName)) -------------string	
-		print("|cffffff553. languageName: |r"			.. tostring(languageName)) -----------string	
-		print("|cffffff554. channelName: |r"			.. tostring(channelName)) ------------string	
-		print("|cffffff555. playerName2: |r"			.. tostring(playerName2)) ------------string	
-		print("|cffffff556. specialFlags: |r"			.. tostring(specialFlags)) -----------string	
-		print("|cffffff557. zoneChannelID: |r"			.. tostring(zoneChannelID)) ----------number	
-		print("|cffffff558. channelIndex: |r"			.. tostring(channelIndex)) -----------number	
-		print("|cffffff559. channelBaseName: |r"		.. tostring(channelBaseName)) --------string	
-		print("|cffffff5510. unused: |r"				.. tostring(unused)) -----------------number	
-		print("|cffffff5511. lineID: |r"				.. tostring(lineID)) -----------------number	
-		print("|cffffff5512. guid: |r"					.. tostring(guid)) -------------------string	
-		print("|cffffff5513. bnSenderID: |r"			.. tostring(bnSenderID)) -------------number	
-		print("|cffffff5514. isMobile: |r"				.. tostring(isMobile)) ---------------boolean	
-		print("|cffffff5515. isSubtitle: |r"			.. tostring(isSubtitle)) -------------boolean	
-		print("|cffffff5516. hideSenderInLetterbox: |r"	.. tostring(hideSenderInLetterbox)) --boolean	
-		print("|cffffff5517. supressRaidIcons: |r"		.. tostring(supressRaidIcons)) -------boolean
-		print("|cff77ccff------------------------------------------------------------------------------------|r")
+	-- Print event details.
+	if DebugEnabled then
+		print("|cff77ccff" .. ({...})[1] .. " |r" .. #{...} .. "|cff77ccff|r")
+		for i,v in pairs({...}) do
+			print(i .. ". " .. type(v) .. ": " ..  tostring(v))
+		end
 	end
-
-	-- Print event name.
-	if DebugEnabled then print("|cff77ccff" .. event .. "|r") end
+	-- Events.
+	local group = ""
 	if event == "ADDON_LOADED" and text == addonName then
 		JocysCom_LoadTocFileSettings()
 		-- Set MiniMenuFrame on left or right side.
@@ -352,8 +337,8 @@ local group = ""
 		-- Set DialogueScrollFrame and make it transparent.
 		JocysCom_OptionsFrame_OnHide()
 		-- Set text of elements.
-		JocysCom_Text_EN()
-		print("|cff77ccff" .. event .. " |r" .. tostring(text) .. "|cff77ccff|r")
+		JocysCom_Text_EN()	
+		--if DebugEnabled then JocysCom_OptionsFrame:RegisterAllEvents() end
 		return 
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		-- Create macro if it doesn't exist and slot is available.
@@ -362,12 +347,13 @@ local group = ""
 	elseif event == "PLAYER_LOGOUT" then
 		JocysCom_SaveTocFileSettings()
 		return
-	elseif event == "PLAYER_TARGET_CHANGED" then
-		JocysCom_SaveNPC()
+
+	elseif event == "UPDATE_MOUSEOVER_UNIT" then
+		JocysCom_SaveNPC("mouseover")
 		return
---	elseif event == "CHAT_MSG_ADDON" and text == addonPrefix and JocysCom_FilterCheckButton:GetChecked() == false then
---		print("|cff77ccff2" .. event .. "|r" .. tostring(text))
---		return
+	elseif event == "PLAYER_TARGET_CHANGED" then
+		JocysCom_SaveNPC("target")
+		return
 	-- Quest events.
 	elseif event == "GOSSIP_CLOSED" then
 		return
@@ -400,13 +386,12 @@ local group = ""
 				questMessage = GetQuestText()
 			end
 		end
-		playerName = GetUnitName("npc")
+		playerName = UnitName("npc")
 		if JocysCom_NameQuestCheckButton:GetChecked() and playerName ~= nil then
 			nameIntro = true
 			questMessage = playerName .. " says. " .. questMessage
 		end
 		speakMessage = questMessage
-
 		if JocysCom_QuestCheckButton:GetChecked() == false then
 			return
 		end -- Don't proceed if "auto-start" speech check-box is disabled.
@@ -430,7 +415,7 @@ local group = ""
 		if JocysCom_NameWhisperCheckButton:GetChecked() then nameIntro = true end
 		-- replace friend's real name with character name.
 		if event == "CHAT_MSG_BN_WHISPER_INFORM" then
-			playerName = GetUnitName("player")
+			playerName = UnitName("player")
 		elseif event == "CHAT_MSG_BN_WHISPER" then --or event == "CHAT_MSG_BN_CONVERSATION"
 			-- bnetIDAccount, accountName, battleTag, isBattleTagPresence, characterName, bnetIDGameAccount, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, messageTime, canSoR, isReferAFriend, canSummonFriend = BNGetFriendInfo(friendIndex)
 			-- Extract friend's presenceID "|Kg00|kTestas|k".
@@ -617,7 +602,7 @@ function JocysCom_SpeakMessage(event, speakMessage, name, group, realName)
 		end
 	-- If CHAT event.
 	else
-		NPCName = GetUnitName("npc")
+		NPCName = UnitName("npc")
 		NPCSex = UnitSex("npc")
 		if JocysCom_StartOnOpenCheckButton:GetChecked() then
 			JocysCom_SendChatMessageStop(1) -- Send stop message.
@@ -751,7 +736,7 @@ end
 function JocysCom_PixelPositionInOptions()
 point, relativeTo, relativePoint, xOfs, yOfs = JocysCom_ClipboardMessageFrame:GetPoint(1)
 
-print("Position: " .. round(xOfs, 0) .. " : " .. round(yOfs, 0)) --string.format("%.0f",yOfs)
+print("Position: " .. round(xOfs, 0) .. " : " .. round(yOfs, 0) .. " : " .. JocysCom_ClipboardMessageFrame:GetScale()) --string.format("%.0f",yOfs)
 
 --JocysCom_ClipboardMessagePixelXEditBox:SetText(tostring(xOfs))
 --JocysCom_ClipboardMessagePixelYEditBox:SetText(tostring(yOfs))
@@ -974,24 +959,19 @@ function JocysCom_OptionsButton_OnClick()
 end
 
 -- [ Save ] button.
-function JocysCom_SaveNPC()
-	if UnitIsPlayer("target") or UnitPlayerControlled("target") or GetUnitName("target") == nil or UnitSex("target") == nil then 
-		if JocysCom_SaveCheckButton:GetChecked() ~= true then
+function JocysCom_SaveNPC(m)
+	if UnitIsPlayer(m) or UnitPlayerControlled(m) or UnitName(m) == nil or UnitSex(m) == nil then 
+		if DebugEnabled then
 			print("|cff999999Only uncontrollable by players NPC targets will be saved.|r")
 		end
 	else
-		local saveMessage = "<message command=\"save\"" .. Attribute("name", GetUnitName("target")) .. Attribute("gender", Gender(UnitSex("target"))) .. Attribute("effect", UnitCreatureType("target")) .. " />"
+		local saveMessage = "<message command=\"save\"" .. Attribute("name", UnitName(m)) .. Attribute("gender", Gender(UnitSex(m))) .. Attribute("effect", UnitCreatureType(m)) .. " />"
 		--Send message.
 		messageEditBox = "|cff808080" .. saveMessage .. "|r"
 		if	JocysCom_NetworkMessageCheckButton:GetChecked() then
 			C_ChatInfo.SendAddonMessage(addonPrefix, saveMessage, "WHISPER", unitName)
-			JocysCom_MessageForEditBox(saveMessage)		
 		else
 			JocysCom_AddMessageToTable(saveMessage)
-		end
-		--Print information in to chat window.
-		if JocysCom_SaveCheckButton:GetChecked() ~= true then
-			print("|cffffff20Save in Monitor: " .. Clear(GetUnitName("target")) .. " : " .. Gender(UnitSex("target")) .. " : " .. Clear(UnitCreatureType("target")) .. "|r")
 		end
 	end
 end
@@ -1062,7 +1042,21 @@ function JocysCom_SendMessagesFromTable()
 	JocysCom_ButtonFlashing()
 	if JocysCom_ClipboardMessageEditBox:HasFocus() then
 		-- Set message.
-		JocysCom_ClipboardMessageEditBox:SetText(messagesTable[1])
+
+--local line = f:CreateTexture()
+--line:SetTexture(.6 ,.6, .6, .2)
+--line:SetSize(1, 1)
+--line:SetPoint("LEFT", f)
+--tex:SetColorTexture(1, 1, 1, 0.5)
+
+print(string.format("%02x", 12))
+print(string.format("%02x", string.byte("b")))
+
+
+
+JocysCom_ClipboardMessageEditBox:SetText("|cffff0000█|r|cff00ff00█|r███████████████████████████████████████████")
+
+		--JocysCom_ClipboardMessageEditBox:SetText(messagesTable[1])
 		JocysCom_ClipboardMessageEditBox:HighlightText()
 		JocysCom_MessageForEditBox(messagesTable[1])
 		if DebugEnabled then print("|cff77ccffMessage removed [|r" .. #messagesTable .. "]|r " ..  JocysCom_MessageAddColors(messagesTable[1])) end
