@@ -27,15 +27,12 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue("WoW")]
 		public string ProgramComboBoxText { get; set; }
 
-		[DefaultValue(true)]
-		public bool MonitorPortChecked { get; set; }
-
 
 		[DefaultValue(typeof(decimal), "0")]
-		public decimal DelayBeforeValue { get; set; }
+		public decimal AddSilenceAfterMessage { get; set; }
 
 		[DefaultValue(typeof(decimal), "0")]
-		public decimal AddSilcenceBeforeMessage { get; set; }
+		public decimal AddSilenceBeforeMessage { get; set; }
 
 		[DefaultValue(false)]
 		public bool LogEnable { get; set; }
@@ -46,7 +43,11 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(true)]
 		public bool LogSound { get; set; }
 
-		#region UDP Monitor Settings
+		[DefaultValue(false)]
+		public bool MonitorsEnabled { get { return _MonitorsEnabled; } set { _MonitorsEnabled = value; OnPropertyChanged(); } }
+		bool _MonitorsEnabled = false;
+
+		#region UDP Monitor
 
 		[DefaultValue(false)]
 		public bool UdpMonitorEnabled { get { return _UdpMonitorEnabled; } set { _UdpMonitorEnabled = value; OnPropertyChanged(); } }
@@ -58,7 +59,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		#endregion
 
-		#region Clipboard Monitor Settings
+		#region Clipboard Monitor
 
 		[DefaultValue(false)]
 		public bool ClipboardMonitorEnabled { get { return _ClipboardMonitorEnabled; } set { _ClipboardMonitorEnabled = value; OnPropertyChanged(); } }
@@ -70,9 +71,19 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		#endregion
 
-		[DefaultValue(CapturingType.Display)]
-		public CapturingType CapturingType { get { return _CapturingType; } set { _CapturingType = value; OnPropertyChanged(); } }
+		#region Network Monitor
+
+		[DefaultValue(false)]
+		public bool NetworkMonitorEnabled { get { return _NetworkMonitorEnabled; } set { _NetworkMonitorEnabled = value; OnPropertyChanged(); } }
+		bool _NetworkMonitorEnabled;
+
+		[DefaultValue(CapturingType.SocPcap)]
+		public CapturingType NetworkMonitorCapturingType { get { return _CapturingType; } set { _CapturingType = value; OnPropertyChanged(); } }
 		CapturingType _CapturingType;
+		public string NetworkMonitorLogFolder { get { return _NetworkMonitorLogsFolder; } set { _NetworkMonitorLogsFolder = value; OnPropertyChanged(); } }
+		string _NetworkMonitorLogsFolder;
+
+		#endregion
 
 		// Non default pitch adds noise.
 		[DefaultValue(0)]

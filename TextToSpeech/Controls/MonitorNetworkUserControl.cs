@@ -13,7 +13,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			InitializeComponent();
 			if (ControlsHelper.IsDesignMode(this))
 				return;
-			ControlsHelper.AddDataBinding(this, c => c._CapturingType, SettingsManager.Options, d => d.CapturingType);
+			ControlsHelper.AddDataBinding(this, c => c._CapturingType, SettingsManager.Options, d => d.NetworkMonitorCapturingType);
 			UpdateWinCapState();
 			WinPcapRadioButton.CheckedChanged += WinPcapRadioButton_CheckedChanged;
 			SocPcapRadioButton.CheckedChanged += WinPcapRadioButton_CheckedChanged;
@@ -28,11 +28,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		{
 			get
 			{
-				if (SocPcapRadioButton.Checked)
-					return Capturing.CapturingType.SocPcap;
-				if (WinPcapRadioButton.Checked)
-					return Capturing.CapturingType.WinPcap;
-				return Capturing.CapturingType.Display;
+				return SocPcapRadioButton.Checked
+					? Capturing.CapturingType.SocPcap
+					: Capturing.CapturingType.WinPcap;
 			}
 			set
 			{

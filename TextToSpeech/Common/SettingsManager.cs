@@ -1,4 +1,5 @@
 ﻿using JocysCom.ClassLibrary.Configuration;
+using JocysCom.TextToSpeech.Monitor.Capturing;
 using System.Linq;
 
 namespace JocysCom.TextToSpeech.Monitor
@@ -65,6 +66,18 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		static object saveReadFileLock = new object();
 
+		public void UpsertDefaultsRecord(message v)
+		{
+			// Try to find existing default record from the list.
+			var dm = SettingsFile.Current.Defaults.FirstOrDefault(x => x.name.ToUpper() == v.name.ToUpper());
+			if (dm == null)
+			{
+				dm = new message();
+				dm.name = v.name;
+				SettingsFile.Current.Defaults.Add(dm);
+			}
+			dm.UpdateMissingAndCangedValuesFrom(v);
+		}
 		public void Save()
 		{
 			lock (saveReadFileLock)

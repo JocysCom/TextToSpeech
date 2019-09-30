@@ -12,8 +12,6 @@ using System.Management;
 using System.Reflection;
 using System.Speech.AudioFormat;
 using System.Speech.Recognition;
-using System.Speech.Synthesis;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor
@@ -29,24 +27,28 @@ namespace JocysCom.TextToSpeech.Monitor
 			if (IsDesignMode)
 				return;
 			LoadSettings();
-			SettingsManager.Options.PropertyChanged += Options_PropertyChanged;
-			WavPlayer = new AudioPlayer(Handle);
-			playlist = new BindingList<PlayItem>();
-			playlist.ListChanged += playlist_ListChanged;
+			Audio.Global.InitGlobal(Handle);
+
+			Global.EffectsPlayer.BeforePlay += EffectsPlayer_BeforePlay;
+			Global.AddingVoiceListItem += AudioGlobal_AddingVoiceListItem;
+			Global.ProcessedMessage += AudioGlobal_ProcessedMessage;
+			Global.HelpSuggested += AudioGlobal_HelpSuggested;
+			Global.EffectsPresetSelected += Global_EffectsPresetSelected;
+
+			ControlsHelper.AddDataBinding(MonitorsEnabledCheckBox, s => s.Checked, SettingsManager.Options, d => d.MonitorsEnabled);
+
+			Audio.Global.playlist.ListChanged += Playlist_ListChanged;
+
 			PlayListDataGridView.AutoGenerateColumns = false;
-			PlayListDataGridView.DataSource = playlist;
+			PlayListDataGridView.DataSource = Global.playlist;
 			Text = MainHelper.GetProductFullName();
-			InstalledVoices = new BindingList<InstalledVoiceEx>();
 			UpdateLabel.Text = "You are running " + MainHelper.GetProductFullName();
 			// Add supported items.
-			PlugIns.Add(new WowListItem());
-			ProgramComboBox.DataSource = PlugIns;
+			ProgramComboBox.DataSource = Program.PlugIns;
 			ProgramComboBox.DisplayMember = "Name";
 			var name = SettingsManager.Options.ProgramComboBoxText;
 			if (!string.IsNullOrEmpty(name))
-			{
 				ProgramComboBox.Text = name;
-			}
 			// If nothing is selected but list have values.
 			if (ProgramComboBox.SelectedIndex == -1 && ProgramComboBox.Items.Count > 0)
 			{
@@ -55,14 +57,74 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			MonitorItem = (VoiceListItem)ProgramComboBox.SelectedItem;
 			ProgramComboBox.SelectedIndexChanged += ProgramComboBox_SelectedIndexChanged;
+			Program._ClipboardMonitor.StatusChanged += _Monitor_StatusChanged;
+			Program._NetworkMonitor.StatusChanged += _Monitor_StatusChanged;
+			Program._UdpMonitor.StatusChanged += _Monitor_StatusChanged;
+
 		}
 
-		private void Options_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		private void Global_EffectsPresetSelected(object sender, ClassLibrary.EventArgs<string> e)
 		{
-			if (e.PropertyName == nameof(SettingsManager.Options.CapturingType))
+			SelectEffectsPreset(e.Data);
+		}
+		private void AudioGlobal_HelpSuggested(object sender, ClassLibrary.EventArgs<string> e)
+		{
+			MainHelpLabel.Text = e.Data;
+		}
+		private void AudioGlobal_ProcessedMessage(object sender, ClassLibrary.EventArgs<Capturing.message> e)
+		{
+			IncomingTextTextBox.Text = e.Data.parts != null && e.Data.parts.Length > 0 ? e.Data.parts[0] : "";
+			IncomingLanguageTextBox.Text = string.IsNullOrEmpty(e.Data.language) ? "" : "language=\"" + e.Data.language + "\"";
+			IncomingNameTextBox.Text = string.IsNullOrEmpty(e.Data.name) ? "" : "name=\"" + e.Data.name + "\"";
+			IncomingGenderTextBox.Text = string.IsNullOrEmpty(e.Data.gender) ? "" : "gender=\"" + e.Data.gender + "\"";
+			IncomingEffectTextBox.Text = string.IsNullOrEmpty(e.Data.effect) ? "" : "effect=\"" + e.Data.effect + "\"";
+			IncomingGroupTextBox.Text = string.IsNullOrEmpty(e.Data.group) ? "" : "group=\"" + e.Data.group + "\"";
+			IncomingPitchTextBox.Text = string.IsNullOrEmpty(e.Data.pitch) ? "" : "pitch=\"" + e.Data.pitch + "\"";
+			IncomingRateTextBox.Text = string.IsNullOrEmpty(e.Data.rate) ? "" : "rate=\"" + e.Data.rate + "\"";
+			IncomingVolumeTextBox.Text = string.IsNullOrEmpty(e.Data.volume) ? "" : "volume=\"" + e.Data.volume + "\"";
+			IncomingCommandTextBox.Text = string.IsNullOrEmpty(e.Data.command) ? "" : "command=\"" + e.Data.command + "\"";
+			int rate;
+			RateTextBox.Text = int.TryParse(e.Data.rate, out rate) ? rate.ToString() : "";
+			int pitch;
+			PitchTextBox.Text = int.TryParse(e.Data.pitch, out pitch) ? pitch.ToString() : "";
+		}
+		private void EffectsPlayer_BeforePlay(object sender, EventArgs e)
+		{
+			var player = (AudioPlayer)sender;
+			EffectPresetsEditorSoundEffectsControl.ApplyEffects(player.ApplicationBuffer);
+		}
+
+		private void Playlist_ListChanged(object sender, ListChangedEventArgs e)
+		{
+			var added = e.ListChangedType == ListChangedType.ItemAdded;
+			var deleted = e.ListChangedType == ListChangedType.ItemDeleted;
+			var reset = e.ListChangedType == ListChangedType.Reset;
+			if (added || deleted || reset)
 			{
-				Program.TopForm.StopNetworkMonitor();
-				Program.TopForm.StartNetworkMonitor();
+				ControlsHelper.BeginInvoke(() =>
+				{
+					var count = Audio.Global.playlist.Count;
+					PlayListTabPage.Text = count == 0
+						? "Play List"
+						: string.Format("Play List: {0}", count);
+				});
+			}
+		}
+
+		object PacketsStateStatusLabelLock = new object();
+		private void _Monitor_StatusChanged(object sender, Capturing.Monitors.MonitorEventArgs e)
+		{
+			// Don't update control from two threads at the same time.
+			lock (PacketsStateStatusLabelLock)
+			{
+				if (e.Error != null)
+					ErrorStatusLabel.Text = e.Error;
+				if (e.Filter != null)
+					ErrorStatusLabel.Text = e.Filter;
+				if (e.Packets != null)
+					ErrorStatusLabel.Text = e.Packets;
+				if (e.State != null)
+					ErrorStatusLabel.Text = e.State;
 			}
 		}
 
@@ -75,15 +137,12 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		void LoadSettings()
 		{
-			// Monitor Port.
-			MonitorPortCheckBox.Checked = SettingsManager.Options.MonitorPortChecked;
-			MonitorPortCheckBox.CheckedChanged += MonitorPortCheckBox_CheckedChanged;
 			// Monitor Clipboard
 			MonitorClipboardComboBox.DataSource = new string[] { "Disabled", "For<message> tags", "For all text" };
 			ControlsHelper.SetSelectedItem(MonitorClipboardComboBox, SettingsManager.Options.MonitorClipboardComboBoxText);
 			MonitorClipboardComboBox.SelectedIndexChanged += MonitorClipboardComboBox_SelectedIndexChanged;
 			// Default Intro sound.
-			DefaultIntroSoundComboBox.DataSource = GetIntroSoundNames();
+			DefaultIntroSoundComboBox.DataSource = Global.GetIntroSoundNames();
 			ControlsHelper.SetSelectedItem(DefaultIntroSoundComboBox, SettingsManager.Options.DefaultIntroSoundComboBox);
 			DefaultIntroSoundComboBox.SelectedIndexChanged += DefaultIntroSoundComboBox_SelectedIndexChanged;
 			// Audio Channels.
@@ -124,12 +183,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			VolumeTrackBar_ValueChanged(null, null);
 		}
 
-		private void MonitorPortCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			SettingsManager.Options.MonitorPortChecked = MonitorPortCheckBox.Checked;
-			UpdateMonitor();
-		}
-
 		private void MonitorClipboardComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			SettingsManager.Options.MonitorClipboardComboBoxText = MonitorClipboardComboBox.Text;
@@ -139,7 +192,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		private void DefaultIntroSoundComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			SettingsManager.Options.DefaultIntroSoundComboBox = DefaultIntroSoundComboBox.Text;
-			PlayCurrentIntroSond();
+			Global.PlayCurrentIntroSound();
 		}
 
 		private void AudioChannelsComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -198,343 +251,13 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		#endregion
 
-		List<VoiceListItem> PlugIns = new List<VoiceListItem>();
-
-		//System.Media.SoundPlayer WavPlayer;
-		AudioPlayer WavPlayer;
-
 		void InstalledVoices_ListChanged(object sender, ListChangedEventArgs e)
 		{
-
-			ValidateList();
-		}
-
-		void ValidateList()
-		{
-			string error = "";
-			if (InstalledVoices.Count == 0) error = "No voices were found";
-			else if (!InstalledVoices.Any(x => x.Female > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Female\" column to use it as female voice ( recommended value: 100 ).";
-			else if (!InstalledVoices.Any(x => x.Female > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Female\" column for at least one voice to use it as female voice.";
-			else if (!InstalledVoices.Any(x => x.Male > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Male\" column to use it as male voice ( recommended value: 100 ).";
-			else if (!InstalledVoices.Any(x => x.Male > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Male\" column for at least one voice to use it as male voice.";
-			else if (!InstalledVoices.Any(x => x.Neutral > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Neutral\" column to use it as neutral voice ( recommended value: 100 ).";
-			else if (!InstalledVoices.Any(x => x.Neutral > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Neutral\" column for at least one voice to use it as neutral voice.";
+			var error = Global.ValidateInstalledVoices();
 			VoiceErrorLabel.Visible = error.Length > 0;
 			VoiceErrorLabel.Text = error;
 		}
 
-		/// <summary>
-		/// This event will fire when item is added, removed or change in the list.
-		/// </summary>
-		void playlist_ListChanged(object sender, ListChangedEventArgs e)
-		{
-			var changed = (e.ListChangedType == ListChangedType.ItemChanged && e.PropertyDescriptor != null && e.PropertyDescriptor.Name == "Status");
-			var added = e.ListChangedType == ListChangedType.ItemAdded;
-			var deleted = e.ListChangedType == ListChangedType.ItemDeleted;
-			var reset = e.ListChangedType == ListChangedType.Reset;
-			if (added || deleted || reset)
-			{
-				BeginInvoke((Action)(() =>
-				{
-					var items = playlist.ToArray();
-					PlayListTabPage.Text = items.Length == 0
-						? "Play List"
-						: string.Format("Play List: {0}", items.Length);
-				}));
-			}
-			CheckPlayList(added, changed);
-		}
-
-		void CheckPlayList(bool added, bool changed)
-		{
-			// If new item was added or item status changed then...
-			var items = playlist.ToArray();
-			if (added || changed)
-			{
-				// If nothing is playing then...
-				if (!items.Any(x => x.Status == JobStatusType.Playing))
-				{
-					// Get first item ready to play.
-					var pitchedItem = items.FirstOrDefault(x => x.Status == JobStatusType.Pitched);
-					//playlist.Remove(item);
-					if (pitchedItem != null)
-					{
-						if (pitchedItem.StreamData != null)
-						{
-							// Takes WAV bytes without header.
-							WavPlayer.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
-							var duration = (int)WavPlayer.Load(pitchedItem.StreamData);
-							WavPlayer.Play();
-							// Start timer which will reset status to Played
-							pitchedItem.Duration = duration;
-							pitchedItem.StartPlayTimer();
-						}
-						else
-						{
-							// Must be outside begin invoke.
-							int sampleRate = pitchedItem.WavHead.SampleRate;
-							int bitsPerSample = pitchedItem.WavHead.BitsPerSample;
-							int channelCount = pitchedItem.WavHead.Channels;
-							// Takes WAV bytes witout header.
-							EffectPresetsEditorSoundEffectsControl.Player.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
-							EffectPresetsEditorSoundEffectsControl.Player.Load(pitchedItem.WavData, sampleRate, bitsPerSample, channelCount);
-							EffectPresetsEditorSoundEffectsControl.Player.Play();
-							// Start timer which will reset status to Played
-							pitchedItem.StartPlayTimer();
-						}
-					}
-				}
-				// If last item finished playing or any item resulted in error then clear then..
-				var lastItem = items.LastOrDefault();
-				if ((lastItem != null && lastItem.Status == JobStatusType.Played) || (items.Any(x => x.Status == JobStatusType.Error)))
-				{
-					BeginInvoke((Action)(() =>
-					{
-						bool groupIsPlaying;
-						int itemsLeftToPlay;
-						lock (playlistLock) { ClearPlayList(null, out groupIsPlaying, out itemsLeftToPlay); }
-					}));
-				}
-				else
-				{
-					BeginInvoke((Action)(() =>
-					{
-						lock (threadIsRunningLock)
-						{
-							// If thread is not running or stopped then...
-							if (!threadIsRunning)
-							{
-								threadIsRunning = true;
-								ThreadPool.QueueUserWorkItem(ProcessPlayItems);
-							}
-						}
-					}));
-				}
-			}
-		}
-
-		/// <summary>
-		/// If group specified then remove only items from the group.
-		/// </summary>
-		/// <param name="group"></param>
-		void ClearPlayList(string group, out bool groupIsPlaying, out int itemsLeftToPlay)
-		{
-			PlayItem[] itemsToClear;
-			if (string.IsNullOrEmpty(group))
-			{
-				itemsToClear = playlist.ToArray();
-				groupIsPlaying = false;
-			}
-			else
-			{
-				itemsToClear = playlist.Where(x => x.Group != null && x.Group.ToLower() == group.ToLower()).ToArray();
-				groupIsPlaying = itemsToClear.Any(x => x.Status == JobStatusType.Playing);
-			}
-			foreach (var item in itemsToClear)
-			{
-				item.Dispose();
-				playlist.Remove(item);
-			}
-			itemsLeftToPlay = playlist.Count();
-		}
-
-		bool threadIsRunning;
-		object threadIsRunningLock = new object();
-
-		/// <summary>
-		/// Thread which will process all play items and convert XML to WAV bytes.
-		/// </summary>
-		/// <param name="status"></param>
-		void ProcessPlayItems(object status)
-		{
-
-			while (true)
-			{
-				PlayItem item = null;
-				lock (threadIsRunningLock)
-				{
-					lock (playlistLock)
-					{
-						// Get first incomplete item in the list.
-						JobStatusType[] validStates = { JobStatusType.Parsed, JobStatusType.Synthesized };
-						item = playlist.FirstOrDefault(x => validStates.Contains(x.Status));
-						// If nothing to do then...
-						if (item == null || playlist.Any(x => x.Status == JobStatusType.Error))
-						{
-							// Exit thread.
-							threadIsRunning = false;
-							return;
-						}
-					}
-				}
-				try
-				{
-					// If XML is available.
-					if (item.Status == JobStatusType.Parsed)
-					{
-						item.Status = JobStatusType.Synthesizing;
-						var encoding = System.Text.Encoding.UTF8;
-						var synthesize = true;
-						FileInfo xmlFi = null;
-						FileInfo wavFi = null;
-						if (SettingsManager.Options.CacheDataRead)
-						{
-							var dir = MainHelper.GetCreateCacheFolder();
-
-							// Look for generalized file first.
-							var uniqueName = item.GetUniqueFilePath(true);
-							// Get XML file path.
-							var xmlFile = string.Format("{0}.xml", uniqueName);
-							var xmlFullPath = Path.Combine(dir.FullName, xmlFile);
-							xmlFi = new FileInfo(xmlFullPath);
-							// If generalized file do not exists then...
-							if (!xmlFi.Exists)
-							{
-								// Look for normal file.
-								uniqueName = item.GetUniqueFilePath(false);
-								// Get XML file path.
-								xmlFile = string.Format("{0}.xml", uniqueName);
-								xmlFullPath = Path.Combine(dir.FullName, xmlFile);
-								xmlFi = new FileInfo(xmlFullPath);
-							}
-							// Prefer MP3 audio file first (custom recorded file).
-							var wavFile = string.Format("{0}.mp3", uniqueName);
-							var wavFullPath = Path.Combine(dir.FullName, wavFile);
-							wavFi = new FileInfo(wavFullPath);
-							if (!wavFi.Exists)
-							{
-								// Get WAV file path.
-								wavFile = string.Format("{0}.wav", uniqueName);
-								wavFullPath = Path.Combine(dir.FullName, wavFile);
-								wavFi = new FileInfo(wavFullPath);
-							}
-							// If both files exists then...
-							if (xmlFi.Exists && wavFi.Exists)
-							{
-								using (Stream stream = new FileStream(wavFi.FullName, FileMode.Open, FileAccess.Read))
-								{
-									// Load existing XML and WAV data into PlayItem.
-									var ms = new MemoryStream();
-									var ad = new SharpDX.MediaFoundation.AudioDecoder(stream);
-									var samples = ad.GetSamples();
-									var enumerator = samples.GetEnumerator();
-									while (enumerator.MoveNext())
-									{
-										var sample = enumerator.Current.ToArray();
-										ms.Write(sample, 0, sample.Length);
-									}
-									// Read WAV head.
-									item.WavHead = ad.WaveFormat;
-									// Read WAV data.
-									item.WavData = ms.ToArray();
-									item.Duration = (int)ad.Duration.TotalMilliseconds;
-								}
-								// Load XML.
-								item.Xml = System.IO.File.ReadAllText(xmlFi.FullName);
-								// Make sure WAV data is not synthesized.
-								synthesize = false;
-							}
-						}
-						if (synthesize)
-						{
-							int bitsPerSample = 0;
-							int sampleRate = 0;
-							int channelCount = 0;
-							Invoke((Action)(() =>
-							{
-								sampleRate = (int)AudioSampleRateComboBox.SelectedItem;
-								bitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
-								channelCount = (int)(AudioChannel)AudioChannelsComboBox.SelectedItem;
-							}));
-							item.WavData = ConvertSapiXmlToWav(item.Xml, sampleRate, bitsPerSample, channelCount);
-							item.WavHead = new SharpDX.Multimedia.WaveFormat(sampleRate, bitsPerSample, channelCount);
-							item.Duration = AudioHelper.GetDuration(item.WavData.Length, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
-							if (SettingsManager.Options.CacheDataWrite && item.WavData != null)
-							{
-								// Create directory if not exists.
-								if (!xmlFi.Directory.Exists)
-									xmlFi.Directory.Create();
-								using (Stream stream = new FileStream(wavFi.FullName, FileMode.Create))
-								{
-									var headBytes = AudioHelper.GetWavHead(item.WavData.Length, sampleRate, bitsPerSample, channelCount);
-									// Write WAV head.
-									stream.Write(headBytes, 0, headBytes.Length);
-									// Write WAV data.
-									stream.Write(item.WavData, 0, item.WavData.Length);
-
-								}
-								// Write XML.
-								System.IO.File.WriteAllText(xmlFi.FullName, item.Xml, encoding);
-							}
-
-						}
-						item.Status = (item.WavHead == null || item.WavData == null)
-							? item.Status = JobStatusType.Error
-							: item.Status = JobStatusType.Synthesized;
-					}
-					if (item.Status == JobStatusType.Synthesized)
-					{
-						item.Status = JobStatusType.Pitching;
-						ApplyPitch(item);
-						item.Status = JobStatusType.Pitched;
-					}
-				}
-				catch (Exception ex)
-				{
-					LastException = ex;
-					item.Status = JobStatusType.Error;
-					// Exit thread.
-					threadIsRunning = false;
-					return;
-				}
-			}
-		}
-
-		void ApplyPitch(PlayItem item)
-		{
-			// Get info about the WAV.
-			int sampleRate = item.WavHead.SampleRate;
-			int bitsPerSample = item.WavHead.BitsPerSample;
-			int channelCount = item.WavHead.Channels;
-			// Get info about effects and pitch.
-			bool applyEffects = false;
-			float pitchShift = 1.0F;
-			Invoke((Action)(() =>
-			{
-				applyEffects = EffectPresetsEditorSoundEffectsControl.GeneralCheckBox.Checked;
-				pitchShift = ((float)EffectPresetsEditorSoundEffectsControl.GeneralPitchTrackBar.Value / 100F);
-
-			}));
-			var ms = new MemoryStream();
-			var writer = new System.IO.BinaryWriter(ms);
-			var bytes = item.WavData;
-			// Add 100 milliseconds at the start.
-			var silenceStart = 100;
-			// Add 200 milliseconds at the end.
-			var silenceEnd = 200;
-			var silenceBytes = AudioHelper.GetSilenceByteCount(sampleRate, bitsPerSample, channelCount, silenceStart + silenceEnd);
-			// Comment WriteHeader(...) line, because SharpDX don't need that (it creates noise).
-			//AudioHelper.WriteHeader(writer, bytes.Length + silenceBytes, channelCount, sampleRate, bitsPerSample);
-			if (applyEffects)
-			{
-				token = new CancellationTokenSource();
-				// This part could take long time.
-				bytes = EffectsGeneral.ApplyPitchShift(bytes, channelCount, sampleRate, bitsPerSample, pitchShift, token);
-				// If pitch shift was canceled then...
-				if (token.IsCancellationRequested) return;
-			}
-			// Add silence at the start to make room for effects.
-			Audio.AudioHelper.WriteSilenceBytes(writer, sampleRate, bitsPerSample, channelCount, silenceStart);
-			writer.Write(bytes);
-			// Add silence at the back to make room for effects.
-			Audio.AudioHelper.WriteSilenceBytes(writer, sampleRate, bitsPerSample, channelCount, silenceEnd);
-			// Add result to play list.
-			item.WavData = ms.ToArray();
-			//System.IO.File.WriteAllBytes("Temp.wav", item.Data);
-			var duration = ((decimal)bytes.Length * 8m) / (decimal)channelCount / (decimal)sampleRate / (decimal)bitsPerSample * 1000m;
-			duration += (silenceStart + silenceEnd);
-			item.Duration = (int)duration;
-		}
 
 		Exception _LastException;
 		Exception LastException
@@ -545,17 +268,13 @@ namespace JocysCom.TextToSpeech.Monitor
 				_LastException = value;
 				if (Disposing || IsDisposed || !IsHandleCreated)
 				{
-					var errorText = ((Exception)_LastException).ToString();
+					var errorText = _LastException.ToString();
 					System.IO.File.WriteAllText("JocysCom.TextToSpeech.Monitor.Error2.txt", errorText);
 				}
 				else
 				{
-					BeginInvoke((Action)(() =>
-					{
-						ErrorStatusLabel.Text = value == null ? "" : MainHelper.CropText(value.Message, 64);
-						ErrorStatusLabel.Visible = value != null;
-
-					}));
+					ErrorStatusLabel.Text = value == null ? "" : MainHelper.CropText(value.Message, 64);
+					ErrorStatusLabel.Visible = value != null;
 				}
 			}
 		}
@@ -586,20 +305,21 @@ namespace JocysCom.TextToSpeech.Monitor
 			VoicesDataGridView.AutoGenerateColumns = false;
 			MessagesDataGridView.AutoGenerateColumns = false;
 			EffectsPresetsDataGridView.AutoGenerateColumns = false;
-			MessagesDataGridView.DataSource = WowMessageList;
+			MessagesDataGridView.DataSource = MessagesVoiceItems;
 			// Enable double buffering to make redraw faster.
 			typeof(DataGridView).InvokeMember("DoubleBuffered",
 			BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty,
 			null, VoicesDataGridView, new object[] { true });
-			resetBuffer();
-			InitializeSpeech();
-			ValidateList();
-			InstalledVoices.ListChanged += InstalledVoices_ListChanged;
-			if (MonitorPortCheckBox.Checked)
-			{
-				StartNetworkMonitor();
+			Global.InitializeSpeech();
+			refreshPresets();
+			VoicesDataGridView.DataSource = Global.InstalledVoices;
+			VoicesDataGridView.SelectionChanged += VoicesDataGridView_SelectionChanged;
+			VoicesDataGridView_SelectionChanged(null, null);
+			Global.InstalledVoices.ListChanged += InstalledVoices_ListChanged;
+			Global.VoiceChanged += AudioGlobal_VoiceChanged;
+			InstalledVoices_ListChanged(null, null);
+			if (MonitorsEnabledCheckBox.Checked)
 				ProgramComboBox.Enabled = false;
-			}
 			UpdateClipboardMonitor();
 			// Load "JocysCom.TextToSpeech.Monitor.rtf" file
 			var stream = MainHelper.GetResource("JocysCom.TextToSpeech.Monitor.rtf");
@@ -610,161 +330,24 @@ namespace JocysCom.TextToSpeech.Monitor
 			ResetHelpToDefault();
 		}
 
+		private void AudioGlobal_VoiceChanged(object sender, ClassLibrary.EventArgs<InstalledVoiceEx> e)
+		{
+			foreach (DataGridViewRow row in VoicesDataGridView.Rows)
+			{
+				if (!row.DataBoundItem.Equals(e.Data))
+					continue;
+				row.Selected = true;
+				VoicesDataGridView.FirstDisplayedCell = row.Cells[0];
+				break;
+			}
+		}
+
 		//Make the recognizer ready
 		SpeechRecognitionEngine recognitionEngine = null;
 
-		// Set voice.
-		void SelectVoice(string name, string language, VoiceGender gender)
-		{
-			int popularity;
-			InstalledVoiceEx[] choice;
-			// Get only enabled voices.
-			var data = InstalledVoices.Where(x => x.Enabled).ToArray();
-			InstalledVoiceEx voice = null;
-
-			// Set voice if only gender value is submitted ("Male", "Female", "Neutral").           
-			if (string.IsNullOrEmpty(name))
-			{
-				// Select first most popular voice in "FemaleColumn", "MaleColumn" or "NeutralColumn".
-				// Male.
-				if (gender == VoiceGender.Male)
-				{
-					if (string.IsNullOrEmpty(language))
-					{
-						voice = data.OrderByDescending(x => x.Male).FirstOrDefault();
-					}
-					else
-					{
-						voice = data.OrderByDescending(x => x.Male).Where(x => x.Language == language).FirstOrDefault();
-					}
-					popularity = voice == null ? 0 : voice.Male;
-				}
-				// Female.
-				else if (gender == VoiceGender.Female)
-				{
-					if (string.IsNullOrEmpty(language))
-					{
-						voice = data.OrderByDescending(x => x.Female).FirstOrDefault();
-					}
-					else
-					{
-						voice = data.OrderByDescending(x => x.Female).Where(x => x.Language == language).FirstOrDefault();
-					}
-					popularity = voice == null ? 0 : voice.Female;
-				}
-				// Neutral.
-				else
-				{
-					if (string.IsNullOrEmpty(language))
-					{
-						voice = data.OrderByDescending(x => x.Neutral).FirstOrDefault();
-					}
-					else
-					{
-						voice = data.OrderByDescending(x => x.Neutral).Where(x => x.Language == language).FirstOrDefault();
-					}
-					popularity = voice == null ? 0 : voice.Neutral;
-				}
-
-				if (string.IsNullOrEmpty(language))
-				{
-					if (popularity == 0) MainHelpLabel.Text = string.Format("There are no voices enabled in \"{0}\" column. Set popularity value to 100 ( normal usage ) or 101 ( normal usage / favourite ) for one voice at least in \"{0}\" column, to use it as \"{0}\" voice.", gender);
-				}
-				else
-				{
-					if (popularity == 0) MainHelpLabel.Text = string.Format("There are no voices enabled in \"{0}\" column with \"Language\" value \"{1}\". Set popularity value to 100 ( normal usage ) for one voice at least in \"{0}\" column with \"Language\" value \"{1}\".", gender, language);
-				}
-			}
-			// Select voice if name and gender values are submitted... ("IVONA 2 Amy") or ("Marshal McBride" and "Male", "Female" or "Neutral").
-			else
-			{
-				// Select specific voice if it exists ("IVONA 2 Amy").
-				voice = data.FirstOrDefault(x => x.Name == name);
-
-				// If voice was not found then... generate voice number and assign voice ("Marshal McBride" and "Male", "Female" or "Neutral").
-				if (voice == null)
-				{
-					// Select enabled (with value higher than 0) voices.
-					if (string.IsNullOrEmpty(language))
-					{
-						if (gender == VoiceGender.Male) choice = data.Where(x => x.Male > 0).ToArray();
-						else if (gender == VoiceGender.Female) choice = data.Where(x => x.Female > 0).ToArray();
-						else choice = data.Where(x => x.Neutral > 0).ToArray();
-						if (choice.Length == 0)
-						{
-							MainHelpLabel.Text = string.Format("There are no voices enabled in \"{0}\" column. Set popularity value to 100 ( normal usage ) for one voice at least in \"{0}\" column, to use it as \"{0}\" voice.", gender);
-						}
-					}
-					else
-					{
-						if (gender == VoiceGender.Male) choice = data.Where(x => x.Male > 0).Where(x => x.Language == language).ToArray();
-						else if (gender == VoiceGender.Female) choice = data.Where(x => x.Female > 0).Where(x => x.Language == language).ToArray();
-						else choice = data.Where(x => x.Neutral > 0).Where(x => x.Language == language).ToArray();
-
-						if (choice.Length == 0)
-						{
-							if (gender == VoiceGender.Male) choice = data.Where(x => x.Male > 0).ToArray();
-							else if (gender == VoiceGender.Female) choice = data.Where(x => x.Female > 0).ToArray();
-							else choice = data.Where(x => x.Neutral > 0).ToArray();
-							MainHelpLabel.Text = string.Format("There are no voices enabled in \"{0}\" column with \"Language\" value \"{1}\". Set popularity value to 100 ( normal usage ) for one voice at least in \"{0}\" column with \"Language\" value \"{1}\".", gender, language);
-						}
-					}
-
-					// If nothing to choose from then try all.
-					if (choice.Length == 0)
-					{
-						choice = data.ToArray();
-					}
-					if (choice.Length == 0) return;
-					// Generate number for selecting voice.
-					var number = MainHelper.GetNumber(0, choice.Count() - 1, "name", name);
-					voice = choice[number];
-				}
-
-			}
-
-			foreach (DataGridViewRow row in VoicesDataGridView.Rows)
-			{
-				if (row.DataBoundItem.Equals(voice))
-				{
-					row.Selected = true;
-					VoicesDataGridView.FirstDisplayedCell = row.Cells[0];
-					break;
-				}
-			}
-		}
-
-		InstalledVoiceEx SelectedVoice
-		{
-			get
-			{
-				var selectedItem = VoicesDataGridView.SelectedRows.Cast<DataGridViewRow>().FirstOrDefault();
-				if (selectedItem == null) return null;
-				return (InstalledVoiceEx)selectedItem.DataBoundItem;
-			}
-		}
-
-		void StopPlayer(string group = null)
-		{
-			bool groupIsPlaying;
-			int itemsLeftToPlay;
-			lock (playlistLock) { ClearPlayList(group, out groupIsPlaying, out itemsLeftToPlay); }
-			if (groupIsPlaying || itemsLeftToPlay == 0)
-			{
-				resetBuffer();
-				if (token != null) token.Cancel();
-				EffectPresetsEditorSoundEffectsControl.Player.Stop();
-				WavPlayer.Stop();
-			}
-			if (itemsLeftToPlay > 0)
-			{
-				CheckPlayList(false, true);
-			}
-		}
-
 		private void StopButton_Click(object sender, EventArgs e)
 		{
-			StopPlayer();
+			Global.StopPlayer();
 		}
 
 		private void TextXmlTabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -774,7 +357,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			RateMaxComboBox.Enabled = en;
 			PitchMinComboBox.Enabled = en;
 			PitchMaxComboBox.Enabled = en;
-			_Volume = SettingsManager.Options.Volume;
+			Global._Volume = SettingsManager.Options.Volume;
 			VolumeTrackBar.Enabled = en;
 			VoicesDataGridView.Enabled = en;
 			VoicesDataGridView.DefaultCellStyle.SelectionBackColor = en
@@ -789,18 +372,18 @@ namespace JocysCom.TextToSpeech.Monitor
 			//Fill SAPI Tab
 			if (string.IsNullOrEmpty(IncomingTextTextBox.Text))
 			{
-				SapiTextBox.Text = ConvertTextToSapiXml("Test text to speech.");
+				SapiTextBox.Text = Global.ConvertTextToSapiXml("Test text to speech.");
 			}
 			else
 			{
-				var blocks = AddTextToPlaylist(ProgramComboBox.Text, IncomingTextTextBox.Text, false, "TextBox");
+				var blocks = Global.AddTextToPlaylist(ProgramComboBox.Text, IncomingTextTextBox.Text, false, "TextBox");
 				SapiTextBox.Text = string.Join("\r\n\r\n", blocks.Select(x => x.Xml));
 			}
 		}
 
 		private void MessagesClearToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			WowMessageList.Clear();
+			MessagesVoiceItems.Clear();
 		}
 
 		private void addNewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -857,12 +440,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			if (disposing && (components != null))
 			{
 				components.Dispose();
-				if (token != null)
-				{
-					token.Cancel();
-					token.Dispose();
-				}
 				DisposeRecognitionEngine();
+				Global.DisposeGlobal();
 			}
 			base.Dispose(disposing);
 		}
@@ -1041,7 +620,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			MainHelpLabel.Text = "Port number. Default value is 3724 ( World of Warcraft ).";
 		}
 
-		private void MonitorPortCheckBox_MouseEnter(object sender, EventArgs e)
+		private void EnableMonitorsCheckBox_MouseEnter(object sender, EventArgs e)
 		{
 			MainHelpLabel.Text = "Disable or enable monitoring. Uncheck to edit.";
 		}
@@ -1067,7 +646,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			if (m.Msg == WM_CLIPBOARDUPDATE)
 			{
 				// Clipboard's data.
-				var iData = Clipboard.GetDataObject();      
+				var iData = Clipboard.GetDataObject();
 				/* Depending on the clipboard's current data format we can process the data differently.
 				 * Feel free to add more checks if you want to process more formats. */
 				if (iData.GetDataPresent(DataFormats.Text))
@@ -1081,7 +660,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					if (string.IsNullOrEmpty(text) || !text.Contains("<message")) return;
 					var voiceItem = (VoiceListItem)Activator.CreateInstance(MonitorItem.GetType());
 					voiceItem.Load(text);
-					addVoiceListItem(voiceItem);
+					Global.addVoiceListItem(voiceItem);
 					// do something with it
 				}
 				else if (iData.GetDataPresent(DataFormats.Bitmap))
@@ -1143,7 +722,6 @@ namespace JocysCom.TextToSpeech.Monitor
 					NativeMethods.RemoveClipboardFormatListener(this.Handle);
 				}
 			}
-			StopNetworkMonitor();
 			DisposeWatcher();
 			SaveSettings();
 		}
@@ -1155,78 +733,13 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		public void SaveSettings()
 		{
-			if (InstalledVoices == null) return;
-			var xml = Serializer.SerializeToXmlString(InstalledVoices);
+			if (Global.InstalledVoices == null) return;
+			var xml = Serializer.SerializeToXmlString(Global.InstalledVoices);
 			SettingsManager.Options.VoicesData = xml;
 			SettingsFile.Current.Save();
 			SettingsManager.Current.Save();
 		}
 
-		public void LoadSettings(InstalledVoiceEx[] voices)
-		{
-			var xml = SettingsManager.Options.VoicesData;
-			InstalledVoiceEx[] savedVoices = null;
-			if (!string.IsNullOrEmpty(xml))
-			{
-				try { savedVoices = Serializer.DeserializeFromXmlString<InstalledVoiceEx[]>(xml); }
-				catch (Exception) { }
-			}
-			if (savedVoices == null) savedVoices = new InstalledVoiceEx[0];
-			var newVoices = new List<InstalledVoiceEx>();
-			var oldVoices = new List<InstalledVoiceEx>();
-			foreach (var voice in voices)
-			{
-				var savedVoice = savedVoices.FirstOrDefault(x => x.Name == voice.Name && x.Gender == voice.Gender);
-				if (savedVoice == null)
-				{
-					newVoices.Add(voice);
-				}
-				else
-				{
-					oldVoices.Add(voice);
-					voice.Enabled = savedVoice.Enabled;
-					voice.Female = savedVoice.Female;
-					voice.Male = savedVoice.Male;
-					voice.Neutral = savedVoice.Neutral;
-				}
-			}
-			// If new voices added then...
-			if (newVoices.Count > 0)
-			{
-				var maleIvonaFound = voices.Any(x => x.Name.StartsWith("IVONA") && x.Gender == VoiceGender.Male);
-				var femaleIvonaFound = voices.Any(x => x.Name.StartsWith("IVONA") && x.Gender == VoiceGender.Female);
-				foreach (var newVoice in newVoices)
-				{
-					// If new voice is Microsoft then...
-					if (newVoice.Name.StartsWith("Microsoft"))
-					{
-						if (newVoice.Gender == VoiceGender.Male && maleIvonaFound) newVoice.Enabled = false;
-						if (newVoice.Gender == VoiceGender.Female && femaleIvonaFound) newVoice.Enabled = false;
-					}
-				}
-				var firstVoiceVoice = newVoices.First();
-				// If list doesn't have female voices then use first new voice.
-				if (!voices.Any(x => x.Female > 0)) firstVoiceVoice.Female = InstalledVoiceEx.MaxVoice;
-				// If list doesn't have male voices then use first new voice.
-				if (!voices.Any(x => x.Male > 0)) firstVoiceVoice.Male = InstalledVoiceEx.MaxVoice;
-				// If list doesn't have neutral voices then use first voice.
-				if (!voices.Any(x => x.Neutral > 0))
-				{
-					var neutralVoices = voices.Where(x => x.Gender == VoiceGender.Neutral);
-					foreach (var neutralVoice in neutralVoices) neutralVoice.Neutral = InstalledVoiceEx.MaxVoice;
-					if (neutralVoices.Count() == 0)
-					{
-						var maleVoices = voices.Where(x => x.Gender == VoiceGender.Male);
-						foreach (var maleVoice in maleVoices) maleVoice.Neutral = InstalledVoiceEx.MaxVoice;
-						if (maleVoices.Count() == 0)
-						{
-							var femaleVoices = voices.Where(x => x.Gender == VoiceGender.Female);
-							foreach (var femaleVoice in femaleVoices) femaleVoice.Neutral = InstalledVoiceEx.MaxVoice;
-						}
-					}
-				}
-			}
-		}
 		#endregion
 
 		private void VoicesDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -1237,68 +750,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			//var column = VoicesDataGridView.Columns[e.ColumnIndex];
 			e.Cancel = true;
 		}
-
-		void UpdateMonitor()
-		{
-			ProgramComboBox.Enabled = !MonitorPortCheckBox.Checked;
-			if (MonitorPortCheckBox.Checked)
-			{
-				StartNetworkMonitor();
-			}
-			else
-			{
-				StopNetworkMonitor();
-			}
-		}
-
-		#region Intro Sounds
-
-		string[] GetIntroSoundNames()
-		{
-			var prefix = ".Audio.";
-			var assembly = Assembly.GetExecutingAssembly();
-			var names = assembly.GetManifestResourceNames().Where(x => x.Contains(prefix)).ToArray();
-			names = names.Select(x => x.Substring(x.IndexOf(prefix) + prefix.Length).Replace(".wav", "")).ToArray();
-			return names;
-		}
-
-		Stream GetIntroSound(string name)
-		{
-			if (string.IsNullOrEmpty(name))
-				return null;
-			var suffix = (".Audio." + name + ".wav").ToLower();
-			var assembly = Assembly.GetExecutingAssembly();
-			var fullResourceName = assembly.GetManifestResourceNames().FirstOrDefault(x => x.ToLower().EndsWith(suffix));
-			return fullResourceName == null ? null : assembly.GetManifestResourceStream(fullResourceName);
-		}
-
-		void AddIntroSoundToPlayList(string text, string group, Stream stream)
-		{
-			var item = new PlayItem(this)
-			{
-				Text = text,
-				WavData = new byte[0],
-				StreamData = stream,
-				Group = group,
-				Status = JobStatusType.Pitched,
-			};
-			lock (playlistLock) { playlist.Add(item); }
-		}
-
-		void PlayCurrentIntroSond()
-		{
-			var introSound = SettingsManager.Options.DefaultIntroSoundComboBox.ToLower();
-			var stream = GetIntroSound(introSound);
-			if (stream != null)
-			{
-				var player = new AudioPlayer(Handle);
-				player.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
-				player.Load(stream);
-				player.Play();
-			}
-		}
-
-		#endregion
 
 		#region Process Monitor
 
@@ -1362,10 +813,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				ProcessStatusLabel.Text = string.Format("{0}: Running", name);
 				//StartNetworkMonitor();
 			}
-			lock (monitorLock)
-			{
-				SetFilter(MonitorItem);
-			}
+			Program._NetworkMonitor.SetFilter(Program.MonitorItem);
 		}
 
 		void DisposeWatcher()
@@ -1421,7 +869,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		private void FilterStatusLabel_Click(object sender, EventArgs e)
 		{
-			var filters = string.Join(" and \r\n", LastFilters);
+			var filters = string.Join(" and \r\n", Program._NetworkMonitor.LastFilters);
 			MessageBox.Show(filters, "Last Filter");
 		}
 
@@ -1439,6 +887,45 @@ namespace JocysCom.TextToSpeech.Monitor
 		private void UpdateTabPage_Click(object sender, EventArgs e)
 		{
 
+		}
+
+
+		void SpeakButton_Click(object sender, EventArgs e)
+		{
+			// if [ Formatted SAPI XML Text ] tab selected.
+			if (TextXmlTabControl.SelectedTab == SapiTabPage)
+			{
+				Global.AddMessageToPlay(SapiTextBox.Text);
+			}
+			// if [ SandBox ] tab selected.
+			else if (TextXmlTabControl.SelectedTab == SandBoxTabPage)
+			{
+				Global.AddMessageToPlay(SandBoxTextBox.Text);
+			}
+			// if [ Incoming Messages ] tab selected.
+			else if (TextXmlTabControl.SelectedTab == MessagesTabPage)
+			{
+				var gridRow = MessagesDataGridView.SelectedRows.Cast<DataGridViewRow>().FirstOrDefault();
+				if (gridRow != null)
+				{
+					var item = (PlugIns.VoiceListItem)gridRow.DataBoundItem;
+					Global.ProcessVoiceTextMessage(item.VoiceXml);
+				}
+			}
+			else
+			{
+				Global.AddTextToPlaylist(ProgramComboBox.Text, IncomingTextTextBox.Text, true, "TextBox");
+			}
+		}
+
+		private void VoicesDataGridView_SelectionChanged(object sender, EventArgs e)
+		{
+			var selectedItem = VoicesDataGridView.SelectedRows.Cast<DataGridViewRow>().FirstOrDefault();
+			InstalledVoiceEx voice = null;
+			if (selectedItem != null)
+				voice = (InstalledVoiceEx)selectedItem.DataBoundItem;
+			if (Global.SelectedVoice != voice)
+				Global.SelectedVoice = voice;
 		}
 	}
 }

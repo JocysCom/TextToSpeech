@@ -770,7 +770,7 @@ namespace JocysCom.ClassLibrary.Controls
 				Cs control, Expression<Func<Cs, Cp>> controlProperty,
 				Ds data, Expression<Func<Ds, Dp>> dataProperty,
 				bool formattingEnabled = false,
-				DataSourceUpdateMode updateMode = DataSourceUpdateMode.OnValidation,
+				DataSourceUpdateMode updateMode = DataSourceUpdateMode.OnPropertyChanged,
 				object nullValue = null,
 				string formatString = null,
 				IFormatProvider formatInfo = null

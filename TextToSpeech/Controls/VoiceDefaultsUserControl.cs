@@ -42,20 +42,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			if (e.ColumnIndex == grid.Columns[LanguageColumn.Name].Index) VoicesDefaultsDataGridView.BeginEdit(true);
             if (e.ColumnIndex == grid.Columns[VoiceColumn.Name].Index) VoicesDefaultsDataGridView.BeginEdit(true);
         }
-
-		public void UpsertRecord(message v)
-		{
-			// Try to find existing default record from the list.
-			var dm = SettingsFile.Current.Defaults.FirstOrDefault(x => x.name.ToLower() == v.name.ToLower());
-			if (dm == null)
-			{
-				dm = new message();
-				dm.name = v.name;
-				SettingsFile.Current.Defaults.Add(dm);
-			}
-			dm.UpdateMissingAndCangedValuesFrom(v);
-		}
-
 		public void AddNewRecord()
 		{
 			var grid = VoicesDefaultsDataGridView;

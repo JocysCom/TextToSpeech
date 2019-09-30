@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace JocysCom.TextToSpeech.Monitor.Capturing
+namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 {
 	public class UdpMonitor : MonitorBase
 	{

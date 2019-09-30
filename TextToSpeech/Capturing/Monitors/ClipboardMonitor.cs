@@ -1,11 +1,10 @@
-﻿using JocysCom.ClassLibrary.Processes;
-using JocysCom.ClassLibrary.Win32;
+﻿using JocysCom.ClassLibrary.Win32;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace JocysCom.TextToSpeech.Monitor.Capturing
+namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 {
 	public class ClipboardMonitor : MonitorBase
 	{
@@ -65,7 +64,6 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 		#endregion
 
 		System.Timers.Timer _Timer;
-		object serverLock = new object();
 
 		public int CopyInterval
 		{
@@ -84,12 +82,9 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 
 		int _Interval = 200;
 
-		public bool IsRunning { get { return _IsRunning; } }
-		bool _IsRunning;
-
 		public override void Start()
 		{
-			lock (serverLock)
+			lock (monitorLock)
 			{
 				if (IsDisposing)
 					return;
@@ -109,7 +104,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 
 		public override void Stop()
 		{
-			lock (serverLock)
+			lock (monitorLock)
 			{
 				// If server is running then...
 				if (_Timer != null)

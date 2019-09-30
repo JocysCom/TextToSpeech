@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using JocysCom.TextToSpeech.Monitor.Audio;
 using SharpDX.DirectSound;
@@ -21,25 +23,14 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			InitializeComponent();
 			if (IsDesignMode)
 				return;
-			Player = new AudioPlayer(Handle);
-			Player.BeforePlay += Player_BeforePlay;
 			CurrentPreset = null;
 			SetDefaultValues();
-			Player.ChangeAudioDevice();
-		}
-
-		private void Player_BeforePlay(object sender, EventArgs e)
-		{
-			var player = (AudioPlayer)sender;
-			ApplyEffects(player.ApplicationBuffer);
 		}
 
 		public bool IsDesignMode
 		{
 			get { return DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime; }
 		}
-
-		public AudioPlayer Player;
 
 		private void SetDefaultValues()
 		{
@@ -183,6 +174,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			var name = cbx.Name.Replace("CheckBox", "") + "TabPage";
 			var tab = EffectsTabControl.TabPages.Cast<TabPage>().FirstOrDefault(x => x.Name == name);
 			tab.ImageIndex = cbx.Checked ? 1 : 0;
+			Global.ApplyEffects = cbx.Checked;
 		}
 
 		Dictionary<TrackBar, decimal> multipliers = new Dictionary<TrackBar, decimal>();
@@ -233,7 +225,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		{
 			// Convert from ±100 to [0.5-2.0]
 			//var pitchShift = Math.Round(Math.Pow(Math.Pow(2F, 1F / 100F), (float)GeneralPitchTrackBar.Value), 2);
-			GeneralPitchValueLabel.Text = ((float)GeneralPitchTrackBar.Value / 100F).ToString("#0%");
+			var v = (float)GeneralPitchTrackBar.Value / 100F;
+			GeneralPitchValueLabel.Text = v.ToString("#0%");
+			Global.PitchShift = v;
 		}
 
 		public void ApplyGeneralEffect(ref EffectsGeneral parameters)
@@ -978,11 +972,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			if (disposing && (components != null))
 			{
 				components.Dispose();
-				if (Player != null)
-				{
-					Player.Dispose();
-					Player = null;
-				}
 			}
 			base.Dispose(disposing);
 		}

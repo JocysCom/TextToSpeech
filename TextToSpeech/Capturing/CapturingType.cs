@@ -6,8 +6,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 	[Flags]
 	public enum CapturingType
 	{
-		Display = 0,
+		SocPcap = 0,
 		WinPcap = 1,
-		SocPcap = 2,
 	}
 }

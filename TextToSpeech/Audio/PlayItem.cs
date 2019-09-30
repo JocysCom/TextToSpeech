@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JocysCom.ClassLibrary.Controls;
+using System;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Runtime.CompilerServices;
 
 namespace JocysCom.TextToSpeech.Monitor.Audio
 {
@@ -19,11 +18,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		System.Timers.Timer playTimer;
 
-		ISynchronizeInvoke _parent;
-
-		public PlayItem(ISynchronizeInvoke parent)
+		public PlayItem()
 		{
-			_parent = parent;
 		}
 
 		/// <summary>Game Name.</summary>
@@ -31,7 +27,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public string Game
 		{
 			get { return _Game; }
-			set { _Game = value; NotifyPropertyChanged("Game"); }
+			set { _Game = value; OnPropertyChanged(); }
 		}
 		string _Game;
 
@@ -40,7 +36,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public string Name
 		{
 			get { return _Name; }
-			set { _Name = value; NotifyPropertyChanged("Name"); }
+			set { _Name = value; OnPropertyChanged(); }
 		}
 		string _Name;
 
@@ -49,7 +45,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public string Gender
 		{
 			get { return _Gender; }
-			set { _Gender = value; NotifyPropertyChanged("Gender"); }
+			set { _Gender = value; OnPropertyChanged(); }
 		}
 		string _Gender;
 
@@ -58,7 +54,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public string Effect
 		{
 			get { return _Effect; }
-			set { _Effect = value; NotifyPropertyChanged("Effect"); }
+			set { _Effect = value; OnPropertyChanged(); }
 		}
 		string _Effect;
 
@@ -120,7 +116,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			if (IsDisposing) return;
 			// Set up timer.
 			_Status = JobStatusType.Playing;
-			NotifyPropertyChanged("Status");
+			OnPropertyChanged("Status");
 			playTimer = new System.Timers.Timer();
 			playTimer.AutoReset = false;
 			playTimer.Elapsed += playTimer_Elapsed;
@@ -131,35 +127,35 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		void playTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 		{
 			_Status = JobStatusType.Played;
-			NotifyPropertyChanged("Status");
+			OnPropertyChanged("Status");
 		}
 
 		bool _IsComment;
 		public bool IsComment
 		{
 			get { return _IsComment; }
-			set { _IsComment = value; NotifyPropertyChanged("IsComment"); }
+			set { _IsComment = value; OnPropertyChanged(); }
 		}
 
 		string _Text;
 		public string Text
 		{
 			get { return _Text; }
-			set { _Text = value; NotifyPropertyChanged("Text"); }
+			set { _Text = value; OnPropertyChanged(); }
 		}
 
 		string _Group;
 		public string Group
 		{
 			get { return _Group; }
-			set { _Group = value; NotifyPropertyChanged("Group"); }
+			set { _Group = value; OnPropertyChanged(); }
 		}
 
 		string _Xml;
 		public string Xml
 		{
 			get { return _Xml; }
-			set { _Xml = value; NotifyPropertyChanged("Xml"); }
+			set { _Xml = value; OnPropertyChanged(); }
 		}
 
 		/// <summary>
@@ -168,7 +164,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public SharpDX.Multimedia.WaveFormat WavHead
 		{
 			get { return _WavHead; }
-			set { _WavHead = value; NotifyPropertyChanged("WavHead"); }
+			set { _WavHead = value; OnPropertyChanged(); }
 		}
 		SharpDX.Multimedia.WaveFormat _WavHead;
 
@@ -178,7 +174,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public byte[] WavData
 		{
 			get { return _WavData; }
-			set { _WavData = value; NotifyPropertyChanged("WavData"); }
+			set { _WavData = value; OnPropertyChanged(); }
 		}
 		byte[] _WavData;
 
@@ -186,7 +182,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public Stream StreamData
 		{
 			get { return _StreamData; }
-			set { _StreamData = value; NotifyPropertyChanged("StreamData"); }
+			set { _StreamData = value; OnPropertyChanged(); }
 		}
 
 
@@ -194,39 +190,26 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public int Duration
 		{
 			get { return _Duration; }
-			set { _Duration = value; NotifyPropertyChanged("Duration"); }
+			set { _Duration = value; OnPropertyChanged(); }
 		}
 
 		JobStatusType _Status;
 		public JobStatusType Status
 		{
 			get { return _Status; }
-			set { _Status = value; NotifyPropertyChanged("Status"); }
+			set { _Status = value; OnPropertyChanged(); }
 		}
 
 		#region INotifyPropertyChanged
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void NotifyPropertyChanged(string propertyName = "")
+		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			if (IsDisposing) return;
-			var ev = PropertyChanged;
-			if (ev == null) return;
-			var p = _parent;
-			if (p == null)
-			{
-				ev(this, new PropertyChangedEventArgs(propertyName));
-			}
-			else
-			{
-				p.BeginInvoke((Action)(() =>
-				{
-					var args = new PropertyChangedEventArgs(propertyName);
-					ev(this, args);
-					System.Windows.Forms.Application.DoEvents();
-				}), new object[0]);
-			}
+			var handler = PropertyChanged;
+			if (handler == null)
+				return;
+			ControlsHelper.Invoke(() => { handler(this, new PropertyChangedEventArgs(propertyName)); });
 		}
 
 		#endregion

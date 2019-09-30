@@ -1,7 +1,7 @@
 ﻿using JocysCom.ClassLibrary;
 using System;
 
-namespace JocysCom.TextToSpeech.Monitor.Capturing
+namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 {
 	public interface IMonitor
 	{

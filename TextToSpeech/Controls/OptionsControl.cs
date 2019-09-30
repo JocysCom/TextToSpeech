@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using JocysCom.TextToSpeech.Monitor.Audio;
+using JocysCom.ClassLibrary.Controls;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
@@ -15,63 +16,46 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		public OptionsControl()
 		{
 			InitializeComponent();
-			if (IsDesignMode)
+			if (ControlsHelper.IsDesignMode(this))
 				return;
 			// Make Google Cloud invisible, because it is not finished yet.
 			OptionsTabControl.TabPages.Remove(GoogleCloudTabPage);
-			AddSilcenceBeforeNumericUpDown.Value = SettingsManager.Options.AddSilcenceBeforeMessage;
-			AddSilenceAfterNumericUpDown.Value = SettingsManager.Options.DelayBeforeValue;
-			LoggingFolderTextBox.Text = GetLogsPath(true);
+			AddSilcenceBeforeNumericUpDown.Value = SettingsManager.Options.AddSilenceBeforeMessage;
+			AddSilenceAfterNumericUpDown.Value = SettingsManager.Options.AddSilenceAfterMessage;
 			LoadSettings();
 			SilenceBefore();
 			SilenceAfter();
-		}
-
-		public bool IsDesignMode
-		{
-			get { return DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime; }
+			ControlsHelper.AddDataBinding(LogFolderTextBox, s => s.Text, SettingsManager.Options, d => d.NetworkMonitorLogFolder);
+			ControlsHelper.AddDataBinding(LogEnabledCheckBox, s => s.Checked, SettingsManager.Options, d => d.LogEnable);
+			ControlsHelper.AddDataBinding(LogFilterTextTextBox, s => s.Text, SettingsManager.Options, d => d.LogText);
+			if (string.IsNullOrEmpty(SettingsManager.Options.NetworkMonitorLogFolder))
+				SettingsManager.Options.NetworkMonitorLogFolder = Capturing.Monitors.NetworkMonitor.GetLogsPath(true);
 		}
 
 		void LoadSettings()
 		{
 			// Load settings into form.
-			LoggingTextBox.Text = SettingsManager.Options.LogText;
-			SearchPattern = Encoding.ASCII.GetBytes(LoggingTextBox.Text);
-			LoggingCheckBox.Checked = SettingsManager.Options.LogEnable;
+			LogFilterTextTextBox.Text = SettingsManager.Options.LogText;
+			LogEnabledCheckBox.Checked = SettingsManager.Options.LogEnable;
 			// Update writer settings.
 			SaveSettings();
 			// Attach events.
-			LoggingTextBox.TextChanged += LoggingTextBox_TextChanged;
-			LoggingCheckBox.CheckedChanged += LoggingCheckBox_CheckedChanged;
-			LoggingPlaySoundCheckBox.CheckedChanged += LoggingPlaySoundCheckBox_CheckedChanged;
+			LogFilterTextTextBox.TextChanged += LoggingTextBox_TextChanged;
+			LogEnabledCheckBox.CheckedChanged += LoggingCheckBox_CheckedChanged;
+			LogPlaySoundCheckBox.CheckedChanged += LoggingPlaySoundCheckBox_CheckedChanged;
 			EnumeratePlaybackDevices();
 			UpdatePlayBackDevice();
 		}
 
 		void SaveSettings()
 		{
-			SettingsManager.Options.LogEnable = LoggingCheckBox.Checked;
-			LoggingTextBox.Enabled = !LoggingCheckBox.Checked;
-			LoggingPlaySoundCheckBox.Enabled = !LoggingCheckBox.Checked;
-			LoggingFolderTextBox.Enabled = !LoggingCheckBox.Checked;
-			OpenButton.Enabled = !LoggingCheckBox.Checked;
-			FilterTextLabel.Enabled = !LoggingCheckBox.Checked;
-			LogFolderLabel.Enabled = !LoggingCheckBox.Checked;
-			lock (WriterLock)
-			{
-				var en = SettingsManager.Options.LogEnable;
-				if (Writer == null && en && !IsDisposed && !Disposing)
-				{
-					Writer = new ClassLibrary.IO.LogFileWriter();
-					Writer.LogFileName = GetLogsPath(true) + "\\log_";
-					Writer.LogFileAutoFlush = true;
-				}
-				else if (Writer != null && !en)
-				{
-					Writer.Dispose();
-					Writer = null;
-				}
-			}
+			SettingsManager.Options.LogEnable = LogEnabledCheckBox.Checked;
+			LogFilterTextTextBox.Enabled = !LogEnabledCheckBox.Checked;
+			LogPlaySoundCheckBox.Enabled = !LogEnabledCheckBox.Checked;
+			LogFolderTextBox.Enabled = !LogEnabledCheckBox.Checked;
+			OpenButton.Enabled = !LogEnabledCheckBox.Checked;
+			FilterTextLabel.Enabled = !LogEnabledCheckBox.Checked;
+			LogFolderLabel.Enabled = !LogEnabledCheckBox.Checked;
 		}
 
 		#region Tab: General
@@ -128,22 +112,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			SilenceAfter();
 		}
 
-		public string GetLogsPath(bool create)
-		{
-			var path = Path.Combine(MainHelper.AppDataPath, "Logs");
-			if (create && !Directory.Exists(path))
-				Directory.CreateDirectory(path);
-			return path;
-		}
-
 		private void OpenButton_Click(object sender, EventArgs e)
 		{
-			MainHelper.OpenUrl(LoggingFolderTextBox.Text);
+			MainHelper.OpenUrl(LogFolderTextBox.Text);
 		}
-
-		public byte[] SearchPattern;
-		public JocysCom.ClassLibrary.IO.LogFileWriter Writer;
-		public object WriterLock = new object();
 
 		private void HowToButton_Click(object sender, EventArgs e)
 		{
@@ -159,17 +131,14 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		// Save value
 		private void LoggingPlaySoundCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			var value = LoggingPlaySoundCheckBox.Checked;
+			var value = LogPlaySoundCheckBox.Checked;
 			SettingsManager.Options.LogSound = value;
 		}
 
 		private void LoggingTextBox_TextChanged(object sender, EventArgs e)
 		{
-			var text = LoggingTextBox.Text;
+			var text = LogFilterTextTextBox.Text;
 			SettingsManager.Options.LogText = text;
-			SearchPattern = string.IsNullOrEmpty(text)
-				? null
-				: Encoding.ASCII.GetBytes(LoggingTextBox.Text);
 		}
 
 		private void LoggingCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -186,14 +155,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			if (disposing && (components != null))
 			{
 				components.Dispose();
-			}
-			lock (WriterLock)
-			{
-				if (Writer != null)
-				{
-					Writer.Dispose();
-					Writer = null;
-				}
 			}
 			base.Dispose(disposing);
 		}
