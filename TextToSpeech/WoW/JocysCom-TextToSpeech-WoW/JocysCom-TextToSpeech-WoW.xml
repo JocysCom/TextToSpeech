@@ -1528,76 +1528,28 @@
     </Scripts>
   </Frame>
   <Frame name="JocysCom_ClipboardMessageFrame" parent="UIParent" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH">
-    <Size x="1080" y="10" />
+    <Size x="10" y="10" />
     <Anchors>
-      <Anchor point="TOPLEFT" relativePoint="TOPLEFT" />
+      <Anchor point="TOPLEFT" />
     </Anchors>
     <Layers>
       <Layer>
-        <Texture>
-          <Anchors>
-            <Anchor point="LEFT" />
-          </Anchors>
-          <Size x="2" y="2" />
-          <Color a="1" r="1" g="0" b="0" />
-        </Texture>
-        <Texture>
-          <Anchors>
-            <Anchor point="LEFT" x="2" />
-          </Anchors>
-          <Size x="2" y="2" />
-          <Color a="1" r="0" g="1" b="0" />
-        </Texture>
-        <Texture>
-          <Anchors>
-            <Anchor point="LEFT" x="4" />
-          </Anchors>
-          <Size x="2" y="2" />
-          <Color a="1" r="0" g="0" b="1" />
-        </Texture>
-        <Texture>
-          <Anchors>
-            <Anchor point="LEFT" x="6" />
-          </Anchors>
-          <Size x="2" y="2" />
-          <Color a="1" r="1" g="0" b="0" />
-        </Texture>
-        <Texture>
-          <Anchors>
-            <Anchor point="LEFT" x="8" />
-          </Anchors>
-          <Size x="2" y="2" />
-          <Color a="1" r="0" g="1" b="0" />
-        </Texture>
-        <Texture>
-          <Anchors>
-            <Anchor point="LEFT" x="10" />
-          </Anchors>
-          <Size x="2" y="2" />
-          <Color a="1" r="0" g="0" b="1" />
-        </Texture>
-        <Texture>
-          <Anchors>
-            <Anchor point="LEFT" x="12" />
-          </Anchors>
-          <Size x="2" y="2" />
-          <Color a="1" r="1" g="0" b="0" />
-        </Texture>
         <Texture name="JocysCom_ClipboardMessageFrame_Texture">
           <Anchors>
-            <Anchor point="LEFT" x="14" />
+            <Anchor point="TOPLEFT" />
           </Anchors>
-          <Size x="2" y="2" />
-          <Color a="1" r="0" g="0" b="0" />
+          <Size x="5" y="5" />
+          <Color a="1" r="1" g="0" b="0" />
         </Texture>
       </Layer>
     </Layers>
     <Frames>
-      <EditBox name="JocysCom_ClipboardMessageEditBox" letters="10000" multiLine="false">
+      <EditBox name="JocysCom_ClipboardMessageEditBox" letters="0" multiLine="true">
+        <Size x="400" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="18" y="-1" />
-          <Anchor point="BOTTOMRIGHT"  x="0" y="1" />
+          <Anchor point="TOPLEFT" x="5" />
         </Anchors>
+        <TextInsets left="1" right="1" top="1" bottom="1" />
         <Layers>
           <Layer>
             <Texture name="JocysCom_ClipboardMessageFrame_Texture">
@@ -1611,7 +1563,7 @@
           </OnEscapePressed>
         </Scripts>
         <FontString justifyH="LEFT" font="Interface/AddOns/JocysCom-TextToSpeech-WoW/Fonts/Arial.ttf">
-          <FontHeight val="1"/>
+          <FontHeight val="7"/>
         </FontString>
         <!--inherits="GameFontHighlightSmall"-->
       </EditBox>
@@ -1629,5 +1581,37 @@
         JocysCom_PixelPositionInOptions();
       </OnDragStop>
     </Scripts>
+  </Frame>
+
+  <Frame name="JocysCom_ColorMessageFrame" parent="WorldFrame" clampedToScreen="false" movable="false" enableMouse="false" frameStrata="HIGH">
+    <Size x="1" y="1" />
+    <Anchors>
+      <Anchor point="TOPLEFT" />
+    </Anchors>
+    <Frames>
+      <EditBox name="JocysCom_ColorMessageFontString" letters="0" multiLine="true" autoFocus="false" ignoreArrows="true">
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+        </Anchors>
+        <Size x="100" />
+        <TextInsets left="0" right="5" top="0" bottom="5" />
+        <Layers>
+          <Layer>
+            <Texture>
+              <Color a="1" r="0" g="0" b="0" />
+            </Texture>
+          </Layer>
+        </Layers>
+        <Scripts>
+          <OnEscapePressed>
+            self:GetParent():Hide();
+          </OnEscapePressed>
+        </Scripts>
+        <FontString justifyH="LEFT" font="Interface/AddOns/JocysCom-TextToSpeech-WoW/Fonts/JocysCom0AsSquare.ttf" multiLine="true" wordwrap="true" monochrome="false" spacing="0" nonspacewrap="true">
+          <Color a="1" r="1" g="1" b="1" />
+          <FontHeight val="1"/>
+        </FontString>
+      </EditBox>
+    </Frames>
   </Frame>
 </Ui>

@@ -1053,10 +1053,15 @@ print(string.format("%02x", 12))
 print(string.format("%02x", string.byte("b")))
 
 
+print(({GetScreenResolutions()})[GetCurrentResolution()])
 
-JocysCom_ClipboardMessageEditBox:SetText("|cffff0000█|r|cff00ff00█|r███████████████████████████████████████████")
+print(GetScreenWidth())
 
-		--JocysCom_ClipboardMessageEditBox:SetText(messagesTable[1])
+--JocysCom_ColorMessageFrame[]
+
+JocysCom_ColorMessageFontString:SetText("|cffff00000|r|cff00ff000|r|cffffffff000000000000000000000000000000000000000000000000000000|r0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
+
+		JocysCom_ClipboardMessageEditBox:SetText(messagesTable[1])
 		JocysCom_ClipboardMessageEditBox:HighlightText()
 		JocysCom_MessageForEditBox(messagesTable[1])
 		if DebugEnabled then print("|cff77ccffMessage removed [|r" .. #messagesTable .. "]|r " ..  JocysCom_MessageAddColors(messagesTable[1])) end
