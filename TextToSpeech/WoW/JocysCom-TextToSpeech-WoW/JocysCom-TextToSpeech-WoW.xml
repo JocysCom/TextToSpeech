@@ -1,8 +1,5 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
   <!--xmlns:xsd="http://www.w3.org/2001/XMLSchema"-->
-
-
-
   <Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parent="UIParent" movable="true" frameLevel="10" enableMouse="true" hidden="true">
     <Size x="600" y="600" />
     <Anchors>
@@ -19,7 +16,7 @@
     </Layers>
     <Frames>
       <!--Cliboard message pixel for Monitor-->
-      <EditBox name="JocysCom_ClipboardMessagePixelXEditBox" inherits="InputBoxTemplate" numeric="true">
+      <EditBox name="JocysCom_ColorMessagePixelXEditBox" inherits="InputBoxTemplate" numeric="true">
         <Size x="40" y="20" />
         <Anchors>
           <Anchor point="TOPLEFT" x="15" y="-75" />
@@ -35,14 +32,14 @@
         </Scripts>
         <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
       </EditBox>
-      <EditBox name="JocysCom_ClipboardMessagePixelYEditBox" inherits="InputBoxTemplate" numeric="true">
+      <EditBox name="JocysCom_ColorMessagePixelYEditBox" inherits="InputBoxTemplate" numeric="true">
         <Size x="40" y="20" />
         <Anchors>
           <Anchor point="TOPLEFT" x="65" y="-75" />
         </Anchors>
         <Layers>
           <Layer>
-            <FontString name="JocysCom_ClipboardMessagePixelYFontString" inherits="GameFontHighlightSmall">
+            <FontString name="JocysCom_ColorMessagePixelYFontString" inherits="GameFontHighlightSmall">
               <Anchors>
                 <Anchor point="LEFT" relativePoint="RIGHT" x="2" />
               </Anchors>
@@ -60,6 +57,28 @@
         </Scripts>
         <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
       </EditBox>
+      <!--DropDownMenu-->
+
+      <!--<Frame name="JocysCom_MenuFrame" />-->
+
+      <!--<Frame parent="UIParent">
+        <Frames>
+          <Button name="MyDropDownMenuButton">
+            <Scripts>
+              <OnClick>
+                MyDropDownMenuButton_OnClick();
+              </OnClick>
+            </Scripts>
+          </Button>
+        </Frames>
+      </Frame>-->
+      <Frame name="MyDropDownMenu" inherits="UIDropDownMenuTemplate" id="1">
+        <Scripts>
+          <OnLoad>
+            UIDropDownMenu_Initialize(self, MyDropDownMenu_OnLoad, "MENU");
+          </OnLoad>
+        </Scripts>
+      </Frame>
       <!--CheckButtons-->
       <CheckButton name="JocysCom_NetworkMessageCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
@@ -72,14 +91,14 @@
           </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="JocysCom_ClipboardMessageCheckButton" inherits="UICheckButtonTemplate">
+      <CheckButton name="JocysCom_ColorMessageCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
           <Anchor point="TOPLEFT" x="7" y="-48" />
         </Anchors>
         <Scripts>
           <OnClick>
-            JocysCom_ClipboardMessageCheckButton_OnClick();
+            JocysCom_ColorMessageCheckButton_OnClick();
           </OnClick>
         </Scripts>
       </CheckButton>
@@ -105,7 +124,7 @@
           </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="JocysCom_SaveCheckButton" inherits="UICheckButtonTemplate">
+      <CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
           <Anchor point="TOPLEFT" x="7" y="-139" />
@@ -116,21 +135,10 @@
           </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate">
-        <Size x="26" y="27" />
-        <Anchors>
-          <Anchor point="TOPLEFT" x="7" y="-161" />
-        </Anchors>
-        <Scripts>
-          <OnClick>
-            JocysCom_PlaySoundAndSaveSettings();
-          </OnClick>
-        </Scripts>
-      </CheckButton>
       <EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate">
         <Size x="100" y="20" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="15" y="-188" />
+          <Anchor point="TOPLEFT" x="15" y="-166" />
         </Anchors>
         <Layers>
           <Layer>
@@ -359,7 +367,7 @@
         </Texture>
       </Layer>
       <Layer>
-        <FontString name="JocysCom_ClipboardMessagesCountFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
+        <FontString name="JocysCom_ColorMessagesCountFontString" inherits="GameFontHighlightSmall" justifyH="LEFT">
           <Anchors>
             <Anchor point="LEFT" relativePoint="RIGHT" x="0" y="-11" />
           </Anchors>
@@ -1529,7 +1537,8 @@
       </OnLeave>
     </Scripts>
   </Frame>
-  <Frame name="JocysCom_ClipboardMessageFrame" parent="UIParent" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH">
+
+  <Frame name="JocysCom_ClipboardMessageFrame" parent="UIParent" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH" hidden="true">
     <Size x="8" y="8" />
     <Anchors>
       <Anchor point="TOPLEFT" />
@@ -1578,19 +1587,18 @@
       </OnDragStart>
       <OnDragStop>
         self:StopMovingOrSizing();
-        JocysCom_PixelPositionInOptions();
       </OnDragStop>
     </Scripts>
   </Frame>
 
-  <Frame name="JocysCom_ColorMessageFrame" parent="WorldFrame" ignoreParentScale="true" >
+  <Frame name="JocysCom_ColorMessageFrame" parent="WorldFrame" ignoreParentScale="true" movable="true" frameStrata="HIGH">
     <Size x="1" y="1" />
     <Anchors>
       <Anchor point="TOPLEFT" />
       <Anchor point="TOPRIGHT" />
     </Anchors>
     <Frames>
-      <EditBox name="JocysCom_ColorMessageFontString" parent="WorldFrame" letters="0" multiLine="true" autoFocus="false" ignoreArrows="true" ignoreParentScale="true" movable="false" enableMouse="false" frameStrata="HIGH" clampedToScreen="false">
+      <EditBox name="JocysCom_ColorMessageFontString" letters="0" multiLine="true" autoFocus="false" ignoreArrows="true" ignoreParentScale="true" movable="false" enableMouse="false" frameStrata="HIGH" clampedToScreen="false">
         <Anchors>
           <Anchor point="TOPLEFT" />
           <Anchor point="TOPRIGHT" />

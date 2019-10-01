@@ -12,8 +12,8 @@
 ## SavedVariablesPerCharacter: JocysCom_DebugEnabled
 
 # Options:
-## SavedVariablesPerCharacter: JocysCom_ReplaceNameEB, JocysCom_ClipboardMessagePixelXEB, JocysCom_ClipboardMessagePixelYEB
-## SavedVariablesPerCharacter: JocysCom_NetworkMessageCB, JocysCom_ClipboardMessageCB, JocysCom_LockCB, JocysCom_MenuCB, JocysCom_FilterCB, JocysCom_SaveCB
+## SavedVariablesPerCharacter: JocysCom_ReplaceNameEB, JocysCom_ColorMessagePixelXEB, JocysCom_ColorMessagePixelYEB
+## SavedVariablesPerCharacter: JocysCom_NetworkMessageCB, JocysCom_ColorMessageCB, JocysCom_LockCB, JocysCom_MenuCB, JocysCom_FilterCB
 
 # Mini Frame:
 ## SavedVariablesPerCharacter: JocysCom_DndCB, JocysCom_ObjectivesCB, JocysCom_StartOnOpenCB, JocysCom_StopOnCloseCB
