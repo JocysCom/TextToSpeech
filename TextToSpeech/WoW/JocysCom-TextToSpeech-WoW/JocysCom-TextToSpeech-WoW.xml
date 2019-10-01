@@ -1539,7 +1539,7 @@
         <Texture>
           <Anchors>
             <Anchor point="TOPLEFT" />
-            <Anchor point="BOTTOMrIGHT" />
+            <Anchor point="BOTTOMRIGHT" />
           </Anchors>
           <Color a="1" r="1" g="0" b="0" />
         </Texture>
