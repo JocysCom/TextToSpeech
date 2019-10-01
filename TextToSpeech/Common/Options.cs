@@ -85,6 +85,22 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		#endregion
 
+		#region Display Monitor
+
+		[DefaultValue(false)]
+		public bool DisplayMonitorEnabled { get { return _DisplayMonitorEnabled; } set { _DisplayMonitorEnabled = value; OnPropertyChanged(); } }
+		bool _DisplayMonitorEnabled;
+
+		[DefaultValue(200)]
+		public int DisplayMonitorInterval { get { return _DisplayMonitorInterval; } set { _DisplayMonitorInterval = value; OnPropertyChanged(); } }
+		int _DisplayMonitorInterval;
+
+		[DefaultValue("#200000,#002000,#000020,#200000,#002000,#000020")]
+		public string DisplayMonitorPrefix { get { return _DisplayMonitorPrefix; } set { _DisplayMonitorPrefix = value; OnPropertyChanged(); } }
+		string _DisplayMonitorPrefix = "#200000,#002000,#000020,#200000,#002000,#000020";
+
+		#endregion
+
 		// Non default pitch adds noise.
 		[DefaultValue(0)]
 		public int PitchMin { get; set; }

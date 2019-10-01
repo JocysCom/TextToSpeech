@@ -153,7 +153,8 @@
     <Compile Include="Capturing\CapturingType.cs" />
     <Compile Include="Capturing\IncommingEventArgs.cs" />
     <Compile Include="Capturing\Monitors\ClipboardMonitor.cs" />
-    <Compile Include="Capturing\DisPcapDevice.cs" />
+    <Compile Include="Capturing\Monitors\DisplayMonitor.Colors.cs" />
+    <Compile Include="Capturing\Monitors\DisplayMonitor.cs" />
     <Compile Include="Capturing\Monitors\IMonitor.cs" />
     <Compile Include="Capturing\message.cs" />
     <Compile Include="Capturing\Monitors\MonitorBase.cs" />

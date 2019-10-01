@@ -22,40 +22,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			OptionsTabControl.TabPages.Remove(GoogleCloudTabPage);
 			AddSilcenceBeforeNumericUpDown.Value = SettingsManager.Options.AddSilenceBeforeMessage;
 			AddSilenceAfterNumericUpDown.Value = SettingsManager.Options.AddSilenceAfterMessage;
-			LoadSettings();
-			SilenceBefore();
-			SilenceAfter();
-			ControlsHelper.AddDataBinding(LogFolderTextBox, s => s.Text, SettingsManager.Options, d => d.NetworkMonitorLogFolder);
-			ControlsHelper.AddDataBinding(LogEnabledCheckBox, s => s.Checked, SettingsManager.Options, d => d.LogEnable);
-			ControlsHelper.AddDataBinding(LogFilterTextTextBox, s => s.Text, SettingsManager.Options, d => d.LogText);
-			if (string.IsNullOrEmpty(SettingsManager.Options.NetworkMonitorLogFolder))
-				SettingsManager.Options.NetworkMonitorLogFolder = Capturing.Monitors.NetworkMonitor.GetLogsPath(true);
-		}
-
-		void LoadSettings()
-		{
-			// Load settings into form.
-			LogFilterTextTextBox.Text = SettingsManager.Options.LogText;
-			LogEnabledCheckBox.Checked = SettingsManager.Options.LogEnable;
-			// Update writer settings.
-			SaveSettings();
-			// Attach events.
-			LogFilterTextTextBox.TextChanged += LoggingTextBox_TextChanged;
-			LogEnabledCheckBox.CheckedChanged += LoggingCheckBox_CheckedChanged;
-			LogPlaySoundCheckBox.CheckedChanged += LoggingPlaySoundCheckBox_CheckedChanged;
 			EnumeratePlaybackDevices();
 			UpdatePlayBackDevice();
-		}
-
-		void SaveSettings()
-		{
-			SettingsManager.Options.LogEnable = LogEnabledCheckBox.Checked;
-			LogFilterTextTextBox.Enabled = !LogEnabledCheckBox.Checked;
-			LogPlaySoundCheckBox.Enabled = !LogEnabledCheckBox.Checked;
-			LogFolderTextBox.Enabled = !LogEnabledCheckBox.Checked;
-			OpenButton.Enabled = !LogEnabledCheckBox.Checked;
-			FilterTextLabel.Enabled = !LogEnabledCheckBox.Checked;
-			LogFolderLabel.Enabled = !LogEnabledCheckBox.Checked;
+			SilenceBefore();
+			SilenceAfter();
 		}
 
 		#region Tab: General
@@ -112,39 +82,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			SilenceAfter();
 		}
 
-		private void OpenButton_Click(object sender, EventArgs e)
-		{
-			MainHelper.OpenUrl(LogFolderTextBox.Text);
-		}
-
-		private void HowToButton_Click(object sender, EventArgs e)
-		{
-			var message = "";
-			message += "1. Enable logging.\r\n";
-			message += "2.Enter and send specified text message(for example: me66age) through game or program chat.\r\n";
-			message += "3.Information about found packets with specified text(for example: me66age) will be logged to TXT file.\r\n";
-			MessageBox.Show(message, "How To...");
-		}
-
 		#endregion
-
-		// Save value
-		private void LoggingPlaySoundCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			var value = LogPlaySoundCheckBox.Checked;
-			SettingsManager.Options.LogSound = value;
-		}
-
-		private void LoggingTextBox_TextChanged(object sender, EventArgs e)
-		{
-			var text = LogFilterTextTextBox.Text;
-			SettingsManager.Options.LogText = text;
-		}
-
-		private void LoggingCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			SaveSettings();
-		}
 
 		/// <summary> 
 		/// Clean up any resources being used.

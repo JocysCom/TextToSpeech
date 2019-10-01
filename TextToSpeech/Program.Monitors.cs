@@ -1,4 +1,5 @@
 ﻿using JocysCom.ClassLibrary.Controls;
+using JocysCom.ClassLibrary.Drawing;
 using JocysCom.TextToSpeech.Monitor.Capturing.Monitors;
 using JocysCom.TextToSpeech.Monitor.PlugIns;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		public static UdpMonitor _UdpMonitor;
 		public static ClipboardMonitor _ClipboardMonitor;
 		public static NetworkMonitor _NetworkMonitor;
+		public static DisplayMonitor _DisplayMonitor;
 
 		public static List<VoiceListItem> PlugIns = new List<VoiceListItem>() { new WowListItem() };
 
@@ -45,6 +47,13 @@ namespace JocysCom.TextToSpeech.Monitor
 			_NetworkMonitor.MessageReceived += _Monitor_MessageReceived;
 			if (SettingsManager.Options.NetworkMonitorEnabled)
 				_NetworkMonitor.Start();
+			// Initialize Display Monitor
+			_DisplayMonitor = new DisplayMonitor();
+			var colors = DisplayMonitor.ColorsFromRgbs(SettingsManager.Options.DisplayMonitorPrefix);
+			_DisplayMonitor.ColorPrefixBytes = Basic.ColorsToBytes(colors, false);
+			_DisplayMonitor.MessageReceived += _Monitor_MessageReceived;
+			if (SettingsManager.Options.DisplayMonitorEnabled)
+				_DisplayMonitor.Start();
 			// Start monitoring property changes.
 			SettingsManager.Options.PropertyChanged += Options_PropertyChanged;
 
@@ -55,6 +64,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			_UdpMonitor.Dispose();
 			_ClipboardMonitor.Dispose();
 			_NetworkMonitor.Dispose();
+			_DisplayMonitor.Dispose();
 		}
 
 		private static void _Monitor_MessageReceived(object sender, ClassLibrary.EventArgs<string> e)
@@ -100,6 +110,21 @@ namespace JocysCom.TextToSpeech.Monitor
 					_NetworkMonitor.Start();
 				else
 					_NetworkMonitor.Stop();
+			}
+			// Display Monitor Properties.
+			if (e.PropertyName == nameof(SettingsManager.Options.DisplayMonitorInterval))
+				_DisplayMonitor.ScanInterval = SettingsManager.Options.DisplayMonitorInterval;
+			if (e.PropertyName == nameof(SettingsManager.Options.DisplayMonitorPrefix))
+			{
+				var colors = DisplayMonitor.ColorsFromRgbs(SettingsManager.Options.DisplayMonitorPrefix);
+				_DisplayMonitor.ColorPrefixBytes = Basic.ColorsToBytes(colors, false);
+			}
+			if (e.PropertyName == nameof(SettingsManager.Options.DisplayMonitorEnabled) || enabledCanged)
+			{
+				if (SettingsManager.Options.DisplayMonitorEnabled && en)
+					_DisplayMonitor.Start();
+				else
+					_DisplayMonitor.Stop();
 			}
 		}
 

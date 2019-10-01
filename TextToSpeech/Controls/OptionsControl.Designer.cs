@@ -26,15 +26,6 @@
 			this.AddSilcenceBeforeNumericUpDown = new System.Windows.Forms.NumericUpDown();
 			this.AddSilenceBeforeLabel = new System.Windows.Forms.Label();
 			this.SilenceBeforeTagLabel = new System.Windows.Forms.Label();
-			this.LogGroupBox = new System.Windows.Forms.GroupBox();
-			this.LogPlaySoundCheckBox = new System.Windows.Forms.CheckBox();
-			this.LogFolderLabel = new System.Windows.Forms.Label();
-			this.FilterTextLabel = new System.Windows.Forms.Label();
-			this.LogFolderTextBox = new System.Windows.Forms.TextBox();
-			this.HowToButton = new System.Windows.Forms.Button();
-			this.OpenButton = new System.Windows.Forms.Button();
-			this.LogFilterTextTextBox = new System.Windows.Forms.TextBox();
-			this.LogEnabledCheckBox = new System.Windows.Forms.CheckBox();
 			this.OptionsTabControl = new System.Windows.Forms.TabControl();
 			this.GeneralTabPage = new System.Windows.Forms.TabPage();
 			this.CacheTabPage = new System.Windows.Forms.TabPage();
@@ -54,7 +45,6 @@
 			this.AddSilenceGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).BeginInit();
-			this.LogGroupBox.SuspendLayout();
 			this.OptionsTabControl.SuspendLayout();
 			this.GeneralTabPage.SuspendLayout();
 			this.CacheTabPage.SuspendLayout();
@@ -206,105 +196,6 @@
 			this.SilenceBeforeTagLabel.TabIndex = 7;
 			this.SilenceBeforeTagLabel.Text = "<silence msec=\"3000\"/>";
 			// 
-			// LogGroupBox
-			// 
-			this.LogGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.LogGroupBox.Controls.Add(this.LogPlaySoundCheckBox);
-			this.LogGroupBox.Controls.Add(this.LogFolderLabel);
-			this.LogGroupBox.Controls.Add(this.FilterTextLabel);
-			this.LogGroupBox.Controls.Add(this.LogFolderTextBox);
-			this.LogGroupBox.Controls.Add(this.HowToButton);
-			this.LogGroupBox.Controls.Add(this.OpenButton);
-			this.LogGroupBox.Controls.Add(this.LogFilterTextTextBox);
-			this.LogGroupBox.Controls.Add(this.LogEnabledCheckBox);
-			this.LogGroupBox.Location = new System.Drawing.Point(6, 115);
-			this.LogGroupBox.Name = "LogGroupBox";
-			this.LogGroupBox.Size = new System.Drawing.Size(734, 128);
-			this.LogGroupBox.TabIndex = 9;
-			this.LogGroupBox.TabStop = false;
-			this.LogGroupBox.Text = "Log Network Packets Test ( Plugin Helper )";
-			// 
-			// LogPlaySoundCheckBox
-			// 
-			this.LogPlaySoundCheckBox.AutoSize = true;
-			this.LogPlaySoundCheckBox.Checked = true;
-			this.LogPlaySoundCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.LogPlaySoundCheckBox.Location = new System.Drawing.Point(72, 22);
-			this.LogPlaySoundCheckBox.Name = "LogPlaySoundCheckBox";
-			this.LogPlaySoundCheckBox.Size = new System.Drawing.Size(328, 17);
-			this.LogPlaySoundCheckBox.TabIndex = 11;
-			this.LogPlaySoundCheckBox.Text = "Play “Radio2” sound, when filter text is found in network packet.";
-			this.LogPlaySoundCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// LogFolderLabel
-			// 
-			this.LogFolderLabel.AutoSize = true;
-			this.LogFolderLabel.Location = new System.Drawing.Point(84, 42);
-			this.LogFolderLabel.Name = "LogFolderLabel";
-			this.LogFolderLabel.Size = new System.Drawing.Size(60, 13);
-			this.LogFolderLabel.TabIndex = 10;
-			this.LogFolderLabel.Text = "Log Folder:";
-			// 
-			// FilterTextLabel
-			// 
-			this.FilterTextLabel.AutoSize = true;
-			this.FilterTextLabel.Location = new System.Drawing.Point(6, 42);
-			this.FilterTextLabel.Name = "FilterTextLabel";
-			this.FilterTextLabel.Size = new System.Drawing.Size(56, 13);
-			this.FilterTextLabel.TabIndex = 10;
-			this.FilterTextLabel.Text = "Filter Text:";
-			// 
-			// LogFolderTextBox
-			// 
-			this.LogFolderTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.LogFolderTextBox.Location = new System.Drawing.Point(91, 58);
-			this.LogFolderTextBox.Name = "LogFolderTextBox";
-			this.LogFolderTextBox.ReadOnly = true;
-			this.LogFolderTextBox.Size = new System.Drawing.Size(556, 20);
-			this.LogFolderTextBox.TabIndex = 7;
-			// 
-			// HowToButton
-			// 
-			this.HowToButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.HowToButton.Location = new System.Drawing.Point(653, 16);
-			this.HowToButton.Name = "HowToButton";
-			this.HowToButton.Size = new System.Drawing.Size(75, 23);
-			this.HowToButton.TabIndex = 5;
-			this.HowToButton.Text = "How To...";
-			this.HowToButton.UseVisualStyleBackColor = true;
-			this.HowToButton.Click += new System.EventHandler(this.HowToButton_Click);
-			// 
-			// OpenButton
-			// 
-			this.OpenButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.OpenButton.Location = new System.Drawing.Point(653, 56);
-			this.OpenButton.Name = "OpenButton";
-			this.OpenButton.Size = new System.Drawing.Size(75, 23);
-			this.OpenButton.TabIndex = 5;
-			this.OpenButton.Text = "Open...";
-			this.OpenButton.UseVisualStyleBackColor = true;
-			this.OpenButton.Click += new System.EventHandler(this.OpenButton_Click);
-			// 
-			// LogFilterTextTextBox
-			// 
-			this.LogFilterTextTextBox.Location = new System.Drawing.Point(6, 58);
-			this.LogFilterTextTextBox.Name = "LogFilterTextTextBox";
-			this.LogFilterTextTextBox.Size = new System.Drawing.Size(79, 20);
-			this.LogFilterTextTextBox.TabIndex = 1;
-			this.LogFilterTextTextBox.Text = "me66age";
-			// 
-			// LogEnabledCheckBox
-			// 
-			this.LogEnabledCheckBox.AutoSize = true;
-			this.LogEnabledCheckBox.Location = new System.Drawing.Point(9, 22);
-			this.LogEnabledCheckBox.Name = "LogEnabledCheckBox";
-			this.LogEnabledCheckBox.Size = new System.Drawing.Size(59, 17);
-			this.LogEnabledCheckBox.TabIndex = 0;
-			this.LogEnabledCheckBox.Text = "Enable";
-			this.LogEnabledCheckBox.UseVisualStyleBackColor = true;
-			// 
 			// OptionsTabControl
 			// 
 			this.OptionsTabControl.Controls.Add(this.GeneralTabPage);
@@ -326,7 +217,6 @@
 			// 
 			this.GeneralTabPage.BackColor = System.Drawing.SystemColors.Control;
 			this.GeneralTabPage.Controls.Add(this.AddSilenceGroupBox);
-			this.GeneralTabPage.Controls.Add(this.LogGroupBox);
 			this.GeneralTabPage.Location = new System.Drawing.Point(4, 22);
 			this.GeneralTabPage.Name = "GeneralTabPage";
 			this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -473,8 +363,6 @@
 			this.AddSilenceGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).EndInit();
-			this.LogGroupBox.ResumeLayout(false);
-			this.LogGroupBox.PerformLayout();
 			this.OptionsTabControl.ResumeLayout(false);
 			this.GeneralTabPage.ResumeLayout(false);
 			this.CacheTabPage.ResumeLayout(false);
@@ -497,15 +385,6 @@
 		private System.Windows.Forms.Label AddSilenceBeforeLabel;
         private System.Windows.Forms.Label SilenceBeforeTagLabel;
         private System.Windows.Forms.Label SilenceAfterTagLabel;
-        private System.Windows.Forms.GroupBox LogGroupBox;
-        private System.Windows.Forms.TextBox LogFilterTextTextBox;
-        private System.Windows.Forms.CheckBox LogEnabledCheckBox;
-        private System.Windows.Forms.TextBox LogFolderTextBox;
-        private System.Windows.Forms.Label LogFolderLabel;
-        private System.Windows.Forms.Label FilterTextLabel;
-        private System.Windows.Forms.Button OpenButton;
-        private System.Windows.Forms.CheckBox LogPlaySoundCheckBox;
-		private System.Windows.Forms.Button HowToButton;
 		private System.Windows.Forms.ComboBox PlaybackDeviceComboBox;
 		private System.Windows.Forms.Button RefreshPlaybackDevices;
 		private System.Windows.Forms.Label label1;

@@ -13,6 +13,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			InitializeComponent();
 			if (ControlsHelper.IsDesignMode(this))
 				return;
+			InitializeLog();
 			ControlsHelper.AddDataBinding(this, c => c._CapturingType, SettingsManager.Options, d => d.NetworkMonitorCapturingType);
 			UpdateWinCapState();
 			WinPcapRadioButton.CheckedChanged += WinPcapRadioButton_CheckedChanged;
@@ -61,6 +62,30 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				WinPcapRadioButton.Enabled = false;
 			}
 		}
+
+		#region Log 
+
+		void InitializeLog()
+		{
+			ControlsHelper.AddDataBinding(LogFolderTextBox, s => s.Text, SettingsManager.Options, d => d.NetworkMonitorLogFolder);
+			ControlsHelper.AddDataBinding(LogEnabledCheckBox, s => s.Checked, SettingsManager.Options, d => d.LogEnable);
+			ControlsHelper.AddDataBinding(LogFilterTextTextBox, s => s.Text, SettingsManager.Options, d => d.LogText);
+			ControlsHelper.AddDataBinding(LogPlaySoundCheckBox, s => s.Text, SettingsManager.Options, d => d.LogSound);
+			if (string.IsNullOrEmpty(SettingsManager.Options.NetworkMonitorLogFolder))
+				SettingsManager.Options.NetworkMonitorLogFolder = Capturing.Monitors.NetworkMonitor.GetLogsPath(true);
+		}
+
+		private void OpenButton_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void HowToButton_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		#endregion
 
 		#region INotifyPropertyChanged
 
