@@ -24,7 +24,6 @@ local messageStop = "<message command=\"stop\" />"
 local macroName = "NPCSaveTTSMacro"
 local macroIcon = "INV_Misc_GroupNeedMore"
 local macroMessage = "/targetfriend"
-local clipboardMessageColor = 0
 local pixelX = 0
 local pixelY = 0
 local chatMessageLimit = 240
@@ -114,8 +113,10 @@ function JocysCom_AddNPCNameToTable(name)
 	if #NPCNamesTable > 0 then
 		for i, n in pairs(NPCNamesTable) do
 			if string.find(n, name) then
-				print("|cff40fb40------------------------------------------------------------------------------------|r")
-				if DebugEnabled then print("|cff40fb40NPCSaveTTSMacro name (name exists): |r" .. name) end
+				if DebugEnabled then
+					print("|cff40fb40------------------------------------------------------------------------------------|r")
+					print("|cff40fb40NPCSaveTTSMacro name (name exists): |r" .. name)
+				end
 				return
 			end
 		end
@@ -734,13 +735,11 @@ local function round(num, numDecimalPlaces)
 end
 
 function JocysCom_PixelPositionInOptions()
-point, relativeTo, relativePoint, xOfs, yOfs = JocysCom_ClipboardMessageFrame:GetPoint(1)
-
-print("Position: " .. round(xOfs, 0) .. " : " .. round(yOfs, 0) .. " : " .. JocysCom_ClipboardMessageFrame:GetScale()) --string.format("%.0f",yOfs)
-
---JocysCom_ClipboardMessagePixelXEditBox:SetText(tostring(xOfs))
---JocysCom_ClipboardMessagePixelYEditBox:SetText(tostring(yOfs))
---JocysCom_SaveTocFileSettings()
+	point, relativeTo, relativePoint, xOfs, yOfs = JocysCom_ClipboardMessageFrame:GetPoint(1)
+	if DebugEnabled then print("Position: " .. round(xOfs, 0) .. " : " .. round(yOfs, 0) .. " : " .. JocysCom_ClipboardMessageFrame:GetScale()) end --string.format("%.0f",yOfs)
+	--JocysCom_ClipboardMessagePixelXEditBox:SetText(tostring(xOfs))
+	--JocysCom_ClipboardMessagePixelYEditBox:SetText(tostring(yOfs))
+	--JocysCom_SaveTocFileSettings()
 end
 
 -- Enable disable check-boxes (speech).
@@ -1041,43 +1040,50 @@ end
 function JocysCom_SendMessagesFromTable()
 	JocysCom_ButtonFlashing()
 	if JocysCom_ClipboardMessageEditBox:HasFocus() then
-		-- Set message.
-
---local line = f:CreateTexture()
---line:SetTexture(.6 ,.6, .6, .2)
---line:SetSize(1, 1)
---line:SetPoint("LEFT", f)
---tex:SetColorTexture(1, 1, 1, 0.5)
-
-print(string.format("%02x", 12))
-print(string.format("%02x", string.byte("b")))
-
-
-print(({GetScreenResolutions()})[GetCurrentResolution()])
-
-print(GetScreenWidth())
-
---JocysCom_ColorMessageFrame[]
-
-JocysCom_ColorMessageFontString:SetText("|cffff00000|r|cff00ff000|r|cffffffff000000000000000000000000000000000000000000000000000000|r0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
-
+		-- Convert message characters to HEX color.
+		local message = messagesTable[1]:gsub(".", function(c) return string.format("%02x", string.byte(c)) end)
+		-- Lenght before inserting "-" after wach 6 characters.
+		local dash0 = #message
+		-- Insert "-" after each 6 characters.
+		message = message:gsub("......", '%1-')
+		-- How many "-" added.
+		local dash1 = #message - dash0
+		-- Numbers left after last "-".
+		local numbersLeft = dash0 - (dash1 * 6)
+		-- Need "0" to add.
+		local needToAdd = 6 - numbersLeft
+		if DebugEnabled then
+			print("|cff77ccff------------------------------------------------------------------------------------|r")
+			print(#message .. " - " .. dash0 .. " = " ..  dash1 .. " / " .. dash0 .. " - (" .. dash1 .. " * 6) / "  .. dash0 .. " - " .. dash1 * 6 .. " = 6 - " .. numbersLeft .. " = " .. 6 - numbersLeft .. " + 1")
+		end
+		message = "|cff" .. message:gsub("-", "0|r|cff")
+		if needToAdd == 2 then
+			message = message .. "000|r"
+		elseif needToAdd == 4 then
+			message = message .. "00000|r"
+		else
+			message = message:gsub("|cff$", "")
+		end
+		-- Send message.
+		if DebugEnabled then
+			print("Send pixels: " .. message)
+			print("|cff77ccff------------------------------------------------------------------------------------|r")
+		end
+		-- Pixels.
+		JocysCom_ColorMessageFontString:SetText(message)
 		JocysCom_ClipboardMessageEditBox:SetText(messagesTable[1])
+		-- Clipboard
 		JocysCom_ClipboardMessageEditBox:HighlightText()
+		-- Options.
 		JocysCom_MessageForEditBox(messagesTable[1])
 		if DebugEnabled then print("|cff77ccffMessage removed [|r" .. #messagesTable .. "]|r " ..  JocysCom_MessageAddColors(messagesTable[1])) end
 		-- Set Clipboard pixel position.
 		pixelX = JocysCom_ClipboardMessagePixelXEditBox:GetNumber()
 		pixelY = JocysCom_ClipboardMessagePixelYEditBox:GetNumber()
-		if pixelY > 0 then
-			pixelY = pixelY * -1
-		end
+		if pixelY > 0 then pixelY = pixelY * -1 end
 		JocysCom_ClipboardMessageFrame:ClearAllPoints()
 		JocysCom_ClipboardMessageFrame:SetPoint("TOPLEFT", pixelX, pixelY)
 		JocysCom_ClipboardMessageFrame:Show()
-		-- Set pixel color.
-		clipboardMessageColor = clipboardMessageColor + 0.1
-		if clipboardMessageColor > 1 then clipboardMessageColor = 0 end
-		JocysCom_ClipboardMessageFrame_Texture:SetColorTexture(clipboardMessageColor, clipboardMessageColor, clipboardMessageColor, 1.0)
 		-- Remove sent message after * second.
 		--<PREFIX>_wait(delay, func [, param [,param [,...]]])
 		JocysCom_wait(0.2, JocysCom_RemoveMessageFromTable)

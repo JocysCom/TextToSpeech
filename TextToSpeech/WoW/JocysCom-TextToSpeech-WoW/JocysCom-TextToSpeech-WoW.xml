@@ -1,4 +1,8 @@
-﻿<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd" xmlns="http://www.blizzard.com/wow/ui/">
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+  <!--xmlns:xsd="http://www.w3.org/2001/XMLSchema"-->
+
+
+
   <Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parent="UIParent" movable="true" frameLevel="10" enableMouse="true" hidden="true">
     <Size x="600" y="600" />
     <Anchors>
@@ -1519,26 +1523,24 @@
       </OnDragStop>
       <OnEnter>
         JocysCom_OptionsButtonFrame:Show();
-        <!--JocysCom_SaveButton:Show();-->
       </OnEnter>
       <OnLeave>
         JocysCom_OptionsButtonFrame:Hide();
-        <!--JocysCom_SaveButton:Hide();-->
       </OnLeave>
     </Scripts>
   </Frame>
   <Frame name="JocysCom_ClipboardMessageFrame" parent="UIParent" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH">
-    <Size x="10" y="10" />
+    <Size x="8" y="8" />
     <Anchors>
       <Anchor point="TOPLEFT" />
     </Anchors>
     <Layers>
       <Layer>
-        <Texture name="JocysCom_ClipboardMessageFrame_Texture">
+        <Texture>
           <Anchors>
             <Anchor point="TOPLEFT" />
+            <Anchor point="BOTTOMrIGHT" />
           </Anchors>
-          <Size x="5" y="5" />
           <Color a="1" r="1" g="0" b="0" />
         </Texture>
       </Layer>
@@ -1547,13 +1549,12 @@
       <EditBox name="JocysCom_ClipboardMessageEditBox" letters="0" multiLine="true">
         <Size x="400" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="5" />
+          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" />
         </Anchors>
-        <TextInsets left="1" right="1" top="1" bottom="1" />
         <Layers>
           <Layer>
-            <Texture name="JocysCom_ClipboardMessageFrame_Texture">
-              <Color a="0.5" r="0.0" g="0" b="0" />
+            <Texture>
+              <Color a="0.5" r="0" g="0" b="0" />
             </Texture>
           </Layer>
         </Layers>
@@ -1562,16 +1563,15 @@
             self:GetParent():Hide();
           </OnEscapePressed>
         </Scripts>
+        <TextInsets left="1" right="1" top="1" bottom="1" />
         <FontString justifyH="LEFT" font="Interface/AddOns/JocysCom-TextToSpeech-WoW/Fonts/Arial.ttf">
           <FontHeight val="7"/>
         </FontString>
-        <!--inherits="GameFontHighlightSmall"-->
       </EditBox>
     </Frames>
     <Scripts>
       <OnLoad>
         self:RegisterForDrag("LeftButton");
-        <!--self:SetBackdrop=""( { edgeFile = "Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-MiniMenuFrame-Border", edgeSize = "23" });-->
       </OnLoad>
       <OnDragStart>
         self:StartMoving();
@@ -1583,18 +1583,18 @@
     </Scripts>
   </Frame>
 
-  <Frame name="JocysCom_ColorMessageFrame" parent="WorldFrame" clampedToScreen="false" movable="false" enableMouse="false" frameStrata="HIGH">
+  <Frame name="JocysCom_ColorMessageFrame" parent="WorldFrame" ignoreParentScale="true" >
     <Size x="1" y="1" />
     <Anchors>
       <Anchor point="TOPLEFT" />
+      <Anchor point="TOPRIGHT" />
     </Anchors>
     <Frames>
-      <EditBox name="JocysCom_ColorMessageFontString" letters="0" multiLine="true" autoFocus="false" ignoreArrows="true">
+      <EditBox name="JocysCom_ColorMessageFontString" parent="WorldFrame" letters="0" multiLine="true" autoFocus="false" ignoreArrows="true" ignoreParentScale="true" movable="false" enableMouse="false" frameStrata="HIGH" clampedToScreen="false">
         <Anchors>
           <Anchor point="TOPLEFT" />
+          <Anchor point="TOPRIGHT" />
         </Anchors>
-        <Size x="100" />
-        <TextInsets left="0" right="5" top="0" bottom="5" />
         <Layers>
           <Layer>
             <Texture>
@@ -1602,16 +1602,14 @@
             </Texture>
           </Layer>
         </Layers>
-        <Scripts>
-          <OnEscapePressed>
-            self:GetParent():Hide();
-          </OnEscapePressed>
-        </Scripts>
-        <FontString justifyH="LEFT" font="Interface/AddOns/JocysCom-TextToSpeech-WoW/Fonts/JocysCom0AsSquare.ttf" multiLine="true" wordwrap="true" monochrome="false" spacing="0" nonspacewrap="true">
+        <TextInsets left="0" right="0" top="0" bottom="0" />
+        <FontString justifyH="LEFT" font="Interface/AddOns/JocysCom-TextToSpeech-WoW/Fonts/JocysCom0AsPixel.ttf" wordwrap="true" spacing="0" nonspacewrap="true" ignoreParentScale="true">
           <Color a="1" r="1" g="1" b="1" />
-          <FontHeight val="1"/>
+          <FontHeight val="1" />
         </FontString>
       </EditBox>
     </Frames>
   </Frame>
+
+
 </Ui>
