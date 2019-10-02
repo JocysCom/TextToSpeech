@@ -197,36 +197,6 @@ namespace JocysCom.ClassLibrary
 
 		#endregion
 
-		#region Search
-
-		/// <summary>
-		/// Fast search.
-		/// </summary>
-		public static int IndexOfPattern(byte[] search, byte[] pattern, int startIndex = 0)
-		{
-			int p;
-			var endIndex = search.Length - pattern.Length;
-			for (var i = startIndex; i <= endIndex; i++)
-			{
-				// Continue if byte doesn't match.
-				if (search[i] != pattern[0])
-					continue;
-				// Check sequence against pattern.
-				for (p = 1; p < pattern.Length; p++)
-				{
-					// Break if byte doesn't match.
-					if (search[i + p] != pattern[p])
-						break;
-					// If last byte matched then return.
-					if (p == pattern.Length - 1)
-						return i;
-				}
-			}
-			return -1;
-		}
-
-		#endregion
-
 		#region IDisposable
 
 		// Dispose() calls Dispose(true)

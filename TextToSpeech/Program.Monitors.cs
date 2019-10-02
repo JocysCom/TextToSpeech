@@ -50,7 +50,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			// Initialize Display Monitor
 			_DisplayMonitor = new DisplayMonitor();
 			var colors = DisplayMonitor.ColorsFromRgbs(SettingsManager.Options.DisplayMonitorPrefix);
-			_DisplayMonitor.ColorPrefixBytes = Basic.ColorsToBytes(colors, false);
+			_DisplayMonitor.SetColorPrefix(Basic.ColorsToBytes(colors, false));
 			_DisplayMonitor.MessageReceived += _Monitor_MessageReceived;
 			if (SettingsManager.Options.DisplayMonitorEnabled)
 				_DisplayMonitor.Start();
@@ -117,7 +117,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			if (e.PropertyName == nameof(SettingsManager.Options.DisplayMonitorPrefix))
 			{
 				var colors = DisplayMonitor.ColorsFromRgbs(SettingsManager.Options.DisplayMonitorPrefix);
-				_DisplayMonitor.ColorPrefixBytes = Basic.ColorsToBytes(colors, false);
+				_DisplayMonitor.SetColorPrefix(Basic.ColorsToBytes(colors, false));
 			}
 			if (e.PropertyName == nameof(SettingsManager.Options.DisplayMonitorEnabled) || enabledCanged)
 			{

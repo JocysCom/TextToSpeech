@@ -1,4 +1,5 @@
-﻿using JocysCom.ClassLibrary.Drawing;
+﻿using JocysCom.ClassLibrary.Controls;
+using JocysCom.ClassLibrary.Drawing;
 using JocysCom.TextToSpeech.Monitor.Capturing;
 using JocysCom.TextToSpeech.Monitor.Capturing.Monitors;
 using System;
@@ -16,25 +17,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		public MonitorDisplayUserControl()
 		{
 			InitializeComponent();
+			BoxXUpDown.DataBindings.Add(nameof(BoxXUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPositionX));
+			BoxYUpDown.DataBindings.Add(nameof(BoxYUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPositionY));
 		}
-
-		#region INotifyPropertyChanged
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			var handler = PropertyChanged;
-			if (handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		#endregion
-
-
-		int changeValue = 0;
-
-		
 
 
 		private void CreateImageButton_Click(object sender, EventArgs e)
@@ -74,45 +59,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			//taskA.Start();
 
 
-			//StatusTextBox.Text = "Capturing...";
-			//var w = ImagePictureBox.Width;
-			//var h = ImagePictureBox.Height;
-			//var b = Basic.CaptureImage((int)BoxXUpDown.Value, (int)BoxYUpDown.Value, w, h);
-			//var prefixBytes = GetPrefixRgbColorBytes();
-			//var prefix = Basic.GetImageBytes(b, prefixBytes.Length);
-			//if (!prefix.SequenceEqual(prefixBytes))
-			//{
-			//	var screen = Screen.PrimaryScreen;
-			//	var sw = screen.Bounds.Width;
-			//	var sh = screen.Bounds.Height;
-			//	StatusTextBox.Text = "Wrong Bytes. Searching...";
-			//	b = Basic.CaptureImage();
-			//	//var screenBytes = GetImageBytes(b);
-			//	var screenBytes = Basic.GetImageBytes(b);
-			//	var index = JocysCom.ClassLibrary.Helper.IndexOfPattern(screenBytes, prefixBytes) / 3;
-			//	StatusTextBox.Text = string.Format("Pixel Index  {0}...", index);
-			//	if (index > -1)
-			//	{
-			//		var x = index % sw;
-			//		var y = (index - x) / sw;
-			//		BoxXUpDown.Value = x;
-			//		BoxYUpDown.Value = y;
-			//		StatusTextBox.Text += string.Format(" [{0}:{1}]", x, y);
-			//	}
-			//}
-			//else
-			//{
-			//	StatusTextBox.Text += string.Format("Prefix found");
-			//	var allBytes = Basic.GetImageBytes(b, w * h);
-			//	var ms = new MemoryStream(allBytes);
-			//	var br = new System.IO.BinaryReader(ms);
-			//	br.Read(prefix, 0, prefix.Length);
-			//	var messageSize = br.ReadInt32();
-			//	var messageBytes = new byte[messageSize];
-			//	br.Read(messageBytes, 0, messageSize);
-			//	var message = System.Text.Encoding.Unicode.GetString(messageBytes);
-			//	ResultsTextBox.Text = message;
-			//}
+			StatusTextBox.Text = "Capturing...";
+
 		}
 
 

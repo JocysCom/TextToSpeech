@@ -75,25 +75,22 @@ namespace JocysCom.ClassLibrary.Text
 		/// <returns>
 		/// The zero-based index position of value if that byte value is found, or -1 if it is not.
 		/// </returns>
+		/// <remarks>This is very fast search.</remarks>
 		public static int IndexOf(byte[] input, byte[] value, int startIndex = 0)
 		{
-			for (int i = startIndex; i < input.Length; i++)
+			var endIndex = input.Length - value.Length;
+			int v;
+			for (var i = startIndex; i <= endIndex; i++)
 			{
-				// If remaining searchable data is smaller than value then...
-				if (value.Length > (input.Length - i))
+				// Check sequence against pattern.
+				for (v = 0; v < value.Length; v++)
 				{
-					return -1;
-				}
-				for (int v = 0; v < value.Length; v++)
-				{
+					// Break if byte doesn't match.
 					if (input[i + v] != value[v])
-					{
 						break;
-					}
+					// If last byte matched then return.
 					else if (v + 1 == value.Length)
-					{
 						return i;
-					}
 				}
 			}
 			return -1;

@@ -99,6 +99,14 @@ namespace JocysCom.TextToSpeech.Monitor
 		public string DisplayMonitorPrefix { get { return _DisplayMonitorPrefix; } set { _DisplayMonitorPrefix = value; OnPropertyChanged(); } }
 		string _DisplayMonitorPrefix = "#200000,#002000,#000020,#200000,#002000,#000020";
 
+		[DefaultValue(0)]
+		public int DisplayMonitorPositionX { get { return _DisplayMonitorPositionX; } set { _DisplayMonitorPositionX = value; OnPropertyChanged(); } }
+		int _DisplayMonitorPositionX;
+
+		[DefaultValue(0)]
+		public int DisplayMonitorPositionY { get { return _DisplayMonitorPositionY; } set { _DisplayMonitorPositionY = value; OnPropertyChanged(); } }
+		int _DisplayMonitorPositionY;
+
 		#endregion
 
 		// Non default pitch adds noise.
