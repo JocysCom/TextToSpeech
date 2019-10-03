@@ -147,8 +147,8 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			// Write message bytes.
 			br.Write(messageBytes);
 			// Write missing bytes for complete color.
-			var mod = messageBytes.Length % 3;
-			for (int i = 0; i < mod; i++)
+			var missingBytes = (3 - (messageBytes.Length % 3)) % 3;
+			for (int i = 0; i < missingBytes; i++)
 				br.Write((byte)0);
 			var allBytes = ms.ToArray();
 			br.Dispose();
@@ -209,7 +209,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			return message;
 		}
 
-		public void FindImagePositionOnScreen()
+		public bool FindImagePositionOnScreen()
 		{
 			//	StatusTextBox.Text = "Wrong Bytes. Searching...";
 			var image = Basic.CaptureImage();
@@ -229,6 +229,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 				SettingsManager.Options.DisplayMonitorPositionY = newY;
 				//StatusTextBox.Text += string.Format(" [{0}:{1}]", x, y);
 			}
+			return index > -1;
 		}
 
 		public static int ReadRgbInt(BinaryReader br)
