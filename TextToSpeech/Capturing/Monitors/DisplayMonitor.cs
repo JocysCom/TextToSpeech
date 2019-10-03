@@ -83,21 +83,42 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		public int _CurrentChangeValue;
 
 		byte[] ColorPrefixBytes;
+		byte[] ColorPrefixBytesBlanked;
 
 		public void SetColorPrefix(byte[] rgbPrefixBytes)
 		{
-			ColorPrefixBytes = InsertBlankPixels(rgbPrefixBytes);
+			ColorPrefixBytes = rgbPrefixBytes;
+			ColorPrefixBytesBlanked = InsertBlankPixels(rgbPrefixBytes);
 		}
 
+		/// <summary>
+		/// BBGGRR,000000,BBGGRR,000000...
+		/// </summary>
+		/// <param name="bytes"></param>
+		/// <returns></returns>
 		public static byte[] InsertBlankPixels(byte[] bytes)
 		{
-			// Insert blank pixels in the middle.
+			// Insert blank pixels.
 			var data = new byte[bytes.Length * 2];
 			for (int p = 0; p < bytes.Length; p += 3)
 			{
 				data[p * 2 + 0] = bytes[p + 0];
 				data[p * 2 + 1] = bytes[p + 1];
 				data[p * 2 + 2] = bytes[p + 2];
+			}
+			return data;
+		}
+
+		public static byte[] RemoveBlankPixels(byte[] bytes)
+		{
+			// Remove blank pixels.
+			var len = bytes.Length / 2;
+			var data = new byte[len];
+			for (var p = 0; p < len; p += 3)
+			{
+				data[p + 0] = bytes[p * 2 + 0];
+				data[p + 1] = bytes[p * 2 + 1];
+				data[p + 2] = bytes[p * 2 + 2];
 			}
 			return data;
 		}
@@ -149,6 +170,9 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			return image;
 		}
 
+		/// <summary>
+		/// Image: prefix[6] + change[1] + size[1] + message_bytes
+		/// </summary>
 		public string CaptureText()
 		{
 			var x = SettingsManager.Options.DisplayMonitorPositionX;
@@ -156,48 +180,61 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			var screen = System.Windows.Forms.Screen.PrimaryScreen;
 			var sw = screen.Bounds.Width;
 			var sh = screen.Bounds.Height;
-			var prefix = ColorPrefixBytes;
+			// Make sure take pixel pairs till the end of the line.
+			var length = sw - x;
+			length = length - (length % 2);
 			// Take screenshot of the line.
-			var image = Basic.CaptureImage(x, y, w: -x, 1);
+			var image = Basic.CaptureImage(x, y, length, 1);
 			var bytes = Basic.GetImageBytes(image);
-			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, prefix);
-			if (index > -1)
+			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, ColorPrefixBytesBlanked);
+			string message = null;
+			// If not found then...
+			if (index == -1)
 			{
-				//	StatusTextBox.Text = "Wrong Bytes. Searching...";
-				image = Basic.CaptureImage();
-				bytes = Basic.GetImageBytes(image);
-				index = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, prefix);
-				//	StatusTextBox.Text = string.Format("Pixel Index  {0}...", index);
-				if (index > -1)
-				{
-					// Get new coordinates of image.
-					var newX = index % sw;
-					var newY = (index - x) / sw;
-					SettingsManager.Options.DisplayMonitorPositionX = newX;
-					SettingsManager.Options.DisplayMonitorPositionY = newY;
-					//StatusTextBox.Text += string.Format(" [{0}:{1}]", x, y);
-				}
+				FindImagePositionOnScreen();
+				return null;
 			}
-			if (index > -1)
-			{
-				//	StatusTextBox.Text += string.Format("Prefix found");
-				//var allBytes = Basic.GetImageBytes(image, w * h);
-				//	var ms = new MemoryStream(allBytes);
-				//	var br = new System.IO.BinaryReader(ms);
-				//	br.Read(prefix, 0, prefix.Length);
-				//	var messageSize = br.ReadInt32();
-				//	var messageBytes = new byte[messageSize];
-				//	br.Read(messageBytes, 0, messageSize);
-				//	var message = System.Text.Encoding.Unicode.GetString(messageBytes);
-				//	ResultsTextBox.Text = message;
-			}
-			return null;
+			//	StatusTextBox.Text += string.Format("Prefix found");
+			bytes = RemoveBlankPixels(bytes);
+			var prefix = ColorPrefixBytes;
+			// Skip prefix.
+			var ms = new MemoryStream(bytes, prefix.Length, bytes.Length - prefix.Length);
+			var br = new System.IO.BinaryReader(ms);
+			var change = ReadRgbInt(br);
+			var messageSize = ReadRgbInt(br);
+			var messageBytes = new byte[messageSize];
+			br.Read(messageBytes, 0, messageSize);
+			message = System.Text.Encoding.UTF8.GetString(messageBytes);
+			//	ResultsTextBox.Text = message;
+			return message;
 		}
 
-		public int IndexOfPattern(byte[] bytes)
+		public void FindImagePositionOnScreen()
 		{
-			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, ColorPrefixBytes);
-			return index;
+			//	StatusTextBox.Text = "Wrong Bytes. Searching...";
+			var image = Basic.CaptureImage();
+			var bytes = Basic.GetImageBytes(image);
+			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, ColorPrefixBytesBlanked);
+			//	StatusTextBox.Text = string.Format("Pixel Index  {0}...", index);
+			if (index > -1)
+			{
+				var screen = System.Windows.Forms.Screen.PrimaryScreen;
+				var sw = screen.Bounds.Width;
+				var sh = screen.Bounds.Height;
+				// Get new coordinates of image.
+				var pixelIndex = index / 3; // 3 bytes per pixel.
+				var newX = pixelIndex % sw;
+				var newY = (pixelIndex - newX) / sw;
+				SettingsManager.Options.DisplayMonitorPositionX = newX;
+				SettingsManager.Options.DisplayMonitorPositionY = newY;
+				//StatusTextBox.Text += string.Format(" [{0}:{1}]", x, y);
+			}
+		}
+
+		public static int ReadRgbInt(BinaryReader br)
+		{
+			var bytes = br.ReadBytes(3);
+			return bytes[2] << 16 | bytes[1] << 8 | bytes[0];
 		}
 
 		#endregion

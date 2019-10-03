@@ -79,7 +79,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(33, 249);
+			this.label3.Location = new System.Drawing.Point(35, 220);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(42, 13);
 			this.label3.TabIndex = 24;
@@ -88,7 +88,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(38, 223);
+			this.label2.Location = new System.Drawing.Point(40, 194);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(37, 13);
 			this.label2.TabIndex = 25;
@@ -97,7 +97,7 @@
 			// ColorPrefixLabel
 			// 
 			this.ColorPrefixLabel.AutoSize = true;
-			this.ColorPrefixLabel.Location = new System.Drawing.Point(15, 171);
+			this.ColorPrefixLabel.Location = new System.Drawing.Point(17, 142);
 			this.ColorPrefixLabel.Name = "ColorPrefixLabel";
 			this.ColorPrefixLabel.Size = new System.Drawing.Size(60, 13);
 			this.ColorPrefixLabel.TabIndex = 26;
@@ -106,7 +106,7 @@
 			// MessageLabel
 			// 
 			this.MessageLabel.AutoSize = true;
-			this.MessageLabel.Location = new System.Drawing.Point(25, 197);
+			this.MessageLabel.Location = new System.Drawing.Point(27, 168);
 			this.MessageLabel.Name = "MessageLabel";
 			this.MessageLabel.Size = new System.Drawing.Size(50, 13);
 			this.MessageLabel.TabIndex = 27;
@@ -115,7 +115,7 @@
 			// ResultsTextBox
 			// 
 			this.ResultsTextBox.BackColor = System.Drawing.SystemColors.Control;
-			this.ResultsTextBox.Location = new System.Drawing.Point(81, 246);
+			this.ResultsTextBox.Location = new System.Drawing.Point(83, 217);
 			this.ResultsTextBox.Name = "ResultsTextBox";
 			this.ResultsTextBox.Size = new System.Drawing.Size(317, 20);
 			this.ResultsTextBox.TabIndex = 20;
@@ -123,14 +123,14 @@
 			// StatusTextBox
 			// 
 			this.StatusTextBox.BackColor = System.Drawing.SystemColors.Control;
-			this.StatusTextBox.Location = new System.Drawing.Point(81, 220);
+			this.StatusTextBox.Location = new System.Drawing.Point(83, 191);
 			this.StatusTextBox.Name = "StatusTextBox";
 			this.StatusTextBox.Size = new System.Drawing.Size(317, 20);
 			this.StatusTextBox.TabIndex = 21;
 			// 
 			// ColorPrefixTextBox
 			// 
-			this.ColorPrefixTextBox.Location = new System.Drawing.Point(81, 168);
+			this.ColorPrefixTextBox.Location = new System.Drawing.Point(83, 139);
 			this.ColorPrefixTextBox.Name = "ColorPrefixTextBox";
 			this.ColorPrefixTextBox.Size = new System.Drawing.Size(317, 20);
 			this.ColorPrefixTextBox.TabIndex = 22;
@@ -138,7 +138,7 @@
 			// 
 			// MessageTextBox
 			// 
-			this.MessageTextBox.Location = new System.Drawing.Point(81, 194);
+			this.MessageTextBox.Location = new System.Drawing.Point(83, 165);
 			this.MessageTextBox.Name = "MessageTextBox";
 			this.MessageTextBox.Size = new System.Drawing.Size(317, 20);
 			this.MessageTextBox.TabIndex = 23;
@@ -169,7 +169,7 @@
 			this.BoxXUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.BoxXUpDown.Location = new System.Drawing.Point(65, 45);
 			this.BoxXUpDown.Maximum = new decimal(new int[] {
-            8192,
+            65535,
             0,
             0,
             0});
@@ -183,7 +183,7 @@
 			this.BoxYUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.BoxYUpDown.Location = new System.Drawing.Point(65, 71);
 			this.BoxYUpDown.Maximum = new decimal(new int[] {
-            0,
+            65535,
             0,
             0,
             0});
@@ -209,7 +209,7 @@
 			// AddMessageTextCheckBox
 			// 
 			this.AddMessageTextCheckBox.AutoSize = true;
-			this.AddMessageTextCheckBox.Location = new System.Drawing.Point(407, 194);
+			this.AddMessageTextCheckBox.Location = new System.Drawing.Point(409, 165);
 			this.AddMessageTextCheckBox.Name = "AddMessageTextCheckBox";
 			this.AddMessageTextCheckBox.Size = new System.Drawing.Size(115, 17);
 			this.AddMessageTextCheckBox.TabIndex = 37;
@@ -219,7 +219,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(404, 171);
+			this.label4.Location = new System.Drawing.Point(406, 142);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(13, 13);
 			this.label4.TabIndex = 32;
@@ -258,7 +258,7 @@
 			// ColorPrefixValueTextBox
 			// 
 			this.ColorPrefixValueTextBox.BackColor = System.Drawing.SystemColors.Control;
-			this.ColorPrefixValueTextBox.Location = new System.Drawing.Point(423, 168);
+			this.ColorPrefixValueTextBox.Location = new System.Drawing.Point(425, 139);
 			this.ColorPrefixValueTextBox.Name = "ColorPrefixValueTextBox";
 			this.ColorPrefixValueTextBox.Size = new System.Drawing.Size(99, 20);
 			this.ColorPrefixValueTextBox.TabIndex = 31;
@@ -268,15 +268,15 @@
 			this.ImagePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.ImagePictureBox.Location = new System.Drawing.Point(3, 139);
+			this.ImagePictureBox.Location = new System.Drawing.Point(179, 113);
 			this.ImagePictureBox.Name = "ImagePictureBox";
-			this.ImagePictureBox.Size = new System.Drawing.Size(634, 16);
+			this.ImagePictureBox.Size = new System.Drawing.Size(458, 16);
 			this.ImagePictureBox.TabIndex = 30;
 			this.ImagePictureBox.TabStop = false;
 			// 
 			// CopyWowTextButton
 			// 
-			this.CopyWowTextButton.Location = new System.Drawing.Point(407, 218);
+			this.CopyWowTextButton.Location = new System.Drawing.Point(409, 189);
 			this.CopyWowTextButton.Name = "CopyWowTextButton";
 			this.CopyWowTextButton.Size = new System.Drawing.Size(99, 23);
 			this.CopyWowTextButton.TabIndex = 29;
