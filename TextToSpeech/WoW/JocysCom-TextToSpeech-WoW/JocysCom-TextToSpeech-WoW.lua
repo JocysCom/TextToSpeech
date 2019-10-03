@@ -61,7 +61,7 @@ local function Gender(v)
 	end
 end
 
-function JocysCom_UpdateMacro()
+function JocysCom_CreateOrUpdateMacro()
 	-- Create macro if doesn't exist and slot is available.
 	if GetMacroIndexByName(macroName) == 0 then
 		local numglobal, numperchar = GetNumMacros()
@@ -131,14 +131,14 @@ function JocysCom_AddNPCNameToTable(name)
 			repeat table.remove(NPCNamesTable, 1)
 			until (#NPCNamesTable < 10)
 		end
-		JocysCom_UpdateMacro()
+		JocysCom_CreateOrUpdateMacro()
 	end
 end
 
 -- Remove NPC names from NPCNamesTable.
 function JocysCom_RemoveNPCNamesFromTable()
 	NPCNamesTable = {}
-	JocysCom_UpdateMacro()
+	JocysCom_CreateOrUpdateMacro()
 end
 
 local function JocysCom_AddonCommands(msg, editbox)
@@ -171,16 +171,17 @@ SLASH_JocysComTTS1 = '/JocysComTTS'
 SlashCmdList["JocysComTTS"] = JocysCom_AddonCommands
 
 -- Set text.
-function JocysCom_Text_EN()
+function JocysCom_AddonTXT_EN()
 	-- OptionsFrame title.
 	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 8.2.5.1 ( 2019-09-26 )")
 	-- CheckButtons (Options) text.
+	JocysCom_ColorMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffColor|r|cff808080 method. In|r |cff77ccffMonitor > Options > [Network] Tab > Enabled: [Checked]|r|cff808080.|r")
+	JocysCom_NetworkMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffNetwork|r|cff808080 method. In|r |cff77ccffMonitor > Options > [Color] Tab > Enabled: [Checked]|r|cff808080.|r")
 	JocysCom_ColorMessagePixelYFontString:SetText("|cff808080 [LEFT] and [TOP] position of color pixel line for|r |cff77ccffMonitor|r|cff808080. Default values [0] and [0].|r")
-	JocysCom_ColorMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffColor|r|cff808080 method.|r \|cff77ccffMonitor Clipboard: [For <message> tags]|r |cff808080in|r |cff77ccffMonitor|r |cff808080must be selected. |r")
-	JocysCom_NetworkMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffNetwork|r|cff808080 method.|r |cff77ccffMonitor Clipboard: [Disabled]|r |cff808080in|r |cff77ccffMonitor|r |cff808080can be selected.|r")
-	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide addon|r |cffffffff<messages>|r |cff808080in chat window.|r")
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080buttons mini frame. Grab frame by clicking on dark background around buttons.|r")
 	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on the right side of |cffffffff[Options]|r |cff808080button. [Unchecked] show menu on the left side.|r")
+	JocysCom_SaveCheckButton.text:SetText("|cff808080 Save \"target\" or \"mouseover\" NPC's name, gender and type in|r |cffffffffMonitor|r|cff808080. Default: [Checked] |r");
+	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide detailed information about addon|r |cffffffff<messages>|r |cff808080in chat window. Default: [Unchecked]|r")
 	-- Font Strings.
 	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH")
 	JocysCom_DescriptionFrameFontString:SetText("|cff808080 Text-to-speech voices, pitch, rate, effects, etc. ... you will find all options in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window or receive chat message, |cff77ccffJocys.Com Text to Speech WoW Addon|r creates special message. If |cffffffffCliboard|r method is selected, |cff77ccffAddon|r puts message into textbox, selects it and changes color of few pixel on screen. If |cffffffffNetwork|r method is selected, |cff77ccffAddon|r sends special addon message to your character. Message can include dialogue text, character name, effect name, etc.. Then, |cff77ccffJocys.Com Text to Speech Monitor|r (which must be running in background) picks-up this message from Clipboard or your Network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.|r")
@@ -246,98 +247,83 @@ function JocysCom_SendSoundIntro(group)
 	end
 end
 
-local menu = {
-    { text = "Select an Option", isTitle = true},
-    { text = "Option 1", func = function() print("You've chosen option 1"); end },
-    { text = "Option 2", func = function() print("You've chosen option 2"); end },
-    { text = "More Options", hasArrow = true,
-        menuList = {
-            { text = "Option 3", func = function() print("You've chosen option 3"); end }
-        } 
-    }
-}
-local menuFrame = CreateFrame("Frame", "ExampleMenuFrame", UIParent, "UIDropDownMenuTemplate")
+--local menu = {
+--    { text = "Select an Option", isTitle = true},
+--    { text = "Option 1", func = function() print("You've chosen option 1"); end },
+--    { text = "Option 2", func = function() print("You've chosen option 2"); end },
+--    { text = "More Options", hasArrow = true,
+--        menuList = {
+--            { text = "Option 3", func = function() print("You've chosen option 3"); end }
+--        } 
+--    }
+--}
+--local menuFrame = CreateFrame("Frame", "ExampleMenuFrame", UIParent, "UIDropDownMenuTemplate")
+--
+---- Make the menu appear at the cursor: 
+--EasyMenu(menu, menuFrame, "cursor", 0 , 0, "MENU");
+---- Or make the menu appear at the frame:
+--menuFrame:SetPoint("Center", UIParent, "Center")
+--EasyMenu(menu, menuFrame, menuFrame, 0 , 0, "MENU");
 
--- Make the menu appear at the cursor: 
-EasyMenu(menu, menuFrame, "cursor", 0 , 0, "MENU");
--- Or make the menu appear at the frame:
-menuFrame:SetPoint("Center", UIParent, "Center")
-EasyMenu(menu, menuFrame, menuFrame, 0 , 0, "MENU");
+-- Register or unregister events.
+function JocysCom_SetEvent(checked, ...)
+	if checked then
+  		for i,v in pairs({...}) do
+			JocysCom_OptionsFrame:RegisterEvent(v)
+			if DebugEnabled then print("|cffffff55Registered: " .. v .. "|r") end
+		end
+	else
+  		for i,v in pairs({...}) do
+			JocysCom_OptionsFrame:UnregisterEvent(v)
+			if DebugEnabled then print("|cff558a84Unregistered: " .. v .. "|r") end
+		end
+	end
+end
 
-
+-- Load saved event settings.
+function JocysCom_LoadEventSettings()
+	-- QUEST. GOSSIP_* (open or close frame), QUEST_* (quest), ITEM_* (books, scrolls, plaques, gravestones, mail).
+	JocysCom_SetEvent(JocysCom_QuestCB, "GOSSIP_SHOW", "QUEST_GREETING", "QUEST_DETAIL", "QUEST_PROGRESS", "QUEST_COMPLETE", "QUEST_LOG_UPDATE", "ITEM_TEXT_READY", "GOSSIP_CLOSED")
+	-- MONSTER.
+	JocysCom_SetEvent(JocysCom_MonsterCB, "CHAT_MSG_MONSTER_EMOTE", "CHAT_MSG_MONSTER_PARTY", "CHAT_MSG_MONSTER_SAY", "CHAT_MSG_MONSTER_WHISPER", "CHAT_MSG_MONSTER_YELL")
+	-- EMOTE.
+	JocysCom_SetEvent(JocysCom_EmoteCB, "CHAT_MSG_EMOTE", "CHAT_MSG_TEXT_EMOTE")
+	-- WHISPER.
+	JocysCom_SetEvent(JocysCom_WhisperCB, "CHAT_MSG_WHISPER", "CHAT_MSG_WHISPER_INFORM", "CHAT_MSG_BN_WHISPER", "CHAT_MSG_BN_WHISPER_INFORM")
+	-- SAY.
+	JocysCom_SetEvent(JocysCom_SayCB, "CHAT_MSG_SAY")
+	-- YELL.
+	JocysCom_SetEvent(JocysCom_YellCB, "CHAT_MSG_YELL")
+	-- PARTY.
+	JocysCom_SetEvent(JocysCom_PartyLCB, "CHAT_MSG_PARTY_LEADER")
+	JocysCom_SetEvent(JocysCom_PartyCB, "CHAT_MSG_PARTY")
+	-- GUILD
+	JocysCom_SetEvent(JocysCom_OfficerCB, "CHAT_MSG_OFFICER")
+	JocysCom_SetEvent(JocysCom_GuildCB, "CHAT_MSG_GUILD", "CHAT_MSG_GUILD_ACHIEVEMENT")
+	-- RAID
+	JocysCom_SetEvent(JocysCom_RaidLCB, "CHAT_MSG_RAID_LEADER", "CHAT_MSG_RAID_WARNING")
+	JocysCom_SetEvent(JocysCom_RaidCB, "CHAT_MSG_RAID")
+	-- INSTANCE.
+	JocysCom_SetEvent(JocysCom_InstanceLCB, "CHAT_MSG_INSTANCE_CHAT_LEADER")
+	JocysCom_SetEvent(JocysCom_InstanceCB, "CHAT_MSG_INSTANCE_CHAT")
+	-- Save unit name, gender and type.
+	JocysCom_SetEvent(JocysCom_SaveCB, "UPDATE_MOUSEOVER_UNIT")
+	JocysCom_SetEvent(JocysCom_SaveCB, "PLAYER_TARGET_CHANGED")
+end
 
 -- Register events.
 function JocysCom_RegisterEvents()
-	-- Addon message prefix.
-	C_ChatInfo.RegisterAddonMessagePrefix(addonPrefix)
-	-- Register events to JocysCom_OptionsFrame.
-	JocysCom_OptionsFrame:SetScript("OnEvent", JocysCom_OptionsFrame_OnEvent)
-	-- Addon loaded event.
-	JocysCom_OptionsFrame:RegisterEvent("ADDON_LOADED")
-	-- Add or edit macro on PLAYER_ENTERING_WORLD event.
-	JocysCom_OptionsFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-	-- Save unit name, gender and type on mouse over event.
-	JocysCom_OptionsFrame:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-	-- Chat GOSSIP / Dialogue open frames events.
-	JocysCom_OptionsFrame:RegisterEvent("GOSSIP_SHOW")
-	-- Chat QUEST events.
-	JocysCom_OptionsFrame:RegisterEvent("QUEST_GREETING") --GOSSIP QUEST ITEM CHAT
-	JocysCom_OptionsFrame:RegisterEvent("QUEST_DETAIL")
-	JocysCom_OptionsFrame:RegisterEvent("QUEST_PROGRESS")
-	JocysCom_OptionsFrame:RegisterEvent("QUEST_COMPLETE")
-	JocysCom_OptionsFrame:RegisterEvent("QUEST_LOG_UPDATE")
-	-- Books, scrolls, saved copies of mail messages, plaques, gravestones events.
-	JocysCom_OptionsFrame:RegisterEvent("ITEM_TEXT_READY")
-	-- Chat GOSSIP / Dialogue close frames.
-	JocysCom_OptionsFrame:RegisterEvent("GOSSIP_CLOSED") --"QUEST_FINISHED", "QUEST_ACCEPTED"
-	-- Chat ADDON events.
-	--JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_ADDON")
-	-- Chat MONSTER events.
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_PARTY")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_SAY")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_WHISPER")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	-- Chat WHISPER events.
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_WHISPER")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_WHISPER_INFORM")
-	-- Chat WHISPER_BN events.
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_BN_WHISPER")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_BN_WHISPER_INFORM")
-	-- Chat EMOTE events.
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_EMOTE")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
-	-- Chat SAY events.
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_SAY")
-	-- Chat YELL events.
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_YELL")
-	-- Chat PARTY events.
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_PARTY")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_PARTY_LEADER")
-	-- Chat GUILD / OFFICER events.
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_GUILD")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_OFFICER")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_GUILD_ACHIEVEMENT")
-	-- Chat RAID events.
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_RAID")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_RAID_LEADER")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_RAID_WARNING")
-	-- Chat INSTANCE events.
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_INSTANCE_CHAT")
-	JocysCom_OptionsFrame:RegisterEvent("CHAT_MSG_INSTANCE_CHAT_LEADER")
-	-- Target event.
-	JocysCom_OptionsFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-	-- Logout event.
+	C_ChatInfo.RegisterAddonMessagePrefix(addonPrefix) -- Addon message prefix.
+	JocysCom_OptionsFrame:SetScript("OnEvent", JocysCom_OptionsFrame_OnEvent) -- Register events on JocysCom_OptionsFrame.
+	JocysCom_OptionsFrame:RegisterEvent("ADDON_LOADED") -- Load all addon settings on this event.
+	JocysCom_OptionsFrame:RegisterEvent("PLAYER_ENTERING_WORLD") -- Create or edit macro on this event.
 	JocysCom_OptionsFrame:RegisterEvent("PLAYER_LOGOUT")
 end
 
 function JocysCom_OptionsFrame_OnEvent(self, ...)
 local event, text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons = ...
-	-- Ignore other addons.
-	if event == "ADDON_LOADED" and text ~= addonName then return end
-	-- don't proceed messages with <message> tags and your own incoming whispers.
-	if string.find(tostring(text), "<message") ~= nil then return end
-
+	if event == "ADDON_LOADED" and text ~= addonName then return end -- Ignore other addons.
+	if string.find(tostring(text), "<message") ~= nil then return end -- don't proceed messages with <message> tags and your own incoming whispers.
 	-- Print event details.
 	if DebugEnabled then
 		print("|cff77ccff------------------------------------------------------------------------------------|r")
@@ -348,30 +334,25 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 	-- Events.
 	local group = ""
 	if event == "ADDON_LOADED" and text == addonName then
-		JocysCom_LoadTocFileSettings()
-		-- Set MiniMenuFrame on left or right side.
-		JocysCom_MenuCheckButton_OnClick()
-		-- Set DialogueScrollFrame and make it transparent.
-		JocysCom_OptionsFrame_OnHide()
-		-- Set text of elements.
-		JocysCom_Text_EN()	
+		JocysCom_LoadTocFileSettings() -- Load addon settings.
+		JocysCom_MenuCheckButton_OnClick() -- Set MiniMenuFrame on left or right side.
+		JocysCom_OptionsFrame_OnHide() -- Set DialogueScrollFrame and make it transparent.
+		JocysCom_AddonTXT_EN() -- Set text of elements.
+		JocysCom_LoadEventSettings() -- Register or unregister events.
 		--if DebugEnabled then JocysCom_OptionsFrame:RegisterAllEvents() end
 		return 
 	elseif event == "PLAYER_ENTERING_WORLD" then
-		-- Create macro if it doesn't exist and slot is available.
-		JocysCom_UpdateMacro()
+		JocysCom_CreateOrUpdateMacro()
 		return
 	elseif event == "PLAYER_LOGOUT" then
 		JocysCom_SaveTocFileSettings()
 		return
-
 	elseif event == "UPDATE_MOUSEOVER_UNIT" then
 		JocysCom_SaveNPC("mouseover")
 		return
 	elseif event == "PLAYER_TARGET_CHANGED" then
 		JocysCom_SaveNPC("target")
 		return
-	-- Quest events.
 	elseif event == "GOSSIP_CLOSED" then
 		return
 	elseif event == "ITEM_TEXT_READY" or event == "GOSSIP_SHOW" or event == "QUEST_GREETING" or event == "QUEST_DETAIL" or event == "QUEST_GREETING" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "QUEST_LOG_UPDATE" then
@@ -391,17 +372,8 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		elseif event == "QUEST_COMPLETE" then
 			questMessage = GetRewardText()
 		elseif event == "QUEST_DETAIL" then
-			local objectivesHeader = QuestInfoObjectivesHeader:GetText()
-			if (objectivesHeader == nil) then
-				objectivesHeader = ""
-			else
-				objectivesHeader = string.gsub(objectivesHeader, "Quest ", "Your ") .. "."
-			end
-			if JocysCom_ObjectivesCheckButton:GetChecked() then
-				questMessage = GetQuestText() .. " " .. objectivesHeader .. " " .. GetObjectiveText()
-			else
-				questMessage = GetQuestText()
-			end
+			local objectivesHeader = QuestInfoObjectivesHeader:GetText() and string.gsub(QuestInfoObjectivesHeader:GetText(), "Quest ", "Your ") .. "." or ""
+			questMessage = JocysCom_ObjectivesCheckButton:GetChecked() and GetQuestText() .. " " .. objectivesHeader .. " " .. GetObjectiveText() or GetQuestText()
 		end
 		playerName = UnitName("npc")
 		if JocysCom_NameQuestCheckButton:GetChecked() and playerName ~= nil then
@@ -409,11 +381,8 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 			questMessage = playerName .. " says. " .. questMessage
 		end
 		speakMessage = questMessage
-		if JocysCom_QuestCheckButton:GetChecked() == false then
-			return
-		end -- Don't proceed if "auto-start" speech check-box is disabled.
-	-- Chat events.
-	elseif JocysCom_MonsterCheckButton:GetChecked() and string.find(event, "MSG_MONSTER") ~= nil then
+	-- MONSTER.
+	elseif string.find(event, "MSG_MONSTER") ~= nil then
 		group = "Monster"
 		-- don't proceed repetitive NPC messages by the same NPC.
 		if (lastArg == text .. playerName) then
@@ -426,7 +395,8 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		JocysCom_AddNPCNameToTable(playerName)
 		if JocysCom_SoundMonsterCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameMonsterCheckButton:GetChecked() or (event == "CHAT_MSG_MONSTER_EMOTE") then nameIntro = true end
-	elseif JocysCom_WhisperCheckButton:GetChecked() and (event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" or event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM") then --or event == "CHAT_MSG_BN_CONVERSATION"
+	-- WHISPER.
+	elseif event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" or event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM" then
 		group = "Whisper"
 		if JocysCom_SoundWhisperCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameWhisperCheckButton:GetChecked() then nameIntro = true end
@@ -458,47 +428,47 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 				local realName = true
 			end
 		end
-	elseif JocysCom_EmoteCheckButton:GetChecked() and ((event == "CHAT_MSG_EMOTE") or (event == "CHAT_MSG_TEXT_EMOTE")) then
+	elseif event == "CHAT_MSG_EMOTE" or event == "CHAT_MSG_TEXT_EMOTE" then
 		group = "Emote"
 		if JocysCom_SoundEmoteCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
-		if (event == "CHAT_MSG_EMOTE") then nameIntro = true end
-	elseif JocysCom_SayCheckButton:GetChecked() and (event == "CHAT_MSG_SAY") then
+		if event == "CHAT_MSG_EMOTE" then nameIntro = true end
+	elseif event == "CHAT_MSG_SAY" then
 		group = "Say"
 		if JocysCom_SoundSayCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameSayCheckButton:GetChecked() then nameIntro = true end
-	elseif JocysCom_YellCheckButton:GetChecked() and (event == "CHAT_MSG_YELL") then
+	elseif event == "CHAT_MSG_YELL" then
 		group = "Yell"
 		if JocysCom_SoundYellCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameYellCheckButton:GetChecked() then nameIntro = true end
-	elseif JocysCom_GuildCheckButton:GetChecked() and (event == "CHAT_MSG_GUILD") then
+	elseif event == "CHAT_MSG_GUILD" then
 		group = "Guild"
 		if JocysCom_SoundGuildCheckButton:GetChecked() then	JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameGuildCheckButton:GetChecked() then nameIntro = true end
-	elseif JocysCom_OfficerCheckButton:GetChecked() and (event == "CHAT_MSG_OFFICER") then
+	elseif event == "CHAT_MSG_OFFICER" then
 		group = "Officer"
 		if JocysCom_SoundOfficerCheckButton:GetChecked() then	JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameOfficerCheckButton:GetChecked() then nameIntro = true end
-	elseif JocysCom_RaidCheckButton:GetChecked() and (event == "CHAT_MSG_RAID") then
+	elseif event == "CHAT_MSG_RAID" then
 		group = "Raid"
 		if JocysCom_SoundRaidCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameRaidCheckButton:GetChecked() then nameIntro = true end
-	elseif JocysCom_RaidLeaderCheckButton:GetChecked() and (event == "CHAT_MSG_RAID_LEADER" or event == "CHAT_MSG_RAID_WARNING") then
+	elseif event == "CHAT_MSG_RAID_LEADER" or event == "CHAT_MSG_RAID_WARNING" then
 		group = "RaidLeader"
 		if JocysCom_SoundRaidLeaderCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameRaidLeaderCheckButton:GetChecked() then nameIntro = true end
-	elseif JocysCom_PartyCheckButton:GetChecked() and (event == "CHAT_MSG_PARTY") then
+	elseif event == "CHAT_MSG_PARTY" then
 		group = "Party"
 		if JocysCom_SoundPartyCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NamePartyCheckButton:GetChecked() then nameIntro = true end
-	elseif JocysCom_PartyLeaderCheckButton:GetChecked() and (event == "CHAT_MSG_PARTY_LEADER") then
+	elseif event == "CHAT_MSG_PARTY_LEADER" then
 		group = "PartyLeader"
 		if JocysCom_SoundPartyLeaderCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NamePartyLeaderCheckButton:GetChecked() then nameIntro = true end
-	elseif JocysCom_InstanceCheckButton:GetChecked() and (event == "CHAT_MSG_INSTANCE_CHAT") then
+	elseif event == "CHAT_MSG_INSTANCE_CHAT" then
 		group = "Instance"
 		if JocysCom_SoundInstanceCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameInstanceCheckButton:GetChecked() then nameIntro = true end
-	elseif JocysCom_InstanceLeaderCheckButton:GetChecked() and (event == "CHAT_MSG_INSTANCE_CHAT_LEADER") then
+	elseif event == "CHAT_MSG_INSTANCE_CHAT_LEADER" then
 		group = "InstanceLeader"
 		if JocysCom_SoundInstanceLeaderCheckButton:GetChecked() then JocysCom_SendSoundIntro(group) end
 		if JocysCom_NameInstanceLeaderCheckButton:GetChecked() then nameIntro = true end
@@ -757,6 +727,7 @@ function JocysCom_CheckButton_OnClick(self, name)
 		JocysCom_SendChatMessageStop(1, name)
 	end
 	JocysCom_SaveTocFileSettings()
+	JocysCom_LoadEventSettings()
 end
 
 -- Show MiniMenuFrame and set text.
@@ -1224,6 +1195,8 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_MenuCB == false then JocysCom_MenuCheckButton:SetChecked(false) else JocysCom_MenuCheckButton:SetChecked(true) end
 	-- Set FilterCheckButton and Message filters.
 	if JocysCom_FilterCB == false then JocysCom_FilterCheckButton:SetChecked(false) else JocysCom_FilterCheckButton:SetChecked(true) end
+	-- Set save NPC name, gender and type to Monitor.
+	if JocysCom_SaveCB == false then JocysCom_SaveCheckButton:SetChecked(false) else JocysCom_SaveCheckButton:SetChecked(true) end
 	-- Add chat message filters.
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", JocysCom_CHAT_MSG_WHISPER)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", JocysCom_CHAT_MSG_WHISPER)
@@ -1295,6 +1268,7 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_LockCB = JocysCom_LockCheckButton:GetChecked()
 	JocysCom_MenuCB = JocysCom_MenuCheckButton:GetChecked()
 	JocysCom_FilterCB = JocysCom_FilterCheckButton:GetChecked()
+	JocysCom_SaveCB = JocysCom_SaveCheckButton:GetChecked();
 	JocysCom_QuestCB = JocysCom_QuestCheckButton:GetChecked()
 	JocysCom_MonsterCB = JocysCom_MonsterCheckButton:GetChecked()
 	JocysCom_WhisperCB = JocysCom_WhisperCheckButton:GetChecked()

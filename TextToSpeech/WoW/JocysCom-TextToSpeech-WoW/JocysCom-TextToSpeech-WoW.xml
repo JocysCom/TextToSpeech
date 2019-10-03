@@ -72,33 +72,33 @@
           </Button>
         </Frames>
       </Frame>-->
-      <Frame name="MyDropDownMenu" inherits="UIDropDownMenuTemplate" id="1">
+      <!--<Frame name="MyDropDownMenu" inherits="UIDropDownMenuTemplate" id="1">
         <Scripts>
           <OnLoad>
             UIDropDownMenu_Initialize(self, MyDropDownMenu_OnLoad, "MENU");
           </OnLoad>
         </Scripts>
-      </Frame>
+      </Frame>-->
       <!--CheckButtons-->
-      <CheckButton name="JocysCom_NetworkMessageCheckButton" inherits="UICheckButtonTemplate">
+      <CheckButton name="JocysCom_ColorMessageCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
           <Anchor point="TOPLEFT" x="7" y="-26" />
         </Anchors>
         <Scripts>
           <OnClick>
-            JocysCom_NetworkMessageCheckButton_OnClick();
+            JocysCom_ColorMessageCheckButton_OnClick();
           </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="JocysCom_ColorMessageCheckButton" inherits="UICheckButtonTemplate">
+      <CheckButton name="JocysCom_NetworkMessageCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
           <Anchor point="TOPLEFT" x="7" y="-48" />
         </Anchors>
         <Scripts>
           <OnClick>
-            JocysCom_ColorMessageCheckButton_OnClick();
+            JocysCom_NetworkMessageCheckButton_OnClick();
           </OnClick>
         </Scripts>
       </CheckButton>
@@ -124,10 +124,27 @@
           </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate">
+
+      <CheckButton name="JocysCom_SaveCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
         <Anchors>
           <Anchor point="TOPLEFT" x="7" y="-139" />
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            self.text:SetPoint("LEFT", 27, 0);
+          </OnLoad>
+          <OnClick>
+            JocysCom_PlaySoundAndSaveSettings();
+            JocysCom_LoadEventSettings();
+          </OnClick>
+        </Scripts>
+      </CheckButton>
+
+      <CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate">
+        <Size x="26" y="27" />
+        <Anchors>
+          <Anchor point="TOPLEFT" x="7" y="-161" />
         </Anchors>
         <Scripts>
           <OnClick>
@@ -135,10 +152,11 @@
           </OnClick>
         </Scripts>
       </CheckButton>
+
       <EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate">
         <Size x="100" y="20" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="15" y="-166" />
+          <Anchor point="TOPLEFT" x="15" y="-188" />
         </Anchors>
         <Layers>
           <Layer>
