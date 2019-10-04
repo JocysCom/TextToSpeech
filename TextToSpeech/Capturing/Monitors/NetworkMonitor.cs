@@ -1,4 +1,6 @@
-﻿using JocysCom.TextToSpeech.Monitor.PlugIns;
+﻿using JocysCom.ClassLibrary;
+using JocysCom.ClassLibrary.Controls;
+using JocysCom.TextToSpeech.Monitor.PlugIns;
 using PacketDotNet;
 using SharpPcap;
 using SharpPcap.WinPcap;
@@ -11,7 +13,7 @@ using System.Net.Sockets;
 
 namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 {
-	public class NetworkMonitor : MonitorBase
+	public partial class NetworkMonitor : MonitorBase
 	{
 		public NetworkMonitor()
 		{
@@ -66,6 +68,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		{
 			lock (monitorLock)
 			{
+				InitWatcher();
 				if (IsRunning)
 					return;
 				if (IsDisposing)
@@ -146,6 +149,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 					device.Close();
 				}
 				CaptureDevices.Clear();
+				DisposeWatcher();
 			}
 		}
 
@@ -365,6 +369,12 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		}
 
 		#endregion
+
+		static void OnEvent<T>(EventHandler<EventArgs<T>> handler, T data)
+		{
+			if (handler != null)
+				ControlsHelper.Invoke(() => { handler(null, new EventArgs<T>(data)); });
+		}
 
 		public override void Dispose()
 		{

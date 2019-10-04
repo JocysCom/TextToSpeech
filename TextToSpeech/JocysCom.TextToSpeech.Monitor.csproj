@@ -94,9 +94,7 @@
   <PropertyGroup>
     <ApplicationIcon>app.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PacketDotNet">
@@ -125,9 +123,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Design" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Speech" />
@@ -160,6 +160,7 @@
     <Compile Include="Capturing\Monitors\MonitorBase.cs" />
     <Compile Include="Capturing\Monitors\MonitorEventArgs.cs" />
     <Compile Include="Capturing\Monitors\NetworkMonitor.cs" />
+    <Compile Include="Capturing\Monitors\NetworkMonitor.ProcessWatcher.cs" />
     <Compile Include="Capturing\SocPcapDevice.cs" />
     <Compile Include="Capturing\Monitors\UdpMonitor.cs" />
     <Compile Include="Capturing\WinPcapHelper.cs" />
@@ -300,6 +301,7 @@
     <Compile Include="JocysCom\Security\CRC32.cs" />
     <Compile Include="JocysCom\Security\HashHelper.cs" />
     <Compile Include="JocysCom\Security\MD5Helper.cs" />
+    <Compile Include="JocysCom\Security\PermissionHelper.cs" />
     <Compile Include="JocysCom\Security\SHA256Helper.cs" />
     <Compile Include="JocysCom\Text\EncodingType.cs" />
     <Compile Include="JocysCom\Text\Filters.cs" />
@@ -330,6 +332,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PlugIns\VoiceListItem.cs" />
+    <Compile Include="Program.AdminCommands.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Program.Monitors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -499,9 +502,6 @@
     <None Include="WoW\JocysCom.TextToSpeech.WoW.mklink.bat" />
     <None Include="WoW\MakeLinkToLua.bat" />
     <None Include="app.config" />
-    <None Include="app.manifest">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Audio\Radio2.wav" />

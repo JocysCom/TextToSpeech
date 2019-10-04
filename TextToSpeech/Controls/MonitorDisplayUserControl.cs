@@ -72,5 +72,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ColorPrefixValueTextBox.Text = string.Join(",", values);
 		}
 
+		private void ClearImageButton_Click(object sender, EventArgs e)
+		{
+			ImagePictureBox.Image = null;
+		}
 	}
 }

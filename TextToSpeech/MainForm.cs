@@ -10,6 +10,8 @@ using System.IO;
 using System.Linq;
 using System.Management;
 using System.Reflection;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Speech.AudioFormat;
 using System.Speech.Recognition;
 using System.Windows.Forms;
@@ -55,12 +57,18 @@ namespace JocysCom.TextToSpeech.Monitor
 				// Select first one.
 				ProgramComboBox.SelectedIndex = 0;
 			}
-			MonitorItem = (VoiceListItem)ProgramComboBox.SelectedItem;
-			ProgramComboBox.SelectedIndexChanged += ProgramComboBox_SelectedIndexChanged;
 			Program._ClipboardMonitor.StatusChanged += _Monitor_StatusChanged;
 			Program._NetworkMonitor.StatusChanged += _Monitor_StatusChanged;
 			Program._UdpMonitor.StatusChanged += _Monitor_StatusChanged;
+			Program._NetworkMonitor.ProcessChanged += _NetworkMonitor_ProcessChanged;
 
+		}
+
+		private void _NetworkMonitor_ProcessChanged(object sender, ClassLibrary.EventArgs<string> e)
+		{
+			ProcessStatusLabel.Text = string.IsNullOrEmpty(e.Data)
+				? "Process: None"
+				: string.Format("{0}: Running", e.Data);
 		}
 
 		private void Global_EffectsPresetSelected(object sender, ClassLibrary.EventArgs<string> e)
@@ -326,7 +334,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			var sr = new StreamReader(stream);
 			AboutRichTextBox.Rtf = sr.ReadToEnd();
 			sr.Close();
-			InitWatcher();
 			ResetHelpToDefault();
 		}
 
@@ -658,7 +665,7 @@ namespace JocysCom.TextToSpeech.Monitor
 					_lastData = text;
 					if (MonitorClipboardComboBox.SelectedIndex == 2 && !text.Contains("<message")) text = "<message command=\"Play\"><part>" + text + "</part></message>";
 					if (string.IsNullOrEmpty(text) || !text.Contains("<message")) return;
-					var voiceItem = (VoiceListItem)Activator.CreateInstance(MonitorItem.GetType());
+					var voiceItem = (VoiceListItem)Activator.CreateInstance(Program.MonitorItem.GetType());
 					voiceItem.Load(text);
 					Global.addVoiceListItem(voiceItem);
 					// do something with it
@@ -722,7 +729,6 @@ namespace JocysCom.TextToSpeech.Monitor
 					NativeMethods.RemoveClipboardFormatListener(this.Handle);
 				}
 			}
-			DisposeWatcher();
 			SaveSettings();
 		}
 
@@ -733,7 +739,14 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		public void SaveSettings()
 		{
-			if (Global.InstalledVoices == null) return;
+			if (Global.InstalledVoices == null)
+				return;
+			// Check if settings are writable.
+			var path = SettingsFile.Current.FolderPath;
+			var rights = FileSystemRights.Write | FileSystemRights.Modify;
+			var hasRights = JocysCom.ClassLibrary.Security.PermissionHelper.HasRights(path, rights);
+			if (!hasRights)
+				Program.RunElevated(AdminCommand.FixProgramSettingsPermissions);
 			var xml = Serializer.SerializeToXmlString(Global.InstalledVoices);
 			SettingsManager.Options.VoicesData = xml;
 			SettingsFile.Current.Save();
@@ -749,122 +762,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			//var voice = (InstalledVoiceEx)grid.Rows[e.RowIndex].DataBoundItem;
 			//var column = VoicesDataGridView.Columns[e.ColumnIndex];
 			e.Cancel = true;
-		}
-
-		#region Process Monitor
-
-		ManagementEventWatcher startWatch;
-		ManagementEventWatcher stopWatch;
-
-		void InitWatcher()
-		{
-			startWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
-			startWatch.EventArrived += StartWatch_EventArrived;
-			startWatch.Start();
-			stopWatch = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStopTrace"));
-			stopWatch.EventArrived += StopWatch_EventArrived;
-			stopWatch.Start();
-			CheckProcessStatus();
-		}
-
-		string GetRunningProcessName()
-		{
-			var mi = MonitorItem;
-			if (mi == null)
-			{
-				return null;
-			}
-			var names = mi.Process.Select(x => x.ToLower()).ToArray();
-			string wmiQueryString = "SELECT ExecutablePath FROM Win32_Process WHERE ExecutablePath <> Null";
-			var paths = new List<string>();
-			using (var searcher = new ManagementObjectSearcher(wmiQueryString))
-			{
-				using (var results = searcher.Get())
-				{
-					var mos = results.Cast<ManagementObject>().ToList();
-					foreach (var mo in mos)
-					{
-						if (mo != null)
-						{
-							var path = (string)mo["ExecutablePath"];
-							var name = Path.GetFileName(path).ToLower();
-							paths.Add(name);
-							if (names.Contains(name))
-							{
-								return name;
-							}
-						}
-					}
-				}
-			}
-			return null;
-		}
-
-		void CheckProcessStatus()
-		{
-			var name = GetRunningProcessName();
-			if (string.IsNullOrEmpty(name))
-			{
-				ProcessStatusLabel.Text = "Process: None";
-				//StopNetworkMonitor();
-			}
-			else
-			{
-				ProcessStatusLabel.Text = string.Format("{0}: Running", name);
-				//StartNetworkMonitor();
-			}
-			Program._NetworkMonitor.SetFilter(Program.MonitorItem);
-		}
-
-		void DisposeWatcher()
-		{
-			if (startWatch != null)
-			{
-				startWatch.Stop();
-				startWatch.Dispose();
-				startWatch = null;
-			}
-			if (stopWatch != null)
-			{
-				stopWatch.Stop();
-				stopWatch.Dispose();
-				stopWatch = null;
-			}
-		}
-
-		private void StartWatch_EventArrived(object sender, EventArrivedEventArgs e)
-		{
-			var name = (string)e.NewEvent.Properties["ProcessName"].Value;
-			var item = MonitorItem;
-			if (item.Process.Contains(name.ToLower()))
-			{
-				CheckProcessStatus();
-			}
-		}
-
-		private void StopWatch_EventArrived(object sender, EventArrivedEventArgs e)
-		{
-			var name = (string)e.NewEvent.Properties["ProcessName"].Value;
-			var item = MonitorItem;
-			if (item.Process.Contains(name.ToLower()))
-			{
-				CheckProcessStatus();
-			}
-		}
-
-		#endregion
-
-
-		VoiceListItem MonitorItem;
-
-		private void ProgramComboBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (ProgramComboBox.SelectedIndex > -1)
-			{
-				var item = (VoiceListItem)ProgramComboBox.SelectedItem;
-				MonitorItem = item;
-				SettingsManager.Options.ProgramComboBoxText = item.Name;
-			}
 		}
 
 		private void FilterStatusLabel_Click(object sender, EventArgs e)

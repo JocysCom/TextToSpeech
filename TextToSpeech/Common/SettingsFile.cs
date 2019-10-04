@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
-using System.Xml;
-using System.Text;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Linq;
 using JocysCom.ClassLibrary.ComponentModel;
 using JocysCom.TextToSpeech.Monitor.Capturing;
 using JocysCom.ClassLibrary.Runtime;

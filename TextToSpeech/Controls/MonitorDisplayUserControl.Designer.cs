@@ -57,6 +57,7 @@
 			this.CopyIntervalLabel = new System.Windows.Forms.Label();
 			this.CopyIntervalUpDown = new System.Windows.Forms.NumericUpDown();
 			this.ColorBoxGroupBox = new System.Windows.Forms.GroupBox();
+			this.ClearImageButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.BoxXUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxYUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxSizeUpDown)).BeginInit();
@@ -69,7 +70,7 @@
 			// EnableCapturingCheckBox
 			// 
 			this.EnableCapturingCheckBox.AutoSize = true;
-			this.EnableCapturingCheckBox.Location = new System.Drawing.Point(406, 20);
+			this.EnableCapturingCheckBox.Location = new System.Drawing.Point(406, 27);
 			this.EnableCapturingCheckBox.Name = "EnableCapturingCheckBox";
 			this.EnableCapturingCheckBox.Size = new System.Drawing.Size(107, 17);
 			this.EnableCapturingCheckBox.TabIndex = 28;
@@ -146,7 +147,7 @@
 			// 
 			// CaptureImageButton
 			// 
-			this.CaptureImageButton.Location = new System.Drawing.Point(301, 45);
+			this.CaptureImageButton.Location = new System.Drawing.Point(301, 75);
 			this.CaptureImageButton.Name = "CaptureImageButton";
 			this.CaptureImageButton.Size = new System.Drawing.Size(99, 23);
 			this.CaptureImageButton.TabIndex = 18;
@@ -156,7 +157,7 @@
 			// 
 			// CreateImageButton
 			// 
-			this.CreateImageButton.Location = new System.Drawing.Point(301, 16);
+			this.CreateImageButton.Location = new System.Drawing.Point(301, 23);
 			this.CreateImageButton.Name = "CreateImageButton";
 			this.CreateImageButton.Size = new System.Drawing.Size(99, 23);
 			this.CreateImageButton.TabIndex = 19;
@@ -378,6 +379,16 @@
 			this.ColorBoxGroupBox.TabStop = false;
 			this.ColorBoxGroupBox.Text = "Color Box";
 			// 
+			// ClearImageButton
+			// 
+			this.ClearImageButton.Location = new System.Drawing.Point(301, 49);
+			this.ClearImageButton.Name = "ClearImageButton";
+			this.ClearImageButton.Size = new System.Drawing.Size(99, 23);
+			this.ClearImageButton.TabIndex = 19;
+			this.ClearImageButton.Text = "Clear Image";
+			this.ClearImageButton.UseVisualStyleBackColor = true;
+			this.ClearImageButton.Click += new System.EventHandler(this.ClearImageButton_Click);
+			// 
 			// MonitorDisplayUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -399,6 +410,7 @@
 			this.Controls.Add(this.ColorPrefixTextBox);
 			this.Controls.Add(this.MessageTextBox);
 			this.Controls.Add(this.CaptureImageButton);
+			this.Controls.Add(this.ClearImageButton);
 			this.Controls.Add(this.CreateImageButton);
 			this.Name = "MonitorDisplayUserControl";
 			this.Size = new System.Drawing.Size(640, 280);
@@ -447,5 +459,6 @@
 		private System.Windows.Forms.Label CopyIntervalLabel;
 		private System.Windows.Forms.NumericUpDown CopyIntervalUpDown;
 		private System.Windows.Forms.GroupBox ColorBoxGroupBox;
+		private System.Windows.Forms.Button ClearImageButton;
 	}
 }

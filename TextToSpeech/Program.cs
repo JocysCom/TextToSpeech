@@ -27,8 +27,16 @@ namespace JocysCom.TextToSpeech.Monitor
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main()
+		static void Main(params string[] args)
 		{
+			// ------------------------------------------------
+			// Administrator commands.
+			// ------------------------------------------------
+			var executed = ProcessAdminCommands(false, args);
+			// If valid command was executed then...
+			if (executed)
+				return;
+			// ------------------------------------------------
 			//var h = "6000000000aa06402a020c7fc4218f00cd3b5a2cb0ecc03f2a04e80050192273028cfafffefbf006";
 			//var bytes = HexToBytes(h);
 			//Network.Ip6Header header;
