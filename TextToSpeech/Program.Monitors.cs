@@ -80,6 +80,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			var enabledCanged = e.PropertyName == nameof(SettingsManager.Options.MonitorsEnabled);
 			var en = SettingsManager.Options.MonitorsEnabled;
+			var isElevated = JocysCom.ClassLibrary.Security.PermissionHelper.IsElevated;
 
 			// UDP Monitor Properties.
 			if (e.PropertyName == nameof(SettingsManager.Options.UdpMonitorPort))
@@ -106,7 +107,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				_NetworkMonitor.CapturingType = SettingsManager.Options.NetworkMonitorCapturingType;
 			if (e.PropertyName == nameof(SettingsManager.Options.NetworkMonitorEnabled) || enabledCanged)
 			{
-				if (SettingsManager.Options.NetworkMonitorEnabled && en)
+				if (SettingsManager.Options.NetworkMonitorEnabled && en && isElevated)
 					_NetworkMonitor.Start();
 				else
 					_NetworkMonitor.Stop();
