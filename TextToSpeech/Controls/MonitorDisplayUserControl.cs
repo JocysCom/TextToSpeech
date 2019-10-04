@@ -60,7 +60,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 
 			StatusTextBox.Text = "Capturing...";
-			ResultsTextBox.Text = Program._DisplayMonitor.CaptureText() ?? "";
+			ResultsTextBox.Text = Program._DisplayMonitor.CaptureMessage() ?? "";
 		}
 
 

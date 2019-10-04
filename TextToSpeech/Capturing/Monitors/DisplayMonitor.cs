@@ -173,7 +173,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		/// <summary>
 		/// Image: prefix[6] + change[1] + size[1] + message_bytes
 		/// </summary>
-		public string CaptureText()
+		public string CaptureTextFromPosition()
 		{
 			var x = SettingsManager.Options.DisplayMonitorPositionX;
 			var y = SettingsManager.Options.DisplayMonitorPositionY;
@@ -187,13 +187,9 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			var image = Basic.CaptureImage(x, y, length, 1);
 			var bytes = Basic.GetImageBytes(image);
 			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, ColorPrefixBytesBlanked);
-			string message = null;
 			// If not found then...
 			if (index == -1)
-			{
-				FindImagePositionOnScreen();
 				return null;
-			}
 			//	StatusTextBox.Text += string.Format("Prefix found");
 			bytes = RemoveBlankPixels(bytes);
 			var prefix = ColorPrefixBytes;
@@ -204,10 +200,26 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			var messageSize = ReadRgbInt(br);
 			var messageBytes = new byte[messageSize];
 			br.Read(messageBytes, 0, messageSize);
-			message = System.Text.Encoding.UTF8.GetString(messageBytes);
+			var message = System.Text.Encoding.UTF8.GetString(messageBytes);
 			//	ResultsTextBox.Text = message;
 			return message;
 		}
+
+		/// <summary>
+		/// Image: prefix[6] + change[1] + size[1] + message_bytes
+		/// </summary>
+		public string CaptureMessage()
+		{
+			var message = CaptureTextFromPosition();
+			if (message == null)
+			{
+				var success = FindImagePositionOnScreen();
+				if (success)
+					message = CaptureTextFromPosition();
+			}
+			return message;
+		}
+
 
 		public bool FindImagePositionOnScreen()
 		{
