@@ -96,7 +96,12 @@ namespace JocysCom.ClassLibrary.Runtime
 			}
 			return default(T);
 		}
-
+		/// <summary>
+		/// Return default attribute value.
+		/// </summary>
+		/// <typeparam name="S">Source Type</typeparam>
+		/// <typeparam name="T">Return Type</typeparam>
+		/// <param name="memberName">Member name i.e. property or field name.</param>
 		public static T GetDefaultValue<S, T>(string memberName)
 		{
 			var member = typeof(S).GetMember(memberName);
