@@ -9,7 +9,7 @@
       <Layer>
         <FontString name="JocysCom_MessageForMonitorFrameFontString" inherits="GameFontHighlightSmall">
           <Anchors>
-            <Anchor point="TOP" y="-215" />
+            <Anchor point="TOP" y="-193" />
           </Anchors>
         </FontString>
       </Layer>
@@ -57,28 +57,6 @@
         </Scripts>
         <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
       </EditBox>
-      <!--DropDownMenu-->
-
-      <!--<Frame name="JocysCom_MenuFrame" />-->
-
-      <!--<Frame parent="UIParent">
-        <Frames>
-          <Button name="MyDropDownMenuButton">
-            <Scripts>
-              <OnClick>
-                MyDropDownMenuButton_OnClick();
-              </OnClick>
-            </Scripts>
-          </Button>
-        </Frames>
-      </Frame>-->
-      <!--<Frame name="MyDropDownMenu" inherits="UIDropDownMenuTemplate" id="1">
-        <Scripts>
-          <OnLoad>
-            UIDropDownMenu_Initialize(self, MyDropDownMenu_OnLoad, "MENU");
-          </OnLoad>
-        </Scripts>
-      </Frame>-->
       <!--CheckButtons-->
       <CheckButton name="JocysCom_ColorMessageCheckButton" inherits="UICheckButtonTemplate">
         <Size x="26" y="27" />
@@ -141,22 +119,10 @@
         </Scripts>
       </CheckButton>
 
-      <CheckButton name="JocysCom_FilterCheckButton" inherits="UICheckButtonTemplate">
-        <Size x="26" y="27" />
-        <Anchors>
-          <Anchor point="TOPLEFT" x="7" y="-161" />
-        </Anchors>
-        <Scripts>
-          <OnClick>
-            JocysCom_PlaySoundAndSaveSettings();
-          </OnClick>
-        </Scripts>
-      </CheckButton>
-
       <EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate">
         <Size x="100" y="20" />
         <Anchors>
-          <Anchor point="TOPLEFT" x="15" y="-188" />
+          <Anchor point="TOPLEFT" x="15" y="-166" />
         </Anchors>
         <Layers>
           <Layer>
@@ -183,7 +149,7 @@
 
       <Frame name="JocysCom_MessageFrame" inherits="InsetFrameTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" x="3" y="-232" />
+          <Anchor point="TOPLEFT" x="3" y="-210" />
           <Anchor point="BOTTOMRIGHT" x="-3" y="142" />
         </Anchors>
         <Layers>
@@ -305,10 +271,9 @@
     </Frames>
     <Scripts>
       <OnShow>
-        JocysCom_DndCheck();
+        JocysCom_DialogueMiniFrame_OnShow();
       </OnShow>
       <OnHide>
-        JocysCom_DndCheck();
         JocysCom_DialogueMiniFrame_OnHide();
       </OnHide>
     </Scripts>
@@ -1612,7 +1577,7 @@
   <Frame name="JocysCom_ColorMessageFrame" parent="WorldFrame" ignoreParentScale="true" movable="true" frameStrata="HIGH">
     <Size x="1" y="1" />
     <Anchors>
-      <Anchor point="TOPLEFT" />
+      <Anchor point="TOPLEFT" x="4" y="4" />
       <Anchor point="TOPRIGHT" />
     </Anchors>
     <Frames>

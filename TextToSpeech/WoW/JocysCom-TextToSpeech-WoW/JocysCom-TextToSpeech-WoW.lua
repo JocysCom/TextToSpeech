@@ -7,8 +7,11 @@
 local DebugEnabled = false
 
 -- Set variables.
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.1 ( 2019-10-05 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
+-- Message prefix for Monitor to find pixel line. 
+local messagePrefix =  "|cff2200000|r|cff0022000|r|cff0000220|r|cff2200000|r|cff0022000|r|cff0000220|r"
 local unitName = UnitName("player") -- GetUnitName()
 local customName = UnitName("player")
 local unitClass = UnitClass("player")
@@ -30,6 +33,7 @@ local chatMessageLimit = 240
 local messagesTable = {}
 local NPCNamesTable = {}
 local timerEnabled = false
+local eventForScroll = "" -- Save last quest event name for mouse scroll.
 
 local function Clear(v)
 	if v == nil or v == "" then
@@ -151,8 +155,10 @@ local function JocysCom_AddonCommands(msg, editbox)
 		DebugEnabled = not DebugEnabled
 		JocysCom_SaveTocFileSettings()
 		if DebugEnabled then
+			JocysCom_DebugEnabledSettings()
 			print("Debug: [Enabled]")
 		else
+			JocysCom_DebugEnabledSettings()
 			print("Debug: [Disabled]")
 		end
 	else
@@ -170,21 +176,29 @@ end
 SLASH_JocysComTTS1 = '/JocysComTTS'
 SlashCmdList["JocysComTTS"] = JocysCom_AddonCommands
 
+function JocysCom_DebugEnabledSettings()
+	if DebugEnabled then
+		JocysCom_ClipboardMessageFrame:Show()
+	else
+		JocysCom_ClipboardMessageFrame:Hide()
+	end
+end
+
 -- Set text.
 function JocysCom_AddonTXT_EN()
 	-- OptionsFrame title.
-	JocysCom_OptionsFrame.TitleText:SetText("Jocys.com Text to Speech World of Warcraft Addon 8.2.5.1 ( 2019-09-26 )")
+	JocysCom_OptionsFrame.TitleText:SetText(addonVersion)
 	-- CheckButtons (Options) text.
-	JocysCom_ColorMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffColor|r|cff808080 method. In|r |cff77ccffMonitor > Options > [Network] Tab > Enabled: [Checked]|r|cff808080.|r")
-	JocysCom_NetworkMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffNetwork|r|cff808080 method. In|r |cff77ccffMonitor > Options > [Color] Tab > Enabled: [Checked]|r|cff808080.|r")
+	JocysCom_ColorMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffDisplay|r|cff808080 method. In|r |cff77ccffTTS Monitor > [Options] Tab > [Monitor: Display] Tab > [Checked] Enable|r|cff808080.|r")
+	JocysCom_NetworkMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffNetwork|r|cff808080 method. In|r |cff77ccffTTS Monitor >  [Options] Tab > [Monitor: Network] Tab > [Checked] Enable|r|cff808080.|r")
 	JocysCom_ColorMessagePixelYFontString:SetText("|cff808080 [LEFT] and [TOP] position of color pixel line for|r |cff77ccffMonitor|r|cff808080. Default values [0] and [0].|r")
-	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080buttons mini frame. Grab frame by clicking on dark background around buttons.|r")
-	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on the right side of |cffffffff[Options]|r |cff808080button. [Unchecked] show menu on the left side.|r")
-	JocysCom_SaveCheckButton.text:SetText("|cff808080 Save \"target\" or \"mouseover\" NPC's name, gender and type in|r |cffffffffMonitor|r|cff808080. Default: [Checked] |r");
-	JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide detailed information about addon|r |cffffffff<messages>|r |cff808080in chat window. Default: [Unchecked]|r")
+	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock frame with |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080button. Grab frame by clicking on dark background around buttons.|r")
+	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on right side of |cffffffff[Options]|r |cff808080button. [Unchecked] show menu on left side.|r")
+	JocysCom_SaveCheckButton.text:SetText("|cff808080 Save \"target\" and \"mouseover\" NPC's name, gender and type in|r |cffffffffMonitor|r|cff808080. Default: [Checked] |r");
+	--JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide detailed information about addon|r |cffffffff<messages>|r |cff808080in chat window. Default: [Unchecked]|r")
 	-- Font Strings.
 	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH")
-	JocysCom_DescriptionFrameFontString:SetText("|cff808080 Text-to-speech voices, pitch, rate, effects, etc. ... you will find all options in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window or receive chat message, |cff77ccffJocys.Com Text to Speech WoW Addon|r creates special message. If |cffffffffCliboard|r method is selected, |cff77ccffAddon|r puts message into textbox, selects it and changes color of few pixel on screen. If |cffffffffNetwork|r method is selected, |cff77ccffAddon|r sends special addon message to your character. Message can include dialogue text, character name, effect name, etc.. Then, |cff77ccffJocys.Com Text to Speech Monitor|r (which must be running in background) picks-up this message from Clipboard or your Network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffAddon|r with |cff77ccffMonitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.|r")
+	JocysCom_DescriptionFrameFontString:SetText("|cff808080 All text-to-speech options (voices, pitch, rate, effects, etc.) are in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window or receive chat message, |cff77ccffWoW Addon|r creates special message. If |cffffffffDisplay|r method is selected, |cff77ccffWoW Addon|r converts message into line of coloured pixels and shows it on your display. If |cffffffffNetwork|r method is selected, |cff77ccffWoW Addon|r sends special addon message to your character. Message can include dialogue text, character name, effect name, etc.. Then, |cff77ccffTTS Monitor|r (which must be running in background) picks-up this message from your display or network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffWoW Addon|r with |cff77ccffTTS Monitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.|r")
 	JocysCom_ReplaceNameFontString:SetText("|cff808080 Here you can change your name for text to speech from |cff00ff00" .. unitName .. "|r to something else.|r")
 	JocysCom_MessageForMonitorFrameFontString:SetText("|cff808080 Latest message for|r |cff77ccffJocys.Com Text to Speech Monitor|r |cff808080... it must be runninng in background:|r")
 end
@@ -214,7 +228,8 @@ end
 -- MessageStop function.
 function JocysCom_SendChatMessageStop(CloseOrButton, group)
 	-- Disable DND <Busy>.
-	if UnitIsDND("player") then SendChatMessage("", "DND") end
+	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(false) end
+	-- CLose if "0".
 	if CloseOrButton ~= 0 then
 		if JocysCom_StartOnOpenCheckButton:GetChecked() ~= true and CloseOrButton ~= 2  then
 			return
@@ -246,24 +261,6 @@ function JocysCom_SendSoundIntro(group)
 		JocysCom_AddMessageToTable(messageGroup)
 	end
 end
-
---local menu = {
---    { text = "Select an Option", isTitle = true},
---    { text = "Option 1", func = function() print("You've chosen option 1"); end },
---    { text = "Option 2", func = function() print("You've chosen option 2"); end },
---    { text = "More Options", hasArrow = true,
---        menuList = {
---            { text = "Option 3", func = function() print("You've chosen option 3"); end }
---        } 
---    }
---}
---local menuFrame = CreateFrame("Frame", "ExampleMenuFrame", UIParent, "UIDropDownMenuTemplate")
---
----- Make the menu appear at the cursor: 
---EasyMenu(menu, menuFrame, "cursor", 0 , 0, "MENU");
----- Or make the menu appear at the frame:
---menuFrame:SetPoint("Center", UIParent, "Center")
---EasyMenu(menu, menuFrame, menuFrame, 0 , 0, "MENU");
 
 -- Register or unregister events.
 function JocysCom_SetEvent(checked, ...)
@@ -335,10 +332,15 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 	local group = ""
 	if event == "ADDON_LOADED" and text == addonName then
 		JocysCom_LoadTocFileSettings() -- Load addon settings.
+		JocysCom_DebugEnabledSettings() -- Show / Hide clipboard EditBox and other settings.
 		JocysCom_MenuCheckButton_OnClick() -- Set MiniMenuFrame on left or right side.
 		JocysCom_OptionsFrame_OnHide() -- Set DialogueScrollFrame and make it transparent.
 		JocysCom_AddonTXT_EN() -- Set text of elements.
 		JocysCom_LoadEventSettings() -- Register or unregister events.
+		-- Attach and show frames.
+		JocysCom_AttachAndShowFrames()
+		JocysCom_DialogueScrollFrame:Show()
+		JocysCom_DialogueMiniFrame:Show()
 		--if DebugEnabled then JocysCom_OptionsFrame:RegisterAllEvents() end
 		return 
 	elseif event == "PLAYER_ENTERING_WORLD" then
@@ -358,6 +360,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 	elseif event == "ITEM_TEXT_READY" or event == "GOSSIP_SHOW" or event == "QUEST_GREETING" or event == "QUEST_DETAIL" or event == "QUEST_GREETING" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "QUEST_LOG_UPDATE" then
 		-- Set MiniFrame and Scrollframe
 		JocysCom_AttachAndShowFrames()
+		eventForScroll = event;
 		group = "Quest"
 		questMessage = nil
 		speakMessage = nil
@@ -375,12 +378,12 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 			local objectivesHeader = QuestInfoObjectivesHeader:GetText() and string.gsub(QuestInfoObjectivesHeader:GetText(), "Quest ", "Your ") .. "." or ""
 			questMessage = JocysCom_ObjectivesCheckButton:GetChecked() and GetQuestText() .. " " .. objectivesHeader .. " " .. GetObjectiveText() or GetQuestText()
 		end
+		speakMessage = questMessage
 		playerName = UnitName("npc")
 		if JocysCom_NameQuestCheckButton:GetChecked() and playerName ~= nil then
 			nameIntro = true
 			questMessage = playerName .. " says. " .. questMessage
 		end
-		speakMessage = questMessage
 	-- MONSTER.
 	elseif string.find(event, "MSG_MONSTER") ~= nil then
 		group = "Monster"
@@ -480,12 +483,14 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		speakMessage = text
 	end
 	-- Remove realm name from name.
-		if playerName ~= nil then dashIndex = string.find(playerName, "-") else dashIndex = nil end
+	if playerName ~= nil then dashIndex = string.find(playerName, "-") else dashIndex = nil end
 	if dashIndex ~= nil then playerName = string.sub(playerName, 1, dashIndex - 1) end
 
 	-- Set "whispers", "says" or "yells".
 	local messageType = ""
-	if event == "GOSSIP_SHOW" or event == "ITEM_TEXT_READY" or string.find(event, "QUEST") ~= nil or (string.find(event, "CHAT") ~= nil and string.find(event, "EMOTE") == nil) then messageType = " says. " end
+	if event == "GOSSIP_SHOW" or event == "ITEM_TEXT_READY" or string.find(event, "QUEST") ~= nil or (string.find(event, "CHAT") ~= nil and string.find(event, "EMOTE") == nil) then
+	messageType = " says. "
+	end
 	if string.find(event, "WHISPER") ~= nil then messageType = " whispers. " end
 	if string.find(event, "YELL") ~= nil then messageType = " yells. " end
 	-- Add name if name check-box enabled.
@@ -498,6 +503,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		speakMessage = messageLeader .. playerName .. " " .. messageType .. speakMessage
 	else
 		speakMessage = speakMessage
+
 	end
 	nameIntro = false
 	JocysCom_SpeakMessage(event, speakMessage, playerName, group, realName)
@@ -666,20 +672,42 @@ function JocysCom_SpeakMessage(event, speakMessage, name, group, realName)
 	end
 end
 
--- DND Check.
-function JocysCom_DndCheck()
-	if JocysCom_DndCheckButton:GetChecked() and JocysCom_DialogueMiniFrame:IsVisible() then
+-- Enable / Disable "Do Not Disturb" (DND) / <Busy>
+function JocysCom_DND(b)
+	if b then
 		if not UnitIsDND("player") then SendChatMessage("<" .. unitName .. ">: " .. messageDoNotDisturb, "DND") end
 	else
 		if UnitIsDND("player") then SendChatMessage("", "DND") end
 	end
 end
 
+-- DialogueMiniFrame OnShow.
+function JocysCom_DialogueMiniFrame_OnShow()
+	if JocysCom_DndCheckButton:GetChecked() then
+		JocysCom_DND(true)
+	end
+end
+
+-- DialogueMiniFrame OnHide.
+function JocysCom_DialogueMiniFrame_OnHide()
+	JocysCom_SendChatMessageStop(0, "Quest")
+end
+
 -- DND CheckButton OnClick.
 function JocysCom_DndCheckButton_OnClick()
 	PlaySound(856)
 	JocysCom_SaveTocFileSettings()
-	JocysCom_DndCheck()
+	if JocysCom_DndCheckButton:GetChecked() then
+		JocysCom_FilterDND()
+		if JocysCom_DialogueMiniFrame:IsVisible() then
+			JocysCom_DND(true)
+		else
+			JocysCom_DND(false)
+		end
+	else
+		JocysCom_DND(false)
+		JocysCom_FilterDND()
+	end
 end
 
 -- Play sound and save settings.
@@ -859,20 +887,25 @@ end
 
 -- [ Play ] button.
 function JocysCom_PlayButton_OnClick()
+	-- Disable DND.
+	if JocysCom_DndCheckButton:GetChecked() and JocysCom_DialogueMiniFrame:IsVisible() then JocysCom_DND(true) end
 	if JocysCom_ColorMessageCheckButton:GetChecked() then
 	JocysCom_ClipboardMessageEditBoxSetFocus()
 	end
 	if WorldMapFrame:IsVisible() then
 		local questDescription, questObjectives = GetQuestLogQuestText()
 		questMessage = questObjectives .. " Description. " .. questDescription
+		JocysCom_SpeakMessage("SROLL_UP_OR_PLAY_BUTTON", questMessage, "", "Quest")
+	else
+		JocysCom_OptionsFrame_OnEvent(nil, eventForScroll)
 	end
-	JocysCom_SpeakMessage("SROLL_UP_OR_PLAY_BUTTON", questMessage, "", "Quest")
 end
 
 -- ScrollFrame - scroll-up or scroll-down.
 function JocysCom_DialogueScrollFrame_OnMouseWheel(self, delta)
 	if delta == 1 then
 		JocysCom_PlayButton_OnClick()
+
 	else
 		JocysCom_StopButton_OnClick("Quest")
 	end
@@ -921,13 +954,8 @@ function JocysCom_AttachAndShowFrames()
 		print("|cffabd473PLAY and STOP buttons attached to |r" .. JocysCom_DialogueMiniFrame:GetParent():GetName())
 	end
 	JocysCom_DialogueScrollFrame:SetFrameLevel(100)
-	JocysCom_DialogueMiniFrame:Show()
-	JocysCom_DialogueScrollFrame:Show()
-end
-
--- Close all JocysCom frames.
-function JocysCom_DialogueMiniFrame_OnHide()
-	JocysCom_SendChatMessageStop(0, "Quest")
+	--JocysCom_DialogueMiniFrame:Show()
+	--JocysCom_DialogueScrollFrame:Show()
 end
 
 -- [ Options ] button.
@@ -1060,8 +1088,6 @@ function JocysCom_SendMessagesFromTable()
 		--	message = message:gsub("|cff$", "")
 		--end
 		-- Image: prefix[6] + change[1] + size[1] + message_bytes
-		-- Message prefix for Monitor to find pixel line. 
-		local messagePrefix =  "|cff2200000|r|cff0022000|r|cff0000220|r|cff2200000|r|cff0022000|r|cff0000220|r"
 		-- Add 11 to red when message changes.
 		if messageChanged > 80 then messageChanged = 5 end
 		messageChanged = messageChanged + 5
@@ -1172,23 +1198,10 @@ function JocysCom_wait(delay, func, ...)
 	return true
 end
 
--- Enable/Disable message filter.
-function JocysCom_CHAT_MSG_WHISPER(self, event, msg)
-	if string.find(msg, "<message") ~= nil then
-		return true
-	end
-end
--- Enable/Disable message filter
-function JocysCom_CHAT_MSG_DND(self, event, msg)
-	if string.find(msg, "<" .. unitName .. ">: ") ~= nil and JocysCom_FilterCheckButton:GetChecked() then
-		return true
-	end
-end
--- Enable/Disable message filter
-function JocysCom_CHAT_MSG_SYSTEM(self, event, msg)
-	if string.find(msg, "You are no") ~= nil and JocysCom_FilterCheckButton:GetChecked() then
-		return true
-	end
+---- Enable/Disable DND message filter.
+function JocysCom_FilterDND()
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", function(self, event, msg) return not DebugEnabled and JocysCom_DndCheckButton:GetChecked() and string.find(msg, "You are no longer marked Busy.") ~= nil end)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", function(self, event, msg) return not DebugEnabled and JocysCom_DndCheckButton:GetChecked() and string.find(msg, "You are now Busy:") ~= nil end)
 end
 
 -- Load and apply settings from toc file.
@@ -1204,22 +1217,19 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_LockCheckButton:GetChecked() then JocysCom_StopButtonFrame:RegisterForDrag() else JocysCom_StopButtonFrame:RegisterForDrag("LeftButton") end
 	-- Set MenuCheckButton and MiniMenuFrame.
 	if JocysCom_MenuCB == false then JocysCom_MenuCheckButton:SetChecked(false) else JocysCom_MenuCheckButton:SetChecked(true) end
-	-- Set FilterCheckButton and Message filters.
-	if JocysCom_FilterCB == false then JocysCom_FilterCheckButton:SetChecked(false) else JocysCom_FilterCheckButton:SetChecked(true) end
 	-- Set save NPC name, gender and type to Monitor.
 	if JocysCom_SaveCB == false then JocysCom_SaveCheckButton:SetChecked(false) else JocysCom_SaveCheckButton:SetChecked(true) end
 	-- Add chat message filters.
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", JocysCom_CHAT_MSG_WHISPER)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", JocysCom_CHAT_MSG_WHISPER)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_DND", JocysCom_CHAT_MSG_DND)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", JocysCom_CHAT_MSG_SYSTEM)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", function(self, event, msg) return string.find(msg, "<message") ~= nil end)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", function(self, event, msg) return string.find(msg, "<message") ~= nil end)
+	JocysCom_FilterDND()
 	-- Set (Options) EditBoxes.
 	if JocysCom_ColorMessagePixelXEB == "" or JocysCom_ColorMessagePixelXEB == nil then JocysCom_ColorMessagePixelXEB = 0 JocysCom_ColorMessagePixelXEditBox:SetNumber(JocysCom_ColorMessagePixelXEB) else JocysCom_ColorMessagePixelXEditBox:SetNumber(JocysCom_ColorMessagePixelXEB) end
 	if JocysCom_ColorMessagePixelYEB == "" or JocysCom_ColorMessagePixelYEB == nil then JocysCom_ColorMessagePixelYEB = 0 JocysCom_ColorMessagePixelYEditBox:SetNumber(JocysCom_ColorMessagePixelYEB) else JocysCom_ColorMessagePixelYEditBox:SetNumber(JocysCom_ColorMessagePixelYEB) end
 	if JocysCom_ReplaceNameEB == "" or JocysCom_ReplaceNameEB == nil then JocysCom_ReplaceNameEB = unitName JocysCom_ReplaceNameEditBox:SetText(JocysCom_ReplaceNameEB) else JocysCom_ReplaceNameEditBox:SetText(JocysCom_ReplaceNameEB) end
 	-- Set (MiniFrame) CheckButtons.
 	if JocysCom_QuestCB == false then JocysCom_QuestCheckButton:SetChecked(false) else JocysCom_QuestCheckButton:SetChecked(true) end
-	if JocysCom_MonsterCB == true then JocysCom_MonsterCheckButton:SetChecked(true) else JocysCom_MonsterCheckButton:SetChecked(false) end
+	if JocysCom_MonsterCB == false then JocysCom_MonsterCheckButton:SetChecked(false) else JocysCom_MonsterCheckButton:SetChecked(true) end
 	if JocysCom_WhisperCB == false then JocysCom_WhisperCheckButton:SetChecked(false) else JocysCom_WhisperCheckButton:SetChecked(true) end
 	if JocysCom_EmoteCB == false then JocysCom_EmoteCheckButton:SetChecked(false) else JocysCom_EmoteCheckButton:SetChecked(true) end
 	if JocysCom_SayCB == false then JocysCom_SayCheckButton:SetChecked(false) else JocysCom_SayCheckButton:SetChecked(true) end
@@ -1278,7 +1288,6 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_DndCB = JocysCom_DndCheckButton:GetChecked()
 	JocysCom_LockCB = JocysCom_LockCheckButton:GetChecked()
 	JocysCom_MenuCB = JocysCom_MenuCheckButton:GetChecked()
-	JocysCom_FilterCB = JocysCom_FilterCheckButton:GetChecked()
 	JocysCom_SaveCB = JocysCom_SaveCheckButton:GetChecked();
 	JocysCom_QuestCB = JocysCom_QuestCheckButton:GetChecked()
 	JocysCom_MonsterCB = JocysCom_MonsterCheckButton:GetChecked()
