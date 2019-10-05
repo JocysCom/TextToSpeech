@@ -187,7 +187,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			return image;
 		}
 
-		// Reuse objects to same memory.
+		// Reuse objects to save memory.
 		byte[] lineBuffer;
 		Bitmap lineBitmap;
 		byte[] lineBufferNoBlanks;
@@ -243,6 +243,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			return message;
 		}
 
+		// Reuse objects to save memory.
 		byte[] screenBytes;
 		Bitmap screenBitmap;
 		public bool FindImagePositionOnScreen()
