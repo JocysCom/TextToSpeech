@@ -33,7 +33,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			Global.HelpSuggested += AudioGlobal_HelpSuggested;
 			Global.EffectsPresetSelected += Global_EffectsPresetSelected;
 
-			ControlsHelper.AddDataBinding(MonitorsEnabledCheckBox, s => s.Checked, SettingsManager.Options, d => d.MonitorsEnabled);
+			MonitorsEnabledCheckBox.DataBindings.Add(nameof(MonitorsEnabledCheckBox.Checked), SettingsManager.Options, nameof(SettingsManager.Options.MonitorsEnabled));
 
 			Audio.Global.playlist.ListChanged += Playlist_ListChanged;
 

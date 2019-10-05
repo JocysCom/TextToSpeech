@@ -21,6 +21,13 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 					if (!string.IsNullOrEmpty(message))
 						OnMessageReceived(message);
 				}
+				// If message is null then pixels where not found on the screen and full scan was done.
+				if (message == null)
+				{
+					// Wait for 1 second.
+					// Logical delay without blocking the current thread.
+					System.Threading.Tasks.Task.Delay(1000).Wait();
+				}
 			}
 			catch (Exception ex)
 			{
@@ -117,18 +124,20 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			return data;
 		}
 
-		public static byte[] RemoveBlankPixels(byte[] bytes)
+		public static void RemoveBlankPixels(byte[] bytes, ref byte[] destination)
 		{
 			// Remove blank pixels.
 			var len = bytes.Length / 2;
-			var data = new byte[len];
+			if (destination == null)
+				destination = new byte[len];
+			if (destination.Length != len)
+				Array.Resize(ref destination, len);
 			for (var p = 0; p < len; p += 3)
 			{
-				data[p + 0] = bytes[p * 2 + 0];
-				data[p + 1] = bytes[p * 2 + 1];
-				data[p + 2] = bytes[p * 2 + 2];
+				destination[p + 0] = bytes[p * 2 + 0];
+				destination[p + 1] = bytes[p * 2 + 1];
+				destination[p + 2] = bytes[p * 2 + 2];
 			}
-			return data;
 		}
 
 		/// <summary>
@@ -178,6 +187,11 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			return image;
 		}
 
+		// Reuse objects to same memory.
+		byte[] lineBuffer;
+		Bitmap lineBitmap;
+		byte[] lineBufferNoBlanks;
+
 		/// <summary>
 		/// Image: prefix[6] + change[1] + size[1] + message_bytes
 		/// </summary>
@@ -192,17 +206,17 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			var length = sw - x;
 			length = length - (length % 2);
 			// Take screenshot of the line.
-			var image = Basic.CaptureImage(x, y, length, 1);
-			var bytes = Basic.GetImageBytes(image);
-			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, ColorPrefixBytesBlanked);
+			Basic.CaptureImage(ref lineBitmap, x, y, length, 1);
+			Basic.GetImageBytes(ref lineBuffer, lineBitmap);
+			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(lineBuffer, ColorPrefixBytesBlanked);
 			// If not found then...
 			if (index == -1)
 				return null;
 			//	StatusTextBox.Text += string.Format("Prefix found");
-			bytes = RemoveBlankPixels(bytes);
+			RemoveBlankPixels(lineBuffer, ref lineBufferNoBlanks);
 			var prefix = ColorPrefixBytes;
 			// Skip prefix.
-			var ms = new MemoryStream(bytes, prefix.Length, bytes.Length - prefix.Length);
+			var ms = new MemoryStream(lineBufferNoBlanks, prefix.Length, lineBufferNoBlanks.Length - prefix.Length);
 			var br = new System.IO.BinaryReader(ms);
 			var change = ReadRgbInt(br);
 			var messageSize = ReadRgbInt(br);
@@ -212,6 +226,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			//	ResultsTextBox.Text = message;
 			return message;
 		}
+
 
 		/// <summary>
 		/// Image: prefix[6] + change[1] + size[1] + message_bytes
@@ -228,13 +243,14 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			return message;
 		}
 
-
+		byte[] screenBytes;
+		Bitmap screenBitmap;
 		public bool FindImagePositionOnScreen()
 		{
 			//	StatusTextBox.Text = "Wrong Bytes. Searching...";
-			var image = Basic.CaptureImage();
-			var bytes = Basic.GetImageBytes(image);
-			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, ColorPrefixBytesBlanked);
+			Basic.CaptureImage(ref screenBitmap);
+			Basic.GetImageBytes(ref screenBytes, screenBitmap);
+			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(screenBytes, ColorPrefixBytesBlanked);
 			//	StatusTextBox.Text = string.Format("Pixel Index  {0}...", index);
 			if (index > -1)
 			{
