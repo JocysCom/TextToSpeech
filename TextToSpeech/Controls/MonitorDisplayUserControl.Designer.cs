@@ -56,6 +56,7 @@
 			this.RunAsAdministratorLabel = new System.Windows.Forms.Label();
 			this.DebugGroupBox = new System.Windows.Forms.GroupBox();
 			this.label1 = new System.Windows.Forms.Label();
+			this.button1 = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.BoxXUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxYUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
@@ -127,7 +128,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ColorPrefixTextBox.Location = new System.Drawing.Point(83, 97);
 			this.ColorPrefixTextBox.Name = "ColorPrefixTextBox";
-			this.ColorPrefixTextBox.Size = new System.Drawing.Size(226, 20);
+			this.ColorPrefixTextBox.Size = new System.Drawing.Size(230, 20);
 			this.ColorPrefixTextBox.TabIndex = 22;
 			this.ColorPrefixTextBox.TextChanged += new System.EventHandler(this.ColorPrefixTextBox_TextChanged);
 			// 
@@ -357,6 +358,7 @@
 			this.DebugGroupBox.Controls.Add(this.BoxYUpDown);
 			this.DebugGroupBox.Controls.Add(this.BoxXLabel);
 			this.DebugGroupBox.Controls.Add(this.ColorPrefixNumberLabel);
+			this.DebugGroupBox.Controls.Add(this.button1);
 			this.DebugGroupBox.Controls.Add(this.CreateImageButton);
 			this.DebugGroupBox.Controls.Add(this.ColorPrefixValueTextBox);
 			this.DebugGroupBox.Controls.Add(this.ClearImageButton);
@@ -386,6 +388,16 @@
 			this.label1.Size = new System.Drawing.Size(36, 13);
 			this.label1.TabIndex = 26;
 			this.label1.Text = "Image";
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(344, 15);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(99, 23);
+			this.button1.TabIndex = 19;
+			this.button1.Text = "Reset Settings";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.ResetToDefaultButton_Click);
 			// 
 			// MonitorDisplayUserControl
 			// 
@@ -440,5 +452,6 @@
 		private System.Windows.Forms.Label RunAsAdministratorLabel;
 		private System.Windows.Forms.GroupBox DebugGroupBox;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Button button1;
 	}
 }

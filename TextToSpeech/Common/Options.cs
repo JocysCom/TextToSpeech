@@ -95,6 +95,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		public int DisplayMonitorInterval { get { return _DisplayMonitorInterval; } set { _DisplayMonitorInterval = value; OnPropertyChanged(); } }
 		int _DisplayMonitorInterval = 100;
 
+		[DefaultValue("#220000,#002200,#000022,#220000,#002200,#000022")]
 		public string DisplayMonitorPrefix { get { return _DisplayMonitorPrefix; } set { _DisplayMonitorPrefix = value; OnPropertyChanged(); } }
 		string _DisplayMonitorPrefix = "#220000,#002200,#000022,#220000,#002200,#000022";
 
@@ -105,6 +106,15 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(0)]
 		public int DisplayMonitorPositionY { get { return _DisplayMonitorPositionY; } set { _DisplayMonitorPositionY = value; OnPropertyChanged(); } }
 		int _DisplayMonitorPositionY;
+
+		public void DisplayMonitorResetSettings()
+		{
+			DisplayMonitorEnabled = ClassLibrary.Runtime.Attributes.GetDefaultValue<Options, bool>(nameof(DisplayMonitorEnabled));
+			DisplayMonitorInterval = ClassLibrary.Runtime.Attributes.GetDefaultValue<Options, int>(nameof(DisplayMonitorInterval));
+			DisplayMonitorPrefix = ClassLibrary.Runtime.Attributes.GetDefaultValue<Options, string>(nameof(DisplayMonitorPrefix));
+			DisplayMonitorPositionX = ClassLibrary.Runtime.Attributes.GetDefaultValue<Options, int>(nameof(DisplayMonitorPositionX));
+			DisplayMonitorPositionY = ClassLibrary.Runtime.Attributes.GetDefaultValue<Options, int>(nameof(DisplayMonitorPositionY));
+		}
 
 		#endregion
 

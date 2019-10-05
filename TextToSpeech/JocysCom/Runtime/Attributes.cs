@@ -97,6 +97,12 @@ namespace JocysCom.ClassLibrary.Runtime
 			return default(T);
 		}
 
+		public static T GetDefaultValue<S, T>(string memberName)
+		{
+			var member = typeof(S).GetMember(memberName);
+			return GetDefaultValue<T>(member[0]);
+		}
+
 		public static T GetDefaultValue<T>(object value)
 		{
 			lock (DefaultValuesLock)
@@ -104,15 +110,10 @@ namespace JocysCom.ClassLibrary.Runtime
 				if (!DefaultValues.ContainsKey(value))
 				{
 					DefaultValueAttribute[] attributes;
-					ICustomAttributeProvider p;
-					if (value is ICustomAttributeProvider)
-					{
-						p = (ICustomAttributeProvider)value;
-					}
-					else
-					{
+					var p = value as ICustomAttributeProvider;
+					// Assume it is enumeration value.
+					if (p == null)
 						p = value.GetType().GetField(value.ToString());
-					}
 					attributes = (DefaultValueAttribute[])p.GetCustomAttributes(typeof(DefaultValueAttribute), false);
 					var r = attributes.Length > 0 ? attributes[0].Value : null;
 					DefaultValues.Add(value, r);

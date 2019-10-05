@@ -77,5 +77,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ImagePictureBox.Image = null;
 		}
 
+		private void ResetToDefaultButton_Click(object sender, EventArgs e)
+		{
+			SettingsManager.Options.DisplayMonitorResetSettings();
+		}
 	}
 }
