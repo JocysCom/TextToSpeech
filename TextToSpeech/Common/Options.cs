@@ -91,9 +91,9 @@ namespace JocysCom.TextToSpeech.Monitor
 		public bool DisplayMonitorEnabled { get { return _DisplayMonitorEnabled; } set { _DisplayMonitorEnabled = value; OnPropertyChanged(); } }
 		bool _DisplayMonitorEnabled = true;
 
-		[DefaultValue(200)]
+		[DefaultValue(100)]
 		public int DisplayMonitorInterval { get { return _DisplayMonitorInterval; } set { _DisplayMonitorInterval = value; OnPropertyChanged(); } }
-		int _DisplayMonitorInterval;
+		int _DisplayMonitorInterval = 100;
 
 		public string DisplayMonitorPrefix { get { return _DisplayMonitorPrefix; } set { _DisplayMonitorPrefix = value; OnPropertyChanged(); } }
 		string _DisplayMonitorPrefix = "#220000,#002200,#000022,#220000,#002200,#000022";

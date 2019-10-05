@@ -202,9 +202,9 @@
 			this.OptionsTabControl.Controls.Add(this.CacheTabPage);
 			this.OptionsTabControl.Controls.Add(this.GoogleCloudTabPage);
 			this.OptionsTabControl.Controls.Add(this.MicrosoftCortanaTabPage);
+			this.OptionsTabControl.Controls.Add(this.MonitorDispalyTabPage);
 			this.OptionsTabControl.Controls.Add(this.MonitorNetworkTabPage);
 			this.OptionsTabControl.Controls.Add(this.MonitorUdpPortTabPage);
-			this.OptionsTabControl.Controls.Add(this.MonitorDispalyTabPage);
 			this.OptionsTabControl.Controls.Add(this.MonitorClipBoardTabPage);
 			this.OptionsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.OptionsTabControl.Location = new System.Drawing.Point(0, 0);

@@ -2,7 +2,6 @@
 using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 
 namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 {
@@ -25,16 +24,16 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			}
 			catch (Exception ex)
 			{
-				throw;
+				Console.WriteLine(ex.Message);
 			}
 			finally
 			{
-				if (IsRunning)
-					_Timer.Start();
+				//if (IsRunning)
+				//	_Timer.Start();
 			}
 		}
 
-		System.Timers.Timer _Timer;
+		JocysCom.ClassLibrary.HiResTimer _Timer;
 
 		public int ScanInterval
 		{
@@ -51,7 +50,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			}
 		}
 
-		int _Interval = 200;
+		int _Interval = 100;
 
 		public override void Start()
 		{
@@ -64,9 +63,9 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 					// Server is already running;
 					return;
 				}
-				_Timer = new System.Timers.Timer();
+				_Timer = new JocysCom.ClassLibrary.HiResTimer();
 				_Timer.Interval = ScanInterval;
-				_Timer.AutoReset = false;
+				//_Timer.AutoReset = false;
 				_Timer.Elapsed += _Timer_Elapsed;
 				_Timer.Start();
 				_IsRunning = true;
