@@ -1,7 +1,9 @@
-﻿using System;
+﻿using JocysCom.ClassLibrary.Controls;
+using System;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
+using System.Security.AccessControl;
 using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor
@@ -118,7 +120,22 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				SettingsManager.Current.OptionsData.ResetToDefault();
 			}
-
+			// Check if settings are writable.
+			var path = SettingsFile.Current.FolderPath;
+			var rights = FileSystemRights.Write | FileSystemRights.Modify;
+			var hasRights = JocysCom.ClassLibrary.Security.PermissionHelper.HasRights(path, rights);
+			if (!hasRights)
+			{
+				var caption = string.Format("Folder Access Denied - {0}", path);
+				var text = "Old settings were written with administrator permissions.\r\n";
+				text += "You'll need to provide administrator permissions to fix access and save settings.";
+				var form = new MessageBoxForm();
+				form.StartPosition = FormStartPosition.CenterParent;
+				var result2 = form.ShowForm(text, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+				form.Dispose();
+				if (result2 == DialogResult.OK)
+					RunElevated(AdminCommand.FixProgramSettingsPermissions);
+			}
 			return true;
 		}
 

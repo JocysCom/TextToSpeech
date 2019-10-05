@@ -4,14 +4,11 @@ using JocysCom.ClassLibrary.Win32;
 using JocysCom.TextToSpeech.Monitor.Audio;
 using JocysCom.TextToSpeech.Monitor.PlugIns;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Management;
 using System.Reflection;
 using System.Security.AccessControl;
-using System.Security.Principal;
 using System.Speech.AudioFormat;
 using System.Speech.Recognition;
 using System.Windows.Forms;
@@ -742,15 +739,36 @@ namespace JocysCom.TextToSpeech.Monitor
 			if (Global.InstalledVoices == null)
 				return;
 			// Check if settings are writable.
-			var path = SettingsFile.Current.FolderPath;
-			var rights = FileSystemRights.Write | FileSystemRights.Modify;
-			var hasRights = JocysCom.ClassLibrary.Security.PermissionHelper.HasRights(path, rights);
-			if (!hasRights)
-				Program.RunElevated(AdminCommand.FixProgramSettingsPermissions);
-			var xml = Serializer.SerializeToXmlString(Global.InstalledVoices);
-			SettingsManager.Options.VoicesData = xml;
-			SettingsFile.Current.Save();
-			SettingsManager.Current.Save();
+			//var path = SettingsFile.Current.FolderPath;
+			//var rights = FileSystemRights.Write | FileSystemRights.Modify;
+			//var hasRights = JocysCom.ClassLibrary.Security.PermissionHelper.HasRights(path, rights);
+			//DialogResult result = DialogResult.OK;
+			//if (!hasRights)
+			//{
+			//	var caption = string.Format("Folder Access Denied - {0}", path);
+			//	var text = "Old settings were written with administrator permissions.\r\n";
+			//	text += "You'll need to provide administrator permissions to fix access and save settings.";
+			//	var form = new MessageBoxForm();
+			//	form.StartPosition = FormStartPosition.CenterParent;
+			//	result = form.ShowForm(text, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+			//	form.Dispose();
+			//	if (result == DialogResult.OK)
+			//		Program.RunElevated(AdminCommand.FixProgramSettingsPermissions);
+			//}
+			try
+			{
+				var xml = Serializer.SerializeToXmlString(Global.InstalledVoices);
+				SettingsManager.Options.VoicesData = xml;
+				SettingsFile.Current.Save();
+				SettingsManager.Current.Save();
+			}
+			catch (Exception ex)
+			{
+				var form2 = new MessageBoxForm();
+				form2.StartPosition = FormStartPosition.CenterParent;
+				form2.ShowForm(ex.ToString(), ex.Message);
+				form2.Dispose();
+			}
 		}
 
 		#endregion
