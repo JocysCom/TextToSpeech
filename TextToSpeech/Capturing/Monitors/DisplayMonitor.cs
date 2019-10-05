@@ -227,20 +227,24 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			return message;
 		}
 
+		object captureLock = new object();
 
 		/// <summary>
 		/// Image: prefix[6] + change[1] + size[1] + message_bytes
 		/// </summary>
 		public string CaptureMessage()
 		{
-			var message = CaptureTextFromPosition();
-			if (message == null)
+			lock (captureLock)
 			{
-				var success = FindImagePositionOnScreen();
-				if (success)
-					message = CaptureTextFromPosition();
+				var message = CaptureTextFromPosition();
+				if (message == null)
+				{
+					var success = FindImagePositionOnScreen();
+					if (success)
+						message = CaptureTextFromPosition();
+				}
+				return message;
 			}
-			return message;
 		}
 
 		// Reuse objects to save memory.
