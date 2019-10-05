@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security.AccessControl;
 using System.Speech.AudioFormat;
 using System.Speech.Recognition;
 using System.Windows.Forms;

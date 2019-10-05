@@ -1031,23 +1031,33 @@ function JocysCom_SendMessagesFromTable()
 	--if JocysCom_ClipboardMessageEditBox:HasFocus() then
 		-- Convert message characters to HEX color.
 		local messageHEX = messagesTable[1]:gsub(".", function(c) return string.format("%02x", string.byte(c)) end)
-		-- Insert "-" after each 6 characters.
-		local messageHEX6 = messageHEX:gsub("......", '%1-')
-		-- How many "-" separators added.
-		local separators = #messageHEX6 - #messageHEX
-		-- HEX numbers after last separator "-".
-		local endHEX = #messageHEX - (separators * 6)
-		-- Need "0" to add.
-		local addHEX = 6 - endHEX
-		-- Add "|cff", "000" or "00000" and "|r".
-		message = "|cff" .. messageHEX6:gsub("-", "0|r|cff")
-		if addHEX == 2 then
-			message = message .. "000|r"
-		elseif addHEX == 4 then
-			message = message .. "00000|r"
-		else
-			message = message:gsub("|cff$", "")
+		local messageLen = #messageHEX / 2
+		local mod = math.fmod(messageLen,3)
+		if mod == 1 then
+			messageHEX = messageHEX .. "0000"
+		elseif mod == 2 then
+			messageHEX = messageHEX .. "00"
 		end
+		-- Reverse RGB.
+		local message2 = messageHEX:gsub("(..)(..)(..)", "|cff" .. "%3%2%1" .. "0|r")
+		
+		-- Insert "-" after each 6 characters.
+		--local messageHEX6 = messageHEX:gsub("......", '%1-')
+		-- How many "-" separators added.
+		--local separators = #messageHEX6 - #messageHEX
+		-- HEX numbers after last separator "-".
+		--local endHEX = #messageHEX - (separators * 6)
+		-- Need "0" to add.
+		--local addHEX = 6 - endHEX
+		-- Add "|cff", "000" or "00000" and "|r".
+		--message = "|cff" .. messageHEX6:gsub("-", "0|r|cff")
+		--if addHEX == 2 then
+		--	message = message .. "000|r"
+		--elseif addHEX == 4 then
+		--	message = message .. "00000|r"
+		--else
+		--	message = message:gsub("|cff$", "")
+		--end
 		-- Image: prefix[6] + change[1] + size[1] + message_bytes
 		-- Message prefix for Monitor to find pixel line. 
 		local messagePrefix =  "|cff2200000|r|cff0022000|r|cff0000220|r|cff2200000|r|cff0022000|r|cff0000220|r"
@@ -1056,14 +1066,14 @@ function JocysCom_SendMessagesFromTable()
 		messageChanged = messageChanged + 5
 		local messageChangedS = "|cff" .. messageChanged .. messageChanged.. messageChanged .. "0|r"
 		-- Message bytes.
-		local messageBytes = "|cff" .. string.format("%06x", #messageHEX / 2) .. "0|r"
+		local messageBytes = "|cff" .. string.format("%06x", messageLen) .. "0|r"
 		-- Add prefixes.
-		message = messagePrefix .. messageChangedS .. messageBytes ..  message
+		message = messagePrefix .. messageChangedS .. messageBytes ..  message2
 
 		if DebugEnabled then
 			print("|cff77ccff------------------------------------------------------------------------------------|r")
-			print("|cff77ccffSeparators|r (" .. #messageHEX6 .. " - " .. #messageHEX .. " = " ..  separators .. ") |cff77ccffendHEX|r (" .. #messageHEX .. " - " .. separators .. " * 6 = " .. endHEX .. ") |cff77ccffaddHEX|r (6 - " .. endHEX .. " = " .. addHEX .. ")")
-			print("|cff77ccffMessage pixels: |r" .. message)
+		--	print("|cff77ccffSeparators|r (" .. #messageHEX6 .. " - " .. #messageHEX .. " = " ..  separators .. ") |cff77ccffendHEX|r (" .. #messageHEX .. " - " .. separators .. " * 6 = " .. endHEX .. ") |cff77ccffaddHEX|r (6 - " .. endHEX .. " = " .. addHEX .. ")")
+			print("|cff77ccffMessage pixels: |r" .. message2)
 			print("|cff77ccffMessage removed: [|r" .. #messagesTable .. "|cff77ccff]|r " .. JocysCom_MessageAddColors(messagesTable[1]))
 		end
 		-- Set color frame position.

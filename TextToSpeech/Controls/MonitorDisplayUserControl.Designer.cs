@@ -135,7 +135,7 @@
 			this.ColorPrefixTextBox.Name = "ColorPrefixTextBox";
 			this.ColorPrefixTextBox.Size = new System.Drawing.Size(317, 20);
 			this.ColorPrefixTextBox.TabIndex = 22;
-			this.ColorPrefixTextBox.Text = "#200000,#002000,#000020,#200000,#002000,#000020";
+			this.ColorPrefixTextBox.TextChanged += new System.EventHandler(this.ColorPrefixTextBox_TextChanged);
 			// 
 			// MessageTextBox
 			// 

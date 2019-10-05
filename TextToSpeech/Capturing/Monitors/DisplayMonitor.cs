@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 
 namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 {

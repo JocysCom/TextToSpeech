@@ -1,13 +1,7 @@
 ﻿using JocysCom.ClassLibrary.Controls;
-using JocysCom.ClassLibrary.Drawing;
-using JocysCom.TextToSpeech.Monitor.Capturing;
 using JocysCom.TextToSpeech.Monitor.Capturing.Monitors;
 using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
@@ -21,6 +15,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				return;
 			BoxXUpDown.DataBindings.Add(nameof(BoxXUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPositionX));
 			BoxYUpDown.DataBindings.Add(nameof(BoxYUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPositionY));
+			ColorPrefixTextBox.DataBindings.Add(nameof(ColorPrefixTextBox.Text), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPrefix));
 		}
 
 
@@ -78,5 +73,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		{
 			ImagePictureBox.Image = null;
 		}
+
 	}
 }
