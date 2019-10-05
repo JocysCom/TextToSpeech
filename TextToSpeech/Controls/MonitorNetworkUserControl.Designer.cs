@@ -43,16 +43,19 @@
 			this.MainSettingsGroupBox = new System.Windows.Forms.GroupBox();
 			this.UdpMessagesLabel = new System.Windows.Forms.Label();
 			this.UdpPortMessagesTextBox = new System.Windows.Forms.TextBox();
+			this.RunAsAdministratorLabel = new System.Windows.Forms.Label();
+			this.AsAdministratorPanel = new System.Windows.Forms.Panel();
 			this.CaptureGroupBox.SuspendLayout();
 			this.LogGroupBox.SuspendLayout();
 			this.MainSettingsGroupBox.SuspendLayout();
+			this.AsAdministratorPanel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// CaptureGroupBox
 			// 
 			this.CaptureGroupBox.Controls.Add(this.WinPcapRadioButton);
 			this.CaptureGroupBox.Controls.Add(this.SocPcapRadioButton);
-			this.CaptureGroupBox.Location = new System.Drawing.Point(179, 3);
+			this.CaptureGroupBox.Location = new System.Drawing.Point(179, 27);
 			this.CaptureGroupBox.Name = "CaptureGroupBox";
 			this.CaptureGroupBox.Size = new System.Drawing.Size(240, 73);
 			this.CaptureGroupBox.TabIndex = 11;
@@ -92,7 +95,7 @@
 			this.LogGroupBox.Controls.Add(this.HowToButton);
 			this.LogGroupBox.Controls.Add(this.OpenButton);
 			this.LogGroupBox.Controls.Add(this.LogFilterTextTextBox);
-			this.LogGroupBox.Location = new System.Drawing.Point(3, 82);
+			this.LogGroupBox.Location = new System.Drawing.Point(3, 106);
 			this.LogGroupBox.Name = "LogGroupBox";
 			this.LogGroupBox.Size = new System.Drawing.Size(634, 122);
 			this.LogGroupBox.TabIndex = 12;
@@ -182,7 +185,7 @@
 			this.MainSettingsGroupBox.Controls.Add(this.UdpMessagesLabel);
 			this.MainSettingsGroupBox.Controls.Add(this.UdpPortMessagesTextBox);
 			this.MainSettingsGroupBox.Controls.Add(this.LogEnabledCheckBox);
-			this.MainSettingsGroupBox.Location = new System.Drawing.Point(3, 3);
+			this.MainSettingsGroupBox.Location = new System.Drawing.Point(3, 27);
 			this.MainSettingsGroupBox.Name = "MainSettingsGroupBox";
 			this.MainSettingsGroupBox.Size = new System.Drawing.Size(170, 73);
 			this.MainSettingsGroupBox.TabIndex = 13;
@@ -210,10 +213,35 @@
 			this.UdpPortMessagesTextBox.Text = "0";
 			this.UdpPortMessagesTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
+			// RunAsAdministratorLabel
+			// 
+			this.RunAsAdministratorLabel.AutoSize = true;
+			this.RunAsAdministratorLabel.Dock = System.Windows.Forms.DockStyle.Top;
+			this.RunAsAdministratorLabel.Location = new System.Drawing.Point(0, 0);
+			this.RunAsAdministratorLabel.Name = "RunAsAdministratorLabel";
+			this.RunAsAdministratorLabel.Padding = new System.Windows.Forms.Padding(3);
+			this.RunAsAdministratorLabel.Size = new System.Drawing.Size(444, 19);
+			this.RunAsAdministratorLabel.TabIndex = 14;
+			this.RunAsAdministratorLabel.Text = "You must run this application as Administrator in order for “Network Monitor” fea" +
+    "ture to work.";
+			// 
+			// AsAdministratorPanel
+			// 
+			this.AsAdministratorPanel.AutoSize = true;
+			this.AsAdministratorPanel.BackColor = System.Drawing.SystemColors.Info;
+			this.AsAdministratorPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.AsAdministratorPanel.Controls.Add(this.RunAsAdministratorLabel);
+			this.AsAdministratorPanel.Dock = System.Windows.Forms.DockStyle.Top;
+			this.AsAdministratorPanel.Location = new System.Drawing.Point(0, 0);
+			this.AsAdministratorPanel.Name = "AsAdministratorPanel";
+			this.AsAdministratorPanel.Size = new System.Drawing.Size(640, 21);
+			this.AsAdministratorPanel.TabIndex = 15;
+			// 
 			// MonitorNetworkUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.AsAdministratorPanel);
 			this.Controls.Add(this.MainSettingsGroupBox);
 			this.Controls.Add(this.LogGroupBox);
 			this.Controls.Add(this.CaptureGroupBox);
@@ -225,7 +253,10 @@
 			this.LogGroupBox.PerformLayout();
 			this.MainSettingsGroupBox.ResumeLayout(false);
 			this.MainSettingsGroupBox.PerformLayout();
+			this.AsAdministratorPanel.ResumeLayout(false);
+			this.AsAdministratorPanel.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -246,5 +277,7 @@
 		private System.Windows.Forms.GroupBox MainSettingsGroupBox;
 		private System.Windows.Forms.Label UdpMessagesLabel;
 		private System.Windows.Forms.TextBox UdpPortMessagesTextBox;
+		private System.Windows.Forms.Label RunAsAdministratorLabel;
+		private System.Windows.Forms.Panel AsAdministratorPanel;
 	}
 }

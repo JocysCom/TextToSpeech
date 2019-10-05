@@ -43,9 +43,9 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(true)]
 		public bool LogSound { get; set; }
 
-		[DefaultValue(false)]
+		[DefaultValue(true)]
 		public bool MonitorsEnabled { get { return _MonitorsEnabled; } set { _MonitorsEnabled = value; OnPropertyChanged(); } }
-		bool _MonitorsEnabled = false;
+		bool _MonitorsEnabled = true;
 
 		#region UDP Monitor
 
@@ -87,9 +87,9 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		#region Display Monitor
 
-		[DefaultValue(false)]
+		[DefaultValue(true)]
 		public bool DisplayMonitorEnabled { get { return _DisplayMonitorEnabled; } set { _DisplayMonitorEnabled = value; OnPropertyChanged(); } }
-		bool _DisplayMonitorEnabled;
+		bool _DisplayMonitorEnabled = true;
 
 		[DefaultValue(200)]
 		public int DisplayMonitorInterval { get { return _DisplayMonitorInterval; } set { _DisplayMonitorInterval = value; OnPropertyChanged(); } }

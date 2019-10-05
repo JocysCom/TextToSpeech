@@ -19,11 +19,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			if (ControlsHelper.IsDesignMode(this))
 				return;
 			var isElevated = JocysCom.ClassLibrary.Security.PermissionHelper.IsElevated;
-			// Disable network scan if not running as administrator		
-			if (!isElevated)
-			{
-				OptionsTabControl.TabPages.Remove(MonitorNetworkTabPage);
-			}
+			// Hide clipboard for later.
+			OptionsTabControl.TabPages.Remove(MonitorClipBoardTabPage);
 			// Make Google Cloud invisible, because it is not finished yet.
 			OptionsTabControl.TabPages.Remove(GoogleCloudTabPage);
 			AddSilcenceBeforeNumericUpDown.Value = SettingsManager.Options.AddSilenceBeforeMessage;
