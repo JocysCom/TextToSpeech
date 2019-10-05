@@ -18,6 +18,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ColorPrefixTextBox.DataBindings.Add(nameof(ColorPrefixTextBox.Text), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPrefix));
 			MonitorEnabledCheckBox.DataBindings.Add(nameof(MonitorEnabledCheckBox.Checked), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorEnabled));
 			CopyIntervalUpDown.DataBindings.Add(nameof(CopyIntervalUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorInterval));
+			MessagesTextBox.DataBindings.Add(nameof(MessagesTextBox.Text), Program._DisplayMonitor, nameof(Program._DisplayMonitor.MessagesReceived));
 		}
 
 
