@@ -172,8 +172,9 @@
 			// 
 			// LogEnabledCheckBox
 			// 
+			this.LogEnabledCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.LogEnabledCheckBox.AutoSize = true;
-			this.LogEnabledCheckBox.Location = new System.Drawing.Point(101, 19);
+			this.LogEnabledCheckBox.Location = new System.Drawing.Point(105, 19);
 			this.LogEnabledCheckBox.Name = "LogEnabledCheckBox";
 			this.LogEnabledCheckBox.Size = new System.Drawing.Size(59, 17);
 			this.LogEnabledCheckBox.TabIndex = 0;
@@ -196,7 +197,7 @@
 			// 
 			this.UdpMessagesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.UdpMessagesLabel.AutoSize = true;
-			this.UdpMessagesLabel.Location = new System.Drawing.Point(41, 45);
+			this.UdpMessagesLabel.Location = new System.Drawing.Point(41, 44);
 			this.UdpMessagesLabel.Name = "UdpMessagesLabel";
 			this.UdpMessagesLabel.Size = new System.Drawing.Size(58, 13);
 			this.UdpMessagesLabel.TabIndex = 6;
