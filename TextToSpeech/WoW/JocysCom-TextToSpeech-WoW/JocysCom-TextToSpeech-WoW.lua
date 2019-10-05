@@ -1033,6 +1033,7 @@ function JocysCom_SendMessagesFromTable()
 		local messageHEX = messagesTable[1]:gsub(".", function(c) return string.format("%02x", string.byte(c)) end)
 		local messageLen = #messageHEX / 2
 		local mod = math.fmod(messageLen,3)
+		-- Add missing bytes.
 		if mod == 1 then
 			messageHEX = messageHEX .. "0000"
 		elseif mod == 2 then
