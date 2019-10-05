@@ -188,7 +188,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		}
 
 		// Reuse objects to save memory.
-		byte[] lineBuffer;
+		byte[] lineBytes;
 		Bitmap lineBitmap;
 		byte[] lineBufferNoBlanks;
 
@@ -207,13 +207,13 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			length = length - (length % 2);
 			// Take screenshot of the line.
 			Basic.CaptureImage(ref lineBitmap, x, y, length, 1);
-			Basic.GetImageBytes(ref lineBuffer, lineBitmap);
-			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(lineBuffer, ColorPrefixBytesBlanked);
+			Basic.GetImageBytes(ref lineBytes, lineBitmap);
+			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(lineBytes, ColorPrefixBytesBlanked);
 			// If not found then...
 			if (index == -1)
 				return null;
 			//	StatusTextBox.Text += string.Format("Prefix found");
-			RemoveBlankPixels(lineBuffer, ref lineBufferNoBlanks);
+			RemoveBlankPixels(lineBytes, ref lineBufferNoBlanks);
 			var prefix = ColorPrefixBytes;
 			// Skip prefix.
 			var ms = new MemoryStream(lineBufferNoBlanks, prefix.Length, lineBufferNoBlanks.Length - prefix.Length);
