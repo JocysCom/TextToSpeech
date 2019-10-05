@@ -8,12 +8,20 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 {
 	public partial class DisplayMonitor : MonitorBase
 	{
+
+		public string lastMessage;
+
 		private void _Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 		{
 			try
 			{
-
-
+				var message = CaptureMessage();
+				if (!string.IsNullOrEmpty(message) && !Equals(lastMessage, message))
+				{
+					lastMessage = message;
+					if (!string.IsNullOrEmpty(message))
+						OnMessageReceived(message);
+				}
 			}
 			catch (Exception ex)
 			{

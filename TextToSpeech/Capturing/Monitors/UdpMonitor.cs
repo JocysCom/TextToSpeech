@@ -66,7 +66,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 
 		void StartReceive()
 		{
-			byte[] buffer = new Byte[8096];
+			byte[] buffer = new byte[8096];
 			var sockArgs = new SocketAsyncEventArgs();
 			sockArgs.AcceptSocket = serverSocket;
 			// Receive only from 127.0.0.1.

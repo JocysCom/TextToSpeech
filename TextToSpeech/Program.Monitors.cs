@@ -70,10 +70,10 @@ namespace JocysCom.TextToSpeech.Monitor
 		private static void _Monitor_MessageReceived(object sender, ClassLibrary.EventArgs<string> e)
 		{
 			// Invoke on UI thread.
-			ControlsHelper.BeginInvoke(() =>
-			{
+			//ControlsHelper.BeginInvoke(() =>
+			//{
 				Audio.Global.AddMessageToPlay(e.Data);
-			});
+			//});
 		}
 
 		static void Options_PropertyChanged(object sender, PropertyChangedEventArgs e)

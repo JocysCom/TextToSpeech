@@ -128,7 +128,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		{
 			var changed = (e.ListChangedType == ListChangedType.ItemChanged && e.PropertyDescriptor != null && e.PropertyDescriptor.Name == "Status");
 			var added = e.ListChangedType == ListChangedType.ItemAdded;
-			CheckPlayList(added, changed);
+			// CheckPlayList will adjust playlist item properties.
+			// Item will be in the process of adding to the grid control and could fail.
+			// Use BeginInvoke (delay execution) to make sure that grid control will complete update.
+			ControlsHelper.BeginInvoke(() => { CheckPlayList(added, changed); });
 		}
 
 		static void CheckPlayList(bool added, bool changed)
