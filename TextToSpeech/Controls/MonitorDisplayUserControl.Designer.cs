@@ -32,7 +32,7 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.ColorPrefixLabel = new System.Windows.Forms.Label();
 			this.MessageLabel = new System.Windows.Forms.Label();
-			this.ResultsTextBox = new System.Windows.Forms.TextBox();
+			this.ResultsMessageTextBox = new System.Windows.Forms.TextBox();
 			this.StatusTextBox = new System.Windows.Forms.TextBox();
 			this.ColorPrefixTextBox = new System.Windows.Forms.TextBox();
 			this.MessageTextBox = new System.Windows.Forms.TextBox();
@@ -57,6 +57,8 @@
 			this.DebugGroupBox = new System.Windows.Forms.GroupBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
+			this.ResultsChangeTextBox = new System.Windows.Forms.TextBox();
+			this.ResultsChangeLabel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.BoxXUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxYUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
@@ -102,15 +104,15 @@
 			this.MessageLabel.TabIndex = 27;
 			this.MessageLabel.Text = "Message";
 			// 
-			// ResultsTextBox
+			// ResultsMessageTextBox
 			// 
-			this.ResultsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.ResultsMessageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.ResultsTextBox.BackColor = System.Drawing.SystemColors.Control;
-			this.ResultsTextBox.Location = new System.Drawing.Point(83, 175);
-			this.ResultsTextBox.Name = "ResultsTextBox";
-			this.ResultsTextBox.Size = new System.Drawing.Size(374, 20);
-			this.ResultsTextBox.TabIndex = 20;
+			this.ResultsMessageTextBox.BackColor = System.Drawing.SystemColors.Control;
+			this.ResultsMessageTextBox.Location = new System.Drawing.Point(83, 175);
+			this.ResultsMessageTextBox.Name = "ResultsMessageTextBox";
+			this.ResultsMessageTextBox.Size = new System.Drawing.Size(538, 20);
+			this.ResultsMessageTextBox.TabIndex = 20;
 			// 
 			// StatusTextBox
 			// 
@@ -119,7 +121,7 @@
 			this.StatusTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.StatusTextBox.Location = new System.Drawing.Point(83, 149);
 			this.StatusTextBox.Name = "StatusTextBox";
-			this.StatusTextBox.Size = new System.Drawing.Size(374, 20);
+			this.StatusTextBox.Size = new System.Drawing.Size(409, 20);
 			this.StatusTextBox.TabIndex = 21;
 			// 
 			// ColorPrefixTextBox
@@ -128,7 +130,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ColorPrefixTextBox.Location = new System.Drawing.Point(83, 97);
 			this.ColorPrefixTextBox.Name = "ColorPrefixTextBox";
-			this.ColorPrefixTextBox.Size = new System.Drawing.Size(235, 20);
+			this.ColorPrefixTextBox.Size = new System.Drawing.Size(399, 20);
 			this.ColorPrefixTextBox.TabIndex = 22;
 			this.ColorPrefixTextBox.TextChanged += new System.EventHandler(this.ColorPrefixTextBox_TextChanged);
 			// 
@@ -138,9 +140,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.MessageTextBox.Location = new System.Drawing.Point(83, 123);
 			this.MessageTextBox.Name = "MessageTextBox";
-			this.MessageTextBox.Size = new System.Drawing.Size(374, 20);
+			this.MessageTextBox.Size = new System.Drawing.Size(538, 20);
 			this.MessageTextBox.TabIndex = 23;
-			this.MessageTextBox.Text = "Hello World!";
+			this.MessageTextBox.Text = "<message name=\"NPC Name\" gender=\"Male\" command=\"Play\"><part>Test text to speech.<" +
+    "/part></message>";
 			// 
 			// CaptureImageButton
 			// 
@@ -192,7 +195,7 @@
 			// 
 			this.ColorPrefixNumberLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.ColorPrefixNumberLabel.AutoSize = true;
-			this.ColorPrefixNumberLabel.Location = new System.Drawing.Point(324, 100);
+			this.ColorPrefixNumberLabel.Location = new System.Drawing.Point(488, 100);
 			this.ColorPrefixNumberLabel.Name = "ColorPrefixNumberLabel";
 			this.ColorPrefixNumberLabel.Size = new System.Drawing.Size(13, 13);
 			this.ColorPrefixNumberLabel.TabIndex = 32;
@@ -220,7 +223,7 @@
 			// 
 			this.ColorPrefixValueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.ColorPrefixValueTextBox.BackColor = System.Drawing.SystemColors.Control;
-			this.ColorPrefixValueTextBox.Location = new System.Drawing.Point(343, 97);
+			this.ColorPrefixValueTextBox.Location = new System.Drawing.Point(507, 97);
 			this.ColorPrefixValueTextBox.Name = "ColorPrefixValueTextBox";
 			this.ColorPrefixValueTextBox.Size = new System.Drawing.Size(114, 20);
 			this.ColorPrefixValueTextBox.TabIndex = 31;
@@ -232,7 +235,7 @@
 			this.ImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.ImagePictureBox.Location = new System.Drawing.Point(83, 71);
 			this.ImagePictureBox.Name = "ImagePictureBox";
-			this.ImagePictureBox.Size = new System.Drawing.Size(374, 20);
+			this.ImagePictureBox.Size = new System.Drawing.Size(538, 20);
 			this.ImagePictureBox.TabIndex = 30;
 			this.ImagePictureBox.TabStop = false;
 			// 
@@ -335,7 +338,7 @@
 			this.AsAdministratorPanel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.AsAdministratorPanel.Location = new System.Drawing.Point(0, 0);
 			this.AsAdministratorPanel.Name = "AsAdministratorPanel";
-			this.AsAdministratorPanel.Size = new System.Drawing.Size(645, 21);
+			this.AsAdministratorPanel.Size = new System.Drawing.Size(809, 21);
 			this.AsAdministratorPanel.TabIndex = 43;
 			// 
 			// RunAsAdministratorLabel
@@ -364,6 +367,7 @@
 			this.DebugGroupBox.Controls.Add(this.ClearImageButton);
 			this.DebugGroupBox.Controls.Add(this.ImagePictureBox);
 			this.DebugGroupBox.Controls.Add(this.CaptureImageButton);
+			this.DebugGroupBox.Controls.Add(this.ResultsChangeLabel);
 			this.DebugGroupBox.Controls.Add(this.label3);
 			this.DebugGroupBox.Controls.Add(this.MessageTextBox);
 			this.DebugGroupBox.Controls.Add(this.label2);
@@ -372,10 +376,11 @@
 			this.DebugGroupBox.Controls.Add(this.ColorPrefixLabel);
 			this.DebugGroupBox.Controls.Add(this.StatusTextBox);
 			this.DebugGroupBox.Controls.Add(this.MessageLabel);
-			this.DebugGroupBox.Controls.Add(this.ResultsTextBox);
+			this.DebugGroupBox.Controls.Add(this.ResultsChangeTextBox);
+			this.DebugGroupBox.Controls.Add(this.ResultsMessageTextBox);
 			this.DebugGroupBox.Location = new System.Drawing.Point(179, 27);
 			this.DebugGroupBox.Name = "DebugGroupBox";
-			this.DebugGroupBox.Size = new System.Drawing.Size(463, 204);
+			this.DebugGroupBox.Size = new System.Drawing.Size(627, 204);
 			this.DebugGroupBox.TabIndex = 44;
 			this.DebugGroupBox.TabStop = false;
 			this.DebugGroupBox.Text = "Debug and Tests";
@@ -399,6 +404,25 @@
 			this.label1.TabIndex = 26;
 			this.label1.Text = "Image";
 			// 
+			// ResultsChangeTextBox
+			// 
+			this.ResultsChangeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.ResultsChangeTextBox.BackColor = System.Drawing.SystemColors.Control;
+			this.ResultsChangeTextBox.Location = new System.Drawing.Point(546, 149);
+			this.ResultsChangeTextBox.Name = "ResultsChangeTextBox";
+			this.ResultsChangeTextBox.Size = new System.Drawing.Size(75, 20);
+			this.ResultsChangeTextBox.TabIndex = 20;
+			// 
+			// ResultsChangeLabel
+			// 
+			this.ResultsChangeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.ResultsChangeLabel.AutoSize = true;
+			this.ResultsChangeLabel.Location = new System.Drawing.Point(498, 152);
+			this.ResultsChangeLabel.Name = "ResultsChangeLabel";
+			this.ResultsChangeLabel.Size = new System.Drawing.Size(44, 13);
+			this.ResultsChangeLabel.TabIndex = 24;
+			this.ResultsChangeLabel.Text = "Change";
+			// 
 			// MonitorDisplayUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -407,7 +431,7 @@
 			this.Controls.Add(this.AsAdministratorPanel);
 			this.Controls.Add(this.MainSettingsGroupBox);
 			this.Name = "MonitorDisplayUserControl";
-			this.Size = new System.Drawing.Size(645, 254);
+			this.Size = new System.Drawing.Size(809, 254);
 			((System.ComponentModel.ISupportInitialize)(this.BoxXUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxYUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
@@ -428,7 +452,7 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label ColorPrefixLabel;
 		private System.Windows.Forms.Label MessageLabel;
-		private System.Windows.Forms.TextBox ResultsTextBox;
+		private System.Windows.Forms.TextBox ResultsMessageTextBox;
 		private System.Windows.Forms.TextBox StatusTextBox;
 		private System.Windows.Forms.TextBox ColorPrefixTextBox;
 		private System.Windows.Forms.TextBox MessageTextBox;
@@ -453,5 +477,7 @@
 		private System.Windows.Forms.GroupBox DebugGroupBox;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.TextBox ResultsChangeTextBox;
+		private System.Windows.Forms.Label ResultsChangeLabel;
 	}
 }

@@ -8,18 +8,19 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 	public partial class DisplayMonitor : MonitorBase
 	{
 
-		public string lastMessage;
+		public int lastChange;
 
 		private void _Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 		{
 			try
 			{
-				var message = CaptureMessage();
-				if (!string.IsNullOrEmpty(message) && !Equals(lastMessage, message))
+				int change;
+				string message;
+				CaptureMessage(out change, out message);
+				if (!string.IsNullOrEmpty(message) && change != lastChange)
 				{
-					lastMessage = message;
-					if (!string.IsNullOrEmpty(message))
-						OnMessageReceived(message);
+					lastChange = change;
+					OnMessageReceived(message);
 				}
 				// If message is null then pixels where not found on the screen and full scan was done.
 				if (message == null)
@@ -195,8 +196,10 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		/// <summary>
 		/// Image: prefix[6] + change[1] + size[1] + message_bytes
 		/// </summary>
-		public string CaptureTextFromPosition()
+		public void CaptureTextFromPosition(out int change, out string message)
 		{
+			change = 0;
+			message = null;
 			var x = SettingsManager.Options.DisplayMonitorPositionX;
 			var y = SettingsManager.Options.DisplayMonitorPositionY;
 			var screen = System.Windows.Forms.Screen.PrimaryScreen;
@@ -211,20 +214,18 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(lineBytes, ColorPrefixBytesBlanked);
 			// If not found then...
 			if (index == -1)
-				return null;
+				return;
 			//	StatusTextBox.Text += string.Format("Prefix found");
 			RemoveBlankPixels(lineBytes, ref lineBufferNoBlanks);
 			var prefix = ColorPrefixBytes;
 			// Skip prefix.
 			var ms = new MemoryStream(lineBufferNoBlanks, prefix.Length, lineBufferNoBlanks.Length - prefix.Length);
 			var br = new System.IO.BinaryReader(ms);
-			var change = ReadRgbInt(br);
+			change = ReadRgbInt(br);
 			var messageSize = ReadRgbInt(br);
 			var messageBytes = new byte[messageSize];
 			br.Read(messageBytes, 0, messageSize);
-			var message = System.Text.Encoding.UTF8.GetString(messageBytes);
-			//	ResultsTextBox.Text = message;
-			return message;
+			message = System.Text.Encoding.UTF8.GetString(messageBytes);
 		}
 
 		object captureLock = new object();
@@ -232,18 +233,17 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		/// <summary>
 		/// Image: prefix[6] + change[1] + size[1] + message_bytes
 		/// </summary>
-		public string CaptureMessage()
+		public void CaptureMessage(out int change, out string message)
 		{
 			lock (captureLock)
 			{
-				var message = CaptureTextFromPosition();
+				CaptureTextFromPosition(out change, out message);
 				if (message == null)
 				{
 					var success = FindImagePositionOnScreen();
 					if (success)
-						message = CaptureTextFromPosition();
+						CaptureTextFromPosition(out change, out message);
 				}
-				return message;
 			}
 		}
 
