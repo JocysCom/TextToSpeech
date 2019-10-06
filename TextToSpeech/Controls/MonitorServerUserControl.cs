@@ -6,9 +6,9 @@ using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-	public partial class MonitorUdpPortUserControl : UserControl
+	public partial class MonitorServerUserControl : UserControl
 	{
-		public MonitorUdpPortUserControl()
+		public MonitorServerUserControl()
 		{
 			InitializeComponent();
 			if (ControlsHelper.IsDesignMode(this))

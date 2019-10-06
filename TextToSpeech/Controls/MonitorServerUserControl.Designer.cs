@@ -1,6 +1,6 @@
 ﻿namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-    partial class MonitorUdpPortUserControl
+    partial class MonitorServerUserControl
     {
         /// <summary> 
         /// Required designer variable.
