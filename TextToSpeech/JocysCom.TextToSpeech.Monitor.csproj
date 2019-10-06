@@ -502,7 +502,6 @@
     <None Include="WoW\JocysCom.TextToSpeech.Monitor.sign.bat" />
     <None Include="WoW\JocysCom.TextToSpeech.WoW.mklink.bat" />
     <None Include="WoW\MakeLinkToLua.bat" />
-    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Audio\Radio2.wav" />
