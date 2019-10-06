@@ -1,6 +1,6 @@
 # WoW Addon and Monitor • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
-WoW Addon and Monitor reads quests and chat messages with text-to-speech voices. It makes game more immersive and you will not miss messages in chat. Addon text-to-speech feature allows visually impaired people to enjoy the game.
+WoW Addon and Monitor reads quests and chat messages with text-to-speech voices. It makes game more immersive and you will not miss messages in chat. Addon adds essential text-to-speech feature, which allows visually impaired people to enjoy the game.
 
 <hr />
 
