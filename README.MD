@@ -93,7 +93,7 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 • Spanish - Helena, Sabina.</sub></p>
 </blockquote>
 
-<p>When you will run <b>“JocysCom.TextToSpeech.Monitor.exe”</b>, additional text-to-speech voices should be visible now.</p>
+<p>Additional text-to-speech voices must be visible in <b>“JocysCom.TextToSpeech.Monitor.exe”</b>.</p>
 
 ### 6. Run <b>“JocysCom.TextToSpeech.Monitor.exe”</b> file (file is inside pasted folder).
 <hr />
@@ -128,11 +128,11 @@ Speed of voices can be adjusted in “Monitor's” “Rate” fields. Values can
 
 <p><img src="https://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Rate_Speed.png" /></p>
 
-### 10. Run “World of Warcraft” game.
+### 8. Run “World of Warcraft” game.
 <hr />
 
 
-<p>11. <b>[■]</b> (Stop text-to-speech) button will appear at the <b>center of the screen</b>. If you will move mouse pointer over <b>[≡]</b> (Options) button, menu with various <b>check-boxes</b> will appear. Move mouse pointer over any <strong>check-box</strong> and title will show, what it enables/disables.</p>
+<p>9. <b>[■]</b> (Stop text-to-speech) button will appear at the <b>center of the screen</b>. If you will move mouse pointer over <b>[≡]</b> (Options) button, menu with various <b>check-boxes</b> will appear. Move mouse pointer over any <strong>check-box</strong> and title will show, what it enables/disables.</p>
 
 <blockquote>
 <sub>To move mini frame with [≡][■] buttons: Move mouse pointer over [■] button. [≡] (Options) button will appear. Click on [≡] (Options) button, to open “Options” window. Unlock mini frame by unchecking first check-box in “Options” window. You can move “Options” window out of the way, if it is on top of mini frame with [≡][■] buttons. Move mini frame by clicking on black background around [≡][■] buttons. Lock it again, by checking the same check-box.</sub>
@@ -148,11 +148,11 @@ Speed of voices can be adjusted in “Monitor's” “Rate” fields. Values can
 Usual file directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysCom-TextToSpeech-WoW\</sub>
 </blockquote>
 
-12. <b>[■]</b> (Stop) and <b>[►]</b> (Play) buttons will appear at the bottom of some windows too.</p>
+10. <b>[■]</b> (Stop) and <b>[►]</b> (Play) buttons will appear at the bottom of some windows too.</p>
 
 <p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Buttons.png" /></a></p>
 
-<p>13. <b>“Addon”</b> gets genders of targeted (you are interacting with) NPCs. <b>“Addon”</b> also gets conversations-chat, but not genders of NPCs, who are walking and talking around you. Therefore, <strong>“Addon”</strong> automatically saves every NPC (name, gender and type), which you are targeting, in <b>“Monitor“</b> (must be running in background). Also, if slot is available, <b>“Addon“</b> will create <strong>“NPCSaveTTSMacro”</strong> and will update it during the game. You can use this macro to target at once up to 9 last chatting NPCs or any nearest friendly NPC (to save them in <b>“Monitor“</b>). Saved in <b>“Monitor“</b> NPCs have genders (male and female voices) in their conversations. I didn't figure out yet, how to get NPCs genders directly from NPC chat event or some database (although, there is no problem with players). For example: If you see two female NPCs chatting, but they have male voices... just click on them (or use macro to target them) and they should get female voices from that moment. Enter <strong>/m</strong> in chat window to show macros:</p>
+<p>11. <b>“Addon”</b> gets genders of targeted (you are interacting with) NPCs. <b>“Addon”</b> also gets conversations-chat, but not genders of NPCs, who are walking and talking around you. Therefore, <strong>“Addon”</strong> automatically saves every NPC (name, gender and type), which you are targeting, in <b>“Monitor“</b> (must be running in background). Also, if slot is available, <b>“Addon“</b> will create <strong>“NPCSaveTTSMacro”</strong> and will update it during the game. You can use this macro to target at once up to 9 last chatting NPCs or any nearest friendly NPC (to save them in <b>“Monitor“</b>). Saved in <b>“Monitor“</b> NPCs have genders (male and female voices) in their conversations. I didn't figure out yet, how to get NPCs genders directly from NPC chat event or some database (although, there is no problem with players). For example: If you see two female NPCs chatting, but they have male voices... just click on them (or use macro to target them) and they should get female voices from that moment. Enter <strong>/m</strong> in chat window to show macros:</p>
 
 <p></a target="_blank" href="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Macro.png"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Macro.png" /></a></p>
 
