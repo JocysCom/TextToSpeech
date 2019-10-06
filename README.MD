@@ -103,23 +103,13 @@ Good Ivona voices are English-British <b>“Amy”</b> and <b>“Brian”</b>. S
 </blockquote>
 
 <blockquote>
-<p align="justify"><sub>You can pin “Monitor” to Windows OS taskbar, if you plan to use it frequently. Administrator rights are required to run this program. Make sure that you are using <i>digitally signed software</i>. Any modification in code of software, after it is signed, <i>invalidates</i> digital signature. <i>Digitally signed software</i> ensures that users can verify origin of software and that no one has tampered with it.</sub></p>
+<p align="justify"><sub>You can pin “Monitor” to Windows OS taskbar, if you plan to use it frequently. Official JocysCom.TextToSpeech.Monitor.exe is always <i>digitally signed</i>. Any modification in code of software, after it is signed, <i>invalidates</i> digital signature. <i>Digitally signed software</i> ensures that users can verify origin of software and that no one has tampered with it.</sub></p>
 </blockquote>
-
-<p>7. User Account Control window must show <b>“Verified Publisher: Jocys.com”</b> or <b>“Verified Publisher: Evaldas Jocys”</b>.</p>
-
-<blockquote>
-<p>Do not trust executables from <b>“Publisher: Unknown”</b>.</p>
-</blockquote>
-
-<p><img src="http://www.jocys.com/Files/Software/Monitor_Signed_UAC.png" /></p> 
-
-<p>8. Click <b>[ Yes ]</b> button.</p>
 
 <p>“Monitor Clipboard” option doesn't work and must be [Disabled] in Windows XP.<br />
 “Addon” requires latest version of “World of Warcraft” game.</p>
 
-<p>9. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab (example).</p>
+<p>7. When <b>“Monitor”</b>, will open, setup voices in <b>[Voices]</b> tab (example).</p>
 
 <p><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_2_2_35.png" /></a></p>
 
