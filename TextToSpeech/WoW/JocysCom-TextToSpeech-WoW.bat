@@ -8,6 +8,7 @@ SET fil=%~n0
 SET dst="%DIR0%\%fil%.zip"
 SET lst="%DIR0%\%fil%-Include.txt"
 SET img="%DIR0%\%fil%-Images.txt"
+SET fnt="%DIR0%\%fil%-Fonts.txt"
 SET exc="%DIR0%\%fil%-Exclude.txt"
 SET wra="%ProgramFiles%\WinRAR\winrar.exe"
 if NOT EXIST %wra% SET wra="%ProgramFiles(x86)%\WinRAR\winrar.exe"
@@ -29,6 +30,7 @@ cd
 echo --- Pack all files in the list.
 %zip% -ap"%fil%" %dst% @%lst%
 %zip% -ap"%fil%\Images" %dst% @%img%
+%zip% -ap"%fil%\Fonts" %dst% @%fnt%
 :: Go back to home/current folder.
 cd %DIR0%
 

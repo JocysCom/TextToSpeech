@@ -890,7 +890,7 @@ function JocysCom_PlayButton_OnClick()
 	if JocysCom_ColorMessageCheckButton:GetChecked() then
 	JocysCom_ClipboardMessageEditBoxSetFocus()
 	end
-	if WorldMapFrame:IsVisible() then
+	if QuestMapDetailsScrollFrame:IsVisible() then
 		local questDescription, questObjectives = GetQuestLogQuestText()
 		questMessage = questObjectives .. " Description. " .. questDescription
 		JocysCom_SpeakMessage("SROLL_UP_OR_PLAY_BUTTON", questMessage, "", "Quest")
@@ -919,15 +919,15 @@ function JocysCom_AttachAndShowFrames()
 			frame = GossipFrame
 		elseif QuestFrame:IsVisible() then
 			frame = QuestFrame
-		elseif WorldMapFrame:IsVisible() then
-			frame = WorldMapFrame
 		elseif ItemTextFrame:IsVisible() then
 			frame = ItemTextFrame
+		elseif QuestMapFrame:IsVisible() then
+			frame = QuestMapFrame
 		end
 	JocysCom_DialogueMiniFrame:ClearAllPoints()
 	JocysCom_DialogueScrollFrame:ClearAllPoints()
 	-- Different ScrollFrame position and size if frame is WorldMapFrame.
-	if frame == WorldMapFrame then
+	if frame == QuestMapFrame then
 		-- ScrollFrame.
 		local width = QuestMapDetailsScrollFrame:GetWidth()
 		JocysCom_DialogueScrollFrame:SetParent(QuestMapDetailsScrollFrame)
@@ -935,7 +935,7 @@ function JocysCom_AttachAndShowFrames()
 		JocysCom_DialogueScrollFrame:SetWidth(width - 4)
 		-- MiniFrame.
 		JocysCom_DialogueMiniFrame:SetParent(QuestMapDetailsScrollFrame)
-		JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", WorldMapFrame, "BOTTOMRIGHT", 0, 1)
+		JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", QuestMapFrame, "BOTTOMRIGHT", 0, 1)
 	else
 		-- ScrollFrame.
 		local width = frame:GetWidth()
@@ -1124,6 +1124,10 @@ end
 function JocysCom_ClipboardMessageEditBoxSetFocus()
 	if DebugEnabled then
 		JocysCom_ClipboardMessageFrame:Show()
+		-- Clear focus...
+		if JocysCom_ClipboardMessageEditBox:HasFocus() then
+			JocysCom_ClipboardMessageEditBox:ClearFocus()
+		end
 		--JocysCom_ClipboardMessageFrame:SetFocus()
 		--JocysCom_ClipboardMessageEditBox:HighlightText()
 	else

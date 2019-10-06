@@ -16,7 +16,7 @@
     </Layers>
     <Frames>
       <!--Cliboard message pixel for Monitor-->
-      <EditBox name="JocysCom_ColorMessagePixelXEditBox" inherits="InputBoxTemplate" numeric="true">
+      <EditBox name="JocysCom_ColorMessagePixelXEditBox" inherits="InputBoxTemplate" numeric="true" autofocus="false">
         <Size x="40" y="20" />
         <Anchors>
           <Anchor point="TOPLEFT" x="15" y="-75" />
@@ -32,7 +32,7 @@
         </Scripts>
         <FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
       </EditBox>
-      <EditBox name="JocysCom_ColorMessagePixelYEditBox" inherits="InputBoxTemplate" numeric="true">
+      <EditBox name="JocysCom_ColorMessagePixelYEditBox" inherits="InputBoxTemplate" numeric="true" autofocus="false">
         <Size x="40" y="20" />
         <Anchors>
           <Anchor point="TOPLEFT" x="65" y="-75" />
@@ -119,7 +119,7 @@
         </Scripts>
       </CheckButton>
 
-      <EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate">
+      <EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate" autofocus="false">
         <Size x="100" y="20" />
         <Anchors>
           <Anchor point="TOPLEFT" x="15" y="-166" />
@@ -171,7 +171,7 @@
             </Anchors>
             <ScrollChild>
               <!--<Frames>-->
-              <EditBox name="JocysCom_OptionsEditBox" letters="10000" multiLine="true">
+              <EditBox name="JocysCom_OptionsEditBox" letters="10000" multiLine="true" autofocus="false">
                 <Size x="565" />
                 <Scripts>
                   <OnLoad>
@@ -1538,7 +1538,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <EditBox name="JocysCom_ClipboardMessageEditBox" letters="0" multiLine="true">
+      <EditBox name="JocysCom_ClipboardMessageEditBox" letters="0" multiLine="true" autofocus="false">
         <Size x="400" />
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" />
