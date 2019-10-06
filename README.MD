@@ -1,4 +1,4 @@
-## Note: It seems like WoW started to encrypt messages after last major patch. You need to use new version of WoW Addon and Montor, which are using new message sending and capturing technique by using color pixels of the display.
+## Note: New version of WoW require new version of WoW Addon and Montor, which are using new message sending and capturing technique by using color pixels of the display.
 
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
