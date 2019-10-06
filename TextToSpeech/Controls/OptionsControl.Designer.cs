@@ -214,7 +214,7 @@
 			this.OptionsTabControl.Location = new System.Drawing.Point(0, 0);
 			this.OptionsTabControl.Name = "OptionsTabControl";
 			this.OptionsTabControl.SelectedIndex = 0;
-			this.OptionsTabControl.Size = new System.Drawing.Size(754, 367);
+			this.OptionsTabControl.Size = new System.Drawing.Size(821, 367);
 			this.OptionsTabControl.TabIndex = 11;
 			// 
 			// GeneralTabPage
@@ -225,7 +225,7 @@
 			this.GeneralTabPage.Location = new System.Drawing.Point(4, 23);
 			this.GeneralTabPage.Name = "GeneralTabPage";
 			this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.GeneralTabPage.Size = new System.Drawing.Size(746, 340);
+			this.GeneralTabPage.Size = new System.Drawing.Size(813, 340);
 			this.GeneralTabPage.TabIndex = 0;
 			this.GeneralTabPage.Text = "General";
 			// 
@@ -237,7 +237,7 @@
 			this.CacheTabPage.Location = new System.Drawing.Point(4, 23);
 			this.CacheTabPage.Name = "CacheTabPage";
 			this.CacheTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.CacheTabPage.Size = new System.Drawing.Size(746, 340);
+			this.CacheTabPage.Size = new System.Drawing.Size(813, 340);
 			this.CacheTabPage.TabIndex = 1;
 			this.CacheTabPage.Text = "Cache";
 			// 
@@ -246,7 +246,7 @@
 			this.CachePanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.CachePanel.Location = new System.Drawing.Point(3, 3);
 			this.CachePanel.Name = "CachePanel";
-			this.CachePanel.Size = new System.Drawing.Size(740, 334);
+			this.CachePanel.Size = new System.Drawing.Size(807, 334);
 			this.CachePanel.TabIndex = 0;
 			// 
 			// GoogleCloudTabPage
@@ -256,7 +256,7 @@
 			this.GoogleCloudTabPage.ImageKey = "Options_Google_Cloud";
 			this.GoogleCloudTabPage.Location = new System.Drawing.Point(4, 23);
 			this.GoogleCloudTabPage.Name = "GoogleCloudTabPage";
-			this.GoogleCloudTabPage.Size = new System.Drawing.Size(746, 340);
+			this.GoogleCloudTabPage.Size = new System.Drawing.Size(813, 340);
 			this.GoogleCloudTabPage.TabIndex = 2;
 			this.GoogleCloudTabPage.Text = "Google Cloud";
 			// 
@@ -265,7 +265,7 @@
 			this.GoogleCloudPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.GoogleCloudPanel.Location = new System.Drawing.Point(0, 0);
 			this.GoogleCloudPanel.Name = "GoogleCloudPanel";
-			this.GoogleCloudPanel.Size = new System.Drawing.Size(746, 340);
+			this.GoogleCloudPanel.Size = new System.Drawing.Size(813, 340);
 			this.GoogleCloudPanel.TabIndex = 0;
 			// 
 			// MicrosoftCortanaTabPage
@@ -275,7 +275,7 @@
 			this.MicrosoftCortanaTabPage.ImageKey = "Options_Microsoft_Cortana";
 			this.MicrosoftCortanaTabPage.Location = new System.Drawing.Point(4, 23);
 			this.MicrosoftCortanaTabPage.Name = "MicrosoftCortanaTabPage";
-			this.MicrosoftCortanaTabPage.Size = new System.Drawing.Size(746, 340);
+			this.MicrosoftCortanaTabPage.Size = new System.Drawing.Size(813, 340);
 			this.MicrosoftCortanaTabPage.TabIndex = 3;
 			this.MicrosoftCortanaTabPage.Text = "Microsoft Cortana";
 			// 
@@ -284,7 +284,7 @@
 			this.MicrosoftCortanaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.MicrosoftCortanaPanel.Location = new System.Drawing.Point(0, 0);
 			this.MicrosoftCortanaPanel.Name = "MicrosoftCortanaPanel";
-			this.MicrosoftCortanaPanel.Size = new System.Drawing.Size(746, 340);
+			this.MicrosoftCortanaPanel.Size = new System.Drawing.Size(813, 340);
 			this.MicrosoftCortanaPanel.TabIndex = 0;
 			// 
 			// MonitorDispalyTabPage
@@ -294,7 +294,7 @@
 			this.MonitorDispalyTabPage.ImageKey = "Options_Monitor_Display";
 			this.MonitorDispalyTabPage.Location = new System.Drawing.Point(4, 23);
 			this.MonitorDispalyTabPage.Name = "MonitorDispalyTabPage";
-			this.MonitorDispalyTabPage.Size = new System.Drawing.Size(746, 340);
+			this.MonitorDispalyTabPage.Size = new System.Drawing.Size(813, 340);
 			this.MonitorDispalyTabPage.TabIndex = 6;
 			this.MonitorDispalyTabPage.Text = "Monitor: Display";
 			// 
@@ -303,7 +303,7 @@
 			this.monitorDisplayUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.monitorDisplayUserControl1.Location = new System.Drawing.Point(0, 0);
 			this.monitorDisplayUserControl1.Name = "monitorDisplayUserControl1";
-			this.monitorDisplayUserControl1.Size = new System.Drawing.Size(746, 340);
+			this.monitorDisplayUserControl1.Size = new System.Drawing.Size(813, 340);
 			this.monitorDisplayUserControl1.TabIndex = 0;
 			// 
 			// MonitorNetworkTabPage
@@ -313,7 +313,7 @@
 			this.MonitorNetworkTabPage.ImageKey = "Options_Monitor_Network";
 			this.MonitorNetworkTabPage.Location = new System.Drawing.Point(4, 23);
 			this.MonitorNetworkTabPage.Name = "MonitorNetworkTabPage";
-			this.MonitorNetworkTabPage.Size = new System.Drawing.Size(746, 340);
+			this.MonitorNetworkTabPage.Size = new System.Drawing.Size(813, 340);
 			this.MonitorNetworkTabPage.TabIndex = 4;
 			this.MonitorNetworkTabPage.Text = "Monitor: Network";
 			// 
@@ -323,7 +323,7 @@
 			this.CapturingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.CapturingPanel.Location = new System.Drawing.Point(0, 0);
 			this.CapturingPanel.Name = "CapturingPanel";
-			this.CapturingPanel.Size = new System.Drawing.Size(746, 340);
+			this.CapturingPanel.Size = new System.Drawing.Size(813, 340);
 			this.CapturingPanel.TabIndex = 0;
 			// 
 			// MonitorServerTabPage
@@ -333,7 +333,7 @@
 			this.MonitorServerTabPage.ImageKey = "Options_Monitor_Server";
 			this.MonitorServerTabPage.Location = new System.Drawing.Point(4, 23);
 			this.MonitorServerTabPage.Name = "MonitorServerTabPage";
-			this.MonitorServerTabPage.Size = new System.Drawing.Size(746, 340);
+			this.MonitorServerTabPage.Size = new System.Drawing.Size(813, 340);
 			this.MonitorServerTabPage.TabIndex = 5;
 			this.MonitorServerTabPage.Text = "Monitor: Server";
 			// 
@@ -342,7 +342,7 @@
 			this.monitorUdpPortUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.monitorUdpPortUserControl1.Location = new System.Drawing.Point(0, 0);
 			this.monitorUdpPortUserControl1.Name = "monitorUdpPortUserControl1";
-			this.monitorUdpPortUserControl1.Size = new System.Drawing.Size(746, 340);
+			this.monitorUdpPortUserControl1.Size = new System.Drawing.Size(813, 340);
 			this.monitorUdpPortUserControl1.TabIndex = 0;
 			// 
 			// MonitorClipBoardTabPage
@@ -352,7 +352,7 @@
 			this.MonitorClipBoardTabPage.ImageKey = "Options_Monitor_Clipboard";
 			this.MonitorClipBoardTabPage.Location = new System.Drawing.Point(4, 23);
 			this.MonitorClipBoardTabPage.Name = "MonitorClipBoardTabPage";
-			this.MonitorClipBoardTabPage.Size = new System.Drawing.Size(746, 340);
+			this.MonitorClipBoardTabPage.Size = new System.Drawing.Size(813, 340);
 			this.MonitorClipBoardTabPage.TabIndex = 7;
 			this.MonitorClipBoardTabPage.Text = "Monitor: Clipboard";
 			// 
@@ -361,7 +361,7 @@
 			this.monitorClipboardUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.monitorClipboardUserControl1.Location = new System.Drawing.Point(0, 0);
 			this.monitorClipboardUserControl1.Name = "monitorClipboardUserControl1";
-			this.monitorClipboardUserControl1.Size = new System.Drawing.Size(746, 340);
+			this.monitorClipboardUserControl1.Size = new System.Drawing.Size(813, 340);
 			this.monitorClipboardUserControl1.TabIndex = 0;
 			// 
 			// TabsImageList
@@ -383,7 +383,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.OptionsTabControl);
 			this.Name = "OptionsControl";
-			this.Size = new System.Drawing.Size(754, 367);
+			this.Size = new System.Drawing.Size(821, 367);
 			this.AddSilenceGroupBox.ResumeLayout(false);
 			this.AddSilenceGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).EndInit();

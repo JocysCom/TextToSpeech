@@ -55,8 +55,8 @@
 			this.AsAdministratorPanel = new System.Windows.Forms.Panel();
 			this.RunAsAdministratorLabel = new System.Windows.Forms.Label();
 			this.DebugGroupBox = new System.Windows.Forms.GroupBox();
-			this.label1 = new System.Windows.Forms.Label();
 			this.button1 = new System.Windows.Forms.Button();
+			this.label1 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.BoxXUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxYUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
@@ -109,7 +109,7 @@
 			this.ResultsTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.ResultsTextBox.Location = new System.Drawing.Point(83, 175);
 			this.ResultsTextBox.Name = "ResultsTextBox";
-			this.ResultsTextBox.Size = new System.Drawing.Size(369, 20);
+			this.ResultsTextBox.Size = new System.Drawing.Size(374, 20);
 			this.ResultsTextBox.TabIndex = 20;
 			// 
 			// StatusTextBox
@@ -119,7 +119,7 @@
 			this.StatusTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.StatusTextBox.Location = new System.Drawing.Point(83, 149);
 			this.StatusTextBox.Name = "StatusTextBox";
-			this.StatusTextBox.Size = new System.Drawing.Size(369, 20);
+			this.StatusTextBox.Size = new System.Drawing.Size(374, 20);
 			this.StatusTextBox.TabIndex = 21;
 			// 
 			// ColorPrefixTextBox
@@ -128,7 +128,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ColorPrefixTextBox.Location = new System.Drawing.Point(83, 97);
 			this.ColorPrefixTextBox.Name = "ColorPrefixTextBox";
-			this.ColorPrefixTextBox.Size = new System.Drawing.Size(230, 20);
+			this.ColorPrefixTextBox.Size = new System.Drawing.Size(235, 20);
 			this.ColorPrefixTextBox.TabIndex = 22;
 			this.ColorPrefixTextBox.TextChanged += new System.EventHandler(this.ColorPrefixTextBox_TextChanged);
 			// 
@@ -138,7 +138,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.MessageTextBox.Location = new System.Drawing.Point(83, 123);
 			this.MessageTextBox.Name = "MessageTextBox";
-			this.MessageTextBox.Size = new System.Drawing.Size(369, 20);
+			this.MessageTextBox.Size = new System.Drawing.Size(374, 20);
 			this.MessageTextBox.TabIndex = 23;
 			this.MessageTextBox.Text = "Hello World!";
 			// 
@@ -192,7 +192,7 @@
 			// 
 			this.ColorPrefixNumberLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.ColorPrefixNumberLabel.AutoSize = true;
-			this.ColorPrefixNumberLabel.Location = new System.Drawing.Point(319, 100);
+			this.ColorPrefixNumberLabel.Location = new System.Drawing.Point(324, 100);
 			this.ColorPrefixNumberLabel.Name = "ColorPrefixNumberLabel";
 			this.ColorPrefixNumberLabel.Size = new System.Drawing.Size(13, 13);
 			this.ColorPrefixNumberLabel.TabIndex = 32;
@@ -220,7 +220,7 @@
 			// 
 			this.ColorPrefixValueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.ColorPrefixValueTextBox.BackColor = System.Drawing.SystemColors.Control;
-			this.ColorPrefixValueTextBox.Location = new System.Drawing.Point(338, 97);
+			this.ColorPrefixValueTextBox.Location = new System.Drawing.Point(343, 97);
 			this.ColorPrefixValueTextBox.Name = "ColorPrefixValueTextBox";
 			this.ColorPrefixValueTextBox.Size = new System.Drawing.Size(114, 20);
 			this.ColorPrefixValueTextBox.TabIndex = 31;
@@ -232,7 +232,7 @@
 			this.ImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.ImagePictureBox.Location = new System.Drawing.Point(83, 71);
 			this.ImagePictureBox.Name = "ImagePictureBox";
-			this.ImagePictureBox.Size = new System.Drawing.Size(369, 20);
+			this.ImagePictureBox.Size = new System.Drawing.Size(374, 20);
 			this.ImagePictureBox.TabIndex = 30;
 			this.ImagePictureBox.TabStop = false;
 			// 
@@ -335,7 +335,7 @@
 			this.AsAdministratorPanel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.AsAdministratorPanel.Location = new System.Drawing.Point(0, 0);
 			this.AsAdministratorPanel.Name = "AsAdministratorPanel";
-			this.AsAdministratorPanel.Size = new System.Drawing.Size(640, 21);
+			this.AsAdministratorPanel.Size = new System.Drawing.Size(645, 21);
 			this.AsAdministratorPanel.TabIndex = 43;
 			// 
 			// RunAsAdministratorLabel
@@ -375,19 +375,10 @@
 			this.DebugGroupBox.Controls.Add(this.ResultsTextBox);
 			this.DebugGroupBox.Location = new System.Drawing.Point(179, 27);
 			this.DebugGroupBox.Name = "DebugGroupBox";
-			this.DebugGroupBox.Size = new System.Drawing.Size(458, 204);
+			this.DebugGroupBox.Size = new System.Drawing.Size(463, 204);
 			this.DebugGroupBox.TabIndex = 44;
 			this.DebugGroupBox.TabStop = false;
 			this.DebugGroupBox.Text = "Debug and Tests";
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 74);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(36, 13);
-			this.label1.TabIndex = 26;
-			this.label1.Text = "Image";
 			// 
 			// button1
 			// 
@@ -399,6 +390,15 @@
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.ResetToDefaultButton_Click);
 			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(6, 74);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(36, 13);
+			this.label1.TabIndex = 26;
+			this.label1.Text = "Image";
+			// 
 			// MonitorDisplayUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -407,7 +407,7 @@
 			this.Controls.Add(this.AsAdministratorPanel);
 			this.Controls.Add(this.MainSettingsGroupBox);
 			this.Name = "MonitorDisplayUserControl";
-			this.Size = new System.Drawing.Size(640, 254);
+			this.Size = new System.Drawing.Size(645, 254);
 			((System.ComponentModel.ISupportInitialize)(this.BoxXUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxYUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
