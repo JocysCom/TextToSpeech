@@ -57,7 +57,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			Program._NetworkMonitor.StatusChanged += _Monitor_StatusChanged;
 			Program._UdpMonitor.StatusChanged += _Monitor_StatusChanged;
 			Program._NetworkMonitor.ProcessChanged += _NetworkMonitor_ProcessChanged;
-
+			ControlsHelper.ApplyImageStyle(MessagesTabControl);
 		}
 
 		private void _NetworkMonitor_ProcessChanged(object sender, ClassLibrary.EventArgs<string> e)

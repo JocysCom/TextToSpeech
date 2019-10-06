@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.IO;
 using JocysCom.TextToSpeech.Monitor.Audio;
 using JocysCom.ClassLibrary.Controls;
+using System.Drawing;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
@@ -29,6 +30,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			UpdatePlayBackDevice();
 			SilenceBefore();
 			SilenceAfter();
+			ControlsHelper.ApplyImageStyle(OptionsTabControl);
 		}
 
 		#region Tab: General

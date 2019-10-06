@@ -734,6 +734,43 @@ namespace JocysCom.ClassLibrary.Controls
 
 		#endregion
 
+		#region Apply TabControl Image Style
+
+		static string ApplyImageStyleDisabledSuffix = "_DisabledStyle";
+
+		public static void ApplyImageStyle(TabControl control)
+		{
+			var list = control.ImageList;
+			var keys = list.Images.Keys.Cast<string>().ToArray();
+			for (int i = 0; i < keys.Length; i++)
+			{
+				var key = keys[i];
+				var image = list.Images[key];
+				var eff = new JocysCom.ClassLibrary.Drawing.Effects();
+				var disabledImage = (Bitmap)image.Clone();
+				eff.Transparent(disabledImage, 128);
+				list.Images.Add(key + ApplyImageStyleDisabledSuffix, disabledImage);
+			}
+			control.SelectedIndexChanged += ApplyImageStyle_TabControl_SelectedIndexChanged;
+			ApplyImageStyle_TabControl_SelectedIndexChanged(control, new EventArgs());
+		}
+
+		private static void ApplyImageStyle_TabControl_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			var control = (TabControl)sender;
+			var list = control.ImageList;
+			foreach (TabPage item in control.TabPages)
+			{
+				var en = item == control.SelectedTab;
+				var key = item.ImageKey.Replace(ApplyImageStyleDisabledSuffix, "");
+				if (!en)
+					key += ApplyImageStyleDisabledSuffix;
+				item.ImageKey = key;
+			}
+		}
+
+		#endregion
+
 		#region IsDesignMode
 
 		public static bool _IsDesignMode(IComponent component, IComponent parent)

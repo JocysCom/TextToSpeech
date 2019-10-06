@@ -290,6 +290,7 @@
     <Compile Include="JocysCom\Controls\ToolStripBorderlessRenderer.cs" />
     <Compile Include="JocysCom\Drawing\Basic.cs" />
     <Compile Include="JocysCom\Drawing\Effects\Common.cs" />
+    <Compile Include="JocysCom\Drawing\Effects\Transparent.cs" />
     <Compile Include="JocysCom\IO\LogFileWriter.cs" />
     <Compile Include="JocysCom\Network\NetStatInfo.cs" />
     <Compile Include="JocysCom\Processes\CURSORINFO.cs" />
