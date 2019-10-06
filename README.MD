@@ -1,4 +1,4 @@
-### WoW version 8.x require new version of Addon and Monitor, which are using new message sending and capturing technique by using color pixels of the display. This addon also works with official WoW Classic.
+### WoW version 8.x require new version of Addon and Monitor, which are using new message sending and capturing technique by using color pixels of the display. This addon works with official WoW Classic too.
 
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
