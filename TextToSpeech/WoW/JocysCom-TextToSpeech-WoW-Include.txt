@@ -6,5 +6,4 @@ TextToSpeech\WoW\JocysCom-TextToSpeech-WoW\JocysCom-TextToSpeech-WoW.toc
 TextToSpeech\WoW\JocysCom-TextToSpeech-WoW\JocysCom-TextToSpeech-WoW.xml
 TextToSpeech\WoW\JocysCom-TextToSpeech-WoW\JocysCom-TextToSpeech-WoW.Help-Online.URL
 TextToSpeech\bin\Debug\JocysCom.TextToSpeech.Monitor.exe
-TextToSpeech\bin\Debug\JocysCom.TextToSpeech.Monitor.pdb
 
