@@ -4,7 +4,7 @@ WoW Addon and Monitor reads quests and chat messages with text-to-speech voices.
 
 <hr />
 
-### WoW version 8.x requires new version of Addon and Monitor, which are using new message sending and capturing technique by using color pixels of the display. This addon works with official WoW Classic too.
+**Note: WoW version 8.x requires new version of Addon and Monitor, which are using new message sending and capturing technique by using color pixels of the display. This addon works with official WoW Classic too.**
 
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 3.0.5.0 (2019-10-06) • Digitally Signed
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 8.2.5.1 (2019-10-06)
