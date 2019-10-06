@@ -264,6 +264,9 @@ end
 
 -- Register or unregister events.
 function JocysCom_SetEvent(checked, ...)
+if not JocysCom_NetworkMessageCheckButton:GetChecked() and not JocysCom_ColorMessageCheckButton:GetChecked() then
+	checked = false
+end
 	if checked then
   		for i,v in pairs({...}) do
 			JocysCom_OptionsFrame:RegisterEvent(v)
@@ -318,7 +321,8 @@ function JocysCom_RegisterEvents()
 end
 
 function JocysCom_OptionsFrame_OnEvent(self, ...)
-local event, text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons = ...
+-- event, text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons = ...
+local event, text, playerName = ...
 	if event == "ADDON_LOADED" and text ~= addonName then return end -- Ignore other addons.
 	if string.find(tostring(text), "<message") ~= nil then return end -- don't proceed messages with <message> tags and your own incoming whispers.
 	-- Print event details.
@@ -674,7 +678,7 @@ end
 
 -- Enable / Disable "Do Not Disturb" (DND) / <Busy>
 function JocysCom_DND(b)
-	if b then
+	if b and JocysCom_DialogueMiniFrame:IsVisible() then
 		if not UnitIsDND("player") then SendChatMessage("<" .. unitName .. ">: " .. messageDoNotDisturb, "DND") end
 	else
 		if UnitIsDND("player") then SendChatMessage("", "DND") end
@@ -683,9 +687,7 @@ end
 
 -- DialogueMiniFrame OnShow.
 function JocysCom_DialogueMiniFrame_OnShow()
-	if JocysCom_DndCheckButton:GetChecked() then
-		JocysCom_DND(true)
-	end
+	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(true)	end
 end
 
 -- DialogueMiniFrame OnHide.
@@ -694,16 +696,12 @@ function JocysCom_DialogueMiniFrame_OnHide()
 end
 
 -- DND CheckButton OnClick.
-function JocysCom_DndCheckButton_OnClick()
+function JocysCom_DndCheckButton_OnClick(self)
 	PlaySound(856)
 	JocysCom_SaveTocFileSettings()
-	if JocysCom_DndCheckButton:GetChecked() then
+	if self:GetChecked() then
 		JocysCom_FilterDND()
-		if JocysCom_DialogueMiniFrame:IsVisible() then
-			JocysCom_DND(true)
-		else
-			JocysCom_DND(false)
-		end
+		JocysCom_DND(true)
 	else
 		JocysCom_DND(false)
 		JocysCom_FilterDND()
@@ -888,7 +886,7 @@ end
 -- [ Play ] button.
 function JocysCom_PlayButton_OnClick()
 	-- Disable DND.
-	if JocysCom_DndCheckButton:GetChecked() and JocysCom_DialogueMiniFrame:IsVisible() then JocysCom_DND(true) end
+	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(true) end
 	if JocysCom_ColorMessageCheckButton:GetChecked() then
 	JocysCom_ClipboardMessageEditBoxSetFocus()
 	end
@@ -994,6 +992,7 @@ function JocysCom_ColorMessageCheckButton_OnClick()
 	end
 	JocysCom_ClearForm()
 	JocysCom_SaveTocFileSettings()
+	JocysCom_LoadEventSettings()
 end
 
 -- Nwtwork method Enable / Disable.
@@ -1004,6 +1003,7 @@ function JocysCom_NetworkMessageCheckButton_OnClick()
 	end
 	JocysCom_ClearForm()
 	JocysCom_SaveTocFileSettings()
+	JocysCom_LoadEventSettings()
 end
 
 function JocysCom_ClearForm()
@@ -1057,50 +1057,30 @@ local messageChanged = 5
 function JocysCom_SendMessagesFromTable()
 	--JocysCom_ButtonFlashing()
 	--if JocysCom_ClipboardMessageEditBox:HasFocus() then
-		-- Convert message characters to HEX color.
-		local messageHEX = messagesTable[1]:gsub(".", function(c) return string.format("%02x", string.byte(c)) end)
-		local messageLen = #messageHEX / 2
-		local mod = math.fmod(messageLen,3)
+		-- Convert message characters to HEX color.                                                                                                                        
+		local messageHEX = messagesTable[1]:gsub(".", function(c) return string.format("%02x", string.byte(c)) end) -- UTF-8 (a ш B Ш C) (61 D188 42 D0A8 43): 61D18842D0A843 
+		local messageLen = #messageHEX / 2 -- Count bytes-pairs (7): 61 D1 88 42 D0 A8 43
+		local mod = math.fmod(messageLen,3) -- Divide (7) by 3: (7)-3-3... = left 1 (less than 3) / 61D188 42D0A8 43 (3 3 1)
 		-- Add missing bytes.
 		if mod == 1 then
-			messageHEX = messageHEX .. "0000"
+			messageHEX = messageHEX .. "0000" -- If 1 pair left, add 2 pairs (00 00).
 		elseif mod == 2 then
-			messageHEX = messageHEX .. "00"
+			messageHEX = messageHEX .. "00" -- If 2 pairs left, add 1 pair (00).
 		end
-		-- Reverse RGB.
-		local message2 = messageHEX:gsub("(..)(..)(..)", "|cff" .. "%3%2%1" .. "0|r")
-		
-		-- Insert "-" after each 6 characters.
-		--local messageHEX6 = messageHEX:gsub("......", '%1-')
-		-- How many "-" separators added.
-		--local separators = #messageHEX6 - #messageHEX
-		-- HEX numbers after last separator "-".
-		--local endHEX = #messageHEX - (separators * 6)
-		-- Need "0" to add.
-		--local addHEX = 6 - endHEX
-		-- Add "|cff", "000" or "00000" and "|r".
-		--message = "|cff" .. messageHEX6:gsub("-", "0|r|cff")
-		--if addHEX == 2 then
-		--	message = message .. "000|r"
-		--elseif addHEX == 4 then
-		--	message = message .. "00000|r"
-		--else
-		--	message = message:gsub("|cff$", "")
-		--end
-		-- Image: prefix[6] + change[1] + size[1] + message_bytes
-		-- Add 11 to red when message changes.
-		if messageChanged > 80 then messageChanged = 5 end
+		-- Split in 6 (3 pairs), reverse (RGB to BGR), create colored pixel: |cff88D1610|r  (|c alpha(ff) red(88) green(D1) blue(61) character(0) |r)
+		local message = messageHEX:gsub("(..)(..)(..)", "|cff" .. "%3%2%1" .. "0|r")
+		-- Add 5 to red color when message changes.
+		if messageChanged > 80 then messageChanged = 10 end
 		messageChanged = messageChanged + 5
-		local messageChangedS = "|cff" .. messageChanged .. messageChanged.. messageChanged .. "0|r"
-		-- Message bytes.
-		local messageBytes = "|cff" .. string.format("%06x", messageLen) .. "0|r"
-		-- Add prefixes.
-		message = messagePrefix .. messageChangedS .. messageBytes ..  message2
+		local messageChangedColor = "|cff" .. messageChanged .. messageChanged.. messageChanged .. "0|r" -- Set message change value.
+		local messageBytes = string.format("%06x", messageLen) -- Add missing bytes to message lenght value.
+		local messageBytesColor = "|cff" .. messageBytes .. "0|r" -- Set message lenght as color.
+		-- Add prefixes: prefix[6] + change[1] + size[1] + message
+		message = messagePrefix .. messageChangedColor .. messageBytesColor ..  message
 
 		if DebugEnabled then
 			print("|cff77ccff------------------------------------------------------------------------------------|r")
-		--	print("|cff77ccffSeparators|r (" .. #messageHEX6 .. " - " .. #messageHEX .. " = " ..  separators .. ") |cff77ccffendHEX|r (" .. #messageHEX .. " - " .. separators .. " * 6 = " .. endHEX .. ") |cff77ccffaddHEX|r (6 - " .. endHEX .. " = " .. addHEX .. ")")
-			print("|cff77ccffMessage pixels: |r" .. message2)
+			print("|cff77ccffPrefix: |r" .. messagePrefix .. "|cff77ccff Changed: (|r" .. messageChanged .. "|cff77ccff) |r" .. messageChangedColor .. "|cff77ccff Lenght: (|r" .. messageBytes .. "|cff77ccff) |r" .. messageBytesColor .. "|cff77ccff Message: (|r" .. #messageHEX .. "/2=" .. messageLen .. " L" .. mod .. "|cff77ccff) |r" .. message)
 			print("|cff77ccffMessage removed: [|r" .. #messagesTable .. "|cff77ccff]|r " .. JocysCom_MessageAddColors(messagesTable[1]))
 		end
 		-- Set color frame position.

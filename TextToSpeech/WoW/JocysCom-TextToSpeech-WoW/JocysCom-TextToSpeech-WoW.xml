@@ -548,7 +548,7 @@
                 JocysCom_OptionsButtonFrame:Show();
               </OnEnter>
               <OnClick>
-                JocysCom_DndCheckButton_OnClick();
+                JocysCom_DndCheckButton_OnClick(self);
               </OnClick>
               <OnLeave>
                 JocysCom_MiniMenuFrame_Hide();
