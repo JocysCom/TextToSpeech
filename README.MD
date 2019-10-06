@@ -181,38 +181,6 @@ You can delete these files to reset settings or clear saved NPCs (game must be c
 9. Game Menu > [Key Bindings] > [Action Bar]<br />
 10. Bind desired keyboard key to "Action Bar" button with “Stop TTS” macro. After pressing this key on keyboard, text-to-speech will stop.</p>
 
-### Network problems and solutions
-<hr />
-
-<p>Sometimes, “Monitor” doesn't work with “Internet Protocol Version 6” (IPv6). To test this, you can:<br />
-<br />
-<strong>A)</strong> Disable IPv6 in latest version of “World of Warcraft” game:<br />
-<br />
-1. WoW Main Menu &gt; System &gt; Network &gt; Uncheck (disable) “[ ] Enable IPv6 when available” check-box.<br />
-2. Restart WoW game.</p>
-
-<p><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_WoW_Addon_Network.png" style="width: 562px; height: 217px;" /></p>
-
-<p>...OR...<br />
-<br />
-<strong>B)</strong> Temporary disable IPv6 on your network card:</p>
-
-<p>1. Close WoW game and “Monitor”.<br />
-2. Click [Win]+[X] keyboard keys together.<br />
-3. Select “Control Panel” from menu.<br />
-4. Select “Small icons” in “View by:” drop-down menu.<br />
-5. Find and select “Network and Sharing Centre”.<br />
-6. Click on “Change adapter settings”.<br />
-7. Click with second mouse button on network card, you are using.<br />
-8. Select “Properties” from menu.<br />
-9. Uncheck (disable) “Internet Protocol Version 6”.<br />
-10. Click [ OK ] button.<br />
-11. Run WoW game and “Monitor”.</p>
-
-<p>Don't forget to enable (check) “Internet Protocol Version 6” again later.</p>
-
-<img src="http://www.jocys.com/Files/Software/Ethernet_Properties_IP6.png" />
-
 ### Cache Options in “Monitor” (Create text-to-speech audio files)
 <hr />
 
