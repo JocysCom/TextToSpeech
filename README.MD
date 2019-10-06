@@ -1,9 +1,9 @@
-### New version of WoW require new version of WoW Addon and Montor, which are using new message sending and capturing technique by using color pixels of the display.
+### New version of WoW require new version of WoW Addon and Monitor, which are using new message sending and capturing technique by using color pixels of the display.
 
 # Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 2.6.16 (2018-11-10) • Digitally Signed
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 2.3.3 (2018-09-24)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 3.0.5.0 (2019-10-06) • Digitally Signed
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 8.2.5.1 (2019-10-06)
  
 <hr />
 
