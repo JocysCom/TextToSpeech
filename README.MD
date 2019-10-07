@@ -13,9 +13,9 @@
 
 <p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_1.png" /></a> <a href="http://www.jocys.com/TTS/Images/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_WoW_Addon_Small_GitHub.png" /></a></p>
 
-### How it works 
+### How it Works 
 
-<p>When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, “WoW Addon” creates message between <message><part>text</part></message> tags. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> value. If (default) “Display” method is selected, “WoW Addon” converts message into line of coloured pixels and shows it on your display. Then, “Monitor”, which must be running in the background, picks-up this message from your display, converts it to SAPI XML and reads it with specific text-to-speech voice.</p>
+<p>When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, “WoW Addon” creates message between <message><part>text</part></message> tags. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> value. If “Monitor: Display” (default) capture method is enabled, “WoW Addon” converts message into line of coloured pixels and shows it on your display. Then, “Monitor”, which must be running in the background, picks-up this message from your display, converts it to SAPI XML and reads it with specific text-to-speech voice.</p>
 
 ### Addon Control
 
