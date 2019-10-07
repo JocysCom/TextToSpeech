@@ -13,6 +13,10 @@
 
 <p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_1.png" /></a> <a href="http://www.jocys.com/TTS/Images/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_WoW_Addon_Small_GitHub.png" /></a></p>
 
+### YouTube Video - "WoW Addon" very old version (2014-08-06) with Ivona voices
+
+[![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
+
 ### How it Works 
 
 <p style="text-align: justify;">Step 1: When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, <span class="white">"WoW Addon"</span> creates message between <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code> tags. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> value.</p>
@@ -25,10 +29,6 @@
 <p style="color: #84e68c; text-align: justify;">Step 3: <span class="white">"TTS Monitor"</span> will capture this line of coloured pixels and convert it back to the text message if "Monitor: Display" capturin mode is enabled. Then, "TTS Monitor", <em>which must be running in the background</em>, converts it to SAPI XML and reads it with specific text-to-speech voice.</p>
 
 <p style="text-align: justify;">Note: Make sure you do not cover this line with other game elements. TTS Monitor supports other message capturing methods.</p>
-
-### YouTube video ... "WoW Addon" ( very old 2014-08-06 version ) with Ivona voices
-
-[![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
 ### How to Install
 
