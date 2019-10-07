@@ -1,4 +1,4 @@
-# WoW Addon and TTS Monitor • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
+# TTS Monitor and WoW Addon • [Download](http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip)
 
 <p align="justify">WoW Addon and Monitor reads <i>quests</i> and <i>chat messages</i> with text-to-speech voices. Program will choose correct gender and apply special audio effects depending on character type. It makes game more immersive and you will not miss messages in chat. Addon's text-to-speech feature allows visually impaired people to enjoy the game too.</p>
 
