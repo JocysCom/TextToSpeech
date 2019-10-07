@@ -1,7 +1,7 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
   <!--xmlns:xsd="http://www.w3.org/2001/XMLSchema"-->
   <Frame name="JocysCom_OptionsFrame" inherits="BasicFrameTemplate" parent="UIParent" movable="true" frameLevel="10" enableMouse="true" hidden="true">
-    <Size x="600" y="600" />
+    <Size x="600" y="496" />
     <Anchors>
       <Anchor point="CENTER" />
     </Anchors>
@@ -152,17 +152,7 @@
           <Anchor point="TOPLEFT" x="3" y="-210" />
           <Anchor point="BOTTOMRIGHT" x="-3" y="142" />
         </Anchors>
-        <Layers>
-          <Layer>
-            <Texture>
-              <Anchors>
-                <Anchor point="TOPLEFT" x="2" y="-2" />
-                <Anchor point="BOTTOMRIGHT" x="-2" y="2" />
-              </Anchors>
-              <Color a="0.5" r="0" g="0" b="0" />
-            </Texture>
-          </Layer>
-        </Layers>
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true" />
         <Frames>
           <ScrollFrame name="JocysCom_OptionsFrameScroll" inherits="UIPanelScrollFrameTemplate">
             <Anchors>
@@ -192,9 +182,10 @@
       </Frame>
       <Frame name="JocysCom_DescriptionFrame" inherits="InsetFrameTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" x="3" y="-460" />
+          <Anchor point="TOPLEFT" x="3" y="-356" />
           <Anchor point="BOTTOMRIGHT" x="-5" y="4" />
         </Anchors>
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true" />
         <Layers>
           <Layer>
             <FontString name="JocysCom_DescriptionFrameFontString" inherits="GameFontHighlightSmall" justifyV="MIDDLE" justifyH="LEFT" wordwrap="true">
