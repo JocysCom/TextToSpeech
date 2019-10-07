@@ -19,16 +19,13 @@
 
 ### How it Works - new version
 
-<p style="text-align: justify;">Step 1: When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, <span class="white">"WoW Addon"</span> creates message between <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code> tags. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> value.</p>
-
-<p style="text-align: justify;">Step 2: <span class="white">"WoW Addon"</span> converts text message to line of coloured pixels and shows this line inside your in-game window. Default line's position is Top(0) Left(0):</p>
-
-<p><img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_WoW_Addon_Pixels.png" />
- <img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_Monitor_Display_Small.png" /></p>
-
-<p style="color: #84e68c; text-align: justify;">Step 3: <span class="white">"TTS Monitor"</span> will capture this line of coloured pixels and convert it back to the text message if "Monitor: Display" capturin mode is enabled. Then, "TTS Monitor", <em>which must be running in the background</em>, converts it to SAPI XML and reads it with specific text-to-speech voice.</p>
-
-<p style="text-align: justify;">Note: Make sure you do not cover this line with other game elements. TTS Monitor supports other message capturing methods.</p>
+<ol>
+<li>When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, <span class="white">"WoW Addon"</span> creates message between <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code> tags. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> value.</li>
+<li><span class="white">"WoW Addon"</span> converts text message to line of coloured pixels and shows this line inside your in-game window. Default line's position is Top(0) Left(0):<br />
+<img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_WoW_Addon_Pixels.png" /> <img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_Monitor_Display_Small.png" /></li>
+<li style="color: #84e68c; text-align: justify;">Step 3: <span class="white">"TTS Monitor"</span> will capture this line of coloured pixels and convert it back to the text message if "Monitor: Display" capturin mode is enabled. Then, "TTS Monitor", <em>which must be running in the background</em>, converts it to SAPI XML and reads it with specific text-to-speech voice.</li>
+</ol>
+<p>Note: Make sure you do not cover this line with other game elements. TTS Monitor supports other message capturing methods.</p>
 
 ### How to Install
 
