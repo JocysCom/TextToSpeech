@@ -745,14 +745,35 @@ namespace JocysCom.ClassLibrary.Controls
 			for (int i = 0; i < keys.Length; i++)
 			{
 				var key = keys[i];
-				var image = list.Images[key];
-				var eff = new JocysCom.ClassLibrary.Drawing.Effects();
+				var image = (Bitmap)list.Images[key];
 				var disabledImage = (Bitmap)image.Clone();
-				eff.Transparent(disabledImage, 128);
+				MakeImageTransparent(disabledImage, 128);
 				list.Images.Add(key + ApplyImageStyleDisabledSuffix, disabledImage);
 			}
 			control.SelectedIndexChanged += ApplyImageStyle_TabControl_SelectedIndexChanged;
 			ApplyImageStyle_TabControl_SelectedIndexChanged(control, new EventArgs());
+		}
+
+		/// <summary>Make bitmap transparent.</summary>
+		/// <param name="b"></param>
+		/// <param name="alpha">256 max</param>
+		static void MakeImageTransparent(Bitmap b, int alpha)
+		{
+			var w = b.Width;
+			var h = b.Height;
+			int a;
+			Color p;
+			for (int y = 0; y < h; y++)
+			{
+				for (int x = 0; x < w; x++)
+				{
+					p = b.GetPixel(x, y);
+					a = (int)((float)p.A * (float)alpha / byte.MaxValue);
+					if (a >= byte.MaxValue) a = byte.MaxValue;
+					if (a <= byte.MinValue) a = byte.MinValue;
+					b.SetPixel(x, y, Color.FromArgb(a, p.R, p.G, p.B));
+				}
+			}
 		}
 
 		private static void ApplyImageStyle_TabControl_SelectedIndexChanged(object sender, EventArgs e)
