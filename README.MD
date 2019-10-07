@@ -13,11 +13,11 @@
 
 <p style="text-align: center;"><a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Small_1.png" /></a> <a href="http://www.jocys.com/TTS/Images/JocysCom_TTS_WoW_Addon.png" target="_blank"><img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_WoW_Addon_Small_GitHub.png" /></a></p>
 
-### YouTube Video - very old version of "WoW Addon" (2014-08-06) with Ivona voices
+### YouTube Video - very old version of "WoW Addon" with Ivona voices (2014-08-06)
 
 [![addon video](http://img.youtube.com/vi/lhBGNJQvbUo/0.jpg)](http://www.youtube.com/watch?v=lhBGNJQvbUo)
 
-### How it Works - New Version
+### How it Works - new version
 
 <p style="text-align: justify;">Step 1: When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, <span class="white">"WoW Addon"</span> creates message between <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code> tags. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> value.</p>
 
