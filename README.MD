@@ -23,7 +23,7 @@
 
 <p style="text-align: justify;">Step 2: <span class="white">"WoW Addon"</span> converts text message to line of coloured pixels and shows this line inside your in-game window. Default line's position is Top(0) Left(0):</p>
 
-<p><img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_Monitor_Display_2x.png" />
+<p><img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_WoW_Addon_Pixels.png" />
  <img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_Monitor_Display_Small.png" /></p>
 
 <p style="color: #84e68c; text-align: justify;">Step 3: <span class="white">"TTS Monitor"</span> will capture this line of coloured pixels and convert it back to the text message if "Monitor: Display" capturin mode is enabled. Then, "TTS Monitor", <em>which must be running in the background</em>, converts it to SAPI XML and reads it with specific text-to-speech voice.</p>
