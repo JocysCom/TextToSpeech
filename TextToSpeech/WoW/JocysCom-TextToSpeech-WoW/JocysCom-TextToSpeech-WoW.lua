@@ -189,8 +189,8 @@ function JocysCom_AddonTXT_EN()
 	-- OptionsFrame title.
 	JocysCom_OptionsFrame.TitleText:SetText(addonVersion)
 	-- CheckButtons (Options) text.
-	JocysCom_ColorMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffDisplay|r|cff808080 method. In|r |cff77ccffTTS Monitor > [Options] Tab > [Monitor: Display] Tab > [Checked] Enable|r|cff808080.|r")
-	JocysCom_NetworkMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffNetwork|r|cff808080 method. In|r |cff77ccffTTS Monitor >  [Options] Tab > [Monitor: Network] Tab > [Checked] Enable|r|cff808080.|r")
+	JocysCom_ColorMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffDisplay|r|cff808080 mode. In|r |cff77ccffTTS Monitor > [Options] Tab > [Monitor: Display] Tab > [Checked] Enable|r|cff808080.|r")
+	JocysCom_NetworkMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffNetwork|r|cff808080 mode. In|r |cff77ccffTTS Monitor >  [Options] Tab > [Monitor: Network] Tab > [Checked] Enable|r|cff808080.|r")
 	JocysCom_ColorMessagePixelYFontString:SetText("|cff808080 [LEFT] and [TOP] position of color pixel line for|r |cff77ccffMonitor|r|cff808080. Default values [0] and [0].|r")
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock frame with |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080button. Grab frame by clicking on dark background around buttons.|r")
 	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on right side of |cffffffff[Options]|r |cff808080button. [Unchecked] show menu on left side.|r")
@@ -198,7 +198,7 @@ function JocysCom_AddonTXT_EN()
 	--JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide detailed information about addon|r |cffffffff<messages>|r |cff808080in chat window. Default: [Unchecked]|r")
 	-- Font Strings.
 	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH")
-	JocysCom_DescriptionFrameFontString:SetText("|cff808080 All text-to-speech options (voices, pitch, rate, effects, etc.) are in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window or receive chat message, |cff77ccffWoW Addon|r creates special message. If |cffffffffDisplay|r method is selected, |cff77ccffWoW Addon|r converts message into line of coloured pixels and shows it on your display. If |cffffffffNetwork|r method is selected, |cff77ccffWoW Addon|r sends special addon message to your character. Message can include dialogue text, character name, effect name, etc.. Then, |cff77ccffTTS Monitor|r (which must be running in background) picks-up this message from your display or network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffWoW Addon|r with |cff77ccffTTS Monitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.|r")
+	JocysCom_DescriptionFrameFontString:SetText("|cff808080 All text-to-speech options (voices, pitch, rate, effects, etc.) are in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window or receive chat message, |cff77ccffWoW Addon|r creates special message. If |cffffffffDisplay|r mode is selected, |cff77ccffWoW Addon|r converts message into line of coloured pixels and shows it on your display. If |cffffffffNetwork|r mode is selected, |cff77ccffWoW Addon|r sends special addon message to your character. Message can include dialogue text, character name, effect name, etc.. Then, |cff77ccffTTS Monitor|r (which must be running in background) picks-up this message from your display or network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffWoW Addon|r with |cff77ccffTTS Monitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.|r")
 	JocysCom_ReplaceNameFontString:SetText("|cff808080 Here you can change your name for text to speech from |cff00ff00" .. unitName .. "|r to something else.|r")
 	JocysCom_MessageForMonitorFrameFontString:SetText("|cff808080 Latest message for|r |cff77ccffJocys.Com Text to Speech Monitor|r |cff808080... it must be runninng in background:|r")
 end
@@ -984,7 +984,7 @@ function JocysCom_SaveNPC(m)
 	end
 end
 
--- Clipboard method Enable / Disable.
+-- Clipboard mode Enable / Disable.
 function JocysCom_ColorMessageCheckButton_OnClick()
 	PlaySound(856)
 	if JocysCom_ColorMessageCheckButton:GetChecked() then
@@ -995,7 +995,7 @@ function JocysCom_ColorMessageCheckButton_OnClick()
 	JocysCom_LoadEventSettings()
 end
 
--- Nwtwork method Enable / Disable.
+-- Nwtwork mode Enable / Disable.
 function JocysCom_NetworkMessageCheckButton_OnClick()
 	PlaySound(856)
 	if JocysCom_NetworkMessageCheckButton:GetChecked() then
