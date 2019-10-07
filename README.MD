@@ -7,7 +7,7 @@
 **Note: WoW version 8.x requires new version of Addon and Monitor, which are using new message sending and capturing technique by using color pixels of the display. This addon works with official WoW Classic too.**
 
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 3.1.4.0 (2019-10-06) • Digitally Signed
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 8.2.5.1 (2019-10-06)
+ * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech “World of Warcraft” Addon 8.2.5.2 (2019-10-06)
  
 <hr />
 
@@ -22,6 +22,8 @@
 <p style="text-align: center;">Old “Monitor” and “WoW Addon” versions.<br />
 To show WoW's ( <u>Version</u> / <u>Interface</u> )... paste in chat: <i>/run print((select(4, GetBuildInfo())));</i></p>
 
+ * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2019-06-26.zip">2019-06-26 (80200 / 8.2.0)</a><br /> 
+ * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2018-09-24.zip">2018-09-24 (80000 / 8.0.1)</a><br /> 
  * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2017-12-02.zip">2017-12-02 (70300 / 7.3.2)</a><br /> 
  * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2017-11-30.zip">2017-11-30 (70300 / 7.3.2)</a><br />  
  * <a href="/Files/Software/JocysCom-TextToSpeech-WoW-2017-09-27.zip">2017-09-27 (70300 / 7.3.0)</a><br />  
