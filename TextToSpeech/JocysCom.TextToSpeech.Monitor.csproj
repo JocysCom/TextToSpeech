@@ -96,6 +96,12 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
+    <Reference Include="AWSSDK.Core">
+      <HintPath>Resources\Amazon\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.Polly">
+      <HintPath>Resources\Amazon\AWSSDK.Polly.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PacketDotNet">
       <HintPath>Resources\SharpPcap\PacketDotNet.dll</HintPath>
@@ -130,6 +136,7 @@
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Speech" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms.DataVisualization.Design" />
@@ -223,6 +230,12 @@
       <DependentUpon>OptionsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Audio\AudioPlayer.cs" />
+    <Compile Include="Controls\Options\AmazonPollyUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Options\AmazonPollyUserControl.Designer.cs">
+      <DependentUpon>AmazonPollyUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Options\GeneralOptionsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -241,15 +254,17 @@
     <Compile Include="Controls\VoiceDefaultsUserControl.Designer.cs">
       <DependentUpon>VoiceDefaultsUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Google\OptionsGoogleCloudUserControl.cs">
+    <Compile Include="JocysCom\Security\Encryption.cs" />
+    <Compile Include="Voices\AmazonPolly.cs" />
+    <Compile Include="Controls\Options\GoogleTTSUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Google\OptionsGoogleCloudUserControl.Designer.cs">
-      <DependentUpon>OptionsGoogleCloudUserControl.cs</DependentUpon>
+    <Compile Include="Controls\Options\GoogleTTSUserControl.Designer.cs">
+      <DependentUpon>GoogleTTSUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Google\ListResponse.cs" />
-    <Compile Include="Google\SsmlVoiceGender.cs" />
-    <Compile Include="Google\TextToSpeechClient.cs" />
+    <Compile Include="Voices\Google\ListResponse.cs" />
+    <Compile Include="Voices\Google\SsmlVoiceGender.cs" />
+    <Compile Include="Voices\Google\TextToSpeechClient.cs" />
     <Compile Include="JocysCom\Collections\KeyValue.cs" />
     <Compile Include="JocysCom\Common\EventArgs.cs" />
     <Compile Include="JocysCom\Common\Helper.cs" />
@@ -371,6 +386,9 @@
       <DependentUpon>OptionsControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Options\AmazonPollyUserControl.resx">
+      <DependentUpon>AmazonPollyUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Options\GeneralOptionsUserControl.resx">
       <DependentUpon>GeneralOptionsUserControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -384,8 +402,8 @@
     <EmbeddedResource Include="Controls\SoundEffectsControl.resx">
       <DependentUpon>SoundEffectsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Google\OptionsGoogleCloudUserControl.resx">
-      <DependentUpon>OptionsGoogleCloudUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Options\GoogleTTSUserControl.resx">
+      <DependentUpon>GoogleTTSUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JocysCom\Configuration\SettingsItemForm.resx">
       <DependentUpon>SettingsItemForm.cs</DependentUpon>
@@ -531,6 +549,12 @@
     <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Question_32x32.png" />
     <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Warning.ico" />
     <Content Include="JocysCom\Controls\MessageBoxFormImages\MessageBoxIcon_Warning_32x32.png" />
+    <EmbeddedResource Include="Resources\Amazon\AWSSDK.Core.dll" />
+    <EmbeddedResource Include="Resources\Amazon\AWSSDK.Core.pdb" />
+    <EmbeddedResource Include="Resources\Amazon\AWSSDK.Core.xml" />
+    <EmbeddedResource Include="Resources\Amazon\AWSSDK.Polly.dll" />
+    <EmbeddedResource Include="Resources\Amazon\AWSSDK.Polly.pdb" />
+    <EmbeddedResource Include="Resources\Amazon\AWSSDK.Polly.xml" />
     <Content Include="Resources\Icons\CheckBox.png" />
     <Content Include="Resources\Icons\CheckBox_Unchecked.png" />
     <Content Include="Resources\Icons\SelectAll.png" />

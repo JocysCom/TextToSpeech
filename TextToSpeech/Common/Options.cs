@@ -1,7 +1,9 @@
 ﻿using JocysCom.TextToSpeech.Monitor.Capturing;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Speech.AudioFormat;
+using System.Xml.Serialization;
 
 namespace JocysCom.TextToSpeech.Monitor
 {
@@ -114,6 +116,66 @@ namespace JocysCom.TextToSpeech.Monitor
 			DisplayMonitorPrefix = ClassLibrary.Runtime.Attributes.GetDefaultValue<Options, string>(nameof(DisplayMonitorPrefix));
 			DisplayMonitorPositionX = ClassLibrary.Runtime.Attributes.GetDefaultValue<Options, int>(nameof(DisplayMonitorPositionX));
 			DisplayMonitorPositionY = ClassLibrary.Runtime.Attributes.GetDefaultValue<Options, int>(nameof(DisplayMonitorPositionY));
+		}
+
+		#endregion
+
+		#region Voices: Amazon
+
+		[DefaultValue(null)]
+		public string AmazonRegionSystemName { get { return _AmazonRegionSystemName; } set { _AmazonRegionSystemName = value; OnPropertyChanged(); } }
+		string _AmazonRegionSystemName;
+
+		[XmlIgnore]
+		public string AmazonAccessKey
+		{
+			get { return UserDecrypt(_AmazonAccessKeyEncrypted); }
+			set { _AmazonAccessKeyEncrypted = UserEncrypt(value); OnPropertyChanged(); }
+		}
+		[DefaultValue(null), XmlElement(ElementName = nameof(AmazonAccessKey))]
+		public string _AmazonAccessKeyEncrypted { get; set; }
+
+		[XmlIgnore]
+		public string AmazonSecretKey
+		{
+			get { return UserDecrypt(_AmazonSecretKeyEncrypted); }
+			set { _AmazonSecretKeyEncrypted = UserEncrypt(value); OnPropertyChanged(); }
+		}
+		[DefaultValue(null), XmlElement(ElementName = nameof(AmazonSecretKey))]
+		public string _AmazonSecretKeyEncrypted { get; set; }
+
+		#endregion
+
+		#region Encrypt Settings 
+
+		static string UserEncrypt(string text)
+		{
+			try
+			{
+				//var user = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
+				var user = "AppContext";
+				return JocysCom.ClassLibrary.Security.Encryption.ProtectWithMachineKey(text, user);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
+			return null;
+		}
+
+		static string UserDecrypt(string base64)
+		{
+			try
+			{
+				//var user = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
+				var user = "AppContext";
+				return JocysCom.ClassLibrary.Security.Encryption.UnProtectWithMachineKey(base64, user);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
+			return null;
 		}
 
 		#endregion
