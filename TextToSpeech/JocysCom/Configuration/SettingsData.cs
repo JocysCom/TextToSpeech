@@ -124,7 +124,7 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		public delegate IList<T> ValidateDataDelegate(IList<T> items);
 
-		[NonSerialized, XmlIgnore]
+		[XmlIgnore, NonSerialized]
 		public ValidateDataDelegate ValidateData;
 
 		public void Load()
