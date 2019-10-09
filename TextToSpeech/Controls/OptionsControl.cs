@@ -23,7 +23,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			// Hide clipboard for later.
 			OptionsTabControl.TabPages.Remove(MonitorClipBoardTabPage);
 			// Make Google Cloud invisible, because it is not finished yet.
-			OptionsTabControl.TabPages.Remove(GoogleCloudTabPage);
+			OptionsTabControl.TabPages.Remove(GoogleTTSTabPage);
 			AddSilcenceBeforeNumericUpDown.Value = SettingsManager.Options.AddSilenceBeforeMessage;
 			AddSilenceAfterNumericUpDown.Value = SettingsManager.Options.AddSilenceAfterMessage;
 			EnumeratePlaybackDevices();

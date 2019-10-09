@@ -32,8 +32,9 @@
 			this.GeneralTabPage = new System.Windows.Forms.TabPage();
 			this.CacheTabPage = new System.Windows.Forms.TabPage();
 			this.CachePanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsCacheUserControl();
-			this.GoogleCloudTabPage = new System.Windows.Forms.TabPage();
-			this.GoogleCloudPanel = new JocysCom.TextToSpeech.Monitor.Google.OptionsGoogleCloudUserControl();
+			this.GoogleTTSTabPage = new System.Windows.Forms.TabPage();
+			this.GoogleCloudPanel = new JocysCom.TextToSpeech.Monitor.Google.GoogleTTSUserControl();
+			this.AmazonPollyTabPage = new System.Windows.Forms.TabPage();
 			this.MicrosoftCortanaTabPage = new System.Windows.Forms.TabPage();
 			this.MicrosoftCortanaPanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsMicrosoftCortanaUserControl();
 			this.MonitorDispalyTabPage = new System.Windows.Forms.TabPage();
@@ -45,13 +46,15 @@
 			this.MonitorClipBoardTabPage = new System.Windows.Forms.TabPage();
 			this.monitorClipboardUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.MonitorClipboardUserControl();
 			this.TabsImageList = new System.Windows.Forms.ImageList(this.components);
+			this.AmazonPollyPanel = new JocysCom.TextToSpeech.Monitor.Controls.Options.AmazonPollyUserControl();
 			this.AddSilenceGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).BeginInit();
 			this.OptionsTabControl.SuspendLayout();
 			this.GeneralTabPage.SuspendLayout();
 			this.CacheTabPage.SuspendLayout();
-			this.GoogleCloudTabPage.SuspendLayout();
+			this.GoogleTTSTabPage.SuspendLayout();
+			this.AmazonPollyTabPage.SuspendLayout();
 			this.MicrosoftCortanaTabPage.SuspendLayout();
 			this.MonitorDispalyTabPage.SuspendLayout();
 			this.MonitorNetworkTabPage.SuspendLayout();
@@ -75,7 +78,7 @@
 			this.AddSilenceGroupBox.Controls.Add(this.SilenceBeforeTagLabel);
 			this.AddSilenceGroupBox.Location = new System.Drawing.Point(6, 6);
 			this.AddSilenceGroupBox.Name = "AddSilenceGroupBox";
-			this.AddSilenceGroupBox.Size = new System.Drawing.Size(734, 103);
+			this.AddSilenceGroupBox.Size = new System.Drawing.Size(827, 103);
 			this.AddSilenceGroupBox.TabIndex = 0;
 			this.AddSilenceGroupBox.TabStop = false;
 			this.AddSilenceGroupBox.Text = "Audio Options";
@@ -88,14 +91,14 @@
 			this.PlaybackDeviceComboBox.FormattingEnabled = true;
 			this.PlaybackDeviceComboBox.Location = new System.Drawing.Point(91, 71);
 			this.PlaybackDeviceComboBox.Name = "PlaybackDeviceComboBox";
-			this.PlaybackDeviceComboBox.Size = new System.Drawing.Size(461, 21);
+			this.PlaybackDeviceComboBox.Size = new System.Drawing.Size(554, 21);
 			this.PlaybackDeviceComboBox.TabIndex = 33;
 			this.PlaybackDeviceComboBox.SelectedIndexChanged += new System.EventHandler(this.PlaybackDeviceComboBox_SelectedIndexChanged);
 			// 
 			// RefreshPlaybackDevices
 			// 
 			this.RefreshPlaybackDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.RefreshPlaybackDevices.Location = new System.Drawing.Point(558, 70);
+			this.RefreshPlaybackDevices.Location = new System.Drawing.Point(651, 70);
 			this.RefreshPlaybackDevices.Name = "RefreshPlaybackDevices";
 			this.RefreshPlaybackDevices.Size = new System.Drawing.Size(75, 23);
 			this.RefreshPlaybackDevices.TabIndex = 5;
@@ -203,7 +206,8 @@
 			// 
 			this.OptionsTabControl.Controls.Add(this.GeneralTabPage);
 			this.OptionsTabControl.Controls.Add(this.CacheTabPage);
-			this.OptionsTabControl.Controls.Add(this.GoogleCloudTabPage);
+			this.OptionsTabControl.Controls.Add(this.GoogleTTSTabPage);
+			this.OptionsTabControl.Controls.Add(this.AmazonPollyTabPage);
 			this.OptionsTabControl.Controls.Add(this.MicrosoftCortanaTabPage);
 			this.OptionsTabControl.Controls.Add(this.MonitorDispalyTabPage);
 			this.OptionsTabControl.Controls.Add(this.MonitorNetworkTabPage);
@@ -214,7 +218,7 @@
 			this.OptionsTabControl.Location = new System.Drawing.Point(0, 0);
 			this.OptionsTabControl.Name = "OptionsTabControl";
 			this.OptionsTabControl.SelectedIndex = 0;
-			this.OptionsTabControl.Size = new System.Drawing.Size(821, 367);
+			this.OptionsTabControl.Size = new System.Drawing.Size(914, 367);
 			this.OptionsTabControl.TabIndex = 11;
 			// 
 			// GeneralTabPage
@@ -225,7 +229,7 @@
 			this.GeneralTabPage.Location = new System.Drawing.Point(4, 23);
 			this.GeneralTabPage.Name = "GeneralTabPage";
 			this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.GeneralTabPage.Size = new System.Drawing.Size(813, 340);
+			this.GeneralTabPage.Size = new System.Drawing.Size(906, 340);
 			this.GeneralTabPage.TabIndex = 0;
 			this.GeneralTabPage.Text = "General";
 			// 
@@ -237,7 +241,7 @@
 			this.CacheTabPage.Location = new System.Drawing.Point(4, 23);
 			this.CacheTabPage.Name = "CacheTabPage";
 			this.CacheTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.CacheTabPage.Size = new System.Drawing.Size(813, 340);
+			this.CacheTabPage.Size = new System.Drawing.Size(906, 340);
 			this.CacheTabPage.TabIndex = 1;
 			this.CacheTabPage.Text = "Cache";
 			// 
@@ -246,27 +250,38 @@
 			this.CachePanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.CachePanel.Location = new System.Drawing.Point(3, 3);
 			this.CachePanel.Name = "CachePanel";
-			this.CachePanel.Size = new System.Drawing.Size(807, 334);
+			this.CachePanel.Size = new System.Drawing.Size(900, 334);
 			this.CachePanel.TabIndex = 0;
 			// 
-			// GoogleCloudTabPage
+			// GoogleTTSTabPage
 			// 
-			this.GoogleCloudTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.GoogleCloudTabPage.Controls.Add(this.GoogleCloudPanel);
-			this.GoogleCloudTabPage.ImageKey = "Options_Google_Cloud";
-			this.GoogleCloudTabPage.Location = new System.Drawing.Point(4, 23);
-			this.GoogleCloudTabPage.Name = "GoogleCloudTabPage";
-			this.GoogleCloudTabPage.Size = new System.Drawing.Size(813, 340);
-			this.GoogleCloudTabPage.TabIndex = 2;
-			this.GoogleCloudTabPage.Text = "Google Cloud";
+			this.GoogleTTSTabPage.BackColor = System.Drawing.SystemColors.Control;
+			this.GoogleTTSTabPage.Controls.Add(this.GoogleCloudPanel);
+			this.GoogleTTSTabPage.ImageKey = "Options_Google_TTS";
+			this.GoogleTTSTabPage.Location = new System.Drawing.Point(4, 23);
+			this.GoogleTTSTabPage.Name = "GoogleTTSTabPage";
+			this.GoogleTTSTabPage.Size = new System.Drawing.Size(906, 340);
+			this.GoogleTTSTabPage.TabIndex = 2;
+			this.GoogleTTSTabPage.Text = "Google TTS";
 			// 
 			// GoogleCloudPanel
 			// 
 			this.GoogleCloudPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.GoogleCloudPanel.Location = new System.Drawing.Point(0, 0);
 			this.GoogleCloudPanel.Name = "GoogleCloudPanel";
-			this.GoogleCloudPanel.Size = new System.Drawing.Size(813, 340);
+			this.GoogleCloudPanel.Size = new System.Drawing.Size(906, 340);
 			this.GoogleCloudPanel.TabIndex = 0;
+			// 
+			// AmazonPollyTabPage
+			// 
+			this.AmazonPollyTabPage.BackColor = System.Drawing.SystemColors.Control;
+			this.AmazonPollyTabPage.Controls.Add(this.AmazonPollyPanel);
+			this.AmazonPollyTabPage.ImageKey = "Options_Amazon_Polly";
+			this.AmazonPollyTabPage.Location = new System.Drawing.Point(4, 23);
+			this.AmazonPollyTabPage.Name = "AmazonPollyTabPage";
+			this.AmazonPollyTabPage.Size = new System.Drawing.Size(906, 340);
+			this.AmazonPollyTabPage.TabIndex = 8;
+			this.AmazonPollyTabPage.Text = "Amazon Polly";
 			// 
 			// MicrosoftCortanaTabPage
 			// 
@@ -275,7 +290,7 @@
 			this.MicrosoftCortanaTabPage.ImageKey = "Options_Microsoft_Cortana";
 			this.MicrosoftCortanaTabPage.Location = new System.Drawing.Point(4, 23);
 			this.MicrosoftCortanaTabPage.Name = "MicrosoftCortanaTabPage";
-			this.MicrosoftCortanaTabPage.Size = new System.Drawing.Size(813, 340);
+			this.MicrosoftCortanaTabPage.Size = new System.Drawing.Size(906, 340);
 			this.MicrosoftCortanaTabPage.TabIndex = 3;
 			this.MicrosoftCortanaTabPage.Text = "Microsoft Cortana";
 			// 
@@ -284,7 +299,7 @@
 			this.MicrosoftCortanaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.MicrosoftCortanaPanel.Location = new System.Drawing.Point(0, 0);
 			this.MicrosoftCortanaPanel.Name = "MicrosoftCortanaPanel";
-			this.MicrosoftCortanaPanel.Size = new System.Drawing.Size(813, 340);
+			this.MicrosoftCortanaPanel.Size = new System.Drawing.Size(906, 340);
 			this.MicrosoftCortanaPanel.TabIndex = 0;
 			// 
 			// MonitorDispalyTabPage
@@ -294,7 +309,7 @@
 			this.MonitorDispalyTabPage.ImageKey = "Options_Monitor_Display";
 			this.MonitorDispalyTabPage.Location = new System.Drawing.Point(4, 23);
 			this.MonitorDispalyTabPage.Name = "MonitorDispalyTabPage";
-			this.MonitorDispalyTabPage.Size = new System.Drawing.Size(813, 340);
+			this.MonitorDispalyTabPage.Size = new System.Drawing.Size(906, 340);
 			this.MonitorDispalyTabPage.TabIndex = 6;
 			this.MonitorDispalyTabPage.Text = "Monitor: Display";
 			// 
@@ -303,7 +318,7 @@
 			this.monitorDisplayUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.monitorDisplayUserControl1.Location = new System.Drawing.Point(0, 0);
 			this.monitorDisplayUserControl1.Name = "monitorDisplayUserControl1";
-			this.monitorDisplayUserControl1.Size = new System.Drawing.Size(813, 340);
+			this.monitorDisplayUserControl1.Size = new System.Drawing.Size(906, 340);
 			this.monitorDisplayUserControl1.TabIndex = 0;
 			// 
 			// MonitorNetworkTabPage
@@ -313,7 +328,7 @@
 			this.MonitorNetworkTabPage.ImageKey = "Options_Monitor_Network";
 			this.MonitorNetworkTabPage.Location = new System.Drawing.Point(4, 23);
 			this.MonitorNetworkTabPage.Name = "MonitorNetworkTabPage";
-			this.MonitorNetworkTabPage.Size = new System.Drawing.Size(813, 340);
+			this.MonitorNetworkTabPage.Size = new System.Drawing.Size(906, 340);
 			this.MonitorNetworkTabPage.TabIndex = 4;
 			this.MonitorNetworkTabPage.Text = "Monitor: Network";
 			// 
@@ -323,7 +338,7 @@
 			this.CapturingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.CapturingPanel.Location = new System.Drawing.Point(0, 0);
 			this.CapturingPanel.Name = "CapturingPanel";
-			this.CapturingPanel.Size = new System.Drawing.Size(813, 340);
+			this.CapturingPanel.Size = new System.Drawing.Size(906, 340);
 			this.CapturingPanel.TabIndex = 0;
 			// 
 			// MonitorServerTabPage
@@ -333,7 +348,7 @@
 			this.MonitorServerTabPage.ImageKey = "Options_Monitor_Server";
 			this.MonitorServerTabPage.Location = new System.Drawing.Point(4, 23);
 			this.MonitorServerTabPage.Name = "MonitorServerTabPage";
-			this.MonitorServerTabPage.Size = new System.Drawing.Size(813, 340);
+			this.MonitorServerTabPage.Size = new System.Drawing.Size(906, 340);
 			this.MonitorServerTabPage.TabIndex = 5;
 			this.MonitorServerTabPage.Text = "Monitor: Server";
 			// 
@@ -342,7 +357,7 @@
 			this.monitorUdpPortUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.monitorUdpPortUserControl1.Location = new System.Drawing.Point(0, 0);
 			this.monitorUdpPortUserControl1.Name = "monitorUdpPortUserControl1";
-			this.monitorUdpPortUserControl1.Size = new System.Drawing.Size(813, 340);
+			this.monitorUdpPortUserControl1.Size = new System.Drawing.Size(906, 340);
 			this.monitorUdpPortUserControl1.TabIndex = 0;
 			// 
 			// MonitorClipBoardTabPage
@@ -352,7 +367,7 @@
 			this.MonitorClipBoardTabPage.ImageKey = "Options_Monitor_Clipboard";
 			this.MonitorClipBoardTabPage.Location = new System.Drawing.Point(4, 23);
 			this.MonitorClipBoardTabPage.Name = "MonitorClipBoardTabPage";
-			this.MonitorClipBoardTabPage.Size = new System.Drawing.Size(813, 340);
+			this.MonitorClipBoardTabPage.Size = new System.Drawing.Size(906, 340);
 			this.MonitorClipBoardTabPage.TabIndex = 7;
 			this.MonitorClipBoardTabPage.Text = "Monitor: Clipboard";
 			// 
@@ -361,7 +376,7 @@
 			this.monitorClipboardUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.monitorClipboardUserControl1.Location = new System.Drawing.Point(0, 0);
 			this.monitorClipboardUserControl1.Name = "monitorClipboardUserControl1";
-			this.monitorClipboardUserControl1.Size = new System.Drawing.Size(813, 340);
+			this.monitorClipboardUserControl1.Size = new System.Drawing.Size(906, 340);
 			this.monitorClipboardUserControl1.TabIndex = 0;
 			// 
 			// TabsImageList
@@ -370,12 +385,21 @@
 			this.TabsImageList.TransparentColor = System.Drawing.Color.Transparent;
 			this.TabsImageList.Images.SetKeyName(0, "Options_Cache");
 			this.TabsImageList.Images.SetKeyName(1, "Options_General");
-			this.TabsImageList.Images.SetKeyName(2, "Options_Google_Cloud");
-			this.TabsImageList.Images.SetKeyName(3, "Options_Microsoft_Cortana");
-			this.TabsImageList.Images.SetKeyName(4, "Options_Monitor_Display");
-			this.TabsImageList.Images.SetKeyName(5, "Options_Monitor_Network");
-			this.TabsImageList.Images.SetKeyName(6, "Options_Monitor_Server");
-			this.TabsImageList.Images.SetKeyName(7, "Options_Monitor_Clipboard");
+			this.TabsImageList.Images.SetKeyName(2, "Options_Google_TTS");
+			this.TabsImageList.Images.SetKeyName(3, "Options_Amazon_Polly");
+			this.TabsImageList.Images.SetKeyName(4, "Options_Microsoft_Cortana");
+			this.TabsImageList.Images.SetKeyName(5, "Options_Monitor_Display");
+			this.TabsImageList.Images.SetKeyName(6, "Options_Monitor_Network");
+			this.TabsImageList.Images.SetKeyName(7, "Options_Monitor_Server");
+			this.TabsImageList.Images.SetKeyName(8, "Options_Monitor_Clipboard");
+			// 
+			// AmazonPollyPanel
+			// 
+			this.AmazonPollyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.AmazonPollyPanel.Location = new System.Drawing.Point(0, 0);
+			this.AmazonPollyPanel.Name = "AmazonPollyPanel";
+			this.AmazonPollyPanel.Size = new System.Drawing.Size(906, 340);
+			this.AmazonPollyPanel.TabIndex = 0;
 			// 
 			// OptionsControl
 			// 
@@ -383,7 +407,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.OptionsTabControl);
 			this.Name = "OptionsControl";
-			this.Size = new System.Drawing.Size(821, 367);
+			this.Size = new System.Drawing.Size(914, 367);
 			this.AddSilenceGroupBox.ResumeLayout(false);
 			this.AddSilenceGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).EndInit();
@@ -391,7 +415,8 @@
 			this.OptionsTabControl.ResumeLayout(false);
 			this.GeneralTabPage.ResumeLayout(false);
 			this.CacheTabPage.ResumeLayout(false);
-			this.GoogleCloudTabPage.ResumeLayout(false);
+			this.GoogleTTSTabPage.ResumeLayout(false);
+			this.AmazonPollyTabPage.ResumeLayout(false);
 			this.MicrosoftCortanaTabPage.ResumeLayout(false);
 			this.MonitorDispalyTabPage.ResumeLayout(false);
 			this.MonitorNetworkTabPage.ResumeLayout(false);
@@ -417,11 +442,11 @@
 		private System.Windows.Forms.TabControl OptionsTabControl;
 		private System.Windows.Forms.TabPage GeneralTabPage;
 		private System.Windows.Forms.TabPage CacheTabPage;
-		private System.Windows.Forms.TabPage GoogleCloudTabPage;
+		private System.Windows.Forms.TabPage GoogleTTSTabPage;
 		private System.Windows.Forms.TabPage MicrosoftCortanaTabPage;
 		private System.Windows.Forms.TabPage MonitorNetworkTabPage;
 		private OptionsMicrosoftCortanaUserControl MicrosoftCortanaPanel;
-		private Google.OptionsGoogleCloudUserControl GoogleCloudPanel;
+		private Google.GoogleTTSUserControl GoogleCloudPanel;
 		private OptionsCacheUserControl CachePanel;
 		private MonitorNetworkUserControl CapturingPanel;
 		private System.Windows.Forms.TabPage MonitorServerTabPage;
@@ -431,5 +456,7 @@
 		private System.Windows.Forms.TabPage MonitorClipBoardTabPage;
 		private MonitorClipboardUserControl monitorClipboardUserControl1;
 		private System.Windows.Forms.ImageList TabsImageList;
+		private System.Windows.Forms.TabPage AmazonPollyTabPage;
+		private Options.AmazonPollyUserControl AmazonPollyPanel;
 	}
 }
