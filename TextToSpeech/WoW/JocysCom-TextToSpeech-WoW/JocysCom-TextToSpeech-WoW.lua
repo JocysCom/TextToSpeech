@@ -7,7 +7,7 @@
 local DebugEnabled = false
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.2 ( 2019-10-06 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.3 ( 2019-10-09 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line. 
@@ -282,8 +282,9 @@ end
 
 -- Load saved event settings.
 function JocysCom_LoadEventSettings()
-	-- QUEST. GOSSIP_* (open or close frame), QUEST_* (quest), ITEM_* (books, scrolls, plaques, gravestones, mail).
-	JocysCom_SetEvent(JocysCom_QuestCB, "GOSSIP_SHOW", "QUEST_GREETING", "QUEST_DETAIL", "QUEST_PROGRESS", "QUEST_COMPLETE", "QUEST_LOG_UPDATE", "ITEM_TEXT_READY", "GOSSIP_CLOSED")
+
+	-- QUESTS and MAIL. GOSSIP_* (open or close frame), QUEST_* (quest), ITEM_* (books, scrolls, plaques, gravestones, mail).
+	JocysCom_SetEvent(JocysCom_QuestCB, "GOSSIP_SHOW", "QUEST_GREETING", "QUEST_DETAIL", "QUEST_PROGRESS", "QUEST_COMPLETE", "QUEST_LOG_UPDATE", "ITEM_TEXT_READY", "GOSSIP_CLOSED","MAIL_SHOW", "MAIL_CLOSED")
 	-- MONSTER.
 	JocysCom_SetEvent(JocysCom_MonsterCB, "CHAT_MSG_MONSTER_EMOTE", "CHAT_MSG_MONSTER_PARTY", "CHAT_MSG_MONSTER_SAY", "CHAT_MSG_MONSTER_WHISPER", "CHAT_MSG_MONSTER_YELL")
 	-- EMOTE.
@@ -309,6 +310,9 @@ function JocysCom_LoadEventSettings()
 	-- Save unit name, gender and type.
 	JocysCom_SetEvent(JocysCom_SaveCB, "UPDATE_MOUSEOVER_UNIT")
 	JocysCom_SetEvent(JocysCom_SaveCB, "PLAYER_TARGET_CHANGED")
+
+	--if DebugEnabled then JocysCom_OptionsFrame:RegisterAllEvents() end
+
 end
 
 -- Register events.
@@ -323,6 +327,9 @@ end
 function JocysCom_OptionsFrame_OnEvent(self, ...)
 -- event, text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons = ...
 local event, text, playerName = ...
+	if string.find(event, "COMBAT") ~= nil or string.find(event, "SPELL") ~= nil or string.find(event, "COMPANION") ~= nil or string.find(event, "PET") ~= nil or string.find(event, "EXHAUSTION") ~= nil then return end
+
+
 	if event == "ADDON_LOADED" and text ~= addonName then return end -- Ignore other addons.
 	if string.find(tostring(text), "<message") ~= nil then return end -- don't proceed messages with <message> tags and your own incoming whispers.
 	-- Print event details.
@@ -345,7 +352,6 @@ local event, text, playerName = ...
 		JocysCom_AttachAndShowFrames()
 		JocysCom_DialogueScrollFrame:Show()
 		JocysCom_DialogueMiniFrame:Show()
-		--if DebugEnabled then JocysCom_OptionsFrame:RegisterAllEvents() end
 		return 
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		JocysCom_CreateOrUpdateMacro()
@@ -359,9 +365,12 @@ local event, text, playerName = ...
 	elseif event == "PLAYER_TARGET_CHANGED" then
 		JocysCom_SaveNPC("target")
 		return
-	elseif event == "GOSSIP_CLOSED" then
+	elseif event == "GOSSIP_CLOSED" or event == "MAIL_CLOSED" then
 		return
-	elseif event == "ITEM_TEXT_READY" or event == "GOSSIP_SHOW" or event == "QUEST_GREETING" or event == "QUEST_DETAIL" or event == "QUEST_GREETING" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "QUEST_LOG_UPDATE" then
+	elseif event == "MAIL_SHOW" then
+	JocysCom_AttachAndShowFrames()
+		return
+	elseif event == "ITEM_TEXT_READY" or event == "GOSSIP_SHOW" or event == "QUEST_GREETING" or event == "QUEST_DETAIL" or event == "QUEST_GREETING" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "QUEST_LOG_UPDATE" or event == "MAIL_SHOW" then
 		-- Set MiniFrame and Scrollframe
 		JocysCom_AttachAndShowFrames()
 		eventForScroll = event;
@@ -599,8 +608,13 @@ function JocysCom_SpeakMessage(event, speakMessage, name, group, realName)
 		end
 	-- If CHAT event.
 	else
-		NPCName = UnitName("npc")
-		NPCSex = UnitSex("npc")
+		if event == "SROLL_UP_OR_PLAY_BUTTON" and OpenMailFrame:IsVisible() and name ~= nil then
+			NPCName = name
+			NPCSex = nil
+		else
+			NPCName = UnitName("npc")
+			NPCSex = UnitSex("npc")
+		end
 		if JocysCom_StartOnOpenCheckButton:GetChecked() then
 			JocysCom_SendChatMessageStop(1) -- Send stop message.
 		end
@@ -890,10 +904,19 @@ function JocysCom_PlayButton_OnClick()
 	if JocysCom_ColorMessageCheckButton:GetChecked() then
 	JocysCom_ClipboardMessageEditBoxSetFocus()
 	end
+
 	if QuestMapDetailsScrollFrame:IsVisible() then
+		-- local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isStory = GetQuestLogTitle()
 		local questDescription, questObjectives = GetQuestLogQuestText()
 		questMessage = questObjectives .. " Description. " .. questDescription
 		JocysCom_SpeakMessage("SROLL_UP_OR_PLAY_BUTTON", questMessage, "", "Quest")
+
+	elseif OpenMailFrame:IsVisible() then
+		--local inboxText = GetInboxText(InboxFrame.openMailID)
+		local packageIcon, stationeryIcon, sender, subject = GetInboxHeaderInfo(InboxFrame.openMailID) -- packageIcon, stationeryIcon, sender, subject, money, CODAmount, daysLeft, hasItem, wasRead, wasReturned, textCreated, canReply, isGM = GetInboxHeaderInfo(InboxFrame.openMailID)
+		local bodyText = GetInboxText(InboxFrame.openMailID) -- bodyText, texture, isTakeable, isInvoice = GetInboxText(InboxFrame.openMailID)
+		questMessage = sender .. ". " .. subject .. ". " .. bodyText
+		JocysCom_SpeakMessage("SROLL_UP_OR_PLAY_BUTTON", questMessage, sender, "Quest")
 	else
 		JocysCom_OptionsFrame_OnEvent(nil, eventForScroll)
 	end
@@ -921,6 +944,8 @@ function JocysCom_AttachAndShowFrames()
 			frame = QuestFrame
 		elseif ItemTextFrame:IsVisible() then
 			frame = ItemTextFrame
+		elseif MailFrame:IsVisible() then
+			frame = OpenMailFrame
 		elseif QuestMapFrame:IsVisible() then
 			frame = QuestMapFrame
 		end
@@ -936,6 +961,16 @@ function JocysCom_AttachAndShowFrames()
 		-- MiniFrame.
 		JocysCom_DialogueMiniFrame:SetParent(QuestMapDetailsScrollFrame)
 		JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", QuestMapFrame, "BOTTOMRIGHT", 0, 1)
+	elseif frame == OpenMailFrame then
+		-- ScrollFrame.
+		local width = frame:GetWidth()
+		JocysCom_DialogueScrollFrame:SetParent(frame)
+		JocysCom_DialogueScrollFrame:SetWidth(width - 50)
+		JocysCom_DialogueScrollFrame:SetPoint("TOPLEFT", 12, -89)
+		-- MiniFrame.
+		JocysCom_DialogueMiniFrame:SetParent(frame)
+		JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", 0, 1)
+	
 	else
 		-- ScrollFrame.
 		local width = frame:GetWidth()
