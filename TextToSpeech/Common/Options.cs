@@ -123,6 +123,10 @@ namespace JocysCom.TextToSpeech.Monitor
 		#region Voices: Amazon
 
 		[DefaultValue(null)]
+		public bool AmazonEnabled { get { return _AmazonEnabled; } set { _AmazonEnabled = value; OnPropertyChanged(); } }
+		bool _AmazonEnabled;
+
+		[DefaultValue(null)]
 		public string AmazonRegionSystemName { get { return _AmazonRegionSystemName; } set { _AmazonRegionSystemName = value; OnPropertyChanged(); } }
 		string _AmazonRegionSystemName;
 

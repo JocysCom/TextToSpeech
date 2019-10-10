@@ -1,74 +1,112 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JocysCom.ClassLibrary.Controls;
+using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Speech.Synthesis;
-using System.Text;
+using System.Xml.Serialization;
 
 namespace JocysCom.TextToSpeech.Monitor
 {
-    public class InstalledVoiceEx : INotifyPropertyChanged
-    {
-        public InstalledVoiceEx()
-        {
-        }
+	public class InstalledVoiceEx : INotifyPropertyChanged
+	{
+		public InstalledVoiceEx()
+		{
+		}
 
-        [NonSerialized]
-        public const int MaxVoice = 100;
+		[NonSerialized]
+		public const int MaxVoice = 100;
 
+		public InstalledVoiceEx(VoiceInfo voice)
+		{
+			Voice = voice;
+			Source = VoiceSource.Local;
+			Gender = voice.Gender;
+			Name = voice.Name;
+			Language = voice.AdditionalInfo.Where(x => x.Key == "Language").Select(x => x.Value).FirstOrDefault() ?? "";
+			CultureName = voice.Culture.Name;
+			Age = voice.Age;
+			Description = voice.Description;
+			Version = voice.AdditionalInfo.Where(x => x.Key == "Version").Select(x => x.Value).FirstOrDefault() ?? "";
+			CultureLCID = voice.Culture.LCID;
+			Enabled = true;
+			switch (Gender)
+			{
+				case VoiceGender.Female: Female = MaxVoice; break;
+				case VoiceGender.Male: Male = MaxVoice; break;
+				case VoiceGender.Neutral: Neutral = MaxVoice; break;
+				default: break;
+			}
+		}
 
+		public override string ToString()
+		{
+			return Description;
+		}
 
-        public InstalledVoiceEx(VoiceInfo voice)
-        {
-            Gender = voice.Gender;
-            Name = voice.Name;
-            Language = voice.AdditionalInfo.Where(x => x.Key == "Language").Select(x => x.Value).FirstOrDefault() ?? "";
-            CultureName = voice.Culture.Name;
-            Age = voice.Age;
-            Description = voice.Description;
-            Version = voice.AdditionalInfo.Where(x => x.Key == "Version").Select(x => x.Value).FirstOrDefault() ?? "";
-            CultureLCID = voice.Culture.LCID;
-            Enabled = true;
-            switch (Gender)
-            {
-                case VoiceGender.Female: Female = MaxVoice; break;
-                case VoiceGender.Male: Male = MaxVoice; break;
-                case VoiceGender.Neutral: Neutral = MaxVoice; break;
-                default: break;
-            }
-        }
+		public InstalledVoiceEx(Amazon.Polly.Model.Voice voice)
+		{
+			Voice = voice;
+			Source = VoiceSource.Amazon;
+			Name = voice.Name;
+			Language = voice.LanguageCode;
+			CultureName = "";
+			Age = VoiceAge.NotSet;
+			Description = string.Format("{0} {1} - {2} - {3}: {4}", Source, Name, Language, Gender, string.Join(", ", voice.SupportedEngines));
+			Version = "";
+			CultureLCID = 0;
+			Enabled = true;
+			if (voice.Gender == Amazon.Polly.Gender.Female)
+			{
+				Gender = VoiceGender.Female;
+				Female = MaxVoice;
+			}
+			else if (voice.Gender == Amazon.Polly.Gender.Male)
+			{
+				Gender = VoiceGender.Male;
+				Male = MaxVoice;
+			}
+		}
 
-        bool _Enabled;
-        int _Female;
-        int _Male;
-        int _Neutral;
+		bool _Enabled;
+		int _Female;
+		int _Male;
+		int _Neutral;
 
-        public bool Enabled { get { return _Enabled; } set { _Enabled = value; NotifyPropertyChanged("Enabled"); } }
-        public int Female { get { return _Female; } set { _Female = value; NotifyPropertyChanged("Female"); } }
-        public int Male { get { return _Male; } set { _Male = value; NotifyPropertyChanged("Male"); } }
-        public int Neutral { get { return _Neutral; } set { _Neutral = value; NotifyPropertyChanged("Neutral"); } }
-        public VoiceGender Gender { get; set; }
-        public string Name { get; set; }
-        public string Language { get; set; }
-        public string CultureName { get; set; }
-        public VoiceAge Age { get; set; }
-        public string Description { get; set; }
-        public string Version { get; set; }
-        public int CultureLCID { get; set; }
+		public bool Enabled { get { return _Enabled; } set { _Enabled = value; OnPropertyChanged(); } }
+		public int Female { get { return _Female; } set { _Female = value; OnPropertyChanged(); } }
+		public int Male { get { return _Male; } set { _Male = value; OnPropertyChanged(); } }
+		public int Neutral { get { return _Neutral; } set { _Neutral = value; OnPropertyChanged(); } }
 
-        #region INotifyPropertyChanged
+		[XmlIgnore]
+		public object Voice { get { return _Voice; } set { _Voice = value; } }
+		object _Voice;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		public VoiceSource Source { get { return _Source; } set { _Source = value; OnPropertyChanged(); } }
+		VoiceSource _Source;
 
-        private void NotifyPropertyChanged(string propertyName = "")
-        {
-            var ev = PropertyChanged;
-            if (ev == null) return;
-            ev(this, new PropertyChangedEventArgs(propertyName));
-        }
+		public VoiceGender Gender { get; set; }
+		public string Name { get; set; }
+		public string Language { get; set; }
+		public string CultureName { get; set; }
+		public VoiceAge Age { get; set; }
+		public string Description { get; set; }
+		public string Version { get; set; }
+		public int CultureLCID { get; set; }
 
-        #endregion
+		#region INotifyPropertyChanged
 
+		public event PropertyChangedEventHandler PropertyChanged;
 
-    }
+		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			var handler = PropertyChanged;
+			if (handler == null)
+				return;
+			ControlsHelper.Invoke(() => { handler(this, new PropertyChangedEventArgs(propertyName)); });
+		}
+
+		#endregion
+
+	}
 }
