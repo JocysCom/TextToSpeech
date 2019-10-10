@@ -1568,8 +1568,8 @@
   <Frame name="JocysCom_ColorMessageFrame" parent="WorldFrame" ignoreParentScale="true" movable="true" frameStrata="HIGH">
     <Size x="1" y="1" />
     <Anchors>
-      <Anchor point="TOPLEFT" x="4" y="4" />
-      <Anchor point="TOPRIGHT" />
+      <Anchor point="TOP" x="0" y="-50" />
+      <Anchor point="TOP" />
     </Anchors>
     <Frames>
       <EditBox name="JocysCom_ColorMessageFontString" letters="0" multiLine="true" autoFocus="false" ignoreArrows="true" ignoreParentScale="true" movable="false" enableMouse="false" frameStrata="HIGH" clampedToScreen="false">
