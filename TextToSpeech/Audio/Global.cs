@@ -23,11 +23,12 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public static event EventHandler<EventArgs<InstalledVoiceEx>> VoiceChanged;
 		public static event EventHandler<EventArgs<Exception>> Exception;
 
-		static void OnEvent<T>(EventHandler<EventArgs<T>> handler, T data)
+		public static void OnEvent<T>(EventHandler<EventArgs<T>> handler, T data)
 		{
 			if (handler != null)
 				ControlsHelper.Invoke(() => { handler(null, new EventArgs<T>(data)); });
 		}
+
 		public static void InitGlobal(IntPtr handle)
 		{
 			Handle = handle;
@@ -38,6 +39,13 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			EffectsPlayer.ChangeAudioDevice();
 			playlist = new BindingList<PlayItem>();
 			playlist.ListChanged += playlist_ListChanged;
+			// Track Amazon polly errors globally.
+			Voices.AmazonPolly.Exception += AmazonPolly_Exception;
+		}
+
+		private static void AmazonPolly_Exception(object sender, EventArgs<Exception> e)
+		{
+			OnEvent(Exception, e.Data);
 		}
 
 		public static void DisposeGlobal()

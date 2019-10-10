@@ -2,6 +2,8 @@ using Amazon;
 using Amazon.Polly;
 using Amazon.Polly.Model;
 using Amazon.Runtime;
+using JocysCom.ClassLibrary;
+using JocysCom.ClassLibrary.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -125,25 +127,36 @@ namespace JocysCom.TextToSpeech.Monitor.Voices
 			}
 		}
 
+		public static event EventHandler<EventArgs<Exception>> Exception;
+
+		public static void OnEvent<T>(EventHandler<EventArgs<T>> handler, T data)
+		{
+			if (handler != null)
+				ControlsHelper.Invoke(() => { handler(null, new EventArgs<T>(data)); });
+		}
 
 		#endregion
 
-		public List<Voice> DescribeVoices(string languageCode = null)
+		public List<Voice> GetVoices(DescribeVoicesRequest request = null)
 		{
-			var request = new DescribeVoicesRequest();
-			if (!string.IsNullOrEmpty(languageCode))
-				request.LanguageCode = languageCode;
-			//request.Engine = Engine.Neural;
+			request = request ?? new DescribeVoicesRequest();
 			var voices = new List<Voice>();
 			string nextToken;
-			do
+			try
 			{
-				var response = Client.DescribeVoices(request);
-				nextToken = response.NextToken;
-				request.NextToken = nextToken;
-				foreach (var voice in response.Voices)
-					voices.Add(voice);
-			} while (nextToken != null);
+				do
+				{
+					var response = Client.DescribeVoices(request);
+					nextToken = response.NextToken;
+					request.NextToken = nextToken;
+					foreach (var voice in response.Voices)
+						voices.Add(voice);
+				} while (nextToken != null);
+			}
+			catch (Exception ex)
+			{
+				OnEvent(Exception, ex);
+			}
 			return voices;
 		}
 
@@ -206,15 +219,17 @@ namespace JocysCom.TextToSpeech.Monitor.Voices
 		}
 
 
-		public byte[] SynthesizeSpeech(VoiceId voiceId, string text, OutputFormat format = null)
+		public byte[] SynthesizeSpeech(Voice voice, string text, OutputFormat format = null)
 		{
 			if (format == null)
 				format = OutputFormat.Mp3;
 			var request = new SynthesizeSpeechRequest();
 			request.OutputFormat = format;
-			request.VoiceId = voiceId;
+			request.VoiceId = voice.Id;
+			// Prefer neural voices.
+			if (voice.SupportedEngines.Contains(Engine.Neural))
+				request.Engine = Engine.Neural;
 			request.Text = text;
-			request.Engine = Engine.Neural; 
 			var ms = new MemoryStream();
 			var response = Client.SynthesizeSpeech(request);
 			var bufferSize = 2 * 1024;

@@ -36,6 +36,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			if (region != null)
 				RegionComboBox.SelectedItem = region;
 			RegionComboBox.SelectedIndexChanged += RegionComboBox_SelectedIndexChanged;
+			RegionComboBox_SelectedIndexChanged(null, null);
 			AmazonEnabledCheckBox.DataBindings.Add(nameof(AmazonEnabledCheckBox.Checked), SettingsManager.Options, nameof(SettingsManager.Options.AmazonEnabled));
 		}
 
@@ -44,6 +45,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			var region = (RegionEndpoint)RegionComboBox.SelectedItem;
 			if (region != null)
 				SettingsManager.Options.AmazonRegionSystemName = region.SystemName;
+			RefreshVoicesButton_Click(null, null);
 		}
 
 		private void SecretKeyTextBox_TextChanged(object sender, EventArgs e)
@@ -74,9 +76,14 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 				SettingsManager.Options.AmazonSecretKey,
 				SettingsManager.Options.AmazonRegionSystemName
 			);
-			var voices = client.DescribeVoices();
+			var voices = client.GetVoices();
 			var installedVoices = voices.Select(x => new InstalledVoiceEx(x));
 			return installedVoices.OrderBy(x=>x.Name).ToList();
+		}
+
+		private void Global_Exception(object sender, ClassLibrary.EventArgs<Exception> e)
+		{
+			throw new NotImplementedException();
 		}
 
 		private void SpeakButton_Click(object sender, EventArgs e)
@@ -88,7 +95,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 				SettingsManager.Options.AmazonRegionSystemName
 			);
 			var voice = (Voice)((InstalledVoiceEx)VoicesComboBox.SelectedItem).Voice;
-			var buffer = client.SynthesizeSpeech(voice.Id, text);
+			var buffer = client.SynthesizeSpeech(voice, text);
 			var item = ConvertToPlatItem(buffer);
 			Global.playlist.Add(item);
 		}
@@ -117,7 +124,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			item.Status = JobStatusType.Synthesized;
 			return item;
 		}
-
 
 	}
 }
