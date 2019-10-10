@@ -1,4 +1,5 @@
 ﻿-- Show or hide frame names: /fstack
+-- Show events: /eventtrace
 --#:\Program Files (x86)\World of Warcraft\WTF\Account\ACCOUNTNAME\SavedVariables.lua - Blizzard's saved variables.
 --#:\Program Files (x86)\World of Warcraft\WTF\Account\ACCOUNTNAME\SavedVariables\JocysCom-TextToSpeech-WoW.lua - Per-account settings for each individual AddOn.
 --#:\Program Files (x86)\World of Warcraft\WTF\Account\ACCOUNTNAME\RealmName\CharacterName\JocysCom-TextToSpeech-WoW.lua - Per-character settings for each individual AddOn.
@@ -202,9 +203,9 @@ end
 
 -- Unlock frames.
 function JocysCom_OptionsFrame_OnShow()
-	JocysCom_StopButtonFrame_Texture:SetColorTexture(0, 0, 0, 0.8)
+	JocysCom_StopButtonFrame_Texture:SetColorTexture(0, 0, 0, 0.5)
 	JocysCom_DialogueScrollFrame:EnableMouse(true)
-	JocysCom_DialogueScrollFrame_Texture:SetColorTexture(0, 0, 0, 0.8)
+	JocysCom_DialogueScrollFrame_Texture:SetColorTexture(0, 0, 0, 0.5)
 	JocysCom_DialogueScrollFrame_FontString:Show()
 	JocysCom_DialogueScrollFrameResizeButton:Show()
 end
@@ -337,7 +338,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 	end
 
 	-- Attach and show frames.
-	if event == "ADDON_LOADED" or event == "GOSSIP_SHOW" or event == "QUEST_LOG_UPDATE" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "MAIL_SHOW" or event == "ITEM_TEXT_READY"  then 	-- or event == "QUEST_GREETING" or event == "QUEST_DETAIL"
+	if event == "ADDON_LOADED" or event == "GOSSIP_SHOW" or event == "QUEST_GREETING" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "QUEST_LOG_UPDATE" or event == "MAIL_SHOW" or event == "ITEM_TEXT_READY"  then 	-- or event == "QUEST_GREETING"
 		JocysCom_AttachAndShowFrames()
 	end
 	-- Events.
@@ -944,7 +945,6 @@ function JocysCom_AttachAndShowFrames()
 		frameScroll = QuestMapDetailsScrollFrame
 	-- Quest.
 	elseif QuestFrame:IsVisible() then
-		frameButton = QuestFrame
 		if QuestDetailScrollFrame:IsVisible() then
 			frameScroll = QuestDetailScrollFrame
 		elseif QuestProgressScrollFrame:IsVisible() then
@@ -952,6 +952,7 @@ function JocysCom_AttachAndShowFrames()
 		elseif QuestRewardScrollFrame:IsVisible() then
 			frameScroll = QuestRewardScrollFrame
 		end
+		frameButton = QuestFrame
 	-- Item.
 	elseif ItemTextFrame:IsVisible() then
 		frameButton = ItemTextFrame

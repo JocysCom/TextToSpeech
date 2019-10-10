@@ -275,8 +275,8 @@
       <Anchor point="TOPLEFT" />
     </Anchors>
     <ResizeBounds>
-      <minResize x="100" y="100" />
-      <maxResize x="288" y="288" />
+      <minResize x="60" y="60" />
+      <maxResize x="600" y="600" />
     </ResizeBounds>
     <Layers>
       <Layer>
