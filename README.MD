@@ -21,7 +21,7 @@
 
 <ol>
 <li>When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, "WoW Addon" creates XML message <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code>. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> values.</li>
-<li style="margin-bottom: 10px;">"WoW Addon" converts XML text message to line of coloured pixels and shows this line inside your in-game window. 1 RGB pixel can hold 3 bytes or 3 ASCII characters or 1 UTF8 Japanese character. Default line's position is Top(0) Left(0):<br />
+<li>"WoW Addon" converts XML text message to line of coloured pixels and shows this line inside your in-game window. 1 RGB pixel can hold 3 bytes or 3 ASCII characters or 1 UTF8 Japanese character. Default line's position is Top(0) Left(0):<br />
 <img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_WoW_Addon_Pixels.png" /> <img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_Monitor_Display_Small.png" /></li>
 <li>“TTS Monitor” <i>(must be running in the background)</i> captures this line of coloured pixels and converts back to the text message &gt; converts it to SAPI XML &gt; reads it with specific text-to-speech voice <i>(if "Monitor: Display" capturing mode is enabled)</i>.</li>
 </ol>
@@ -37,10 +37,10 @@
 	<img src="http://www.jocys.com/Files/Software/Copy.png" />
 <li>Paste <i>"JocysCom-TextToSpeech-WoW"</i> folder inside <i>"AddOns"</i> folder of WoW.</li>
 	<i>Usual directory: C:\Program Files\World of Warcraft\_retail_Interface\AddOns</i>
-<li>Install additional text-to-speech voices, if needed. BETTER voices are developed by <a href="http://www.ivona.com" target="_blank">Ivona</a> and distributed by <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a>.</li>
+<li>Install additional text-to-speech voices, if needed. BETTER voices are developed by <a href="http://www.ivona.com" target="_blank">Ivona</a> (distributed by <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a>).</li>
 <li>Run <b>"JocysCom.TextToSpeech.Monitor.exe"</b> file (file is inside pasted folder).</li>
 	<i>Usual directory: C:\Program Files\World of Warcraft\_retail_\Interface\AddOns\JocysCom-TextToSpeech-WoW\</i>
-<li style="margin-bottom: 10px;">When <b>"TTS Monitor"</b>, will open, setup voices in <b>[Voices]</b> tab (example).<br />
+<li>When <b>"TTS Monitor"</b>, will open, setup voices in <b>[Voices]</b> tab (example).<br />
 <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_2_2_35.png" /></a></li>
 <li>Run "World of Warcraft" game.</li>
 </ol>
