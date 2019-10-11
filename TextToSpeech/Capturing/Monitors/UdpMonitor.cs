@@ -25,9 +25,6 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 
 		int _PortNumber;
 
-		public bool IsRunning { get { return _IsRunning; } }
-		bool _IsRunning;
-
 		public override void Start()
 		{
 			lock (serverSocketLock)

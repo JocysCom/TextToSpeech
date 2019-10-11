@@ -116,7 +116,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			if (IsDisposing) return;
 			// Set up timer.
 			_Status = JobStatusType.Playing;
-			OnPropertyChanged("Status");
+			OnPropertyChanged(nameof(Status));
 			playTimer = new System.Timers.Timer();
 			playTimer.AutoReset = false;
 			playTimer.Elapsed += playTimer_Elapsed;
@@ -127,36 +127,36 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		void playTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 		{
 			_Status = JobStatusType.Played;
-			OnPropertyChanged("Status");
+			OnPropertyChanged(nameof(Status));
 		}
 
-		bool _IsComment;
 		public bool IsComment
 		{
 			get { return _IsComment; }
 			set { _IsComment = value; OnPropertyChanged(); }
 		}
+		bool _IsComment;
 
-		string _Text;
 		public string Text
 		{
 			get { return _Text; }
 			set { _Text = value; OnPropertyChanged(); }
 		}
+		string _Text;
 
-		string _Group;
 		public string Group
 		{
 			get { return _Group; }
 			set { _Group = value; OnPropertyChanged(); }
 		}
+		string _Group;
 
-		string _Xml;
 		public string Xml
 		{
 			get { return _Xml; }
 			set { _Xml = value; OnPropertyChanged(); }
 		}
+		string _Xml;
 
 		/// <summary>
 		/// Contains information about the WAV Data.
@@ -178,27 +178,26 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		}
 		byte[] _WavData;
 
-		Stream _StreamData;
 		public Stream StreamData
 		{
 			get { return _StreamData; }
 			set { _StreamData = value; OnPropertyChanged(); }
 		}
+		Stream _StreamData;
 
-
-		int _Duration;
 		public int Duration
 		{
 			get { return _Duration; }
 			set { _Duration = value; OnPropertyChanged(); }
 		}
+		int _Duration;
 
-		JobStatusType _Status;
 		public JobStatusType Status
 		{
 			get { return _Status; }
 			set { _Status = value; OnPropertyChanged(); }
 		}
+		JobStatusType _Status;
 
 		#region INotifyPropertyChanged
 

@@ -37,7 +37,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var im = new message();
 
 			// If <message.
-			if (!text.Contains("<message")) return;
+			if (!text.Contains("<message"))
+				return;
 			var v = Serializer.DeserializeFromXmlString<message>(text);
 			// Override voice values.
 			var name = v.name;
@@ -77,9 +78,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			im.rate = v.rate;
 
 			// Set effect.
-			var effectValue = string.IsNullOrEmpty(v.effect) ? "Default" : v.effect;
-			OnEvent(EffectsPresetSelected, effectValue);
-			im.effect = !string.IsNullOrEmpty(v.effect) ? "effect=\"" + v.effect + "\"" : "";
+			im.effect = string.IsNullOrEmpty(v.effect) ? "Default" : v.effect;
+			OnEvent(EffectsPresetSelected, im.effect);
 
 			// Set volume.
 			var volumeIsValid = int.TryParse(v.volume, out _Volume);
@@ -90,12 +90,12 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			im.volume = v.volume;
 
 			// Set group.
-			var groupValue = string.IsNullOrEmpty(v.group) ? "" : v.group;
-			im.group = v.group;
+			im.group = string.IsNullOrEmpty(v.group) ? "" : v.group;
 
 			// Set command.
 			im.command = v.command;
-			if (string.IsNullOrEmpty(v.command)) return;
+			if (string.IsNullOrEmpty(v.command))
+				return;
 
 			// commands.
 			switch (v.command.ToLower())
@@ -112,8 +112,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					}
 					break;
 				case "add":
-					if (v.parts != null)
-						buffer += string.Join("", v.parts);
+					if (v.part != null)
+						partsBuffer += v.part;
 					break;
 				case "sound":
 					var groupName = string.IsNullOrEmpty(v.group)
@@ -143,20 +143,20 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					}
 					break;
 				case "play":
-					if (v.parts != null)
-						buffer += string.Join("", v.parts);
-					var decodedText = System.Web.HttpUtility.HtmlDecode(Global.buffer);
-					buffer = "";
-					im.parts = new string[] { decodedText };
+					// Add last part to the buffer.
+					if (v.part != null)
+						partsBuffer += v.part;
+					// Decode complete message part.
+					im.part = System.Web.HttpUtility.HtmlDecode(partsBuffer);
+					// Clean buffer.
+					partsBuffer = "";
 					// Add silence before message.
 					var programName = Program.MonitorItem.Name;
 					var silenceIntBefore = (int)SettingsManager.Options.AddSilenceBeforeMessage;
 					if (silenceIntBefore > 0)
-					{
 						AddTextToPlaylist(programName, "<silence msec=\"" + silenceIntBefore.ToString() + "\" />", true, v.group);
-					}
 					// Add actual message to the playlist
-					AddTextToPlaylist(programName, decodedText, true, v.group,
+					AddTextToPlaylist(programName, im.part, true, v.group,
 						// Supply NCP properties.
 						v.name, v.gender, v.effect,
 						// Supply Player properties.
@@ -165,9 +165,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					// Add silence after message.
 					var silenceIntAfter = (int)SettingsManager.Options.AddSilenceAfterMessage;
 					if (silenceIntAfter > 0)
-					{
 						AddTextToPlaylist(programName, "<silence msec=\"" + silenceIntAfter.ToString() + "\" />", true, v.group);
-					}
 					break;
 				case "stop":
 					text = "";
@@ -184,7 +182,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			}
 			OnEvent(ProcessedMessage, im);
 		}
-
 
 	}
 }

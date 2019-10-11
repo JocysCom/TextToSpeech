@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
@@ -53,9 +54,9 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 		public string volume { get { return _volume; } set { _volume = value; OnPropertyChanged(); } }
 		string _volume;
 
-		[DataMember, XmlElement("part")]
-		public string[] parts { get { return _parts; } set { _parts = value; OnPropertyChanged(); } }
-		string[] _parts;
+		[DataMember, XmlElement]
+		public string part { get { return _parts; } set { _parts = value; OnPropertyChanged(); } }
+		string _parts;
 
 		/// <summary>
 		/// Set current voice values from other voice object.
@@ -63,6 +64,8 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 		/// <param name="v">voice which will be used as a source of values.</param>
 		public void UpdateMissingValuesFrom(message v)
 		{
+			if (v == null)
+				throw new ArgumentNullException(nameof(v));
 			if (!v.enabled)
 				return;
 			// if value supplied and current is empty then...
@@ -78,6 +81,8 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 
 		public void UpdateMissingAndChangedValuesFrom(message v)
 		{
+			if (v == null)
+				throw new ArgumentNullException(nameof(v));
 			// if value supplied and current is not the same then...
 			if (!string.IsNullOrEmpty(v.language) && language != v.language) language = v.language;
 			if (!string.IsNullOrEmpty(v.gender) && gender != v.gender) gender = v.gender;
@@ -90,6 +95,8 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 
 		public void UpdateFrom(message v)
 		{
+			if (v == null)
+				throw new ArgumentNullException(nameof(v));
 			language = v.language;
 			gender = v.gender;
 			effect = v.effect;

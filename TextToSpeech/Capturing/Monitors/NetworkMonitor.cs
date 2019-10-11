@@ -29,8 +29,6 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		// The socket which monitors all incoming packets.
 		private List<ICaptureDevice> CaptureDevices = new List<ICaptureDevice>();
 
-		// A flag to check if packets are to be monitored or not.
-		private bool continueMonitoring = false;
 		long Ip4PacketsCount = 0;
 		long Ip6PacketsCount = 0;
 
@@ -82,7 +80,6 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 				try
 				{
 					IpAddresses.Clear();
-					continueMonitoring = true;
 					// Retrieve all capture devices
 					if (SettingsManager.Options.NetworkMonitorCapturingType == CapturingType.WinPcap)
 					{

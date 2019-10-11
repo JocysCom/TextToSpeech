@@ -77,16 +77,16 @@ namespace JocysCom.TextToSpeech.Monitor
 		}
 		private void AudioGlobal_ProcessedMessage(object sender, ClassLibrary.EventArgs<Capturing.message> e)
 		{
-			IncomingTextTextBox.Text = e.Data.parts != null && e.Data.parts.Length > 0 ? e.Data.parts[0] : "";
-			IncomingLanguageTextBox.Text = string.IsNullOrEmpty(e.Data.language) ? "" : "language=\"" + e.Data.language + "\"";
-			IncomingNameTextBox.Text = string.IsNullOrEmpty(e.Data.name) ? "" : "name=\"" + e.Data.name + "\"";
-			IncomingGenderTextBox.Text = string.IsNullOrEmpty(e.Data.gender) ? "" : "gender=\"" + e.Data.gender + "\"";
-			IncomingEffectTextBox.Text = string.IsNullOrEmpty(e.Data.effect) ? "" : "effect=\"" + e.Data.effect + "\"";
-			IncomingGroupTextBox.Text = string.IsNullOrEmpty(e.Data.group) ? "" : "group=\"" + e.Data.group + "\"";
-			IncomingPitchTextBox.Text = string.IsNullOrEmpty(e.Data.pitch) ? "" : "pitch=\"" + e.Data.pitch + "\"";
-			IncomingRateTextBox.Text = string.IsNullOrEmpty(e.Data.rate) ? "" : "rate=\"" + e.Data.rate + "\"";
-			IncomingVolumeTextBox.Text = string.IsNullOrEmpty(e.Data.volume) ? "" : "volume=\"" + e.Data.volume + "\"";
-			IncomingCommandTextBox.Text = string.IsNullOrEmpty(e.Data.command) ? "" : "command=\"" + e.Data.command + "\"";
+			InPartTextBox.Text = string.Format("{0}", e.Data.part);
+			InLanguageTextBox.Text = string.Format("{0}", e.Data.language);
+			InNameTextBox.Text = string.Format("{0}", e.Data.name);
+			InGenderTextBox.Text = string.Format("{0}", e.Data.gender);
+			InEffectTextBox.Text = string.Format("{0}", e.Data.effect);
+			InGroupTextBox.Text = string.Format("{0}", e.Data.group);
+			InPitchTextBox.Text = string.Format("{0}", e.Data.pitch);
+			InRateTextBox.Text = string.Format("{0}", e.Data.rate);
+			InVolumeTextBox.Text = string.Format("{0}", e.Data.volume);
+			InCommandTextBox.Text = string.Format("{0}", e.Data.command);
 			int rate;
 			RateTextBox.Text = int.TryParse(e.Data.rate, out rate) ? rate.ToString() : "";
 			int pitch;
@@ -373,13 +373,13 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 
 			//Fill SAPI Tab
-			if (string.IsNullOrEmpty(IncomingTextTextBox.Text))
+			if (string.IsNullOrEmpty(InPartTextBox.Text))
 			{
 				SapiTextBox.Text = Global.ConvertTextToSapiXml("Test text to speech.");
 			}
 			else
 			{
-				var blocks = Global.AddTextToPlaylist(ProgramComboBox.Text, IncomingTextTextBox.Text, false, "TextBox");
+				var blocks = Global.AddTextToPlaylist(ProgramComboBox.Text, InPartTextBox.Text, false, "TextBox");
 				SapiTextBox.Text = string.Join("\r\n\r\n", blocks.Select(x => x.Xml));
 			}
 		}
@@ -486,7 +486,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				text += "Rejected: " + wordUnit.Text + ", " + wordUnit.LexicalForm + ", " + wordUnit.Pronunciation + "\r\n";
 			}
-			IncomingTextTextBox.Text += text;
+			InPartTextBox.Text += text;
 		}
 
 		void recognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
@@ -496,7 +496,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				text += "Recognized: " + wordUnit.Text + ", " + wordUnit.LexicalForm + ", " + wordUnit.Pronunciation + "\r\n";
 			}
-			IncomingTextTextBox.Text += text;
+			InPartTextBox.Text += text;
 		}
 
 		private void aboutControl_Load(object sender, EventArgs e)
@@ -828,7 +828,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			else
 			{
-				Global.AddTextToPlaylist(ProgramComboBox.Text, IncomingTextTextBox.Text, true, "TextBox");
+				Global.AddTextToPlaylist(ProgramComboBox.Text, InPartTextBox.Text, true, "TextBox");
 			}
 		}
 

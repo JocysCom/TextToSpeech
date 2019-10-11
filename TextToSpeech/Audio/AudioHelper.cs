@@ -130,7 +130,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		static byte[] PackageInt(int source, int length = 2)
 		{
-			if ((length != 2) && (length != 4)) throw new ArgumentException("Length must be either 2 or 4", "length");
+			if ((length != 2) && (length != 4))
+				throw new ArgumentException("Length must be either 2 or 4", nameof(length));
 			var retVal = new byte[length];
 			retVal[0] = (byte)(source & 0xFF);
 			retVal[1] = (byte)((source >> 8) & 0xFF);
