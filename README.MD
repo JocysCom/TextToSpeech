@@ -20,10 +20,10 @@
 ### How it Works (new version)
 
 <ol>
-<li>"WoW Addon" creates XML text message <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code> when you open window with text (dialogue, quest, book, etc.) or receive chat message in game. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> values.</li>
-<li>"WoW Addon" converts XML text message to line of coloured pixels and shows this line inside your in-game window. 1 RGB pixel can hold 3 bytes or 3 ASCII characters or 1 UTF8 Japanese character. Default line's position is Top(0) Left(0):<br />
+<li>When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, "WoW Addon" creates XML message <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code>. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> values.</li>
+<li style="margin-bottom: 10px;">"WoW Addon" converts XML text message to line of coloured pixels and shows this line inside your in-game window. 1 RGB pixel can hold 3 bytes or 3 ASCII characters or 1 UTF8 Japanese character. Default line's position is Top(0) Left(0):<br />
 <img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_WoW_Addon_Pixels.png" /> <img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_Monitor_Display_Small.png" /></li>
-<li>"TTS Monitor" captures this line of coloured pixels and converts back to the text message if "Monitor: Display" capturing mode is enabled. Then, "TTS Monitor", <em>which must be running in the background</em>, converts it to SAPI XML and reads it with specific text-to-speech voice.</li>
+<li>“TTS Monitor” <i>(must be running in the background)</i> captures this line of coloured pixels and converts back to the text message &gt; converts it to SAPI XML &gt; reads it with specific text-to-speech voice <i>(if "Monitor: Display" capturing mode is enabled)</i>.</li>
 </ol>
 <p>Note: Make sure you do not cover this line with other game elements. TTS Monitor supports other message capturing methods and "Cache" option which allows to use manually pre-recorded voices.</p>
 
@@ -35,12 +35,17 @@
 <li>Open "File Explorer" (Win+E), locate downloaded file and open it.</li>
 <li>Copy <i>"JocysCom-TextToSpeech-WoW"</i> folder (folder is inside downloaded zip file).<br />
 <img src="http://www.jocys.com/Files/Software/Copy.png" /></li
-<li>Paste <i>"JocysCom-TextToSpeech-WoW"</i> folder inside <i>"AddOns"</i> folder of WoW.<br/>Usual directory: C:\Program Files\World of Warcraft\Interface\AddOns</li>
-<li>Install additional text-to-speech voices, if needed. BETTER text-to-speech voices are developed by <a href="http://www.ivona.com" target="_blank">Ivona</a> and distributed by <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a>.</li>
-<li>Run <b>"JocysCom.TextToSpeech.Monitor.exe"</b> file (file is inside pasted folder).<br/>Usual directory: C:\Program Files\World of Warcraft\Interface\AddOns\JocysCom-TextToSpeech-WoW\</li>
-<li>When <b>"TTS Monitor"</b>, will open, setup voices in <b>[Voices]</b> tab (example).<br />
+<li>Paste <i>"JocysCom-TextToSpeech-WoW"</i> folder inside <i>"AddOns"</i> folder of WoW.</li>
+
+<i>Usual directory: C:\Program Files\World of Warcraft\_retail_Interface\AddOns</i>
+
+<li>Install additional text-to-speech voices, if needed. BETTER voices are developed by <a href="http://www.ivona.com" target="_blank">Ivona</a> and distributed by <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a>.</li>
+<li>Run <b>"JocysCom.TextToSpeech.Monitor.exe"</b> file (file is inside pasted folder).</li>
+
+Usual directory: C:\Program Files\World of Warcraft\_retail_\Interface\AddOns\JocysCom-TextToSpeech-WoW\
+<li style="margin-bottom: 10px;">When <b>"TTS Monitor"</b>, will open, setup voices in <b>[Voices]</b> tab (example).<br />
 <a href="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices.png" target="_blank"><img src="http://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices_2_2_35.png" /></a></li>
 <li>Run "World of Warcraft" game.</li>
 </ol>
 
-You can read more on how to use WoW addon here: https://www.jocys.com/TTS
+You can read more on how to use WoW addon here: <a href="https://www.jocys.com/TTS" target="_blank">Jocys.com/TTS</a>
