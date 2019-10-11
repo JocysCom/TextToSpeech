@@ -1,13 +1,10 @@
 ﻿using JocysCom.ClassLibrary.Runtime;
 using SharpDX.DirectSound;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Xml.Serialization;
 
 namespace JocysCom.TextToSpeech.Monitor.Audio
 {

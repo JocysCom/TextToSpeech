@@ -1,19 +1,13 @@
 ﻿
 using JocysCom.TextToSpeech.Monitor.Audio;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.Objects.DataClasses;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.Serialization;
 
 namespace JocysCom.TextToSpeech.Monitor
 {

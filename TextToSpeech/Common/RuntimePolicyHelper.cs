@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace JocysCom.TextToSpeech.Monitor
 {
@@ -12,7 +9,7 @@ namespace JocysCom.TextToSpeech.Monitor
 	/// </summary>
 	public class RuntimePolicyHelper
 	{
-	
+
 		public static bool LegacyV2RuntimeEnabledSuccessfully { get; set; }
 
 		static RuntimePolicyHelper()

@@ -29,7 +29,8 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			{
 				throw;
 			}
-			finally {
+			finally
+			{
 				if (IsRunning)
 					_Timer.Start();
 			}

@@ -1,12 +1,7 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
+﻿using JocysCom.ClassLibrary.Controls;
 using JocysCom.TextToSpeech.Monitor.Audio;
-using JocysCom.ClassLibrary.Controls;
-using System.Drawing;
+using System;
+using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {

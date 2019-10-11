@@ -39,7 +39,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 
 		object SequenceNumbersLock = new object();
 		List<uint> SequenceNumbers = new List<uint>();
-	
+
 		public static string GetLogsPath(bool create)
 		{
 			var path = Path.Combine(MainHelper.AppDataPath, "Logs");

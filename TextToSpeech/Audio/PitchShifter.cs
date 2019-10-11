@@ -45,251 +45,248 @@
 *****************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading;
 
 namespace Mike.Rules
 {
-    public class PitchShifter
-    {
+	public class PitchShifter
+	{
 
-        #region Private Static Memebers
-        private static int MAX_FRAME_LENGTH = 16000;
-        private static float[] gInFIFO = new float[MAX_FRAME_LENGTH];
-        private static float[] gOutFIFO = new float[MAX_FRAME_LENGTH];
-        private static float[] gFFTworksp = new float[2 * MAX_FRAME_LENGTH];
-        private static float[] gLastPhase = new float[MAX_FRAME_LENGTH / 2 + 1];
-        private static float[] gSumPhase = new float[MAX_FRAME_LENGTH / 2 + 1];
-        private static float[] gOutputAccum = new float[2 * MAX_FRAME_LENGTH];
-        private static float[] gAnaFreq = new float[MAX_FRAME_LENGTH];
-        private static float[] gAnaMagn = new float[MAX_FRAME_LENGTH];
-        private static float[] gSynFreq = new float[MAX_FRAME_LENGTH];
-        private static float[] gSynMagn = new float[MAX_FRAME_LENGTH];
-        private static long gRover;
-        #endregion
+		#region Private Static Memebers
+		private static int MAX_FRAME_LENGTH = 16000;
+		private static float[] gInFIFO = new float[MAX_FRAME_LENGTH];
+		private static float[] gOutFIFO = new float[MAX_FRAME_LENGTH];
+		private static float[] gFFTworksp = new float[2 * MAX_FRAME_LENGTH];
+		private static float[] gLastPhase = new float[MAX_FRAME_LENGTH / 2 + 1];
+		private static float[] gSumPhase = new float[MAX_FRAME_LENGTH / 2 + 1];
+		private static float[] gOutputAccum = new float[2 * MAX_FRAME_LENGTH];
+		private static float[] gAnaFreq = new float[MAX_FRAME_LENGTH];
+		private static float[] gAnaMagn = new float[MAX_FRAME_LENGTH];
+		private static float[] gSynFreq = new float[MAX_FRAME_LENGTH];
+		private static float[] gSynMagn = new float[MAX_FRAME_LENGTH];
+		private static long gRover;
+		#endregion
 
-        #region Public Static  Methods
+		#region Public Static  Methods
 
-        public static void PitchShift(float pitchShift, long numSampsToProcess, float sampleRate, float[] indata, CancellationTokenSource token)
-        {
-            PitchShift(pitchShift, numSampsToProcess, (long)2048, (long)10, sampleRate, indata, token);
-        }
+		public static void PitchShift(float pitchShift, long numSampsToProcess, float sampleRate, float[] indata, CancellationTokenSource token)
+		{
+			PitchShift(pitchShift, numSampsToProcess, (long)2048, (long)10, sampleRate, indata, token);
+		}
 
-        public static void PitchShift(float pitchShift, long numSampsToProcess, long fftFrameSize, long osamp, float sampleRate, float[] indata, CancellationTokenSource token)
-        {
-            double magn, phase, tmp, window, real, imag;
-            double freqPerBin, expct;
-            long i, k, qpd, index, inFifoLatency, stepSize, fftFrameSize2;
-
-
-            float[] outdata = indata;
-            /* set up some handy variables */
-            fftFrameSize2 = fftFrameSize / 2;
-            stepSize = fftFrameSize / osamp;
-            freqPerBin = sampleRate / (double)fftFrameSize;
-            expct = 2.0 * Math.PI * (double)stepSize / (double)fftFrameSize;
-            inFifoLatency = fftFrameSize - stepSize;
-            if (gRover == 0) gRover = inFifoLatency;
+		public static void PitchShift(float pitchShift, long numSampsToProcess, long fftFrameSize, long osamp, float sampleRate, float[] indata, CancellationTokenSource token)
+		{
+			double magn, phase, tmp, window, real, imag;
+			double freqPerBin, expct;
+			long i, k, qpd, index, inFifoLatency, stepSize, fftFrameSize2;
 
 
-            /* main processing loop */
-            for (i = 0; i < numSampsToProcess; i++)
-            {
-
-                /* As long as we have not yet collected enough data just read in */
-                gInFIFO[gRover] = indata[i];
-                outdata[i] = gOutFIFO[gRover - inFifoLatency];
-                gRover++;
-
-                /* now we have enough data for processing */
-                if (gRover >= fftFrameSize)
-                {
-                    gRover = inFifoLatency;
-
-                    /* do windowing and re,im interleave */
-                    for (k = 0; k < fftFrameSize; k++)
-                    {
-                        window = -.5 * Math.Cos(2.0 * Math.PI * (double)k / (double)fftFrameSize) + .5;
-                        gFFTworksp[2 * k] = (float)(gInFIFO[k] * window);
-                        gFFTworksp[2 * k + 1] = 0.0F;
-                    }
+			float[] outdata = indata;
+			/* set up some handy variables */
+			fftFrameSize2 = fftFrameSize / 2;
+			stepSize = fftFrameSize / osamp;
+			freqPerBin = sampleRate / (double)fftFrameSize;
+			expct = 2.0 * Math.PI * (double)stepSize / (double)fftFrameSize;
+			inFifoLatency = fftFrameSize - stepSize;
+			if (gRover == 0) gRover = inFifoLatency;
 
 
-                    /* ***************** ANALYSIS ******************* */
-                    /* do transform */
-                    ShortTimeFourierTransform(gFFTworksp, fftFrameSize, -1);
-                    if (token != null && token.IsCancellationRequested) return;
-                    /* this is the analysis step */
-                    for (k = 0; k <= fftFrameSize2; k++)
-                    {
+			/* main processing loop */
+			for (i = 0; i < numSampsToProcess; i++)
+			{
 
-                        /* de-interlace FFT buffer */
-                        real = gFFTworksp[2 * k];
-                        imag = gFFTworksp[2 * k + 1];
+				/* As long as we have not yet collected enough data just read in */
+				gInFIFO[gRover] = indata[i];
+				outdata[i] = gOutFIFO[gRover - inFifoLatency];
+				gRover++;
 
-                        /* compute magnitude and phase */
-                        magn = 2.0 * Math.Sqrt(real * real + imag * imag);
-                        phase = Math.Atan2(imag, real);
+				/* now we have enough data for processing */
+				if (gRover >= fftFrameSize)
+				{
+					gRover = inFifoLatency;
 
-                        /* compute phase difference */
-                        tmp = phase - gLastPhase[k];
-                        gLastPhase[k] = (float)phase;
+					/* do windowing and re,im interleave */
+					for (k = 0; k < fftFrameSize; k++)
+					{
+						window = -.5 * Math.Cos(2.0 * Math.PI * (double)k / (double)fftFrameSize) + .5;
+						gFFTworksp[2 * k] = (float)(gInFIFO[k] * window);
+						gFFTworksp[2 * k + 1] = 0.0F;
+					}
 
-                        /* subtract expected phase difference */
-                        tmp -= (double)k * expct;
 
-                        /* map delta phase into +/- Pi interval */
-                        qpd = (long)(tmp / Math.PI);
-                        if (qpd >= 0) qpd += qpd & 1;
-                        else qpd -= qpd & 1;
-                        tmp -= Math.PI * (double)qpd;
+					/* ***************** ANALYSIS ******************* */
+					/* do transform */
+					ShortTimeFourierTransform(gFFTworksp, fftFrameSize, -1);
+					if (token != null && token.IsCancellationRequested) return;
+					/* this is the analysis step */
+					for (k = 0; k <= fftFrameSize2; k++)
+					{
 
-                        /* get deviation from bin frequency from the +/- Pi interval */
-                        tmp = osamp * tmp / (2.0 * Math.PI);
+						/* de-interlace FFT buffer */
+						real = gFFTworksp[2 * k];
+						imag = gFFTworksp[2 * k + 1];
 
-                        /* compute the k-th partials' true frequency */
-                        tmp = (double)k * freqPerBin + tmp * freqPerBin;
+						/* compute magnitude and phase */
+						magn = 2.0 * Math.Sqrt(real * real + imag * imag);
+						phase = Math.Atan2(imag, real);
 
-                        /* store magnitude and true frequency in analysis arrays */
-                        gAnaMagn[k] = (float)magn;
-                        gAnaFreq[k] = (float)tmp;
+						/* compute phase difference */
+						tmp = phase - gLastPhase[k];
+						gLastPhase[k] = (float)phase;
 
-                    }
+						/* subtract expected phase difference */
+						tmp -= (double)k * expct;
 
-                    /* ***************** PROCESSING ******************* */
-                    /* this does the actual pitch shifting */
-                    for (int zero = 0; zero < fftFrameSize; zero++)
-                    {
-                        gSynMagn[zero] = 0;
-                        gSynFreq[zero] = 0;
-                    }
+						/* map delta phase into +/- Pi interval */
+						qpd = (long)(tmp / Math.PI);
+						if (qpd >= 0) qpd += qpd & 1;
+						else qpd -= qpd & 1;
+						tmp -= Math.PI * (double)qpd;
 
-                    for (k = 0; k <= fftFrameSize2; k++)
-                    {
-                        index = (long)(k * pitchShift);
-                        if (index <= fftFrameSize2)
-                        {
-                            gSynMagn[index] += gAnaMagn[k];
-                            gSynFreq[index] = gAnaFreq[k] * pitchShift;
-                        }
-                    }
+						/* get deviation from bin frequency from the +/- Pi interval */
+						tmp = osamp * tmp / (2.0 * Math.PI);
 
-                    /* ***************** SYNTHESIS ******************* */
-                    /* this is the synthesis step */
-                    for (k = 0; k <= fftFrameSize2; k++)
-                    {
+						/* compute the k-th partials' true frequency */
+						tmp = (double)k * freqPerBin + tmp * freqPerBin;
 
-                        /* get magnitude and true frequency from synthesis arrays */
-                        magn = gSynMagn[k];
-                        tmp = gSynFreq[k];
+						/* store magnitude and true frequency in analysis arrays */
+						gAnaMagn[k] = (float)magn;
+						gAnaFreq[k] = (float)tmp;
 
-                        /* subtract bin mid frequency */
-                        tmp -= (double)k * freqPerBin;
+					}
 
-                        /* get bin deviation from freq deviation */
-                        tmp /= freqPerBin;
+					/* ***************** PROCESSING ******************* */
+					/* this does the actual pitch shifting */
+					for (int zero = 0; zero < fftFrameSize; zero++)
+					{
+						gSynMagn[zero] = 0;
+						gSynFreq[zero] = 0;
+					}
 
-                        /* take osamp into account */
-                        tmp = 2.0 * Math.PI * tmp / osamp;
+					for (k = 0; k <= fftFrameSize2; k++)
+					{
+						index = (long)(k * pitchShift);
+						if (index <= fftFrameSize2)
+						{
+							gSynMagn[index] += gAnaMagn[k];
+							gSynFreq[index] = gAnaFreq[k] * pitchShift;
+						}
+					}
 
-                        /* add the overlap phase advance back in */
-                        tmp += (double)k * expct;
+					/* ***************** SYNTHESIS ******************* */
+					/* this is the synthesis step */
+					for (k = 0; k <= fftFrameSize2; k++)
+					{
 
-                        /* accumulate delta phase to get bin phase */
-                        gSumPhase[k] += (float)tmp;
-                        phase = gSumPhase[k];
+						/* get magnitude and true frequency from synthesis arrays */
+						magn = gSynMagn[k];
+						tmp = gSynFreq[k];
 
-                        /* get real and imag part and re-interleave */
-                        gFFTworksp[2 * k] = (float)(magn * Math.Cos(phase));
-                        gFFTworksp[2 * k + 1] = (float)(magn * Math.Sin(phase));
-                    }
+						/* subtract bin mid frequency */
+						tmp -= (double)k * freqPerBin;
 
-                    /* zero negative frequencies */
-                    for (k = fftFrameSize + 2; k < 2 * fftFrameSize; k++) gFFTworksp[k] = 0.0F;
+						/* get bin deviation from freq deviation */
+						tmp /= freqPerBin;
 
-                    /* do inverse transform */
-                    ShortTimeFourierTransform(gFFTworksp, fftFrameSize, 1);
-                    if (token != null && token.IsCancellationRequested) return;
+						/* take osamp into account */
+						tmp = 2.0 * Math.PI * tmp / osamp;
 
-                    /* do windowing and add to output accumulator */
-                    for (k = 0; k < fftFrameSize; k++)
-                    {
-                        window = -.5 * Math.Cos(2.0 * Math.PI * (double)k / (double)fftFrameSize) + .5;
-                        gOutputAccum[k] += (float)(2.0 * window * gFFTworksp[2 * k] / (fftFrameSize2 * osamp));
-                    }
-                    for (k = 0; k < stepSize; k++) gOutFIFO[k] = gOutputAccum[k];
+						/* add the overlap phase advance back in */
+						tmp += (double)k * expct;
 
-                    /* shift accumulator */
-                    //memmove(gOutputAccum, gOutputAccum + stepSize, fftFrameSize * sizeof(float));
-                    for (k = 0; k < fftFrameSize; k++)
-                    {
-                        gOutputAccum[k] = gOutputAccum[k + stepSize];
-                    }
+						/* accumulate delta phase to get bin phase */
+						gSumPhase[k] += (float)tmp;
+						phase = gSumPhase[k];
 
-                    /* move input FIFO */
-                    for (k = 0; k < inFifoLatency; k++) gInFIFO[k] = gInFIFO[k + stepSize];
-                }
-            }
-        }
-        #endregion
+						/* get real and imag part and re-interleave */
+						gFFTworksp[2 * k] = (float)(magn * Math.Cos(phase));
+						gFFTworksp[2 * k + 1] = (float)(magn * Math.Sin(phase));
+					}
 
-        #region Private Static Methods
+					/* zero negative frequencies */
+					for (k = fftFrameSize + 2; k < 2 * fftFrameSize; k++) gFFTworksp[k] = 0.0F;
 
-        public static void ShortTimeFourierTransform(float[] fftBuffer, long fftFrameSize, long sign)
-        {
-            float wr, wi, arg, temp;
-            float tr, ti, ur, ui;
-            long i, bitm, j, le, le2, k;
+					/* do inverse transform */
+					ShortTimeFourierTransform(gFFTworksp, fftFrameSize, 1);
+					if (token != null && token.IsCancellationRequested) return;
 
-            for (i = 2; i < 2 * fftFrameSize - 2; i += 2)
-            {
-                for (bitm = 2, j = 0; bitm < 2 * fftFrameSize; bitm <<= 1)
-                {
-                    if ((i & bitm) != 0) j++;
-                    j <<= 1;
-                }
-                if (i < j)
-                {
-                    temp = fftBuffer[i];
-                    fftBuffer[i] = fftBuffer[j];
-                    fftBuffer[j] = temp;
-                    temp = fftBuffer[i + 1];
-                    fftBuffer[i + 1] = fftBuffer[j + 1];
-                    fftBuffer[j + 1] = temp;
-                }
-            }
-            long max = (long)(Math.Log(fftFrameSize) / Math.Log(2.0) + .5);
-            for (k = 0, le = 2; k < max; k++)
-            {
-                le <<= 1;
-                le2 = le >> 1;
-                ur = 1.0F;
-                ui = 0.0F;
-                arg = (float)Math.PI / (le2 >> 1);
-                wr = (float)Math.Cos(arg);
-                wi = (float)(sign * Math.Sin(arg));
-                for (j = 0; j < le2; j += 2)
-                {
+					/* do windowing and add to output accumulator */
+					for (k = 0; k < fftFrameSize; k++)
+					{
+						window = -.5 * Math.Cos(2.0 * Math.PI * (double)k / (double)fftFrameSize) + .5;
+						gOutputAccum[k] += (float)(2.0 * window * gFFTworksp[2 * k] / (fftFrameSize2 * osamp));
+					}
+					for (k = 0; k < stepSize; k++) gOutFIFO[k] = gOutputAccum[k];
 
-                    for (i = j; i < 2 * fftFrameSize; i += le)
-                    {
-                        tr = fftBuffer[i + le2] * ur - fftBuffer[i + le2 + 1] * ui;
-                        ti = fftBuffer[i + le2] * ui + fftBuffer[i + le2 + 1] * ur;
-                        fftBuffer[i + le2] = fftBuffer[i] - tr;
-                        fftBuffer[i + le2 + 1] = fftBuffer[i + 1] - ti;
-                        fftBuffer[i] += tr;
-                        fftBuffer[i + 1] += ti;
+					/* shift accumulator */
+					//memmove(gOutputAccum, gOutputAccum + stepSize, fftFrameSize * sizeof(float));
+					for (k = 0; k < fftFrameSize; k++)
+					{
+						gOutputAccum[k] = gOutputAccum[k + stepSize];
+					}
 
-                    }
-                    tr = ur * wr - ui * wi;
-                    ui = ur * wi + ui * wr;
-                    ur = tr;
-                }
-            }
-        }
+					/* move input FIFO */
+					for (k = 0; k < inFifoLatency; k++) gInFIFO[k] = gInFIFO[k + stepSize];
+				}
+			}
+		}
+		#endregion
 
-        #endregion
-    }
+		#region Private Static Methods
+
+		public static void ShortTimeFourierTransform(float[] fftBuffer, long fftFrameSize, long sign)
+		{
+			float wr, wi, arg, temp;
+			float tr, ti, ur, ui;
+			long i, bitm, j, le, le2, k;
+
+			for (i = 2; i < 2 * fftFrameSize - 2; i += 2)
+			{
+				for (bitm = 2, j = 0; bitm < 2 * fftFrameSize; bitm <<= 1)
+				{
+					if ((i & bitm) != 0) j++;
+					j <<= 1;
+				}
+				if (i < j)
+				{
+					temp = fftBuffer[i];
+					fftBuffer[i] = fftBuffer[j];
+					fftBuffer[j] = temp;
+					temp = fftBuffer[i + 1];
+					fftBuffer[i + 1] = fftBuffer[j + 1];
+					fftBuffer[j + 1] = temp;
+				}
+			}
+			long max = (long)(Math.Log(fftFrameSize) / Math.Log(2.0) + .5);
+			for (k = 0, le = 2; k < max; k++)
+			{
+				le <<= 1;
+				le2 = le >> 1;
+				ur = 1.0F;
+				ui = 0.0F;
+				arg = (float)Math.PI / (le2 >> 1);
+				wr = (float)Math.Cos(arg);
+				wi = (float)(sign * Math.Sin(arg));
+				for (j = 0; j < le2; j += 2)
+				{
+
+					for (i = j; i < 2 * fftFrameSize; i += le)
+					{
+						tr = fftBuffer[i + le2] * ur - fftBuffer[i + le2 + 1] * ui;
+						ti = fftBuffer[i + le2] * ui + fftBuffer[i + le2 + 1] * ur;
+						fftBuffer[i + le2] = fftBuffer[i] - tr;
+						fftBuffer[i + le2 + 1] = fftBuffer[i + 1] - ti;
+						fftBuffer[i] += tr;
+						fftBuffer[i + 1] += ti;
+
+					}
+					tr = ur * wr - ui * wi;
+					ui = ur * wi + ui * wr;
+					ur = tr;
+				}
+			}
+		}
+
+		#endregion
+	}
 }

@@ -1,12 +1,12 @@
-﻿using System;
+﻿using JocysCom.ClassLibrary.Configuration;
+using JocysCom.ClassLibrary.Controls;
+using JocysCom.ClassLibrary.Runtime;
+using JocysCom.TextToSpeech.Monitor.Capturing;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using JocysCom.TextToSpeech.Monitor.Capturing;
-using JocysCom.ClassLibrary.Runtime;
-using JocysCom.ClassLibrary.Controls;
-using JocysCom.ClassLibrary.Configuration;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {

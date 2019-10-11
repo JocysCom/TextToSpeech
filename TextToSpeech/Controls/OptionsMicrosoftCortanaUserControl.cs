@@ -34,7 +34,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				var value = (string)token.GetValue(null);
 				var item = new KeyValuePair<string, string>(name, value);
 
-				var voicePath  = string.Format("{0}", token.GetValue("VoicePath"));
+				var voicePath = string.Format("{0}", token.GetValue("VoicePath"));
 				if (string.IsNullOrEmpty(voicePath))
 					continue;
 				var path = Environment.ExpandEnvironmentVariables(voicePath) + ".APM";
@@ -150,7 +150,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ImportButton.Enabled = !targetExist;
 			RemoveButton.Enabled = targetExist;
 		}
-		
+
 		private void ImportButton_Click(object sender, EventArgs e)
 		{
 			var item = (KeyValuePair<string, string>)MobileVoiceComboBox.SelectedItem;

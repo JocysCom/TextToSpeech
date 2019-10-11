@@ -1,5 +1,4 @@
-﻿using JocysCom.ClassLibrary.Controls;
-using JocysCom.ClassLibrary.Drawing;
+﻿using JocysCom.ClassLibrary.Drawing;
 using JocysCom.TextToSpeech.Monitor.Capturing.Monitors;
 using JocysCom.TextToSpeech.Monitor.PlugIns;
 using System.Collections.Generic;
@@ -72,7 +71,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			// Invoke on UI thread.
 			//ControlsHelper.BeginInvoke(() =>
 			//{
-				Audio.Global.AddMessageToPlay(e.Data);
+			Audio.Global.AddMessageToPlay(e.Data);
 			//});
 		}
 

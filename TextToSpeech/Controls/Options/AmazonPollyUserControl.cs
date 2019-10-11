@@ -1,5 +1,4 @@
 ﻿using Amazon;
-using Amazon.Polly;
 using Amazon.Polly.Model;
 using JocysCom.ClassLibrary.Controls;
 using JocysCom.TextToSpeech.Monitor.Audio;
@@ -78,7 +77,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			);
 			var voices = client.GetVoices();
 			var installedVoices = voices.Select(x => new InstalledVoiceEx(x));
-			return installedVoices.OrderBy(x=>x.Name).ToList();
+			return installedVoices.OrderBy(x => x.Name).ToList();
 		}
 
 		private void Global_Exception(object sender, ClassLibrary.EventArgs<Exception> e)

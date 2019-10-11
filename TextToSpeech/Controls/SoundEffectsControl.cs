@@ -1,13 +1,11 @@
+using JocysCom.TextToSpeech.Monitor.Audio;
+using SharpDX.DirectSound;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
-using JocysCom.TextToSpeech.Monitor.Audio;
-using SharpDX.DirectSound;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {

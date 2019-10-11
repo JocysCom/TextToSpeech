@@ -1,10 +1,10 @@
-﻿using System;
+﻿using JocysCom.ClassLibrary.ComponentModel;
+using JocysCom.ClassLibrary.Configuration;
+using JocysCom.ClassLibrary.Runtime;
+using JocysCom.TextToSpeech.Monitor.Capturing;
+using System;
 using System.IO;
 using System.Xml.Serialization;
-using JocysCom.ClassLibrary.ComponentModel;
-using JocysCom.TextToSpeech.Monitor.Capturing;
-using JocysCom.ClassLibrary.Runtime;
-using JocysCom.ClassLibrary.Configuration;
 
 namespace JocysCom.TextToSpeech.Monitor
 {

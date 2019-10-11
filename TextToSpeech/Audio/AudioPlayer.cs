@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SharpDX.DirectSound;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using SharpDX.DirectSound;
 
 namespace JocysCom.TextToSpeech.Monitor.Audio
 {

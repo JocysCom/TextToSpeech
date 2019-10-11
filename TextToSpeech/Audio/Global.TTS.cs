@@ -1,5 +1,4 @@
 ﻿using JocysCom.ClassLibrary;
-using JocysCom.ClassLibrary.Controls;
 using JocysCom.ClassLibrary.Runtime;
 using JocysCom.TextToSpeech.Monitor.Capturing;
 using System;
@@ -30,7 +29,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public static event EventHandler<EventArgs<string>> EffectsPresetSelected;
 		static void OnHelp(string format, params object[] args)
 		{
-		   var message = args.Length > 0 ? string.Format(format, args) : format;
+			var message = args.Length > 0 ? string.Format(format, args) : format;
 			OnEvent(HelpSuggested, message);
 		}
 		public static void ProcessVoiceTextMessage(string text)

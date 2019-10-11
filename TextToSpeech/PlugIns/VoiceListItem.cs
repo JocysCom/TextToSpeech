@@ -1,11 +1,6 @@
-﻿using JocysCom.TextToSpeech.Monitor.Capturing;
-using PacketDotNet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using PacketDotNet;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 
 namespace JocysCom.TextToSpeech.Monitor.PlugIns
 {
@@ -43,7 +38,7 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 		public int FilterDestinationPort { get; set; }
 		public int FilterSourcePort { get; set; }
 		public TrafficDirection FilterDirection { get; set; }
-		public ProtocolType FilterProtocol { get; set; } 
+		public ProtocolType FilterProtocol { get; set; }
 		public string FilterProcessName { get; set; }
 
 		#endregion

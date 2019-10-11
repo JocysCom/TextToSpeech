@@ -1,16 +1,13 @@
-﻿using System;
+﻿using JocysCom.ClassLibrary.Configuration;
+using JocysCom.ClassLibrary.Controls;
+using JocysCom.ClassLibrary.Runtime;
+using JocysCom.TextToSpeech.Monitor.Capturing;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using JocysCom.TextToSpeech.Monitor.Capturing;
-using JocysCom.ClassLibrary.ComponentModel;
-using JocysCom.ClassLibrary.Runtime;
-using JocysCom.ClassLibrary.Controls;
-using JocysCom.ClassLibrary.Configuration;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
@@ -40,8 +37,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			if (e.ColumnIndex == grid.Columns[RateColumn.Name].Index) VoicesDefaultsDataGridView.BeginEdit(true);
 			if (e.ColumnIndex == grid.Columns[VolumeColumn.Name].Index) VoicesDefaultsDataGridView.BeginEdit(true);
 			if (e.ColumnIndex == grid.Columns[LanguageColumn.Name].Index) VoicesDefaultsDataGridView.BeginEdit(true);
-            if (e.ColumnIndex == grid.Columns[VoiceColumn.Name].Index) VoicesDefaultsDataGridView.BeginEdit(true);
-        }
+			if (e.ColumnIndex == grid.Columns[VoiceColumn.Name].Index) VoicesDefaultsDataGridView.BeginEdit(true);
+		}
 		public void AddNewRecord()
 		{
 			var grid = VoicesDefaultsDataGridView;
@@ -267,9 +264,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			MainHelper.OpenUrl(SettingsFile.Current.FolderPath);
 		}
 
-        private void ExportSaveFileDialog_FileOk(object sender, CancelEventArgs e)
-        {
+		private void ExportSaveFileDialog_FileOk(object sender, CancelEventArgs e)
+		{
 
-        }
-    }
+		}
+	}
 }
