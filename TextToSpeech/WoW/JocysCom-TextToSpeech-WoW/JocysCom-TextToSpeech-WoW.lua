@@ -17,7 +17,6 @@ local unitName = UnitName("player") -- GetUnitName()
 local customName = UnitName("player")
 local unitClass = UnitClass("player")
 local lastArg = nil
-local stopWhenClosing = 1
 local dashIndex = nil
 local hashIndex = nil
 local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-to-speech is enabled."
@@ -154,10 +153,10 @@ local function JocysCom_AddonCommands(msg, editbox)
 		JocysCom_SaveTocFileSettings()
 		if DebugEnabled then
 			JocysCom_DebugEnabledSettings()
-			print("Debug: [Enabled]")
+			print("|cffff0000JocysComTTS Debug: [Enabled]|r")
 		else
 			JocysCom_DebugEnabledSettings()
-			print("Debug: [Disabled]")
+			print("|cff00ff00JocysComTTS Debug: [Disabled]|r")
 		end
 	else
 		-- If cmd is nil, display help message.
@@ -195,7 +194,7 @@ function JocysCom_AddonTXT_EN()
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Save \"target\" and \"mouseover\" NPC's name, gender and type in|r |cffffffffMonitor|r|cff808080. Default: [Checked] |r");
 	--JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide detailed information about addon|r |cffffffff<messages>|r |cff808080in chat window. Default: [Unchecked]|r")
 	-- Font Strings.
-	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH")
+	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH\n\nClose \"Options\" to make it transparent")
 	JocysCom_DescriptionFrameFontString:SetText("|cff808080 All text-to-speech options (voices, pitch, rate, effects, etc.) are in |cff77ccffJocys.Com Text to Speech Monitor|r.\n\nHow it works: When you open NPC dialogue window or receive chat message, |cff77ccffWoW Addon|r creates special message. If |cffffffffDisplay|r mode is selected, |cff77ccffWoW Addon|r converts message into line of coloured pixels and shows it on your display. If |cffffffffNetwork|r mode is selected, |cff77ccffWoW Addon|r sends special addon message to your character. Message can include dialogue text, character name, effect name, etc.. Then, |cff77ccffTTS Monitor|r (which must be running in background) picks-up this message from your display or network traffic and reads it with text-to-speech voice. You can use free text-to-speech voices by Microsoft or you can download and install additional and better text-to-speech voices from |cff77ccffIvona.com|r website. Good voices are English-British \"Amy\" and \"Brian\". English-American \"Salli\" and \"Joey\" are not bad too. For more help and to download or update |cff77ccffWoW Addon|r with |cff77ccffTTS Monitor|r, visit \"Software\" section of |cff77ccffJocys.com|r website.|r")
 	JocysCom_ReplaceNameFontString:SetText("|cff808080 Here you can change your name for text to speech from |cff00ff00" .. unitName .. "|r to something else.|r")
 	JocysCom_MessageForMonitorFrameFontString:SetText("|cff808080 Latest message for|r |cff77ccffJocys.Com Text to Speech Monitor|r |cff808080... it must be runninng in background:|r")
@@ -203,11 +202,11 @@ end
 
 -- Unlock frames.
 function JocysCom_OptionsFrame_OnShow()
-	JocysCom_StopButtonFrame_Texture:SetColorTexture(0, 0, 0, 0.5)
-	JocysCom_DialogueScrollFrame:EnableMouse(true)
-	JocysCom_DialogueScrollFrame_Texture:SetColorTexture(0, 0, 0, 0.5)
+	JocysCom_StopButtonFrame_Texture:SetColorTexture(0, 0, 0, 0.8)
+	--JocysCom_DialogueScrollFrame:EnableMouse(true)
+	JocysCom_DialogueScrollFrame_Texture:SetColorTexture(0, 0, 0, 0.8)
 	JocysCom_DialogueScrollFrame_FontString:Show()
-	JocysCom_DialogueScrollFrameResizeButton:Show()
+	--JocysCom_DialogueScrollFrameResizeButton:Show()
 end
 
 -- Lock frames.
@@ -224,23 +223,13 @@ function JocysCom_OptionsFrame_OnHide()
 end
 
 -- MessageStop function.
-function JocysCom_SendChatMessageStop(CloseOrButton, group)
+function JocysCom_SendChatMessageStop(group) -- button = button (mouse wheel down) or check-box.
 	-- Disable DND <Busy>.
 	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(false) end
-	-- CLose if "0".
-	if CloseOrButton ~= 0 then
-		if JocysCom_StartOnOpenCheckButton:GetChecked() ~= true and CloseOrButton ~= 2  then
-			return
-		end
-	end
 	-- Add group attribute if goup exists.
-		messageStop = "<message command=\"stop\"" .. Attribute("group", group) .. " />"
-	if (stopWhenClosing == 1 or group ~= nil or group ~= "") and (JocysCom_StopOnCloseCheckButton:GetChecked() or (CloseOrButton == 1 or CloseOrButton == 2)) then
-		-- Send message and fill EditBox in Options window.
-		JocysCom_SendMessage(messageStop, true)
-		if JocysCom_NetworkMessageCheckButton:GetChecked() and DebugEnabled then print(JocysCom_MessageAddColors(messageStop)) end
-		stopWhenClosing = 0
-	end
+	local messageStop = "<message command=\"stop\"" .. Attribute("group", group) .. " />"
+	JocysCom_SendMessage(messageStop, true)
+	if DebugEnabled and JocysCom_NetworkMessageCheckButton:GetChecked() then print(JocysCom_MessageAddColors(messageStop)) end
 end
 
 -- Send sound intro function.
@@ -306,14 +295,13 @@ end
 -- Register events.
 function JocysCom_RegisterEvents()
 	C_ChatInfo.RegisterAddonMessagePrefix(addonPrefix) -- Addon message prefix.
-	JocysCom_OptionsFrame:SetScript("OnEvent", JocysCom_OptionsFrame_OnEvent) -- Register events on JocysCom_OptionsFrame.
+	JocysCom_OptionsFrame:SetScript("OnEvent", function(...) JocysCom_OptionsFrame_OnEvent(false, ...) end) -- Register events on JocysCom_OptionsFrame --- JocysCom_OptionsFrame_OnEvent(playButton, ...).
 	JocysCom_OptionsFrame:RegisterEvent("ADDON_LOADED") -- Load all addon settings on this event.
 	JocysCom_OptionsFrame:RegisterEvent("PLAYER_ENTERING_WORLD") -- Create or edit macro on this event.
 	JocysCom_OptionsFrame:RegisterEvent("PLAYER_LOGOUT")
 end
 
-function JocysCom_OptionsFrame_OnEvent(self, ...)
-
+function JocysCom_OptionsFrame_OnEvent(button, self, ...)
 	local group = ""
 	local name = nil
 	local sex = nil -- UnitSex(name) -- UnitSex("npc")
@@ -336,7 +324,6 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 			print(i .. ". " .. type(v) .. ": " ..  tostring(v))
 		end
 	end
-
 	-- Attach and show frames.
 	if event == "ADDON_LOADED" or event == "GOSSIP_SHOW" or event == "QUEST_GREETING" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "QUEST_LOG_UPDATE" or event == "MAIL_SHOW" or event == "ITEM_TEXT_READY"  then 	-- or event == "QUEST_GREETING"
 		JocysCom_AttachAndShowFrames()
@@ -359,6 +346,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		JocysCom_SaveTocFileSettings()
 		return
 	elseif event == "UPDATE_MOUSEOVER_UNIT" then
+		if GossipFrame:IsVisible() or QuestFrame:IsVisible() or QuestMapFrame:IsVisible() or ItemTextFrame:IsVisible() or MailFrame:IsVisible() then return end
 		JocysCom_SaveNPC("mouseover")
 		return
 	elseif event == "PLAYER_TARGET_CHANGED" then
@@ -384,6 +372,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 			speakMessage = ItemTextGetText()
 		elseif event == "GOSSIP_SHOW" then
 			speakMessage = GetGossipText()
+			-- print("NPCNAME: " .. _G.GossipFrameNpcNameText:GetText());
 		elseif event == "QUEST_GREETING" then
 			speakMessage = GetGreetingText()
 		elseif event == "QUEST_PROGRESS" then
@@ -393,6 +382,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		elseif event == "QUEST_DETAIL" then
 			local objectivesHeader = QuestInfoObjectivesHeader:GetText() and QuestInfoObjectivesHeader:GetText() .. ". " or ""
 			speakMessage = JocysCom_ObjectivesCheckButton:GetChecked() and GetQuestText() .. " " .. objectivesHeader .. " " .. GetObjectiveText() or GetQuestText()
+			-- print("NPCNAME: " .. _G.QuestFrameNpcNameText:GetText())
 		end
 		group = "Quest"
 		name = UnitName("npc")
@@ -420,34 +410,37 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		name = JocysCom_RemoveRealmName(playerName)
 		sex = UnitSex(name)
 		group = "Whisper"
+		if DebugEnabled then print("WHISPER Name: " .. name .. " Gender: " .. sex) end
 		soundIntro = JocysCom_SoundWhisperCheckButton:GetChecked()
 		nameIntro = JocysCom_NameWhisperCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_BN_WHISPER_INFORM" then
 			name = unitName
 			sex = UnitSex(unitName)
+			if DebugEnabled then print("BN_WHISPER_INFORM Name: " .. name .. " Gender: " .. sex) end
 			group = "Whisper"
 			soundIntro = JocysCom_SoundWhisperCheckButton:GetChecked()
 			nameIntro = JocysCom_NameWhisperCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_BN_WHISPER" then --or event == "CHAT_MSG_BN_CONVERSATION"
-		-- bnetIDAccount, accountName, battleTag, isBattleTagPresence, characterName, bnetIDGameAccount, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, messageTime, canSoR, isReferAFriend, canSummonFriend = BNGetFriendInfo(friendIndex)
-		-- Extract friend's presenceID "|Kg00|kTestas|k".
-		-- |K[gsf][0-9]+|k[0]+|k
-		-- The 3rd character indicates given name, surname, or full name.
-		-- The number which follows it represents the friend's Bnet Presence ID.
-		-- The zeros between the |k form a string of the same length as the name which will replace it. E.g. if your first name is John and your presence id is 30, your given name (John) would be represented by the string |Kg30|k0000|k
-		-- replace friend's real name with character name.
-		local nameNumber = string.match(playerName, "|K.(%d*)|k")
-		_, accountName, battleTag, _, characterName = BNGetFriendInfo(nameNumber)
-		-- Set name.
+		-- bnSenderID = presenceID 
+		-- local presenceID, accountName, battleTag, isBattleTagPresence, characterName, bnetIDGameAccount, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, messageTime, canSoR, isReferAFriend, canSummonFriend = BNGetFriendInfoByID(bnSenderID)
+		local presenceID, accountName, battleTag, isBattleTagPresence, characterName = BNGetFriendInfoByID(bnSenderID)
+		if DebugEnabled then print("|cff77ccffbnSenderID:|r " .. tostring(bnSenderID) .. " |cff77ccffpresenceID:|r " .. tostring(presenceID) .. " |cff77ccffaccountName:|r " .. tostring(accountName) .. " |cff77ccffbattleTag:|r " .. tostring(battleTag) .. " |cff77ccffcharacterName:|r " .. tostring(characterName)) end
+		-- Select if not nil priority: characterName > battleTag > accountName
 		if characterName ~= nil then
 			name = JocysCom_RemoveRealmName(characterName)
 			sex = UnitSex(name)
-		elseif accountName ~= nil then
-			name = accountName
-			sex = UnitSex(name)
-		elseif battleTag ~= nil and string.find(battleTag, "#") ~= nil then
-			name = string.sub(name, 1, hashIndex - 1)
-			sex = UnitSex(name)
+			if DebugEnabled then print("BN_WHISPER characterName: " .. tostring(name) .. " Gender: " .. tostring(name)) end
+		elseif battleTag ~= nil then
+			name = tostring(battleTag)
+			-- remove #0000 from batleTag
+			if string.find(name, "#") ~= nil then 
+				local hashIndex = string.find(name, "#")
+				name = string.sub(name, 1, hashIndex - 1)
+			end
+			if DebugEnabled then print("BN_WHISPER battleTag: " .. tostring(name)) end
+--		elseif accountName ~= nil then
+--			name = accountName
+--			if DebugEnabled then print("BN_WHISPER accountName: " .. tostring(name)) end
 		else
 			name = "Your friend"
 		end
@@ -523,26 +516,44 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 	end
 	-- If event CHAT.
 	if string.find(event, "CHAT") ~= nil then
-		name = JocysCom_RemoveRealmName(name)
-		-- SpeakMessage
 		speakMessage = text
+	end
+
+	if DebugEnabled then
+		print("event: " .. tostring(event))
+		print("speakMessage: " .. tostring(speakMessage))
+		print("name: " .. tostring(name))
+		print("sex: " .. tostring(sex))
+		print("group: " .. tostring(group))
+		print("soundIntro: " .. tostring(soundIntro))
+		print("soundEffect: " .. tostring(soundEffect))
 	end
 
 	-- Add name intro to text.
 	if nameIntro then
 		local introType = ""
 		-- Set "whispers", "says" or "yells".
-		if group == "Whisper" then introType = " whispers. "
-		elseif group == "Yell" then introType = " yells. "
-		else introType = " says. " end	
+		if group == "Whisper" then
+			introType = " whispers. "
+		elseif group == "Yell" then
+			introType = " yells. "
+		else
+			introType = " says. "
+		end	
 		-- Add "***Leader" before name. Replace "***Leader" to "*** leader ".
 		local messageLeader = ""
 		if string.find(group, "Leader") ~= nil then
 			messageLeader = string.gsub(group, "Leader", " leader ")
 		end
-		speakMessage = messageLeader .. name .. " " .. messageType .. speakMessage
-	else
-		speakMessage = speakMessage
+		speakMessage = messageLeader .. name .. " " .. introType .. speakMessage
+	end
+
+	-- On Quest event or Quest play.
+	if group == "Quest" then
+		-- Don't start automatic play if StartOnOpen[0] and Play[0] -- command "play" is not from button-mouse.
+		if not JocysCom_StartOnOpenCheckButton:GetChecked() and not button then return end
+		-- If StopOnClose[1] remove all old messages and play new message instantly.
+		if JocysCom_StopOnCloseCheckButton:GetChecked() then JocysCom_SendChatMessageStop() end
 	end
 	-- Send message.
 	JocysCom_SpeakMessage(event, speakMessage, name, sex, group, soundIntro, soundEffect)
@@ -640,8 +651,6 @@ function JocysCom_SpeakMessage(event, speakMessage, name, sex, group, soundIntro
 	speakMessage = JocysCom_Replace(speakMessage)
 	-- Send intro sound message.
 	if soundIntro and group ~= nil then JocysCom_SendSoundIntro(group) end
-	-- Stop old "Quest" message if "Start TTS on opening window" is checked.
-	if group == "Quest" and JocysCom_StartOnOpenCheckButton:GetChecked() then JocysCom_SendChatMessageStop(1) end
 	-- Format and send whisper message.
 	local chatMessageSP = "<message command=\"play\"" .. Attribute("group", group) .. Attribute("name", name) .. Attribute("gender", Gender(sex)) .. Attribute("effect", soundEffect) .. "><part>"
 	local chatMessageSA = "<message command=\"add\"><part>"
@@ -674,7 +683,6 @@ function JocysCom_SpeakMessage(event, speakMessage, name, sex, group, soundIntro
 		if speakMessageRemainingLen <= sizePlay then
 			part = string.sub(speakMessage, startIndex)
 			chatMessage = chatMessageSP .. part .. chatMessageE
-			stopWhenClosing = 1
 			-- Send message and fill EditBox in Options window.
 			JocysCom_SendMessage(chatMessage, true)	
 			-- Debug information
@@ -685,7 +693,6 @@ function JocysCom_SpeakMessage(event, speakMessage, name, sex, group, soundIntro
 				-- If space is out of size then...
 				part = string.sub(speakMessage, startIndex, endIndex - 1)
 				chatMessage = chatMessageSA .. part .. chatMessageE
-				stopWhenClosing = 1
 				-- Send message and do not fill EditBox in Options window.
 				JocysCom_SendMessage(chatMessage, false)	
 				if JocysCom_NetworkMessageCheckButton:GetChecked() and DebugEnabled then print("|cff77ccffSpace found:[|r" .. tostring(index) .. "|cff77ccff] Message From-To:[|r" .. startIndex .. "-" .. (endIndex - 1) .. "|cff77ccff]|r" .. JocysCom_MessageAddColors(chatMessage)) end
@@ -712,6 +719,7 @@ end
 
 -- DialogueMiniFrame OnShow.
 function JocysCom_DialogueMiniFrame_OnShow()
+	-- Enable DND <Busy>.
 	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(true)	end
 	if QuestMapFrame:IsVisible() then
 		eventForScroll = "QUEST_LOG_PLAY_BUTTON"
@@ -723,7 +731,10 @@ end
 
 -- DialogueMiniFrame OnHide.
 function JocysCom_DialogueMiniFrame_OnHide()
-	JocysCom_SendChatMessageStop(0, "Quest")
+	-- Disable DND <Busy>.
+	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(false) end
+	-- Remove "Quest" messages if StopOnClose enabled.
+	if JocysCom_StopOnCloseCheckButton:GetChecked() then JocysCom_SendChatMessageStop("Quest") end
 end
 
 -- DND CheckButton OnClick.
@@ -780,7 +791,8 @@ end
 function JocysCom_CheckButton_OnClick(self, name)
 	PlaySound(856)
 	if self:GetChecked() == false then
-		JocysCom_SendChatMessageStop(1, name)
+		-- Remove disabled group messages.
+		JocysCom_SendChatMessageStop(name)
 	end
 	JocysCom_SaveTocFileSettings()
 	JocysCom_LoadEventSettings()
@@ -907,9 +919,11 @@ function JocysCom_StopButton_OnClick(name)
 	JocysCom_ClipboardMessageEditBoxSetFocus()
 	end
 	if name == "Quest" then
-		JocysCom_SendChatMessageStop(2, name)
+		-- Remove only "Quest" messages -- [■] stop button on dialogue windows.
+		JocysCom_SendChatMessageStop(name)
 	else
-		JocysCom_SendChatMessageStop(2)
+		-- Remove all messages -- [≡][■] stop button on mini frame.
+		JocysCom_SendChatMessageStop()
 	end
 end
 
@@ -918,7 +932,7 @@ function JocysCom_PlayButton_OnClick()
 	-- Disable DND.
 	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(true) end
 	--if JocysCom_ColorMessageCheckButton:GetChecked() then JocysCom_ClipboardMessageEditBoxSetFocus() end
-	JocysCom_OptionsFrame_OnEvent(nil, eventForScroll)
+	JocysCom_OptionsFrame_OnEvent(true, nil, eventForScroll) -- play button, self, active "Quest" event name (openend text window).
 end
 
 -- ScrollFrame - scroll-up or scroll-down.
@@ -965,8 +979,8 @@ function JocysCom_AttachAndShowFrames()
 	-- ScrollFrame
 	JocysCom_DialogueScrollFrame:ClearAllPoints()
 	JocysCom_DialogueScrollFrame:SetParent(frameScroll)
-	JocysCom_DialogueScrollFrame:SetPoint("TOPLEFT", frameScroll, 0, 0)
-	JocysCom_DialogueScrollFrame:SetPoint("BOTTOMRIGHT", frameScroll, 0, 0)
+	JocysCom_DialogueScrollFrame:SetPoint("TOPLEFT", frameScroll, 4, -4)
+	JocysCom_DialogueScrollFrame:SetPoint("BOTTOMRIGHT", frameScroll, -4, 4)
 	JocysCom_DialogueScrollFrame:SetFrameLevel(100)
 	-- ButtonFrame
 	JocysCom_DialogueMiniFrame:ClearAllPoints()

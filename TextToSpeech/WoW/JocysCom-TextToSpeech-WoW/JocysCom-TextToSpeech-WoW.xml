@@ -296,18 +296,18 @@
       </Layer>
     </Layers>
     <Frames>
-      <Button name="JocysCom_DialogueScrollFrameResizeButton" parentKey="ResizeButton">
+      <Button name="JocysCom_DialogueScrollFrameResizeButton" parentKey="ResizeButton" hidden="true">
         <Size x="16" y="16" />
         <Anchors>
           <Anchor point="BOTTOMRIGHT" />
         </Anchors>
         <Scripts>
-          <OnMouseDown>
+          <!--<OnMouseDown>
             self:GetParent():StartSizing("BOTTOMRIGHT");
           </OnMouseDown>
           <OnMouseUp>
             self:GetParent():StopMovingOrSizing();
-          </OnMouseUp>
+          </OnMouseUp>-->
         </Scripts>
         <NormalTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Up" />
         <PushedTexture file="Interface\CHATFRAME\UI-ChatIM-SizeGrabber-Down" />
@@ -315,7 +315,7 @@
       </Button>
     </Frames>
     <Scripts>
-      <OnLoad>
+      <!--<OnLoad>
         self:RegisterForDrag("LeftButton");
       </OnLoad>
       <OnDragStart>
@@ -323,7 +323,7 @@
       </OnDragStart>
       <OnDragStop>
         self:StopMovingOrSizing();
-      </OnDragStop>
+      </OnDragStop>-->
       <OnMouseWheel>
         JocysCom_DialogueScrollFrame_OnMouseWheel(self, delta);
       </OnMouseWheel>
@@ -448,7 +448,7 @@
       </Button>
 
       <Frame name="JocysCom_MiniMenuFrame" enableMouse="true" hidden="true">
-        <Size x="240" y="486" />
+        <Size x="266" y="486" />
         <Backdrop tile="true" bgFile="Interface/FrameGeneral/UI-Background-Rock">
           <TileSize val="350" />
           <BackgroundInsets left="7" right="3" top="3" bottom="5" />
@@ -577,7 +577,7 @@
             </Anchors>
             <Scripts>
               <OnLoad>
-                self.text:SetText("|cffefc176 START TTS on opening window|r");
+                self.text:SetText("|cffefc176 START+ADD TTS on opening window or [>] |r");
                 self.text:SetPoint("TOPLEFT", 24, -8);
               </OnLoad>
               <OnEnter>
@@ -600,7 +600,7 @@
             </Anchors>
             <Scripts>
               <OnLoad>
-                self.text:SetText("|cffefc176 STOP TTS on closing window|r");
+                self.text:SetText("|cffefc176 STOP old TTS on closing-changing window|r");
                 self.text:SetPoint("TOPLEFT", 24, -8);
               </OnLoad>
               <OnEnter>
