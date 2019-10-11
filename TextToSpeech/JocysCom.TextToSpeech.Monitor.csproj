@@ -342,7 +342,7 @@
     <Compile Include="Audio\PitchShifter.cs" />
     <Compile Include="Audio\PlayItem.cs" />
     <Compile Include="Common\RuntimePolicyHelper.cs" />
-    <Compile Include="Controls\Sounds.cs" />
+    <Compile Include="Controls\sound.cs" />
     <Compile Include="Controls\SoundEffectsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -441,6 +441,7 @@
     <EmbeddedResource Include="Resources\Audio\Radio1.wav" />
     <EmbeddedResource Include="Resources\Icons\Information.png" />
     <EmbeddedResource Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.rtf" />
+    <None Include=".editorconfig" />
     <None Include="JocysCom\MakeLinks.bat" />
     <None Include="packages.config" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor.psd" />

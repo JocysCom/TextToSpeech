@@ -1,5 +1,6 @@
 ﻿using JocysCom.ClassLibrary.Configuration;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
@@ -14,7 +15,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		}
 
 		[XmlAttribute]
-		public bool Enabled { get { return _Enabled; } set { _Enabled = value; NotifyPropertyChanged("Enabled"); } }
+		public bool Enabled { get { return _Enabled; } set { _Enabled = value; OnPropertyChanged(); } }
 		bool _Enabled;
 
 		[XmlAttribute]
@@ -24,7 +25,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			set
 			{
 				_Group = string.IsNullOrEmpty((value ?? "").Trim()) ? null : value;
-				NotifyPropertyChanged("Group");
+				OnPropertyChanged();
 			}
 		}
 		string _Group;
@@ -36,7 +37,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			set
 			{
 				_Key = string.IsNullOrEmpty((value ?? "").Trim()) ? null : value;
-				NotifyPropertyChanged("Key");
+				OnPropertyChanged();
 			}
 		}
 		string _Key;
@@ -48,7 +49,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			set
 			{
 				_Value = string.IsNullOrEmpty((value ?? "").Trim()) ? null : value;
-				NotifyPropertyChanged("Value");
+				OnPropertyChanged();
 			}
 		}
 		string _Value;
@@ -60,7 +61,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			set
 			{
 				_Rx = string.IsNullOrEmpty((value ?? "").Trim()) ? null : value;
-				NotifyPropertyChanged("Rx");
+				OnPropertyChanged();
 			}
 		}
 		string _Rx;
@@ -71,11 +72,11 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				return true;
 			}
-			var value = text.ToLower();
+			var value = text.ToUpper();
 			return
-				(!string.IsNullOrEmpty(Group) && Group.ToLower().Contains(value)) ||
-				(!string.IsNullOrEmpty(Key) && Key.ToLower().Contains(value)) ||
-				(!string.IsNullOrEmpty(Value) && Value.ToLower().Contains(value));
+				(!string.IsNullOrEmpty(Group) && Group.ToUpper().Contains(value)) ||
+				(!string.IsNullOrEmpty(Key) && Key.ToUpper().Contains(value)) ||
+				(!string.IsNullOrEmpty(Value) && Value.ToUpper().Contains(value));
 		}
 
 		[XmlIgnore]
@@ -123,23 +124,21 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void NotifyPropertyChanged(string propertyName = "")
+		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var ev = PropertyChanged;
 			lock (RegexValueLock)
 			{
-				if (propertyName == "Key" || propertyName == "Rx")
-				{
+				if (propertyName == nameof(Key) || propertyName == nameof(Rx))
 					_RegexValue = null;
-				}
 			}
-			if (ev == null) return;
-			ev(this, new PropertyChangedEventArgs(propertyName));
+			var handler = PropertyChanged;
+			if (handler == null)
+				return;
+			handler(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-
-
 		#endregion
+
 	}
 
 }

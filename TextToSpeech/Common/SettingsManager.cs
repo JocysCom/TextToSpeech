@@ -76,7 +76,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				dm.name = v.name;
 				SettingsFile.Current.Defaults.Add(dm);
 			}
-			dm.UpdateMissingAndCangedValuesFrom(v);
+			dm.UpdateMissingAndChangedValuesFrom(v);
 		}
 		public void Save()
 		{

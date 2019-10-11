@@ -1,57 +1,60 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace JocysCom.TextToSpeech.Monitor.Capturing
 {
+	[DataContract]
 	public class message : INotifyPropertyChanged
 	{
 
-		[XmlAttribute, DefaultValue(true)]
-		public bool enabled { get { return _enabled; } set { _enabled = value; NotifyPropertyChanged("_enabled"); } }
+		[DataMember, XmlAttribute, DefaultValue(true)]
+		public bool enabled { get { return _enabled; } set { _enabled = value; OnPropertyChanged(); } }
 		bool _enabled = true;
 
-		[XmlAttribute]
-		public string name { get { return _name; } set { _name = value; NotifyPropertyChanged("name"); } }
+		[DataMember, XmlAttribute]
+		public string name { get { return _name; } set { _name = value; OnPropertyChanged(); } }
 		string _name;
 
-		[XmlAttribute]
-		public string voice { get { return _voice; } set { _voice = value; NotifyPropertyChanged("voice"); } }
+		[DataMember, XmlAttribute]
+		public string voice { get { return _voice; } set { _voice = value; OnPropertyChanged(); } }
 		string _voice;
 
-		[XmlAttribute]
-		public string language { get { return _language; } set { _language = value; NotifyPropertyChanged("language"); } }
+		[DataMember, XmlAttribute]
+		public string language { get { return _language; } set { _language = value; OnPropertyChanged(); } }
 		string _language;
 
-		[XmlAttribute]
-		public string command { get { return _command; } set { _command = value; NotifyPropertyChanged("command"); } }
+		[DataMember, XmlAttribute]
+		public string command { get { return _command; } set { _command = value; OnPropertyChanged(); } }
 		string _command;
 
-		[XmlAttribute]
-		public string pitch { get { return _pitch; } set { _pitch = value; NotifyPropertyChanged("pitch"); } }
+		[DataMember, XmlAttribute]
+		public string pitch { get { return _pitch; } set { _pitch = value; OnPropertyChanged(); } }
 		string _pitch;
 
-		[XmlAttribute]
-		public string rate { get { return _rate; } set { _rate = value; NotifyPropertyChanged("rate"); } }
+		[DataMember, XmlAttribute]
+		public string rate { get { return _rate; } set { _rate = value; OnPropertyChanged(); } }
 		string _rate;
 
-		[XmlAttribute]
-		public string gender { get { return _gender; } set { _gender = value; NotifyPropertyChanged("gender"); } }
+		[DataMember, XmlAttribute]
+		public string gender { get { return _gender; } set { _gender = value; OnPropertyChanged(); } }
 		string _gender;
 
-		[XmlAttribute]
-		public string effect { get { return _effect; } set { _effect = value; NotifyPropertyChanged("effect"); } }
+		[DataMember, XmlAttribute]
+		public string effect { get { return _effect; } set { _effect = value; OnPropertyChanged(); } }
 		string _effect;
 
-		[XmlAttribute]
-		public string group { get { return _group; } set { _group = value; NotifyPropertyChanged("group"); } }
+		[DataMember, XmlAttribute]
+		public string group { get { return _group; } set { _group = value; OnPropertyChanged(); } }
 		string _group;
 
-		[XmlAttribute]
-		public string volume { get { return _volume; } set { _volume = value; NotifyPropertyChanged("volume"); } }
+		[DataMember, XmlAttribute]
+		public string volume { get { return _volume; } set { _volume = value; OnPropertyChanged(); } }
 		string _volume;
 
-		[XmlElement("part")]
-		public string[] parts { get { return _parts; } set { _parts = value; NotifyPropertyChanged("parts"); } }
+		[DataMember, XmlElement("part")]
+		public string[] parts { get { return _parts; } set { _parts = value; OnPropertyChanged(); } }
 		string[] _parts;
 
 		/// <summary>
@@ -60,22 +63,20 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 		/// <param name="v">voice which will be used as a source of values.</param>
 		public void UpdateMissingValuesFrom(message v)
 		{
-
-			if (v.enabled)
-			{
-				// if value supplied and current is empty then...
-				if (!string.IsNullOrEmpty(v.language) && string.IsNullOrEmpty(language)) language = v.language;
-				if (!string.IsNullOrEmpty(v.gender) && string.IsNullOrEmpty(gender)) gender = v.gender;
-				if (!string.IsNullOrEmpty(v.effect) && string.IsNullOrEmpty(effect)) effect = v.effect;
-				if (!string.IsNullOrEmpty(v.pitch) && string.IsNullOrEmpty(pitch)) pitch = v.pitch;
-				if (!string.IsNullOrEmpty(v.rate) && string.IsNullOrEmpty(rate)) rate = v.rate;
-				if (!string.IsNullOrEmpty(v.group) && string.IsNullOrEmpty(group)) group = v.group;
-				if (!string.IsNullOrEmpty(v.volume) && string.IsNullOrEmpty(volume)) volume = v.volume;
-				if (!string.IsNullOrEmpty(v.voice) && string.IsNullOrEmpty(voice)) name = v.voice;
-			}
+			if (!v.enabled)
+				return;
+			// if value supplied and current is empty then...
+			if (!string.IsNullOrEmpty(v.language) && string.IsNullOrEmpty(language)) language = v.language;
+			if (!string.IsNullOrEmpty(v.gender) && string.IsNullOrEmpty(gender)) gender = v.gender;
+			if (!string.IsNullOrEmpty(v.effect) && string.IsNullOrEmpty(effect)) effect = v.effect;
+			if (!string.IsNullOrEmpty(v.pitch) && string.IsNullOrEmpty(pitch)) pitch = v.pitch;
+			if (!string.IsNullOrEmpty(v.rate) && string.IsNullOrEmpty(rate)) rate = v.rate;
+			if (!string.IsNullOrEmpty(v.group) && string.IsNullOrEmpty(group)) group = v.group;
+			if (!string.IsNullOrEmpty(v.volume) && string.IsNullOrEmpty(volume)) volume = v.volume;
+			if (!string.IsNullOrEmpty(v.voice) && string.IsNullOrEmpty(voice)) name = v.voice;
 		}
 
-		public void UpdateMissingAndCangedValuesFrom(message v)
+		public void UpdateMissingAndChangedValuesFrom(message v)
 		{
 			// if value supplied and current is not the same then...
 			if (!string.IsNullOrEmpty(v.language) && language != v.language) language = v.language;
@@ -102,15 +103,15 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void NotifyPropertyChanged(string propertyName = "")
+		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var ev = PropertyChanged;
-			if (ev == null) return;
-			ev(this, new PropertyChangedEventArgs(propertyName));
+			var handler = PropertyChanged;
+			if (handler == null)
+				return;
+			handler(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#endregion
-
 
 	}
 

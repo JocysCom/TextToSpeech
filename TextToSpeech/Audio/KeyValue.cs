@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace JocysCom.TextToSpeech.Monitor.Audio
@@ -33,10 +34,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			get { return _key; }
 			set
 			{
-				if (!IEquatable<T>.Equals(_key, value))
+				if (!Equals(_key, value))
 				{
 					_key = value;
-					NotifyPropertyChanged("Key");
+					OnPropertyChanged();
 				}
 			}
 		}
@@ -45,10 +46,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			get { return _value; }
 			set
 			{
-				if (!IEquatable<T>.Equals(_value, value))
+				if (!Equals(_value, value))
 				{
 					_value = value;
-					NotifyPropertyChanged("Value");
+					OnPropertyChanged();
 				}
 			}
 		}
@@ -62,11 +63,12 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void NotifyPropertyChanged(string propertyName = "")
+		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var ev = PropertyChanged;
-			if (ev == null) return;
-			ev(this, new PropertyChangedEventArgs(propertyName));
+			var handler = PropertyChanged;
+			if (handler == null)
+				return;
+			handler(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#endregion
