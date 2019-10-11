@@ -22,7 +22,14 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 		public string voice { get { return _voice; } set { _voice = value; OnPropertyChanged(); } }
 		string _voice;
 
-		[DataMember, XmlAttribute]
+		/// <summary>
+		/// Culture. Can be sent in 2 formats:
+		///		LCID HEX value: '419' = 0x0419 = ru-RU = Russian - Russia // Regex: ^[0-9a-fA-F]{1,4}$
+		///		Language[-Location] value: 'en-GB' = English - Great Britain
+		/// var ci = new System.Globalization.CultureInfo("en-GB", false);
+		/// var ci = new System.Globalization.CultureInfo(0x040A, false);
+		/// </summary>
+		[DataMember, XmlAttribute, DefaultValue("")]
 		public string language { get { return _language; } set { _language = value; OnPropertyChanged(); } }
 		string _language;
 
