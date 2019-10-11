@@ -45,4 +45,4 @@
 <li>Run "World of Warcraft" game.</li>
 </ol>
 
-You can read more on how to use "WoW Addon" and "TTS Monitor" here: <a href="https://www.jocys.com/TTS" target="_blank">Jocys.com/TTS</a>
+You can read more on how to use "WoW Addon" and "TTS Monitor" here... <a href="https://www.jocys.com/TTS" target="_blank">Jocys.com/TTS</a>
