@@ -23,7 +23,7 @@
 <li>When you open window with text (dialogue, quest, book, etc.) or receive chat message in game, "WoW Addon" creates XML message <code>&lt;message&gt;&lt;part&gt;text&lt;/part&gt;&lt;/message&gt;</code>. This message can include <code>text</code>, <code>name</code>, <code>gender</code>, <code>effect</code>, <code>group</code>, <code>pitch</code>, <code>rate</code>, <code>volume</code>, etc. and <code>command</code> values.</li>
 <li>"WoW Addon" converts XML text message to line of coloured pixels and shows this line inside your in-game window. 1 RGB pixel can hold 3 bytes or 3 ASCII characters or 1 UTF8 Japanese character. Default line's position is Top(0) Left(0):<br />
 <img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_WoW_Addon_Pixels.png" /> <img src="http://www.jocys.com/TTS/Images/JocysCom_TTS_Monitor_Display_Small.png" /></li>
-<li>"TTS Monitor" <i>(must be running in the background)</i> captures this line of coloured pixels and converts back to the text message &gt; converts it to SAPI XML &gt; reads it with specific text-to-speech voice (if "Monitor: Display" capturing mode is enabled).</li>
+<li>"TTS Monitor" <i>(must be running in the background)</i> captures this line of coloured pixels and converts back to the text message &gt; converts it to SAPI XML &gt; reads it with specific text-to-speech voice, <i>if "Monitor: Display" capturing mode is enabled</i>.</li>
 </ol>
 <p>Note: Make sure you do not cover this line with other game elements. TTS Monitor supports other message capturing methods and "Cache" option which allows to use manually pre-recorded voices.</p>
 
