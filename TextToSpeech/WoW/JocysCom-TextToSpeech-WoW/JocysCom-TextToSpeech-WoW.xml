@@ -448,7 +448,7 @@
       </Button>
 
       <Frame name="JocysCom_MiniMenuFrame" enableMouse="true" hidden="true">
-        <Size x="266" y="486" />
+        <Size x="242" y="486" />
         <Backdrop tile="true" bgFile="Interface/FrameGeneral/UI-Background-Rock">
           <TileSize val="350" />
           <BackgroundInsets left="7" right="3" top="3" bottom="5" />
@@ -577,7 +577,7 @@
             </Anchors>
             <Scripts>
               <OnLoad>
-                self.text:SetText("|cffefc176 START+ADD TTS on opening window or [>] |r");
+                self.text:SetText("|cffefc176 START • ADD TTS on opening window|r");
                 self.text:SetPoint("TOPLEFT", 24, -8);
               </OnLoad>
               <OnEnter>
@@ -600,7 +600,7 @@
             </Anchors>
             <Scripts>
               <OnLoad>
-                self.text:SetText("|cffefc176 STOP old TTS on closing-changing window|r");
+                self.text:SetText("|cffefc176 STOP opened TTS on closing window|r");
                 self.text:SetPoint("TOPLEFT", 24, -8);
               </OnLoad>
               <OnEnter>
