@@ -37,7 +37,7 @@
 	<p><img src="http://www.jocys.com/Files/Software/Copy.png" /></p></li>
 <li>Paste <i>"JocysCom-TextToSpeech-WoW"</i> folder inside <i>"AddOns"</i> folder of WoW.
 	<p><i>Usual directory: C:\Program Files\World of Warcraft\_retail_Interface\AddOns</i></p></li>
-<li>Install additional text-to-speech voices, if needed. BETTER voices are developed by <a href="http://www.ivona.com" target="_blank">Ivona</a> (distributed by <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a>).</li>
+<li>Install additional TTS voices, if needed. BETTER voices are developed by <a href="http://www.ivona.com" target="_blank">Ivona</a> and distributed by <a href="http://harposoftware.com/en/content/10-trial" target="_blank">Harpo Software</a>.</li>
 <li>Run <b>"JocysCom.TextToSpeech.Monitor.exe"</b> file (file is inside pasted folder).
 	<p><i>Usual directory: C:\Program Files\World of Warcraft\_retail_\Interface\AddOns\JocysCom-TextToSpeech-WoW\</i></p></li>
 <li>When <b>"TTS Monitor"</b>, will open, setup voices in <b>[Voices]</b> tab (example).
