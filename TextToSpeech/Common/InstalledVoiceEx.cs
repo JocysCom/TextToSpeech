@@ -21,14 +21,17 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			Voice = voice;
 			Source = VoiceSource.Local;
+			// Set culture properties.
+			var culture = voice.Culture;
+			CultureLCID = culture.LCID;
+			CultureName = culture.Name;
+			Language = culture.TwoLetterISOLanguageName;
+			// Set voice properties.
 			Gender = voice.Gender;
 			Name = voice.Name;
-			Language = voice.AdditionalInfo.Where(x => x.Key == "Language").Select(x => x.Value).FirstOrDefault() ?? "";
-			CultureName = voice.Culture.Name;
 			Age = voice.Age;
 			Description = voice.Description;
 			Version = voice.AdditionalInfo.Where(x => x.Key == "Version").Select(x => x.Value).FirstOrDefault() ?? "";
-			CultureLCID = voice.Culture.LCID;
 			Enabled = true;
 			switch (Gender)
 			{
@@ -48,13 +51,16 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			Voice = voice;
 			Source = VoiceSource.Amazon;
+			// Set culture properties.
+			var culture = new System.Globalization.CultureInfo(voice.LanguageCode, false);
+			CultureLCID = culture.LCID;
+			CultureName = culture.Name;
+			Language = culture.TwoLetterISOLanguageName;
+			// Set voice properties.
 			Name = voice.Name;
-			Language = voice.LanguageCode;
-			CultureName = "";
 			Age = VoiceAge.NotSet;
-			Description = string.Format("{0} {1} - {2} - {3}: {4}", Source, Name, Language, Gender, string.Join(", ", voice.SupportedEngines));
+			Description = string.Format("{0} {1} - {2} - {3}: {4}", Source, Name, CultureName, Gender, string.Join(", ", voice.SupportedEngines));
 			Version = "";
-			CultureLCID = 0;
 			Enabled = true;
 			if (voice.Gender == Amazon.Polly.Gender.Female)
 			{
@@ -87,11 +93,11 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		public VoiceGender Gender { get; set; }
 		public string Name { get; set; }
-		public string Language { get; set; }
-		public string CultureName { get; set; }
 		public VoiceAge Age { get; set; }
 		public string Description { get; set; }
 		public string Version { get; set; }
+		public string Language { get; set; }
+		public string CultureName { get; set; }
 		public int CultureLCID { get; set; }
 
 		#region INotifyPropertyChanged

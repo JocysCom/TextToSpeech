@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
 namespace JocysCom.TextToSpeech.Monitor.Capturing
@@ -32,6 +34,17 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 		[DataMember, XmlAttribute, DefaultValue("")]
 		public string language { get { return _language; } set { _language = value; OnPropertyChanged(); } }
 		string _language;
+
+		public static CultureInfo GetCultureInfo(string language)
+		{
+			if (string.IsNullOrEmpty(language))
+				return null;
+			var rx = new Regex("^[0-9a-fA-F]+$");
+			// If HEX code then...
+			return rx.IsMatch(language)
+				? new CultureInfo(int.Parse(language, NumberStyles.HexNumber), false)
+				: new CultureInfo(language, false);
+		}
 
 		[DataMember, XmlAttribute]
 		public string command { get { return _command; } set { _command = value; OnPropertyChanged(); } }

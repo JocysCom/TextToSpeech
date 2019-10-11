@@ -3,6 +3,7 @@ using SpeechLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Speech.Synthesis;
@@ -422,66 +423,69 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			}
 		}
 
+		/// <summary>Filter voices by language.</summary>
+		static InstalledVoiceEx[] FilterVoicesByCulture(InstalledVoiceEx[] voices, CultureInfo culture)
+		{
+			// Get voice match by name. Example: en-GB.
+			var choice = voices.Where(x => x.CultureName == culture.Name).ToArray();
+			// If voice not found then get match by language. Example: en
+			if (choice != null)
+				return choice;
+			choice = voices
+				.Where(x => string.Equals(x.Language, culture.TwoLetterISOLanguageName, StringComparison.InvariantCultureIgnoreCase))
+				.ToArray();
+			return choice;
+		}
+
+		/// <summary>Filter voices by language.</summary>
+		static InstalledVoiceEx[] FilterVoicesByGender(InstalledVoiceEx[] voices, VoiceGender gender)
+		{
+			if (gender == VoiceGender.Male)
+				return voices.Where(x => x.Male > 0).ToArray();
+			else if (gender == VoiceGender.Female)
+				return voices.Where(x => x.Female > 0).ToArray();
+			else
+				return voices.Where(x => x.Neutral > 0).ToArray();
+		}
+
+		/// <summary>Reorder voices by gender.</summary>
+		static void OrderVoicesByGender(ref InstalledVoiceEx[] voices, VoiceGender gender)
+		{
+			if (gender == VoiceGender.Male)
+				voices = voices.OrderByDescending(x => x.Male).ToArray();
+			else if (gender == VoiceGender.Female)
+				voices = voices.OrderByDescending(x => x.Female).ToArray();
+			else if (gender == VoiceGender.Neutral)
+				voices = voices.OrderByDescending(x => x.Neutral).ToArray();
+		}
+
 		// Set voice.
 		static void SelectVoice(string name, string language, VoiceGender gender)
 		{
 			int popularity;
 			InstalledVoiceEx[] choice;
 			// Get only enabled voices.
-			var data = Global.InstalledVoices.Where(x => x.Enabled).ToArray();
+			var data = InstalledVoices.Where(x => x.Enabled).ToArray();
 			InstalledVoiceEx voice = null;
-
+			var culture = Capturing.message.GetCultureInfo(language);
 			// Set voice if only gender value is submitted ("Male", "Female", "Neutral").           
 			if (string.IsNullOrEmpty(name))
 			{
 				// Select first most popular voice in "FemaleColumn", "MaleColumn" or "NeutralColumn".
-				// Male.
-				if (gender == VoiceGender.Male)
-				{
-					if (string.IsNullOrEmpty(language))
-					{
-						voice = data.OrderByDescending(x => x.Male).FirstOrDefault();
-					}
-					else
-					{
-						voice = data.OrderByDescending(x => x.Male).Where(x => x.Language == language).FirstOrDefault();
-					}
-					popularity = voice == null ? 0 : voice.Male;
-				}
-				// Female.
-				else if (gender == VoiceGender.Female)
-				{
-					if (string.IsNullOrEmpty(language))
-					{
-						voice = data.OrderByDescending(x => x.Female).FirstOrDefault();
-					}
-					else
-					{
-						voice = data.OrderByDescending(x => x.Female).Where(x => x.Language == language).FirstOrDefault();
-					}
-					popularity = voice == null ? 0 : voice.Female;
-				}
-				// Neutral.
-				else
-				{
-					if (string.IsNullOrEmpty(language))
-					{
-						voice = data.OrderByDescending(x => x.Neutral).FirstOrDefault();
-					}
-					else
-					{
-						voice = data.OrderByDescending(x => x.Neutral).Where(x => x.Language == language).FirstOrDefault();
-					}
-					popularity = voice == null ? 0 : voice.Neutral;
-				}
-
+				OrderVoicesByGender(ref data, gender);
+				voice = culture == null
+					? data.FirstOrDefault()
+					: FilterVoicesByCulture(data, culture).FirstOrDefault();
+				popularity = voice == null ? 0 : voice.Male;
 				if (string.IsNullOrEmpty(language))
 				{
-					if (popularity == 0) OnHelp("There are no voices enabled in \"{0}\" column. Set popularity value to 100 ( normal usage ) or 101 ( normal usage / favourite ) for one voice at least in \"{0}\" column, to use it as \"{0}\" voice.", gender);
+					if (popularity == 0)
+						OnHelp("There are no voices enabled in \"{0}\" column. Set popularity value to 100 ( normal usage ) or 101 ( normal usage / favourite ) for one voice at least in \"{0}\" column, to use it as \"{0}\" voice.", gender);
 				}
 				else
 				{
-					if (popularity == 0) OnHelp("There are no voices enabled in \"{0}\" column with \"Language\" value \"{1}\". Set popularity value to 100 ( normal usage ) for one voice at least in \"{0}\" column with \"Language\" value \"{1}\".", gender, language);
+					if (popularity == 0)
+						OnHelp("There are no voices enabled in \"{0}\" column with \"Language\" value \"{1}\". Set popularity value to 100 ( normal usage ) for one voice at least in \"{0}\" column with \"Language\" value \"{1}\".", gender, language);
 				}
 			}
 			// Select voice if name and gender values are submitted... ("IVONA 2 Amy") or ("Marshal McBride" and "Male", "Female" or "Neutral").
@@ -489,42 +493,26 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			{
 				// Select specific voice if it exists ("IVONA 2 Amy").
 				voice = data.FirstOrDefault(x => x.Name == name);
-
 				// If voice was not found then... generate voice number and assign voice ("Marshal McBride" and "Male", "Female" or "Neutral").
 				if (voice == null)
 				{
-					// Select enabled (with value higher than 0) voices.
-					if (string.IsNullOrEmpty(language))
-					{
-						if (gender == VoiceGender.Male) choice = data.Where(x => x.Male > 0).ToArray();
-						else if (gender == VoiceGender.Female) choice = data.Where(x => x.Female > 0).ToArray();
-						else choice = data.Where(x => x.Neutral > 0).ToArray();
-						if (choice.Length == 0)
-						{
-							OnHelp("There are no voices enabled in \"{0}\" column. Set popularity value to 100 ( normal usage ) for one voice at least in \"{0}\" column, to use it as \"{0}\" voice.", gender);
-						}
-					}
-					else
-					{
-						if (gender == VoiceGender.Male) choice = data.Where(x => x.Male > 0).Where(x => x.Language == language).ToArray();
-						else if (gender == VoiceGender.Female) choice = data.Where(x => x.Female > 0).Where(x => x.Language == language).ToArray();
-						else choice = data.Where(x => x.Neutral > 0).Where(x => x.Language == language).ToArray();
-
-						if (choice.Length == 0)
-						{
-							if (gender == VoiceGender.Male) choice = data.Where(x => x.Male > 0).ToArray();
-							else if (gender == VoiceGender.Female) choice = data.Where(x => x.Female > 0).ToArray();
-							else choice = data.Where(x => x.Neutral > 0).ToArray();
-							OnHelp("There are no voices enabled in \"{0}\" column with \"Language\" value \"{1}\". Set popularity value to 100 ( normal usage ) for one voice at least in \"{0}\" column with \"Language\" value \"{1}\".", gender, language);
-						}
-					}
-
-					// If nothing to choose from then try all.
+					choice = FilterVoicesByGender(data, gender);
 					if (choice.Length == 0)
 					{
-						choice = data.ToArray();
+						OnHelp("There are no voices enabled in \"{0}\" column. Set popularity value to 100 ( normal usage ) for one voice at least in \"{0}\" column, to use it as \"{0}\" voice.", gender);
 					}
-					if (choice.Length == 0) return;
+					// If culture supplied.
+					else if (culture != null)
+					{
+						choice = FilterVoicesByCulture(choice, culture);
+						if (choice.Length == 0)
+							OnHelp("There are no voices enabled in \"{0}\" column with \"Language\" value \"{1}\". Set popularity value to 100 ( normal usage ) for one voice at least in \"{0}\" column with \"Language\" value \"{1}\".", gender, language);
+					}
+					// If nothing to choose from then try all.
+					if (choice.Length == 0)
+						choice = data.ToArray();
+					if (choice.Length == 0)
+						return;
 					// Generate number for selecting voice.
 					var number = MainHelper.GetNumber(0, choice.Count() - 1, "name", name);
 					voice = choice[number];
@@ -533,8 +521,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			if (SelectedVoice != voice)
 				OnEvent(VoiceChanged, voice);
 		}
-
-
 
 		public static CancellationTokenSource token;
 
