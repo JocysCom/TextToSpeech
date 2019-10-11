@@ -1,8 +1,6 @@
-﻿using System.ComponentModel;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Serialization;
 
 namespace JocysCom.ClassLibrary.Configuration
 {

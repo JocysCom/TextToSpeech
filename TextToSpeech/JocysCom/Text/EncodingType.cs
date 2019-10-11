@@ -5,7 +5,7 @@
 	/// Most Intel and AMD CPUs are little-endian, ARM CPUs can be little-endian or big-endian.
 	/// PA-RISC (big-endian, though the processor supports both), PowerPC (big-endian), and SPARC (big-endian).
 	/// </summary>
-	public enum EncodingType: int
+	public enum EncodingType : int
 	{
 		Auto = 0,
 		ASCII = 1,

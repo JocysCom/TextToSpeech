@@ -1,12 +1,10 @@
 ﻿using JocysCom.ClassLibrary.Collections;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -178,7 +176,7 @@ namespace JocysCom.ClassLibrary.Network
 						info.IsNetworkAvailable = true;
 						// More configuration = higher priority of IP address.
 						var priority =
-							properties.GatewayAddresses.Where(x=>x.Address.AddressFamily == AddressFamily.InterNetwork).Count() +
+							properties.GatewayAddresses.Where(x => x.Address.AddressFamily == AddressFamily.InterNetwork).Count() +
 							properties.DnsAddresses.Where(x => x.AddressFamily == AddressFamily.InterNetwork).Count() +
 							properties.DhcpServerAddresses.Where(x => x.AddressFamily == AddressFamily.InterNetwork).Count() +
 							properties.WinsServersAddresses.Where(x => x.AddressFamily == AddressFamily.InterNetwork).Count();

@@ -1,12 +1,11 @@
-﻿using System;
+﻿using JocysCom.ClassLibrary.Controls;
+using JocysCom.ClassLibrary.Runtime;
+using System;
 using System.ComponentModel;
-using System.Windows.Forms;
 using System.Drawing.Design;
 using System.Linq;
-using System.Collections;
-using JocysCom.ClassLibrary.Controls;
 using System.Reflection;
-using JocysCom.ClassLibrary.Runtime;
+using System.Windows.Forms;
 
 namespace JocysCom.ClassLibrary.Configuration
 {
@@ -420,14 +419,14 @@ namespace JocysCom.ClassLibrary.Configuration
 			CheckSelected(false);
 		}
 
-        private void SelectAllButton_Click(object sender, EventArgs e)
-        {
-            DataGridView.SelectAll();
-        }
+		private void SelectAllButton_Click(object sender, EventArgs e)
+		{
+			DataGridView.SelectAll();
+		}
 
-        private void DeselectAllButton_Click(object sender, EventArgs e)
-        {
-            DataGridView.ClearSelection();
-        }
-    }
+		private void DeselectAllButton_Click(object sender, EventArgs e)
+		{
+			DataGridView.ClearSelection();
+		}
+	}
 }

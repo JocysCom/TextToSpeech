@@ -230,9 +230,9 @@ namespace JocysCom.ClassLibrary.Runtime
 			var result =
 				from ch in json
 				let quotes = ch == '"' ? quoteCount++ : quoteCount
-				let lineBreak = ch == ',' && quotes % 2 == 0 ? ch + Environment.NewLine + String.Concat(Enumerable.Repeat(ident, indentation)) : null
-				let openChar = ch == '{' || ch == '[' ? ch + Environment.NewLine + String.Concat(Enumerable.Repeat(ident, ++indentation)) : ch.ToString()
-				let closeChar = ch == '}' || ch == ']' ? Environment.NewLine + String.Concat(Enumerable.Repeat(ident, --indentation)) + ch : ch.ToString()
+				let lineBreak = ch == ',' && quotes % 2 == 0 ? ch + Environment.NewLine + string.Concat(Enumerable.Repeat(ident, indentation)) : null
+				let openChar = ch == '{' || ch == '[' ? ch + Environment.NewLine + string.Concat(Enumerable.Repeat(ident, ++indentation)) : ch.ToString()
+				let closeChar = ch == '}' || ch == ']' ? Environment.NewLine + string.Concat(Enumerable.Repeat(ident, --indentation)) + ch : ch.ToString()
 				select lineBreak == null ? openChar.Length > 1 ? openChar : closeChar : lineBreak;
 			return String.Concat(result);
 		}
@@ -452,28 +452,36 @@ namespace JocysCom.ClassLibrary.Runtime
 			var settings = new XmlReaderSettings();
 			settings.DtdProcessing = DtdProcessing.Ignore;
 			settings.XmlResolver = null;
-			using (var tr = new XmlTextReader(sr))
+			// Stream 'ms' and 'sr' will be disposed by the reader.
+			using (var reader = XmlReader.Create(sr, settings))
 			{
-				// Ignore namespaces.
-				tr.Namespaces = false;
-				// Stream 'ms' and 'sr' will be disposed by the reader.
-				using (var reader = XmlReader.Create(tr, settings))
-				{
-					object o;
-					var serializer = GetXmlSerializer(type);
-					lock (serializer) { o = serializer.Deserialize(reader); }
-					return o;
-				}
+				object o;
+				var serializer = GetXmlSerializer(type);
+				lock (serializer) { o = serializer.Deserialize(reader); }
+				return o;
 			}
 		}
+
+
+		// Example how to add the missing namespaces.
+		// 
+		// Create a new NameTable
+		//var nameTable = new NameTable();
+		// Create a new NamespaceManager
+		//var nsMgr = new XmlNamespaceManager(nameTable);
+		// Add namespaces used in the XML
+		//nsMgr.AddNamespace("xlink", "urn:http://namespaceurl.com");
+		// Create the XmlParserContext using the previous declared XmlNamespaceManager
+		//var inputContext = new XmlParserContext(null, nsMgr, null, XmlSpace.None);
 
 		/// <summary>
 		/// De-serialize object from XML string. XML string must not contain Byte Order Mark (BOM).
 		/// </summary>
 		/// <param name="xml">XML string representing object.</param>
 		/// <param name="type">Type of object.</param>
+		/// <param name="inputContext">You can use inputContext to add missing namespaces.</param>
 		/// <returns>Object.</returns>
-		public static object DeserializeFromXmlString(string xml, Type type)
+		public static object DeserializeFromXmlString(string xml, Type type, XmlParserContext inputContext = null)
 		{
 			// Note: If you are getting de-serialization error in XML document(1,1) then there is a chance that
 			// you are trying to de-serialize string which contains Byte Order Mark (BOM) which must not be there.
@@ -487,18 +495,13 @@ namespace JocysCom.ClassLibrary.Runtime
 			var settings = new XmlReaderSettings();
 			settings.DtdProcessing = DtdProcessing.Ignore;
 			settings.XmlResolver = null;
-			using (var tr = new XmlTextReader(sr))
+			// Stream 'sr' will be disposed by the reader.
+			using (var reader = XmlReader.Create(sr, settings, inputContext))
 			{
-				// Ignore namespaces.
-				tr.Namespaces = false;
-				// Stream 'sr' will be disposed by the reader.
-				using (var reader = XmlReader.Create(tr, settings))
-				{
-					object o;
-					var serializer = GetXmlSerializer(type);
-					lock (serializer) { o = serializer.Deserialize(reader); }
-					return o;
-				}
+				object o;
+				var serializer = GetXmlSerializer(type);
+				lock (serializer) { o = serializer.Deserialize(reader); }
+				return o;
 			}
 		}
 

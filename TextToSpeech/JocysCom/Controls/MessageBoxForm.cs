@@ -15,28 +15,28 @@ namespace JocysCom.ClassLibrary.Controls
 		int h;
 		int w;
 
-        /// <summary>Displays a message box with the specified text, caption, buttons, icon, and default button.</summary>
-        /// <param name="text">The text to display in the message box.</param>
-        /// <param name="caption">The text to display in the title bar of the message box.</param>
-        /// <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons" /> values that specifies which buttons to display in the message box.</param>
-        /// <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon" /> values that specifies which icon to display in the message box.</param>
-        /// <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton" /> values that specifies the default button for the message box.</param>
-        /// <returns>One of the <see cref="T:System.Windows.Forms.DialogResult" /> values.</returns>
-        public static DialogResult Show(string text, string caption = "", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
-        {
-            MessageBoxForm form = new MessageBoxForm();
-            form.StartPosition = FormStartPosition.CenterScreen;
-            return form.ShowForm(text, caption, buttons, icon, defaultButton);
-        }
+		/// <summary>Displays a message box with the specified text, caption, buttons, icon, and default button.</summary>
+		/// <param name="text">The text to display in the message box.</param>
+		/// <param name="caption">The text to display in the title bar of the message box.</param>
+		/// <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons" /> values that specifies which buttons to display in the message box.</param>
+		/// <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon" /> values that specifies which icon to display in the message box.</param>
+		/// <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton" /> values that specifies the default button for the message box.</param>
+		/// <returns>One of the <see cref="T:System.Windows.Forms.DialogResult" /> values.</returns>
+		public static DialogResult Show(string text, string caption = "", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
+		{
+			MessageBoxForm form = new MessageBoxForm();
+			form.StartPosition = FormStartPosition.CenterScreen;
+			return form.ShowForm(text, caption, buttons, icon, defaultButton);
+		}
 
-        /// <summary>Displays a message box with the specified text, caption, buttons, icon, and default button.</summary>
-        /// <param name="text">The text to display in the message box.</param>
-        /// <param name="caption">The text to display in the title bar of the message box.</param>
-        /// <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons" /> values that specifies which buttons to display in the message box.</param>
-        /// <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon" /> values that specifies which icon to display in the message box.</param>
-        /// <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton" /> values that specifies the default button for the message box.</param>
-        /// <returns>One of the <see cref="T:System.Windows.Forms.DialogResult" /> values.</returns>
-        public DialogResult ShowForm(string text, string caption = "", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
+		/// <summary>Displays a message box with the specified text, caption, buttons, icon, and default button.</summary>
+		/// <param name="text">The text to display in the message box.</param>
+		/// <param name="caption">The text to display in the title bar of the message box.</param>
+		/// <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons" /> values that specifies which buttons to display in the message box.</param>
+		/// <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon" /> values that specifies which icon to display in the message box.</param>
+		/// <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton" /> values that specifies the default button for the message box.</param>
+		/// <returns>One of the <see cref="T:System.Windows.Forms.DialogResult" /> values.</returns>
+		public DialogResult ShowForm(string text, string caption = "", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
 		{
 			AddResizeEvents();
 			TextLabel.Text = text;

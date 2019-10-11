@@ -1,18 +1,17 @@
-﻿using System;
+﻿using JocysCom.ClassLibrary.ComponentModel;
+using JocysCom.ClassLibrary.Runtime;
+using System;
 using System.Collections.Generic;
+using System.Data.Objects.DataClasses;
+using System.Diagnostics;
 using System.IO;
-using System.Xml.Serialization;
-using System.Xml;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Data.Objects.DataClasses;
-using JocysCom.ClassLibrary.Runtime;
-using JocysCom.ClassLibrary.ComponentModel;
-using System.Reflection;
-using System.Linq;
-using System.IO.Compression;
-using System.Runtime.Serialization;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace JocysCom.ClassLibrary.Configuration
 {

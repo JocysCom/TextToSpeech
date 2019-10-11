@@ -31,7 +31,7 @@ namespace JocysCom.ClassLibrary
 		public HiResTimer(int interval)
 		{
 			if (interval <= 0)
-				throw new ArgumentException("Invalid value", "interval");
+				throw new ArgumentException("Invalid value", nameof(interval));
 			_Interval = interval;
 		}
 

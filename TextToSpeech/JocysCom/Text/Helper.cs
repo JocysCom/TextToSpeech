@@ -1,11 +1,11 @@
-﻿using System;
+﻿using JocysCom.ClassLibrary.Collections;
+using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using JocysCom.ClassLibrary.Collections;
 
 namespace JocysCom.ClassLibrary.Text
 {
@@ -121,16 +121,16 @@ namespace JocysCom.ClassLibrary.Text
 			return GetValue<string>(name, s, defaultValue);
 		}
 
-			/// <summary>
-			/// Convert timespan to string.
-			/// </summary>
-			/// <param name="ts">TimeSpan value to convert.</param>
-			/// <param name="includeMilliseconds">include milliseconds.</param>
-			/// <param name="useWords">Use words instead of ':' and '.' separator.</param>
-			/// <param name="useShortWords">Use short words. Applied when useWords = true.</param>
-			/// <param name="precision">Precision. Applied when useWords = true.</param>
-			/// <returns></returns>
-			public static string TimeSpanToString(TimeSpan ts, bool includeMilliseconds = false, bool useWords = false, bool useShortWords = false, int? precision = null)
+		/// <summary>
+		/// Convert timespan to string.
+		/// </summary>
+		/// <param name="ts">TimeSpan value to convert.</param>
+		/// <param name="includeMilliseconds">include milliseconds.</param>
+		/// <param name="useWords">Use words instead of ':' and '.' separator.</param>
+		/// <param name="useShortWords">Use short words. Applied when useWords = true.</param>
+		/// <param name="precision">Precision. Applied when useWords = true.</param>
+		/// <returns></returns>
+		public static string TimeSpanToString(TimeSpan ts, bool includeMilliseconds = false, bool useWords = false, bool useShortWords = false, int? precision = null)
 		{
 			string s = "";
 			if (useWords)
