@@ -44,7 +44,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var name = v.name;
 			var overrideVoice = SettingsFile.Current.Defaults.FirstOrDefault(x => x.name == name);
 			// if override was found and enabled then...
-			if (overrideVoice != null) v.UpdateMissingValuesFrom(overrideVoice);
+			if (overrideVoice != null)
+				v.UpdateMissingValuesFrom(overrideVoice);
 
 			//Set gender. "Male"(1), "Female"(2), "Neutral"(3).
 			_Gender = string.IsNullOrEmpty(v.gender) || v.gender != "Male" && v.gender != "Female" && v.gender != "Neutral" ? SettingsManager.Options.GenderComboBoxText : v.gender;
@@ -79,7 +80,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 			// Set effect.
 			im.effect = string.IsNullOrEmpty(v.effect) ? "Default" : v.effect;
-			OnEvent(EffectsPresetSelected, im.effect);
+			if (v.command.ToLower() != "save")
+				OnEvent(EffectsPresetSelected, im.effect);
 
 			// Set volume.
 			var volumeIsValid = int.TryParse(v.volume, out _Volume);
