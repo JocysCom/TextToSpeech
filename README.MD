@@ -33,7 +33,7 @@
 <li>Exit WoW before installing or updating addon.</li>
 <li>Download <a href="http://www.jocys.com/Files/Software/JocysCom-TextToSpeech-WoW.zip">JocysComTextToSpeech-WoW.zip</a> file.</li>
 <li>Open "File Explorer" (Win+E), locate downloaded file and open it.</li>
-<li>Copy <i>"JocysCom-TextToSpeech-WoW"</i> folder (folder is inside downloaded zip file).<br />
+<li>Copy <i>"JocysCom-TextToSpeech-WoW"</i> folder (folder is inside downloaded zip file).<br /><br />
 	<img src="http://www.jocys.com/Files/Software/Copy.png" /></li>
 <li>Paste <i>"JocysCom-TextToSpeech-WoW"</i> folder inside <i>"AddOns"</i> folder of WoW.<br />
 	<i>Usual directory: C:\Program Files\World of Warcraft\_retail_Interface\AddOns</i></li>
