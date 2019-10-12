@@ -101,7 +101,7 @@
 			// 
 			// RefreshButton
 			// 
-			this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.RefreshButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.reset_16x16;
 			this.RefreshButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.RefreshButton.Location = new System.Drawing.Point(12, 339);
