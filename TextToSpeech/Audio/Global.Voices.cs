@@ -19,12 +19,17 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		public static void InitializeSpeech()
 		{
-			RefreshVoicesGrid();
+			RefreshLocalVoicesGrid(Audio.Global.InstalledVoices);
 		}
 
 		#region Installed Voices
 
 		public static BindingList<InstalledVoiceEx> InstalledVoices { get; set; }
+
+		public static BindingList<InstalledVoiceEx> LocalVoices { get; set; }
+		public static BindingList<InstalledVoiceEx> AmazonNeuralVoices { get; set; }
+		public static BindingList<InstalledVoiceEx> AmazonStandardVoices { get; set; }
+
 		public static InstalledVoiceEx SelectedVoice { get { return _SelectedVoice; } set { _SelectedVoice = value; } }
 		static InstalledVoiceEx _SelectedVoice;
 		public static string ValidateInstalledVoices()
@@ -42,20 +47,26 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		#endregion
 
-		public static void RefreshVoicesGrid()
+		public static List<InstalledVoiceEx> GetLocalVoices()
 		{
-			InstalledVoices.Clear();
 			// Fill grid with voices.
 			// Create synthesizer which will be used to create WAV files from SSML XML.
 			var ssmlSynthesizer = new SpeechSynthesizer();
-			InstalledVoice[] voices = ssmlSynthesizer.GetInstalledVoices().OrderBy(x => x.VoiceInfo.Culture.Name).ThenBy(x => x.VoiceInfo.Gender).ThenBy(x => x.VoiceInfo.Name).ToArray();
-			var voicesEx = voices.Select(x => new InstalledVoiceEx(x.VoiceInfo)).ToArray();
-			LoadSettings(voicesEx);
-			foreach (var voiceEx in voicesEx) InstalledVoices.Add(voiceEx);
+			var voices = ssmlSynthesizer.GetInstalledVoices().OrderBy(x => x.VoiceInfo.Culture.Name).ThenBy(x => x.VoiceInfo.Gender).ThenBy(x => x.VoiceInfo.Name).ToArray();
+			var voicesEx = voices.Select(x => new InstalledVoiceEx(x.VoiceInfo)).ToList();
 			ssmlSynthesizer.Dispose();
+			return voicesEx;
 		}
 
-		public static void LoadSettings(InstalledVoiceEx[] voices)
+		public static void RefreshLocalVoicesGrid(BindingList<InstalledVoiceEx> list)
+		{
+			list.Clear();
+			var voicesEx = GetLocalVoices();
+			LoadSettings(voicesEx);
+			foreach (var voiceEx in voicesEx) list.Add(voiceEx);
+		}
+
+		public static void LoadSettings(List<InstalledVoiceEx> voices)
 		{
 			var xml = SettingsManager.Options.VoicesData;
 			InstalledVoiceEx[] savedVoices = null;
@@ -64,7 +75,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				try { savedVoices = Serializer.DeserializeFromXmlString<InstalledVoiceEx[]>(xml); }
 				catch (Exception) { }
 			}
-			if (savedVoices == null) savedVoices = new InstalledVoiceEx[0];
+			if (savedVoices == null)
+				savedVoices = new InstalledVoiceEx[0];
 			var newVoices = new List<InstalledVoiceEx>();
 			var oldVoices = new List<InstalledVoiceEx>();
 			foreach (var voice in voices)

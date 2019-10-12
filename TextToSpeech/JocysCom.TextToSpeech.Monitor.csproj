@@ -197,6 +197,12 @@
     <Compile Include="Controls\AcronymsUserControl.Designer.cs">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AddVoicesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\AddVoicesForm.Designer.cs">
+      <DependentUpon>AddVoicesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Options\MonitorClipboardUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -378,6 +384,9 @@
     <Compile Include="Properties\Settings.cs" />
     <EmbeddedResource Include="Controls\AcronymsUserControl.resx">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AddVoicesForm.resx">
+      <DependentUpon>AddVoicesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Options\MonitorClipboardUserControl.resx">
       <DependentUpon>MonitorClipboardUserControl.cs</DependentUpon>
@@ -576,8 +585,13 @@
     <EmbeddedResource Include="Resources\Amazon\AWSSDK.Polly.dll" />
     <EmbeddedResource Include="Resources\Amazon\AWSSDK.Polly.pdb" />
     <EmbeddedResource Include="Resources\Amazon\AWSSDK.Polly.xml" />
+    <None Include="Resources\Icons\Amazon_Add_Neural_16x16.png" />
+    <None Include="Resources\Icons\Amazon_Add_Standard_16x16.png" />
+    <None Include="Resources\Icons\Add_16x16.png" />
     <Content Include="Resources\Icons\CheckBox.png" />
     <Content Include="Resources\Icons\CheckBox_Unchecked.png" />
+    <None Include="Resources\Icons\Local_Add_16x16.png" />
+    <None Include="Resources\Icons\Remove_16x16.png" />
     <Content Include="Resources\Icons\SelectAll.png" />
     <Content Include="Resources\Icons\SelectNone.png" />
     <Content Include="Resources\Images\Copy.png" />

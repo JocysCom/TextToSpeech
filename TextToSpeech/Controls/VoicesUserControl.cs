@@ -1,4 +1,6 @@
 ﻿using JocysCom.ClassLibrary.Controls;
+using JocysCom.TextToSpeech.Monitor.Audio;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -54,6 +56,39 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			}
 		}
 
+		#region Appearance
+
+		/// <summary>
+		/// Gets or sets the object used to marshal event-handler calls that are issued when
+		/// an interval has elapsed.
+		/// </summary>
+		[Category("Appearance"), Browsable(true), DefaultValue(true)]
+		public bool MenuButtonsVisible { get { return VoicesToolStrip.Visible; } set { VoicesToolStrip.Visible = value; } }
+
+		/// <summary>
+		/// Gets or sets the object used to marshal event-handler calls that are issued when
+		/// an interval has elapsed.
+		/// </summary>
+		[Category("Appearance"), Browsable(true), DefaultValue(true)]
+		public bool GenderRatesVisible
+		{
+			get
+			{
+				return
+					MaleColumn.Visible &
+					FemaleColumn.Visible &
+					NeutralColumn.Visible;
+			}
+			set
+			{
+				MaleColumn.Visible = value;
+				FemaleColumn.Visible = value;
+				NeutralColumn.Visible = value;
+			}
+		}
+
+		#endregion
+
 		#region VoicesDataGridView
 
 		private void VoicesDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -101,5 +136,55 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 
 		#endregion
+
+		private void AddLocalVoicesButton_Click(object sender, System.EventArgs e)
+		{
+			var form = new AddVoicesForm();
+			form.Text = string.Format("{0} {1}: Local Voices", Application.CompanyName, Application.ProductName);
+			form.StartPosition = FormStartPosition.CenterParent;
+			if (Global.LocalVoices == null)
+				Global.LocalVoices = new BindingList<InstalledVoiceEx>();
+			form.VoicesGridView.DataSource = Global.LocalVoices;
+			// Start refreshing voices.
+			ControlsHelper.BeginInvoke(() =>
+			{
+				Global.LocalVoices.Clear();
+				var voices = Global.GetLocalVoices();
+				foreach (var voice in voices)
+					Global.LocalVoices.Add(voice);
+			});
+			var result = form.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+			}
+			form.VoicesGridView.DataSource = null;
+		}
+
+		private void AddAmazonNeuralVoicesButton_Click(object sender, System.EventArgs e)
+		{
+			var form = new AddVoicesForm();
+			form.Text = string.Format("{0} {1}: Amazon Neural Voices", Application.CompanyName, Application.ProductName);
+			form.StartPosition = FormStartPosition.CenterParent;
+			form.VoicesGridView.DataSource = Global.AmazonNeuralVoices;
+			var result = form.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+			}
+			form.VoicesGridView.DataSource = null;
+		}
+
+		private void AddAmazonStandardVoicesButton_Click(object sender, System.EventArgs e)
+		{
+			var form = new AddVoicesForm();
+			form.Text = string.Format("{0} {1}: Amazon Standard Voices", Application.CompanyName, Application.ProductName);
+			form.StartPosition = FormStartPosition.CenterParent;
+			form.VoicesGridView.DataSource = Global.AmazonStandardVoices;
+			var result = form.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+			}
+			form.VoicesGridView.DataSource = null;
+		}
+
 	}
 }

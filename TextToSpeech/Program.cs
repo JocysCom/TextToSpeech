@@ -10,6 +10,23 @@ namespace JocysCom.TextToSpeech.Monitor
 {
 	static partial class Program
 	{
+
+		/// <summary>
+		/// Detect if Visual Studio is debugging the program.
+		/// If 'True' then exception are not wrapper in "try...catch" and Visual Studio will be able to navigate to exception line.
+		/// </summary>
+		public static bool IsDebug
+		{
+			get
+			{
+#if DEBUG
+				return true;
+#else
+				return false;
+#endif
+			}
+		}
+
 		public static MainForm TopForm;
 
 		static byte[] HexToBytes(string hex)
@@ -55,11 +72,21 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.ThreadException += Application_ThreadException;
 			Application.ApplicationExit += Application_ApplicationExit;
-			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+			if (!IsDebug)
+			{
+				Application.ThreadException += Application_ThreadException;
+				AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+			}
 			// Check if settings file is valid.
-			if (!CheckSettings()) return;
+			if (!CheckSettings())
+				return;
+			if (IsDebug)
+			{
+				InitMonitors();
+				Application.Run(new MainForm());
+				return;
+			}
 			try
 			{
 				InitMonitors();

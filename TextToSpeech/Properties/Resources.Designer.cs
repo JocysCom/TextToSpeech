@@ -63,6 +63,36 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Add_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("Add_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Amazon_Add_Neural_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("Amazon_Add_Neural_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Amazon_Add_Standard_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("Amazon_Add_Standard_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CheckBox {
             get {
                 object obj = ResourceManager.GetObject("CheckBox", resourceCulture);
@@ -151,6 +181,16 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Local_Add_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("Local_Add_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon Message {
@@ -176,6 +216,16 @@ namespace JocysCom.TextToSpeech.Monitor.Properties {
         internal static System.Drawing.Bitmap Question_32x32 {
             get {
                 object obj = ResourceManager.GetObject("Question_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Remove_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("Remove_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
