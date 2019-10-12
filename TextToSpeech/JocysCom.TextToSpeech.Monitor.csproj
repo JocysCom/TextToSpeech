@@ -165,12 +165,14 @@
     <Compile Include="Audio\Global.Voices.cs" />
     <Compile Include="Audio\KeyValue.cs" />
     <Compile Include="Capturing\CapturingType.cs" />
+    <Compile Include="Capturing\MessageCommand.cs" />
     <Compile Include="Capturing\IncommingEventArgs.cs" />
     <Compile Include="Capturing\Monitors\ClipboardMonitor.cs" />
     <Compile Include="Capturing\Monitors\DisplayMonitor.Colors.cs" />
     <Compile Include="Capturing\Monitors\DisplayMonitor.cs" />
     <Compile Include="Capturing\Monitors\IMonitor.cs" />
-    <Compile Include="Capturing\message.cs" />
+    <Compile Include="Capturing\MessageGender.cs" />
+    <Compile Include="Capturing\Message.cs" />
     <Compile Include="Capturing\Monitors\MonitorBase.cs" />
     <Compile Include="Capturing\Monitors\MonitorEventArgs.cs" />
     <Compile Include="Capturing\Monitors\NetworkMonitor.cs" />

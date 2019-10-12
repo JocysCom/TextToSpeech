@@ -2,6 +2,7 @@
 using JocysCom.ClassLibrary.Runtime;
 using JocysCom.ClassLibrary.Win32;
 using JocysCom.TextToSpeech.Monitor.Audio;
+using JocysCom.TextToSpeech.Monitor.Capturing;
 using JocysCom.TextToSpeech.Monitor.PlugIns;
 using System;
 using System.ComponentModel;
@@ -162,8 +163,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			ControlsHelper.SetSelectedItem(AudioBitsPerSampleComboBox, SettingsManager.Options.AudioSampleRate);
 			AudioBitsPerSampleComboBox.SelectedIndexChanged += AudioBitsPerSampleComboBox_SelectedIndexChanged;
 			// Gender.
-			GenderComboBox.DataSource = new string[] { "Male", "Female", "Neutral" };
-			ControlsHelper.SetSelectedItem(GenderComboBox, SettingsManager.Options.GenderComboBoxText);
+			GenderComboBox.DataSource = new object[] { MessageGender.Male, MessageGender.Female, MessageGender.Neutral };
+			GenderComboBox.SelectedItem = SettingsManager.Options.GenderComboBoxText;
 			GenderComboBox.SelectedIndexChanged += GenderComboBox_SelectedIndexChanged;
 			// Pitch Min.
 			PitchMinComboBox.DataSource = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10 };
@@ -216,7 +217,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		private void GenderComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			SettingsManager.Options.GenderComboBoxText = (string)GenderComboBox.SelectedItem;
+			SettingsManager.Options.GenderComboBoxText = (MessageGender)GenderComboBox.SelectedItem;
 		}
 
 		private void PitchMinComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -360,7 +361,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			RateMaxComboBox.Enabled = en;
 			PitchMinComboBox.Enabled = en;
 			PitchMaxComboBox.Enabled = en;
-			Global._Volume = SettingsManager.Options.Volume;
 			VolumeTrackBar.Enabled = en;
 			VoicesDataGridView.Enabled = en;
 			VoicesDataGridView.DefaultCellStyle.SelectionBackColor = en

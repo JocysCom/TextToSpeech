@@ -239,7 +239,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		#endregion
 
-		public static string partsBuffer = "";
 		public static void StopPlayer(string group = null)
 		{
 			bool groupIsPlaying;
@@ -247,7 +246,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			lock (playlistLock) { ClearPlayList(group, out groupIsPlaying, out itemsLeftToPlay); }
 			if (groupIsPlaying || itemsLeftToPlay == 0)
 			{
-				partsBuffer = "";
+				addMessage = null;
 				if (token != null)
 					token.Cancel();
 				EffectsPlayer.Stop();

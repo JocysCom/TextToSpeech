@@ -1,4 +1,5 @@
 ﻿using JocysCom.ClassLibrary.Runtime;
+using JocysCom.TextToSpeech.Monitor.Capturing;
 using SpeechLib;
 using System;
 using System.Collections.Generic;
@@ -155,9 +156,9 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		}
 
 		// Demonstrates SetText, ContainsText, and GetText. 
-		public static string SwapClipboardHtmlText(String replacementHtmlText)
+		public static string SwapClipboardHtmlText(string replacementHtmlText)
 		{
-			String returnHtmlText = null;
+			string returnHtmlText = null;
 			if (Clipboard.ContainsText(TextDataFormat.Html))
 			{
 				returnHtmlText = Clipboard.GetText(TextDataFormat.Html);
@@ -171,6 +172,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			string name = null,
 			string gender = null,
 			string effect = null,
+			int volume = 100,
 			// Optional propertied for player character
 			string playerName = null,
 			string playerNameChanged = null,
@@ -193,6 +195,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				var sentence = block.Value + block.Key.Replace(cs, "").Replace(ce, "") + "";
 				if (!string.IsNullOrEmpty(sentence.Trim('\r', '\n', ' ')))
 				{
+					MessageGender _gender;
+					Enum.TryParse(gender, out _gender);
 					var item = new PlayItem()
 					{
 						Game = game,
@@ -202,7 +206,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 						PlayerClass = playerClass,
 						// Set NPC properties.
 						Name = name,
-						Gender = gender,
+						Gender = _gender,
 						Effect = effect,
 						// Set data properties.
 						Status = JobStatusType.Parsed,
@@ -214,7 +218,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					{
 						item.Text = item.GetGeneralizedText();
 					}
-					item.Xml = ConvertTextToSapiXml(item.Text, comment);
+					item.Xml = ConvertTextToSapiXml(item.Text, comment, volume);
 					items.Add(item);
 					if (addToPlaylist) lock (playlistLock) { playlist.Add(item); }
 				};
@@ -224,10 +228,11 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			return items;
 		}
 
-		public static string ConvertTextToSapiXml(string text, bool isComment = false)
+		public static string ConvertTextToSapiXml(string text, bool isComment = false, int volume = 100)
 		{
 			var vi = SelectedVoice;
-			return GetXmlText(text, vi, _Volume, _Pitch, _Rate, isComment);
+			var vol = (int)(((decimal)volume / 100m) * (decimal)SettingsManager.Options.Volume);
+			return GetXmlText(text, vi, vol, _Pitch, _Rate, isComment);
 		}
 
 		/// <summary>
@@ -438,29 +443,29 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		}
 
 		/// <summary>Filter voices by language.</summary>
-		static InstalledVoiceEx[] FilterVoicesByGender(InstalledVoiceEx[] voices, VoiceGender gender)
+		static InstalledVoiceEx[] FilterVoicesByGender(InstalledVoiceEx[] voices, MessageGender gender)
 		{
-			if (gender == VoiceGender.Male)
+			if (gender == MessageGender.Male)
 				return voices.Where(x => x.Male > 0).ToArray();
-			else if (gender == VoiceGender.Female)
+			else if (gender == MessageGender.Female)
 				return voices.Where(x => x.Female > 0).ToArray();
 			else
 				return voices.Where(x => x.Neutral > 0).ToArray();
 		}
 
 		/// <summary>Reorder voices by gender.</summary>
-		static void OrderVoicesByGender(ref InstalledVoiceEx[] voices, VoiceGender gender)
+		static void OrderVoicesByGender(ref InstalledVoiceEx[] voices, MessageGender gender)
 		{
-			if (gender == VoiceGender.Male)
+			if (gender == MessageGender.Male)
 				voices = voices.OrderByDescending(x => x.Male).ToArray();
-			else if (gender == VoiceGender.Female)
+			else if (gender == MessageGender.Female)
 				voices = voices.OrderByDescending(x => x.Female).ToArray();
-			else if (gender == VoiceGender.Neutral)
+			else
 				voices = voices.OrderByDescending(x => x.Neutral).ToArray();
 		}
 
 		// Set voice.
-		static void SelectVoice(string name, string language, VoiceGender gender)
+		static void SelectVoice(string name, string language, MessageGender gender)
 		{
 			int popularity;
 			InstalledVoiceEx[] choice;

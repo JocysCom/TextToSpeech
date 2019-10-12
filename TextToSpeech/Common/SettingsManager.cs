@@ -1,5 +1,6 @@
 ﻿using JocysCom.ClassLibrary.Configuration;
 using JocysCom.TextToSpeech.Monitor.Capturing;
+using System;
 using System.Linq;
 
 namespace JocysCom.TextToSpeech.Monitor
@@ -69,7 +70,8 @@ namespace JocysCom.TextToSpeech.Monitor
 		public void UpsertDefaultsRecord(message v)
 		{
 			// Try to find existing default record from the list.
-			var dm = SettingsFile.Current.Defaults.FirstOrDefault(x => x.name.ToUpper() == v.name.ToUpper());
+			var dm = SettingsFile.Current.Defaults.FirstOrDefault(x => string.Equals(x.name, v.name, StringComparison.InvariantCultureIgnoreCase));
+			// If there is no default message then...
 			if (dm == null)
 			{
 				dm = new message();

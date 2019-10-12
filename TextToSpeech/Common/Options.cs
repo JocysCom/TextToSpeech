@@ -198,8 +198,8 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(2)]
 		public int RateMax { get; set; }
 
-		[DefaultValue("Male")]
-		public string GenderComboBoxText { get; set; }
+		[DefaultValue(MessageGender.Male)]
+		public MessageGender GenderComboBoxText { get; set; }
 
 		[DefaultValue("Disable")]
 		public string MonitorClipboardComboBoxText { get; set; }

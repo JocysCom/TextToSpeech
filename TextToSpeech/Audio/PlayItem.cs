@@ -1,4 +1,5 @@
 ﻿using JocysCom.ClassLibrary.Controls;
+using JocysCom.TextToSpeech.Monitor.Capturing;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -42,12 +43,12 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		/// <summary>NPC Gender.</summary>
 		[DefaultValue(null)]
-		public string Gender
+		public MessageGender Gender
 		{
 			get { return _Gender; }
 			set { _Gender = value; OnPropertyChanged(); }
 		}
-		string _Gender;
+		MessageGender _Gender;
 
 		/// <summary>NPC Effect.</summary>
 		[DefaultValue(null)]
@@ -82,7 +83,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			}
 			else
 			{
-				charPath = JocysCom.ClassLibrary.Text.Filters.GetKey(string.Format("{0}_{1}_{2}", Name, Gender ?? "", Effect ?? ""), false);
+				charPath = JocysCom.ClassLibrary.Text.Filters.GetKey(string.Format("{0}_{1}_{2}", Name, Gender, Effect ?? ""), false);
 				// Generalize text if needed.
 				var text = generalize ? GetGeneralizedText() : Text;
 				fileName = JocysCom.ClassLibrary.Text.Filters.GetKey(text, false);
