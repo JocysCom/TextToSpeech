@@ -8,7 +8,7 @@
 local DebugEnabled = false
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.5 ( 2019-10-10 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.6 ( 2019-10-11 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line. 
@@ -30,7 +30,6 @@ local chatMessageLimit = 240
 local messagesTable = {}
 local NPCNamesTable = {}
 local timerEnabled = false
-local eventForScroll = "" -- Save last quest event name for mouse scroll.
 
 local function Clear(v)
 	if v == nil or v == "" then
@@ -189,7 +188,7 @@ function JocysCom_AddonTXT_EN()
 	JocysCom_ColorMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffDisplay|r|cff808080 mode. In|r |cff77ccffTTS Monitor > [Options] Tab > [Monitor: Display] Tab > [Checked] Enable|r|cff808080.|r")
 	JocysCom_NetworkMessageCheckButton.text:SetText("|cff808080 Enable|r |cffffffffNetwork|r|cff808080 mode. In|r |cff77ccffTTS Monitor >  [Options] Tab > [Monitor: Network] Tab > [Checked] Enable|r|cff808080.|r")
 	JocysCom_ColorMessagePixelYFontString:SetText("|cff808080 [LEFT] and [TOP] position of color pixel line for|r |cff77ccffMonitor|r|cff808080. Default values [0] and [0].|r")
-	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock frame with |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080buttons. Grab frame by clicking on dark background around buttons.|r")
+	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock frame with |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080button. Grab frame by clicking on dark background around buttons.|r")
 	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on right side of |cffffffff[Options]|r |cff808080button. [Unchecked] show menu on left side.|r")
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Save \"target\" and \"mouseover\" NPC's name, gender and type in|r |cffffffffMonitor|r|cff808080. Default: [Checked] |r");
 	--JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide detailed information about addon|r |cffffffff<messages>|r |cff808080in chat window. Default: [Unchecked]|r")
@@ -257,6 +256,13 @@ end
 			if DebugEnabled then print("|cff558a84Unregistered: " .. v .. "|r") end
 		end
 	end
+end
+
+-- Check and set text.
+local function nilCheck(v, d)
+	if v == nil then return ""
+	elseif d ~= nil then return v .. d
+	else return v end
 end
 
 -- Load saved event settings.
@@ -354,34 +360,41 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		return
 	elseif event == "GOSSIP_CLOSED" or event == "MAIL_CLOSED" then
 		return
-	elseif event == "MAIL_PLAY_BUTTON" then
+	--QUEST events.
+	elseif event == "MAIL_SHOW_JOCYS" then
 			local packageIcon, stationeryIcon, sender, subject = GetInboxHeaderInfo(InboxFrame.openMailID) -- packageIcon, stationeryIcon, sender, subject, money, CODAmount, daysLeft, hasItem, wasRead, wasReturned, textCreated, canReply, isGM = GetInboxHeaderInfo(InboxFrame.openMailID)
 			local bodyText = GetInboxText(InboxFrame.openMailID) -- bodyText, texture, isTakeable, isInvoice = GetInboxText(InboxFrame.openMailID)
 			group = "Quest"
 			name = sender
-			speakMessage = sender .. ". " .. subject .. ". " .. bodyText
-	elseif event == "QUEST_LOG_PLAY_BUTTON" then
+			speakMessage = nilCheck(sender, ". ") .. nilCheck(subject, ". ") .. nilCheck(bodyText, ". ") 
+			nameIntro = JocysCom_NameQuestCheckButton:GetChecked()
+			soundIntro = JocysCom_SoundQuestCheckButton:GetChecked()
+	elseif event == "QUEST_LOG_UPDATE_JOCYS" then
 			-- local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isStory = GetQuestLogTitle()
 			local questDescription, questObjectives = GetQuestLogQuestText()
 			group = "Quest"
-			speakMessage = questObjectives .. ". " .. questDescription
+			local title = JocysCom_TitlesCheckButton:GetChecked() and QuestInfoTitleHeader:GetText() or nil
+			speakMessage = nilCheck(title, ". ") .. nilCheck(questObjectives, ". ") .. nilCheck(QuestInfoDescriptionHeader:GetText(), ". ") .. questDescription
+			soundIntro = JocysCom_SoundQuestCheckButton:GetChecked()
+		soundIntro = JocysCom_SoundQuestCheckButton:GetChecked()
 	elseif event == "GOSSIP_SHOW" or event == "QUEST_GREETING" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "ITEM_TEXT_READY" then
-		-- Set MiniFrame and Scrollframe.
-		eventForScroll = event;
 		if event == "ITEM_TEXT_READY" then
 			speakMessage = ItemTextGetText()
 		elseif event == "GOSSIP_SHOW" then
 			speakMessage = GetGossipText()
 			-- print("NPCNAME: " .. _G.GossipFrameNpcNameText:GetText());
-		elseif event == "QUEST_GREETING" then
+		elseif event == "QUEST_GREETING" then	
 			speakMessage = GetGreetingText()
 		elseif event == "QUEST_PROGRESS" then
-			speakMessage = GetProgressText()
+			local title = JocysCom_TitlesCheckButton:GetChecked() and QuestProgressTitleText:GetText() or nil
+			speakMessage = 	nilCheck(title, ". ") .. GetProgressText()
 		elseif event == "QUEST_COMPLETE" then
-			speakMessage = GetRewardText()
+			local title = JocysCom_TitlesCheckButton:GetChecked() and QuestInfoTitleHeader:GetText() or nil
+			speakMessage = nilCheck(title, ". ") .. GetRewardText()
 		elseif event == "QUEST_DETAIL" then
-			local objectivesHeader = QuestInfoObjectivesHeader:GetText() and QuestInfoObjectivesHeader:GetText() .. ". " or ""
-			speakMessage = JocysCom_ObjectivesCheckButton:GetChecked() and GetQuestText() .. " " .. objectivesHeader .. " " .. GetObjectiveText() or GetQuestText()
+			local title = JocysCom_TitlesCheckButton:GetChecked() and QuestInfoTitleHeader:GetText() or nil
+			local objective = JocysCom_ObjectivesCheckButton:GetChecked() and nilCheck(QuestInfoObjectivesHeader:GetText(), ". ") .. GetObjectiveText() or nil
+			speakMessage = nilCheck(title, ". ") .. GetQuestText() .. " " .. nilCheck(objective, ". ")
 			-- print("NPCNAME: " .. _G.QuestFrameNpcNameText:GetText())
 		end
 		group = "Quest"
@@ -518,7 +531,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 	if string.find(event, "CHAT") ~= nil then
 		speakMessage = text
 	end
-
+	-- Debug.
 	if DebugEnabled then
 		print("event: " .. tostring(event))
 		print("speakMessage: " .. tostring(speakMessage))
@@ -528,7 +541,6 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		print("soundIntro: " .. tostring(soundIntro))
 		print("soundEffect: " .. tostring(soundEffect))
 	end
-
 	-- Add name intro to text.
 	if nameIntro then
 		local introType = ""
@@ -547,7 +559,6 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		end
 		speakMessage = messageLeader .. name .. " " .. introType .. speakMessage
 	end
-
 	-- On Quest event or Quest play.
 	if group == "Quest" then
 		-- Don't start automatic play if StartOnOpen[0] and Play[0] -- command "play" is not from button-mouse.
@@ -721,12 +732,9 @@ end
 function JocysCom_DialogueMiniFrame_OnShow()
 	-- Enable DND <Busy>.
 	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(true)	end
-	if QuestMapFrame:IsVisible() then
-		eventForScroll = "QUEST_LOG_PLAY_BUTTON"
-	elseif MailFrame:IsVisible() then
-		eventForScroll = "MAIL_PLAY_BUTTON"
+	if JocysCom_StartOnOpenCheckButton:GetChecked() and (QuestMapFrame:IsVisible() or MailFrame:IsVisible()) then
+		JocysCom_PlayOpenedFrame()
 	end
-	-- JocysCom_OptionsFrame_OnEvent(nil, eventForScroll)
 end
 
 -- DialogueMiniFrame OnHide.
@@ -810,12 +818,14 @@ end
 		fontString = "|cffddddddStop text-to-speech and clear all playlist.\n|r"
 	elseif name == "Busy" then
 		fontString = "|cff6464ffShow <Busy> over your character\nwhen window is open and speech is on.|r"
+	elseif name == "Titles" then
+		fontString = "|cffefc176Include QUEST TITLES\nin text-to-speech.|r"
 	elseif name == "Objectives" then
 		fontString = "|cffefc176Include QUEST OBJECTIVES\nin text-to-speech.|r"
 	elseif name == "StartOnOpen" then
-		fontString = "|cffefc176Instantly START to play DIALOGUE,\nBOOK, etc. text on opening window.|r"
+		fontString = "|cffefc176START to play DIALOGUE, BOOK, etc.\non opening window.|r"
 	elseif name == "StopOnClose" then
-		fontString = "|cffefc176Instantly STOP to play DIALOGUE,\nBOOK, etc. text on closing window.|r"
+		fontString = "|cffefc176STOP to play DIALOGUE, BOOK, etc. on\nclosing window. Uncheck to collect quests.|r"
 	elseif name == "Quest" then
 		fontString = "|cffefc176Play DIALOGUE, BOOK, PLAQUE, etc.\nwindow text.|r"
 	elseif name == "Monster" then
@@ -932,7 +942,7 @@ function JocysCom_PlayButton_OnClick()
 	-- Disable DND.
 	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(true) end
 	--if JocysCom_ColorMessageCheckButton:GetChecked() then JocysCom_ClipboardMessageEditBoxSetFocus() end
-	JocysCom_OptionsFrame_OnEvent(true, nil, eventForScroll) -- play button, self, active "Quest" event name (openend text window).
+	JocysCom_PlayOpenedFrame()
 end
 
 -- ScrollFrame - scroll-up or scroll-down.
@@ -943,6 +953,29 @@ function JocysCom_DialogueScrollFrame_OnMouseWheel(self, delta)
 	else
 		JocysCom_StopButton_OnClick("Quest")
 	end
+end
+
+function JocysCom_PlayOpenedFrame()
+	-- Default.
+	local event = nil
+	-- Gossip.
+	if GossipFrame:IsVisible() then event = "GOSSIP_SHOW"
+	-- Quest.
+	elseif QuestFrame:IsVisible() then
+		if QuestGreetingScrollFrame:IsVisible() then event = "QUEST_GREETING"
+		elseif QuestDetailScrollFrame:IsVisible() then event = "QUEST_DETAIL"
+		elseif QuestProgressScrollFrame:IsVisible() then event = "QUEST_PROGRESS"
+		elseif QuestRewardScrollFrame:IsVisible() then event = "QUEST_COMPLETE"
+		end
+	-- QuestLog.
+	elseif QuestMapFrame:IsVisible() then event = "QUEST_LOG_UPDATE_JOCYS"
+	-- Item.
+	elseif ItemTextFrame:IsVisible() then event = "ITEM_TEXT_READY"
+	-- Mail.
+	elseif MailFrame:IsVisible() then event = "MAIL_SHOW_JOCYS"
+	end
+	-- Return.
+	if event ~= nil then JocysCom_OptionsFrame_OnEvent(true, nil, event) end
 end
 
 -- Show or Hide JocysCom frames.
@@ -959,7 +992,9 @@ function JocysCom_AttachAndShowFrames()
 		frameScroll = QuestMapDetailsScrollFrame
 	-- Quest.
 	elseif QuestFrame:IsVisible() then
-		if QuestDetailScrollFrame:IsVisible() then
+		if QuestGreetingScrollFrame:IsVisible() then
+			frameScroll = QuestGreetingScrollFrame
+		elseif QuestDetailScrollFrame:IsVisible() then
 			frameScroll = QuestDetailScrollFrame
 		elseif QuestProgressScrollFrame:IsVisible() then
 			frameScroll = QuestProgressScrollFrame
@@ -1264,6 +1299,7 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_RaidLCB == false then JocysCom_RaidLeaderCheckButton:SetChecked(false) else JocysCom_RaidLeaderCheckButton:SetChecked(true) end
 	if JocysCom_InstanceCB == false then JocysCom_InstanceCheckButton:SetChecked(false) else JocysCom_InstanceCheckButton:SetChecked(true) end
 	if JocysCom_InstanceLCB == false then JocysCom_InstanceLeaderCheckButton:SetChecked(false) else JocysCom_InstanceLeaderCheckButton:SetChecked(true) end
+	if JocysCom_TitlesCB == true then JocysCom_TitlesCheckButton:SetChecked(true) else JocysCom_TitlesCheckButton:SetChecked(false) end
 	if JocysCom_ObjectivesCB == false then JocysCom_ObjectivesCheckButton:SetChecked(false) else JocysCom_ObjectivesCheckButton:SetChecked(true) end
 	if JocysCom_StartOnOpenCB == false then JocysCom_StartOnOpenCheckButton:SetChecked(false) else JocysCom_StartOnOpenCheckButton:SetChecked(true) end
 	if JocysCom_StopOnCloseCB == false then JocysCom_StopOnCloseCheckButton:SetChecked(false) else JocysCom_StopOnCloseCheckButton:SetChecked(true) end
@@ -1325,6 +1361,7 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_RaidLCB = JocysCom_RaidLeaderCheckButton:GetChecked()
 	JocysCom_InstanceCB = JocysCom_InstanceCheckButton:GetChecked()
 	JocysCom_InstanceLCB = JocysCom_InstanceLeaderCheckButton:GetChecked()
+	JocysCom_TitlesCB = JocysCom_TitlesCheckButton:GetChecked()
 	JocysCom_ObjectivesCB = JocysCom_ObjectivesCheckButton:GetChecked()
 	JocysCom_StartOnOpenCB = JocysCom_StartOnOpenCheckButton:GetChecked()
 	JocysCom_StopOnCloseCB = JocysCom_StopOnCloseCheckButton:GetChecked()
