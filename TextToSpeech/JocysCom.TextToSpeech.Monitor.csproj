@@ -197,40 +197,40 @@
     <Compile Include="Controls\AcronymsUserControl.Designer.cs">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MonitorClipboardUserControl.cs">
+    <Compile Include="Controls\Options\MonitorClipboardUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\MonitorClipboardUserControl.Designer.cs">
+    <Compile Include="Controls\Options\MonitorClipboardUserControl.Designer.cs">
       <DependentUpon>MonitorClipboardUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MonitorDisplayUserControl.cs">
+    <Compile Include="Controls\Options\MonitorDisplayUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\MonitorDisplayUserControl.Designer.cs">
+    <Compile Include="Controls\Options\MonitorDisplayUserControl.Designer.cs">
       <DependentUpon>MonitorDisplayUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\OptionsCacheUserControl.cs">
+    <Compile Include="Controls\Options\OptionsCacheUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\OptionsCacheUserControl.Designer.cs">
+    <Compile Include="Controls\Options\OptionsCacheUserControl.Designer.cs">
       <DependentUpon>OptionsCacheUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MonitorNetworkUserControl.cs">
+    <Compile Include="Controls\Options\MonitorNetworkUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\MonitorNetworkUserControl.Designer.cs">
+    <Compile Include="Controls\Options\MonitorNetworkUserControl.Designer.cs">
       <DependentUpon>MonitorNetworkUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\OptionsMicrosoftCortanaUserControl.cs">
+    <Compile Include="Controls\Options\OptionsMicrosoftCortanaUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\OptionsMicrosoftCortanaUserControl.Designer.cs">
+    <Compile Include="Controls\Options\OptionsMicrosoftCortanaUserControl.Designer.cs">
       <DependentUpon>OptionsMicrosoftCortanaUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MonitorServerUserControl.cs">
+    <Compile Include="Controls\Options\MonitorServerUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\MonitorServerUserControl.Designer.cs">
+    <Compile Include="Controls\Options\MonitorServerUserControl.Designer.cs">
       <DependentUpon>MonitorServerUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\OptionsControl.cs">
@@ -344,7 +344,7 @@
     <Compile Include="Audio\PitchShifter.cs" />
     <Compile Include="Audio\PlayItem.cs" />
     <Compile Include="Common\RuntimePolicyHelper.cs" />
-    <Compile Include="Controls\sound.cs" />
+    <Compile Include="Common\sound.cs" />
     <Compile Include="Controls\SoundEffectsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -373,22 +373,22 @@
     <EmbeddedResource Include="Controls\AcronymsUserControl.resx">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MonitorClipboardUserControl.resx">
+    <EmbeddedResource Include="Controls\Options\MonitorClipboardUserControl.resx">
       <DependentUpon>MonitorClipboardUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MonitorDisplayUserControl.resx">
+    <EmbeddedResource Include="Controls\Options\MonitorDisplayUserControl.resx">
       <DependentUpon>MonitorDisplayUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\OptionsCacheUserControl.resx">
+    <EmbeddedResource Include="Controls\Options\OptionsCacheUserControl.resx">
       <DependentUpon>OptionsCacheUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MonitorNetworkUserControl.resx">
+    <EmbeddedResource Include="Controls\Options\MonitorNetworkUserControl.resx">
       <DependentUpon>MonitorNetworkUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\OptionsMicrosoftCortanaUserControl.resx">
+    <EmbeddedResource Include="Controls\Options\OptionsMicrosoftCortanaUserControl.resx">
       <DependentUpon>OptionsMicrosoftCortanaUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MonitorServerUserControl.resx">
+    <EmbeddedResource Include="Controls\Options\MonitorServerUserControl.resx">
       <DependentUpon>MonitorServerUserControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
