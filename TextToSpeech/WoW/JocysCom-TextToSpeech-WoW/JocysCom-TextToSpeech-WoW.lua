@@ -732,7 +732,7 @@ end
 function JocysCom_DialogueMiniFrame_OnShow()
 	-- Enable DND <Busy>.
 	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(true)	end
-	if JocysCom_StartOnOpenCheckButton:GetChecked() and (QuestMapFrame:IsVisible() or MailFrame:IsVisible()) then
+	if JocysCom_StartOnOpenCheckButton:GetChecked() and MailFrame:IsVisible() then -- QuestMapFrame:IsVisible()
 		JocysCom_PlayOpenedFrame()
 	end
 end
