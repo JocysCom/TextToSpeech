@@ -102,7 +102,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					int _volume;
 					var volumeIsValid = int.TryParse(am.volume, out _volume);
 					if (!volumeIsValid)
-						_volume = SettingsManager.Options.Volume;
+						_volume = 100;
 					if (_volume < 0) _volume = 0;
 					if (_volume > 100) _volume = 100;
 
