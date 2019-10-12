@@ -34,6 +34,7 @@
 			this.MainTabPage = new System.Windows.Forms.TabPage();
 			this.OkButton = new System.Windows.Forms.Button();
 			this.CloseButton = new System.Windows.Forms.Button();
+			this.RefreshButton = new System.Windows.Forms.Button();
 			this.MainTabControl.SuspendLayout();
 			this.MainTabPage.SuspendLayout();
 			this.SuspendLayout();
@@ -80,26 +81,44 @@
 			this.OkButton.Size = new System.Drawing.Size(131, 23);
 			this.OkButton.TabIndex = 2;
 			this.OkButton.Text = "Add Selected Voices";
-			this.OkButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.OkButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.OkButton.UseVisualStyleBackColor = true;
 			this.OkButton.Click += new System.EventHandler(this.OkButton_Click);
 			// 
 			// CloseButton
 			// 
 			this.CloseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.CloseButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Close_16x16;
+			this.CloseButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.CloseButton.Location = new System.Drawing.Point(575, 339);
 			this.CloseButton.Name = "CloseButton";
 			this.CloseButton.Size = new System.Drawing.Size(75, 23);
 			this.CloseButton.TabIndex = 2;
 			this.CloseButton.Text = "Cancel";
+			this.CloseButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.CloseButton.UseVisualStyleBackColor = true;
 			this.CloseButton.Click += new System.EventHandler(this.CloseButton_Click);
+			// 
+			// RefreshButton
+			// 
+			this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.RefreshButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.reset_16x16;
+			this.RefreshButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.RefreshButton.Location = new System.Drawing.Point(12, 339);
+			this.RefreshButton.Name = "RefreshButton";
+			this.RefreshButton.Size = new System.Drawing.Size(75, 23);
+			this.RefreshButton.TabIndex = 3;
+			this.RefreshButton.Text = "Refresh";
+			this.RefreshButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.RefreshButton.UseVisualStyleBackColor = true;
+			this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
 			// 
 			// AddVoicesForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(662, 374);
+			this.Controls.Add(this.RefreshButton);
 			this.Controls.Add(this.CloseButton);
 			this.Controls.Add(this.OkButton);
 			this.Controls.Add(this.MainTabControl);
@@ -119,5 +138,6 @@
 		private System.Windows.Forms.TabPage MainTabPage;
 		private System.Windows.Forms.Button OkButton;
 		private System.Windows.Forms.Button CloseButton;
+		private System.Windows.Forms.Button RefreshButton;
 	}
 }

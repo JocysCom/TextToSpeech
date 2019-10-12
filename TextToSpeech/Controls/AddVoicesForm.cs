@@ -24,5 +24,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		{
 			DialogResult = DialogResult.Cancel;
 		}
+
+		private void RefreshButton_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }
