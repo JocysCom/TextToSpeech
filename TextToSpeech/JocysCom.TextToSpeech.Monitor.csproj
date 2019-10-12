@@ -264,6 +264,12 @@
     <Compile Include="Controls\VoiceDefaultsUserControl.Designer.cs">
       <DependentUpon>VoiceDefaultsUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\VoicesUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\VoicesUserControl.Designer.cs">
+      <DependentUpon>VoicesUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="JocysCom\Security\Encryption.cs" />
     <Compile Include="Voices\AmazonPolly.cs" />
     <Compile Include="Controls\Options\GoogleTTSUserControl.cs">
@@ -414,6 +420,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Options\GoogleTTSUserControl.resx">
       <DependentUpon>GoogleTTSUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\VoicesUserControl.resx">
+      <DependentUpon>VoicesUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JocysCom\Configuration\SettingsItemForm.resx">
       <DependentUpon>SettingsItemForm.cs</DependentUpon>

@@ -8,7 +8,6 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Speech.AudioFormat;
 using System.Speech.Recognition;
 using System.Windows.Forms;
@@ -284,41 +283,18 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 		}
 
-		private void VoicesDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-		{
-			if (e.RowIndex == -1) return;
-			var grid = (DataGridView)sender;
-			var voice = (InstalledVoiceEx)grid.Rows[e.RowIndex].DataBoundItem;
-			var column = VoicesDataGridView.Columns[e.ColumnIndex];
-			if (e.ColumnIndex == grid.Columns[AgeColumn.Name].Index)
-			{
-				if (voice.Age.ToString() == "NotSet") e.Value = "...";
-			}
-			e.CellStyle.ForeColor = voice.Enabled
-				? VoicesDataGridView.DefaultCellStyle.ForeColor
-				: System.Drawing.SystemColors.ControlDark;
-			e.CellStyle.SelectionBackColor = voice.Enabled
-			 ? VoicesDataGridView.DefaultCellStyle.SelectionBackColor
-			 : System.Drawing.SystemColors.ControlDark;
-		}
-
 		private void MainForm_Load(object sender, EventArgs e)
 		{
 			if (IsDesignMode) return;
 			SettingsFile.Current.Load();
 			LastException = null;
-			VoicesDataGridView.AutoGenerateColumns = false;
 			MessagesDataGridView.AutoGenerateColumns = false;
 			EffectsPresetsDataGridView.AutoGenerateColumns = false;
 			MessagesDataGridView.DataSource = MessagesVoiceItems;
-			// Enable double buffering to make redraw faster.
-			typeof(DataGridView).InvokeMember("DoubleBuffered",
-			BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty,
-			null, VoicesDataGridView, new object[] { true });
 			Global.InitializeSpeech();
 			refreshPresets();
-			VoicesDataGridView.DataSource = Global.InstalledVoices;
-			VoicesDataGridView.SelectionChanged += VoicesDataGridView_SelectionChanged;
+			VoicesPanel.VoicesGridView.DataSource = Global.InstalledVoices;
+			VoicesPanel.VoicesGridView.SelectionChanged += VoicesDataGridView_SelectionChanged;
 			VoicesDataGridView_SelectionChanged(null, null);
 			Global.InstalledVoices.ListChanged += InstalledVoices_ListChanged;
 			Global.VoiceChanged += AudioGlobal_VoiceChanged;
@@ -336,14 +312,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		private void AudioGlobal_VoiceChanged(object sender, ClassLibrary.EventArgs<InstalledVoiceEx> e)
 		{
-			foreach (DataGridViewRow row in VoicesDataGridView.Rows)
-			{
-				if (!row.DataBoundItem.Equals(e.Data))
-					continue;
-				row.Selected = true;
-				VoicesDataGridView.FirstDisplayedCell = row.Cells[0];
-				break;
-			}
+			VoicesPanel.SelectItem(e.Data);
 		}
 
 		//Make the recognizer ready
@@ -362,10 +331,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			PitchMinComboBox.Enabled = en;
 			PitchMaxComboBox.Enabled = en;
 			VolumeTrackBar.Enabled = en;
-			VoicesDataGridView.Enabled = en;
-			VoicesDataGridView.DefaultCellStyle.SelectionBackColor = en
-				? System.Drawing.SystemColors.Highlight
-				: System.Drawing.SystemColors.ControlDark;
+			VoicesPanel.EnableGrid(en);
 			//Fill SandBox Tab if it is empty
 			if (string.IsNullOrEmpty(SandBoxTextBox.Text))
 			{
@@ -507,22 +473,6 @@ namespace JocysCom.TextToSpeech.Monitor
 		private void AboutRichTextBox_LinkClicked(object sender, LinkClickedEventArgs e)
 		{
 			System.Diagnostics.Process.Start(e.LinkText);
-		}
-
-		private void VoicesDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (e.RowIndex < 0) return;
-			var grid = (DataGridView)sender;
-			//var column = VoicesDataGridView.Columns[e.ColumnIndex];
-			if (e.ColumnIndex == grid.Columns[EnabledColumn.Name].Index)
-			{
-				var voice = (InstalledVoiceEx)grid.Rows[e.RowIndex].DataBoundItem;
-				voice.Enabled = !voice.Enabled;
-				VoicesDataGridView.Invalidate();
-			}
-			if (e.ColumnIndex == grid.Columns[FemaleColumn.Name].Index) VoicesDataGridView.BeginEdit(true);
-			if (e.ColumnIndex == grid.Columns[MaleColumn.Name].Index) VoicesDataGridView.BeginEdit(true);
-			if (e.ColumnIndex == grid.Columns[NeutralColumn.Name].Index) VoicesDataGridView.BeginEdit(true);
 		}
 
 		private void EffectPresetsEditorSoundEffectsControl_Load(object sender, EventArgs e)
@@ -772,15 +722,6 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		#endregion
 
-		private void VoicesDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-		{
-			//if (e.RowIndex == -1) return;
-			//var grid = (DataGridView)sender;
-			//var voice = (InstalledVoiceEx)grid.Rows[e.RowIndex].DataBoundItem;
-			//var column = VoicesDataGridView.Columns[e.ColumnIndex];
-			e.Cancel = true;
-		}
-
 		private void FilterStatusLabel_Click(object sender, EventArgs e)
 		{
 			var filters = string.Join(" and \r\n", Program._NetworkMonitor.LastFilters);
@@ -834,10 +775,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		private void VoicesDataGridView_SelectionChanged(object sender, EventArgs e)
 		{
-			var selectedItem = VoicesDataGridView.SelectedRows.Cast<DataGridViewRow>().FirstOrDefault();
-			InstalledVoiceEx voice = null;
-			if (selectedItem != null)
-				voice = (InstalledVoiceEx)selectedItem.DataBoundItem;
+			var voice = VoicesPanel.GetSelectedItem();
 			if (Global.SelectedVoice != voice)
 				Global.SelectedVoice = voice;
 		}
