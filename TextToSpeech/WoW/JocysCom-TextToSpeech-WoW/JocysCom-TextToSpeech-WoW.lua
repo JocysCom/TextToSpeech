@@ -8,10 +8,10 @@
 local DebugEnabled = false
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.6 ( 2019-10-11 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.6 ( 2019-10-12 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
--- Message prefix for Monitor to find pixel line. 
+-- Message prefix for Monitor to find pixel line.
 local messagePrefix =  "|cff2200000|r|cff0022000|r|cff0000220|r|cff2200000|r|cff0022000|r|cff0000220|r"
 local unitName = UnitName("player") -- GetUnitName()
 local customName = UnitName("player")
@@ -344,7 +344,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		JocysCom_LoadEventSettings() -- Register or unregister events.
 		JocysCom_DialogueScrollFrame:Show()
 		JocysCom_DialogueMiniFrame:Show()
-		return 
+		return
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		JocysCom_CreateOrUpdateMacro()
 		return
@@ -366,7 +366,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 			local bodyText = GetInboxText(InboxFrame.openMailID) -- bodyText, texture, isTakeable, isInvoice = GetInboxText(InboxFrame.openMailID)
 			group = "Quest"
 			name = sender
-			speakMessage = nilCheck(sender, ". ") .. nilCheck(subject, ". ") .. nilCheck(bodyText, ". ") 
+			speakMessage = nilCheck(sender, ". ") .. nilCheck(subject, ". ") .. nilCheck(bodyText, ". ")
 			nameIntro = JocysCom_NameQuestCheckButton:GetChecked()
 			soundIntro = JocysCom_SoundQuestCheckButton:GetChecked()
 	elseif event == "QUEST_LOG_UPDATE_JOCYS" then
@@ -376,14 +376,13 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 			local title = JocysCom_TitlesCheckButton:GetChecked() and QuestInfoTitleHeader:GetText() or nil
 			speakMessage = nilCheck(title, ". ") .. nilCheck(questObjectives, ". ") .. nilCheck(QuestInfoDescriptionHeader:GetText(), ". ") .. questDescription
 			soundIntro = JocysCom_SoundQuestCheckButton:GetChecked()
-		soundIntro = JocysCom_SoundQuestCheckButton:GetChecked()
 	elseif event == "GOSSIP_SHOW" or event == "QUEST_GREETING" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "ITEM_TEXT_READY" then
 		if event == "ITEM_TEXT_READY" then
 			speakMessage = ItemTextGetText()
 		elseif event == "GOSSIP_SHOW" then
 			speakMessage = GetGossipText()
 			-- print("NPCNAME: " .. _G.GossipFrameNpcNameText:GetText());
-		elseif event == "QUEST_GREETING" then	
+		elseif event == "QUEST_GREETING" then
 			speakMessage = GetGreetingText()
 		elseif event == "QUEST_PROGRESS" then
 			local title = JocysCom_TitlesCheckButton:GetChecked() and QuestProgressTitleText:GetText() or nil
@@ -434,7 +433,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 			soundIntro = JocysCom_SoundWhisperCheckButton:GetChecked()
 			nameIntro = JocysCom_NameWhisperCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_BN_WHISPER" then --or event == "CHAT_MSG_BN_CONVERSATION"
-		-- bnSenderID = presenceID 
+		-- bnSenderID = presenceID
 		-- local presenceID, accountName, battleTag, isBattleTagPresence, characterName, bnetIDGameAccount, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, messageTime, canSoR, isReferAFriend, canSummonFriend = BNGetFriendInfoByID(bnSenderID)
 		local presenceID, accountName, battleTag, isBattleTagPresence, characterName = BNGetFriendInfoByID(bnSenderID)
 		if DebugEnabled then print("|cff77ccffbnSenderID:|r " .. tostring(bnSenderID) .. " |cff77ccffpresenceID:|r " .. tostring(presenceID) .. " |cff77ccffaccountName:|r " .. tostring(accountName) .. " |cff77ccffbattleTag:|r " .. tostring(battleTag) .. " |cff77ccffcharacterName:|r " .. tostring(characterName)) end
@@ -446,7 +445,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		elseif battleTag ~= nil then
 			name = tostring(battleTag)
 			-- remove #0000 from batleTag
-			if string.find(name, "#") ~= nil then 
+			if string.find(name, "#") ~= nil then
 				local hashIndex = string.find(name, "#")
 				name = string.sub(name, 1, hashIndex - 1)
 			end
@@ -476,7 +475,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		group = "Yell"
 		name = JocysCom_RemoveRealmName(playerName)
 		sex = UnitSex(name)
-		nameIntro = JocysCom_NameYellCheckButton:GetChecked() 
+		nameIntro = JocysCom_NameYellCheckButton:GetChecked()
 		soundIntro = JocysCom_SoundYellCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_GUILD" then
 		group = "Guild"
@@ -489,13 +488,13 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		name = JocysCom_RemoveRealmName(playerName)
 		sex = UnitSex(name)
 		nameIntro = JocysCom_NameOfficerCheckButton:GetChecked()
-		soundIntro = JocysCom_SoundOfficerCheckButton:GetChecked()	
+		soundIntro = JocysCom_SoundOfficerCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_RAID" then
 		group = "Raid"
 		name = JocysCom_RemoveRealmName(playerName)
 		sex = UnitSex(name)
 		nameIntro = JocysCom_NameRaidCheckButton:GetChecked()
-		soundIntro = JocysCom_SoundRaidCheckButton:GetChecked()	
+		soundIntro = JocysCom_SoundRaidCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_RAID_LEADER" or event == "CHAT_MSG_RAID_WARNING" then
 		group = "RaidLeader"
 		name = JocysCom_RemoveRealmName(playerName)
@@ -551,7 +550,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 			introType = " yells. "
 		else
 			introType = " says. "
-		end	
+		end
 		-- Add "***Leader" before name. Replace "***Leader" to "*** leader ".
 		local messageLeader = ""
 		if string.find(group, "Leader") ~= nil then
@@ -572,7 +571,7 @@ end
 
 -- Remove realm name from name.
 function JocysCom_RemoveRealmName(name)
-	if name ~= nil and string.find(name, "-") ~= nil then 
+	if name ~= nil and string.find(name, "-") ~= nil then
 		name = string.sub(name, 1, string.find(name, "-") - 1)
 	end
 	return name
@@ -695,7 +694,7 @@ function JocysCom_SpeakMessage(event, speakMessage, name, sex, group, soundIntro
 			part = string.sub(speakMessage, startIndex)
 			chatMessage = chatMessageSP .. part .. chatMessageE
 			-- Send message and fill EditBox in Options window.
-			JocysCom_SendMessage(chatMessage, true)	
+			JocysCom_SendMessage(chatMessage, true)
 			-- Debug information
 			if JocysCom_NetworkMessageCheckButton:GetChecked() and DebugEnabled then print("|cff77ccffMessage From-To: [|r" .. startIndex  .. "-" .. speakMessageLen .. "|cff77ccff]|r" .. JocysCom_MessageAddColors(chatMessage)) end
 				break
@@ -705,7 +704,7 @@ function JocysCom_SpeakMessage(event, speakMessage, name, sex, group, soundIntro
 				part = string.sub(speakMessage, startIndex, endIndex - 1)
 				chatMessage = chatMessageSA .. part .. chatMessageE
 				-- Send message and do not fill EditBox in Options window.
-				JocysCom_SendMessage(chatMessage, false)	
+				JocysCom_SendMessage(chatMessage, false)
 				if JocysCom_NetworkMessageCheckButton:GetChecked() and DebugEnabled then print("|cff77ccffSpace found:[|r" .. tostring(index) .. "|cff77ccff] Message From-To:[|r" .. startIndex .. "-" .. (endIndex - 1) .. "|cff77ccff]|r" .. JocysCom_MessageAddColors(chatMessage)) end
 			startIndex = endIndex
 			speakMessageRemainingLen = string.len(string.sub(speakMessage, startIndex))
@@ -732,7 +731,7 @@ end
 function JocysCom_DialogueMiniFrame_OnShow()
 	-- Enable DND <Busy>.
 	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(true)	end
-	if JocysCom_StartOnOpenCheckButton:GetChecked() and MailFrame:IsVisible() then -- QuestMapFrame:IsVisible()
+	if JocysCom_StartOnOpenCheckButton:GetChecked() and MailFrame:IsVisible() then -- QuestMapFrame:IsVisible() 
 		JocysCom_PlayOpenedFrame()
 	end
 end
@@ -1044,7 +1043,7 @@ end
 
 -- [ Save ] button.
 function JocysCom_SaveNPC(m)
-	if UnitIsPlayer(m) or UnitPlayerControlled(m) or UnitName(m) == nil or UnitSex(m) == nil then 
+	if UnitIsPlayer(m) or UnitPlayerControlled(m) or UnitName(m) == nil or UnitSex(m) == nil then
 		if DebugEnabled then
 			print("|cff999999------------------------------------------------------------------------------------|r")
 			print("|cff999999Only uncontrollable by players NPC targets will be saved.|r")
@@ -1130,8 +1129,8 @@ local messageChanged = 5
 function JocysCom_SendMessagesFromTable()
 	--JocysCom_ButtonFlashing()
 	--if JocysCom_ClipboardMessageEditBox:HasFocus() then
-		-- Convert message characters to HEX color.                                                                                                                        
-		local messageHEX = messagesTable[1]:gsub(".", function(c) return string.format("%02x", string.byte(c)) end) -- UTF-8 (a ш B Ш C) (61 D188 42 D0A8 43): 61D18842D0A843 
+		-- Convert message characters to HEX color.
+		local messageHEX = messagesTable[1]:gsub(".", function(c) return string.format("%02x", string.byte(c)) end) -- UTF-8 (a ш B Ш C) (61 D188 42 D0A8 43): 61D18842D0A843
 		local messageLen = #messageHEX / 2 -- Count bytes-pairs (7): 61 D1 88 42 D0 A8 43
 		local mod = math.fmod(messageLen,3) -- Divide (7) by 3: (7)-3-3... = left 1 (less than 3) / 61D188 42D0A8 43 (3 3 1)
 		-- Add missing bytes.
@@ -1150,7 +1149,7 @@ function JocysCom_SendMessagesFromTable()
 		local messageBytesColor = "|cff" .. messageBytes .. "0|r" -- Set message lenght as color.
 		-- Add prefixes: prefix[6] + change[1] + size[1] + message
 		message = messagePrefix .. messageChangedColor .. messageBytesColor ..  message
-
+		-- Debug.
 		if DebugEnabled then
 			print("|cff77ccff------------------------------------------------------------------------------------|r")
 			print("|cff77ccffPrefix: |r" .. messagePrefix .. "|cff77ccff Changed: (|r" .. messageChanged .. "|cff77ccff) |r" .. messageChangedColor .. "|cff77ccff Lenght: (|r" .. messageBytes .. "|cff77ccff) |r" .. messageBytesColor .. "|cff77ccff Message: (|r" .. #messageHEX .. "/2=" .. messageLen .. " L" .. mod .. "|cff77ccff) |r" .. message)
