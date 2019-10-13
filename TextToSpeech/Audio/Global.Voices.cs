@@ -112,7 +112,9 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				var voice = toVoices.FirstOrDefault(x => x.IsSameVoice(fromVoice));
 				if (voice == null)
 				{
+					//fromVoice.Enabled = true;
 					newVoices.Add(fromVoice);
+					toVoices.Add(fromVoice);
 				}
 				else
 				{
@@ -126,6 +128,12 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			// If new voices added then...
 			if (newVoices.Count > 0)
 			{
+				// reorder list 
+				var newOrder = toVoices.OrderBy(x => x.CultureName).ThenBy(x => x.Name).ThenBy(x=>x.Gender).ToArray();
+				toVoices.Clear();
+				foreach (var item in newOrder)
+					toVoices.Add(item);
+
 				var maleIvonaFound = toVoices.Any(x => x.Name.StartsWith("IVONA") && x.Gender == VoiceGender.Male);
 				var femaleIvonaFound = toVoices.Any(x => x.Name.StartsWith("IVONA") && x.Gender == VoiceGender.Female);
 				foreach (var newVoice in newVoices)

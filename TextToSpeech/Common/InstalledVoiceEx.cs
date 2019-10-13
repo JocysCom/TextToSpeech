@@ -30,7 +30,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			Age = voice.Age;
 			Description = voice.Description;
 			Version = voice.AdditionalInfo.Where(x => x.Key == "Version").Select(x => x.Value).FirstOrDefault() ?? "";
-			Enabled = true;
 			switch (Gender)
 			{
 				case VoiceGender.Female: Female = MaxVoice; break;
@@ -73,7 +72,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			Age = VoiceAge.NotSet;
 			Description = string.Format("{0} {1} - {2} - {3}: {4}", Source, Name, CultureName, Gender, string.Join(", ", voice.SupportedEngines));
 			Version = "";
-			Enabled = true;
 			if (voice.Gender == Amazon.Polly.Gender.Female)
 			{
 				Gender = VoiceGender.Female;

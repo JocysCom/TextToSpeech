@@ -125,12 +125,16 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			{
 				if (voice.Age.ToString() == "NotSet") e.Value = "...";
 			}
-			e.CellStyle.ForeColor = voice.Enabled
-				? VoicesDataGridView.DefaultCellStyle.ForeColor
-				: SystemColors.ControlDark;
-			e.CellStyle.SelectionBackColor = voice.Enabled
-			 ? VoicesDataGridView.DefaultCellStyle.SelectionBackColor
-			 : SystemColors.ControlDark;
+			// If main window then...
+			if (MenuButtonsVisible)
+			{
+				e.CellStyle.ForeColor = voice.Enabled
+					? VoicesDataGridView.DefaultCellStyle.ForeColor
+					: SystemColors.ControlDark;
+				e.CellStyle.SelectionBackColor = voice.Enabled
+				 ? VoicesDataGridView.DefaultCellStyle.SelectionBackColor
+				 : SystemColors.ControlDark;
+			}
 		}
 
 		private void VoicesDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -152,53 +156,52 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		#endregion
 
-		private void AddLocalVoicesButton_Click(object sender, System.EventArgs e)
+
+		void AddVoices(string name, BindingList<InstalledVoiceEx> from)
 		{
 			var form = new AddVoicesForm();
-			form.Text = string.Format("{0} {1}: Local Voices", Application.CompanyName, Application.ProductName);
+			form.Text = string.Format("{0} {1}: {2}", Application.CompanyName, Application.ProductName, name);
 			form.StartPosition = FormStartPosition.CenterParent;
-			form.VoicesGridView.DataSource = Global.LocalVoices;
+			form.VoicesGridView.DataSource = from;
 			var result = form.ShowDialog();
 			if (result == DialogResult.OK)
 			{
+				var voices = from.Where(x => x.Enabled).ToList();
+				Global.ImportVoices(Global.InstalledVoices, voices);
 			}
 			form.VoicesGridView.DataSource = null;
+		}
+
+
+		private void AddLocalVoicesButton_Click(object sender, System.EventArgs e)
+		{
+			AddVoices("Local Voices", Global.LocalVoices);
 		}
 
 		private void AddAmazonNeuralVoicesButton_Click(object sender, System.EventArgs e)
 		{
-			var form = new AddVoicesForm();
-			form.Text = string.Format("{0} {1}: Amazon Neural Voices", Application.CompanyName, Application.ProductName);
-			form.StartPosition = FormStartPosition.CenterParent;
-			form.VoicesGridView.DataSource = Global.AmazonNeuralVoices;
-			var result = form.ShowDialog();
-			if (result == DialogResult.OK)
-			{
-			}
-			form.VoicesGridView.DataSource = null;
+			AddVoices("Amazon Neural Voices", Global.AmazonNeuralVoices);
 		}
 
 		private void AddAmazonStandardVoicesButton_Click(object sender, System.EventArgs e)
 		{
-			var form = new AddVoicesForm();
-			form.Text = string.Format("{0} {1}: Amazon Standard Voices", Application.CompanyName, Application.ProductName);
-			form.StartPosition = FormStartPosition.CenterParent;
-			form.VoicesGridView.DataSource = Global.AmazonStandardVoices;
-			var result = form.ShowDialog();
-			if (result == DialogResult.OK)
-			{
-			}
-			form.VoicesGridView.DataSource = null;
+			AddVoices("Amazon Standard Voices", Global.AmazonStandardVoices);
 		}
 
+		// Used from AddVoicesForm only.
 		public void RefreshVoices(bool force = false)
 		{
-			if (VoicesGridView.DataSource == Global.LocalVoices && (Global.LocalVoices.Count == 0 || force))
-				RefreshLocalVoices(Global.LocalVoices);
-			if (VoicesGridView.DataSource == Global.AmazonNeuralVoices && (Global.AmazonNeuralVoices.Count == 0 || force))
-				RefreshAmazonVoices(Engine.Neural, Global.AmazonNeuralVoices);
-			if (VoicesGridView.DataSource == Global.AmazonStandardVoices && (Global.AmazonStandardVoices.Count == 0 || force))
-				RefreshAmazonVoices(Engine.Standard, Global.AmazonStandardVoices);
+			var list = (BindingList<InstalledVoiceEx>)VoicesGridView.DataSource;
+			//// Uncehck selection by default.
+			//foreach (var item in list)
+			//	if (item.Enabled)
+			//		item.Enabled = false;
+			if (list == Global.LocalVoices)
+				RefreshLocalVoices(list);
+			if (list == Global.AmazonNeuralVoices && (list.Count == 0 || force))
+				RefreshAmazonVoices(Engine.Neural, list);
+			if (list == Global.AmazonStandardVoices && (list.Count == 0 || force))
+				RefreshAmazonVoices(Engine.Standard, list);
 		}
 
 		void RefreshLocalVoices(BindingList<InstalledVoiceEx> list)
@@ -208,6 +211,11 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			{
 				list.Clear();
 				var voices = Voices.VoiceHelper.GetLocalVoices();
+				voices = RemoveVoices(voices, Global.InstalledVoices);
+				// Uncehck selection by default.
+				//foreach (var item in list)
+				//	if (item.Enabled)
+				//		item.Enabled = false;
 				foreach (var voice in voices)
 					list.Add(voice);
 			});
@@ -219,13 +227,17 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		void RefreshAmazonVoices(Engine engine, BindingList<InstalledVoiceEx> list)
 		{
 			_CancelGetVoices = false;
-			StatusLabel.Text = "Please Wait...\r\n";
+			StatusLabel.Text = "Scan all supported voices. Please Wait...\r\n";
 			StatusPanel.Visible = true;
 			list.Clear();
 			var voices = new List<InstalledVoiceEx>();
 			var ts = new System.Threading.ThreadStart(delegate ()
 			{
 				voices = GetAmazonVoices(null, engine, null);
+				// Uncehck selection by default.
+				//foreach (var item in list)
+				//	if (item.Enabled)
+				//		item.Enabled = false;
 				ControlsHelper.Invoke(() =>
 				{
 					foreach (var voice in voices)
