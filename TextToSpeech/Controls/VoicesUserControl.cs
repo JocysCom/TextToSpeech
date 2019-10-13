@@ -255,7 +255,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		void RefreshAmazonVoices(Engine engine, BindingList<InstalledVoiceEx> list)
 		{
 			_CancelGetVoices = false;
-			StatusLabel.Text = "Scan all supported voices. Please Wait...\r\n";
+			StatusLabel.Text = "";
 			StatusPanel.Visible = true;
 			list.Clear();
 			var voices = new List<InstalledVoiceEx>();
@@ -270,6 +270,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				{
 					foreach (var voice in voices)
 						list.Add(voice);
+					if (voices.Count == 0)
+						StatusLabel.Text += "No new voices found.";
 					StatusPanel.Visible = voices.Count == 0;
 				});
 			});
@@ -367,7 +369,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ControlsHelper.Invoke(() =>
 			{
 				StatusLabel.Text += string.Format(format, args);
-				StatusPanel.VerticalScroll.Value = StatusPanel.VerticalScroll.Maximum;
+				BodyPanel.VerticalScroll.Value = BodyPanel.VerticalScroll.Maximum;
 			});
 		}
 
