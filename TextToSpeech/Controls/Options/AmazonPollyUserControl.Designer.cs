@@ -112,9 +112,9 @@
 			this.HelpLabel.AutoSize = true;
 			this.HelpLabel.Location = new System.Drawing.Point(6, 22);
 			this.HelpLabel.Name = "HelpLabel";
-			this.HelpLabel.Size = new System.Drawing.Size(149, 13);
+			this.HelpLabel.Size = new System.Drawing.Size(124, 13);
 			this.HelpLabel.TabIndex = 18;
-			this.HelpLabel.Text = "Step 1: Create AWS Account:";
+			this.HelpLabel.Text = "1. Create AWS Account:";
 			// 
 			// HelpGroupBox
 			// 
@@ -124,7 +124,7 @@
 			this.HelpGroupBox.Controls.Add(this.HelpLabel);
 			this.HelpGroupBox.Location = new System.Drawing.Point(390, 3);
 			this.HelpGroupBox.Name = "HelpGroupBox";
-			this.HelpGroupBox.Size = new System.Drawing.Size(370, 156);
+			this.HelpGroupBox.Size = new System.Drawing.Size(370, 121);
 			this.HelpGroupBox.TabIndex = 19;
 			this.HelpGroupBox.TabStop = false;
 			this.HelpGroupBox.Text = "How To Use Amazon Polly";
@@ -134,16 +134,16 @@
 			this.Help2Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.Help2Label.Location = new System.Drawing.Point(6, 68);
+			this.Help2Label.Location = new System.Drawing.Point(6, 35);
 			this.Help2Label.Name = "Help2Label";
-			this.Help2Label.Size = new System.Drawing.Size(358, 85);
+			this.Help2Label.Size = new System.Drawing.Size(358, 83);
 			this.Help2Label.TabIndex = 20;
 			this.Help2Label.Text = resources.GetString("Help2Label.Text");
 			// 
 			// AwsLinkLabel
 			// 
 			this.AwsLinkLabel.AutoSize = true;
-			this.AwsLinkLabel.Location = new System.Drawing.Point(30, 48);
+			this.AwsLinkLabel.Location = new System.Drawing.Point(136, 22);
 			this.AwsLinkLabel.Name = "AwsLinkLabel";
 			this.AwsLinkLabel.Size = new System.Drawing.Size(125, 13);
 			this.AwsLinkLabel.TabIndex = 19;
@@ -275,7 +275,7 @@
 			// label1
 			// 
 			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.label1.Location = new System.Drawing.Point(390, 162);
+			this.label1.Location = new System.Drawing.Point(390, 127);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(283, 69);
 			this.label1.TabIndex = 20;

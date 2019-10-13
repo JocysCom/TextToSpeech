@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Help2Label.Text" xml:space="preserve">
-    <value>Click on your user name at the top right of the page.
-Click on the "My Security Credentials" link from the drop-down menu.
-Find anc Click the "Access Keys" section.
-Click "Create New Access Key".
-Click on the Show link in the same row, and copy the
-"Access Key ID and "Secret Access Key":</value>
+    <value>2. Click on your user name at the top right of the page.
+3. Click on the "My Security Credentials" link from the drop-down menu.
+4. Find anc Click the "Access Keys" section.
+5. Click "Create New Access Key".
+6. Click on the Show link in the same row, and
+7. Copy the "Access Key ID and "Secret Access Key" into "TTS Monitor" Options</value>
   </data>
 </root>
