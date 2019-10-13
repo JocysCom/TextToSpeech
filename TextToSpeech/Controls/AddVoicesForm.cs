@@ -27,7 +27,12 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void RefreshButton_Click(object sender, EventArgs e)
 		{
+			VoicesPanel.RefreshVoices(true);
+		}
 
+		private void AddVoicesForm_Load(object sender, EventArgs e)
+		{
+			VoicesPanel.RefreshVoices();
 		}
 	}
 }

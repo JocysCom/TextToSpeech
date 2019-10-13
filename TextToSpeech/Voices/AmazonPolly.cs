@@ -137,25 +137,45 @@ namespace JocysCom.TextToSpeech.Monitor.Voices
 
 		#endregion
 
-		public List<Voice> GetVoices(DescribeVoicesRequest request = null)
+		public Exception LastException;
+
+		public List<Voice> GetVoices(DescribeVoicesRequest request = null, int millisecondsTimeout = 20000)
 		{
-			request = request ?? new DescribeVoicesRequest();
+			LastException = null;
 			var voices = new List<Voice>();
-			string nextToken;
-			try
+			var timeout = true;
+			var ts = new System.Threading.ThreadStart(delegate ()
 			{
-				do
+				request = request ?? new DescribeVoicesRequest();
+				string nextToken;
+				try
 				{
-					var response = Client.DescribeVoices(request);
-					nextToken = response.NextToken;
-					request.NextToken = nextToken;
-					foreach (var voice in response.Voices)
-						voices.Add(voice);
-				} while (nextToken != null);
-			}
-			catch (Exception ex)
+					do
+					{
+						var response = Client.DescribeVoices(request);
+						nextToken = response.NextToken;
+						request.NextToken = nextToken;
+						foreach (var voice in response.Voices)
+							voices.Add(voice);
+					} while (nextToken != null);
+				}
+				catch (Exception ex)
+				{
+					LastException = ex;
+					Console.WriteLine(ex.ToString());
+					//OnEvent(Exception, ex);
+				}
+				timeout = false;
+			});
+			var t = new System.Threading.Thread(ts);
+			t.Start();
+			t.Join(millisecondsTimeout);
+			if (timeout)
 			{
-				OnEvent(Exception, ex);
+				var timeoutEx = new Exception("AmmazonPolly.GetVoices timed out (" + millisecondsTimeout.ToString() + "ms)");
+				LastException = timeoutEx;
+				Console.WriteLine(timeoutEx.ToString());
+				//OnEvent(Exception, ex);
 			}
 			return voices;
 		}

@@ -35,7 +35,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			if (region != null)
 				RegionComboBox.SelectedItem = region;
 			RegionComboBox.SelectedIndexChanged += RegionComboBox_SelectedIndexChanged;
-			RegionComboBox_SelectedIndexChanged(null, null);
 			AmazonEnabledCheckBox.DataBindings.Add(nameof(AmazonEnabledCheckBox.Checked), SettingsManager.Options, nameof(SettingsManager.Options.AmazonEnabled));
 		}
 
@@ -70,12 +69,15 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 
 		List<InstalledVoiceEx> GetAmazonVoices()
 		{
+			StatusTextBox.Text = "";
 			var client = new Voices.AmazonPolly(
 				SettingsManager.Options.AmazonAccessKey,
 				SettingsManager.Options.AmazonSecretKey,
 				SettingsManager.Options.AmazonRegionSystemName
 			);
 			var voices = client.GetVoices();
+			var result = client.LastException == null ? "Success" : client.LastException.Message;
+			StatusTextBox.Text = string.Format("{0:HH:mm:ss}: {1}", DateTime.Now, result);
 			var installedVoices = voices.Select(x => new InstalledVoiceEx(x));
 			return installedVoices.OrderBy(x => x.Name).ToList();
 		}
@@ -87,6 +89,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 
 		private void SpeakButton_Click(object sender, EventArgs e)
 		{
+			StatusTextBox.Text = "";
 			var text = MessageTextBox.Text;
 			var client = new Voices.AmazonPolly(
 				SettingsManager.Options.AmazonAccessKey,
@@ -95,6 +98,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			);
 			var voice = (Voice)((InstalledVoiceEx)VoicesComboBox.SelectedItem).Voice;
 			var buffer = client.SynthesizeSpeech(voice, text);
+			var result = client.LastException == null ? "Success" : client.LastException.Message;
+			StatusTextBox.Text = string.Format("{0:HH:mm:ss}: {1}", DateTime.Now, result);
 			var item = ConvertToPlatItem(buffer);
 			Global.playlist.Add(item);
 		}

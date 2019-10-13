@@ -29,25 +29,15 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddVoicesForm));
-			this.VoicesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesUserControl();
 			this.MainTabControl = new System.Windows.Forms.TabControl();
 			this.MainTabPage = new System.Windows.Forms.TabPage();
 			this.OkButton = new System.Windows.Forms.Button();
 			this.CloseButton = new System.Windows.Forms.Button();
 			this.RefreshButton = new System.Windows.Forms.Button();
+			this.VoicesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesUserControl();
 			this.MainTabControl.SuspendLayout();
 			this.MainTabPage.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// VoicesPanel
-			// 
-			this.VoicesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.VoicesPanel.GenderRatesVisible = false;
-			this.VoicesPanel.Location = new System.Drawing.Point(0, 0);
-			this.VoicesPanel.MenuButtonsVisible = false;
-			this.VoicesPanel.Name = "VoicesPanel";
-			this.VoicesPanel.Size = new System.Drawing.Size(630, 295);
-			this.VoicesPanel.TabIndex = 0;
 			// 
 			// MainTabControl
 			// 
@@ -113,6 +103,16 @@
 			this.RefreshButton.UseVisualStyleBackColor = true;
 			this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
 			// 
+			// VoicesPanel
+			// 
+			this.VoicesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.VoicesPanel.GenderRatesVisible = false;
+			this.VoicesPanel.Location = new System.Drawing.Point(0, 0);
+			this.VoicesPanel.MenuButtonsVisible = false;
+			this.VoicesPanel.Name = "VoicesPanel";
+			this.VoicesPanel.Size = new System.Drawing.Size(630, 295);
+			this.VoicesPanel.TabIndex = 0;
+			// 
 			// AddVoicesForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -125,6 +125,7 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "AddVoicesForm";
 			this.Text = "Add Voices...";
+			this.Load += new System.EventHandler(this.AddVoicesForm_Load);
 			this.MainTabControl.ResumeLayout(false);
 			this.MainTabPage.ResumeLayout(false);
 			this.ResumeLayout(false);

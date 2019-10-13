@@ -382,6 +382,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.cs" />
+    <Compile Include="Voices\VoiceHelper.cs" />
     <EmbeddedResource Include="Controls\AcronymsUserControl.resx">
       <DependentUpon>AcronymsUserControl.cs</DependentUpon>
     </EmbeddedResource>

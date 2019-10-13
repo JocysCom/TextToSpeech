@@ -1,6 +1,7 @@
 ﻿using JocysCom.ClassLibrary.Controls;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Speech.Synthesis;
@@ -22,10 +23,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			Voice = voice;
 			Source = VoiceSource.Local;
 			// Set culture properties.
-			var culture = voice.Culture;
-			CultureLCID = culture.LCID;
-			CultureName = culture.Name;
-			Language = culture.TwoLetterISOLanguageName;
+			SetCulture(voice.Culture);
 			// Set voice properties.
 			Gender = voice.Gender;
 			Name = voice.Name;
@@ -47,15 +45,21 @@ namespace JocysCom.TextToSpeech.Monitor
 			return Description;
 		}
 
+		public void SetCulture(CultureInfo culture)
+		{
+			// Set culture properties.
+			CultureLCID = culture.LCID;
+			CultureName = culture.Name;
+			Language = culture.TwoLetterISOLanguageName;
+		}
+
 		public InstalledVoiceEx(Amazon.Polly.Model.Voice voice)
 		{
 			Voice = voice;
 			Source = VoiceSource.Amazon;
 			// Set culture properties.
-			var culture = new System.Globalization.CultureInfo(voice.LanguageCode, false);
-			CultureLCID = culture.LCID;
-			CultureName = culture.Name;
-			Language = culture.TwoLetterISOLanguageName;
+			var culture = new CultureInfo(voice.LanguageCode);
+			SetCulture(culture);
 			// Set voice properties.
 			Name = voice.Name;
 			Age = VoiceAge.NotSet;
@@ -85,11 +89,16 @@ namespace JocysCom.TextToSpeech.Monitor
 		public int Neutral { get { return _Neutral; } set { _Neutral = value; OnPropertyChanged(); } }
 
 		[XmlIgnore]
-		public object Voice { get { return _Voice; } set { _Voice = value; } }
-		object _Voice;
+		public object Voice { get; set; }
+
+		/// <summary>Used to pick fastest server.</summary>
+		[XmlIgnore]
+		public TimeSpan SourceRequestSpeed { get; set; }
 
 		public VoiceSource Source { get { return _Source; } set { _Source = value; OnPropertyChanged(); } }
 		VoiceSource _Source;
+
+		public string SourceKeys { get; set; }
 
 		public VoiceGender Gender { get; set; }
 		public string Name { get; set; }

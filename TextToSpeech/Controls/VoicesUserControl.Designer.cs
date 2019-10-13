@@ -7,19 +7,6 @@
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		/// <summary> 
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		#region Component Designer generated code
 
 		/// <summary> 
@@ -42,11 +29,6 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.VoicesDataGridView = new System.Windows.Forms.DataGridView();
-			this.VoicesToolStrip = new System.Windows.Forms.ToolStrip();
-			this.AddLocalVoicesButton = new System.Windows.Forms.ToolStripButton();
-			this.AddAmazonNeuralVoicesButton = new System.Windows.Forms.ToolStripButton();
-			this.AddAmazonStandardVoicesButton = new System.Windows.Forms.ToolStripButton();
-			this.RemoveButton = new System.Windows.Forms.ToolStripButton();
 			this.EnabledColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.MaleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.FemaleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,8 +40,16 @@
 			this.LanguageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.AgeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.DescriptionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.VoicesToolStrip = new System.Windows.Forms.ToolStrip();
+			this.AddLocalVoicesButton = new System.Windows.Forms.ToolStripButton();
+			this.AddAmazonNeuralVoicesButton = new System.Windows.Forms.ToolStripButton();
+			this.AddAmazonStandardVoicesButton = new System.Windows.Forms.ToolStripButton();
+			this.RemoveButton = new System.Windows.Forms.ToolStripButton();
+			this.StatusPanel = new System.Windows.Forms.Panel();
+			this.StatusLabel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).BeginInit();
 			this.VoicesToolStrip.SuspendLayout();
+			this.StatusPanel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// VoicesDataGridView
@@ -119,61 +109,11 @@
 			this.VoicesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
 			this.VoicesDataGridView.RowHeadersVisible = false;
 			this.VoicesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.VoicesDataGridView.Size = new System.Drawing.Size(742, 201);
+			this.VoicesDataGridView.Size = new System.Drawing.Size(742, 186);
 			this.VoicesDataGridView.TabIndex = 1;
 			this.VoicesDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.VoicesDataGridView_CellClick);
 			this.VoicesDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.VoicesDataGridView_CellFormatting);
 			this.VoicesDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.VoicesDataGridView_DataError);
-			// 
-			// VoicesToolStrip
-			// 
-			this.VoicesToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.VoicesToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AddLocalVoicesButton,
-            this.AddAmazonNeuralVoicesButton,
-            this.AddAmazonStandardVoicesButton,
-            this.RemoveButton});
-			this.VoicesToolStrip.Location = new System.Drawing.Point(0, 0);
-			this.VoicesToolStrip.Name = "VoicesToolStrip";
-			this.VoicesToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.VoicesToolStrip.Size = new System.Drawing.Size(742, 25);
-			this.VoicesToolStrip.TabIndex = 4;
-			// 
-			// AddLocalVoicesButton
-			// 
-			this.AddLocalVoicesButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Local_Add_16x16;
-			this.AddLocalVoicesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.AddLocalVoicesButton.Name = "AddLocalVoicesButton";
-			this.AddLocalVoicesButton.Size = new System.Drawing.Size(125, 22);
-			this.AddLocalVoicesButton.Text = "Add Local Voices...";
-			this.AddLocalVoicesButton.Click += new System.EventHandler(this.AddLocalVoicesButton_Click);
-			// 
-			// AddAmazonNeuralVoicesButton
-			// 
-			this.AddAmazonNeuralVoicesButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Amazon_Add_Neural_16x16;
-			this.AddAmazonNeuralVoicesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.AddAmazonNeuralVoicesButton.Name = "AddAmazonNeuralVoicesButton";
-			this.AddAmazonNeuralVoicesButton.Size = new System.Drawing.Size(179, 22);
-			this.AddAmazonNeuralVoicesButton.Text = "Add Amazon Neural Voices...";
-			this.AddAmazonNeuralVoicesButton.Click += new System.EventHandler(this.AddAmazonNeuralVoicesButton_Click);
-			// 
-			// AddAmazonStandardVoicesButton
-			// 
-			this.AddAmazonStandardVoicesButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Amazon_Add_Standard_16x16;
-			this.AddAmazonStandardVoicesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.AddAmazonStandardVoicesButton.Name = "AddAmazonStandardVoicesButton";
-			this.AddAmazonStandardVoicesButton.Size = new System.Drawing.Size(191, 22);
-			this.AddAmazonStandardVoicesButton.Text = "Add Amazon Standard Voices...";
-			this.AddAmazonStandardVoicesButton.Click += new System.EventHandler(this.AddAmazonStandardVoicesButton_Click);
-			// 
-			// RemoveButton
-			// 
-			this.RemoveButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.RemoveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Remove_16x16;
-			this.RemoveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.RemoveButton.Name = "RemoveButton";
-			this.RemoveButton.Size = new System.Drawing.Size(70, 22);
-			this.RemoveButton.Text = "Remove";
 			// 
 			// EnabledColumn
 			// 
@@ -298,7 +238,6 @@
 			this.LanguageColumn.ReadOnly = true;
 			this.LanguageColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.LanguageColumn.Visible = false;
-			this.LanguageColumn.Width = 63;
 			// 
 			// AgeColumn
 			// 
@@ -324,17 +263,90 @@
 			this.DescriptionColumn.ReadOnly = true;
 			this.DescriptionColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
+			// VoicesToolStrip
+			// 
+			this.VoicesToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.VoicesToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddLocalVoicesButton,
+            this.AddAmazonNeuralVoicesButton,
+            this.AddAmazonStandardVoicesButton,
+            this.RemoveButton});
+			this.VoicesToolStrip.Location = new System.Drawing.Point(0, 0);
+			this.VoicesToolStrip.Name = "VoicesToolStrip";
+			this.VoicesToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.VoicesToolStrip.Size = new System.Drawing.Size(742, 25);
+			this.VoicesToolStrip.TabIndex = 4;
+			// 
+			// AddLocalVoicesButton
+			// 
+			this.AddLocalVoicesButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Local_Add_16x16;
+			this.AddLocalVoicesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.AddLocalVoicesButton.Name = "AddLocalVoicesButton";
+			this.AddLocalVoicesButton.Size = new System.Drawing.Size(125, 22);
+			this.AddLocalVoicesButton.Text = "Add Local Voices...";
+			this.AddLocalVoicesButton.Click += new System.EventHandler(this.AddLocalVoicesButton_Click);
+			// 
+			// AddAmazonNeuralVoicesButton
+			// 
+			this.AddAmazonNeuralVoicesButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Amazon_Add_Neural_16x16;
+			this.AddAmazonNeuralVoicesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.AddAmazonNeuralVoicesButton.Name = "AddAmazonNeuralVoicesButton";
+			this.AddAmazonNeuralVoicesButton.Size = new System.Drawing.Size(179, 22);
+			this.AddAmazonNeuralVoicesButton.Text = "Add Amazon Neural Voices...";
+			this.AddAmazonNeuralVoicesButton.Click += new System.EventHandler(this.AddAmazonNeuralVoicesButton_Click);
+			// 
+			// AddAmazonStandardVoicesButton
+			// 
+			this.AddAmazonStandardVoicesButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Amazon_Add_Standard_16x16;
+			this.AddAmazonStandardVoicesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.AddAmazonStandardVoicesButton.Name = "AddAmazonStandardVoicesButton";
+			this.AddAmazonStandardVoicesButton.Size = new System.Drawing.Size(191, 22);
+			this.AddAmazonStandardVoicesButton.Text = "Add Amazon Standard Voices...";
+			this.AddAmazonStandardVoicesButton.Click += new System.EventHandler(this.AddAmazonStandardVoicesButton_Click);
+			// 
+			// RemoveButton
+			// 
+			this.RemoveButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.RemoveButton.Image = global::JocysCom.TextToSpeech.Monitor.Properties.Resources.Remove_16x16;
+			this.RemoveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.RemoveButton.Name = "RemoveButton";
+			this.RemoveButton.Size = new System.Drawing.Size(70, 22);
+			this.RemoveButton.Text = "Remove";
+			// 
+			// StatusPanel
+			// 
+			this.StatusPanel.AutoSize = true;
+			this.StatusPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.StatusPanel.Controls.Add(this.StatusLabel);
+			this.StatusPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.StatusPanel.Location = new System.Drawing.Point(0, 211);
+			this.StatusPanel.Name = "StatusPanel";
+			this.StatusPanel.Size = new System.Drawing.Size(742, 15);
+			this.StatusPanel.TabIndex = 5;
+			// 
+			// StatusLabel
+			// 
+			this.StatusLabel.AutoSize = true;
+			this.StatusLabel.Location = new System.Drawing.Point(3, 0);
+			this.StatusLabel.Name = "StatusLabel";
+			this.StatusLabel.Size = new System.Drawing.Size(70, 13);
+			this.StatusLabel.TabIndex = 0;
+			this.StatusLabel.Text = "Please wait...";
+			// 
 			// VoicesUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.VoicesDataGridView);
+			this.Controls.Add(this.StatusPanel);
 			this.Controls.Add(this.VoicesToolStrip);
 			this.Name = "VoicesUserControl";
 			this.Size = new System.Drawing.Size(742, 226);
 			((System.ComponentModel.ISupportInitialize)(this.VoicesDataGridView)).EndInit();
 			this.VoicesToolStrip.ResumeLayout(false);
 			this.VoicesToolStrip.PerformLayout();
+			this.StatusPanel.ResumeLayout(false);
+			this.StatusPanel.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -359,5 +371,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn LanguageColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn AgeColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn DescriptionColumn;
+		private System.Windows.Forms.Panel StatusPanel;
+		private System.Windows.Forms.Label StatusLabel;
 	}
 }

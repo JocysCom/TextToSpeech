@@ -47,21 +47,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		#endregion
 
-		public static List<InstalledVoiceEx> GetLocalVoices()
-		{
-			// Fill grid with voices.
-			// Create synthesizer which will be used to create WAV files from SSML XML.
-			var ssmlSynthesizer = new SpeechSynthesizer();
-			var voices = ssmlSynthesizer.GetInstalledVoices().OrderBy(x => x.VoiceInfo.Culture.Name).ThenBy(x => x.VoiceInfo.Gender).ThenBy(x => x.VoiceInfo.Name).ToArray();
-			var voicesEx = voices.Select(x => new InstalledVoiceEx(x.VoiceInfo)).ToList();
-			ssmlSynthesizer.Dispose();
-			return voicesEx;
-		}
-
 		public static void RefreshLocalVoicesGrid(BindingList<InstalledVoiceEx> list)
 		{
 			list.Clear();
-			var voicesEx = GetLocalVoices();
+			var voicesEx = Voices.VoiceHelper.GetLocalVoices();
 			LoadSettings(voicesEx);
 			foreach (var voiceEx in voicesEx) list.Add(voiceEx);
 		}
