@@ -31,22 +31,22 @@
 			this.OptionsTabControl = new System.Windows.Forms.TabControl();
 			this.GeneralTabPage = new System.Windows.Forms.TabPage();
 			this.CacheTabPage = new System.Windows.Forms.TabPage();
-			this.GoogleTTSTabPage = new System.Windows.Forms.TabPage();
-			this.AmazonPollyTabPage = new System.Windows.Forms.TabPage();
-			this.MicrosoftCortanaTabPage = new System.Windows.Forms.TabPage();
-			this.MonitorDispalyTabPage = new System.Windows.Forms.TabPage();
-			this.MonitorNetworkTabPage = new System.Windows.Forms.TabPage();
-			this.MonitorServerTabPage = new System.Windows.Forms.TabPage();
-			this.MonitorClipBoardTabPage = new System.Windows.Forms.TabPage();
-			this.TabsImageList = new System.Windows.Forms.ImageList(this.components);
 			this.CachePanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsCacheUserControl();
+			this.GoogleTTSTabPage = new System.Windows.Forms.TabPage();
 			this.GoogleCloudPanel = new JocysCom.TextToSpeech.Monitor.Google.GoogleTTSUserControl();
+			this.AmazonPollyTabPage = new System.Windows.Forms.TabPage();
 			this.AmazonPollyPanel = new JocysCom.TextToSpeech.Monitor.Controls.Options.AmazonPollyUserControl();
+			this.MicrosoftCortanaTabPage = new System.Windows.Forms.TabPage();
 			this.MicrosoftCortanaPanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsMicrosoftCortanaUserControl();
+			this.MonitorDispalyTabPage = new System.Windows.Forms.TabPage();
 			this.monitorDisplayUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.MonitorDisplayUserControl();
+			this.MonitorNetworkTabPage = new System.Windows.Forms.TabPage();
 			this.CapturingPanel = new JocysCom.TextToSpeech.Monitor.Controls.MonitorNetworkUserControl();
+			this.MonitorServerTabPage = new System.Windows.Forms.TabPage();
 			this.monitorUdpPortUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.MonitorServerUserControl();
+			this.MonitorClipBoardTabPage = new System.Windows.Forms.TabPage();
 			this.monitorClipboardUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.MonitorClipboardUserControl();
+			this.TabsImageList = new System.Windows.Forms.ImageList(this.components);
 			this.AddSilenceGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).BeginInit();
@@ -245,6 +245,14 @@
 			this.CacheTabPage.TabIndex = 1;
 			this.CacheTabPage.Text = "Cache";
 			// 
+			// CachePanel
+			// 
+			this.CachePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.CachePanel.Location = new System.Drawing.Point(3, 3);
+			this.CachePanel.Name = "CachePanel";
+			this.CachePanel.Size = new System.Drawing.Size(900, 334);
+			this.CachePanel.TabIndex = 0;
+			// 
 			// GoogleTTSTabPage
 			// 
 			this.GoogleTTSTabPage.BackColor = System.Drawing.SystemColors.Control;
@@ -255,6 +263,14 @@
 			this.GoogleTTSTabPage.Size = new System.Drawing.Size(906, 340);
 			this.GoogleTTSTabPage.TabIndex = 2;
 			this.GoogleTTSTabPage.Text = "Google TTS";
+			// 
+			// GoogleCloudPanel
+			// 
+			this.GoogleCloudPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.GoogleCloudPanel.Location = new System.Drawing.Point(0, 0);
+			this.GoogleCloudPanel.Name = "GoogleCloudPanel";
+			this.GoogleCloudPanel.Size = new System.Drawing.Size(906, 340);
+			this.GoogleCloudPanel.TabIndex = 0;
 			// 
 			// AmazonPollyTabPage
 			// 
@@ -267,6 +283,14 @@
 			this.AmazonPollyTabPage.TabIndex = 8;
 			this.AmazonPollyTabPage.Text = "Amazon Polly";
 			// 
+			// AmazonPollyPanel
+			// 
+			this.AmazonPollyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.AmazonPollyPanel.Location = new System.Drawing.Point(0, 0);
+			this.AmazonPollyPanel.Name = "AmazonPollyPanel";
+			this.AmazonPollyPanel.Size = new System.Drawing.Size(906, 340);
+			this.AmazonPollyPanel.TabIndex = 0;
+			// 
 			// MicrosoftCortanaTabPage
 			// 
 			this.MicrosoftCortanaTabPage.BackColor = System.Drawing.SystemColors.Control;
@@ -277,6 +301,14 @@
 			this.MicrosoftCortanaTabPage.Size = new System.Drawing.Size(906, 340);
 			this.MicrosoftCortanaTabPage.TabIndex = 3;
 			this.MicrosoftCortanaTabPage.Text = "Microsoft Cortana";
+			// 
+			// MicrosoftCortanaPanel
+			// 
+			this.MicrosoftCortanaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.MicrosoftCortanaPanel.Location = new System.Drawing.Point(0, 0);
+			this.MicrosoftCortanaPanel.Name = "MicrosoftCortanaPanel";
+			this.MicrosoftCortanaPanel.Size = new System.Drawing.Size(906, 340);
+			this.MicrosoftCortanaPanel.TabIndex = 0;
 			// 
 			// MonitorDispalyTabPage
 			// 
@@ -289,6 +321,14 @@
 			this.MonitorDispalyTabPage.TabIndex = 6;
 			this.MonitorDispalyTabPage.Text = "Monitor: Display";
 			// 
+			// monitorDisplayUserControl1
+			// 
+			this.monitorDisplayUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.monitorDisplayUserControl1.Location = new System.Drawing.Point(0, 0);
+			this.monitorDisplayUserControl1.Name = "monitorDisplayUserControl1";
+			this.monitorDisplayUserControl1.Size = new System.Drawing.Size(906, 340);
+			this.monitorDisplayUserControl1.TabIndex = 0;
+			// 
 			// MonitorNetworkTabPage
 			// 
 			this.MonitorNetworkTabPage.BackColor = System.Drawing.SystemColors.Control;
@@ -299,6 +339,15 @@
 			this.MonitorNetworkTabPage.Size = new System.Drawing.Size(906, 340);
 			this.MonitorNetworkTabPage.TabIndex = 4;
 			this.MonitorNetworkTabPage.Text = "Monitor: Network";
+			// 
+			// CapturingPanel
+			// 
+			this.CapturingPanel._CapturingType = JocysCom.TextToSpeech.Monitor.Capturing.CapturingType.SocPcap;
+			this.CapturingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.CapturingPanel.Location = new System.Drawing.Point(0, 0);
+			this.CapturingPanel.Name = "CapturingPanel";
+			this.CapturingPanel.Size = new System.Drawing.Size(906, 340);
+			this.CapturingPanel.TabIndex = 0;
 			// 
 			// MonitorServerTabPage
 			// 
@@ -311,6 +360,14 @@
 			this.MonitorServerTabPage.TabIndex = 5;
 			this.MonitorServerTabPage.Text = "Monitor: Server";
 			// 
+			// monitorUdpPortUserControl1
+			// 
+			this.monitorUdpPortUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.monitorUdpPortUserControl1.Location = new System.Drawing.Point(0, 0);
+			this.monitorUdpPortUserControl1.Name = "monitorUdpPortUserControl1";
+			this.monitorUdpPortUserControl1.Size = new System.Drawing.Size(906, 340);
+			this.monitorUdpPortUserControl1.TabIndex = 0;
+			// 
 			// MonitorClipBoardTabPage
 			// 
 			this.MonitorClipBoardTabPage.BackColor = System.Drawing.SystemColors.Control;
@@ -321,6 +378,14 @@
 			this.MonitorClipBoardTabPage.Size = new System.Drawing.Size(906, 340);
 			this.MonitorClipBoardTabPage.TabIndex = 7;
 			this.MonitorClipBoardTabPage.Text = "Monitor: Clipboard";
+			// 
+			// monitorClipboardUserControl1
+			// 
+			this.monitorClipboardUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.monitorClipboardUserControl1.Location = new System.Drawing.Point(0, 0);
+			this.monitorClipboardUserControl1.Name = "monitorClipboardUserControl1";
+			this.monitorClipboardUserControl1.Size = new System.Drawing.Size(906, 340);
+			this.monitorClipboardUserControl1.TabIndex = 0;
 			// 
 			// TabsImageList
 			// 
@@ -335,71 +400,6 @@
 			this.TabsImageList.Images.SetKeyName(6, "Options_Monitor_Network");
 			this.TabsImageList.Images.SetKeyName(7, "Options_Monitor_Server");
 			this.TabsImageList.Images.SetKeyName(8, "Options_Monitor_Clipboard");
-			// 
-			// CachePanel
-			// 
-			this.CachePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.CachePanel.Location = new System.Drawing.Point(3, 3);
-			this.CachePanel.Name = "CachePanel";
-			this.CachePanel.Size = new System.Drawing.Size(900, 334);
-			this.CachePanel.TabIndex = 0;
-			// 
-			// GoogleCloudPanel
-			// 
-			this.GoogleCloudPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.GoogleCloudPanel.Location = new System.Drawing.Point(0, 0);
-			this.GoogleCloudPanel.Name = "GoogleCloudPanel";
-			this.GoogleCloudPanel.Size = new System.Drawing.Size(906, 340);
-			this.GoogleCloudPanel.TabIndex = 0;
-			// 
-			// AmazonPollyPanel
-			// 
-			this.AmazonPollyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.AmazonPollyPanel.Location = new System.Drawing.Point(0, 0);
-			this.AmazonPollyPanel.Name = "AmazonPollyPanel";
-			this.AmazonPollyPanel.Size = new System.Drawing.Size(906, 340);
-			this.AmazonPollyPanel.TabIndex = 0;
-			// 
-			// MicrosoftCortanaPanel
-			// 
-			this.MicrosoftCortanaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.MicrosoftCortanaPanel.Location = new System.Drawing.Point(0, 0);
-			this.MicrosoftCortanaPanel.Name = "MicrosoftCortanaPanel";
-			this.MicrosoftCortanaPanel.Size = new System.Drawing.Size(906, 340);
-			this.MicrosoftCortanaPanel.TabIndex = 0;
-			// 
-			// monitorDisplayUserControl1
-			// 
-			this.monitorDisplayUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.monitorDisplayUserControl1.Location = new System.Drawing.Point(0, 0);
-			this.monitorDisplayUserControl1.Name = "monitorDisplayUserControl1";
-			this.monitorDisplayUserControl1.Size = new System.Drawing.Size(906, 340);
-			this.monitorDisplayUserControl1.TabIndex = 0;
-			// 
-			// CapturingPanel
-			// 
-			this.CapturingPanel._CapturingType = JocysCom.TextToSpeech.Monitor.Capturing.CapturingType.SocPcap;
-			this.CapturingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.CapturingPanel.Location = new System.Drawing.Point(0, 0);
-			this.CapturingPanel.Name = "CapturingPanel";
-			this.CapturingPanel.Size = new System.Drawing.Size(906, 340);
-			this.CapturingPanel.TabIndex = 0;
-			// 
-			// monitorUdpPortUserControl1
-			// 
-			this.monitorUdpPortUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.monitorUdpPortUserControl1.Location = new System.Drawing.Point(0, 0);
-			this.monitorUdpPortUserControl1.Name = "monitorUdpPortUserControl1";
-			this.monitorUdpPortUserControl1.Size = new System.Drawing.Size(906, 340);
-			this.monitorUdpPortUserControl1.TabIndex = 0;
-			// 
-			// monitorClipboardUserControl1
-			// 
-			this.monitorClipboardUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.monitorClipboardUserControl1.Location = new System.Drawing.Point(0, 0);
-			this.monitorClipboardUserControl1.Name = "monitorClipboardUserControl1";
-			this.monitorClipboardUserControl1.Size = new System.Drawing.Size(906, 340);
-			this.monitorClipboardUserControl1.TabIndex = 0;
 			// 
 			// OptionsControl
 			// 
@@ -439,7 +439,6 @@
 		private System.Windows.Forms.Button RefreshPlaybackDevices;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TabControl OptionsTabControl;
 		private System.Windows.Forms.TabPage GeneralTabPage;
 		private System.Windows.Forms.TabPage CacheTabPage;
 		private System.Windows.Forms.TabPage GoogleTTSTabPage;
@@ -456,7 +455,8 @@
 		private System.Windows.Forms.TabPage MonitorClipBoardTabPage;
 		private MonitorClipboardUserControl monitorClipboardUserControl1;
 		private System.Windows.Forms.ImageList TabsImageList;
-		private System.Windows.Forms.TabPage AmazonPollyTabPage;
 		private Options.AmazonPollyUserControl AmazonPollyPanel;
+		public System.Windows.Forms.TabControl OptionsTabControl;
+		public System.Windows.Forms.TabPage AmazonPollyTabPage;
 	}
 }

@@ -180,12 +180,40 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void AddAmazonNeuralVoicesButton_Click(object sender, System.EventArgs e)
 		{
-			AddVoices("Amazon Neural Voices", Global.AmazonNeuralVoices);
+			if (IsAmazonConfigurationValid())
+				AddVoices("Amazon Neural Voices", Global.AmazonNeuralVoices);
 		}
 
 		private void AddAmazonStandardVoicesButton_Click(object sender, System.EventArgs e)
 		{
-			AddVoices("Amazon Standard Voices", Global.AmazonStandardVoices);
+			if (IsAmazonConfigurationValid())
+				AddVoices("Amazon Standard Voices", Global.AmazonStandardVoices);
+		}
+
+		bool IsAmazonConfigurationValid()
+		{
+			var isValid =
+				!string.IsNullOrEmpty(SettingsManager.Options.AmazonAccessKey) &&
+				!string.IsNullOrEmpty(SettingsManager.Options.AmazonSecretKey);
+			if (!isValid)
+			{
+				var message = "";
+				message += "Amazon \"Access key\" and \"Secret Key\" is nto set.\r\n";
+				message += "Would you like to go to [Options] and configure [Amazon Polly] settings?";
+				var form = new MessageBoxForm();
+				form.StartPosition = FormStartPosition.CenterParent;
+				var result = form.ShowForm(message, "Amazon Polly Options", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+				if (result == DialogResult.Yes)
+				{
+					ControlsHelper.BeginInvoke(() =>
+					{
+						Program.TopForm.OptionsPanel.OptionsTabControl.SelectedTab = Program.TopForm.OptionsPanel.AmazonPollyTabPage;
+						Program.TopForm.MessagesTabControl.SelectedTab = Program.TopForm.OptionsTabPage;
+					});
+				}
+				form.Dispose();
+			}
+			return isValid;
 		}
 
 		// Used from AddVoicesForm only.
@@ -415,6 +443,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 					list.Remove(item);
 				}
 			}
+			form.Dispose();
 		}
 	}
 }
