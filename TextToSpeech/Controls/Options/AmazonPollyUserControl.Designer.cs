@@ -39,18 +39,17 @@
 			this.Help2Label = new System.Windows.Forms.Label();
 			this.AwsLinkLabel = new System.Windows.Forms.LinkLabel();
 			this.ServiceGroupBox = new System.Windows.Forms.GroupBox();
-			this.AmazonEnabledCheckBox = new System.Windows.Forms.CheckBox();
-			this.RegionComboBox = new System.Windows.Forms.ComboBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
+			this.StatusTextBox = new System.Windows.Forms.TextBox();
 			this.SpeakButton = new System.Windows.Forms.Button();
+			this.RegionComboBox = new System.Windows.Forms.ComboBox();
 			this.RefreshVoicesButton = new System.Windows.Forms.Button();
-			this.VoicesComboBox = new System.Windows.Forms.ComboBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
 			this.MessageLabel = new System.Windows.Forms.Label();
+			this.VoicesComboBox = new System.Windows.Forms.ComboBox();
 			this.MessageTextBox = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.StatusTextBox = new System.Windows.Forms.TextBox();
-			this.label3 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.SecurityGroupBox.SuspendLayout();
 			this.HelpGroupBox.SuspendLayout();
 			this.ServiceGroupBox.SuspendLayout();
@@ -157,7 +156,6 @@
 			this.ServiceGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ServiceGroupBox.Controls.Add(this.StatusTextBox);
-			this.ServiceGroupBox.Controls.Add(this.AmazonEnabledCheckBox);
 			this.ServiceGroupBox.Controls.Add(this.SpeakButton);
 			this.ServiceGroupBox.Controls.Add(this.RegionComboBox);
 			this.ServiceGroupBox.Controls.Add(this.RefreshVoicesButton);
@@ -169,20 +167,31 @@
 			this.ServiceGroupBox.Controls.Add(this.label4);
 			this.ServiceGroupBox.Location = new System.Drawing.Point(3, 84);
 			this.ServiceGroupBox.Name = "ServiceGroupBox";
-			this.ServiceGroupBox.Size = new System.Drawing.Size(381, 147);
+			this.ServiceGroupBox.Size = new System.Drawing.Size(381, 129);
 			this.ServiceGroupBox.TabIndex = 17;
 			this.ServiceGroupBox.TabStop = false;
 			this.ServiceGroupBox.Text = "Service";
 			// 
-			// AmazonEnabledCheckBox
+			// StatusTextBox
 			// 
-			this.AmazonEnabledCheckBox.AutoSize = true;
-			this.AmazonEnabledCheckBox.Location = new System.Drawing.Point(71, 19);
-			this.AmazonEnabledCheckBox.Name = "AmazonEnabledCheckBox";
-			this.AmazonEnabledCheckBox.Size = new System.Drawing.Size(160, 17);
-			this.AmazonEnabledCheckBox.TabIndex = 18;
-			this.AmazonEnabledCheckBox.Text = "Enable Amazon Polly Voices";
-			this.AmazonEnabledCheckBox.UseVisualStyleBackColor = true;
+			this.StatusTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.StatusTextBox.Location = new System.Drawing.Point(71, 99);
+			this.StatusTextBox.Name = "StatusTextBox";
+			this.StatusTextBox.ReadOnly = true;
+			this.StatusTextBox.Size = new System.Drawing.Size(304, 20);
+			this.StatusTextBox.TabIndex = 19;
+			// 
+			// SpeakButton
+			// 
+			this.SpeakButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.SpeakButton.Location = new System.Drawing.Point(300, 71);
+			this.SpeakButton.Name = "SpeakButton";
+			this.SpeakButton.Size = new System.Drawing.Size(75, 23);
+			this.SpeakButton.TabIndex = 18;
+			this.SpeakButton.Text = "Speak";
+			this.SpeakButton.UseVisualStyleBackColor = true;
+			this.SpeakButton.Click += new System.EventHandler(this.SpeakButton_Click);
 			// 
 			// RegionComboBox
 			// 
@@ -190,19 +199,78 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.RegionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.RegionComboBox.FormattingEnabled = true;
-			this.RegionComboBox.Location = new System.Drawing.Point(71, 42);
+			this.RegionComboBox.Location = new System.Drawing.Point(71, 19);
 			this.RegionComboBox.Name = "RegionComboBox";
 			this.RegionComboBox.Size = new System.Drawing.Size(304, 21);
 			this.RegionComboBox.TabIndex = 17;
 			// 
+			// RefreshVoicesButton
+			// 
+			this.RefreshVoicesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.RefreshVoicesButton.Location = new System.Drawing.Point(300, 44);
+			this.RefreshVoicesButton.Name = "RefreshVoicesButton";
+			this.RefreshVoicesButton.Size = new System.Drawing.Size(75, 23);
+			this.RefreshVoicesButton.TabIndex = 18;
+			this.RefreshVoicesButton.Text = "Refresh";
+			this.RefreshVoicesButton.UseVisualStyleBackColor = true;
+			this.RefreshVoicesButton.Click += new System.EventHandler(this.RefreshVoicesButton_Click);
+			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(6, 45);
+			this.label2.Location = new System.Drawing.Point(6, 22);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(41, 13);
 			this.label2.TabIndex = 16;
 			this.label2.Text = "Region";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(8, 102);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(37, 13);
+			this.label3.TabIndex = 15;
+			this.label3.Text = "Status";
+			// 
+			// MessageLabel
+			// 
+			this.MessageLabel.AutoSize = true;
+			this.MessageLabel.Location = new System.Drawing.Point(8, 76);
+			this.MessageLabel.Name = "MessageLabel";
+			this.MessageLabel.Size = new System.Drawing.Size(50, 13);
+			this.MessageLabel.TabIndex = 15;
+			this.MessageLabel.Text = "Message";
+			// 
+			// VoicesComboBox
+			// 
+			this.VoicesComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.VoicesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.VoicesComboBox.FormattingEnabled = true;
+			this.VoicesComboBox.Location = new System.Drawing.Point(71, 46);
+			this.VoicesComboBox.Name = "VoicesComboBox";
+			this.VoicesComboBox.Size = new System.Drawing.Size(223, 21);
+			this.VoicesComboBox.TabIndex = 17;
+			// 
+			// MessageTextBox
+			// 
+			this.MessageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.MessageTextBox.Location = new System.Drawing.Point(71, 73);
+			this.MessageTextBox.Name = "MessageTextBox";
+			this.MessageTextBox.Size = new System.Drawing.Size(223, 20);
+			this.MessageTextBox.TabIndex = 13;
+			this.MessageTextBox.Text = "Hello world! Test Text to speech.";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(8, 49);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(39, 13);
+			this.label4.TabIndex = 16;
+			this.label4.Text = "Voices";
 			// 
 			// label1
 			// 
@@ -213,86 +281,6 @@
 			this.label1.TabIndex = 20;
 			this.label1.Text = "Neural voices are supported in the following Regions:\r\nUS East (N. Virginia): us-" +
     "east-1\r\nUS West (Oregon): us-west-2\r\nEU (Ireland): eu-west-1";
-			// 
-			// SpeakButton
-			// 
-			this.SpeakButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.SpeakButton.Location = new System.Drawing.Point(300, 94);
-			this.SpeakButton.Name = "SpeakButton";
-			this.SpeakButton.Size = new System.Drawing.Size(75, 23);
-			this.SpeakButton.TabIndex = 18;
-			this.SpeakButton.Text = "Speak";
-			this.SpeakButton.UseVisualStyleBackColor = true;
-			this.SpeakButton.Click += new System.EventHandler(this.SpeakButton_Click);
-			// 
-			// RefreshVoicesButton
-			// 
-			this.RefreshVoicesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.RefreshVoicesButton.Location = new System.Drawing.Point(300, 67);
-			this.RefreshVoicesButton.Name = "RefreshVoicesButton";
-			this.RefreshVoicesButton.Size = new System.Drawing.Size(75, 23);
-			this.RefreshVoicesButton.TabIndex = 18;
-			this.RefreshVoicesButton.Text = "Refresh";
-			this.RefreshVoicesButton.UseVisualStyleBackColor = true;
-			this.RefreshVoicesButton.Click += new System.EventHandler(this.RefreshVoicesButton_Click);
-			// 
-			// VoicesComboBox
-			// 
-			this.VoicesComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.VoicesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.VoicesComboBox.FormattingEnabled = true;
-			this.VoicesComboBox.Location = new System.Drawing.Point(71, 69);
-			this.VoicesComboBox.Name = "VoicesComboBox";
-			this.VoicesComboBox.Size = new System.Drawing.Size(223, 21);
-			this.VoicesComboBox.TabIndex = 17;
-			// 
-			// MessageLabel
-			// 
-			this.MessageLabel.AutoSize = true;
-			this.MessageLabel.Location = new System.Drawing.Point(8, 99);
-			this.MessageLabel.Name = "MessageLabel";
-			this.MessageLabel.Size = new System.Drawing.Size(50, 13);
-			this.MessageLabel.TabIndex = 15;
-			this.MessageLabel.Text = "Message";
-			// 
-			// MessageTextBox
-			// 
-			this.MessageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.MessageTextBox.Location = new System.Drawing.Point(71, 96);
-			this.MessageTextBox.Name = "MessageTextBox";
-			this.MessageTextBox.Size = new System.Drawing.Size(223, 20);
-			this.MessageTextBox.TabIndex = 13;
-			this.MessageTextBox.Text = "Hello world! Test Text to speech.";
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(8, 72);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(39, 13);
-			this.label4.TabIndex = 16;
-			this.label4.Text = "Voices";
-			// 
-			// StatusTextBox
-			// 
-			this.StatusTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.StatusTextBox.Location = new System.Drawing.Point(71, 122);
-			this.StatusTextBox.Name = "StatusTextBox";
-			this.StatusTextBox.ReadOnly = true;
-			this.StatusTextBox.Size = new System.Drawing.Size(304, 20);
-			this.StatusTextBox.TabIndex = 19;
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(8, 125);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(37, 13);
-			this.label3.TabIndex = 15;
-			this.label3.Text = "Status";
 			// 
 			// AmazonPollyUserControl
 			// 
@@ -328,7 +316,6 @@
 		private System.Windows.Forms.GroupBox ServiceGroupBox;
 		private System.Windows.Forms.ComboBox RegionComboBox;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.CheckBox AmazonEnabledCheckBox;
 		private System.Windows.Forms.Button RefreshVoicesButton;
 		private System.Windows.Forms.ComboBox VoicesComboBox;
 		private System.Windows.Forms.Label MessageLabel;
