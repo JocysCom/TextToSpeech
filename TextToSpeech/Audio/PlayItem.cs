@@ -63,6 +63,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public string PlayerNameChanged { get; set; }
 		public string PlayerClass { get; set; }
 
+		public string VoiceSorceKeys { get; set; }
+
 		/// <summary>
 		/// Generic means with player name and class replaced so it will be usable for all names and classes.
 		/// </summary>

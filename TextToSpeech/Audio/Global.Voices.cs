@@ -129,7 +129,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			if (newVoices.Count > 0)
 			{
 				// reorder list 
-				var newOrder = toVoices.OrderBy(x => x.CultureName).ThenBy(x => x.Name).ThenBy(x=>x.Gender).ToArray();
+				var newOrder = toVoices.OrderBy(x => x.CultureName).ThenBy(x => x.Name).ThenBy(x => x.Gender).ToArray();
 				toVoices.Clear();
 				foreach (var item in newOrder)
 					toVoices.Add(item);
@@ -176,6 +176,58 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		static string GetXmlText(string text, InstalledVoiceEx vi, int volume, int pitch, int rate, bool isComment)
 		{
 			string xml;
+			if (vi.Source == VoiceSource.Amazon)
+				xml = GetSsmlXml(text, vi, volume, pitch, rate, isComment);
+			else
+				xml = GetSapiXml(text, vi, volume, pitch, rate, isComment);
+			return xml;
+		}
+
+
+		static string GetSsmlXml(string text, InstalledVoiceEx vi, int volume, int pitch, int rate, bool isComment)
+		{
+			// https://docs.aws.amazon.com/polly/latest/dg/supportedtags.html
+			// <speak>
+			//     <amazon:breath duration="long" volume="x-loud"/> <prosody rate="120%"> <prosody volume="loud"> 
+			//     Wow! <amazon:breath duration="long" volume="loud"/> </prosody> That was quite fast <amazon:breath 
+			//     duration="medium" volume="x-loud"/>. I almost beat my personal best time on this track. </prosody>
+			// </speak>;
+			string xml;
+			string name = vi.Name;
+			var sw = new StringWriter();
+			var w = new XmlTextWriter(sw);
+			w.Formatting = Formatting.Indented;
+			w.WriteStartElement("speak");
+			//if (string.IsNullOrEmpty(language) || vi.CultureLCID.ToString("X3") != language)
+			//{
+			//	w.WriteAttributeString("required", "name=" + name);
+			//}
+			//else
+			//{
+			//	w.WriteAttributeString("required", "name=" + name + ";language=" + language); //+ vi.CultureLCID.ToString("X3"));
+			//}
+			//w.WriteStartElement("volume");
+			//w.WriteAttributeString("level", volume.ToString());
+			//w.WriteStartElement("rate");
+			//w.WriteAttributeString("absspeed", rate.ToString());
+			//w.WriteStartElement("pitch");
+			//w.WriteAttributeString("absmiddle", (isComment ? _PitchComment : pitch).ToString());
+			// Replace acronyms with full values.
+			text = SettingsManager.Current.ReplaceAcronyms(text);
+			w.WriteRaw(text);
+			//w.WriteEndElement();
+			//w.WriteEndElement();
+			//w.WriteEndElement();
+			w.WriteEndElement();
+			xml = sw.ToString();
+			w.Close();
+			return xml;
+		}
+
+
+		static string GetSapiXml(string text, InstalledVoiceEx vi, int volume, int pitch, int rate, bool isComment)
+		{
+			string xml;
 			string name = vi.Name;
 			var sw = new StringWriter();
 			var w = new XmlTextWriter(sw);
@@ -207,6 +259,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			return xml;
 		}
 
+
+
 		// Demonstrates SetText, ContainsText, and GetText. 
 		public static string SwapClipboardHtmlText(string replacementHtmlText)
 		{
@@ -228,7 +282,9 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			// Optional propertied for player character
 			string playerName = null,
 			string playerNameChanged = null,
-			string playerClass = null
+			string playerClass = null,
+			// Keys which will be used to which voice source (Local, Amazon or Google).
+			string voiceSourceKeys = null
 		)
 		{
 			// It will take too long to convert large amount of text to WAV data and apply all filters.
@@ -264,6 +320,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 						Status = JobStatusType.Parsed,
 						IsComment = comment,
 						Group = voiceGroup,
+						VoiceSorceKeys = voiceSourceKeys,
 					};
 					item.Text = sentence;
 					if (SettingsManager.Options.CacheDataGeneralize)
@@ -286,6 +343,67 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var vol = (int)(((decimal)volume / 100m) * (decimal)SettingsManager.Options.Volume);
 			return GetXmlText(text, vi, vol, _Pitch, _Rate, isComment);
 		}
+
+		/// <summary>
+		/// Convert xml to WAV bytes. WAV won't have the header, so you have to add it separatelly.
+		/// </summary>
+		static byte[] ConvertSapiXmlToWav(string voiceSourceKeys, string xml, int sampleRate, int bitsPerSample, int channelCount)
+		{
+			// Default is local.
+			var vs = VoiceSource.Local;
+			var query = System.Web.HttpUtility.ParseQueryString(voiceSourceKeys ?? "");
+			if (!string.IsNullOrEmpty(voiceSourceKeys))
+			{
+				if (!Enum.TryParse(query[InstalledVoiceEx._KeySource], out vs))
+					vs = VoiceSource.Local;
+			}
+			byte[] wavBytes;
+			if (vs == VoiceSource.Amazon)
+			{
+				var client = new Voices.AmazonPolly(
+						SettingsManager.Options.AmazonAccessKey,
+						SettingsManager.Options.AmazonSecretKey,
+						query[InstalledVoiceEx._KeyRegion]
+					);
+				Amazon.Polly.VoiceId voiceId = query[InstalledVoiceEx._KeyVoiceId];
+				Amazon.Polly.Engine engine = query[InstalledVoiceEx._KeyEngine];
+				var mp3Bytes = client.SynthesizeSpeech(voiceId, xml, Amazon.Polly.OutputFormat.Mp3, engine);
+				var pi = ConvertMp3ToPlatItem(mp3Bytes);
+				wavBytes = pi.WavData;
+			}
+			else
+			{
+				wavBytes = ConvertSapiXmlToWav(xml, sampleRate, bitsPerSample, channelCount);
+			}
+			return wavBytes;
+		}
+
+
+		public static PlayItem ConvertMp3ToPlatItem(byte[] mp3)
+		{
+			var item = new PlayItem();
+			using (Stream stream = new MemoryStream(mp3))
+			{
+				// Load existing XML and WAV data into PlayItem.
+				var ms = new MemoryStream();
+				var ad = new SharpDX.MediaFoundation.AudioDecoder(stream);
+				var samples = ad.GetSamples();
+				var enumerator = samples.GetEnumerator();
+				while (enumerator.MoveNext())
+				{
+					var sample = enumerator.Current.ToArray();
+					ms.Write(sample, 0, sample.Length);
+				}
+				// Read WAV head.
+				item.WavHead = ad.WaveFormat;
+				// Read WAV data.
+				item.WavData = ms.ToArray();
+				item.Duration = (int)ad.Duration.TotalMilliseconds;
+			}
+			item.Status = JobStatusType.Synthesized;
+			return item;
+		}
+
 
 		/// <summary>
 		/// Convert xml to WAV bytes. WAV won't have the header, so you have to add it separatelly.
@@ -335,7 +453,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			bytes = (byte[])(object)spStream.GetData();
 			return bytes;
 		}
-
 
 		/// <summary>
 		/// Thread which will process all play items and convert XML to WAV bytes.
@@ -436,7 +553,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 							var bitsPerSample = SettingsManager.Options.AudioBitsPerSample;
 							int sampleRate = SettingsManager.Options.AudioSampleRate;
 							int channelCount = (int)SettingsManager.Options.AudioChannels;
-							item.WavData = ConvertSapiXmlToWav(item.Xml, sampleRate, bitsPerSample, channelCount);
+							item.WavData = ConvertSapiXmlToWav(item.VoiceSorceKeys, item.Xml, sampleRate, bitsPerSample, channelCount);
 							item.WavHead = new SharpDX.Multimedia.WaveFormat(sampleRate, bitsPerSample, channelCount);
 							item.Duration = AudioHelper.GetDuration(item.WavData.Length, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
 							if (SettingsManager.Options.CacheDataWrite && item.WavData != null)
@@ -517,7 +634,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		}
 
 		// Set voice.
-		static void SelectVoice(string name, string language, MessageGender gender)
+		static InstalledVoiceEx SelectVoice(string name, string language, MessageGender gender)
 		{
 			// Get only enabled voices.
 			var data = InstalledVoices.Where(x => x.Enabled).ToArray();
@@ -565,12 +682,13 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			}
 			// If nothing to choose from then...
 			if (choice.Length == 0)
-				return;
+				return null;
 			// Generate number for selecting voice.
 			var number = MainHelper.GetNumber(0, choice.Length - 1, "name", name);
 			voice = choice[number];
 			if (SelectedVoice != voice)
 				OnEvent(VoiceChanged, voice);
+			return voice;
 		}
 
 		public static CancellationTokenSource token;

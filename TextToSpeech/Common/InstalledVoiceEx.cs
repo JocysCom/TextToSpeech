@@ -15,8 +15,14 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 		}
 
-		[NonSerialized]
-		public const int MaxVoice = 100;
+		[NonSerialized] public const int MaxVoice = 100;
+
+		// Amazon Source Keys.
+		[NonSerialized] public const string _KeySource = "Source";
+		[NonSerialized] public const string _KeyRegion = "Region";
+		[NonSerialized] public const string _KeyCulture = "Culture";
+		[NonSerialized] public const string _KeyEngine = "Engine";
+		[NonSerialized] public const string _KeyVoiceId = "VoiceId";
 
 		public InstalledVoiceEx(VoiceInfo voice)
 		{
@@ -52,7 +58,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			Language = culture.TwoLetterISOLanguageName;
 		}
 
-		public bool IsSameVoice(InstalledVoiceEx voice) {
+		public bool IsSameVoice(InstalledVoiceEx voice)
+		{
 			return
 				Source == voice.Source &&
 				CultureName == voice.CultureName &&

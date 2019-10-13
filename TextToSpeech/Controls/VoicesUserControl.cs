@@ -309,11 +309,15 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 							vx.SetCulture(c);
 							vx.SourceRequestSpeed = elapsed;
 							var keys = System.Web.HttpUtility.ParseQueryString("");
-							keys.Add("source", vx.Source.ToString());
-							keys.Add("region", reg.SystemName);
-							keys.Add("culture", cultureName);
-							keys.Add("engine", engineName);
+							keys.Add(InstalledVoiceEx._KeySource, vx.Source.ToString());
+							keys.Add(InstalledVoiceEx._KeyRegion, reg.SystemName);
+							keys.Add(InstalledVoiceEx._KeyCulture, cultureName);
+							keys.Add(InstalledVoiceEx._KeyEngine, engineName);
+							keys.Add(InstalledVoiceEx._KeyVoiceId, voice.Id);
 							vx.SourceKeys = keys.ToString();
+							// Override Description.
+							vx.Description = string.Format("{0}, {1}, {2}, {3}",
+								vx.Source, reg.DisplayName, cultureName, engineName);
 							// Add voice.
 							list.Add(vx);
 							vex++;

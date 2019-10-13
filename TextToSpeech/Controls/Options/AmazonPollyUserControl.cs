@@ -97,36 +97,14 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 				SettingsManager.Options.AmazonRegionSystemName
 			);
 			var voice = (Voice)((InstalledVoiceEx)VoicesComboBox.SelectedItem).Voice;
-			var buffer = client.SynthesizeSpeech(voice, text);
+			Amazon.Polly.Engine engine = null;
+			if (voice.SupportedEngines.Contains(Amazon.Polly.Engine.Neural))
+				engine = Amazon.Polly.Engine.Neural;
+			var buffer = client.SynthesizeSpeech(voice.Id, text, null, engine);
 			var result = client.LastException == null ? "Success" : client.LastException.Message;
 			StatusTextBox.Text = string.Format("{0:HH:mm:ss}: {1}", DateTime.Now, result);
-			var item = ConvertToPlatItem(buffer);
+			var item = Global.ConvertMp3ToPlatItem(buffer);
 			Global.playlist.Add(item);
-		}
-
-		PlayItem ConvertToPlatItem(byte[] mp3)
-		{
-			var item = new PlayItem();
-			using (Stream stream = new MemoryStream(mp3))
-			{
-				// Load existing XML and WAV data into PlayItem.
-				var ms = new MemoryStream();
-				var ad = new SharpDX.MediaFoundation.AudioDecoder(stream);
-				var samples = ad.GetSamples();
-				var enumerator = samples.GetEnumerator();
-				while (enumerator.MoveNext())
-				{
-					var sample = enumerator.Current.ToArray();
-					ms.Write(sample, 0, sample.Length);
-				}
-				// Read WAV head.
-				item.WavHead = ad.WaveFormat;
-				// Read WAV data.
-				item.WavData = ms.ToArray();
-				item.Duration = (int)ad.Duration.TotalMilliseconds;
-			}
-			item.Status = JobStatusType.Synthesized;
-			return item;
 		}
 
 	}

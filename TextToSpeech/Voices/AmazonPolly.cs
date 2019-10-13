@@ -239,17 +239,18 @@ namespace JocysCom.TextToSpeech.Monitor.Voices
 		}
 
 
-		public byte[] SynthesizeSpeech(Voice voice, string text, OutputFormat format = null)
+		public byte[] SynthesizeSpeech(VoiceId voiceId, string text, OutputFormat format = null, Engine engine = null)
 		{
 			if (format == null)
 				format = OutputFormat.Mp3;
 			var request = new SynthesizeSpeechRequest();
 			request.OutputFormat = format;
-			request.VoiceId = voice.Id;
+			request.VoiceId = voiceId;
 			// Prefer neural voices.
-			if (voice.SupportedEngines.Contains(Engine.Neural))
-				request.Engine = Engine.Neural;
+			if (engine != null)
+				request.Engine = engine;
 			request.Text = text;
+			request.TextType = TextType.Ssml;
 			var ms = new MemoryStream();
 			var response = Client.SynthesizeSpeech(request);
 			var bufferSize = 2 * 1024;

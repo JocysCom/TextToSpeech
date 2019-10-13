@@ -75,7 +75,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					am.gender = amGender.ToString();
 
 					// Select voice. ----------------------------------------------------------------------------------------------------
-					SelectVoice(am.name, am.language, amGender);
+					var selectedVoice = SelectVoice(am.name, am.language, amGender);
 
 					// Set pitch.
 					var pitchIsValid = int.TryParse(am.pitch, out _Pitch);
@@ -148,7 +148,9 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 						// Supply NCP properties.
 						am.name, am.gender, am.effect, _volume,
 						// Supply Player properties.
-						_PlayerName, _PlayerNameChanged, _PlayerClass
+						_PlayerName, _PlayerNameChanged, _PlayerClass,
+						// Pass information required to pick corect synthesizer i.e. Local, Amazon or Google voice.
+						selectedVoice == null ? null : selectedVoice.SourceKeys
 					);
 					// Add silence after message.
 					var silenceIntAfter = (int)SettingsManager.Options.AddSilenceAfterMessage;
