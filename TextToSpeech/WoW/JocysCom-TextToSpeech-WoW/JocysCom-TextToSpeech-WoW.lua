@@ -370,13 +370,17 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 			nameIntro = JocysCom_NameQuestCheckButton:GetChecked()
 			soundIntro = JocysCom_SoundQuestCheckButton:GetChecked()
 	elseif event == "QUEST_LOG_UPDATE_JOCYS" then
-			-- local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isStory = GetQuestLogTitle()
+			-- local questDetailID = QuestMapFrame.DetailsFrame.questID
+			-- local questLogIndex = GetQuestLogIndexByID(questDetailID); -- --GetQuestLogIndexByID(QuestLogPopupDetailFrame.questID)
+			-- local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLogTitle(questLogIndex)
+			-- local questPortrait, questPortraitText, questPortraitName, questPortraitMount = GetQuestLogPortraitGiver()
 			local questDescription, questObjectives = GetQuestLogQuestText()
 			group = "Quest"
 			local title = JocysCom_TitlesCheckButton:GetChecked() and QuestInfoTitleHeader:GetText() or nil
 			speakMessage = nilCheck(title, ". ") .. nilCheck(questObjectives, ". ") .. nilCheck(QuestInfoDescriptionHeader:GetText(), ". ") .. questDescription
 			soundIntro = JocysCom_SoundQuestCheckButton:GetChecked()
 	elseif event == "GOSSIP_SHOW" or event == "QUEST_GREETING" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "ITEM_TEXT_READY" then
+		-- local questID = GetQuestID()
 		if event == "ITEM_TEXT_READY" then
 			speakMessage = ItemTextGetText()
 		elseif event == "GOSSIP_SHOW" then
@@ -731,7 +735,7 @@ end
 function JocysCom_DialogueMiniFrame_OnShow()
 	-- Enable DND <Busy>.
 	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(true)	end
-	if JocysCom_StartOnOpenCheckButton:GetChecked() and MailFrame:IsVisible() then -- QuestMapFrame:IsVisible() 
+	if JocysCom_StartOnOpenCheckButton:GetChecked() and MailFrame:IsVisible() then -- QuestMapFrame:IsVisible()
 		JocysCom_PlayOpenedFrame()
 	end
 end
