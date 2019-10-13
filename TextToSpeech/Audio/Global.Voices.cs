@@ -204,11 +204,11 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			w.WriteStartElement("lang");
 			w.WriteAttributeString("xml:lang", vi.CultureName);
 			w.WriteStartElement("prosody");
-			// Convert -10 0 +10 to 50% 100% 200%
+			// Convert -10 0 +10 to 50% 100% 400%
 			if (rate < 0)
-				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 10 / 2)));
+				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 20 / 2)));
 			if (rate >= 0)
-				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 10)));
+				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 20)));
 			// Neural voices do not support pitch.
 			if (!isNeural)
 			{
