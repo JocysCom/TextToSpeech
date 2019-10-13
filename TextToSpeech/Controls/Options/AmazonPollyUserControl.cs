@@ -58,7 +58,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 
 		private void AwsLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			MainHelper.OpenUrl(AwsLinkLabel.Text);
+			var link = ((LinkLabel)sender).Text;
+			MainHelper.OpenUrl(link);
 		}
 
 		private void RefreshVoicesButton_Click(object sender, EventArgs e)
