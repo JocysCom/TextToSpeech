@@ -206,9 +206,9 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			w.WriteStartElement("prosody");
 			// Convert -10 0 +10 to 50% 100% 400%
 			if (rate < 0)
-				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 20 / 2)));
+				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 25 / 2)));
 			if (rate >= 0)
-				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 20)));
+				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 25)));
 			// Neural voices do not support pitch.
 			if (!isNeural)
 			{
