@@ -297,6 +297,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			if (Global.InstalledVoices.Count == 0)
 			{
 				var voicesEx = Voices.VoiceHelper.GetLocalVoices();
+				foreach (var item in voicesEx)
+					item.Enabled = true;
 				Global.ImportVoices(Global.InstalledVoices, voicesEx);
 			}
 			refreshPresets();
