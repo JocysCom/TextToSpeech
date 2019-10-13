@@ -46,23 +46,28 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				: SystemColors.ControlDark;
 		}
 
-		public InstalledVoiceEx GetSelectedItem()
+
+		public List<InstalledVoiceEx> GetSelectedItems()
 		{
-			var selectedItem = VoicesGridView.SelectedRows.Cast<DataGridViewRow>().FirstOrDefault();
-			if (selectedItem != null)
-				return (InstalledVoiceEx)selectedItem.DataBoundItem;
-			return null;
+			var items = VoicesGridView.SelectedRows.Cast<DataGridViewRow>()
+				.Select(x => (InstalledVoiceEx)x.DataBoundItem)
+				.ToList();
+			return items;
 		}
 
 		public void SelectItem(InstalledVoiceEx item)
 		{
+			// Select rows first.
 			foreach (DataGridViewRow row in VoicesDataGridView.Rows)
 			{
-				if (!row.DataBoundItem.Equals(item))
-					continue;
-				row.Selected = true;
-				VoicesDataGridView.FirstDisplayedCell = row.Cells[0];
-				break;
+				if (row.DataBoundItem.Equals(item) && !row.Selected)
+					row.Selected = true;
+			}
+			// Unselect rows.
+			foreach (DataGridViewRow row in VoicesDataGridView.Rows)
+			{
+				if (!row.DataBoundItem.Equals(item) && row.Selected)
+					row.Selected = false;
 			}
 		}
 
@@ -152,8 +157,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			var form = new AddVoicesForm();
 			form.Text = string.Format("{0} {1}: Local Voices", Application.CompanyName, Application.ProductName);
 			form.StartPosition = FormStartPosition.CenterParent;
-			if (Global.LocalVoices == null)
-				Global.LocalVoices = new BindingList<InstalledVoiceEx>();
 			form.VoicesGridView.DataSource = Global.LocalVoices;
 			var result = form.ShowDialog();
 			if (result == DialogResult.OK)
@@ -167,8 +170,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			var form = new AddVoicesForm();
 			form.Text = string.Format("{0} {1}: Amazon Neural Voices", Application.CompanyName, Application.ProductName);
 			form.StartPosition = FormStartPosition.CenterParent;
-			if (Global.AmazonNeuralVoices == null)
-				Global.AmazonNeuralVoices = new BindingList<InstalledVoiceEx>();
 			form.VoicesGridView.DataSource = Global.AmazonNeuralVoices;
 			var result = form.ShowDialog();
 			if (result == DialogResult.OK)
@@ -182,8 +183,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			var form = new AddVoicesForm();
 			form.Text = string.Format("{0} {1}: Amazon Standard Voices", Application.CompanyName, Application.ProductName);
 			form.StartPosition = FormStartPosition.CenterParent;
-			if (Global.AmazonStandardVoices == null)
-				Global.AmazonStandardVoices = new BindingList<InstalledVoiceEx>();
 			form.VoicesGridView.DataSource = Global.AmazonStandardVoices;
 			var result = form.ShowDialog();
 			if (result == DialogResult.OK)
@@ -220,6 +219,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		void RefreshAmazonVoices(Engine engine, BindingList<InstalledVoiceEx> list)
 		{
 			_CancelGetVoices = false;
+			StatusLabel.Text = "Please Wait...\r\n";
 			StatusPanel.Visible = true;
 			list.Clear();
 			var voices = new List<InstalledVoiceEx>();
@@ -230,6 +230,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				{
 					foreach (var voice in voices)
 						list.Add(voice);
+					StatusPanel.Visible = voices.Count == 0;
 				});
 			});
 			_Thread = new Thread(ts);
@@ -238,26 +239,21 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		public List<InstalledVoiceEx> GetAmazonVoices(RegionEndpoint region = null, Engine engine = null, CultureInfo culture = null)
 		{
-			ControlsHelper.Invoke(() =>
-			{
-				StatusLabel.Text = "Please Wait...\r\n";
-			});
 			var list = new List<InstalledVoiceEx>();
-			var tempList = new List<InstalledVoiceEx>();
 			// Get regions to process.
 			var regions = region == null
 				? RegionEndpoint.EnumerableAllRegions.OrderBy(x => x.ToString()).ToList()
 				: new List<RegionEndpoint>() { region };
-			for (int i = 0; i < regions.Count; i++)
+			for (int r = 0; r < regions.Count; r++)
 			{
-				var r = regions[i];
+				var reg = regions[r];
 				AmazonPolly client = null;
 				try
 				{
 					client = new AmazonPolly(
 						SettingsManager.Options.AmazonAccessKey,
 						SettingsManager.Options.AmazonSecretKey,
-						r.SystemName
+						reg.SystemName
 					);
 				}
 				catch (Exception ex)
@@ -270,26 +266,23 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 					request.Engine = engine;
 				if (culture != null)
 					request.LanguageCode = culture.Name;
-				ControlsHelper.Invoke(() =>
-				{
-					StatusLabel.Text += string.Format("{0}/{1} - Region={2}, Engine={3}, Culture={4}",
-					i + 1, regions.Count, r.DisplayName, request.Engine, request.LanguageCode);
-					Application.DoEvents();
-				});
+				AddStatus("{0}/{1} - Region={2}, Engine={3}, Culture={4}",
+					r + 1, regions.Count, reg.DisplayName, request.Engine, request.LanguageCode);
 				// Create stop watch to measure speed with the servers.
 				var sw = new Stopwatch();
 				var voices = client.GetVoices(request, 5000);
 				var elapsed = sw.Elapsed;
-				ControlsHelper.Invoke(() =>
-				{
-					StatusLabel.Text += string.Format(", Voices={0}", voices.Count);
-					if (client.LastException != null)
-						StatusLabel.Text += string.Format(", Exception={0}", client.LastException.Message);
-				});
+				AddStatus(", Voices={0}", voices.Count);
+				if (client.LastException != null)
+					AddStatus("\r\n       Exception: {0}\r\n", client.LastException.Message);
+				else if (voices.Count == 0)
+					AddStatus("\r\n");
+				if (voices.Count == 0)
+					continue;
 				var vex = 0;
 				for (int v = 0; v < voices.Count; v++)
 				{
-					var voice = voices[i];
+					var voice = voices[v];
 					var cultureNames = new List<string>();
 					cultureNames.Add(voice.LanguageCode);
 					cultureNames.AddRange(voice.AdditionalLanguageCodes);
@@ -305,31 +298,67 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 							vx.SourceRequestSpeed = elapsed;
 							var keys = System.Web.HttpUtility.ParseQueryString("");
 							keys.Add("source", vx.Source.ToString());
-							keys.Add("region", r.SystemName);
+							keys.Add("region", reg.SystemName);
 							keys.Add("culture", cultureName);
 							keys.Add("engine", engineName);
 							vx.SourceKeys = keys.ToString();
 							// Add voice.
-							tempList.Add(vx);
+							list.Add(vx);
 							vex++;
 							if (_CancelGetVoices)
 								return null;
 						}
 					}
 				}
-				ControlsHelper.Invoke(() =>
-				{
-					StatusLabel.Text += string.Format(", VoicesEx={0}\r\n", vex);
-				});
+				AddStatus(", VoicesEx={0}\r\n", vex);
 			}
+			AddStatus("Done\r\n");
+			list = RemoveDuplicateVoices(list);
+			list = RemoveVoices(list, Global.InstalledVoices);
+			return list;
+		}
 
+		void AddStatus(string format, params object[] args)
+		{
 			ControlsHelper.Invoke(() =>
 			{
-				StatusLabel.Text += "Done\r\n";
-				//StatusPanel.Visible = true;
+				StatusLabel.Text += string.Format(format, args);
+				StatusPanel.VerticalScroll.Value = StatusPanel.VerticalScroll.Maximum;
 			});
-			list = tempList;
-			return list;
+		}
+
+		List<InstalledVoiceEx> RemoveVoices(List<InstalledVoiceEx> list, IList<InstalledVoiceEx> excludeList)
+		{
+			var newList = new List<InstalledVoiceEx>();
+			for (int i = 0; i < list.Count; i++)
+			{
+				var voice = list[i];
+				// Try to find same voice in new List.
+				var contains = excludeList.Any(x => x.IsSameVoice(voice));
+				// If item was not found then add voice to the list.
+				if (!contains)
+					newList.Add(voice);
+			}
+			// Reorder list.
+			return newList.OrderBy(x => x.CultureName).ThenBy(x => x.Name).ToList();
+		}
+
+		List<InstalledVoiceEx> RemoveDuplicateVoices(List<InstalledVoiceEx> list)
+		{
+			var newList = new List<InstalledVoiceEx>();
+			// Make sure that fastest to retrieve from the Internet voices on the top.
+			list = list.OrderBy(x => x.SourceRequestSpeed).ToList();
+			for (int i = 0; i < list.Count; i++)
+			{
+				var voice = list[i];
+				// Try to find same voice in new List.
+				var newItem = newList.FirstOrDefault(x => x.IsSameVoice(voice));
+				// If item was not found then add voice to the list.
+				if (newItem == null)
+					newList.Add(voice);
+			}
+			// Reorder list.
+			return newList.OrderBy(x => x.CultureName).ThenBy(x => x.Name).ToList();
 		}
 
 		private void AmazonPolly_Exception(object sender, ClassLibrary.EventArgs<System.Exception> e)
@@ -350,6 +379,26 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 					components.Dispose();
 			}
 			base.Dispose(disposing);
+		}
+
+		private void RemoveButton_Click(object sender, EventArgs e)
+		{
+			var items = GetSelectedItems();
+			var message = string.Format("Are you sure you want to remove {0} item{1}?",
+					items.Count, items.Count == 1 ? "" : "s");
+			var form = new MessageBoxForm();
+			form.StartPosition = FormStartPosition.CenterParent;
+			var result = form.ShowForm(message, "Remove", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
+			if (result == DialogResult.OK)
+			{
+				VoicesDataGridView.ClearSelection();
+				var list = (BindingList<InstalledVoiceEx>)VoicesGridView.DataSource;
+				foreach (var item in items)
+				{
+
+					list.Remove(item);
+				}
+			}
 		}
 	}
 }

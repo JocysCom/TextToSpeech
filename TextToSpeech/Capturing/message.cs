@@ -46,9 +46,17 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 				return null;
 			var rx = new Regex("^[0-9a-fA-F]+$");
 			// If HEX code then...
-			return rx.IsMatch(language)
-				? new CultureInfo(int.Parse(language, NumberStyles.HexNumber), false)
-				: new CultureInfo(language, false);
+			try
+			{
+				return rx.IsMatch(language)
+					? new CultureInfo(int.Parse(language, NumberStyles.HexNumber), false)
+					: new CultureInfo(language, false);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
+			return null;
 		}
 
 		[DataMember, XmlAttribute]

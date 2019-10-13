@@ -177,7 +177,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				RegistryHelper.Copy(lm, sourceKey, targetKey, true);
 				lm.Dispose();
 			}
-			Audio.Global.RefreshLocalVoicesGrid(Audio.Global.InstalledVoices);
 			UpdateButtons();
 		}
 
@@ -205,7 +204,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				lm.DeleteSubKeyTree(targetKey);
 				lm.Dispose();
 			}
-			Audio.Global.RefreshLocalVoicesGrid(Audio.Global.InstalledVoices);
 			UpdateButtons();
 		}
 	}

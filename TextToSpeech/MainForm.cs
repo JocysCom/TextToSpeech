@@ -291,7 +291,14 @@ namespace JocysCom.TextToSpeech.Monitor
 			MessagesDataGridView.AutoGenerateColumns = false;
 			EffectsPresetsDataGridView.AutoGenerateColumns = false;
 			MessagesDataGridView.DataSource = MessagesVoiceItems;
-			Global.InitializeSpeech();
+			// Load voices from settings.
+			Global.LoadSettings();
+			// If installed voices are missing then add all local voices.
+			if (Global.InstalledVoices.Count == 0)
+			{
+				var voicesEx = Voices.VoiceHelper.GetLocalVoices();
+				Global.ImportVoices(Global.InstalledVoices, voicesEx);
+			}
 			refreshPresets();
 			VoicesPanel.VoicesGridView.DataSource = Global.InstalledVoices;
 			VoicesPanel.VoicesGridView.SelectionChanged += VoicesDataGridView_SelectionChanged;
@@ -675,50 +682,9 @@ namespace JocysCom.TextToSpeech.Monitor
 					NativeMethods.RemoveClipboardFormatListener(this.Handle);
 				}
 			}
-			SaveSettings();
+			Global.SaveSettings();
 		}
 
-
-		#endregion
-
-		#region Load/Save Settings
-
-		public void SaveSettings()
-		{
-			if (Global.InstalledVoices == null)
-				return;
-			// Check if settings are writable.
-			//var path = SettingsFile.Current.FolderPath;
-			//var rights = FileSystemRights.Write | FileSystemRights.Modify;
-			//var hasRights = JocysCom.ClassLibrary.Security.PermissionHelper.HasRights(path, rights);
-			//DialogResult result = DialogResult.OK;
-			//if (!hasRights)
-			//{
-			//	var caption = string.Format("Folder Access Denied - {0}", path);
-			//	var text = "Old settings were written with administrator permissions.\r\n";
-			//	text += "You'll need to provide administrator permissions to fix access and save settings.";
-			//	var form = new MessageBoxForm();
-			//	form.StartPosition = FormStartPosition.CenterParent;
-			//	result = form.ShowForm(text, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-			//	form.Dispose();
-			//	if (result == DialogResult.OK)
-			//		Program.RunElevated(AdminCommand.FixProgramSettingsPermissions);
-			//}
-			try
-			{
-				var xml = Serializer.SerializeToXmlString(Global.InstalledVoices);
-				SettingsManager.Options.VoicesData = xml;
-				SettingsFile.Current.Save();
-				SettingsManager.Current.Save();
-			}
-			catch (Exception ex)
-			{
-				var form2 = new MessageBoxForm();
-				form2.StartPosition = FormStartPosition.CenterParent;
-				form2.ShowForm(ex.ToString(), ex.Message);
-				form2.Dispose();
-			}
-		}
 
 		#endregion
 
@@ -775,7 +741,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		private void VoicesDataGridView_SelectionChanged(object sender, EventArgs e)
 		{
-			var voice = VoicesPanel.GetSelectedItem();
+			var voice = VoicesPanel.GetSelectedItems().FirstOrDefault();
 			if (Global.SelectedVoice != voice)
 				Global.SelectedVoice = voice;
 		}

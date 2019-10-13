@@ -33,6 +33,9 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		{
 			Handle = handle;
 			InstalledVoices = new BindingList<InstalledVoiceEx>();
+			LocalVoices = new BindingList<InstalledVoiceEx>();
+			AmazonNeuralVoices = new BindingList<InstalledVoiceEx>();
+			AmazonStandardVoices = new BindingList<InstalledVoiceEx>();
 			WavPlayer = new AudioPlayer(Handle);
 			EffectsPlayer = new AudioPlayer(Handle);
 			EffectsPlayer = new AudioPlayer(Handle);

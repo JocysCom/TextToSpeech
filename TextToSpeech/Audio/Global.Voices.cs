@@ -1,4 +1,5 @@
-﻿using JocysCom.ClassLibrary.Runtime;
+﻿using JocysCom.ClassLibrary.Controls;
+using JocysCom.ClassLibrary.Runtime;
 using JocysCom.TextToSpeech.Monitor.Capturing;
 using SpeechLib;
 using System;
@@ -17,11 +18,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 	public static partial class Global
 	{
 
-		public static void InitializeSpeech()
-		{
-			RefreshLocalVoicesGrid(Audio.Global.InstalledVoices);
-		}
-
 		#region Installed Voices
 
 		public static BindingList<InstalledVoiceEx> InstalledVoices { get; set; }
@@ -34,28 +30,60 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		static InstalledVoiceEx _SelectedVoice;
 		public static string ValidateInstalledVoices()
 		{
+			var iv = InstalledVoices;
 			string error = "";
-			if (InstalledVoices.Count == 0) error = "No voices were found";
-			else if (!InstalledVoices.Any(x => x.Female > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Female\" column to use it as female voice ( recommended value: 100 ).";
-			else if (!InstalledVoices.Any(x => x.Female > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Female\" column for at least one voice to use it as female voice.";
-			else if (!InstalledVoices.Any(x => x.Male > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Male\" column to use it as male voice ( recommended value: 100 ).";
-			else if (!InstalledVoices.Any(x => x.Male > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Male\" column for at least one voice to use it as male voice.";
-			else if (!InstalledVoices.Any(x => x.Neutral > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Neutral\" column to use it as neutral voice ( recommended value: 100 ).";
-			else if (!InstalledVoices.Any(x => x.Neutral > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Neutral\" column for at least one voice to use it as neutral voice.";
+			if (iv.Count == 0) error = "No voices were found";
+			else if (!iv.Any(x => x.Female > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Female\" column to use it as female voice ( recommended value: 100 ).";
+			else if (!iv.Any(x => x.Female > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Female\" column for at least one voice to use it as female voice.";
+			else if (!iv.Any(x => x.Male > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Male\" column to use it as male voice ( recommended value: 100 ).";
+			else if (!iv.Any(x => x.Male > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Male\" column for at least one voice to use it as male voice.";
+			else if (!iv.Any(x => x.Neutral > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Neutral\" column to use it as neutral voice ( recommended value: 100 ).";
+			else if (!iv.Any(x => x.Neutral > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Neutral\" column for at least one voice to use it as neutral voice.";
 			return error;
 		}
 
 		#endregion
 
-		public static void RefreshLocalVoicesGrid(BindingList<InstalledVoiceEx> list)
+		#region Save and Load Settings
+
+		public static void SaveSettings()
 		{
-			list.Clear();
-			var voicesEx = Voices.VoiceHelper.GetLocalVoices();
-			LoadSettings(voicesEx);
-			foreach (var voiceEx in voicesEx) list.Add(voiceEx);
+			if (InstalledVoices == null)
+				return;
+			// Check if settings are writable.
+			//var path = SettingsFile.Current.FolderPath;
+			//var rights = FileSystemRights.Write | FileSystemRights.Modify;
+			//var hasRights = JocysCom.ClassLibrary.Security.PermissionHelper.HasRights(path, rights);
+			//DialogResult result = DialogResult.OK;
+			//if (!hasRights)
+			//{
+			//	var caption = string.Format("Folder Access Denied - {0}", path);
+			//	var text = "Old settings were written with administrator permissions.\r\n";
+			//	text += "You'll need to provide administrator permissions to fix access and save settings.";
+			//	var form = new MessageBoxForm();
+			//	form.StartPosition = FormStartPosition.CenterParent;
+			//	result = form.ShowForm(text, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+			//	form.Dispose();
+			//	if (result == DialogResult.OK)
+			//		Program.RunElevated(AdminCommand.FixProgramSettingsPermissions);
+			//}
+			try
+			{
+				var xml = Serializer.SerializeToXmlString(Global.InstalledVoices);
+				SettingsManager.Options.VoicesData = xml;
+				SettingsFile.Current.Save();
+				SettingsManager.Current.Save();
+			}
+			catch (Exception ex)
+			{
+				var form2 = new MessageBoxForm();
+				form2.StartPosition = FormStartPosition.CenterParent;
+				form2.ShowForm(ex.ToString(), ex.Message);
+				form2.Dispose();
+			}
 		}
 
-		public static void LoadSettings(List<InstalledVoiceEx> voices)
+		public static void LoadSettings()
 		{
 			var xml = SettingsManager.Options.VoicesData;
 			InstalledVoiceEx[] savedVoices = null;
@@ -66,29 +94,40 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			}
 			if (savedVoices == null)
 				savedVoices = new InstalledVoiceEx[0];
+			foreach (var voice in savedVoices)
+				InstalledVoices.Add(voice);
+		}
+
+		public static void ImportVoices(BindingList<InstalledVoiceEx> toVoices, List<InstalledVoiceEx> fromVoices)
+		{
+			if (toVoices == null)
+				throw new ArgumentNullException(nameof(toVoices));
+			if (fromVoices == null)
+				throw new ArgumentNullException(nameof(fromVoices));
 			var newVoices = new List<InstalledVoiceEx>();
 			var oldVoices = new List<InstalledVoiceEx>();
-			foreach (var voice in voices)
+			foreach (var fromVoice in fromVoices)
 			{
-				var savedVoice = savedVoices.FirstOrDefault(x => x.Name == voice.Name && x.Gender == voice.Gender);
-				if (savedVoice == null)
+				// Find existing voice.
+				var voice = toVoices.FirstOrDefault(x => x.IsSameVoice(fromVoice));
+				if (voice == null)
 				{
-					newVoices.Add(voice);
+					newVoices.Add(fromVoice);
 				}
 				else
 				{
-					oldVoices.Add(voice);
-					voice.Enabled = savedVoice.Enabled;
-					voice.Female = savedVoice.Female;
-					voice.Male = savedVoice.Male;
-					voice.Neutral = savedVoice.Neutral;
+					oldVoices.Add(fromVoice);
+					fromVoice.Enabled = voice.Enabled;
+					fromVoice.Female = voice.Female;
+					fromVoice.Male = voice.Male;
+					fromVoice.Neutral = voice.Neutral;
 				}
 			}
 			// If new voices added then...
 			if (newVoices.Count > 0)
 			{
-				var maleIvonaFound = voices.Any(x => x.Name.StartsWith("IVONA") && x.Gender == VoiceGender.Male);
-				var femaleIvonaFound = voices.Any(x => x.Name.StartsWith("IVONA") && x.Gender == VoiceGender.Female);
+				var maleIvonaFound = toVoices.Any(x => x.Name.StartsWith("IVONA") && x.Gender == VoiceGender.Male);
+				var femaleIvonaFound = toVoices.Any(x => x.Name.StartsWith("IVONA") && x.Gender == VoiceGender.Female);
 				foreach (var newVoice in newVoices)
 				{
 					// If new voice is Microsoft then...
@@ -100,27 +139,31 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				}
 				var firstVoiceVoice = newVoices.First();
 				// If list doesn't have female voices then use first new voice.
-				if (!voices.Any(x => x.Female > 0)) firstVoiceVoice.Female = InstalledVoiceEx.MaxVoice;
+				if (!toVoices.Any(x => x.Female > 0))
+					firstVoiceVoice.Female = InstalledVoiceEx.MaxVoice;
 				// If list doesn't have male voices then use first new voice.
-				if (!voices.Any(x => x.Male > 0)) firstVoiceVoice.Male = InstalledVoiceEx.MaxVoice;
+				if (!toVoices.Any(x => x.Male > 0))
+					firstVoiceVoice.Male = InstalledVoiceEx.MaxVoice;
 				// If list doesn't have neutral voices then use first voice.
-				if (!voices.Any(x => x.Neutral > 0))
+				if (!toVoices.Any(x => x.Neutral > 0))
 				{
-					var neutralVoices = voices.Where(x => x.Gender == VoiceGender.Neutral);
+					var neutralVoices = toVoices.Where(x => x.Gender == VoiceGender.Neutral);
 					foreach (var neutralVoice in neutralVoices) neutralVoice.Neutral = InstalledVoiceEx.MaxVoice;
 					if (neutralVoices.Count() == 0)
 					{
-						var maleVoices = voices.Where(x => x.Gender == VoiceGender.Male);
+						var maleVoices = toVoices.Where(x => x.Gender == VoiceGender.Male);
 						foreach (var maleVoice in maleVoices) maleVoice.Neutral = InstalledVoiceEx.MaxVoice;
 						if (maleVoices.Count() == 0)
 						{
-							var femaleVoices = voices.Where(x => x.Gender == VoiceGender.Female);
+							var femaleVoices = toVoices.Where(x => x.Gender == VoiceGender.Female);
 							foreach (var femaleVoice in femaleVoices) femaleVoice.Neutral = InstalledVoiceEx.MaxVoice;
 						}
 					}
 				}
 			}
 		}
+
+		#endregion
 
 		static string GetXmlText(string text, InstalledVoiceEx vi, int volume, int pitch, int rate, bool isComment)
 		{
@@ -435,7 +478,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			// Get voice match by name. Example: en-GB.
 			var choice = voices.Where(x => x.CultureName == culture.Name).ToArray();
 			// If voice not found then get match by language. Example: en
-			if (choice != null)
+			if (choice.Length > 0)
 				return choice;
 			choice = voices
 				.Where(x => string.Equals(x.Language, culture.TwoLetterISOLanguageName, StringComparison.InvariantCultureIgnoreCase))
@@ -468,62 +511,56 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		// Set voice.
 		static void SelectVoice(string name, string language, MessageGender gender)
 		{
-			int popularity;
-			InstalledVoiceEx[] choice;
 			// Get only enabled voices.
 			var data = InstalledVoices.Where(x => x.Enabled).ToArray();
 			InstalledVoiceEx voice = null;
 			var culture = Capturing.message.GetCultureInfo(language);
-			// Set voice if only gender value is submitted ("Male", "Female", "Neutral").           
-			if (string.IsNullOrEmpty(name))
+			// Order voices by putting matching gender with highest value first.
+			OrderVoicesByGender(ref data, gender);
+			var missing = "";
+			missing += "There are no voices enabled in \"{0}\" column with value \"{1}\". ";
+			missing += "Set popularity value to 100 ( normal usage ) or 101 ( normal usage / favourite ) for at least one voice.";
+			// Initial choice will be all enabled voices.
+			InstalledVoiceEx[] choice = data;
+			InstalledVoiceEx[] tmp;
+			// If voice name was supplied then...
+			if (!string.IsNullOrEmpty(name))
 			{
-				// Select first most popular voice in "FemaleColumn", "MaleColumn" or "NeutralColumn".
-				OrderVoicesByGender(ref data, gender);
-				voice = culture == null
-					? data.FirstOrDefault()
-					: FilterVoicesByCulture(data, culture).FirstOrDefault();
-				popularity = voice == null ? 0 : voice.Male;
-				if (string.IsNullOrEmpty(language))
-				{
-					if (popularity == 0)
-						OnHelp("There are no voices enabled in \"{0}\" column. Set popularity value to 100 ( normal usage ) or 101 ( normal usage / favourite ) for one voice at least in \"{0}\" column, to use it as \"{0}\" voice.", gender);
-				}
+				// Select voices by name if exists ("IVONA 2 Amy").
+				tmp = data.Where(x => string.Equals(x.Name, name, StringComparison.InvariantCulture)).ToArray();
+				// If choice available then...
+				if (tmp.Length > 0)
+					choice = tmp;
 				else
-				{
-					if (popularity == 0)
-						OnHelp("There are no voices enabled in \"{0}\" column with \"Language\" value \"{1}\". Set popularity value to 100 ( normal usage ) for one voice at least in \"{0}\" column with \"Language\" value \"{1}\".", gender, language);
-				}
+					OnHelp(missing, "Name", name);
 			}
-			// Select voice if name and gender values are submitted... ("IVONA 2 Amy") or ("Marshal McBride" and "Male", "Female" or "Neutral").
+			// If culture supplied.
+			if (culture != null)
+			{
+				tmp = FilterVoicesByCulture(choice, culture);
+				// If choice available then...
+				if (tmp.Length > 0)
+					choice = tmp;
+				else
+					OnHelp(missing, "Culture", language);
+			}
+			// Filter by gender.
+			tmp = FilterVoicesByGender(choice, gender);
+			// If choice available then...
+			if (tmp.Length > 0)
+				choice = tmp;
 			else
 			{
-				// Select specific voice if it exists ("IVONA 2 Amy").
-				voice = data.FirstOrDefault(x => x.Name == name);
-				// If voice was not found then... generate voice number and assign voice ("Marshal McBride" and "Male", "Female" or "Neutral").
-				if (voice == null)
-				{
-					choice = FilterVoicesByGender(data, gender);
-					if (choice.Length == 0)
-					{
-						OnHelp("There are no voices enabled in \"{0}\" column. Set popularity value to 100 ( normal usage ) for one voice at least in \"{0}\" column, to use it as \"{0}\" voice.", gender);
-					}
-					// If culture supplied.
-					else if (culture != null)
-					{
-						choice = FilterVoicesByCulture(choice, culture);
-						if (choice.Length == 0)
-							OnHelp("There are no voices enabled in \"{0}\" column with \"Language\" value \"{1}\". Set popularity value to 100 ( normal usage ) for one voice at least in \"{0}\" column with \"Language\" value \"{1}\".", gender, language);
-					}
-					// If nothing to choose from then try all.
-					if (choice.Length == 0)
-						choice = data.ToArray();
-					if (choice.Length == 0)
-						return;
-					// Generate number for selecting voice.
-					var number = MainHelper.GetNumber(0, choice.Count() - 1, "name", name);
-					voice = choice[number];
-				}
+				OnHelp(missing, "Gender", gender);
+				// Order by Male as default.
+				OrderVoicesByGender(ref data, MessageGender.Male);
 			}
+			// If nothing to choose from then...
+			if (choice.Length == 0)
+				return;
+			// Generate number for selecting voice.
+			var number = MainHelper.GetNumber(0, choice.Length - 1, "name", name);
+			voice = choice[number];
 			if (SelectedVoice != voice)
 				OnEvent(VoiceChanged, voice);
 		}

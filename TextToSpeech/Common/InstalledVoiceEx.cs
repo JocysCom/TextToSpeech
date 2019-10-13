@@ -53,6 +53,14 @@ namespace JocysCom.TextToSpeech.Monitor
 			Language = culture.TwoLetterISOLanguageName;
 		}
 
+		public bool IsSameVoice(InstalledVoiceEx voice) {
+			return
+				Source == voice.Source &&
+				CultureName == voice.CultureName &&
+				Name == voice.Name &&
+				Gender == voice.Gender;
+		}
+
 		public InstalledVoiceEx(Amazon.Polly.Model.Voice voice)
 		{
 			Voice = voice;
