@@ -320,7 +320,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 						Status = JobStatusType.Parsed,
 						IsComment = comment,
 						Group = voiceGroup,
-						VoiceSorceKeys = voiceSourceKeys,
+						VoiceSourceKeys = voiceSourceKeys,
 					};
 					item.Text = sentence;
 					if (SettingsManager.Options.CacheDataGeneralize)
@@ -347,17 +347,16 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		/// <summary>
 		/// Convert xml to WAV bytes. WAV won't have the header, so you have to add it separatelly.
 		/// </summary>
-		static byte[] ConvertSapiXmlToWav(string voiceSourceKeys, string xml, int sampleRate, int bitsPerSample, int channelCount)
+		static void ConvertXmlToWav(PlayItem item)
 		{
 			// Default is local.
 			var vs = VoiceSource.Local;
-			var query = System.Web.HttpUtility.ParseQueryString(voiceSourceKeys ?? "");
-			if (!string.IsNullOrEmpty(voiceSourceKeys))
+			var query = System.Web.HttpUtility.ParseQueryString(item.VoiceSourceKeys ?? "");
+			if (!string.IsNullOrEmpty(item.VoiceSourceKeys))
 			{
 				if (!Enum.TryParse(query[InstalledVoiceEx._KeySource], out vs))
 					vs = VoiceSource.Local;
 			}
-			byte[] wavBytes;
 			if (vs == VoiceSource.Amazon)
 			{
 				var client = new Voices.AmazonPolly(
@@ -367,15 +366,16 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					);
 				Amazon.Polly.VoiceId voiceId = query[InstalledVoiceEx._KeyVoiceId];
 				Amazon.Polly.Engine engine = query[InstalledVoiceEx._KeyEngine];
-				var mp3Bytes = client.SynthesizeSpeech(voiceId, xml, Amazon.Polly.OutputFormat.Mp3, engine);
+				var mp3Bytes = client.SynthesizeSpeech(voiceId, item.Xml, Amazon.Polly.OutputFormat.Mp3, engine);
 				var pi = ConvertMp3ToPlatItem(mp3Bytes);
-				wavBytes = pi.WavData;
+				item.WavHead = pi.WavHead;
+				item.WavData = pi.WavData;
 			}
 			else
 			{
-				wavBytes = ConvertSapiXmlToWav(xml, sampleRate, bitsPerSample, channelCount);
+				var wavBytes = ConvertSapiXmlToWav(item.Xml, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
+				item.WavData = wavBytes;
 			}
-			return wavBytes;
 		}
 
 
@@ -553,8 +553,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 							var bitsPerSample = SettingsManager.Options.AudioBitsPerSample;
 							int sampleRate = SettingsManager.Options.AudioSampleRate;
 							int channelCount = (int)SettingsManager.Options.AudioChannels;
-							item.WavData = ConvertSapiXmlToWav(item.VoiceSorceKeys, item.Xml, sampleRate, bitsPerSample, channelCount);
 							item.WavHead = new SharpDX.Multimedia.WaveFormat(sampleRate, bitsPerSample, channelCount);
+							ConvertXmlToWav(item);
 							item.Duration = AudioHelper.GetDuration(item.WavData.Length, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
 							if (SettingsManager.Options.CacheDataWrite && item.WavData != null)
 							{
