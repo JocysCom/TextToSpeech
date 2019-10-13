@@ -192,6 +192,9 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			//     Wow! <amazon:breath duration="long" volume="loud"/> </prosody> That was quite fast <amazon:breath 
 			//     duration="medium" volume="x-loud"/>. I almost beat my personal best time on this track. </prosody>
 			// </speak>;
+			var query = System.Web.HttpUtility.ParseQueryString(vi.SourceKeys ?? "");
+			var isNeural = query[InstalledVoiceEx._KeyEngine] == Amazon.Polly.Engine.Neural;
+
 			string xml;
 			string name = vi.Name;
 			var sw = new StringWriter();
@@ -204,17 +207,20 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			// Convert -10 0 +10 to 50% 100% 200%
 			if (rate < 0)
 				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 10 / 2)));
-			if (rate > 0)
+			if (rate >= 0)
 				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 10)));
-
-
-			// Convert -10 0 +10 to -100% 100% +100%
-			//if (pitch > 0)
-			//	w.WriteAttributeString("pitch", string.Format("+{0}%", pitch * 10));
-			//if (pitch < 0)
-			//	w.WriteAttributeString("pitch", string.Format("-{0}%", pitch * 10));
-			// Convert 0 100 to -100dB 0dB
-			//w.WriteAttributeString("volume", string.Format("-{0}db", 100 - volume));
+			// Neural voices do not support pitch.
+			if (!isNeural)
+			{
+				// Convert -10 0 +10 to -100% +100%
+				if (pitch < 0)
+					w.WriteAttributeString("pitch", string.Format("-{0}%", pitch * 10));
+				if (pitch > 0)
+					w.WriteAttributeString("pitch", string.Format("+{0}%", pitch * 10));
+				//if (volume < 100)
+				//	// Convert 0 100 to -10dB 0dB
+				//	w.WriteAttributeString("volume", string.Format("-{0}db", (100 - volume) / 10));
+			}
 			// Replace acronyms with full values.
 			text = SettingsManager.Current.ReplaceAcronyms(text);
 			w.WriteRaw(text);
