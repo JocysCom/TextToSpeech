@@ -198,26 +198,28 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var w = new XmlTextWriter(sw);
 			w.Formatting = Formatting.Indented;
 			w.WriteStartElement("speak");
-			//if (string.IsNullOrEmpty(language) || vi.CultureLCID.ToString("X3") != language)
-			//{
-			//	w.WriteAttributeString("required", "name=" + name);
-			//}
-			//else
-			//{
-			//	w.WriteAttributeString("required", "name=" + name + ";language=" + language); //+ vi.CultureLCID.ToString("X3"));
-			//}
-			//w.WriteStartElement("volume");
-			//w.WriteAttributeString("level", volume.ToString());
-			//w.WriteStartElement("rate");
-			//w.WriteAttributeString("absspeed", rate.ToString());
-			//w.WriteStartElement("pitch");
-			//w.WriteAttributeString("absmiddle", (isComment ? _PitchComment : pitch).ToString());
+			w.WriteStartElement("lang");
+			w.WriteAttributeString("xml:lang", vi.CultureName);
+			w.WriteStartElement("prosody");
+			// Convert -10 0 +10 to 50% 100% 200%
+			if (rate < 0)
+				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 10 / 2)));
+			if (rate > 0)
+				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 10)));
+
+
+			// Convert -10 0 +10 to -100% 100% +100%
+			//if (pitch > 0)
+			//	w.WriteAttributeString("pitch", string.Format("+{0}%", pitch * 10));
+			//if (pitch < 0)
+			//	w.WriteAttributeString("pitch", string.Format("-{0}%", pitch * 10));
+			// Convert 0 100 to -100dB 0dB
+			//w.WriteAttributeString("volume", string.Format("-{0}db", 100 - volume));
 			// Replace acronyms with full values.
 			text = SettingsManager.Current.ReplaceAcronyms(text);
 			w.WriteRaw(text);
-			//w.WriteEndElement();
-			//w.WriteEndElement();
-			//w.WriteEndElement();
+			w.WriteEndElement();
+			w.WriteEndElement();
 			w.WriteEndElement();
 			xml = sw.ToString();
 			w.Close();
