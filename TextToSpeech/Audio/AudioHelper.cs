@@ -171,6 +171,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			  SettingsManager.Options.CacheAudioBlockAlign,
 			  SettingsManager.Options.CacheAudioBitsPerSample
 		  );
+			// https://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET
 			var wf = ad.WaveFormat;
 			source.Position = 0;
 			var sourceFormat = WaveFormat.CreateCustomFormat((WaveFormatEncoding)wf.Encoding, wf.SampleRate, wf.Channels, wf.AverageBytesPerSecond, wf.BlockAlign, wf.BitsPerSample);
