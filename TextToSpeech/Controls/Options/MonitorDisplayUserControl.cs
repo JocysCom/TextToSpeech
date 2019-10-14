@@ -13,12 +13,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			InitializeComponent();
 			if (ControlsHelper.IsDesignMode(this))
 				return;
-			BoxXUpDown.DataBindings.Add(nameof(BoxXUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPositionX));
-			BoxYUpDown.DataBindings.Add(nameof(BoxYUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPositionY));
-			ColorPrefixTextBox.DataBindings.Add(nameof(ColorPrefixTextBox.Text), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPrefix));
-			MonitorEnabledCheckBox.DataBindings.Add(nameof(MonitorEnabledCheckBox.Checked), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorEnabled));
-			CopyIntervalUpDown.DataBindings.Add(nameof(CopyIntervalUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorInterval));
-			MessagesTextBox.DataBindings.Add(nameof(MessagesTextBox.Text), Program._DisplayMonitor, nameof(Program._DisplayMonitor.MessagesReceived));
 		}
 
 
@@ -84,6 +78,17 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		private void ResetToDefaultButton_Click(object sender, EventArgs e)
 		{
 			SettingsManager.Options.DisplayMonitorResetSettings();
+		}
+
+		private void MonitorDisplayUserControl_Load(object sender, EventArgs e)
+		{
+			// To avoid validation problems, make sure to add DataBindings inside "Load" event and not inside Constructor.
+			BoxXUpDown.DataBindings.Add(nameof(BoxXUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPositionX));
+			BoxYUpDown.DataBindings.Add(nameof(BoxYUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPositionY));
+			ColorPrefixTextBox.DataBindings.Add(nameof(ColorPrefixTextBox.Text), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPrefix));
+			MonitorEnabledCheckBox.DataBindings.Add(nameof(MonitorEnabledCheckBox.Checked), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorEnabled));
+			CopyIntervalUpDown.DataBindings.Add(nameof(CopyIntervalUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorInterval));
+			MessagesTextBox.DataBindings.Add(nameof(MessagesTextBox.Text), Program._DisplayMonitor, nameof(Program._DisplayMonitor.MessagesReceived));
 		}
 	}
 }

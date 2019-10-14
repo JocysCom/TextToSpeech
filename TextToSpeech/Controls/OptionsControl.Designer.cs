@@ -31,7 +31,7 @@
 			this.OptionsTabControl = new System.Windows.Forms.TabControl();
 			this.GeneralTabPage = new System.Windows.Forms.TabPage();
 			this.CacheTabPage = new System.Windows.Forms.TabPage();
-			this.CachePanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsCacheUserControl();
+			this.CachePanel = new JocysCom.TextToSpeech.Monitor.Controls.CacheOptionsUserControl();
 			this.GoogleTTSTabPage = new System.Windows.Forms.TabPage();
 			this.GoogleCloudPanel = new JocysCom.TextToSpeech.Monitor.Google.GoogleTTSUserControl();
 			this.AmazonPollyTabPage = new System.Windows.Forms.TabPage();
@@ -446,7 +446,7 @@
 		private System.Windows.Forms.TabPage MonitorNetworkTabPage;
 		private OptionsMicrosoftCortanaUserControl MicrosoftCortanaPanel;
 		private Google.GoogleTTSUserControl GoogleCloudPanel;
-		private OptionsCacheUserControl CachePanel;
+		private CacheOptionsUserControl CachePanel;
 		private MonitorNetworkUserControl CapturingPanel;
 		private System.Windows.Forms.TabPage MonitorServerTabPage;
 		private MonitorServerUserControl monitorUdpPortUserControl1;

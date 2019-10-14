@@ -558,10 +558,11 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 						}
 						if (synthesize)
 						{
-							var bitsPerSample = SettingsManager.Options.AudioBitsPerSample;
-							int sampleRate = SettingsManager.Options.AudioSampleRate;
-							int channelCount = (int)SettingsManager.Options.AudioChannels;
-							item.WavHead = new SharpDX.Multimedia.WaveFormat(sampleRate, bitsPerSample, channelCount);
+							item.WavHead = new SharpDX.Multimedia.WaveFormat(
+								SettingsManager.Options.AudioSampleRate,
+								SettingsManager.Options.AudioBitsPerSample,
+								(int)SettingsManager.Options.AudioChannels);
+							// WavHead could change.
 							ConvertXmlToWav(item);
 							item.Duration = AudioHelper.GetDuration(item.WavData.Length, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
 							if (SettingsManager.Options.CacheDataWrite && item.WavData != null)
@@ -571,7 +572,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 									xmlFi.Directory.Create();
 								using (Stream stream = new FileStream(wavFi.FullName, FileMode.Create))
 								{
-									var headBytes = AudioHelper.GetWavHead(item.WavData.Length, sampleRate, bitsPerSample, channelCount);
+									var headBytes = AudioHelper.GetWavHead(item.WavData.Length, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
 									// Write WAV head.
 									stream.Write(headBytes, 0, headBytes.Length);
 									// Write WAV data.

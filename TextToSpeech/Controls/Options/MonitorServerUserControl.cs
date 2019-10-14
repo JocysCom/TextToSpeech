@@ -13,10 +13,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			InitializeComponent();
 			if (ControlsHelper.IsDesignMode(this))
 				return;
-			ControlsHelper.AddDataBinding(UdpEnabledCheckBox, s => s.Checked, SettingsManager.Options, d => d.UdpMonitorEnabled);
-			ControlsHelper.AddDataBinding(UdpPortNumberNumericUpDown, s => s.Value, Program._UdpMonitor, d => d.PortNumber);
-			ControlsHelper.AddDataBinding(UdpPortMessagesTextBox, s => s.Text, Program._UdpMonitor, d => d.MessagesReceived);
-			UpdateExample();
 		}
 
 		private void MonitorUdpPortTestButton_Click(object sender, EventArgs e)
@@ -65,5 +61,13 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		}
 
+		private void MonitorServerUserControl_Load(object sender, EventArgs e)
+		{
+			// To avoid validation problems, make sure to add DataBindings inside "Load" event and not inside Constructor.
+			ControlsHelper.AddDataBinding(UdpEnabledCheckBox, s => s.Checked, SettingsManager.Options, d => d.UdpMonitorEnabled);
+			ControlsHelper.AddDataBinding(UdpPortNumberNumericUpDown, s => s.Value, Program._UdpMonitor, d => d.PortNumber);
+			ControlsHelper.AddDataBinding(UdpPortMessagesTextBox, s => s.Text, Program._UdpMonitor, d => d.MessagesReceived);
+			UpdateExample();
+		}
 	}
 }

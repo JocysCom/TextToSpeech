@@ -6,16 +6,13 @@ using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-	public partial class OptionsCacheUserControl : UserControl
+	public partial class CacheOptionsUserControl : UserControl
 	{
-		public OptionsCacheUserControl()
+		public CacheOptionsUserControl()
 		{
 			InitializeComponent();
 			if (ControlsHelper.IsDesignMode(this))
 				return;
-			ControlsHelper.AddDataBinding(CacheDataWriteCheckBox, c => c.Checked, SettingsManager.Options, d => d.CacheDataWrite);
-			ControlsHelper.AddDataBinding(CacheDataReadCheckBox, c => c.Checked, SettingsManager.Options, d => d.CacheDataRead);
-			ControlsHelper.AddDataBinding(CacheDataGeneralizeCheckBox, c => c.Checked, SettingsManager.Options, d => d.CacheDataGeneralize);
 		}
 
 		private void OpenCacheButton_Click(object sender, EventArgs e)
@@ -28,6 +25,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void OptionsCacheUserControl_Load(object sender, EventArgs e)
 		{
+			// To avoid validation problems, make sure to add DataBindings inside "Load" event and not inside Constructor.
+			ControlsHelper.AddDataBinding(CacheDataWriteCheckBox, c => c.Checked, SettingsManager.Options, d => d.CacheDataWrite);
+			ControlsHelper.AddDataBinding(CacheDataReadCheckBox, c => c.Checked, SettingsManager.Options, d => d.CacheDataRead);
+			ControlsHelper.AddDataBinding(CacheDataGeneralizeCheckBox, c => c.Checked, SettingsManager.Options, d => d.CacheDataGeneralize);
 			_CacheMessageFormat = CacheLabel.Text;
 			var files = MainHelper.GetCreateCacheFolder().GetFiles("*.*", SearchOption.AllDirectories);
 			var count = files.Count();

@@ -824,6 +824,9 @@ namespace JocysCom.ClassLibrary.Controls
 
 		#region Binding
 
+		/// <summary>
+		/// To avoid validation problems, make sure to add DataBindings inside "Load" event and not inside Constructor.
+		/// </summary>
 		public static Binding AddDataBinding<Cs, Cp, Ds, Dp>(
 				Cs control, Expression<Func<Cs, Cp>> controlProperty,
 				Ds data, Expression<Func<Ds, Dp>> dataProperty,

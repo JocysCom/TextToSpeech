@@ -211,13 +211,16 @@ namespace JocysCom.TextToSpeech.Monitor
 		public string PlaybackDevice { get; set; }
 
 		[DefaultValue(false)]
-		public bool CacheDataGeneralize { get; set; }
+		public bool CacheDataWrite { get { return _CacheDataWrite; } set { _CacheDataWrite = value; OnPropertyChanged(); } }
+		bool _CacheDataWrite;
 
 		[DefaultValue(true)]
-		public bool CacheDataRead { get; set; }
+		public bool CacheDataRead { get { return _CacheDataRead; } set { _CacheDataRead = value; OnPropertyChanged(); } }
+		bool _CacheDataRead;
 
 		[DefaultValue(false)]
-		public bool CacheDataWrite { get; set; }
+		public bool CacheDataGeneralize { get { return _CacheDataGeneralize; } set { _CacheDataGeneralize = value; OnPropertyChanged(); } }
+		bool _CacheDataGeneralize;
 
 		[DefaultValue(100)]
 		public int Volume { get; set; }

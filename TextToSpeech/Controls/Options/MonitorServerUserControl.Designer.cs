@@ -216,15 +216,16 @@
 			this.CodeExampleTextBox.Size = new System.Drawing.Size(458, 130);
 			this.CodeExampleTextBox.TabIndex = 6;
 			// 
-			// MonitorUdpPortUserControl
+			// MonitorServerUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.CodeExampleTextBox);
 			this.Controls.Add(this.TestMessageGroupBox);
 			this.Controls.Add(this.MainSettingsGroupBox);
-			this.Name = "MonitorUdpPortUserControl";
+			this.Name = "MonitorServerUserControl";
 			this.Size = new System.Drawing.Size(640, 280);
+			this.Load += new System.EventHandler(this.MonitorServerUserControl_Load);
 			((System.ComponentModel.ISupportInitialize)(this.UdpPortNumberNumericUpDown)).EndInit();
 			this.MainSettingsGroupBox.ResumeLayout(false);
 			this.MainSettingsGroupBox.PerformLayout();

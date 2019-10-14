@@ -215,11 +215,11 @@
     <Compile Include="Controls\Options\MonitorDisplayUserControl.Designer.cs">
       <DependentUpon>MonitorDisplayUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Options\OptionsCacheUserControl.cs">
+    <Compile Include="Controls\Options\CacheOptionsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Options\OptionsCacheUserControl.Designer.cs">
-      <DependentUpon>OptionsCacheUserControl.cs</DependentUpon>
+    <Compile Include="Controls\Options\CacheOptionsUserControl.Designer.cs">
+      <DependentUpon>CacheOptionsUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Options\MonitorNetworkUserControl.cs">
       <SubType>UserControl</SubType>
@@ -395,8 +395,8 @@
     <EmbeddedResource Include="Controls\Options\MonitorDisplayUserControl.resx">
       <DependentUpon>MonitorDisplayUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Options\OptionsCacheUserControl.resx">
-      <DependentUpon>OptionsCacheUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Options\CacheOptionsUserControl.resx">
+      <DependentUpon>CacheOptionsUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Options\MonitorNetworkUserControl.resx">
       <DependentUpon>MonitorNetworkUserControl.cs</DependentUpon>

@@ -248,6 +248,7 @@
 			this.Controls.Add(this.CaptureGroupBox);
 			this.Name = "MonitorNetworkUserControl";
 			this.Size = new System.Drawing.Size(640, 280);
+			this.Load += new System.EventHandler(this.MonitorNetworkUserControl_Load);
 			this.CaptureGroupBox.ResumeLayout(false);
 			this.CaptureGroupBox.PerformLayout();
 			this.LogGroupBox.ResumeLayout(false);

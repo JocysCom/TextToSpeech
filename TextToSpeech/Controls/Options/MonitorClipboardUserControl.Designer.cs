@@ -125,6 +125,7 @@
 			this.Controls.Add(this.MainSettingsGroupBox);
 			this.Name = "MonitorClipboardUserControl";
 			this.Size = new System.Drawing.Size(640, 280);
+			this.Load += new System.EventHandler(this.MonitorClipboardUserControl_Load);
 			this.MainSettingsGroupBox.ResumeLayout(false);
 			this.MainSettingsGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CopyIntervalUpDown)).EndInit();

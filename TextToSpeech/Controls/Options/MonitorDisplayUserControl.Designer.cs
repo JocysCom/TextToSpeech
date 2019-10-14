@@ -56,9 +56,9 @@
 			this.RunAsAdministratorLabel = new System.Windows.Forms.Label();
 			this.DebugGroupBox = new System.Windows.Forms.GroupBox();
 			this.button1 = new System.Windows.Forms.Button();
+			this.ResultsChangeLabel = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.ResultsChangeTextBox = new System.Windows.Forms.TextBox();
-			this.ResultsChangeLabel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.BoxXUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxYUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
@@ -395,6 +395,16 @@
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.ResetToDefaultButton_Click);
 			// 
+			// ResultsChangeLabel
+			// 
+			this.ResultsChangeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.ResultsChangeLabel.AutoSize = true;
+			this.ResultsChangeLabel.Location = new System.Drawing.Point(498, 152);
+			this.ResultsChangeLabel.Name = "ResultsChangeLabel";
+			this.ResultsChangeLabel.Size = new System.Drawing.Size(44, 13);
+			this.ResultsChangeLabel.TabIndex = 24;
+			this.ResultsChangeLabel.Text = "Change";
+			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
@@ -413,16 +423,6 @@
 			this.ResultsChangeTextBox.Size = new System.Drawing.Size(75, 20);
 			this.ResultsChangeTextBox.TabIndex = 20;
 			// 
-			// ResultsChangeLabel
-			// 
-			this.ResultsChangeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ResultsChangeLabel.AutoSize = true;
-			this.ResultsChangeLabel.Location = new System.Drawing.Point(498, 152);
-			this.ResultsChangeLabel.Name = "ResultsChangeLabel";
-			this.ResultsChangeLabel.Size = new System.Drawing.Size(44, 13);
-			this.ResultsChangeLabel.TabIndex = 24;
-			this.ResultsChangeLabel.Text = "Change";
-			// 
 			// MonitorDisplayUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -432,6 +432,7 @@
 			this.Controls.Add(this.MainSettingsGroupBox);
 			this.Name = "MonitorDisplayUserControl";
 			this.Size = new System.Drawing.Size(809, 254);
+			this.Load += new System.EventHandler(this.MonitorDisplayUserControl_Load);
 			((System.ComponentModel.ISupportInitialize)(this.BoxXUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxYUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();

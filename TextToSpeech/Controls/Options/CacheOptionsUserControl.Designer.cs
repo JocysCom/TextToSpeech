@@ -1,6 +1,6 @@
 ﻿namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-	partial class OptionsCacheUserControl
+	partial class CacheOptionsUserControl
 	{
 		/// <summary> 
 		/// Required designer variable.
