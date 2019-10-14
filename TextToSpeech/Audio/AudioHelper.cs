@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.IO;
 
 namespace JocysCom.TextToSpeech.Monitor.Audio
@@ -56,7 +57,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		}
 
 		/// <summary>
-		/// Get duration in miliseconds.
+		/// Get duration in milliseconds.
 		/// </summary>
 		public static int GetDuration(int wavDataSize, int sampleRate, int bitsPerSample, int channelCount)
 		{
@@ -141,6 +142,67 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				retVal[3] = (byte)((source >> 0x18) & 0xFF);
 			}
 			return retVal;
+		}
+
+		#endregion
+
+		#region File converter
+
+
+
+		public static void Convert(Stream source, FileInfo wavFi)
+		{
+			if (wavFi == null)
+				throw new ArgumentNullException(nameof(wavFi));
+			// Create directory if not exists.
+			if (!wavFi.Directory.Exists)
+				wavFi.Directory.Create();
+			WaveFormat format;
+			format = new WaveFormat(
+				SettingsManager.Options.CacheAudioSampleRate,
+				(int)SettingsManager.Options.CacheAudioChannels
+			);
+		   format = WaveFormat.CreateCustomFormat(
+				SettingsManager.Options.CacheAudioFormat,
+				SettingsManager.Options.CacheAudioSampleRate,
+				(int)SettingsManager.Options.CacheAudioChannels,
+				SettingsManager.Options.CacheAudioAverageBitsPerSecond / 8,
+				SettingsManager.Options.CacheAudioBlockAlign,
+				SettingsManager.Options.AudioBitsPerSample
+			);
+			using (var reader = new WaveFileReader(source))
+			using (var conversionStream2 = new WaveFormatConversionStream(format, reader))
+			{
+				WaveFileWriter.CreateWaveFile(wavFi.FullName, conversionStream2);
+			}
+		}
+
+		public static void Write(PlayItem item, FileInfo wavFi)
+		{
+			if (item == null)
+				throw new ArgumentNullException(nameof(item));
+			if (wavFi == null)
+				throw new ArgumentNullException(nameof(wavFi));
+			using (var stream = new FileStream(wavFi.FullName, FileMode.Create))
+				Write(item, stream);
+		}
+
+		public static void Write(PlayItem item, Stream stream)
+		{
+			if (item == null)
+				throw new ArgumentNullException(nameof(item));
+			if (stream == null)
+				throw new ArgumentNullException(nameof(stream));
+			var headBytes = GetWavHead(
+					item.WavData.Length,
+					item.WavHead.SampleRate,
+					item.WavHead.BitsPerSample,
+					item.WavHead.Channels
+			);
+			// Write WAV head.
+			stream.Write(headBytes, 0, headBytes.Length);
+			// Write WAV data.
+			stream.Write(item.WavData, 0, item.WavData.Length);
 		}
 
 		#endregion

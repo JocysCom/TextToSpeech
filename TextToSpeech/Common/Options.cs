@@ -1,4 +1,5 @@
 ﻿using JocysCom.TextToSpeech.Monitor.Capturing;
+using NAudio.Wave;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -226,18 +227,60 @@ namespace JocysCom.TextToSpeech.Monitor
 		public int Volume { get; set; }
 
 		[DefaultValue(AudioChannel.Mono)]
-		public AudioChannel AudioChannels { get; set; }
+		public AudioChannel AudioChannels { get { return _AudioChannels; } set { _AudioChannels = value; OnPropertyChanged(); } }
+		AudioChannel _AudioChannels = AudioChannel.Mono;
 
 		[DefaultValue(22050)]
-		public int AudioSampleRate { get; set; }
+		public int AudioSampleRate { get { return _AudioSampleRate; } set { _AudioSampleRate = value; OnPropertyChanged(); } }
+		int _AudioSampleRate = 22050;
 
 		[DefaultValue(16)]
-		public int AudioBitsPerSample
-		{
-			get { return _AudioBitsPerSample; }
-			set { _AudioBitsPerSample = value; OnPropertyChanged(); }
-		}
-		int _AudioBitsPerSample;
+		public int AudioBitsPerSample { get { return _AudioBitsPerSample; } set { _AudioBitsPerSample = value; OnPropertyChanged(); } }
+		int _AudioBitsPerSample = 16;
+
+		#region Audio File Cache
+
+		[DefaultValue(false)]
+		public bool CacheAudioConvert { get { return _CacheAudioConvert; } set { _CacheAudioConvert = value; OnPropertyChanged(); } }
+		bool _CacheAudioConvert;
+
+		[DefaultValue(WaveFormatEncoding.Pcm)]
+		public WaveFormatEncoding CacheAudioFormat { get { return _CacheAudioFormat; } set { _CacheAudioFormat = value; OnPropertyChanged(); } }
+		WaveFormatEncoding _CacheAudioFormat = WaveFormatEncoding.Pcm;
+
+		[DefaultValue(AudioChannel.Mono)]
+		public AudioChannel CacheAudioChannels { get { return _CacheAudioChannels; } set { _CacheAudioChannels = value; OnPropertyChanged(); } }
+		AudioChannel _CacheAudioChannels = AudioChannel.Mono;
+
+		[DefaultValue(22050)]
+		public int CacheAudioSampleRate { get { return _CacheAudioSampleRate; } set { _CacheAudioSampleRate = value; OnPropertyChanged(); } }
+		int _CacheAudioSampleRate = 22050;
+
+		[DefaultValue(16)]
+		public int CacheAudioBitsPerSample { get { return _CacheAudioBitsPerSample; } set { _CacheAudioBitsPerSample = value; OnPropertyChanged(); } }
+		int _CacheAudioBitsPerSample = 16;
+
+		// Data rates(hence, bit-rates) are always expressed in powers of 10, not 2.
+		// 128 kilobits per second = 128,000 bits per second = 16,000 bytes per second.
+		//
+		// 32 kbit/s – generally acceptable only for speech
+		// 96 kbit/s – generally used for speech or low-quality streaming
+		// 128 or 160 kbit/s – mid-range bitrate quality
+		// 192 kbit/s – medium quality bitrate
+		// 256 kbit/s – a commonly used high-quality bitrate
+		// 320 kbit/s – highest level supported by the MP3 standard	
+		//	
+		[DefaultValue(128000)]
+		public int CacheAudioAverageBitsPerSecond { get { return _CacheAudioAverageBitsPerSecond; } set { _CacheAudioAverageBitsPerSecond = value; OnPropertyChanged(); } }
+		int _CacheAudioAverageBitsPerSecond = 128000;
+
+		// Block Alignment = Bytes per Sample x Number of Channels
+		// For example, the block alignment value for 16-bit PCM format mono audio is 2 (2 bytes per sample x 1 channel). For 16-bit PCM format stereo audio, the block alignment value is 4.
+		[DefaultValue(2)]
+		public int CacheAudioBlockAlign { get { return _CacheAudioBlockAlign; } set { _CacheAudioBlockAlign = value; OnPropertyChanged(); } }
+		int _CacheAudioBlockAlign = 2;
+
+		#endregion
 
 		#region INotifyPropertyChanged
 

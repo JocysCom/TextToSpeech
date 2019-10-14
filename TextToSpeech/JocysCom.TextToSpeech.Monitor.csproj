@@ -105,11 +105,17 @@
   <ItemGroup>
     <Reference Include="AWSSDK.Core">
       <HintPath>Resources\Amazon\AWSSDK.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="AWSSDK.Polly">
       <HintPath>Resources\Amazon\AWSSDK.Polly.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NAudio">
+      <HintPath>Resources\NAudio\NAudio.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PacketDotNet">
       <HintPath>Resources\SharpPcap\PacketDotNet.dll</HintPath>
       <Private>False</Private>
@@ -157,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio\AudioHelper.cs" />
+    <Compile Include="Audio\CacheFileFormat.cs" />
     <Compile Include="Audio\EffectsPreset.cs" />
     <Compile Include="Audio\EffectType.cs" />
     <Compile Include="Audio\Global.cs" />
@@ -656,6 +663,8 @@
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.XAudio2.xml" />
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.MediaFoundation.dll" />
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.MediaFoundation.xml" />
+    <EmbeddedResource Include="Resources\NAudio\NAudio.dll" />
+    <EmbeddedResource Include="Resources\NAudio\NAudio.xml" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon.png" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon_Buttons.png" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon_MiniFrame.png" />

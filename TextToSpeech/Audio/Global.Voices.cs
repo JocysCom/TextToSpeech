@@ -353,7 +353,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		}
 
 		/// <summary>
-		/// Convert xml to WAV bytes. WAV won't have the header, so you have to add it separatelly.
+		/// Convert xml to WAV bytes. WAV won't have the header, so you have to add it separately.
 		/// </summary>
 		static void ConvertXmlToWav(PlayItem item)
 		{
@@ -414,7 +414,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 
 		/// <summary>
-		/// Convert xml to WAV bytes. WAV won't have the header, so you have to add it separatelly.
+		/// Convert XML to WAV bytes. WAV won't have the header, so you have to add it separately.
 		/// </summary>
 		static byte[] ConvertSapiXmlToWav(string xml, int sampleRate, int bitsPerSample, int channelCount)
 		{
@@ -570,14 +570,16 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 								// Create directory if not exists.
 								if (!xmlFi.Directory.Exists)
 									xmlFi.Directory.Create();
-								using (Stream stream = new FileStream(wavFi.FullName, FileMode.Create))
+								if (SettingsManager.Options.CacheAudioConvert)
 								{
-									var headBytes = AudioHelper.GetWavHead(item.WavData.Length, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
-									// Write WAV head.
-									stream.Write(headBytes, 0, headBytes.Length);
-									// Write WAV data.
-									stream.Write(item.WavData, 0, item.WavData.Length);
-
+									var allMs = new MemoryStream();
+									AudioHelper.Write(item, allMs);
+									allMs.Position = 0;
+									AudioHelper.Convert(allMs, wavFi);
+								}
+								else
+								{
+									AudioHelper.Write(item, wavFi);
 								}
 								// Write XML.
 								System.IO.File.WriteAllText(xmlFi.FullName, item.Xml, encoding);

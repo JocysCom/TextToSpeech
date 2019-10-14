@@ -126,6 +126,14 @@ namespace JocysCom.TextToSpeech.Monitor
 				else
 					_DisplayMonitor.Stop();
 			}
+
+			if (e.PropertyName == nameof(SettingsManager.Options.AudioBitsPerSample) ||
+				e.PropertyName == nameof(SettingsManager.Options.CacheAudioChannels))
+			{
+				var blockAlignment = (SettingsManager.Options.AudioBitsPerSample / 8) * (int)SettingsManager.Options.CacheAudioChannels;
+				if (blockAlignment != SettingsManager.Options.CacheAudioBlockAlign)
+					SettingsManager.Options.CacheAudioBlockAlign = blockAlignment;
+			}
 		}
 
 	}
