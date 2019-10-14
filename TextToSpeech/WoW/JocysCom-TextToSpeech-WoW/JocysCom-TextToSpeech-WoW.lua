@@ -1048,6 +1048,8 @@ function JocysCom_AttachAndShowFrames()
 				JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frameButton, "BOTTOMRIGHT", -36, 50)
 			elseif ItemTextFrame:IsVisible() then
 				JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frameButton, "BOTTOMRIGHT", -33, 75)
+			elseif MailFrame:IsVisible() then
+				JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frameButton, "BOTTOMRIGHT", 0, 1)
 			else
 				JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frameButton, "BOTTOMRIGHT", -33, 69)
 			end
