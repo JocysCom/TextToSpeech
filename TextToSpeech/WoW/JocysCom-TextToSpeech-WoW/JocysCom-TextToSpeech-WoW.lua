@@ -7,8 +7,12 @@
 -- Debug mode true(enabled) or false(disabled).
 local DebugEnabled = false
 
+-- version, build, date, tocversion = GetBuildInfo()
+local version, build, date, tocversion = GetBuildInfo()
+local classic = tocversion < 20000
+
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.6 ( 2019-10-12 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.7 ( 2019-10-14 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line.
@@ -295,11 +299,16 @@ function JocysCom_LoadEventSettings()
 	JocysCom_SetEvent(JocysCom_SaveCB, "UPDATE_MOUSEOVER_UNIT")
 	JocysCom_SetEvent(JocysCom_SaveCB, "PLAYER_TARGET_CHANGED")
 
-	--if DebugEnabled then JocysCom_OptionsFrame:RegisterAllEvents() end
+	-- if DebugEnabled then JocysCom_OptionsFrame:RegisterAllEvents() end
 end
 
 -- Register events.
 function JocysCom_RegisterEvents()
+
+	if classic then
+		QuestLogDetailScrollFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames)
+	end
+
 	C_ChatInfo.RegisterAddonMessagePrefix(addonPrefix) -- Addon message prefix.
 	JocysCom_OptionsFrame:SetScript("OnEvent", function(...) JocysCom_OptionsFrame_OnEvent(false, ...) end) -- Register events on JocysCom_OptionsFrame --- JocysCom_OptionsFrame_OnEvent(playButton, ...).
 	JocysCom_OptionsFrame:RegisterEvent("ADDON_LOADED") -- Load all addon settings on this event.
@@ -344,6 +353,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		JocysCom_LoadEventSettings() -- Register or unregister events.
 		JocysCom_DialogueScrollFrame:Show()
 		JocysCom_DialogueMiniFrame:Show()
+		if DebugEnabled then print("TOC: " .. tocversion) end
 		return
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		JocysCom_CreateOrUpdateMacro()
@@ -352,7 +362,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		JocysCom_SaveTocFileSettings()
 		return
 	elseif event == "UPDATE_MOUSEOVER_UNIT" then
-		if GossipFrame:IsVisible() or QuestFrame:IsVisible() or QuestMapFrame:IsVisible() or ItemTextFrame:IsVisible() or MailFrame:IsVisible() then return end
+		if GossipFrame:IsVisible() or QuestFrame:IsVisible() or ItemTextFrame:IsVisible() or MailFrame:IsVisible() or (not classic and QuestMapFrame:IsVisible()) or (classic and QuestLogFrame:IsVisible()) then return end
 		JocysCom_SaveNPC("mouseover")
 		return
 	elseif event == "PLAYER_TARGET_CHANGED" then
@@ -370,17 +380,18 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 			nameIntro = JocysCom_NameQuestCheckButton:GetChecked()
 			soundIntro = JocysCom_SoundQuestCheckButton:GetChecked()
 	elseif event == "QUEST_LOG_UPDATE_JOCYS" then
-			-- local questDetailID = QuestMapFrame.DetailsFrame.questID
-			-- local questLogIndex = GetQuestLogIndexByID(questDetailID); -- --GetQuestLogIndexByID(QuestLogPopupDetailFrame.questID)
-			-- local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLogTitle(questLogIndex)
-			-- local questPortrait, questPortraitText, questPortraitName, questPortraitMount = GetQuestLogPortraitGiver()
+			-- local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isStory = GetQuestLogTitle()
 			local questDescription, questObjectives = GetQuestLogQuestText()
 			group = "Quest"
-			local title = JocysCom_TitlesCheckButton:GetChecked() and QuestInfoTitleHeader:GetText() or nil
+			local title = nil
+			if classic then
+				title = JocysCom_TitlesCheckButton:GetChecked() and QuestLogQuestTitle:GetText() or nil
+			else
+				title = JocysCom_TitlesCheckButton:GetChecked() and QuestInfoTitleHeader:GetText() or nil
+			end
 			speakMessage = nilCheck(title, ". ") .. nilCheck(questObjectives, ". ") .. nilCheck(QuestInfoDescriptionHeader:GetText(), ". ") .. questDescription
 			soundIntro = JocysCom_SoundQuestCheckButton:GetChecked()
 	elseif event == "GOSSIP_SHOW" or event == "QUEST_GREETING" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "ITEM_TEXT_READY" then
-		-- local questID = GetQuestID()
 		if event == "ITEM_TEXT_READY" then
 			speakMessage = ItemTextGetText()
 		elseif event == "GOSSIP_SHOW" then
@@ -971,7 +982,8 @@ function JocysCom_PlayOpenedFrame()
 		elseif QuestRewardScrollFrame:IsVisible() then event = "QUEST_COMPLETE"
 		end
 	-- QuestLog.
-	elseif QuestMapFrame:IsVisible() then event = "QUEST_LOG_UPDATE_JOCYS"
+	elseif not classic and QuestMapFrame:IsVisible() then event = "QUEST_LOG_UPDATE_JOCYS"
+	elseif classic and QuestLogFrame:IsVisible() then event = "QUEST_LOG_UPDATE_JOCYS"
 	-- Item.
 	elseif ItemTextFrame:IsVisible() then event = "ITEM_TEXT_READY"
 	-- Mail.
@@ -990,9 +1002,13 @@ function JocysCom_AttachAndShowFrames()
 		frameButton = GossipFrame
 		frameScroll = GossipGreetingScrollFrame
 	-- Log.
-	elseif QuestMapFrame:IsVisible() then
+	elseif not classic and QuestMapFrame:IsVisible() then
 		frameButton = QuestMapFrame.DetailsFrame
 		frameScroll = QuestMapDetailsScrollFrame
+	-- Quest.
+	elseif classic and QuestLogFrame:IsVisible() then
+		frameButton = QuestLogFrame
+		frameScroll = QuestLogDetailScrollFrame
 	-- Quest.
 	elseif QuestFrame:IsVisible() then
 		if QuestGreetingScrollFrame:IsVisible() then
@@ -1023,11 +1039,21 @@ function JocysCom_AttachAndShowFrames()
 	-- ButtonFrame
 	JocysCom_DialogueMiniFrame:ClearAllPoints()
 	JocysCom_DialogueMiniFrame:SetParent(frameButton)
-	if QuestMapFrame:IsVisible() then
+	if not classic and QuestMapFrame:IsVisible() then
 		frameButton = QuestMapFrame
 		JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frameButton, "BOTTOMRIGHT", 0, -2) -- Exception for QuestMapFrame.
 	else
-		JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frameButton, "BOTTOMRIGHT", 0, 1)
+		if classic then
+			if QuestLogFrame:IsVisible() then
+				JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frameButton, "BOTTOMRIGHT", -36, 50)
+			elseif ItemTextFrame:IsVisible() then
+				JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frameButton, "BOTTOMRIGHT", -33, 75)
+			else
+				JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frameButton, "BOTTOMRIGHT", -33, 69)
+			end
+		else
+			JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frameButton, "BOTTOMRIGHT", 0, 1)
+		end
 	end
 	-- If DebugEnabled.
 	if DebugEnabled then
@@ -1262,6 +1288,9 @@ end
 function JocysCom_FilterDND()
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", function(self, event, msg) return not DebugEnabled and JocysCom_DndCheckButton:GetChecked() and string.find(msg, "You are no longer marked Busy.") ~= nil end)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", function(self, event, msg) return not DebugEnabled and JocysCom_DndCheckButton:GetChecked() and string.find(msg, "You are now Busy:") ~= nil end)
+	-- WoW Classic
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", function(self, event, msg) return not DebugEnabled and JocysCom_DndCheckButton:GetChecked() and string.find(msg, "You are no longer marked DND.") ~= nil end)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", function(self, event, msg) return not DebugEnabled and JocysCom_DndCheckButton:GetChecked() and string.find(msg, "You are now DND.") ~= nil end)
 end
 
 -- Load and apply settings from toc file.
