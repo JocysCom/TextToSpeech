@@ -1,4 +1,5 @@
-﻿using JocysCom.ClassLibrary.Controls;
+﻿using Amazon.Polly;
+using JocysCom.ClassLibrary.Controls;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -60,11 +61,20 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		public bool IsSameVoice(InstalledVoiceEx voice)
 		{
-			return
+			var isSame =
 				Source == voice.Source &&
 				CultureName == voice.CultureName &&
 				Name == voice.Name &&
 				Gender == voice.Gender;
+			// If source is amazon then compare engine too.
+			if (Source == VoiceSource.Amazon) {
+				var query = System.Web.HttpUtility.ParseQueryString(SourceKeys ?? "");
+				var voiceQuery = System.Web.HttpUtility.ParseQueryString(voice.SourceKeys ?? "");
+				Engine engine = query[_KeyEngine];
+				Engine voiceEngine = voiceQuery[_KeyEngine];
+				isSame &= engine == voiceEngine; 
+			}
+			return isSame;
 		}
 
 		public InstalledVoiceEx(Amazon.Polly.Model.Voice voice)

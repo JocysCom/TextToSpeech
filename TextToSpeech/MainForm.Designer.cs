@@ -183,7 +183,8 @@
 			// 
 			// MessagesTabControl
 			// 
-			this.MessagesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.MessagesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.MessagesTabControl.Controls.Add(this.VoicesTabPage);
 			this.MessagesTabControl.Controls.Add(this.VoiceDefaultsTabPage);
@@ -415,7 +416,8 @@
 			// 
 			// EffectTabControl
 			// 
-			this.EffectTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.EffectTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.EffectTabControl.ContextMenuStrip = this.EffectPresetsContextMenuStrip;
 			this.EffectTabControl.Controls.Add(this.EffectTabPage);
 			this.EffectTabControl.ImageList = this.TabsImageList;
@@ -652,8 +654,7 @@
 			// 
 			// TextXmlTabControl
 			// 
-			this.TextXmlTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+			this.TextXmlTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.TextXmlTabControl.Controls.Add(this.SandBoxTabPage);
 			this.TextXmlTabControl.Controls.Add(this.MessagesTabPage);
@@ -978,7 +979,7 @@
 			// 
 			// RecognizeButton
 			// 
-			this.RecognizeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.RecognizeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.RecognizeButton.Location = new System.Drawing.Point(737, 333);
 			this.RecognizeButton.Name = "RecognizeButton";
 			this.RecognizeButton.Size = new System.Drawing.Size(93, 23);
@@ -1103,8 +1104,7 @@
 			// 
 			// IncomingGroupBox
 			// 
-			this.IncomingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.IncomingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.IncomingGroupBox.Controls.Add(this.InCommandLabel);
 			this.IncomingGroupBox.Controls.Add(this.InVolumeLabel);
 			this.IncomingGroupBox.Controls.Add(this.InRateLabel);
