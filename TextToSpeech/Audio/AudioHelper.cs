@@ -157,24 +157,35 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			// Create directory if not exists.
 			if (!wavFi.Directory.Exists)
 				wavFi.Directory.Create();
-			WaveFormat format;
-			format = new WaveFormat(
+			var ad = new SharpDX.MediaFoundation.AudioDecoder(source);
+			WaveFormat destinationFormat
+				= WaveFormat.CreateMuLawFormat(
 				SettingsManager.Options.CacheAudioSampleRate,
 				(int)SettingsManager.Options.CacheAudioChannels
 			);
-		   format = WaveFormat.CreateCustomFormat(
-				SettingsManager.Options.CacheAudioFormat,
-				SettingsManager.Options.CacheAudioSampleRate,
-				(int)SettingsManager.Options.CacheAudioChannels,
-				SettingsManager.Options.CacheAudioAverageBitsPerSecond / 8,
-				SettingsManager.Options.CacheAudioBlockAlign,
-				SettingsManager.Options.AudioBitsPerSample
-			);
+			destinationFormat = WaveFormat.CreateCustomFormat(
+			  SettingsManager.Options.CacheAudioFormat,
+			  SettingsManager.Options.CacheAudioSampleRate,
+			  (int)SettingsManager.Options.CacheAudioChannels,
+			  SettingsManager.Options.CacheAudioAverageBitsPerSecond / 8,
+			  SettingsManager.Options.CacheAudioBlockAlign,
+			  SettingsManager.Options.CacheAudioBitsPerSample
+		  );
+			var wf = ad.WaveFormat;
+			source.Position = 0;
+			var sourceFormat = WaveFormat.CreateCustomFormat((WaveFormatEncoding)wf.Encoding, wf.SampleRate, wf.Channels, wf.AverageBytesPerSecond, wf.BlockAlign, wf.BitsPerSample);
 			using (var reader = new WaveFileReader(source))
-			using (var conversionStream2 = new WaveFormatConversionStream(format, reader))
+			// The ACM mu-law encoder expects its input to be 16 bit.
+			// If you're working with mu or a-law, the sample rate is likely to be low as well.
+			// The following two lines of code will create a zero-length stream of PCM 16 bit and
+			// pass it into a WaveFormatConversionStream to convert it to a-law.
+			// It should not throw a "conversion not possible" error unless for some reason you don't have the G.711 encoder installed on your machine.
+			using (var conversionStream1 = new WaveFormatConversionStream(new WaveFormat(destinationFormat.SampleRate, 16, destinationFormat.Channels), reader))
+			using (var conversionStream2 = new WaveFormatConversionStream(destinationFormat, conversionStream1))
 			{
 				WaveFileWriter.CreateWaveFile(wavFi.FullName, conversionStream2);
 			}
+			ad.Dispose();
 		}
 
 		public static void Write(PlayItem item, FileInfo wavFi)
