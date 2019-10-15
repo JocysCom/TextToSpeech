@@ -4,7 +4,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 {
 	public enum CacheFileFormat
 	{
-		//WAV,
+		[Description("MPEG Audio Layer III (*.mp3")]
+		MP3,
+		//[Description("Advanced Audio Coding (*.aac)")]
+		//AAC,
 		/// <summary>
 		/// Data communication over the telephone network.
 		/// https://www.itu.int/rec/T-REC-G.711

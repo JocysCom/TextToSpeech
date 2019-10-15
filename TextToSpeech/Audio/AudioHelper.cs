@@ -158,14 +158,16 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			if (!wavFi.Directory.Exists)
 				wavFi.Directory.Create();
 			var ad = new SharpDX.MediaFoundation.AudioDecoder(source);
-			WaveFormat destinationFormat
-				= WaveFormat.CreateMuLawFormat(
-				SettingsManager.Options.CacheAudioSampleRate,
-				(int)SettingsManager.Options.CacheAudioChannels
-			);
 			var wavFormat = WaveFormatEncoding.MuLaw;
-			switch (SettingsManager.Options.CacheAudioFormat)
+			var convertFormat = SettingsManager.Options.CacheAudioFormat;
+			switch (convertFormat)
 			{
+				case CacheFileFormat.AAC:
+					wavFormat = WaveFormatEncoding.RawAac;
+					break;
+				case CacheFileFormat.MP3:
+					wavFormat = WaveFormatEncoding.MpegLayer3;
+					break;
 				case CacheFileFormat.ULaw:
 					wavFormat = WaveFormatEncoding.MuLaw;
 					break;
@@ -175,7 +177,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				default:
 					break;
 			}
-			destinationFormat = WaveFormat.CreateCustomFormat(
+			var destinationFormat = WaveFormat.CreateCustomFormat(
 			  wavFormat,
 			  SettingsManager.Options.CacheAudioSampleRate,
 			  (int)SettingsManager.Options.CacheAudioChannels,
@@ -187,17 +189,39 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var wf = ad.WaveFormat;
 			source.Position = 0;
 			var sourceFormat = WaveFormat.CreateCustomFormat((WaveFormatEncoding)wf.Encoding, wf.SampleRate, wf.Channels, wf.AverageBytesPerSecond, wf.BlockAlign, wf.BitsPerSample);
-			using (var reader = new WaveFileReader(source))
+			var reader = new WaveFileReader(source);
 			// The ACM mu-law encoder expects its input to be 16 bit.
 			// If you're working with mu or a-law, the sample rate is likely to be low as well.
 			// The following two lines of code will create a zero-length stream of PCM 16 bit and
 			// pass it into a WaveFormatConversionStream to convert it to a-law.
 			// It should not throw a "conversion not possible" error unless for some reason you don't have the G.711 encoder installed on your machine.
-			using (var conversionStream1 = new WaveFormatConversionStream(new WaveFormat(destinationFormat.SampleRate, 16, destinationFormat.Channels), reader))
-			using (var conversionStream2 = new WaveFormatConversionStream(destinationFormat, conversionStream1))
+			WaveFormatConversionStream conversionStream1 = null;
+			string fileName;
+			string fullName;
+			if (convertFormat == CacheFileFormat.ULaw || convertFormat == CacheFileFormat.ALaw)
 			{
-				WaveFileWriter.CreateWaveFile(wavFi.FullName, conversionStream2);
+				conversionStream1 = new WaveFormatConversionStream(new WaveFormat(destinationFormat.SampleRate, 16, destinationFormat.Channels), reader);
+				fileName = Path.GetFileNameWithoutExtension(wavFi.FullName);
+				fullName = Path.Combine(wavFi.Directory.FullName, fileName + "." + convertFormat.ToString().ToLower() + ".wav");
+				using (var conversionStream2 = new WaveFormatConversionStream(destinationFormat, conversionStream1))
+					WaveFileWriter.CreateWaveFile(fullName, conversionStream2);
+				conversionStream1.Dispose();
 			}
+			else if (convertFormat == CacheFileFormat.AAC)
+			{
+				fileName = Path.GetFileNameWithoutExtension(wavFi.FullName);
+				fullName = Path.Combine(wavFi.Directory.FullName, fileName + ".aac");
+				MediaFoundationEncoder.EncodeToAac(reader, fullName, destinationFormat.AverageBytesPerSecond * 8);
+			}
+			else if (convertFormat == CacheFileFormat.MP3)
+			{
+				fileName = Path.GetFileNameWithoutExtension(wavFi.FullName);
+				fullName = Path.Combine(wavFi.Directory.FullName, fileName + ".mp3");
+				MediaFoundationEncoder.EncodeToMp3(reader, fullName, destinationFormat.AverageBytesPerSecond * 8);
+			}
+			else
+				return;
+			reader.Dispose();
 			ad.Dispose();
 		}
 

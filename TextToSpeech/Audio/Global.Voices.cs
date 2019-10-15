@@ -565,11 +565,17 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 							// WavHead could change.
 							ConvertXmlToWav(item);
 							item.Duration = AudioHelper.GetDuration(item.WavData.Length, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
-							if (SettingsManager.Options.CacheDataWrite && item.WavData != null)
+							if (item.WavData != null)
 							{
 								// Create directory if not exists.
 								if (!xmlFi.Directory.Exists)
 									xmlFi.Directory.Create();
+								// Write XML.
+								System.IO.File.WriteAllText(xmlFi.FullName, item.Xml, encoding);
+								if (SettingsManager.Options.CacheDataWrite)
+								{
+									AudioHelper.Write(item, wavFi);
+								}
 								if (SettingsManager.Options.CacheAudioConvert)
 								{
 									var allMs = new MemoryStream();
@@ -577,14 +583,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 									allMs.Position = 0;
 									AudioHelper.Convert(allMs, wavFi);
 								}
-								else
-								{
-									AudioHelper.Write(item, wavFi);
-								}
-								// Write XML.
-								System.IO.File.WriteAllText(xmlFi.FullName, item.Xml, encoding);
 							}
-
 						}
 						item.Status = (item.WavHead == null || item.WavData == null)
 							? item.Status = JobStatusType.Error

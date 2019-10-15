@@ -1,6 +1,5 @@
 ﻿using JocysCom.ClassLibrary.Controls;
 using JocysCom.TextToSpeech.Monitor.Audio;
-using NAudio.Wave;
 using System;
 using System.IO;
 using System.Linq;
@@ -67,7 +66,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			}
 			var mag = (int)Math.Max(0, Math.Log(value, 1024));
 			var adjustedSize = Math.Round(value / Math.Pow(1024, mag), decimalPlaces);
-			return String.Format("{0} {1}", adjustedSize, SizeSuffixes[mag]);
+			return string.Format("{0} {1}", adjustedSize, SizeSuffixes[mag]);
 		}
 
 		void AddCacheBindings()
@@ -91,13 +90,35 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			CacheAudioBlockAlignComboBox.DataBindings.Clear();
 		}
 
-
-
 		private void CacheAudioFormatComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			ClearCacheBindings();
 			switch (SettingsManager.Options.CacheAudioFormat)
 			{
+				case CacheFileFormat.AAC:
+					CacheAudioChannelsComboBox.Enabled = false;
+					CacheAudioSampleRateComboBox.Enabled = false;
+					CacheAudioBitsPerSampleComboBox.Enabled = false;
+					CacheAudioAverageBitsPerSecondComboBox.Enabled = true;
+					CacheAudioBlockAlignComboBox.Enabled = false;
+					SettingsManager.Options.CacheAudioChannels = AudioChannel.Mono;
+					SettingsManager.Options.CacheAudioSampleRate = 22050;
+					SettingsManager.Options.CacheAudioBitsPerSample = 16;
+					SettingsManager.Options.CacheAudioAverageBitsPerSecond = 64000;
+					SettingsManager.Options.CacheAudioBlockAlign = 2;
+					break;
+				case CacheFileFormat.MP3:
+					CacheAudioChannelsComboBox.Enabled = false;
+					CacheAudioSampleRateComboBox.Enabled = false;
+					CacheAudioBitsPerSampleComboBox.Enabled = false;
+					CacheAudioAverageBitsPerSecondComboBox.Enabled = true;
+					CacheAudioBlockAlignComboBox.Enabled = false;
+					SettingsManager.Options.CacheAudioChannels = AudioChannel.Mono;
+					SettingsManager.Options.CacheAudioSampleRate = 22050;
+					SettingsManager.Options.CacheAudioBitsPerSample = 16;
+					SettingsManager.Options.CacheAudioAverageBitsPerSecond = 96000;
+					SettingsManager.Options.CacheAudioBlockAlign = 2;
+					break;
 				case CacheFileFormat.ULaw:
 				case CacheFileFormat.ALaw:
 					CacheAudioChannelsComboBox.Enabled = false;

@@ -843,7 +843,12 @@ namespace JocysCom.ClassLibrary.Controls
 			var checkBox = control as CheckBox;
 			if (checkBox != null)
 				name = nameof(checkBox.Checked);
-			return control.DataBindings.Add(name, data, dataMemberName);
+			return control.DataBindings.Add(name, data, dataMemberName,
+				false,
+				DataSourceUpdateMode.OnPropertyChanged,
+				null,
+				null,
+				null);
 		}
 
 		/// <summary>

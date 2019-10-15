@@ -74,6 +74,7 @@
 			this.OpenCacheButton.TabIndex = 6;
 			this.OpenCacheButton.Text = "Open...";
 			this.OpenCacheButton.UseVisualStyleBackColor = true;
+			this.OpenCacheButton.Click += new System.EventHandler(this.OpenCacheButton_Click);
 			// 
 			// CacheDataGeneralizeCheckBox
 			// 
