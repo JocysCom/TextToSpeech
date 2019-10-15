@@ -565,25 +565,24 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 							// WavHead could change.
 							ConvertXmlToWav(item);
 							item.Duration = AudioHelper.GetDuration(item.WavData.Length, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
-							if (item.WavData != null)
+						}
+						if (item.WavData != null)
+						{
+							if (SettingsManager.Options.CacheDataWrite || SettingsManager.Options.CacheAudioConvert)
 							{
 								// Create directory if not exists.
 								if (!xmlFi.Directory.Exists)
 									xmlFi.Directory.Create();
-								// Write XML.
-								System.IO.File.WriteAllText(xmlFi.FullName, item.Xml, encoding);
-								if (SettingsManager.Options.CacheDataWrite)
-								{
-									AudioHelper.Write(item, wavFi);
-								}
-								if (SettingsManager.Options.CacheAudioConvert)
-								{
-									var allMs = new MemoryStream();
-									AudioHelper.Write(item, allMs);
-									allMs.Position = 0;
-									AudioHelper.Convert(allMs, wavFi);
-								}
+								if (!xmlFi.Exists)
+									// Write XML.
+									System.IO.File.WriteAllText(xmlFi.FullName, item.Xml, encoding);
 							}
+							// If data was synthesized i.e. was not loaded from the file then...
+							if (synthesize && SettingsManager.Options.CacheDataWrite)
+								AudioHelper.Write(item, wavFi);
+							// If must convert data to other formats.
+							if (SettingsManager.Options.CacheAudioConvert)
+								AudioHelper.Convert(item, wavFi);
 						}
 						item.Status = (item.WavHead == null || item.WavData == null)
 							? item.Status = JobStatusType.Error

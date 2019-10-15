@@ -136,7 +136,7 @@
 			this.groupBox1.Size = new System.Drawing.Size(235, 209);
 			this.groupBox1.TabIndex = 12;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Output Format";
+			this.groupBox1.Text = "Synthesized Output";
 			// 
 			// CacheAudioFormatComboBox
 			// 
@@ -271,9 +271,9 @@
 			this.CacheAudioConvertCheckBox.AutoSize = true;
 			this.CacheAudioConvertCheckBox.Location = new System.Drawing.Point(6, 19);
 			this.CacheAudioConvertCheckBox.Name = "CacheAudioConvertCheckBox";
-			this.CacheAudioConvertCheckBox.Size = new System.Drawing.Size(82, 17);
+			this.CacheAudioConvertCheckBox.Size = new System.Drawing.Size(131, 17);
 			this.CacheAudioConvertCheckBox.TabIndex = 1;
-			this.CacheAudioConvertCheckBox.Text = "Convert To:";
+			this.CacheAudioConvertCheckBox.Text = "Create audio file copy:";
 			this.CacheAudioConvertCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// CacheOptionsUserControl
