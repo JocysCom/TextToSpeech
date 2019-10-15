@@ -103,6 +103,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 				return;
 			// if value supplied and current is empty then...
 			if (!string.IsNullOrEmpty(v.language) && string.IsNullOrEmpty(language)) language = v.language;
+			if (!string.IsNullOrEmpty(v.name) && string.IsNullOrEmpty(name)) name = v.name;
 			if (!string.IsNullOrEmpty(v.gender) && string.IsNullOrEmpty(gender)) gender = v.gender;
 			if (!string.IsNullOrEmpty(v.effect) && string.IsNullOrEmpty(effect)) effect = v.effect;
 			if (!string.IsNullOrEmpty(v.pitch) && string.IsNullOrEmpty(pitch)) pitch = v.pitch;
@@ -122,6 +123,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 				throw new ArgumentNullException(nameof(v));
 			// if value supplied and current is not the same then...
 			if (!string.IsNullOrEmpty(v.language) && language != v.language) language = v.language;
+			if (!string.IsNullOrEmpty(v.name) && name != v.name) name = v.name;
 			if (!string.IsNullOrEmpty(v.gender) && gender != v.gender) gender = v.gender;
 			if (!string.IsNullOrEmpty(v.effect) && effect != v.effect) effect = v.effect;
 			if (!string.IsNullOrEmpty(v.pitch) && pitch != v.pitch) pitch = v.pitch;
@@ -140,6 +142,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 		{
 			if (v == null)
 				throw new ArgumentNullException(nameof(v));
+			name = v.name;
 			language = v.language;
 			gender = v.gender;
 			effect = v.effect;

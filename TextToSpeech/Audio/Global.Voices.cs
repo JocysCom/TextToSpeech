@@ -668,17 +668,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				else
 					OnHelp(missing, "Name", name);
 			}
-			// If culture supplied.
-			if (culture != null)
-			{
-				tmp = FilterVoicesByCulture(choice, culture);
-				// If choice available then...
-				if (tmp.Length > 0)
-					choice = tmp;
-				else
-					OnHelp(missing, "Culture", language);
-			}
-			// Filter by gender.
+			// Filter by gender (more important than by culture).
 			tmp = FilterVoicesByGender(choice, gender);
 			// If choice available then...
 			if (tmp.Length > 0)
@@ -688,6 +678,16 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				OnHelp(missing, "Gender", gender);
 				// Order by Male as default.
 				OrderVoicesByGender(ref data, MessageGender.Male);
+			}
+			// If culture supplied.
+			if (culture != null)
+			{
+				tmp = FilterVoicesByCulture(choice, culture);
+				// If choice available then...
+				if (tmp.Length > 0)
+					choice = tmp;
+				else
+					OnHelp(missing, "Culture", language);
 			}
 			// If nothing to choose from then...
 			if (choice.Length == 0)
