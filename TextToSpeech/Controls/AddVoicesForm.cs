@@ -25,6 +25,12 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				return;
 		}
 
+		private void List_ListChanged(object sender, ListChangedEventArgs e)
+		{
+			var list = (BindingList<InstalledVoiceEx>)sender;
+			OkButton.Enabled = list.Any(x => x.Enabled);
+		}
+
 		public DataGridView VoicesGridView
 		{
 			get { return VoicesPanel.VoicesGridView; }
@@ -48,6 +54,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		private void AddVoicesForm_Load(object sender, EventArgs e)
 		{
 			RefreshVoices();
+			var list = (BindingList<InstalledVoiceEx>)VoicesGridView.DataSource;
+			list.ListChanged += List_ListChanged;
+			OkButton.Enabled = list.Any(x => x.Enabled);
 		}
 
 		#region Parallel tasks.
@@ -105,6 +114,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			_CancelGetVoices = false;
 			StatusLabel.Text = "";
 			LogTabPage.Text = "Log: Scanning voices. Please wait...";
+			RefreshButton.Enabled = false;
 			MainTabControl.SelectedTab = LogTabPage;
 			list.Clear();
 			var voices = new List<InstalledVoiceEx>();
@@ -124,6 +134,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 					if (voices.Count > 0)
 						MainTabControl.SelectedTab = VoicesTabPage;
 					LogTabPage.Text = "Log";
+					RefreshButton.Enabled = true;
 				});
 			});
 			_Thread = new Thread(ts);
@@ -164,11 +175,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			return newList.OrderBy(x => x.CultureName).ThenBy(x => x.Name).ToList();
 		}
 
-		private void AmazonPolly_Exception(object sender, ClassLibrary.EventArgs<System.Exception> e)
-		{
-			throw new System.NotImplementedException();
-		}
-
 		/// <summary> 
 		/// Clean up any resources being used.
 		/// </summary>
@@ -177,6 +183,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		{
 			if (disposing)
 			{
+				var list = (BindingList<InstalledVoiceEx>)VoicesGridView.DataSource;
+				list.ListChanged -= List_ListChanged;
 				_CancelGetVoices = true;
 				if (components != null)
 					components.Dispose();
