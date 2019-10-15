@@ -95,18 +95,18 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ClearCacheBindings();
 			switch (SettingsManager.Options.CacheAudioFormat)
 			{
-				case CacheFileFormat.AAC:
-					CacheAudioChannelsComboBox.Enabled = false;
-					CacheAudioSampleRateComboBox.Enabled = false;
-					CacheAudioBitsPerSampleComboBox.Enabled = false;
-					CacheAudioAverageBitsPerSecondComboBox.Enabled = true;
-					CacheAudioBlockAlignComboBox.Enabled = false;
-					SettingsManager.Options.CacheAudioChannels = AudioChannel.Mono;
-					SettingsManager.Options.CacheAudioSampleRate = 22050;
-					SettingsManager.Options.CacheAudioBitsPerSample = 16;
-					SettingsManager.Options.CacheAudioAverageBitsPerSecond = 64000;
-					SettingsManager.Options.CacheAudioBlockAlign = 2;
-					break;
+				//case CacheFileFormat.AAC:
+				//	CacheAudioChannelsComboBox.Enabled = false;
+				//	CacheAudioSampleRateComboBox.Enabled = false;
+				//	CacheAudioBitsPerSampleComboBox.Enabled = false;
+				//	CacheAudioAverageBitsPerSecondComboBox.Enabled = true;
+				//	CacheAudioBlockAlignComboBox.Enabled = false;
+				//	SettingsManager.Options.CacheAudioChannels = AudioChannel.Mono;
+				//	SettingsManager.Options.CacheAudioSampleRate = 22050;
+				//	SettingsManager.Options.CacheAudioBitsPerSample = 16;
+				//	SettingsManager.Options.CacheAudioAverageBitsPerSecond = 64000;
+				//	SettingsManager.Options.CacheAudioBlockAlign = 2;
+				//	break;
 				case CacheFileFormat.MP3:
 					CacheAudioChannelsComboBox.Enabled = false;
 					CacheAudioSampleRateComboBox.Enabled = false;

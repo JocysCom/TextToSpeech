@@ -162,9 +162,9 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var convertFormat = SettingsManager.Options.CacheAudioFormat;
 			switch (convertFormat)
 			{
-				case CacheFileFormat.AAC:
-					wavFormat = WaveFormatEncoding.RawAac;
-					break;
+				//case CacheFileFormat.AAC:
+				//	wavFormat = WaveFormatEncoding.RawAac;
+				//	break;
 				case CacheFileFormat.MP3:
 					wavFormat = WaveFormatEncoding.MpegLayer3;
 					break;
@@ -207,12 +207,12 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					WaveFileWriter.CreateWaveFile(fullName, conversionStream2);
 				conversionStream1.Dispose();
 			}
-			else if (convertFormat == CacheFileFormat.AAC)
-			{
-				fileName = Path.GetFileNameWithoutExtension(wavFi.FullName);
-				fullName = Path.Combine(wavFi.Directory.FullName, fileName + ".aac");
-				MediaFoundationEncoder.EncodeToAac(reader, fullName, destinationFormat.AverageBytesPerSecond * 8);
-			}
+			//else if (convertFormat == CacheFileFormat.AAC)
+			//{
+			//	fileName = Path.GetFileNameWithoutExtension(wavFi.FullName);
+			//	fullName = Path.Combine(wavFi.Directory.FullName, fileName + ".aac");
+			//	MediaFoundationEncoder.EncodeToAac(reader, fullName, destinationFormat.AverageBytesPerSecond * 8);
+			//}
 			else if (convertFormat == CacheFileFormat.MP3)
 			{
 				fileName = Path.GetFileNameWithoutExtension(wavFi.FullName);
