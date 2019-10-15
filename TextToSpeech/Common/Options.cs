@@ -244,9 +244,9 @@ namespace JocysCom.TextToSpeech.Monitor
 		public bool CacheAudioConvert { get { return _CacheAudioConvert; } set { _CacheAudioConvert = value; OnPropertyChanged(); } }
 		bool _CacheAudioConvert;
 
-		[DefaultValue(WaveFormatEncoding.Pcm)]
-		public WaveFormatEncoding CacheAudioFormat { get { return _CacheAudioFormat; } set { _CacheAudioFormat = value; OnPropertyChanged(); } }
-		WaveFormatEncoding _CacheAudioFormat = WaveFormatEncoding.Pcm;
+		[DefaultValue(Audio.CacheFileFormat.ULaw)]
+		public Audio.CacheFileFormat CacheAudioFormat { get { return _CacheAudioFormat; } set { _CacheAudioFormat = value; OnPropertyChanged(); } }
+		Audio.CacheFileFormat _CacheAudioFormat = Audio.CacheFileFormat.ULaw;
 
 		[DefaultValue(AudioChannel.Mono)]
 		public AudioChannel CacheAudioChannels { get { return _CacheAudioChannels; } set { _CacheAudioChannels = value; OnPropertyChanged(); } }

@@ -163,8 +163,20 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				SettingsManager.Options.CacheAudioSampleRate,
 				(int)SettingsManager.Options.CacheAudioChannels
 			);
+			var wavFormat = WaveFormatEncoding.MuLaw;
+			switch (SettingsManager.Options.CacheAudioFormat)
+			{
+				case CacheFileFormat.ULaw:
+					wavFormat = WaveFormatEncoding.MuLaw;
+					break;
+				case CacheFileFormat.ALaw:
+					wavFormat = WaveFormatEncoding.ALaw;
+					break;
+				default:
+					break;
+			}
 			destinationFormat = WaveFormat.CreateCustomFormat(
-			  SettingsManager.Options.CacheAudioFormat,
+			  wavFormat,
 			  SettingsManager.Options.CacheAudioSampleRate,
 			  (int)SettingsManager.Options.CacheAudioChannels,
 			  SettingsManager.Options.CacheAudioAverageBitsPerSecond / 8,

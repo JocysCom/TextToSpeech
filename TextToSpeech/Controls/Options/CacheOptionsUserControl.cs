@@ -1,4 +1,5 @@
 ﻿using JocysCom.ClassLibrary.Controls;
+using JocysCom.TextToSpeech.Monitor.Audio;
 using NAudio.Wave;
 using System;
 using System.IO;
@@ -15,17 +16,12 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			InitializeComponent();
 			if (ControlsHelper.IsDesignMode(this))
 				return;
-			CacheAudioFormatComboBox.DataSource = new WaveFormatEncoding[]
-			{
-				 WaveFormatEncoding.MuLaw,
-				 WaveFormatEncoding.Pcm,
-				 WaveFormatEncoding.MpegLayer3,
-			};
+			ControlsHelper.BindEnum<CacheFileFormat>(CacheAudioFormatComboBox, "{2}");
 			CacheAudioChannelsComboBox.DataSource = (AudioChannel[])Enum.GetValues(typeof(AudioChannel));
 			// Audio Sample Rate.
 			CacheAudioSampleRateComboBox.DataSource = new int[] { 8000, 11025, 22050, 44100, 48000 };
 			// Audio Bits Per Sample.
-			CacheAudioBitsPerSampleComboBox.DataSource = new int[] { 8, 16 };
+			CacheAudioBitsPerSampleComboBox.DataSource = new int[] { 8, 16, 24 };
 			// 32 kbit/s – generally acceptable only for speech
 			// 96 kbit/s – generally used for speech or low-quality streaming
 			// 128 or 160 kbit/s – mid-range bitrate quality
@@ -52,14 +48,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ControlsHelper.AddDataBinding(CacheDataWriteCheckBox, c => c.Checked, SettingsManager.Options, d => d.CacheDataWrite);
 			ControlsHelper.AddDataBinding(CacheDataReadCheckBox, c => c.Checked, SettingsManager.Options, d => d.CacheDataRead);
 			ControlsHelper.AddDataBinding(CacheDataGeneralizeCheckBox, c => c.Checked, SettingsManager.Options, d => d.CacheDataGeneralize);
-			// Bind Cache format options.
-			ControlsHelper.AddDataBinding(CacheAudioConvertCheckBox, c => c.Checked, SettingsManager.Options, d => d.CacheAudioConvert);
-			ControlsHelper.AddDataBinding(CacheAudioFormatComboBox, c => c.SelectedItem, SettingsManager.Options, d => d.CacheAudioFormat);
-			ControlsHelper.AddDataBinding(CacheAudioChannelsComboBox, c => c.SelectedItem, SettingsManager.Options, d => d.CacheAudioChannels);
-			ControlsHelper.AddDataBinding(CacheAudioSampleRateComboBox, c => c.SelectedItem, SettingsManager.Options, d => d.CacheAudioSampleRate);
-			ControlsHelper.AddDataBinding(CacheAudioBitsPerSampleComboBox, c => c.SelectedItem, SettingsManager.Options, d => d.CacheAudioBitsPerSample);
-			ControlsHelper.AddDataBinding(CacheAudioAverageBitsPerSecondComboBox, c => c.SelectedItem, SettingsManager.Options, d => d.CacheAudioAverageBitsPerSecond);
-			ControlsHelper.AddDataBinding(CacheAudioBlockAlignComboBox, c => c.SelectedItem, SettingsManager.Options, d => d.CacheAudioBlockAlign);
+			// Add cache audio format.
+			ControlsHelper.AddDataBinding(CacheAudioConvertCheckBox, SettingsManager.Options, d => d.CacheAudioConvert);
+			ControlsHelper.AddDataBinding(CacheAudioFormatComboBox, SettingsManager.Options, d => d.CacheAudioFormat);
 			_CacheMessageFormat = CacheLabel.Text;
 			var files = MainHelper.GetCreateCacheFolder().GetFiles("*.*", SearchOption.AllDirectories);
 			var count = files.Count();
@@ -79,5 +70,51 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			return String.Format("{0} {1}", adjustedSize, SizeSuffixes[mag]);
 		}
 
+		void AddCacheBindings()
+		{
+			// Bind Cache format options.
+			CacheAudioChannelsComboBox.DataBindings.Add(nameof(CacheAudioChannelsComboBox.SelectedItem), SettingsManager.Options, nameof(SettingsManager.Options.CacheAudioChannels));
+
+			//ControlsHelper.AddDataBinding(CacheAudioChannelsComboBox, SettingsManager.Options, d => d.CacheAudioChannels);
+			ControlsHelper.AddDataBinding(CacheAudioSampleRateComboBox, SettingsManager.Options, d => d.CacheAudioSampleRate);
+			ControlsHelper.AddDataBinding(CacheAudioBitsPerSampleComboBox, SettingsManager.Options, d => d.CacheAudioBitsPerSample);
+			ControlsHelper.AddDataBinding(CacheAudioAverageBitsPerSecondComboBox, SettingsManager.Options, d => d.CacheAudioAverageBitsPerSecond);
+			ControlsHelper.AddDataBinding(CacheAudioBlockAlignComboBox, SettingsManager.Options, d => d.CacheAudioBlockAlign);
+		}
+
+		void ClearCacheBindings()
+		{
+			CacheAudioChannelsComboBox.DataBindings.Clear();
+			CacheAudioSampleRateComboBox.DataBindings.Clear();
+			CacheAudioBitsPerSampleComboBox.DataBindings.Clear();
+			CacheAudioAverageBitsPerSecondComboBox.DataBindings.Clear();
+			CacheAudioBlockAlignComboBox.DataBindings.Clear();
+		}
+
+
+
+		private void CacheAudioFormatComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ClearCacheBindings();
+			switch (SettingsManager.Options.CacheAudioFormat)
+			{
+				case CacheFileFormat.ULaw:
+				case CacheFileFormat.ALaw:
+					CacheAudioChannelsComboBox.Enabled = false;
+					CacheAudioSampleRateComboBox.Enabled = false;
+					CacheAudioBitsPerSampleComboBox.Enabled = false;
+					CacheAudioAverageBitsPerSecondComboBox.Enabled = false;
+					CacheAudioBlockAlignComboBox.Enabled = false;
+					SettingsManager.Options.CacheAudioChannels = AudioChannel.Mono;
+					SettingsManager.Options.CacheAudioSampleRate = 8000;
+					SettingsManager.Options.CacheAudioBitsPerSample = 8;
+					SettingsManager.Options.CacheAudioAverageBitsPerSecond = 64000;
+					SettingsManager.Options.CacheAudioBlockAlign = 1;
+					break;
+				default:
+					break;
+			}
+			AddCacheBindings();
+		}
 	}
 }

@@ -4,7 +4,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 {
 	public enum CacheFileFormat
 	{
-		WAV,
+		//WAV,
 		/// <summary>
 		/// Data communication over the telephone network.
 		/// https://www.itu.int/rec/T-REC-G.711

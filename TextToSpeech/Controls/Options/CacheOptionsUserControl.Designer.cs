@@ -132,7 +132,7 @@
 			this.groupBox1.Controls.Add(this.CacheAudioConvertCheckBox);
 			this.groupBox1.Location = new System.Drawing.Point(244, 3);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(235, 184);
+			this.groupBox1.Size = new System.Drawing.Size(235, 209);
 			this.groupBox1.TabIndex = 12;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Output Format";
@@ -144,10 +144,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.CacheAudioFormatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.CacheAudioFormatComboBox.FormattingEnabled = true;
-			this.CacheAudioFormatComboBox.Location = new System.Drawing.Point(115, 19);
+			this.CacheAudioFormatComboBox.Location = new System.Drawing.Point(6, 42);
 			this.CacheAudioFormatComboBox.Name = "CacheAudioFormatComboBox";
-			this.CacheAudioFormatComboBox.Size = new System.Drawing.Size(114, 21);
+			this.CacheAudioFormatComboBox.Size = new System.Drawing.Size(223, 21);
 			this.CacheAudioFormatComboBox.TabIndex = 206;
+			this.CacheAudioFormatComboBox.SelectedIndexChanged += new System.EventHandler(this.CacheAudioFormatComboBox_SelectedIndexChanged);
 			// 
 			// CacheAudioChannelsComboBox
 			// 
@@ -156,7 +157,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.CacheAudioChannelsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.CacheAudioChannelsComboBox.FormattingEnabled = true;
-			this.CacheAudioChannelsComboBox.Location = new System.Drawing.Point(115, 46);
+			this.CacheAudioChannelsComboBox.Location = new System.Drawing.Point(115, 69);
 			this.CacheAudioChannelsComboBox.Name = "CacheAudioChannelsComboBox";
 			this.CacheAudioChannelsComboBox.Size = new System.Drawing.Size(114, 21);
 			this.CacheAudioChannelsComboBox.TabIndex = 206;
@@ -168,7 +169,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.CacheAudioBlockAlignComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.CacheAudioBlockAlignComboBox.FormattingEnabled = true;
-			this.CacheAudioBlockAlignComboBox.Location = new System.Drawing.Point(115, 154);
+			this.CacheAudioBlockAlignComboBox.Location = new System.Drawing.Point(115, 177);
 			this.CacheAudioBlockAlignComboBox.Name = "CacheAudioBlockAlignComboBox";
 			this.CacheAudioBlockAlignComboBox.Size = new System.Drawing.Size(114, 21);
 			this.CacheAudioBlockAlignComboBox.TabIndex = 208;
@@ -180,7 +181,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.CacheAudioAverageBitsPerSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.CacheAudioAverageBitsPerSecondComboBox.FormattingEnabled = true;
-			this.CacheAudioAverageBitsPerSecondComboBox.Location = new System.Drawing.Point(115, 127);
+			this.CacheAudioAverageBitsPerSecondComboBox.Location = new System.Drawing.Point(115, 150);
 			this.CacheAudioAverageBitsPerSecondComboBox.Name = "CacheAudioAverageBitsPerSecondComboBox";
 			this.CacheAudioAverageBitsPerSecondComboBox.Size = new System.Drawing.Size(114, 21);
 			this.CacheAudioAverageBitsPerSecondComboBox.TabIndex = 207;
@@ -192,7 +193,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.CacheAudioBitsPerSampleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.CacheAudioBitsPerSampleComboBox.FormattingEnabled = true;
-			this.CacheAudioBitsPerSampleComboBox.Location = new System.Drawing.Point(115, 100);
+			this.CacheAudioBitsPerSampleComboBox.Location = new System.Drawing.Point(115, 123);
 			this.CacheAudioBitsPerSampleComboBox.Name = "CacheAudioBitsPerSampleComboBox";
 			this.CacheAudioBitsPerSampleComboBox.Size = new System.Drawing.Size(114, 21);
 			this.CacheAudioBitsPerSampleComboBox.TabIndex = 208;
@@ -202,7 +203,7 @@
 			this.CacheAudioBlockAlignLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.CacheAudioBlockAlignLabel.AutoSize = true;
-			this.CacheAudioBlockAlignLabel.Location = new System.Drawing.Point(6, 157);
+			this.CacheAudioBlockAlignLabel.Location = new System.Drawing.Point(6, 180);
 			this.CacheAudioBlockAlignLabel.Name = "CacheAudioBlockAlignLabel";
 			this.CacheAudioBlockAlignLabel.Size = new System.Drawing.Size(60, 13);
 			this.CacheAudioBlockAlignLabel.TabIndex = 211;
@@ -215,7 +216,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.CacheAudioSampleRateComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.CacheAudioSampleRateComboBox.FormattingEnabled = true;
-			this.CacheAudioSampleRateComboBox.Location = new System.Drawing.Point(115, 73);
+			this.CacheAudioSampleRateComboBox.Location = new System.Drawing.Point(115, 96);
 			this.CacheAudioSampleRateComboBox.Name = "CacheAudioSampleRateComboBox";
 			this.CacheAudioSampleRateComboBox.Size = new System.Drawing.Size(114, 21);
 			this.CacheAudioSampleRateComboBox.TabIndex = 207;
@@ -225,7 +226,7 @@
 			this.CacheAudioAverageBytesPerSecondLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.CacheAudioAverageBytesPerSecondLabel.AutoSize = true;
-			this.CacheAudioAverageBytesPerSecondLabel.Location = new System.Drawing.Point(6, 130);
+			this.CacheAudioAverageBytesPerSecondLabel.Location = new System.Drawing.Point(6, 153);
 			this.CacheAudioAverageBytesPerSecondLabel.Name = "CacheAudioAverageBytesPerSecondLabel";
 			this.CacheAudioAverageBytesPerSecondLabel.Size = new System.Drawing.Size(76, 13);
 			this.CacheAudioAverageBytesPerSecondLabel.TabIndex = 210;
@@ -236,7 +237,7 @@
 			this.CacheAudioBitsPerSampleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.CacheAudioBitsPerSampleLabel.AutoSize = true;
-			this.CacheAudioBitsPerSampleLabel.Location = new System.Drawing.Point(6, 103);
+			this.CacheAudioBitsPerSampleLabel.Location = new System.Drawing.Point(6, 126);
 			this.CacheAudioBitsPerSampleLabel.Name = "CacheAudioBitsPerSampleLabel";
 			this.CacheAudioBitsPerSampleLabel.Size = new System.Drawing.Size(64, 13);
 			this.CacheAudioBitsPerSampleLabel.TabIndex = 211;
@@ -247,18 +248,18 @@
 			this.CacheAudioSampleRateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.CacheAudioSampleRateLabel.AutoSize = true;
-			this.CacheAudioSampleRateLabel.Location = new System.Drawing.Point(6, 76);
+			this.CacheAudioSampleRateLabel.Location = new System.Drawing.Point(6, 99);
 			this.CacheAudioSampleRateLabel.Name = "CacheAudioSampleRateLabel";
-			this.CacheAudioSampleRateLabel.Size = new System.Drawing.Size(68, 13);
+			this.CacheAudioSampleRateLabel.Size = new System.Drawing.Size(90, 13);
 			this.CacheAudioSampleRateLabel.TabIndex = 210;
-			this.CacheAudioSampleRateLabel.Text = "Sample Rate";
+			this.CacheAudioSampleRateLabel.Text = "Sample Rate (Hz)";
 			// 
 			// CacheAudioChannelsLabel
 			// 
 			this.CacheAudioChannelsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.CacheAudioChannelsLabel.AutoSize = true;
-			this.CacheAudioChannelsLabel.Location = new System.Drawing.Point(6, 49);
+			this.CacheAudioChannelsLabel.Location = new System.Drawing.Point(6, 72);
 			this.CacheAudioChannelsLabel.Name = "CacheAudioChannelsLabel";
 			this.CacheAudioChannelsLabel.Size = new System.Drawing.Size(51, 13);
 			this.CacheAudioChannelsLabel.TabIndex = 209;
@@ -267,11 +268,11 @@
 			// CacheAudioConvertCheckBox
 			// 
 			this.CacheAudioConvertCheckBox.AutoSize = true;
-			this.CacheAudioConvertCheckBox.Location = new System.Drawing.Point(9, 21);
+			this.CacheAudioConvertCheckBox.Location = new System.Drawing.Point(6, 19);
 			this.CacheAudioConvertCheckBox.Name = "CacheAudioConvertCheckBox";
-			this.CacheAudioConvertCheckBox.Size = new System.Drawing.Size(79, 17);
+			this.CacheAudioConvertCheckBox.Size = new System.Drawing.Size(82, 17);
 			this.CacheAudioConvertCheckBox.TabIndex = 1;
-			this.CacheAudioConvertCheckBox.Text = "Convert To";
+			this.CacheAudioConvertCheckBox.Text = "Convert To:";
 			this.CacheAudioConvertCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// CacheOptionsUserControl

@@ -25,6 +25,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			InitializeComponent();
 			if (ControlsHelper.IsDesignMode(this))
 				return;
+			StatusPanel.Dock = DockStyle.Fill;
 			StatusPanel.Visible = false;
 			VoicesDataGridView.AutoGenerateColumns = false;
 			// Enable double buffering to make redraw faster.
@@ -256,6 +257,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 		{
 			_CancelGetVoices = false;
 			StatusLabel.Text = "";
+			VoicesDataGridView.Visible = false;
 			StatusPanel.Visible = true;
 			list.Clear();
 			var voices = new List<InstalledVoiceEx>();
@@ -273,6 +275,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 					if (voices.Count == 0)
 						StatusLabel.Text += "No new voices found.";
 					StatusPanel.Visible = voices.Count == 0;
+					VoicesDataGridView.Visible = voices.Count != 0;
 				});
 			});
 			_Thread = new Thread(ts);

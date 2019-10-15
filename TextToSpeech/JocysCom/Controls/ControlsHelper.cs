@@ -824,6 +824,28 @@ namespace JocysCom.ClassLibrary.Controls
 
 		#region Binding
 
+		public static Binding AddDataBinding<Ds, Dp>(
+			IBindableComponent control,
+			Ds data, Expression<Func<Ds, Dp>> dataProperty)
+		{
+			var dataMemberBody = (MemberExpression)dataProperty.Body;
+			var dataMemberName = dataMemberBody.Member.Name;
+			string name = null;		
+			var textBox = control as TextBox;
+			if (textBox != null)
+				name = nameof(textBox.Text);
+			var comboBox = control as ComboBox;
+			if (comboBox != null) {
+				name = string.IsNullOrEmpty(comboBox.ValueMember)
+					? nameof(comboBox.SelectedItem)
+					: nameof(comboBox.SelectedValue);
+			}
+			var checkBox = control as CheckBox;
+			if (checkBox != null)
+				name = nameof(checkBox.Checked);
+			return control.DataBindings.Add(name, data, dataMemberName);
+		}
+
 		/// <summary>
 		/// To avoid validation problems, make sure to add DataBindings inside "Load" event and not inside Constructor.
 		/// </summary>
