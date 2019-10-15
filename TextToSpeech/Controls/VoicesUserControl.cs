@@ -14,6 +14,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
@@ -25,8 +26,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			InitializeComponent();
 			if (ControlsHelper.IsDesignMode(this))
 				return;
-			StatusPanel.Dock = DockStyle.Fill;
-			StatusPanel.Visible = false;
 			VoicesDataGridView.AutoGenerateColumns = false;
 			// Enable double buffering to make redraw faster.
 			typeof(DataGridView).InvokeMember("DoubleBuffered",
@@ -217,219 +216,6 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			return isValid;
 		}
 
-		// Used from AddVoicesForm only.
-		public void RefreshVoices(bool force = false)
-		{
-			var list = (BindingList<InstalledVoiceEx>)VoicesGridView.DataSource;
-			//// Uncehck selection by default.
-			//foreach (var item in list)
-			//	if (item.Enabled)
-			//		item.Enabled = false;
-			if (list == Global.LocalVoices)
-				RefreshLocalVoices(list);
-			if (list == Global.AmazonNeuralVoices && (list.Count == 0 || force))
-				RefreshAmazonVoices(Engine.Neural, list);
-			if (list == Global.AmazonStandardVoices && (list.Count == 0 || force))
-				RefreshAmazonVoices(Engine.Standard, list);
-		}
-
-		void RefreshLocalVoices(BindingList<InstalledVoiceEx> list)
-		{
-			// Start refreshing voices.
-			ControlsHelper.BeginInvoke(() =>
-			{
-				list.Clear();
-				var voices = Voices.VoiceHelper.GetLocalVoices();
-				voices = RemoveVoices(voices, Global.InstalledVoices);
-				// Uncehck selection by default.
-				//foreach (var item in list)
-				//	if (item.Enabled)
-				//		item.Enabled = false;
-				foreach (var voice in voices)
-					list.Add(voice);
-			});
-		}
-
-		Thread _Thread;
-		bool _CancelGetVoices;
-
-		void RefreshAmazonVoices(Engine engine, BindingList<InstalledVoiceEx> list)
-		{
-			_CancelGetVoices = false;
-			StatusLabel.Text = "";
-			VoicesDataGridView.Visible = false;
-			StatusPanel.Visible = true;
-			list.Clear();
-			var voices = new List<InstalledVoiceEx>();
-			var ts = new System.Threading.ThreadStart(delegate ()
-			{
-				voices = GetAmazonVoices(null, engine, null);
-				// Uncehck selection by default.
-				//foreach (var item in list)
-				//	if (item.Enabled)
-				//		item.Enabled = false;
-				ControlsHelper.Invoke(() =>
-				{
-					foreach (var voice in voices)
-						list.Add(voice);
-					if (voices.Count == 0)
-						StatusLabel.Text += "No new voices found.";
-					StatusPanel.Visible = voices.Count == 0;
-					VoicesDataGridView.Visible = voices.Count != 0;
-				});
-			});
-			_Thread = new Thread(ts);
-			_Thread.Start();
-		}
-
-		public List<InstalledVoiceEx> GetAmazonVoices(RegionEndpoint region = null, Engine engine = null, CultureInfo culture = null)
-		{
-			var list = new List<InstalledVoiceEx>();
-			// Get regions to process.
-			var regions = region == null
-				? RegionEndpoint.EnumerableAllRegions.OrderBy(x => x.ToString()).ToList()
-				: new List<RegionEndpoint>() { region };
-			for (int r = 0; r < regions.Count; r++)
-			{
-				var reg = regions[r];
-				AmazonPolly client = null;
-				try
-				{
-					client = new AmazonPolly(
-						SettingsManager.Options.AmazonAccessKey,
-						SettingsManager.Options.AmazonSecretKey,
-						reg.SystemName
-					);
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex);
-					continue;
-				}
-				var request = new DescribeVoicesRequest();
-				if (engine != null)
-					request.Engine = engine;
-				if (culture != null)
-					request.LanguageCode = culture.Name;
-				AddStatus("{0}/{1} - Region={2}, Engine={3}, Culture={4}",
-					r + 1, regions.Count, reg.DisplayName, request.Engine, request.LanguageCode);
-				// Create stop watch to measure speed with the servers.
-				var sw = new Stopwatch();
-				var voices = client.GetVoices(request, 5000);
-				var elapsed = sw.Elapsed;
-				AddStatus(", Voices={0}", voices.Count);
-				if (client.LastException != null)
-					AddStatus("\r\n       Exception: {0}\r\n", client.LastException.Message);
-				else if (voices.Count == 0)
-					AddStatus("\r\n");
-				if (voices.Count == 0)
-					continue;
-				var vex = 0;
-				for (int v = 0; v < voices.Count; v++)
-				{
-					var voice = voices[v];
-					var cultureNames = new List<string>();
-					cultureNames.Add(voice.LanguageCode);
-					cultureNames.AddRange(voice.AdditionalLanguageCodes);
-					// Add extra cultures.
-					foreach (var cultureName in cultureNames)
-					{
-						// Add engines.
-						var c = new CultureInfo(cultureName);
-						foreach (var engineName in voice.SupportedEngines)
-						{
-							var vx = new InstalledVoiceEx(voice);
-							vx.SetCulture(c);
-							vx.SourceRequestSpeed = elapsed;
-							var keys = System.Web.HttpUtility.ParseQueryString("");
-							keys.Add(InstalledVoiceEx._KeySource, vx.Source.ToString());
-							keys.Add(InstalledVoiceEx._KeyRegion, reg.SystemName);
-							keys.Add(InstalledVoiceEx._KeyCulture, cultureName);
-							keys.Add(InstalledVoiceEx._KeyEngine, engineName);
-							keys.Add(InstalledVoiceEx._KeyVoiceId, voice.Id);
-							vx.SourceKeys = keys.ToString();
-							// Override Description.
-							vx.Description = string.Format("{0}, {1}, {2}, {3}",
-								vx.Source, reg.DisplayName, cultureName, engineName);
-							// Add voice.
-							list.Add(vx);
-							vex++;
-							if (_CancelGetVoices)
-								return null;
-						}
-					}
-				}
-				AddStatus(", VoicesEx={0}\r\n", vex);
-			}
-			AddStatus("Done\r\n");
-			list = RemoveDuplicateVoices(list);
-			list = RemoveVoices(list, Global.InstalledVoices);
-			return list;
-		}
-
-		void AddStatus(string format, params object[] args)
-		{
-			ControlsHelper.Invoke(() =>
-			{
-				StatusLabel.Text += string.Format(format, args);
-				BodyPanel.VerticalScroll.Value = BodyPanel.VerticalScroll.Maximum;
-			});
-		}
-
-		List<InstalledVoiceEx> RemoveVoices(List<InstalledVoiceEx> list, IList<InstalledVoiceEx> excludeList)
-		{
-			var newList = new List<InstalledVoiceEx>();
-			for (int i = 0; i < list.Count; i++)
-			{
-				var voice = list[i];
-				// Try to find same voice in new List.
-				var contains = excludeList.Any(x => x.IsSameVoice(voice));
-				// If item was not found then add voice to the list.
-				if (!contains)
-					newList.Add(voice);
-			}
-			// Reorder list.
-			return newList.OrderBy(x => x.CultureName).ThenBy(x => x.Name).ToList();
-		}
-
-		List<InstalledVoiceEx> RemoveDuplicateVoices(List<InstalledVoiceEx> list)
-		{
-			var newList = new List<InstalledVoiceEx>();
-			// Make sure that fastest to retrieve from the Internet voices on the top.
-			list = list.OrderBy(x => x.SourceRequestSpeed).ToList();
-			for (int i = 0; i < list.Count; i++)
-			{
-				var voice = list[i];
-				// Try to find same voice in new List.
-				var newItem = newList.FirstOrDefault(x => x.IsSameVoice(voice));
-				// If item was not found then add voice to the list.
-				if (newItem == null)
-					newList.Add(voice);
-			}
-			// Reorder list.
-			return newList.OrderBy(x => x.CultureName).ThenBy(x => x.Name).ToList();
-		}
-
-		private void AmazonPolly_Exception(object sender, ClassLibrary.EventArgs<System.Exception> e)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		/// <summary> 
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				_CancelGetVoices = true;
-				if (components != null)
-					components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		private void RemoveButton_Click(object sender, EventArgs e)
 		{
 			var items = GetSelectedItems();
@@ -450,5 +236,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			}
 			form.Dispose();
 		}
+
+
 	}
 }

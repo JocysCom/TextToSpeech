@@ -18,12 +18,27 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		[NonSerialized] public const int MaxVoice = 100;
 
+		#region Amazon Properties
+
 		// Amazon Source Keys.
 		[NonSerialized] public const string _KeySource = "Source";
 		[NonSerialized] public const string _KeyRegion = "Region";
 		[NonSerialized] public const string _KeyCulture = "Culture";
 		[NonSerialized] public const string _KeyEngine = "Engine";
 		[NonSerialized] public const string _KeyVoiceId = "VoiceId";
+
+		[XmlIgnore]
+		public Engine AmazonEngine
+		{
+			get
+			{
+				var query = System.Web.HttpUtility.ParseQueryString(SourceKeys ?? "");
+				Engine engine = query[_KeyEngine];
+				return engine;
+			}
+		}
+
+		#endregion
 
 		public InstalledVoiceEx(VoiceInfo voice)
 		{
@@ -67,12 +82,13 @@ namespace JocysCom.TextToSpeech.Monitor
 				Name == voice.Name &&
 				Gender == voice.Gender;
 			// If source is amazon then compare engine too.
-			if (Source == VoiceSource.Amazon) {
+			if (Source == VoiceSource.Amazon)
+			{
 				var query = System.Web.HttpUtility.ParseQueryString(SourceKeys ?? "");
 				var voiceQuery = System.Web.HttpUtility.ParseQueryString(voice.SourceKeys ?? "");
 				Engine engine = query[_KeyEngine];
 				Engine voiceEngine = voiceQuery[_KeyEngine];
-				isSame &= engine == voiceEngine; 
+				isSame &= engine == voiceEngine;
 			}
 			return isSame;
 		}
