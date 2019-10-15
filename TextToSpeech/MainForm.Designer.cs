@@ -491,6 +491,7 @@
 			this.EffectsPresetsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.EffectsPresetsDataGridView.Size = new System.Drawing.Size(228, 266);
 			this.EffectsPresetsDataGridView.TabIndex = 0;
+			this.EffectsPresetsDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.EffectsPresetsDataGridView_CellClick);
 			this.EffectsPresetsDataGridView.SelectionChanged += new System.EventHandler(this.EffectsPresetsDataGridView_SelectionChanged);
 			this.EffectsPresetsDataGridView.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.EffectsPresetsDataGridView.MouseHover += new System.EventHandler(this.MouseHover_EffectPresets);

@@ -747,5 +747,29 @@ namespace JocysCom.TextToSpeech.Monitor
 			if (Global.SelectedVoice != voice)
 				Global.SelectedVoice = voice;
 		}
+
+		/// <summary>
+		/// Update sandbox automatically if user use mouse to select effect.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void EffectsPresetsDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+		{
+			var row = EffectsPresetsDataGridView.SelectedRows.Cast<DataGridViewRow>().FirstOrDefault();
+			if (row == null)
+				return;
+			var preset = (EffectsPreset)row.DataBoundItem;
+			try
+			{
+				var message = Serializer.DeserializeFromXmlString<message>(SandBoxTextBox.Text);
+				message.effect = preset.Name;
+				var messageXml = Serializer.SerializeToXmlString(message, null, true);
+				SandBoxTextBox.Text = messageXml;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
+		}
 	}
 }
