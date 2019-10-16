@@ -60,8 +60,8 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 		}
 
 		[DataMember, XmlAttribute]
-		public MessageCommand command { get { return _command; } set { _command = value; OnPropertyChanged(); } }
-		MessageCommand _command;
+		public string command { get { return _command; } set { _command = value; OnPropertyChanged(); } }
+		string _command;
 
 		[DataMember, XmlAttribute]
 		public string pitch { get { return _pitch; } set { _pitch = value; OnPropertyChanged(); } }

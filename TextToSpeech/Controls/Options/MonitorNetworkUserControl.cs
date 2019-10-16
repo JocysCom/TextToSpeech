@@ -17,6 +17,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void MonitorNetworkUserControl_Load(object sender, EventArgs e)
 		{
+			if (ControlsHelper.IsDesignMode(this))
+				return;
 			// To avoid validation problems, make sure to add DataBindings inside "Load" event and not inside Constructor.
 			ControlsHelper.AddDataBinding(this, c => c._CapturingType, SettingsManager.Options, d => d.NetworkMonitorCapturingType);
 			ControlsHelper.AddDataBinding(LogFolderTextBox, s => s.Text, SettingsManager.Options, d => d.NetworkMonitorLogFolder);

@@ -14,6 +14,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void MonitorClipboardUserControl_Load(object sender, System.EventArgs e)
 		{
+			if (ControlsHelper.IsDesignMode(this))
+				return;
 			// To avoid validation problems, make sure to add DataBindings inside "Load" event and not inside Constructor.
 			ControlsHelper.AddDataBinding(MonitorEnabledCheckBox, s => s.Checked, SettingsManager.Options, d => d.ClipboardMonitorEnabled);
 			ControlsHelper.AddDataBinding(CopyIntervalUpDown, s => s.Value, Program._ClipboardMonitor, d => d.CopyInterval);

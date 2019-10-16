@@ -44,9 +44,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				v.UpdateMissingValuesFrom(overrideVoice);
 
 			// commands.
-			switch (v.command)
+			var cmd = v.command.ToLower();
+			switch (cmd)
 			{
-				case MessageCommand.Player:
+				case MessageCommands.Player:
 					if (v.name != null)
 					{
 						var playerNames = v.name.Split(',').Select(x => x.Trim()).ToArray();
@@ -55,12 +56,12 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 						_PlayerClass = playerNames.Skip(2).FirstOrDefault();
 					}
 					break;
-				case MessageCommand.Add:
+				case MessageCommands.Add:
 					if (addMessage == null)
 						addMessage = new message();
 					addMessage.UpdateMissingAndChangedValuesFrom(v, true);
 					break;
-				case  MessageCommand.Play:
+				case  MessageCommands.Play:
 					if (addMessage == null)
 						addMessage = new message();
 					addMessage.UpdateMissingAndChangedValuesFrom(v, true);
@@ -95,7 +96,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 					// Set effect.
 					var _effect = string.IsNullOrEmpty(am.effect) ? "Default" : am.effect;
-					if (am.command != MessageCommand.Save)
+					if (cmd != MessageCommands.Save)
 						OnEvent(EffectsPresetSelected, _effect);
 
 					// Set volume.
@@ -140,7 +141,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					var allText = System.Web.HttpUtility.HtmlDecode(am.part);
 					// Add silence before message.
 					var programName = Program.MonitorItem.Name;
-					var silenceIntBefore = (int)SettingsManager.Options.AddSilenceBeforeMessage;
+					var silenceIntBefore = SettingsManager.Options.AddSilenceBeforeMessage;
 					if (silenceIntBefore > 0)
 						AddTextToPlaylist(programName, "<silence msec=\"" + silenceIntBefore.ToString() + "\" />", true, am.group);
 					// Add actual message to the playlist
@@ -149,7 +150,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 						am.name, am.gender, am.effect, _volume,
 						// Supply Player properties.
 						_PlayerName, _PlayerNameChanged, _PlayerClass,
-						// Pass information required to pick corect synthesizer i.e. Local, Amazon or Google voice.
+						// Pass information required to pick correct synthesizer i.e. Local, Amazon or Google voice.
 						selectedVoice == null ? null : selectedVoice.SourceKeys
 					);
 					// Add silence after message.
@@ -157,10 +158,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					if (silenceIntAfter > 0)
 						AddTextToPlaylist(programName, "<silence msec=\"" + silenceIntAfter.ToString() + "\" />", true, am.group);
 					break;
-				case MessageCommand.Stop:
+				case MessageCommands.Stop:
 					StopPlayer(v.group);
 					break;
-				case MessageCommand.Save:
+				case MessageCommands.Save:
 					// If name supplied then...
 					if (!string.IsNullOrEmpty(v.name))
 						// Save into default 

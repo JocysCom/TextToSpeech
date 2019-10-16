@@ -7,9 +7,9 @@ using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls
 {
-	public partial class OptionsMicrosoftCortanaUserControl : UserControl
+	public partial class MicrosoftCortanaOptionsUserControl : UserControl
 	{
-		public OptionsMicrosoftCortanaUserControl()
+		public MicrosoftCortanaOptionsUserControl()
 		{
 			InitializeComponent();
 		}
@@ -23,6 +23,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void CortanaForm_Load(object sender, EventArgs e)
 		{
+			if (ControlsHelper.IsDesignMode(this))
+				return;
 			var lm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
 			var tokens = lm.OpenSubKey(mTokens32);
 			if (tokens == null)

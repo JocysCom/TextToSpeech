@@ -173,16 +173,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		#endregion
 
-		static string GetXmlText(string text, InstalledVoiceEx vi, int volume, int pitch, int rate, bool isComment)
-		{
-			string xml;
-			if (vi.Source == VoiceSource.Amazon)
-				xml = GetSsmlXml(text, vi, volume, pitch, rate, isComment);
-			else
-				xml = GetSapiXml(text, vi, volume, pitch, rate, isComment);
-			return xml;
-		}
-
 
 		static string GetSsmlXml(string text, InstalledVoiceEx vi, int volume, int pitch, int rate, bool isComment)
 		{
@@ -267,8 +257,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			return xml;
 		}
 
-
-
 		// Demonstrates SetText, ContainsText, and GetText. 
 		public static string SwapClipboardHtmlText(string replacementHtmlText)
 		{
@@ -295,12 +283,17 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			string voiceSourceKeys = null
 		)
 		{
+			MessageGender _gender;
+			Enum.TryParse(gender, out _gender);
 			// It will take too long to convert large amount of text to WAV data and apply all filters.
 			// This function will split text into smaller sentences.
 			var cs = "[comment]";
 			var ce = "[/comment]";
 			var items = new List<PlayItem>();
-			var splitItems = MainHelper.SplitText(text, new string[] { ". ", "! ", "? ", cs, ce });
+			// Split sentences if option is enabled.
+			var splitItems = SettingsManager.Options.SplitMessageIntoSentences
+				? MainHelper.SplitText(text, new string[] { ". ", "! ", "? ", cs, ce })
+				: MainHelper.SplitText(text, new string[] { cs, ce });
 			var sentences = splitItems.Where(x => (x.Value + x.Key).Trim().Length > 0).ToArray();
 			bool comment = false;
 			// Loop trough each sentence.
@@ -311,45 +304,44 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				var sentence = block.Value + block.Key.Replace(cs, "").Replace(ce, "") + "";
 				if (!string.IsNullOrEmpty(sentence.Trim('\r', '\n', ' ')))
 				{
-					MessageGender _gender;
-					Enum.TryParse(gender, out _gender);
-					var item = new PlayItem()
-					{
-						Game = game,
-						// Set Player properties
-						PlayerName = playerName,
-						PlayerNameChanged = playerNameChanged,
-						PlayerClass = playerClass,
-						// Set NPC properties.
-						Name = name,
-						Gender = _gender,
-						Effect = effect,
-						// Set data properties.
-						Status = JobStatusType.Parsed,
-						IsComment = comment,
-						Group = voiceGroup,
-						VoiceSourceKeys = voiceSourceKeys,
-					};
+					var item = new PlayItem();
+					item.Game = game;
+					// Set Player properties
+					item.PlayerName = playerName;
+					item.PlayerNameChanged = playerNameChanged;
+					item.PlayerClass = playerClass;
+					// Set NPC properties.
+					item.Name = name;
+					item.Gender = _gender;
+					item.Effect = effect;
+					// Set data properties.
+					item.Status = JobStatusType.Parsed;
+					item.IsComment = comment;
+					item.Group = voiceGroup;
+					item.VoiceSourceKeys = voiceSourceKeys;
 					item.Text = sentence;
 					if (SettingsManager.Options.CacheDataGeneralize)
-					{
 						item.Text = item.GetGeneralizedText();
-					}
-					item.Xml = ConvertTextToSapiXml(item.Text, comment, volume);
+					item.Xml = ConvertTextToXml(item.Text, comment, volume);
 					items.Add(item);
 					if (addToPlaylist) lock (playlistLock) { playlist.Add(item); }
 				};
+				// If comment started.
 				if (block.Key == cs) comment = true;
+				// If comment ended.
 				if (block.Key == ce) comment = false;
 			}
 			return items;
 		}
 
-		public static string ConvertTextToSapiXml(string text, bool isComment = false, int volume = 100)
+		public static string ConvertTextToXml(string text, bool isComment = false, int volume = 100)
 		{
 			var vi = SelectedVoice;
 			var vol = (int)(((decimal)volume / 100m) * (decimal)SettingsManager.Options.Volume);
-			return GetXmlText(text, vi, vol, _Pitch, _Rate, isComment);
+			var xml = vi.Source == VoiceSource.Amazon
+				? GetSsmlXml(text, vi, vol, _Pitch, _Rate, isComment)
+				: GetSapiXml(text, vi, vol, _Pitch, _Rate, isComment);
+			return xml;
 		}
 
 		/// <summary>

@@ -831,18 +831,29 @@ namespace JocysCom.ClassLibrary.Controls
 			var dataMemberBody = (MemberExpression)dataProperty.Body;
 			var dataMemberName = dataMemberBody.Member.Name;
 			string name = null;		
+			// Add TextBox.
 			var textBox = control as TextBox;
 			if (textBox != null)
 				name = nameof(textBox.Text);
+			// Add ComboBox.
 			var comboBox = control as ComboBox;
 			if (comboBox != null) {
 				name = string.IsNullOrEmpty(comboBox.ValueMember)
 					? nameof(comboBox.SelectedItem)
 					: nameof(comboBox.SelectedValue);
 			}
+			// Add CheckBox.
 			var checkBox = control as CheckBox;
 			if (checkBox != null)
 				name = nameof(checkBox.Checked);
+			// Add NumericUpDown.
+			var upDown = control as NumericUpDown;
+			if (upDown != null)
+				name = nameof(upDown.Value);
+			// If type is missing then throw error.
+			if (string.IsNullOrEmpty(name))
+				throw new Exception(string.Format("Add control Type '{0}' to ControlsHelper.AddDataBinding(control, data, dataProperty) method!", control.GetType()));
+			// Add data binding.
 			return control.DataBindings.Add(name, data, dataMemberName,
 				false,
 				DataSourceUpdateMode.OnPropertyChanged,

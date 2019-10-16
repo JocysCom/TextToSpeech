@@ -350,7 +350,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			//Fill SAPI Tab
 			if (string.IsNullOrEmpty(InPartTextBox.Text))
 			{
-				SapiTextBox.Text = Global.ConvertTextToSapiXml("Test text to speech.");
+				SapiTextBox.Text = Global.ConvertTextToXml("Test text to speech.");
 			}
 			else
 			{

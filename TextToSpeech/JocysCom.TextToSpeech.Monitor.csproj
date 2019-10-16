@@ -65,7 +65,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>full</DebugType>
+    <DebugType>embedded</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisLogFile>bin\Debug\JocysCom.TextToSpeech.WowMonitor.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
@@ -234,11 +234,11 @@
     <Compile Include="Controls\Options\MonitorNetworkUserControl.Designer.cs">
       <DependentUpon>MonitorNetworkUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Options\OptionsMicrosoftCortanaUserControl.cs">
+    <Compile Include="Controls\Options\MicrosoftCortanaOptionsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Options\OptionsMicrosoftCortanaUserControl.Designer.cs">
-      <DependentUpon>OptionsMicrosoftCortanaUserControl.cs</DependentUpon>
+    <Compile Include="Controls\Options\MicrosoftCortanaOptionsUserControl.Designer.cs">
+      <DependentUpon>MicrosoftCortanaOptionsUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Options\MonitorServerUserControl.cs">
       <SubType>UserControl</SubType>
@@ -408,8 +408,8 @@
     <EmbeddedResource Include="Controls\Options\MonitorNetworkUserControl.resx">
       <DependentUpon>MonitorNetworkUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Options\OptionsMicrosoftCortanaUserControl.resx">
-      <DependentUpon>OptionsMicrosoftCortanaUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Options\MicrosoftCortanaOptionsUserControl.resx">
+      <DependentUpon>MicrosoftCortanaOptionsUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Options\MonitorServerUserControl.resx">
       <DependentUpon>MonitorServerUserControl.cs</DependentUpon>

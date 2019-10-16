@@ -30,12 +30,21 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue("WoW")]
 		public string ProgramComboBoxText { get; set; }
 
+		#region General Options
 
-		[DefaultValue(typeof(decimal), "0")]
-		public decimal AddSilenceAfterMessage { get; set; }
+		[DefaultValue(0)]
+		public long AddSilenceBeforeMessage { get { return _AddSilenceBeforeMessage; } set { _AddSilenceBeforeMessage = value; OnPropertyChanged(); } }
+		long _AddSilenceBeforeMessage;
 
-		[DefaultValue(typeof(decimal), "0")]
-		public decimal AddSilenceBeforeMessage { get; set; }
+		[DefaultValue(0)]
+		public long AddSilenceAfterMessage { get { return _AddSilenceAfterMessage; } set { _AddSilenceAfterMessage = value; OnPropertyChanged(); } }
+		long _AddSilenceAfterMessage;
+
+		[DefaultValue(true)]
+		public bool SplitMessageIntoSentences { get { return _SplitMessageIntoSentences; } set { _SplitMessageIntoSentences = value; OnPropertyChanged(); } }
+		bool _SplitMessageIntoSentences = true;
+
+		#endregion
 
 		[DefaultValue(false)]
 		public bool LogEnable { get; set; }

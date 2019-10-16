@@ -63,6 +63,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void MonitorServerUserControl_Load(object sender, EventArgs e)
 		{
+			if (ControlsHelper.IsDesignMode(this))
+				return;
 			// To avoid validation problems, make sure to add DataBindings inside "Load" event and not inside Constructor.
 			ControlsHelper.AddDataBinding(UdpEnabledCheckBox, s => s.Checked, SettingsManager.Options, d => d.UdpMonitorEnabled);
 			ControlsHelper.AddDataBinding(UdpPortNumberNumericUpDown, s => s.Value, Program._UdpMonitor, d => d.PortNumber);

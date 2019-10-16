@@ -2,18 +2,19 @@
 
 namespace JocysCom.TextToSpeech.Monitor.Capturing
 {
-	[DataContract]
-	public enum MessageCommand
+
+	/// <summary>Use lowercase.</summary>
+	public static class MessageCommands
 	{
 		/// <summary>Add text for the playback.</summary>
-		[EnumMember] Add,
+		public const string Add = "add";
 		/// <summary>Play all collected information.</summary>
-		[EnumMember] Play,
+		public const string Play = "play";
 		/// <summary>Stop current playback and clear playback list.</summary>
-		[EnumMember] Stop,
-		/// <summary>Save NPC name, type and effext.</summary>
-		[EnumMember] Save,
+		public const string Stop = "stop";
+		/// <summary>Save NPC name, type and effect.</summary>
+		public const string Save = "save";
 		/// <summary>Set PlayerName, PlayerNameChanged, PlayerClass values.</summary>
-		[EnumMember] Player,
+		public const string Player = "player";
 	}
 }

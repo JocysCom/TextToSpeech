@@ -17,17 +17,6 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsControl));
-			this.AddSilenceGroupBox = new System.Windows.Forms.GroupBox();
-			this.PlaybackDeviceComboBox = new System.Windows.Forms.ComboBox();
-			this.RefreshPlaybackDevices = new System.Windows.Forms.Button();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.AddSilenceAfterLabel = new System.Windows.Forms.Label();
-			this.AddSilenceAfterNumericUpDown = new System.Windows.Forms.NumericUpDown();
-			this.SilenceAfterTagLabel = new System.Windows.Forms.Label();
-			this.AddSilcenceBeforeNumericUpDown = new System.Windows.Forms.NumericUpDown();
-			this.AddSilenceBeforeLabel = new System.Windows.Forms.Label();
-			this.SilenceBeforeTagLabel = new System.Windows.Forms.Label();
 			this.OptionsTabControl = new System.Windows.Forms.TabControl();
 			this.GeneralTabPage = new System.Windows.Forms.TabPage();
 			this.CacheTabPage = new System.Windows.Forms.TabPage();
@@ -37,7 +26,7 @@
 			this.AmazonPollyTabPage = new System.Windows.Forms.TabPage();
 			this.AmazonPollyPanel = new JocysCom.TextToSpeech.Monitor.Controls.Options.AmazonPollyUserControl();
 			this.MicrosoftCortanaTabPage = new System.Windows.Forms.TabPage();
-			this.MicrosoftCortanaPanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsMicrosoftCortanaUserControl();
+			this.MicrosoftCortanaPanel = new JocysCom.TextToSpeech.Monitor.Controls.MicrosoftCortanaOptionsUserControl();
 			this.MonitorDispalyTabPage = new System.Windows.Forms.TabPage();
 			this.monitorDisplayUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.MonitorDisplayUserControl();
 			this.MonitorNetworkTabPage = new System.Windows.Forms.TabPage();
@@ -47,9 +36,7 @@
 			this.MonitorClipBoardTabPage = new System.Windows.Forms.TabPage();
 			this.monitorClipboardUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.MonitorClipboardUserControl();
 			this.TabsImageList = new System.Windows.Forms.ImageList(this.components);
-			this.AddSilenceGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).BeginInit();
+			this.GeneralOptionsPanel = new JocysCom.TextToSpeech.Monitor.Controls.Options.GeneralOptionsUserControl();
 			this.OptionsTabControl.SuspendLayout();
 			this.GeneralTabPage.SuspendLayout();
 			this.CacheTabPage.SuspendLayout();
@@ -61,146 +48,6 @@
 			this.MonitorServerTabPage.SuspendLayout();
 			this.MonitorClipBoardTabPage.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// AddSilenceGroupBox
-			// 
-			this.AddSilenceGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.AddSilenceGroupBox.Controls.Add(this.PlaybackDeviceComboBox);
-			this.AddSilenceGroupBox.Controls.Add(this.RefreshPlaybackDevices);
-			this.AddSilenceGroupBox.Controls.Add(this.label1);
-			this.AddSilenceGroupBox.Controls.Add(this.label2);
-			this.AddSilenceGroupBox.Controls.Add(this.AddSilenceAfterLabel);
-			this.AddSilenceGroupBox.Controls.Add(this.AddSilenceAfterNumericUpDown);
-			this.AddSilenceGroupBox.Controls.Add(this.SilenceAfterTagLabel);
-			this.AddSilenceGroupBox.Controls.Add(this.AddSilcenceBeforeNumericUpDown);
-			this.AddSilenceGroupBox.Controls.Add(this.AddSilenceBeforeLabel);
-			this.AddSilenceGroupBox.Controls.Add(this.SilenceBeforeTagLabel);
-			this.AddSilenceGroupBox.Location = new System.Drawing.Point(6, 6);
-			this.AddSilenceGroupBox.Name = "AddSilenceGroupBox";
-			this.AddSilenceGroupBox.Size = new System.Drawing.Size(827, 103);
-			this.AddSilenceGroupBox.TabIndex = 0;
-			this.AddSilenceGroupBox.TabStop = false;
-			this.AddSilenceGroupBox.Text = "Audio Options";
-			// 
-			// PlaybackDeviceComboBox
-			// 
-			this.PlaybackDeviceComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.PlaybackDeviceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.PlaybackDeviceComboBox.FormattingEnabled = true;
-			this.PlaybackDeviceComboBox.Location = new System.Drawing.Point(91, 71);
-			this.PlaybackDeviceComboBox.Name = "PlaybackDeviceComboBox";
-			this.PlaybackDeviceComboBox.Size = new System.Drawing.Size(554, 21);
-			this.PlaybackDeviceComboBox.TabIndex = 33;
-			this.PlaybackDeviceComboBox.SelectedIndexChanged += new System.EventHandler(this.PlaybackDeviceComboBox_SelectedIndexChanged);
-			// 
-			// RefreshPlaybackDevices
-			// 
-			this.RefreshPlaybackDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.RefreshPlaybackDevices.Location = new System.Drawing.Point(651, 70);
-			this.RefreshPlaybackDevices.Name = "RefreshPlaybackDevices";
-			this.RefreshPlaybackDevices.Size = new System.Drawing.Size(75, 23);
-			this.RefreshPlaybackDevices.TabIndex = 5;
-			this.RefreshPlaybackDevices.Text = "Refresh";
-			this.RefreshPlaybackDevices.UseVisualStyleBackColor = true;
-			this.RefreshPlaybackDevices.Click += new System.EventHandler(this.RefreshPlaybackDevices_Click);
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 74);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(79, 13);
-			this.label1.TabIndex = 10;
-			this.label1.Text = "Output Device:";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(6, 47);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(135, 13);
-			this.label2.TabIndex = 6;
-			this.label2.Text = "Add Silence After Message";
-			// 
-			// AddSilenceAfterLabel
-			// 
-			this.AddSilenceAfterLabel.AutoSize = true;
-			this.AddSilenceAfterLabel.Location = new System.Drawing.Point(146, 47);
-			this.AddSilenceAfterLabel.Name = "AddSilenceAfterLabel";
-			this.AddSilenceAfterLabel.Size = new System.Drawing.Size(130, 13);
-			this.AddSilenceAfterLabel.TabIndex = 6;
-			this.AddSilenceAfterLabel.Text = "( default value is 0 ) [ ms ]:";
-			// 
-			// AddSilenceAfterNumericUpDown
-			// 
-			this.AddSilenceAfterNumericUpDown.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.AddSilenceAfterNumericUpDown.Location = new System.Drawing.Point(279, 45);
-			this.AddSilenceAfterNumericUpDown.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-			this.AddSilenceAfterNumericUpDown.Name = "AddSilenceAfterNumericUpDown";
-			this.AddSilenceAfterNumericUpDown.Size = new System.Drawing.Size(114, 20);
-			this.AddSilenceAfterNumericUpDown.TabIndex = 5;
-			this.AddSilenceAfterNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.AddSilenceAfterNumericUpDown.ValueChanged += new System.EventHandler(this.AddSilenceAfterNumericUpDown_ValueChanged);
-			// 
-			// SilenceAfterTagLabel
-			// 
-			this.SilenceAfterTagLabel.AutoSize = true;
-			this.SilenceAfterTagLabel.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.SilenceAfterTagLabel.ForeColor = System.Drawing.SystemColors.ActiveBorder;
-			this.SilenceAfterTagLabel.Location = new System.Drawing.Point(399, 48);
-			this.SilenceAfterTagLabel.Name = "SilenceAfterTagLabel";
-			this.SilenceAfterTagLabel.Size = new System.Drawing.Size(161, 14);
-			this.SilenceAfterTagLabel.TabIndex = 8;
-			this.SilenceAfterTagLabel.Text = "<silence msec=\"3000\"/>";
-			// 
-			// AddSilcenceBeforeNumericUpDown
-			// 
-			this.AddSilcenceBeforeNumericUpDown.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.AddSilcenceBeforeNumericUpDown.Location = new System.Drawing.Point(279, 19);
-			this.AddSilcenceBeforeNumericUpDown.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-			this.AddSilcenceBeforeNumericUpDown.Name = "AddSilcenceBeforeNumericUpDown";
-			this.AddSilcenceBeforeNumericUpDown.Size = new System.Drawing.Size(114, 20);
-			this.AddSilcenceBeforeNumericUpDown.TabIndex = 5;
-			this.AddSilcenceBeforeNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.AddSilcenceBeforeNumericUpDown.ValueChanged += new System.EventHandler(this.AddSilcenceBeforeNumericUpDown_ValueChanged);
-			// 
-			// AddSilenceBeforeLabel
-			// 
-			this.AddSilenceBeforeLabel.AutoSize = true;
-			this.AddSilenceBeforeLabel.Location = new System.Drawing.Point(6, 21);
-			this.AddSilenceBeforeLabel.Name = "AddSilenceBeforeLabel";
-			this.AddSilenceBeforeLabel.Size = new System.Drawing.Size(270, 13);
-			this.AddSilenceBeforeLabel.TabIndex = 6;
-			this.AddSilenceBeforeLabel.Text = "Add Silence Before Message ( default value is 0 ) [ ms ]:";
-			// 
-			// SilenceBeforeTagLabel
-			// 
-			this.SilenceBeforeTagLabel.AutoSize = true;
-			this.SilenceBeforeTagLabel.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.SilenceBeforeTagLabel.ForeColor = System.Drawing.SystemColors.ActiveBorder;
-			this.SilenceBeforeTagLabel.Location = new System.Drawing.Point(399, 22);
-			this.SilenceBeforeTagLabel.Name = "SilenceBeforeTagLabel";
-			this.SilenceBeforeTagLabel.Size = new System.Drawing.Size(161, 14);
-			this.SilenceBeforeTagLabel.TabIndex = 7;
-			this.SilenceBeforeTagLabel.Text = "<silence msec=\"3000\"/>";
 			// 
 			// OptionsTabControl
 			// 
@@ -224,7 +71,7 @@
 			// GeneralTabPage
 			// 
 			this.GeneralTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.GeneralTabPage.Controls.Add(this.AddSilenceGroupBox);
+			this.GeneralTabPage.Controls.Add(this.GeneralOptionsPanel);
 			this.GeneralTabPage.ImageKey = "Options_General";
 			this.GeneralTabPage.Location = new System.Drawing.Point(4, 23);
 			this.GeneralTabPage.Name = "GeneralTabPage";
@@ -401,6 +248,14 @@
 			this.TabsImageList.Images.SetKeyName(7, "Options_Monitor_Server");
 			this.TabsImageList.Images.SetKeyName(8, "Options_Monitor_Clipboard");
 			// 
+			// GeneralOptionsPanel
+			// 
+			this.GeneralOptionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.GeneralOptionsPanel.Location = new System.Drawing.Point(3, 3);
+			this.GeneralOptionsPanel.Name = "GeneralOptionsPanel";
+			this.GeneralOptionsPanel.Size = new System.Drawing.Size(900, 334);
+			this.GeneralOptionsPanel.TabIndex = 0;
+			// 
 			// OptionsControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -408,10 +263,6 @@
 			this.Controls.Add(this.OptionsTabControl);
 			this.Name = "OptionsControl";
 			this.Size = new System.Drawing.Size(914, 367);
-			this.AddSilenceGroupBox.ResumeLayout(false);
-			this.AddSilenceGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.AddSilcenceBeforeNumericUpDown)).EndInit();
 			this.OptionsTabControl.ResumeLayout(false);
 			this.GeneralTabPage.ResumeLayout(false);
 			this.CacheTabPage.ResumeLayout(false);
@@ -427,24 +278,12 @@
 		}
 
 		#endregion
-
-		private System.Windows.Forms.GroupBox AddSilenceGroupBox;
-		private System.Windows.Forms.NumericUpDown AddSilcenceBeforeNumericUpDown;
-		private System.Windows.Forms.NumericUpDown AddSilenceAfterNumericUpDown;
-		private System.Windows.Forms.Label AddSilenceAfterLabel;
-		private System.Windows.Forms.Label AddSilenceBeforeLabel;
-        private System.Windows.Forms.Label SilenceBeforeTagLabel;
-        private System.Windows.Forms.Label SilenceAfterTagLabel;
-		private System.Windows.Forms.ComboBox PlaybackDeviceComboBox;
-		private System.Windows.Forms.Button RefreshPlaybackDevices;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TabPage GeneralTabPage;
 		private System.Windows.Forms.TabPage CacheTabPage;
 		private System.Windows.Forms.TabPage GoogleTTSTabPage;
 		private System.Windows.Forms.TabPage MicrosoftCortanaTabPage;
 		private System.Windows.Forms.TabPage MonitorNetworkTabPage;
-		private OptionsMicrosoftCortanaUserControl MicrosoftCortanaPanel;
+		private MicrosoftCortanaOptionsUserControl MicrosoftCortanaPanel;
 		private Google.GoogleTTSUserControl GoogleCloudPanel;
 		private CacheOptionsUserControl CachePanel;
 		private MonitorNetworkUserControl CapturingPanel;
@@ -458,5 +297,6 @@
 		private Options.AmazonPollyUserControl AmazonPollyPanel;
 		public System.Windows.Forms.TabControl OptionsTabControl;
 		public System.Windows.Forms.TabPage AmazonPollyTabPage;
+		private Options.GeneralOptionsUserControl GeneralOptionsPanel;
 	}
 }

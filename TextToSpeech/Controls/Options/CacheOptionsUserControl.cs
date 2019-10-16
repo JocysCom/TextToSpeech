@@ -43,6 +43,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void OptionsCacheUserControl_Load(object sender, EventArgs e)
 		{
+			if (ControlsHelper.IsDesignMode(this))
+				return;
 			// To avoid validation problems, make sure to add DataBindings inside "Load" event and not inside Constructor.
 			ControlsHelper.AddDataBinding(CacheDataWriteCheckBox, c => c.Checked, SettingsManager.Options, d => d.CacheDataWrite);
 			ControlsHelper.AddDataBinding(CacheDataReadCheckBox, c => c.Checked, SettingsManager.Options, d => d.CacheDataRead);

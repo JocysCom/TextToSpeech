@@ -82,6 +82,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void MonitorDisplayUserControl_Load(object sender, EventArgs e)
 		{
+			if (ControlsHelper.IsDesignMode(this))
+				return;
 			// To avoid validation problems, make sure to add DataBindings inside "Load" event and not inside Constructor.
 			BoxXUpDown.DataBindings.Add(nameof(BoxXUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPositionX));
 			BoxYUpDown.DataBindings.Add(nameof(BoxYUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorPositionY));

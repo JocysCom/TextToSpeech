@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JocysCom.ClassLibrary.Controls;
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -9,7 +10,7 @@ namespace JocysCom.TextToSpeech.Monitor.Google
 		public GoogleTTSUserControl()
 		{
 			InitializeComponent();
-			if (IsDesignMode)
+			if (ControlsHelper.IsDesignMode(this))
 				return;
 			WebAppClientIdTextBox.Text = SettingsManager.Options.GoogleWebAppClientId;
 			WebAppClientSecretTextBox.Text = SettingsManager.Options.GoogleWebAppClientSecret;
@@ -18,10 +19,6 @@ namespace JocysCom.TextToSpeech.Monitor.Google
 			ApiKeyTextBox.TextChanged += ApiKeyTextBox_TextChanged;
 		}
 
-		public bool IsDesignMode
-		{
-			get { return DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime; }
-		}
 
 		private void GoogleOptionsUserControl_Load(object sender, EventArgs e)
 		{

@@ -328,16 +328,6 @@
 			this.OptionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.OptionsPanel.Location = new System.Drawing.Point(0, 0);
 			this.OptionsPanel.Name = "OptionsPanel";
-			this.OptionsPanel.silenceAfter = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.OptionsPanel.silenceBefore = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
 			this.OptionsPanel.Size = new System.Drawing.Size(816, 266);
 			this.OptionsPanel.TabIndex = 0;
 			// 
