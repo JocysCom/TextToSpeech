@@ -1,7 +1,6 @@
 ﻿using JocysCom.ClassLibrary.Controls;
 using JocysCom.ClassLibrary.Runtime;
 using JocysCom.TextToSpeech.Monitor.Capturing;
-using SpeechLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -191,8 +190,11 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var w = new XmlTextWriter(sw);
 			w.Formatting = Formatting.Indented;
 			w.WriteStartElement("speak");
-			w.WriteStartElement("lang");
+			w.WriteAttributeString("version", "1.0");
+			w.WriteAttributeString("xmlns", "http://www.w3.org/2001/10/synthesis");
 			w.WriteAttributeString("xml:lang", vi.CultureName);
+			//w.WriteStartElement("lang");
+			//w.WriteAttributeString("xml:lang", vi.Language);
 			w.WriteStartElement("prosody");
 			// Convert -10 0 +10 to 50% 100% 400%
 			if (rate < 0)
@@ -215,7 +217,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			text = SettingsManager.Current.ReplaceAcronyms(text);
 			w.WriteRaw(text);
 			w.WriteEndElement();
-			w.WriteEndElement();
+			//w.WriteEndElement();
 			w.WriteEndElement();
 			xml = sw.ToString();
 			w.Close();
@@ -223,39 +225,39 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		}
 
 
-		static string GetSapiXml(string text, InstalledVoiceEx vi, int volume, int pitch, int rate, bool isComment)
-		{
-			string xml;
-			string name = vi.Name;
-			var sw = new StringWriter();
-			var w = new XmlTextWriter(sw);
-			w.Formatting = Formatting.Indented;
-			w.WriteStartElement("voice");
-			if (string.IsNullOrEmpty(language) || vi.CultureLCID.ToString("X3") != language)
-			{
-				w.WriteAttributeString("required", "name=" + name);
-			}
-			else
-			{
-				w.WriteAttributeString("required", "name=" + name + ";language=" + language); //+ vi.CultureLCID.ToString("X3"));
-			}
-			w.WriteStartElement("volume");
-			w.WriteAttributeString("level", volume.ToString());
-			w.WriteStartElement("rate");
-			w.WriteAttributeString("absspeed", rate.ToString());
-			w.WriteStartElement("pitch");
-			w.WriteAttributeString("absmiddle", (isComment ? _PitchComment : pitch).ToString());
-			// Replace acronyms with full values.
-			text = SettingsManager.Current.ReplaceAcronyms(text);
-			w.WriteRaw(text);
-			w.WriteEndElement();
-			w.WriteEndElement();
-			w.WriteEndElement();
-			w.WriteEndElement();
-			xml = sw.ToString();
-			w.Close();
-			return xml;
-		}
+		//static string GetSapiXml(string text, InstalledVoiceEx vi, int volume, int pitch, int rate, bool isComment)
+		//{
+		//	string xml;
+		//	string name = vi.Name;
+		//	var sw = new StringWriter();
+		//	var w = new XmlTextWriter(sw);
+		//	w.Formatting = Formatting.Indented;
+		//	w.WriteStartElement("voice");
+		//	if (string.IsNullOrEmpty(language) || vi.CultureLCID.ToString("X3") != language)
+		//	{
+		//		w.WriteAttributeString("required", "name=" + name);
+		//	}
+		//	else
+		//	{
+		//		w.WriteAttributeString("required", "name=" + name + ";language=" + language); //+ vi.CultureLCID.ToString("X3"));
+		//	}
+		//	w.WriteStartElement("volume");
+		//	w.WriteAttributeString("level", volume.ToString());
+		//	w.WriteStartElement("rate");
+		//	w.WriteAttributeString("absspeed", rate.ToString());
+		//	w.WriteStartElement("pitch");
+		//	w.WriteAttributeString("absmiddle", (isComment ? _PitchComment : pitch).ToString());
+		//	// Replace acronyms with full values.
+		//	text = SettingsManager.Current.ReplaceAcronyms(text);
+		//	w.WriteRaw(text);
+		//	w.WriteEndElement();
+		//	w.WriteEndElement();
+		//	w.WriteEndElement();
+		//	w.WriteEndElement();
+		//	xml = sw.ToString();
+		//	w.Close();
+		//	return xml;
+		//}
 
 		// Demonstrates SetText, ContainsText, and GetText. 
 		public static string SwapClipboardHtmlText(string replacementHtmlText)
@@ -340,7 +342,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var vol = (int)(((decimal)volume / 100m) * (decimal)SettingsManager.Options.Volume);
 			var xml = vi.Source == VoiceSource.Amazon
 				? GetSsmlXml(text, vi, vol, _Pitch, _Rate, isComment)
-				: GetSapiXml(text, vi, vol, _Pitch, _Rate, isComment);
+				: GetSsmlXml(text, vi, vol, _Pitch, _Rate, isComment);
 			return xml;
 		}
 
@@ -373,7 +375,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			}
 			else
 			{
-				var wavBytes = ConvertSapiXmlToWav(item.Xml, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
+				string voiceId = query[InstalledVoiceEx._KeyVoiceId];
+				var wavBytes = ConvertSapiXmlToWav(voiceId, item.Xml, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
 				item.WavData = wavBytes;
 			}
 		}
@@ -408,49 +411,30 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		/// <summary>
 		/// Convert XML to WAV bytes. WAV won't have the header, so you have to add it separately.
 		/// </summary>
-		static byte[] ConvertSapiXmlToWav(string xml, int sampleRate, int bitsPerSample, int channelCount)
+		static byte[] ConvertSapiXmlToWav(string voiceId, string xml, int sampleRate, int bitsPerSample, int channelCount)
 		{
-			var t = SpeechAudioFormatType.SAFT48kHz16BitMono;
-			switch (channelCount)
-			{
-				case 1: // Mono
-					switch (sampleRate)
-					{
-						case 11025: t = bitsPerSample == 8 ? SpeechAudioFormatType.SAFT11kHz8BitMono : SpeechAudioFormatType.SAFT11kHz16BitMono; break;
-						case 22050: t = bitsPerSample == 8 ? SpeechAudioFormatType.SAFT22kHz8BitMono : SpeechAudioFormatType.SAFT22kHz16BitMono; break;
-						case 44100: t = bitsPerSample == 8 ? SpeechAudioFormatType.SAFT44kHz8BitMono : SpeechAudioFormatType.SAFT44kHz16BitMono; break;
-						case 48000: t = bitsPerSample == 8 ? SpeechAudioFormatType.SAFT48kHz8BitMono : SpeechAudioFormatType.SAFT48kHz16BitMono; break;
-					}
-					break;
-				case 2: // Stereo
-					switch (sampleRate)
-					{
-						case 11025: t = bitsPerSample == 8 ? SpeechAudioFormatType.SAFT11kHz8BitStereo : SpeechAudioFormatType.SAFT11kHz16BitStereo; break;
-						case 22050: t = bitsPerSample == 8 ? SpeechAudioFormatType.SAFT22kHz8BitStereo : SpeechAudioFormatType.SAFT22kHz16BitStereo; break;
-						case 44100: t = bitsPerSample == 8 ? SpeechAudioFormatType.SAFT44kHz8BitStereo : SpeechAudioFormatType.SAFT44kHz16BitStereo; break;
-						case 48000: t = bitsPerSample == 8 ? SpeechAudioFormatType.SAFT48kHz8BitStereo : SpeechAudioFormatType.SAFT48kHz16BitStereo; break;
-					}
-					break;
-			}
-			byte[] bytes;
-			var voice = new SpeechLib.SpVoice();
-			// Write into memory.
-			var stream = new SpeechLib.SpMemoryStream();
-			stream.Format.Type = t;
-			voice.AudioOutputStream = stream;
+			byte[] bytes = null;
+			var ms = new MemoryStream();
+			var synth = new SpeechSynthesizer();
+			synth.SetOutputToWaveStream(ms);
 			try
 			{
-				voice.Speak(xml, SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak);
+				var voice = synth.GetInstalledVoices().Cast<InstalledVoice>().FirstOrDefault(x => x.VoiceInfo.Id == voiceId);
+				synth.SelectVoice(voice.VoiceInfo.Name);
+				synth.SpeakSsml(xml);
+				bytes = ms.ToArray();
 			}
 			catch (Exception ex)
 			{
 				ex.Data.Add("Voice", "voiceName");
 				OnEvent(Exception, ex);
-				return null;
 			}
-			var spStream = (SpMemoryStream)voice.AudioOutputStream;
-			spStream.Seek(0, SpeechStreamSeekPositionType.SSSPTRelativeToStart);
-			bytes = (byte[])(object)spStream.GetData();
+			finally
+			{
+				synth.Dispose();
+				ms.Dispose();
+			}
+
 			return bytes;
 		}
 

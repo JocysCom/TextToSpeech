@@ -59,6 +59,11 @@ namespace JocysCom.TextToSpeech.Monitor
 				case VoiceGender.Neutral: Neutral = MaxVoice; break;
 				default: break;
 			}
+			var keys = System.Web.HttpUtility.ParseQueryString("");
+			keys.Add(_KeySource, VoiceSource.Local.ToString());
+			keys.Add(_KeyCulture, CultureName);
+			keys.Add(_KeyVoiceId, voice.Id);
+			SourceKeys = keys.ToString();
 		}
 
 		public override string ToString()
