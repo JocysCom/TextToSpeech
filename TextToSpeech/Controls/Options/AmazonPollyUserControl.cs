@@ -104,7 +104,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			var buffer = client.SynthesizeSpeech(voice.Id, text, null, engine);
 			var result = client.LastException == null ? "Success" : client.LastException.Message;
 			StatusTextBox.Text = string.Format("{0:HH:mm:ss}: {1}", DateTime.Now, result);
-			var item = Global.ConvertMp3ToPlatItem(buffer);
+			var item = Global.DecodeToPlayItem(buffer);
 			Global.playlist.Add(item);
 		}
 
