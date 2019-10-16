@@ -72,7 +72,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		int ParallelCount;
 		int ParallelTotal;
-		object ParalelReportLock = new object();
+		object ParallelReportLock = new object();
 		string ParalelLineFormat;
 
 		public void ParallelAction(List<RegionTaskSettings> settingsList, Func<RegionTaskSettings, string> action, string group, int parallelTasks = 16)
@@ -99,7 +99,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				result = string.Format("Exception: {0}", ex.Message);
 			}
 			// Report.
-			lock (ParalelReportLock)
+			lock (ParallelReportLock)
 			{
 				System.Threading.Interlocked.Increment(ref ParallelCount);
 				var percent = (decimal)ParallelCount / (decimal)ParallelTotal * 100m;
