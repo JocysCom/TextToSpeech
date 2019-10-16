@@ -213,7 +213,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			}).ToList();
 			var group = engine == null ? "All" : engine.Value;
 			ParallelAction(settingsList, GetVoices, group, 16);
-			AddStatus("Done\r\n");
+			AddStatus("{0} Done\r\n", group);
 			var list = new List<InstalledVoiceEx>();
 			foreach (var item in settingsList)
 				list.AddRange(item.Voices);

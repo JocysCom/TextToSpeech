@@ -120,10 +120,10 @@
   <data name="Help2Label.Text" xml:space="preserve">
     <value>2. Click on your user name at the top right of the page.
 3. Click on the "My Security Credentials" link from the drop-down menu.
-4. Find anc Click the "Access Keys" section.
+4. Find and click on the "Access Keys" section.
 5. Click "Create New Access Key".
-6. Click on the Show link in the same row, and
-7. Copy the "Access Key" and "Secret Key" into "TTS Monitor" Options
+6. Click on the "Show" link in the same row.
+7. Copy the "Access Key" and "Secret Key" into "TTS Monitor" Options.
 </value>
   </data>
 </root>
