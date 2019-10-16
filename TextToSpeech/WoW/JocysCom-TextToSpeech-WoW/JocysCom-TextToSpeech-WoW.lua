@@ -1,8 +1,10 @@
-﻿-- Show or hide frame names: /fstack
+﻿-- Extract current TOC Version (Interface) in chat window: /run print((select(4, GetBuildInfo())));
+-- Show errors (1) or hide errors (0): /console scriptErrors 1
+-- Show or hide frame names: /fstack
 -- Show events: /eventtrace
---#:\Program Files (x86)\World of Warcraft\WTF\Account\ACCOUNTNAME\SavedVariables.lua - Blizzard's saved variables.
---#:\Program Files (x86)\World of Warcraft\WTF\Account\ACCOUNTNAME\SavedVariables\JocysCom-TextToSpeech-WoW.lua - Per-account settings for each individual AddOn.
---#:\Program Files (x86)\World of Warcraft\WTF\Account\ACCOUNTNAME\RealmName\CharacterName\JocysCom-TextToSpeech-WoW.lua - Per-character settings for each individual AddOn.
+--#:\Program Files (x86)\World of Warcraft\_retail_\WTF\Account\ACCOUNTNAME\SavedVariables.lua - Blizzard's saved variables.
+--#:\Program Files (x86)\World of Warcraft\_retail_WTF\Account\ACCOUNTNAME\SavedVariables\JocysCom-TextToSpeech-WoW.lua - Per-account settings for each individual AddOn.
+--#:\Program Files (x86)\World of Warcraft\_retail_WTF\Account\ACCOUNTNAME\RealmName\CharacterName\JocysCom-TextToSpeech-WoW.lua - Per-character settings for each individual AddOn.
 
 -- Debug mode true(enabled) or false(disabled).
 local DebugEnabled = false

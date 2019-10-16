@@ -1,4 +1,3 @@
-#Show errors (1) or hide errors (0): /console scriptErrors 1
 #Extract current TOC Version (Interface) in chat window: /run print((select(4, GetBuildInfo())));
 
 ## Author: Jocys.com
