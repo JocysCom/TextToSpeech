@@ -1,6 +1,7 @@
 ﻿using JocysCom.ClassLibrary.Controls;
 using JocysCom.ClassLibrary.Runtime;
 using JocysCom.TextToSpeech.Monitor.Capturing;
+using SharpDX.Multimedia;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -195,29 +196,35 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			w.WriteAttributeString("xml:lang", vi.CultureName);
 			//w.WriteStartElement("lang");
 			//w.WriteAttributeString("xml:lang", vi.Language);
-			w.WriteStartElement("prosody");
+			string rateString = null;
 			// Convert -10 0 +10 to 50% 100% 400%
 			if (rate < 0)
-				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 25 / 2)));
-			if (rate >= 0)
-				w.WriteAttributeString("rate", string.Format("{0}%", 100 + (rate * 25)));
+				rateString = string.Format("{0}%", 100 + (rate * 10 / 2));
+			if (rate > 0)
+				rateString = string.Format("{0}%", 100 + (rate * 10));
+			string pitchString = null;
 			// Neural voices do not support pitch.
-			if (!isNeural)
+			// Convert -10 0 +10 to -100% +100%
+			if (!isNeural && pitch < 0)
+				pitchString = string.Format("-{0}%", pitch * 10);
+			if (!isNeural && pitch > 0)
+				pitchString = string.Format("+{0}%", pitch * 10);
+			//if (volume < 100)
+			//	// Convert 0 100 to -10dB 0dB
+			//	w.WriteAttributeString("volume", string.Format("-{0}db", (100 - volume) / 10));
+			if (rateString != null || pitchString != null)
 			{
-				// Convert -10 0 +10 to -100% +100%
-				if (pitch < 0)
-					w.WriteAttributeString("pitch", string.Format("-{0}%", pitch * 10));
-				if (pitch > 0)
-					w.WriteAttributeString("pitch", string.Format("+{0}%", pitch * 10));
-				//if (volume < 100)
-				//	// Convert 0 100 to -10dB 0dB
-				//	w.WriteAttributeString("volume", string.Format("-{0}db", (100 - volume) / 10));
+				w.WriteStartElement("prosody");
+				if (rateString != null)
+					w.WriteAttributeString("rate", rateString);
+				if (pitchString != null)
+					w.WriteAttributeString("pitch", rateString);
 			}
 			// Replace acronyms with full values.
 			text = SettingsManager.Current.ReplaceAcronyms(text);
 			w.WriteRaw(text);
-			w.WriteEndElement();
-			//w.WriteEndElement();
+			if (rateString != null || pitchString != null)
+				w.WriteEndElement();
 			w.WriteEndElement();
 			xml = sw.ToString();
 			w.Close();
@@ -340,9 +347,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		{
 			var vi = SelectedVoice;
 			var vol = (int)(((decimal)volume / 100m) * (decimal)SettingsManager.Options.Volume);
-			var xml = vi.Source == VoiceSource.Amazon
-				? GetSsmlXml(text, vi, vol, _Pitch, _Rate, isComment)
-				: GetSsmlXml(text, vi, vol, _Pitch, _Rate, isComment);
+			var xml = GetSsmlXml(text, vi, vol, _Pitch, _Rate, isComment);
 			return xml;
 		}
 
@@ -376,8 +381,29 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			else
 			{
 				string voiceId = query[InstalledVoiceEx._KeyVoiceId];
-				var wavBytes = ConvertSapiXmlToWav(voiceId, item.Xml, item.WavHead.SampleRate, item.WavHead.BitsPerSample, item.WavHead.Channels);
-				item.WavData = wavBytes;
+				var wavMs = new MemoryStream();
+				var success = ConvertSapiXmlToWav(voiceId, item.Xml, wavMs);
+				if (success)
+				{
+					wavMs.Position = 0;
+					var ad = new SharpDX.MediaFoundation.AudioDecoder(wavMs);
+					var ms = new MemoryStream();
+					var samples = ad.GetSamples();
+					var enumerator = samples.GetEnumerator();
+					while (enumerator.MoveNext())
+					{
+						var sample = enumerator.Current.ToArray();
+						ms.Write(sample, 0, sample.Length);
+					}
+					// Read WAV head.
+					item.WavHead = ad.WaveFormat;
+					// Read WAV data.
+					item.WavData = ms.ToArray();
+					item.Duration = (int)ad.Duration.TotalMilliseconds;
+					ad.Dispose();
+					ms.Dispose();
+					wavMs.Dispose();
+				}
 			}
 		}
 
@@ -411,18 +437,16 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		/// <summary>
 		/// Convert XML to WAV bytes. WAV won't have the header, so you have to add it separately.
 		/// </summary>
-		static byte[] ConvertSapiXmlToWav(string voiceId, string xml, int sampleRate, int bitsPerSample, int channelCount)
+		static bool ConvertSapiXmlToWav(string voiceId, string xml, Stream stream)
 		{
-			byte[] bytes = null;
-			var ms = new MemoryStream();
 			var synth = new SpeechSynthesizer();
-			synth.SetOutputToWaveStream(ms);
+			synth.SetOutputToWaveStream(stream);
 			try
 			{
 				var voice = synth.GetInstalledVoices().Cast<InstalledVoice>().FirstOrDefault(x => x.VoiceInfo.Id == voiceId);
 				synth.SelectVoice(voice.VoiceInfo.Name);
 				synth.SpeakSsml(xml);
-				bytes = ms.ToArray();
+				return true;
 			}
 			catch (Exception ex)
 			{
@@ -432,10 +456,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			finally
 			{
 				synth.Dispose();
-				ms.Dispose();
 			}
-
-			return bytes;
+			return false;
 		}
 
 		/// <summary>
