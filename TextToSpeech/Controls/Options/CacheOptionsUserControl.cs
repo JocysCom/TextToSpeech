@@ -95,6 +95,18 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ClearCacheBindings();
 			switch (SettingsManager.Options.CacheAudioFormat)
 			{
+				case CacheFileFormat.WAV:
+					CacheAudioChannelsComboBox.Enabled = true;
+					CacheAudioSampleRateComboBox.Enabled = true;
+					CacheAudioBitsPerSampleComboBox.Enabled = true;
+					CacheAudioAverageBitsPerSecondComboBox.Enabled = false;
+					CacheAudioBlockAlignComboBox.Enabled = false;
+					SettingsManager.Options.CacheAudioChannels = SettingsManager.Options.AudioChannels;
+					SettingsManager.Options.CacheAudioSampleRate = SettingsManager.Options.AudioSampleRate;
+					SettingsManager.Options.CacheAudioBitsPerSample = SettingsManager.Options.AudioBitsPerSample;
+					SettingsManager.Options.CacheAudioAverageBitsPerSecond = 96000;
+					SettingsManager.Options.CacheAudioBlockAlign = 2;
+					break;
 				case CacheFileFormat.MP3:
 					CacheAudioChannelsComboBox.Enabled = false;
 					CacheAudioSampleRateComboBox.Enabled = false;

@@ -4,7 +4,9 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 {
 	public enum CacheFileFormat
 	{
-		[Description("MPEG Audio Layer III (*.mp3")]
+		[Description("Waveform PCM (*.wav)")]
+		WAV,
+		[Description("MPEG Audio Layer III (*.mp3)")]
 		MP3,
 		/// <summary>
 		/// Data communication over the telephone network.

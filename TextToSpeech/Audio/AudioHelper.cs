@@ -158,7 +158,9 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			if (convertFormat == CacheFileFormat.ULaw || convertFormat == CacheFileFormat.ALaw)
 				fullName = Path.Combine(wavFi.Directory.FullName, fileName + "." + convertFormat.ToString().ToLower() + ".wav");
 			else if (convertFormat == CacheFileFormat.MP3)
-				fullName = Path.Combine(wavFi.Directory.FullName, fileName + ".mp3");
+				fullName = Path.Combine(wavFi.Directory.FullName, fileName + ".copy.mp3");
+			else if (convertFormat == CacheFileFormat.WAV)
+				fullName = Path.Combine(wavFi.Directory.FullName, fileName + ".copy.wav");
 			else
 				// Do nothing if format do not match.
 				return;
@@ -201,6 +203,16 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			else if (convertFormat == CacheFileFormat.MP3)
 			{
 				MediaFoundationEncoder.EncodeToMp3(reader, fullName, SettingsManager.Options.CacheAudioAverageBitsPerSecond);
+			}
+			else if (convertFormat == CacheFileFormat.WAV)
+			{
+				var destWav = new WaveFormat(
+					SettingsManager.Options.CacheAudioSampleRate,
+					SettingsManager.Options.CacheAudioBitsPerSample,
+					(int)SettingsManager.Options.CacheAudioChannels
+				);
+				using (var conversionStream2 = new WaveFormatConversionStream(destWav, reader))
+					WaveFileWriter.CreateWaveFile(fullName, conversionStream2);
 			}
 			reader.Dispose();
 		}
