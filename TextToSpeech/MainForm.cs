@@ -22,7 +22,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			Program.TopForm = this;
 			ControlsHelper.InitInvokeContext();
 			InitializeComponent();
-			if (IsDesignMode)
+			if (ControlsHelper.IsDesignMode(this))
 				return;
 			LoadSettings();
 			Audio.Global.InitGlobal(Handle);
@@ -158,8 +158,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			ControlsHelper.SetSelectedItem(AudioSampleRateComboBox, SettingsManager.Options.AudioSampleRate);
 			AudioSampleRateComboBox.SelectedIndexChanged += AudioSampleRateComboBox_SelectedIndexChanged;
 			// Audio Bits Per Sample.
-			AudioBitsPerSampleComboBox.DataSource = new int[] { 16 };
-			ControlsHelper.SetSelectedItem(AudioBitsPerSampleComboBox, SettingsManager.Options.AudioSampleRate);
+			AudioBitsPerSampleComboBox.DataSource = new int[] { 8, 16 };
+			ControlsHelper.SetSelectedItem(AudioBitsPerSampleComboBox, SettingsManager.Options.AudioBitsPerSample);
 			AudioBitsPerSampleComboBox.SelectedIndexChanged += AudioBitsPerSampleComboBox_SelectedIndexChanged;
 			// Gender.
 			GenderComboBox.DataSource = new object[] { MessageGender.Male, MessageGender.Female, MessageGender.Neutral };
@@ -211,7 +211,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		private void AudioBitsPerSampleComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			SettingsManager.Options.AudioSampleRate = (int)AudioBitsPerSampleComboBox.SelectedItem;
+			SettingsManager.Options.AudioBitsPerSample = (int)AudioBitsPerSampleComboBox.SelectedItem;
 		}
 
 		private void GenderComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -285,7 +285,8 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			if (IsDesignMode) return;
+			if (ControlsHelper.IsDesignMode(this))
+				return;
 			SettingsFile.Current.Load();
 			LastException = null;
 			MessagesDataGridView.AutoGenerateColumns = false;
