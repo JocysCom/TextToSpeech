@@ -1,5 +1,4 @@
 ﻿using JocysCom.TextToSpeech.Monitor.Capturing;
-using NAudio.Wave;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -290,6 +289,24 @@ namespace JocysCom.TextToSpeech.Monitor
 		int _CacheAudioBlockAlign = 2;
 
 		#endregion
+
+		#region Modify Speech Locally
+
+
+		[DefaultValue(true)]
+		public bool ModifyLocallyPitch { get { return _ModifyLocallyPitch; } set { _ModifyLocallyPitch = value; OnPropertyChanged(); } }
+		bool _ModifyLocallyPitch = true;
+
+		[DefaultValue(true)]
+		public bool ModifyLocallyRate { get { return _ModifyLocallyRate; } set { _ModifyLocallyRate = value; OnPropertyChanged(); } }
+		bool _ModifyLocallyRate = true;
+
+		[DefaultValue(true)]
+		public bool ModifyLocallyVolume { get { return _ModifyLocallyVolume; } set { _ModifyLocallyVolume = value; OnPropertyChanged(); } }
+		bool _ModifyLocallyVolume = true;
+
+		#endregion
+
 
 		#region INotifyPropertyChanged
 

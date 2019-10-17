@@ -28,10 +28,15 @@
 			this.SilenceBeforeTagLabel = new System.Windows.Forms.Label();
 			this.SplitMessageIntoSentencesCheckBox = new System.Windows.Forms.CheckBox();
 			this.SynthesizingOptionsGroupBox = new System.Windows.Forms.GroupBox();
+			this.ModifyVolumeLocallyCheckBox = new System.Windows.Forms.CheckBox();
+			this.ModifyRateLocallyCheckBox = new System.Windows.Forms.CheckBox();
+			this.ModifyPitchLocallyCheckBox = new System.Windows.Forms.CheckBox();
+			this.ModifyLocallyGroupBox = new System.Windows.Forms.GroupBox();
 			this.AddSilenceGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceBeforeNumericUpDown)).BeginInit();
 			this.SynthesizingOptionsGroupBox.SuspendLayout();
+			this.ModifyLocallyGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// AddSilenceGroupBox
@@ -184,17 +189,60 @@
 			// SynthesizingOptionsGroupBox
 			// 
 			this.SynthesizingOptionsGroupBox.Controls.Add(this.SplitMessageIntoSentencesCheckBox);
-			this.SynthesizingOptionsGroupBox.Location = new System.Drawing.Point(3, 110);
+			this.SynthesizingOptionsGroupBox.Location = new System.Drawing.Point(118, 110);
 			this.SynthesizingOptionsGroupBox.Name = "SynthesizingOptionsGroupBox";
-			this.SynthesizingOptionsGroupBox.Size = new System.Drawing.Size(262, 50);
+			this.SynthesizingOptionsGroupBox.Size = new System.Drawing.Size(253, 44);
 			this.SynthesizingOptionsGroupBox.TabIndex = 3;
 			this.SynthesizingOptionsGroupBox.TabStop = false;
 			this.SynthesizingOptionsGroupBox.Text = "Synthesizing Options";
+			// 
+			// ModifyVolumeLocallyCheckBox
+			// 
+			this.ModifyVolumeLocallyCheckBox.AutoSize = true;
+			this.ModifyVolumeLocallyCheckBox.Location = new System.Drawing.Point(6, 65);
+			this.ModifyVolumeLocallyCheckBox.Name = "ModifyVolumeLocallyCheckBox";
+			this.ModifyVolumeLocallyCheckBox.Size = new System.Drawing.Size(61, 17);
+			this.ModifyVolumeLocallyCheckBox.TabIndex = 2;
+			this.ModifyVolumeLocallyCheckBox.Text = "Volume";
+			this.ModifyVolumeLocallyCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ModifyRateLocallyCheckBox
+			// 
+			this.ModifyRateLocallyCheckBox.AutoSize = true;
+			this.ModifyRateLocallyCheckBox.Location = new System.Drawing.Point(6, 42);
+			this.ModifyRateLocallyCheckBox.Name = "ModifyRateLocallyCheckBox";
+			this.ModifyRateLocallyCheckBox.Size = new System.Drawing.Size(49, 17);
+			this.ModifyRateLocallyCheckBox.TabIndex = 2;
+			this.ModifyRateLocallyCheckBox.Text = "Rate";
+			this.ModifyRateLocallyCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ModifyPitchLocallyCheckBox
+			// 
+			this.ModifyPitchLocallyCheckBox.AutoSize = true;
+			this.ModifyPitchLocallyCheckBox.Location = new System.Drawing.Point(6, 19);
+			this.ModifyPitchLocallyCheckBox.Name = "ModifyPitchLocallyCheckBox";
+			this.ModifyPitchLocallyCheckBox.Size = new System.Drawing.Size(50, 17);
+			this.ModifyPitchLocallyCheckBox.TabIndex = 2;
+			this.ModifyPitchLocallyCheckBox.Text = "Pitch";
+			this.ModifyPitchLocallyCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// ModifyLocallyGroupBox
+			// 
+			this.ModifyLocallyGroupBox.Controls.Add(this.ModifyVolumeLocallyCheckBox);
+			this.ModifyLocallyGroupBox.Controls.Add(this.ModifyPitchLocallyCheckBox);
+			this.ModifyLocallyGroupBox.Controls.Add(this.ModifyRateLocallyCheckBox);
+			this.ModifyLocallyGroupBox.Location = new System.Drawing.Point(3, 110);
+			this.ModifyLocallyGroupBox.Name = "ModifyLocallyGroupBox";
+			this.ModifyLocallyGroupBox.Size = new System.Drawing.Size(109, 89);
+			this.ModifyLocallyGroupBox.TabIndex = 3;
+			this.ModifyLocallyGroupBox.TabStop = false;
+			this.ModifyLocallyGroupBox.Text = "Modify Locally";
 			// 
 			// GeneralOptionsUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.ModifyLocallyGroupBox);
 			this.Controls.Add(this.SynthesizingOptionsGroupBox);
 			this.Controls.Add(this.AddSilenceGroupBox);
 			this.Name = "GeneralOptionsUserControl";
@@ -206,6 +254,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceBeforeNumericUpDown)).EndInit();
 			this.SynthesizingOptionsGroupBox.ResumeLayout(false);
 			this.SynthesizingOptionsGroupBox.PerformLayout();
+			this.ModifyLocallyGroupBox.ResumeLayout(false);
+			this.ModifyLocallyGroupBox.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -225,5 +275,9 @@
 		private System.Windows.Forms.Label SilenceBeforeTagLabel;
 		private System.Windows.Forms.CheckBox SplitMessageIntoSentencesCheckBox;
 		private System.Windows.Forms.GroupBox SynthesizingOptionsGroupBox;
+		private System.Windows.Forms.CheckBox ModifyPitchLocallyCheckBox;
+		private System.Windows.Forms.CheckBox ModifyVolumeLocallyCheckBox;
+		private System.Windows.Forms.CheckBox ModifyRateLocallyCheckBox;
+		private System.Windows.Forms.GroupBox ModifyLocallyGroupBox;
 	}
 }

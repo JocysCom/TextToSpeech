@@ -19,6 +19,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			ControlsHelper.AddDataBinding(AddSilenceBeforeNumericUpDown, SettingsManager.Options, x => x.AddSilenceBeforeMessage);
 			ControlsHelper.AddDataBinding(AddSilenceAfterNumericUpDown, SettingsManager.Options, x => x.AddSilenceAfterMessage);
 			ControlsHelper.AddDataBinding(SplitMessageIntoSentencesCheckBox, SettingsManager.Options, x => x.SplitMessageIntoSentences);
+			// Modify locally settings.
+			ControlsHelper.AddDataBinding(ModifyPitchLocallyCheckBox, SettingsManager.Options, x => x.ModifyLocallyPitch);
+			ControlsHelper.AddDataBinding(ModifyPitchLocallyCheckBox, SettingsManager.Options, x => x.ModifyLocallyRate);
+			ControlsHelper.AddDataBinding(ModifyPitchLocallyCheckBox, SettingsManager.Options, x => x.ModifyLocallyVolume);
 			SettingsManager.Options.PropertyChanged += Options_PropertyChanged;
 			EnumeratePlaybackDevices();
 			SilenceBefore();
