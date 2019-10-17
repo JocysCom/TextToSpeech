@@ -211,7 +211,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				if (vi.Source == VoiceSource.Amazon)
 					pitchString = string.Format("{0:+0;-0;0}%", pitch * 10);
 				else
-					pitchString = string.Format("{0:+0;-0;0}st", pitch);
+					pitchString = string.Format("{0:+0;-0;0}", pitch);
 			//if (volume < 100)
 			//	// Convert 0 100 to -10dB 0dB
 			//	w.WriteAttributeString("volume", string.Format("-{0}db", (100 - volume) / 10));
