@@ -34,21 +34,18 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		/// <summary>NPC Name.</summary>
 		[DefaultValue(null)]
-		public string Name
-		{
-			get { return _Name; }
-			set { _Name = value; OnPropertyChanged(); }
-		}
+		public string Name { get { return _Name; } set { _Name = value; OnPropertyChanged(); } }
 		string _Name;
 
 		/// <summary>NPC Gender.</summary>
 		[DefaultValue(null)]
-		public MessageGender Gender
-		{
-			get { return _Gender; }
-			set { _Gender = value; OnPropertyChanged(); }
-		}
+		public MessageGender Gender { get { return _Gender; } set { _Gender = value; OnPropertyChanged(); } }
 		MessageGender _Gender;
+
+		/// <summary>Volume.</summary>
+		[DefaultValue(100)]
+		public int Volume { get { return _Volume; } set { _Volume = value; OnPropertyChanged(); } }
+		int _Volume;
 
 		/// <summary>NPC Effect.</summary>
 		[DefaultValue(null)]

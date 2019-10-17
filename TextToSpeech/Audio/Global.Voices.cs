@@ -225,31 +225,42 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			w.WriteAttributeString("xml:lang", vi.CultureName);
 			//w.WriteStartElement("lang");
 			//w.WriteAttributeString("xml:lang", vi.Language);
-			string rateString = null;
-			// Convert -10 0 +10 to 50% 100% 400%
-			if (rate != 0)
-			{
-				//var ratep = 100 + (rate * 10 / 2);
-				rateString = string.Format("{0:+0;-0;0}%", rate * 10);
-			}
+			// Modify: Pitch.
 			string pitchString = null;
-			// Neural voices do not support pitch.
-			// Convert -10 0 +10 to -100% +100%
-			if (!isNeural && pitch != 0)
+			if (!SettingsManager.Options.ModifyLocallyPitch && !isNeural && pitch != 0)
+			{
 				if (vi.Source == VoiceSource.Amazon)
 					pitchString = string.Format("{0:+0;-0;0}%", pitch * 10);
 				else
 					pitchString = string.Format("{0:+0;-0;0}", pitch);
-			//if (volume < 100)
-			//	// Convert 0 100 to -10dB 0dB
-			//	w.WriteAttributeString("volume", string.Format("-{0}db", (100 - volume) / 10));
-			if (rateString != null || pitchString != null)
+			}
+			// Modify: Rate.
+			string rateString = null;
+			if (!SettingsManager.Options.ModifyLocallyRate && rate != 0)
+			{
+				// Convert -10 0 +10 to 50% 100% 400%
+				rateString = string.Format("{0:+0;-0;0}%", rate * 10);
+			}
+			// Neural voices do not support pitch.
+			string volumeString = null;
+			if (!SettingsManager.Options.ModifyLocallyVolume && volume < 100)
+			{
+				// Convert -10 0 +10 to -100% +100%
+				// Convert 0 100 to -10dB 0dB
+				if (vi.Source == VoiceSource.Amazon)
+					volumeString = string.Format("-{0}db", (100 - volume) / 10);
+				else
+					volumeString = string.Format("-{0}db", (100 - volume) / 10);
+			}
+			if (rateString != null || pitchString != null || volumeString != null)
 			{
 				w.WriteStartElement("prosody");
-				if (rateString != null)
-					w.WriteAttributeString("rate", rateString);
 				if (pitchString != null)
 					w.WriteAttributeString("pitch", pitchString);
+				if (rateString != null)
+					w.WriteAttributeString("rate", rateString);
+				if (volumeString != null)
+					w.WriteAttributeString("volume", volumeString);
 			}
 			// Replace acronyms with full values.
 			text = SettingsManager.Current.ReplaceAcronyms(text);
@@ -354,6 +365,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					item.Name = name;
 					item.Gender = _gender;
 					item.Effect = effect;
+					item.Volume = volume;
 					// Set data properties.
 					item.Status = JobStatusType.Parsed;
 					item.IsComment = comment;
@@ -597,8 +609,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 						}
 						if (item.WavData != null)
 						{
-							// If apply Local pitch effect then...
-							if (true)
+							var applyRate = SettingsManager.Options.ModifyLocallyRate && _Rate != 0;
+							var applyPitch = SettingsManager.Options.ModifyLocallyPitch && _Pitch != 0;
+							var applyVolume = SettingsManager.Options.ModifyLocallyVolume && item.Volume < 100;
+							if (applyRate || applyPitch)
 							{
 								var parameters = new SoundStretch.RunParameters();
 								parameters.TempoDelta = ((float)Math.Pow(1.1, _Rate) - 1f) * 100f;
@@ -609,6 +623,23 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 								inStream.Position = 0;
 								var outStream = new MemoryStream();
 								SoundStretch.SoundTouchHelper.Process(inStream, outStream, parameters);
+								var outBytes = outStream.ToArray();
+								var pi = DecodeToPlayItem(outBytes);
+								item.WavHead = pi.WavHead;
+								item.WavData = pi.WavData;
+								item.Duration = pi.Duration;
+								pi.Dispose();
+								inStream.Dispose();
+								outStream.Dispose();
+							}
+							if (applyVolume)
+							{
+								var inStream = new MemoryStream();
+								AudioHelper.Write(item, inStream);
+								inStream.Position = 0;
+								var vol = (float)item.Volume / 100f;
+								var outStream = new MemoryStream();
+								AudioHelper.ChangeVolume(vol, inStream, outStream);
 								var outBytes = outStream.ToArray();
 								var pi = DecodeToPlayItem(outBytes);
 								item.WavHead = pi.WavHead;

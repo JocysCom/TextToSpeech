@@ -177,7 +177,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			// https://www.codeproject.com/Articles/501521/How-to-convert-between-most-audio-formats-in-NET
 			source.Position = 0;
 			var reader = new WaveFileReader(source);
-			if (convertFormat == CacheFileFormat.ULaw || convertFormat == CacheFileFormat.ALaw)
+		   if (convertFormat == CacheFileFormat.ULaw || convertFormat == CacheFileFormat.ALaw)
 			{
 				// The ACM mu-law encoder expects its input to be 16 bit.
 				// If you're working with mu or a-law, the sample rate is likely to be low as well.
@@ -215,6 +215,14 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					WaveFileWriter.CreateWaveFile(fullName, conversionStream2);
 			}
 			reader.Dispose();
+		}
+
+		public static void ChangeVolume(float volume, Stream source, Stream target)
+		{
+			var reader = new WaveFileReader(source);
+			var vp = new VolumeWaveProvider16(reader);
+			vp.Volume = volume;
+			WaveFileWriter.WriteWavFileToStream(target, vp);
 		}
 
 		public static void Write(PlayItem item, FileInfo wavFi)
