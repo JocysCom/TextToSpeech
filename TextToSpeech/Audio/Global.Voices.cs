@@ -186,6 +186,34 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var query = System.Web.HttpUtility.ParseQueryString(vi.SourceKeys ?? "");
 			var isNeural = query[InstalledVoiceEx._KeyEngine] == Amazon.Polly.Engine.Neural;
 
+			
+			// Percentage could be calculated from: var percent = Math.Pow(1.1, rate);
+			// 
+			//	-10	38.6%
+			//	-9	42.4%
+			//	-8	46.7%
+			//	-7	51.3%
+			//	-6	56.4%
+			//	-5	62.1%
+			//	-4	68.3%
+			//	-3	75.1%
+			//	-2	82.6%
+			//	-1	90.9%
+			//	0	100.0%
+			//	1	110.0%
+			//	2	121.0%
+			//	3	133.1%
+			//	4	146.4%
+			//	5	161.1%
+			//	6	177.2%
+			//	7	194.9%
+			//	8	214.4%
+			//	9	235.8%
+			//	10	259.4%
+
+
+
+
 			string xml;
 			string name = vi.Name;
 			var sw = new StringWriter();
