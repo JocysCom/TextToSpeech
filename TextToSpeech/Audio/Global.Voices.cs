@@ -186,7 +186,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var query = System.Web.HttpUtility.ParseQueryString(vi.SourceKeys ?? "");
 			var isNeural = query[InstalledVoiceEx._KeyEngine] == Amazon.Polly.Engine.Neural;
 
-			
+
 			// Percentage could be calculated from: var percent = Math.Pow(1.1, rate);
 			// 
 			//	-10	38.6%
@@ -597,6 +597,27 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 						}
 						if (item.WavData != null)
 						{
+							// If apply Local pitch effect then...
+							if (true)
+							{
+								var parameters = new SoundStretch.RunParameters();
+								parameters.TempoDelta = ((float)Math.Pow(1.1, _Rate) - 1f) * 100f;
+								parameters.PitchDelta = (float)_Pitch;
+								parameters.Speech = true;
+								var inStream = new MemoryStream();
+								AudioHelper.Write(item, inStream);
+								inStream.Position = 0;
+								var outStream = new MemoryStream();
+								SoundStretch.SoundTouchHelper.Process(inStream, outStream, parameters);
+								var outBytes = outStream.ToArray();
+								var pi = DecodeToPlayItem(outBytes);
+								item.WavHead = pi.WavHead;
+								item.WavData = pi.WavData;
+								item.Duration = pi.Duration;
+								pi.Dispose();
+								inStream.Dispose();
+								outStream.Dispose();
+							}
 							if (SettingsManager.Options.CacheDataWrite || SettingsManager.Options.CacheAudioConvert)
 							{
 								// Create directory if not exists.
