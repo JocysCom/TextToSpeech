@@ -199,17 +199,19 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			//w.WriteAttributeString("xml:lang", vi.Language);
 			string rateString = null;
 			// Convert -10 0 +10 to 50% 100% 400%
-			if (rate < 0)
-				rateString = string.Format("{0}%", 100 + (rate * 10 / 2));
-			if (rate > 0)
-				rateString = string.Format("{0}%", 100 + (rate * 10));
+			if (rate != 0)
+			{
+				//var ratep = 100 + (rate * 10 / 2);
+				rateString = string.Format("{0:+0;-0;0}%", rate * 10);
+			}
 			string pitchString = null;
 			// Neural voices do not support pitch.
 			// Convert -10 0 +10 to -100% +100%
-			if (!isNeural && pitch < 0)
-				pitchString = string.Format("-{0}%", pitch * 10);
-			if (!isNeural && pitch > 0)
-				pitchString = string.Format("+{0}%", pitch * 10);
+			if (!isNeural && pitch != 0)
+				if (vi.Source == VoiceSource.Amazon)
+					pitchString = string.Format("{0:+0;-0;0}%", pitch * 10);
+				else
+					pitchString = string.Format("{0:+0;-0;0}st", pitch);
 			//if (volume < 100)
 			//	// Convert 0 100 to -10dB 0dB
 			//	w.WriteAttributeString("volume", string.Format("-{0}db", (100 - volume) / 10));
@@ -219,7 +221,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				if (rateString != null)
 					w.WriteAttributeString("rate", rateString);
 				if (pitchString != null)
-					w.WriteAttributeString("pitch", rateString);
+					w.WriteAttributeString("pitch", pitchString);
 			}
 			// Replace acronyms with full values.
 			text = SettingsManager.Current.ReplaceAcronyms(text);
