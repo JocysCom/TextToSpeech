@@ -31,18 +31,12 @@
 			this.TabsImageList = new System.Windows.Forms.ImageList(this.components);
 			this.MessagesTabControl = new System.Windows.Forms.TabControl();
 			this.VoicesTabPage = new System.Windows.Forms.TabPage();
-			this.VoicesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesUserControl();
 			this.VoiceErrorLabel = new System.Windows.Forms.Label();
 			this.VoiceDefaultsTabPage = new System.Windows.Forms.TabPage();
-			this.VoiceDefaultsPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesDefaultsUserControl();
 			this.SoundsTabPage = new System.Windows.Forms.TabPage();
-			this.SoundsPanel = new JocysCom.TextToSpeech.Monitor.Controls.SoundsUserControl();
 			this.AcronymsTabPage = new System.Windows.Forms.TabPage();
-			this.acronymsUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.AcronymsUserControl();
 			this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
-			this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
 			this.OptionsTabPage = new System.Windows.Forms.TabPage();
-			this.OptionsPanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsControl();
 			this.HelpTabPage = new System.Windows.Forms.TabPage();
 			this.AboutRichTextBox = new System.Windows.Forms.RichTextBox();
 			this.UpdateTabPage = new System.Windows.Forms.TabPage();
@@ -136,11 +130,6 @@
 			this.ProgramComboBox = new System.Windows.Forms.ComboBox();
 			this.MessagesTabControl.SuspendLayout();
 			this.VoicesTabPage.SuspendLayout();
-			this.VoiceDefaultsTabPage.SuspendLayout();
-			this.SoundsTabPage.SuspendLayout();
-			this.AcronymsTabPage.SuspendLayout();
-			this.EffectsPresetsEditorTabPage.SuspendLayout();
-			this.OptionsTabPage.SuspendLayout();
 			this.HelpTabPage.SuspendLayout();
 			this.UpdateTabPage.SuspendLayout();
 			this.EffectTabControl.SuspendLayout();
@@ -205,7 +194,6 @@
 			// 
 			// VoicesTabPage
 			// 
-			this.VoicesTabPage.Controls.Add(this.VoicesPanel);
 			this.VoicesTabPage.Controls.Add(this.VoiceErrorLabel);
 			this.VoicesTabPage.ImageKey = "Businessman.png";
 			this.VoicesTabPage.Location = new System.Drawing.Point(4, 27);
@@ -213,14 +201,6 @@
 			this.VoicesTabPage.Size = new System.Drawing.Size(816, 266);
 			this.VoicesTabPage.TabIndex = 3;
 			this.VoicesTabPage.Text = "Voices";
-			// 
-			// VoicesPanel
-			// 
-			this.VoicesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.VoicesPanel.Location = new System.Drawing.Point(0, 0);
-			this.VoicesPanel.Name = "VoicesPanel";
-			this.VoicesPanel.Size = new System.Drawing.Size(816, 247);
-			this.VoicesPanel.TabIndex = 2;
 			// 
 			// VoiceErrorLabel
 			// 
@@ -238,7 +218,6 @@
 			// VoiceDefaultsTabPage
 			// 
 			this.VoiceDefaultsTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.VoiceDefaultsTabPage.Controls.Add(this.VoiceDefaultsPanel);
 			this.VoiceDefaultsTabPage.ImageKey = "BusinessPeople.png";
 			this.VoiceDefaultsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.VoiceDefaultsTabPage.Name = "VoiceDefaultsTabPage";
@@ -246,18 +225,9 @@
 			this.VoiceDefaultsTabPage.TabIndex = 5;
 			this.VoiceDefaultsTabPage.Text = "Voice Defaults";
 			// 
-			// VoiceDefaultsPanel
-			// 
-			this.VoiceDefaultsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.VoiceDefaultsPanel.Location = new System.Drawing.Point(0, 0);
-			this.VoiceDefaultsPanel.Name = "VoiceDefaultsPanel";
-			this.VoiceDefaultsPanel.Size = new System.Drawing.Size(816, 266);
-			this.VoiceDefaultsPanel.TabIndex = 0;
-			// 
 			// SoundsTabPage
 			// 
 			this.SoundsTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.SoundsTabPage.Controls.Add(this.SoundsPanel);
 			this.SoundsTabPage.ImageKey = "Music.png";
 			this.SoundsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.SoundsTabPage.Name = "SoundsTabPage";
@@ -265,18 +235,9 @@
 			this.SoundsTabPage.TabIndex = 7;
 			this.SoundsTabPage.Text = "Intro Sounds";
 			// 
-			// SoundsPanel
-			// 
-			this.SoundsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.SoundsPanel.Location = new System.Drawing.Point(0, 0);
-			this.SoundsPanel.Name = "SoundsPanel";
-			this.SoundsPanel.Size = new System.Drawing.Size(816, 266);
-			this.SoundsPanel.TabIndex = 0;
-			// 
 			// AcronymsTabPage
 			// 
 			this.AcronymsTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.AcronymsTabPage.Controls.Add(this.acronymsUserControl1);
 			this.AcronymsTabPage.ImageKey = "Acronyms_16x16.png";
 			this.AcronymsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.AcronymsTabPage.Name = "AcronymsTabPage";
@@ -284,17 +245,8 @@
 			this.AcronymsTabPage.TabIndex = 9;
 			this.AcronymsTabPage.Text = "Acronyms";
 			// 
-			// acronymsUserControl1
-			// 
-			this.acronymsUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.acronymsUserControl1.Location = new System.Drawing.Point(0, 0);
-			this.acronymsUserControl1.Name = "acronymsUserControl1";
-			this.acronymsUserControl1.Size = new System.Drawing.Size(816, 266);
-			this.acronymsUserControl1.TabIndex = 0;
-			// 
 			// EffectsPresetsEditorTabPage
 			// 
-			this.EffectsPresetsEditorTabPage.Controls.Add(this.EffectPresetsEditorSoundEffectsControl);
 			this.EffectsPresetsEditorTabPage.ImageKey = "Window_Effects_Editor.png";
 			this.EffectsPresetsEditorTabPage.Location = new System.Drawing.Point(4, 27);
 			this.EffectsPresetsEditorTabPage.Name = "EffectsPresetsEditorTabPage";
@@ -302,34 +254,15 @@
 			this.EffectsPresetsEditorTabPage.TabIndex = 1;
 			this.EffectsPresetsEditorTabPage.Text = "Efect Preset Editor";
 			// 
-			// EffectPresetsEditorSoundEffectsControl
-			// 
-			this.EffectPresetsEditorSoundEffectsControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
-			this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
-			this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-			this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
-			this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
-			this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
-			// 
 			// OptionsTabPage
 			// 
 			this.OptionsTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.OptionsTabPage.Controls.Add(this.OptionsPanel);
 			this.OptionsTabPage.ImageKey = "Options_16x16.png";
 			this.OptionsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.OptionsTabPage.Name = "OptionsTabPage";
 			this.OptionsTabPage.Size = new System.Drawing.Size(816, 266);
 			this.OptionsTabPage.TabIndex = 8;
 			this.OptionsTabPage.Text = "Options";
-			// 
-			// OptionsPanel
-			// 
-			this.OptionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.OptionsPanel.Location = new System.Drawing.Point(0, 0);
-			this.OptionsPanel.Name = "OptionsPanel";
-			this.OptionsPanel.Size = new System.Drawing.Size(816, 266);
-			this.OptionsPanel.TabIndex = 0;
 			// 
 			// HelpTabPage
 			// 
@@ -456,7 +389,7 @@
 			this.EffectTabPage.Name = "EffectTabPage";
 			this.EffectTabPage.Size = new System.Drawing.Size(228, 266);
 			this.EffectTabPage.TabIndex = 0;
-			this.EffectTabPage.Text = "Effect Presets";
+			this.EffectTabPage.Text = "Sound Card Effect Presets";
 			this.EffectTabPage.UseVisualStyleBackColor = true;
 			// 
 			// EffectsPresetsDataGridView
@@ -1569,11 +1502,6 @@
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.MessagesTabControl.ResumeLayout(false);
 			this.VoicesTabPage.ResumeLayout(false);
-			this.VoiceDefaultsTabPage.ResumeLayout(false);
-			this.SoundsTabPage.ResumeLayout(false);
-			this.AcronymsTabPage.ResumeLayout(false);
-			this.EffectsPresetsEditorTabPage.ResumeLayout(false);
-			this.OptionsTabPage.ResumeLayout(false);
 			this.HelpTabPage.ResumeLayout(false);
 			this.UpdateTabPage.ResumeLayout(false);
 			this.EffectTabControl.ResumeLayout(false);
@@ -1614,7 +1542,6 @@
         private System.Windows.Forms.ContextMenuStrip MessagesContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem MessagesClearToolStripMenuItem;
         private System.Windows.Forms.TabPage EffectsPresetsEditorTabPage;
-        private Controls.SoundEffectsControl EffectPresetsEditorSoundEffectsControl;
         private System.Windows.Forms.TabControl EffectTabControl;
         private System.Windows.Forms.TabPage EffectTabPage;
         private System.Windows.Forms.DataGridView EffectsPresetsDataGridView;
@@ -1671,8 +1598,6 @@
         private System.Windows.Forms.Label UpdateLabel;
         private System.Windows.Forms.Button UpdateButton;
 		private System.Windows.Forms.TabPage VoiceDefaultsTabPage;
-		private Controls.VoicesDefaultsUserControl VoiceDefaultsPanel;
-        private Controls.SoundsUserControl SoundsPanel;
         public System.Windows.Forms.Label MainHelpLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListStatusColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn CommentColumn;
@@ -1689,7 +1614,6 @@
 		private System.Windows.Forms.ToolStripStatusLabel EmptyStatusLabel;
 		private System.Windows.Forms.ToolStripStatusLabel FilterStatusLabel;
 		private System.Windows.Forms.TabPage AcronymsTabPage;
-		private Controls.AcronymsUserControl acronymsUserControl1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn DestinationAddressColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn SequenceNumberColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn WowDataLength;
@@ -1704,10 +1628,8 @@
 		private System.Windows.Forms.Label InGenderLabel;
 		private System.Windows.Forms.Label InNameLabel;
 		private System.Windows.Forms.Label InLanguageLabel;
-		private Controls.VoicesUserControl VoicesPanel;
 		public System.Windows.Forms.TabControl MessagesTabControl;
 		public System.Windows.Forms.TabPage OptionsTabPage;
-		public Controls.OptionsControl OptionsPanel;
 	}
 }
 
