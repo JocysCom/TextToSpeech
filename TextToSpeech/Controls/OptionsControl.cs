@@ -16,9 +16,9 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				return;
 			var isElevated = JocysCom.ClassLibrary.Security.PermissionHelper.IsElevated;
 			//// Hide clipboard for later.
-			//OptionsTabControl.TabPages.Remove(MonitorClipBoardTabPage);
+			OptionsTabControl.TabPages.Remove(MonitorClipBoardTabPage);
 			//// Make Google Cloud invisible, because it is not finished yet.
-			//OptionsTabControl.TabPages.Remove(GoogleTTSTabPage);
+			OptionsTabControl.TabPages.Remove(GoogleTTSTabPage);
 			//ControlsHelper.ApplyImageStyle(OptionsTabControl);
 		}
 
