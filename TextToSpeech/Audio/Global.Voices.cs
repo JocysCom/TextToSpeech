@@ -389,8 +389,9 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public static string ConvertTextToXml(string text, bool isComment = false, int volume = 100)
 		{
 			var vi = SelectedVoice;
-			var vol = (int)(((decimal)volume / 100m) * (decimal)SettingsManager.Options.Volume);
-			var xml = GetSsmlXml(text, vi, vol, _Pitch, _Rate, isComment);
+			// Apply 'message' volume and playback volume.
+			//var vol = (int)(((decimal)volume / 100m) * (decimal)SettingsManager.Options.Volume);
+			var xml = GetSsmlXml(text, vi, volume, _Pitch, _Rate, isComment);
 			return xml;
 		}
 

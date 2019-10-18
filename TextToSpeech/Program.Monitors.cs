@@ -134,6 +134,7 @@ namespace JocysCom.TextToSpeech.Monitor
 				if (blockAlignment != SettingsManager.Options.CacheAudioBlockAlign)
 					SettingsManager.Options.CacheAudioBlockAlign = blockAlignment;
 			}
+
 		}
 
 	}

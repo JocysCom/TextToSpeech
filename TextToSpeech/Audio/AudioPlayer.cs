@@ -1,6 +1,7 @@
 ﻿using SharpDX.DirectSound;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 
 namespace JocysCom.TextToSpeech.Monitor.Audio
@@ -22,6 +23,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		IntPtr _Handle;
 		public SecondarySoundBuffer ApplicationBuffer = null;
 		DirectSound ApplicationDevice = null;
+
+		[DefaultValue(100)]
+		public int Volume { get { return _Volume; } set { _Volume = value; } }
+		int _Volume = 100;
 
 		public byte[] GetBytes(Stream stream)
 		{
@@ -72,8 +77,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			desc.Flags =
 				// Play sound even if application loses focus.
 				BufferFlags.GlobalFocus |
-				// This has to be true to use effects.
-				BufferFlags.ControlEffects;
+				// Allow to control Effects.
+				BufferFlags.ControlEffects |
+				// Allow to control Volume
+				BufferFlags.ControlVolume;
 			desc.BufferBytes = wavBytes.Length;
 			// Create and set the buffer for playing the sound.
 			ApplicationBuffer = new SecondarySoundBuffer(ApplicationDevice, desc);
@@ -93,6 +100,13 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				ev(this, new EventArgs());
 			// If there is no sound then go to "Playback Devices", select your device,
 			// Press [Configure] button, press [Test] button to see if all speaker are producing sound.
+			// Volume ranges from -10000 (-100dB silent) to 0 (maximum) and represents the attenuation, in hundredths of a decibel(dB).
+			// 10dB increase is required before a sound is perceived to be twice as loud.
+			//var power = 10f / 3f;
+			var power = 4f;
+			var doublePowerDb = 6f;
+			var volume = (int)(-Math.Pow(100f - (float)Volume, power) / Math.Pow(50f, power) * doublePowerDb * 100f);
+			ab.Volume = Math.Max(volume, -10000);
 			ab.Play(0, PlayFlags.None);
 		}
 

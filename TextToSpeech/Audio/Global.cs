@@ -42,8 +42,17 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			EffectsPlayer.ChangeAudioDevice();
 			playlist = new BindingList<PlayItem>();
 			playlist.ListChanged += playlist_ListChanged;
-			// Track Amazon polly errors globally.
+			// Track Amazon Polly errors globally.
 			Voices.AmazonPolly.Exception += AmazonPolly_Exception;
+			SettingsManager.Options.PropertyChanged += Options_PropertyChanged;
+		}
+
+		private static void Options_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(SettingsManager.Options.Volume))
+			{
+				WavPlayer.Volume = SettingsManager.Options.Volume;
+			}
 		}
 
 		private static void AmazonPolly_Exception(object sender, EventArgs<Exception> e)
@@ -106,10 +115,11 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var stream = GetIntroSound(introSound);
 			if (stream != null)
 			{
-				var player = new AudioPlayer(Handle);
-				player.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
-				player.Load(stream);
-				player.Play();
+				var introSoundPlayer = new AudioPlayer(Handle);
+				introSoundPlayer.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
+				introSoundPlayer.Load(stream);
+				introSoundPlayer.Volume = SettingsManager.Options.Volume;
+				introSoundPlayer.Play();
 			}
 		}
 
@@ -118,10 +128,11 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var stream = GetIntroSound("Radio2");
 			if (stream != null)
 			{
-				var player = new AudioPlayer(Handle);
-				player.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
-				player.Load(stream);
-				player.Play();
+				var logSoundPlayer = new AudioPlayer(Handle);
+				logSoundPlayer.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
+				logSoundPlayer.Load(stream);
+				logSoundPlayer.Volume = SettingsManager.Options.Volume;
+				logSoundPlayer.Play();
 			}
 		}
 
@@ -164,6 +175,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 							// Takes WAV bytes without header.
 							WavPlayer.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
 							var duration = (int)WavPlayer.Load(pitchedItem.StreamData);
+							WavPlayer.Volume = SettingsManager.Options.Volume;
 							WavPlayer.Play();
 							// Start timer which will reset status to Played
 							pitchedItem.Duration = duration;
@@ -178,6 +190,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 							// Takes WAV bytes without header.
 							EffectsPlayer.ChangeAudioDevice(SettingsManager.Options.PlaybackDevice);
 							EffectsPlayer.Load(pitchedItem.WavData, sampleRate, bitsPerSample, channelCount);
+							EffectsPlayer.Volume = SettingsManager.Options.Volume;
 							EffectsPlayer.Play();
 							// Start timer which will reset status to Played
 							pitchedItem.StartPlayTimer();
