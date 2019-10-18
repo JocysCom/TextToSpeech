@@ -12,25 +12,37 @@ You can compare various voices below:
 
 <table>
 <tr>
-<td><img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Female.png" /></td>
-<td><img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Male.png" /></td>
-<td><img src="http://www.jocys.com/TTS/Images/Icon_INV_Misc_Head_Dragon_Nexus.png" /></td>
-<td><img src="http://www.jocys.com/TTS/Images/Icon_INV_Misc_Head_ClockworkGnome_01.png" /></td>
+<td>Brand</td><td>Quality</td>
+<td><img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Female.png" />
+
+Female</td>
+<td><img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Male.png" />
+
+Male</td>
+<td><img src="http://www.jocys.com/TTS/Images/Icon_INV_Misc_Head_Dragon_Nexus.png" />
+
+Dragonkin</td>
+<td><img src="http://www.jocys.com/TTS/Images/Icon_INV_Misc_Head_ClockworkGnome_01.png" />
+
+Mechanical</td>
 </tr><tr>
-<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Female.mp3" target="_blank">Microsoft_Female</a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male.mp3" target="_blank">Microsoft_Male.mp3</a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Dragonkin.mp3" target="_blank">Microsoft_Male_Dragonkin.mp3</a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Mechanical.mp3" target="_blank">Microsoft_Male_Mechanical.mp3</a></td>
+<td>Microsoft</td><td>Poor</td>
+<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Mechanical.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 </tr><tr>
-<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Female.mp3" target="_blank">Ivona_Female.mp3</a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Male.mp3" target="_blank">Ivona_Male.mp3</a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Dragonkin.mp3" target="_blank">Ivona_Male_Dragonkin.mp3</a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Mechanical.mp3" target="_blank">Ivona_Male_Mechanical.mp3</a></td>
+<td>Ivona</td><td>Good</td>
+<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Mechanical.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 </tr><tr>
-<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Female.mp3" target="_blank">Amazon_Female.mp3</a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Male.mp3" target="_blank">Amazon_Male.mp3</a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Dragonkin.mp3" target="_blank">Amazon_Male_Dragonkin.mp3</a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Mechanical.mp3" target="_blank">Amazon_Male_Mechanical.mp3</a></td>
+<td>Amazon (Neural)</td><td>Best</td>
+<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Mechanical.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 </tr>
 </table>
 
