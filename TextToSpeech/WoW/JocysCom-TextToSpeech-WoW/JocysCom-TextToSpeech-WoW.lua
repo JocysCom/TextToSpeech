@@ -2,19 +2,21 @@
 -- Show errors (1) or hide errors (0): /console scriptErrors 1
 -- Show or hide frame names: /fstack
 -- Show events: /eventtrace
---#:\Program Files (x86)\World of Warcraft\_retail_\WTF\Account\ACCOUNTNAME\SavedVariables.lua - Blizzard's saved variables.
---#:\Program Files (x86)\World of Warcraft\_retail_WTF\Account\ACCOUNTNAME\SavedVariables\JocysCom-TextToSpeech-WoW.lua - Per-account settings for each individual AddOn.
---#:\Program Files (x86)\World of Warcraft\_retail_WTF\Account\ACCOUNTNAME\RealmName\CharacterName\JocysCom-TextToSpeech-WoW.lua - Per-character settings for each individual AddOn.
+-- Blizzard > Settings > Game Settings > Game Name > [v] Additional command line arguments > [-console] > WoW Game > "`" > [exportInterfaceFiles code] or [exportInterfaceFiles art]
+
+-- #:\Program Files (x86)\World of Warcraft\_retail_\WTF\Account\ACCOUNTNAME\SavedVariables.lua - Blizzard's saved variables.
+-- #:\Program Files (x86)\World of Warcraft\_retail_WTF\Account\ACCOUNTNAME\SavedVariables\JocysCom-TextToSpeech-WoW.lua - Per-account settings for each individual AddOn.
+-- #:\Program Files (x86)\World of Warcraft\_retail_WTF\Account\ACCOUNTNAME\RealmName\CharacterName\JocysCom-TextToSpeech-WoW.lua - Per-character settings for each individual AddOn.
 
 -- Debug mode true(enabled) or false(disabled).
 local DebugEnabled = false
 
 -- version, build, date, tocversion = GetBuildInfo()
 local version, build, date, tocversion = GetBuildInfo()
-local classic = tocversion < 20000
+local classic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.7 ( 2019-10-14 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.8 ( 2019-10-16 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line.
@@ -28,7 +30,7 @@ local hashIndex = nil
 local messageDoNotDisturb = "Please wait... NPC dialog window is open and text-to-speech is enabled."
 local messageStop = "<message command=\"stop\" />"
 local macroName = "NPCSaveTTSMacro"
-local macroIcon = "INV_Misc_GroupNeedMore"
+local macroIcon = "Spell_Holy_PrayerofSpirit"
 local macroMessage = "/targetfriend"
 local pixelX = 0
 local pixelY = 0
@@ -82,7 +84,7 @@ function JocysCom_CreateOrUpdateMacro()
 	if GetMacroIndexByName(macroName) > 0 then
 		-- Set macro text and icon.
 		if #NPCNamesTable > 0 then
-			macroIcon = "INV_Misc_GroupNeedMore"
+			macroIcon = "Spell_Holy_PrayerofSpirit"
 			macroMessage = ""
 			-- Add NPC names from table to macro.
 			for i, n in pairs(NPCNamesTable) do
@@ -98,7 +100,7 @@ function JocysCom_CreateOrUpdateMacro()
 				print("|cff40fb40------------------------------------------------------------------------------------|r")
 			end
 		else
-			macroIcon = "INV_Misc_GroupLooking"
+			macroIcon = "Spell_Holy_DivineSpirit"
 			macroMessage = "/targetfriend"
 			-- Print NPC name list.
 			if DebugEnabled then
@@ -229,8 +231,6 @@ end
 
 -- MessageStop function.
 function JocysCom_SendChatMessageStop(group) -- button = button (mouse wheel down) or check-box.
-	-- Disable DND <Busy>.
-	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(false) end
 	-- Add group attribute if goup exists.
 	local messageStop = "<message command=\"stop\"" .. Attribute("group", group) .. " />"
 	JocysCom_SendMessage(messageStop, true)
@@ -306,11 +306,9 @@ end
 
 -- Register events.
 function JocysCom_RegisterEvents()
-
 	if classic then
 		QuestLogDetailScrollFrame:SetScript("OnShow", JocysCom_AttachAndShowFrames)
 	end
-
 	C_ChatInfo.RegisterAddonMessagePrefix(addonPrefix) -- Addon message prefix.
 	JocysCom_OptionsFrame:SetScript("OnEvent", function(...) JocysCom_OptionsFrame_OnEvent(false, ...) end) -- Register events on JocysCom_OptionsFrame --- JocysCom_OptionsFrame_OnEvent(playButton, ...).
 	JocysCom_OptionsFrame:RegisterEvent("ADDON_LOADED") -- Load all addon settings on this event.
@@ -327,7 +325,6 @@ function JocysCom_OptionsFrame_OnEvent(button, self, ...)
 	local nameIntro = false
 	local soundIntro = false
 	local soundEffect = nil
-
 -- event, text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons = ...
 local event, text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID = ...
 	--if string.find(event, "COMBAT") ~= nil or string.find(event, "SPELL") ~= nil or string.find(event, "COMPANION") ~= nil or string.find(event, "PET") ~= nil or string.find(event, "EXHAUSTION") ~= nil then return end
@@ -355,7 +352,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		JocysCom_LoadEventSettings() -- Register or unregister events.
 		JocysCom_DialogueScrollFrame:Show()
 		JocysCom_DialogueMiniFrame:Show()
-		if DebugEnabled then print("TOC: " .. tocversion) end
+		if DebugEnabled then print("WoW Classic: " .. tostring(classic) .. " TOC: " .. tocversion) end
 		return
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		JocysCom_CreateOrUpdateMacro()
@@ -746,8 +743,12 @@ end
 
 -- DialogueMiniFrame OnShow.
 function JocysCom_DialogueMiniFrame_OnShow()
-	-- Enable DND <Busy>.
-	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(true)	end
+	-- Enable DND <Busy> except QuestLogFrame (classic) or QuestMapFrame (retail).
+	if classic then
+		if JocysCom_DndCheckButton:GetChecked() and not QuestLogFrame:IsVisible() then JocysCom_DND(true) end
+	else
+		if JocysCom_DndCheckButton:GetChecked() and not QuestMapFrame:IsVisible() then JocysCom_DND(true) end
+	end
 	if JocysCom_StartOnOpenCheckButton:GetChecked() and MailFrame:IsVisible() then -- QuestMapFrame:IsVisible()
 		JocysCom_PlayOpenedFrame()
 	end
@@ -951,6 +952,8 @@ function JocysCom_StopButton_OnClick(name)
 		-- Remove all messages -- [≡][■] stop button on mini frame.
 		JocysCom_SendChatMessageStop()
 	end
+	-- Disable DND <Busy>.
+	if JocysCom_DndCheckButton:GetChecked() then JocysCom_DND(false) end
 end
 
 -- [ Play ] button.
@@ -1197,7 +1200,6 @@ function JocysCom_SendMessagesFromTable()
 		JocysCom_ColorMessageFrame:SetPoint("TOPLEFT", pixelX, pixelY)
 		JocysCom_ColorMessageFrame:SetPoint("TOPRIGHT")
 		JocysCom_ColorMessageFrame:Show()
-
 		-- Send to pixels.
 		JocysCom_ColorMessageFontString:SetText(message)
 		-- Send to clipboard
