@@ -217,7 +217,6 @@
 			// 
 			this.VoicesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.VoicesPanel.Location = new System.Drawing.Point(0, 0);
-			this.VoicesPanel.MenuButtonsVisible = false;
 			this.VoicesPanel.Name = "VoicesPanel";
 			this.VoicesPanel.Size = new System.Drawing.Size(816, 247);
 			this.VoicesPanel.TabIndex = 2;
