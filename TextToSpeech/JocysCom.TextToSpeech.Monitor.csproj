@@ -140,9 +140,6 @@
       <HintPath>Resources\SharpPcap\SharpPcap.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SoundTouch.Net">
-      <HintPath>Resources\SoundTouch\SoundTouch.Net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Configuration.Install" />
