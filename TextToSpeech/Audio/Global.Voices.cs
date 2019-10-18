@@ -616,7 +616,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 							if (applyRate || applyPitch)
 							{
 								var parameters = new SoundStretch.RunParameters();
-								parameters.TempoDelta = ((float)Math.Pow(1.1, _Rate) - 1f) * 100f;
+								parameters.TempoDelta = GetTempoDeltaFromRate(_Rate);
 								parameters.PitchDelta = (float)_Pitch;
 								parameters.Speech = true;
 								var inStream = new MemoryStream();
@@ -686,6 +686,26 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					return;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Convert [-10,+10] to [-50,+100] percent.
+		/// var deltaString = string.Format("{0:+#\"%\";-#\"%\";", delta);
+		/// </summary>
+		public static int GetTempoDeltaFromRate(int rate)
+		{
+			// Increase/Decrease each step by 10%.
+			// Convert [-10,+10] to [-61,+159] percent.
+			// var delta = ((float)Math.Pow(1.1, rate) - 1f) * 100f -100%
+			//
+			int delta = 0;
+			// Decrease tempo by -5% to -50%
+			if (rate < 0)
+				delta = rate * 5;
+			// Increase tempo by +10% to +100%.
+			else if (rate > 0)
+				delta = rate * 10;
+			return delta;
 		}
 
 		/// <summary>Filter voices by language.</summary>

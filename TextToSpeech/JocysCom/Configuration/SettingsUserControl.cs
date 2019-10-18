@@ -37,6 +37,8 @@ namespace JocysCom.ClassLibrary.Configuration
 		public SettingsUserControl()
 		{
 			InitializeComponent();
+			if (ControlsHelper.IsDesignMode(this))
+				return;
 			InitDelayTimer();
 			SettingsDataGridView.AutoGenerateColumns = false;
 		}

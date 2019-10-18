@@ -263,7 +263,7 @@ namespace JocysCom.ClassLibrary.Runtime
 
 		static object XmlSerializersLock = new object();
 		static Dictionary<Type, XmlSerializer> XmlSerializers;
-		static XmlSerializer GetXmlSerializer(Type type)
+		public static XmlSerializer GetXmlSerializer(Type type)
 		{
 			lock (XmlSerializersLock)
 			{
