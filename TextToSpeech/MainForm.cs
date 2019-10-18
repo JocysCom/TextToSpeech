@@ -250,7 +250,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		private void VolumeTrackBar_ValueChanged(object sender, EventArgs e)
 		{
 			SettingsManager.Options.Volume = VolumeTrackBar.Value;
-			VolumeTextBox.Text = string.Format("{0}%", SettingsManager.Options.Volume);
+			VolumeLabel.Text = string.Format("{0}% Volume", SettingsManager.Options.Volume);
 		}
 
 		#endregion

@@ -32,6 +32,7 @@
 			this.ModifyRateLocallyCheckBox = new System.Windows.Forms.CheckBox();
 			this.ModifyPitchLocallyCheckBox = new System.Windows.Forms.CheckBox();
 			this.ModifyLocallyGroupBox = new System.Windows.Forms.GroupBox();
+			this.ModifyLocalLabel = new System.Windows.Forms.Label();
 			this.AddSilenceGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceAfterNumericUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.AddSilenceBeforeNumericUpDown)).BeginInit();
@@ -189,7 +190,7 @@
 			// SynthesizingOptionsGroupBox
 			// 
 			this.SynthesizingOptionsGroupBox.Controls.Add(this.SplitMessageIntoSentencesCheckBox);
-			this.SynthesizingOptionsGroupBox.Location = new System.Drawing.Point(118, 110);
+			this.SynthesizingOptionsGroupBox.Location = new System.Drawing.Point(3, 110);
 			this.SynthesizingOptionsGroupBox.Name = "SynthesizingOptionsGroupBox";
 			this.SynthesizingOptionsGroupBox.Size = new System.Drawing.Size(253, 44);
 			this.SynthesizingOptionsGroupBox.TabIndex = 3;
@@ -231,12 +232,27 @@
 			this.ModifyLocallyGroupBox.Controls.Add(this.ModifyVolumeLocallyCheckBox);
 			this.ModifyLocallyGroupBox.Controls.Add(this.ModifyPitchLocallyCheckBox);
 			this.ModifyLocallyGroupBox.Controls.Add(this.ModifyRateLocallyCheckBox);
-			this.ModifyLocallyGroupBox.Location = new System.Drawing.Point(3, 110);
+			this.ModifyLocallyGroupBox.Controls.Add(this.ModifyLocalLabel);
+			this.ModifyLocallyGroupBox.Location = new System.Drawing.Point(262, 110);
 			this.ModifyLocallyGroupBox.Name = "ModifyLocallyGroupBox";
-			this.ModifyLocallyGroupBox.Size = new System.Drawing.Size(109, 89);
+			this.ModifyLocallyGroupBox.Size = new System.Drawing.Size(278, 89);
 			this.ModifyLocallyGroupBox.TabIndex = 3;
 			this.ModifyLocallyGroupBox.TabStop = false;
 			this.ModifyLocallyGroupBox.Text = "Modify Locally";
+			// 
+			// ModifyLocalLabel
+			// 
+			this.ModifyLocalLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ModifyLocalLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.ModifyLocalLabel.Location = new System.Drawing.Point(73, 16);
+			this.ModifyLocalLabel.Name = "ModifyLocalLabel";
+			this.ModifyLocalLabel.Size = new System.Drawing.Size(199, 66);
+			this.ModifyLocalLabel.TabIndex = 6;
+			this.ModifyLocalLabel.Text = "Amazon Neural voices do not support Pitch or Volume change effects. You can overc" +
+    "ome this limit by enabling these options here in order to apply these effects lo" +
+    "cally.";
 			// 
 			// GeneralOptionsUserControl
 			// 
@@ -279,5 +295,6 @@
 		private System.Windows.Forms.CheckBox ModifyVolumeLocallyCheckBox;
 		private System.Windows.Forms.CheckBox ModifyRateLocallyCheckBox;
 		private System.Windows.Forms.GroupBox ModifyLocallyGroupBox;
+		private System.Windows.Forms.Label ModifyLocalLabel;
 	}
 }

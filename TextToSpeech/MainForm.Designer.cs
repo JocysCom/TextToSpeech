@@ -101,7 +101,6 @@
 			this.VolumeTrackBar = new System.Windows.Forms.TrackBar();
 			this.StopButton = new System.Windows.Forms.Button();
 			this.SpeakButton = new System.Windows.Forms.Button();
-			this.VolumeTextBox = new System.Windows.Forms.TextBox();
 			this.IncomingGroupBox = new System.Windows.Forms.GroupBox();
 			this.InCommandLabel = new System.Windows.Forms.Label();
 			this.InVolumeLabel = new System.Windows.Forms.Label();
@@ -218,6 +217,7 @@
 			// 
 			this.VoicesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.VoicesPanel.Location = new System.Drawing.Point(0, 0);
+			this.VoicesPanel.MenuButtonsVisible = false;
 			this.VoicesPanel.Name = "VoicesPanel";
 			this.VoicesPanel.Size = new System.Drawing.Size(816, 247);
 			this.VoicesPanel.TabIndex = 2;
@@ -612,11 +612,11 @@
 			// 
 			this.RateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.RateLabel.AutoSize = true;
-			this.RateLabel.Location = new System.Drawing.Point(856, 569);
+			this.RateLabel.Location = new System.Drawing.Point(860, 569);
 			this.RateLabel.Name = "RateLabel";
-			this.RateLabel.Size = new System.Drawing.Size(92, 13);
+			this.RateLabel.Size = new System.Drawing.Size(89, 13);
 			this.RateLabel.TabIndex = 208;
-			this.RateLabel.Text = "Rate [ min - max ]:";
+			this.RateLabel.Text = "Rate [ min - max ]";
 			this.RateLabel.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.RateLabel.MouseHover += new System.EventHandler(this.RateLabel_MouseHover);
 			// 
@@ -624,24 +624,23 @@
 			// 
 			this.PitchLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.PitchLabel.AutoSize = true;
-			this.PitchLabel.Location = new System.Drawing.Point(855, 542);
+			this.PitchLabel.Location = new System.Drawing.Point(859, 542);
 			this.PitchLabel.Name = "PitchLabel";
-			this.PitchLabel.Size = new System.Drawing.Size(93, 13);
+			this.PitchLabel.Size = new System.Drawing.Size(90, 13);
 			this.PitchLabel.TabIndex = 207;
-			this.PitchLabel.Text = "Pitch [ min - max ]:";
+			this.PitchLabel.Text = "Pitch [ min - max ]";
 			this.PitchLabel.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.PitchLabel.MouseHover += new System.EventHandler(this.PitchLabel_MouseHover);
 			// 
 			// VolumeLabel
 			// 
 			this.VolumeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.VolumeLabel.AutoSize = true;
-			this.VolumeLabel.Location = new System.Drawing.Point(904, 600);
+			this.VolumeLabel.Location = new System.Drawing.Point(858, 597);
 			this.VolumeLabel.Name = "VolumeLabel";
-			this.VolumeLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.VolumeLabel.Size = new System.Drawing.Size(45, 13);
+			this.VolumeLabel.Size = new System.Drawing.Size(91, 13);
 			this.VolumeLabel.TabIndex = 210;
-			this.VolumeLabel.Text = "Volume:";
+			this.VolumeLabel.Text = "100% Volume";
+			this.VolumeLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// TextXmlTabControl
 			// 
@@ -912,11 +911,11 @@
 			// 
 			this.AudioBitsPerSampleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.AudioBitsPerSampleLabel.AutoSize = true;
-			this.AudioBitsPerSampleLabel.Location = new System.Drawing.Point(851, 488);
+			this.AudioBitsPerSampleLabel.Location = new System.Drawing.Point(855, 488);
 			this.AudioBitsPerSampleLabel.Name = "AudioBitsPerSampleLabel";
-			this.AudioBitsPerSampleLabel.Size = new System.Drawing.Size(97, 13);
+			this.AudioBitsPerSampleLabel.Size = new System.Drawing.Size(94, 13);
 			this.AudioBitsPerSampleLabel.TabIndex = 205;
-			this.AudioBitsPerSampleLabel.Text = "Audio Bits/Sample:";
+			this.AudioBitsPerSampleLabel.Text = "Audio Bits/Sample";
 			this.AudioBitsPerSampleLabel.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.AudioBitsPerSampleLabel.MouseHover += new System.EventHandler(this.MouseHover_AudioBitsPerSample);
 			// 
@@ -936,11 +935,11 @@
 			// 
 			this.AudioSampleRateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.AudioSampleRateLabel.AutoSize = true;
-			this.AudioSampleRateLabel.Location = new System.Drawing.Point(847, 461);
+			this.AudioSampleRateLabel.Location = new System.Drawing.Point(851, 461);
 			this.AudioSampleRateLabel.Name = "AudioSampleRateLabel";
-			this.AudioSampleRateLabel.Size = new System.Drawing.Size(101, 13);
+			this.AudioSampleRateLabel.Size = new System.Drawing.Size(98, 13);
 			this.AudioSampleRateLabel.TabIndex = 204;
-			this.AudioSampleRateLabel.Text = "Audio Sample Rate:";
+			this.AudioSampleRateLabel.Text = "Audio Sample Rate";
 			this.AudioSampleRateLabel.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.AudioSampleRateLabel.MouseHover += new System.EventHandler(this.MouseHover_AudioSampleRate);
 			// 
@@ -960,11 +959,11 @@
 			// 
 			this.AudioChannelsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.AudioChannelsLabel.AutoSize = true;
-			this.AudioChannelsLabel.Location = new System.Drawing.Point(864, 434);
+			this.AudioChannelsLabel.Location = new System.Drawing.Point(868, 434);
 			this.AudioChannelsLabel.Name = "AudioChannelsLabel";
-			this.AudioChannelsLabel.Size = new System.Drawing.Size(84, 13);
+			this.AudioChannelsLabel.Size = new System.Drawing.Size(81, 13);
 			this.AudioChannelsLabel.TabIndex = 203;
-			this.AudioChannelsLabel.Text = "Audio Channels:";
+			this.AudioChannelsLabel.Text = "Audio Channels";
 			this.AudioChannelsLabel.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.AudioChannelsLabel.MouseHover += new System.EventHandler(this.MouseHover_AudioChannels);
 			// 
@@ -997,11 +996,11 @@
 			// 
 			this.MonitorClipboardLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.MonitorClipboardLabel.AutoSize = true;
-			this.MonitorClipboardLabel.Location = new System.Drawing.Point(856, 380);
+			this.MonitorClipboardLabel.Location = new System.Drawing.Point(860, 380);
 			this.MonitorClipboardLabel.Name = "MonitorClipboardLabel";
-			this.MonitorClipboardLabel.Size = new System.Drawing.Size(92, 13);
+			this.MonitorClipboardLabel.Size = new System.Drawing.Size(89, 13);
 			this.MonitorClipboardLabel.TabIndex = 202;
-			this.MonitorClipboardLabel.Text = "Monitor Clipboard:";
+			this.MonitorClipboardLabel.Text = "Monitor Clipboard";
 			this.MonitorClipboardLabel.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.MonitorClipboardLabel.MouseHover += new System.EventHandler(this.MouseHover_MonitorClipboardComboBox);
 			// 
@@ -1078,20 +1077,6 @@
 			this.SpeakButton.Text = "   Speak";
 			this.SpeakButton.UseVisualStyleBackColor = true;
 			this.SpeakButton.Click += new System.EventHandler(this.SpeakButton_Click);
-			// 
-			// VolumeTextBox
-			// 
-			this.VolumeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.VolumeTextBox.BackColor = System.Drawing.SystemColors.Control;
-			this.VolumeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.VolumeTextBox.Location = new System.Drawing.Point(875, 600);
-			this.VolumeTextBox.Name = "VolumeTextBox";
-			this.VolumeTextBox.ReadOnly = true;
-			this.VolumeTextBox.Size = new System.Drawing.Size(27, 13);
-			this.VolumeTextBox.TabIndex = 209;
-			this.VolumeTextBox.TabStop = false;
-			this.VolumeTextBox.Text = "100%";
-			this.VolumeTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// IncomingGroupBox
 			// 
@@ -1379,11 +1364,11 @@
 			// 
 			this.DefaultGenderLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.DefaultGenderLabel.AutoSize = true;
-			this.DefaultGenderLabel.Location = new System.Drawing.Point(843, 515);
+			this.DefaultGenderLabel.Location = new System.Drawing.Point(847, 515);
 			this.DefaultGenderLabel.Name = "DefaultGenderLabel";
-			this.DefaultGenderLabel.Size = new System.Drawing.Size(105, 13);
+			this.DefaultGenderLabel.Size = new System.Drawing.Size(102, 13);
 			this.DefaultGenderLabel.TabIndex = 206;
-			this.DefaultGenderLabel.Text = "Default · My Gender:";
+			this.DefaultGenderLabel.Text = "Default · My Gender";
 			this.DefaultGenderLabel.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.DefaultGenderLabel.MouseHover += new System.EventHandler(this.MouseHover_GenderComboBox);
 			// 
@@ -1391,11 +1376,11 @@
 			// 
 			this.DefaultIntroSoundLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.DefaultIntroSoundLabel.AutoSize = true;
-			this.DefaultIntroSoundLabel.Location = new System.Drawing.Point(846, 407);
+			this.DefaultIntroSoundLabel.Location = new System.Drawing.Point(850, 407);
 			this.DefaultIntroSoundLabel.Name = "DefaultIntroSoundLabel";
-			this.DefaultIntroSoundLabel.Size = new System.Drawing.Size(102, 13);
+			this.DefaultIntroSoundLabel.Size = new System.Drawing.Size(99, 13);
 			this.DefaultIntroSoundLabel.TabIndex = 213;
-			this.DefaultIntroSoundLabel.Text = "Default Intro Sound:";
+			this.DefaultIntroSoundLabel.Text = "Default Intro Sound";
 			// 
 			// DefaultIntroSoundComboBox
 			// 
@@ -1413,12 +1398,12 @@
 			this.MonitorsEnabledCheckBox.AutoSize = true;
 			this.MonitorsEnabledCheckBox.Checked = true;
 			this.MonitorsEnabledCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.MonitorsEnabledCheckBox.Location = new System.Drawing.Point(887, 352);
+			this.MonitorsEnabledCheckBox.Location = new System.Drawing.Point(888, 352);
 			this.MonitorsEnabledCheckBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
 			this.MonitorsEnabledCheckBox.Name = "MonitorsEnabledCheckBox";
-			this.MonitorsEnabledCheckBox.Size = new System.Drawing.Size(64, 17);
+			this.MonitorsEnabledCheckBox.Size = new System.Drawing.Size(61, 17);
 			this.MonitorsEnabledCheckBox.TabIndex = 211;
-			this.MonitorsEnabledCheckBox.Text = "Monitor:";
+			this.MonitorsEnabledCheckBox.Text = "Monitor";
 			this.MonitorsEnabledCheckBox.UseVisualStyleBackColor = true;
 			this.MonitorsEnabledCheckBox.MouseLeave += new System.EventHandler(this.MouseLeave_MainHelpLabel);
 			this.MonitorsEnabledCheckBox.MouseHover += new System.EventHandler(this.EnableMonitorsCheckBox_MouseEnter);
@@ -1538,7 +1523,6 @@
 			this.Controls.Add(this.PitchMaxComboBox);
 			this.Controls.Add(this.RateMaxComboBox);
 			this.Controls.Add(this.EffectTabControl);
-			this.Controls.Add(this.VolumeTextBox);
 			this.Controls.Add(this.MonitorClipboardLabel);
 			this.Controls.Add(this.SpeakButton);
 			this.Controls.Add(this.StopButton);
@@ -1649,7 +1633,6 @@
         private System.Windows.Forms.TrackBar VolumeTrackBar;
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.Button SpeakButton;
-        private System.Windows.Forms.TextBox VolumeTextBox;
         private System.Windows.Forms.RichTextBox AboutRichTextBox;
         private System.Windows.Forms.ComboBox RateMaxComboBox;
         private System.Windows.Forms.ComboBox PitchMaxComboBox;
