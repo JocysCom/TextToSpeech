@@ -12,7 +12,7 @@ using System.Xml.Serialization;
 
 namespace JocysCom.ClassLibrary.Runtime
 {
-	public class Serializer
+	public static class Serializer
 	{
 
 		#region Helper Functions
@@ -462,7 +462,6 @@ namespace JocysCom.ClassLibrary.Runtime
 			}
 		}
 
-
 		// Example how to add the missing namespaces.
 		// 
 		// Create a new NameTable
@@ -481,26 +480,37 @@ namespace JocysCom.ClassLibrary.Runtime
 		/// <param name="type">Type of object.</param>
 		/// <param name="inputContext">You can use inputContext to add missing namespaces.</param>
 		/// <returns>Object.</returns>
-		public static object DeserializeFromXmlString(string xml, Type type, XmlParserContext inputContext = null)
+		public static object DeserializeFromXmlString(string xml, Type type, XmlParserContext inputContext = null, bool ignoreNamespaces = false)
 		{
 			// Note: If you are getting de-serialization error in XML document(1,1) then there is a chance that
 			// you are trying to de-serialize string which contains Byte Order Mark (BOM) which must not be there.
 			// Probably you used "var xml = System.Text.Encoding.GetString(bytes)" directly on file content.
 			// You should use "StreamReader" on file content, because this method will strip BOM properly
 			// when converting bytes to string.
-			var sr = new StringReader(xml);
 			// Settings used to protect from
 			// CWE-611: Improper Restriction of XML External Entity Reference('XXE')
 			// https://cwe.mitre.org/data/definitions/611.html
 			var settings = new XmlReaderSettings();
 			settings.DtdProcessing = DtdProcessing.Ignore;
 			settings.XmlResolver = null;
+			object o;
+			var serializer = GetXmlSerializer(type);
 			// Stream 'sr' will be disposed by the reader.
-			using (var reader = XmlReader.Create(sr, settings, inputContext))
+			using (var sr = new StringReader(xml))
 			{
-				object o;
-				var serializer = GetXmlSerializer(type);
-				lock (serializer) { o = serializer.Deserialize(reader); }
+				if (ignoreNamespaces)
+				{
+					using (var tr = new XmlTextReader(sr))
+					{
+						// Ignore namespaces.
+						tr.Namespaces = false;
+						using (var reader = XmlReader.Create(tr, settings))
+							lock (serializer) { o = serializer.Deserialize(reader); }
+					}
+					return o;
+				}
+				using (var reader = XmlReader.Create(sr, settings, inputContext))
+					lock (serializer) { o = serializer.Deserialize(reader); }
 				return o;
 			}
 		}
