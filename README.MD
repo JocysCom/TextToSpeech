@@ -30,7 +30,7 @@ Robot</th>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 <td align="center"<a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Mechanical.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 </tr><tr>
-<td>Amazon / Ivona</td><td>Good</td>
+<td>Ivona</td><td>Good</td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Ivona_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Ivona_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
