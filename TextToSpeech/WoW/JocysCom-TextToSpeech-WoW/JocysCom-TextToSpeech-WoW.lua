@@ -70,6 +70,11 @@ local function Gender(v)
 end
 
 function JocysCom_CreateOrUpdateMacro()
+	-- Do nothing if player in combat.
+	if InCombatLockdown() then
+		if DebugEnabled then print("|cff999999Macro inLockdown: |r" .. tostring(InCombatLockdown())) end
+		return
+	end
 	-- Create macro if doesn't exist and slot is available.
 	if GetMacroIndexByName(macroName) == 0 then
 		local numglobal, numperchar = GetNumMacros()
@@ -1080,10 +1085,6 @@ end
 
 -- [ Save ] button.
 function JocysCom_SaveNPC(m)
-	if InCombatLockdown() then
-		if DebugEnabled then print("|cff999999Macro: inLockdown.|r") end
-		return
-	end
 	if UnitIsPlayer(m) or UnitPlayerControlled(m) or UnitName(m) == nil or UnitSex(m) == nil then
 		if DebugEnabled then
 			print("|cff999999------------------------------------------------------------------------------------|r")
