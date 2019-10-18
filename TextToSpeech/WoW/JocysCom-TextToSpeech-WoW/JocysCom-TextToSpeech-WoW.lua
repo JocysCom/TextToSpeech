@@ -70,7 +70,7 @@ local function Gender(v)
 end
 
 function JocysCom_CreateOrUpdateMacro()
-	-- Do nothing if player in combat.
+	-- Do nothing if player is in combat.
 	if InCombatLockdown() then
 		if DebugEnabled then print("|cff999999Macro inLockdown: |r" .. tostring(InCombatLockdown())) end
 		return
