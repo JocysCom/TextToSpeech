@@ -107,13 +107,13 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			// Doubling the sound pressure (voltage) corresponds to a measured level change of +6 dB.
 			// Doubling of sound intensity (acoustic energy) belongs to a calculated level change of +3 dB.
 			//
-			// Volume    dB    Value
-			// ------  ------  ------
-			// 100       0.00       0
-			// 75       -0.36     -36
-			// 50       -6.00    -600
-			// 25      -31.11   -3111
-			// 0      -100.00  -10000
+			// Volume    dB     Value
+			// ------  -------  -------
+			//    100     0.00       0
+			//     75    -0.36     -36
+			//     50    -6.00    -600
+			//     25   -31.11   -3111
+			//      0  -100.00  -10000
 			// 
 			// When [0-100] slider is set to 50.
 			//var percent50 = 0.5f;
