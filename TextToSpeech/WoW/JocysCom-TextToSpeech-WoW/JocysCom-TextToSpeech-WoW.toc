@@ -5,7 +5,6 @@
 ## Notes: Jocys.com Text to Speech World of Warcraft AddOn
 ## Title: |cff77ccffJocys.com|r Text to Speech
 ## Version: 8.2.5
-## Globe: check-classic
 
 ## SavedVariables:
 
