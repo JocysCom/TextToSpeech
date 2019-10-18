@@ -6,43 +6,41 @@
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech "World of Warcraft" Addon 8.2.5.8 (2019-10-16)
  
 <hr />
-Addon supports Amazon Polly Text-To-Speech, Standard and Neural, voices. You need to have https://aws.amazon.com account. More help on TTS Monitor > "Options" tab > "Amazon Poly" tab.
-
-You can compare various voices below:
+Addon supports Amazon Polly Text-To-Speech, Standard and Neural, voices. You need to have https://aws.amazon.com account. More help on TTS Monitor > "Options" tab > "Amazon Poly" tab. You can compare various voices below:
 
 <table>
 <tr>
-<td>Brand</td><td>Quality</td>
-<td><img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Female.png" />
+<th>Brand</th><th>Quality</th>
+<th><img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Female.png" />
 
-Female</td>
-<td><img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Male.png" />
+Female</th>
+<th><img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Male.png" />
 
-Male</td>
-<td><img src="http://www.jocys.com/TTS/Images/Icon_INV_Misc_Head_Dragon_Nexus.png" />
+Male</th>
+<th><img src="http://www.jocys.com/TTS/Images/Icon_INV_Misc_Head_Dragon_Nexus.png" />
 
-Dragonkin</td>
-<td><img src="http://www.jocys.com/TTS/Images/Icon_INV_Misc_Head_ClockworkGnome_01.png" />
+Dragon</th>
+<th><img src="http://www.jocys.com/TTS/Images/Icon_INV_Misc_Head_ClockworkGnome_01.png" />
 
-Mechanical</td>
+Robot</th>
 </tr><tr>
 <td>Microsoft</td><td>Poor</td>
-<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Mechanical.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td align="center"><a href="https://www.jocys.com/TTS/Audio/Microsoft_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></td>
+<td align="center"><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td align="center"><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td align="center"<a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Mechanical.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 </tr><tr>
 <td>Ivona</td><td>Good</td>
-<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Mechanical.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td align="center"><a href="https://www.jocys.com/TTS/Audio/Ivona_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td align="center"><a href="https://www.jocys.com/TTS/Audio/Ivona_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td align="center"><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td align="center"><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Mechanical.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 </tr><tr>
 <td>Amazon (Neural)</td><td>Best</td>
-<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
-<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Mechanical.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td align="center"<a href="https://www.jocys.com/TTS/Audio/Amazon_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td align="center"><a href="https://www.jocys.com/TTS/Audio/Amazon_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td align="center"><a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
+<td align="center"><a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Mechanical.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 </tr>
 </table>
 
