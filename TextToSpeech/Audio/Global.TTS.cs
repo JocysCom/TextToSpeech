@@ -45,6 +45,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 			// commands.
 			var cmd = v.command.ToLower();
+			sound snd;
 			switch (cmd)
 			{
 				case MessageCommands.Player:
@@ -61,7 +62,34 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 						addMessage = new message();
 					addMessage.UpdateMissingAndChangedValuesFrom(v, true);
 					break;
-				case  MessageCommands.Play:
+				case MessageCommands.Sound:
+					var groupName2 = string.IsNullOrEmpty(v.group)
+						? SettingsManager.Options.DefaultIntroSoundComboBox ?? ""
+						: v.group;
+					// Find intro sound.
+					snd = SettingsFile.Current.Sounds.FirstOrDefault(x => x.group.ToUpper() == groupName2.ToUpper());
+					// If sound was not found then...
+					if (snd == null)
+					{
+						// Add sound to the list.
+						snd = new sound();
+						snd.group = v.group;
+						SettingsFile.Current.Sounds.Add(snd);
+					}
+					if (snd.enabled)
+					{
+						// Get WAV name/path.
+						var wavToPlay = string.IsNullOrEmpty(snd.file) ? groupName2 : snd.file;
+						wavToPlay = MainHelper.ConvertFromSpecialFoldersPattern(wavToPlay);
+						var stream = GetIntroSound(wavToPlay);
+						if (stream == null && System.IO.File.Exists(wavToPlay))
+							stream = new System.IO.FileStream(wavToPlay, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+						OnEvent(IntroSoundSelected, snd);
+						if (stream != null)
+							AddIntroSoundToPlayList(wavToPlay, v.group, stream);
+					}
+					break;
+				case MessageCommands.Play:
 					if (addMessage == null)
 						addMessage = new message();
 					addMessage.UpdateMissingAndChangedValuesFrom(v, true);
@@ -115,7 +143,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 							? SettingsManager.Options.DefaultIntroSoundComboBox ?? ""
 							: am.group;
 						// Find intro sound.
-						var snd = SettingsFile.Current.Sounds.FirstOrDefault(x => x.group.ToUpper() == groupName.ToUpper());
+						snd = SettingsFile.Current.Sounds.FirstOrDefault(x => x.group.ToUpper() == groupName.ToUpper());
 						// If sound was not found then...
 						if (snd == null)
 						{

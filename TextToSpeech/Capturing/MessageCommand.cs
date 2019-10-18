@@ -16,5 +16,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing
 		public const string Save = "save";
 		/// <summary>Set PlayerName, PlayerNameChanged, PlayerClass values.</summary>
 		public const string Player = "player";
+		/// <summary>Play Sound.</summary>
+		public const string Sound = "sound";
 	}
 }
