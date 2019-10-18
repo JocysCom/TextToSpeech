@@ -133,7 +133,7 @@
 			this.HelpGroupBox.Size = new System.Drawing.Size(370, 259);
 			this.HelpGroupBox.TabIndex = 19;
 			this.HelpGroupBox.TabStop = false;
-			this.HelpGroupBox.Text = "How To Use Amazon Polly";
+			this.HelpGroupBox.Text = "How To Use Amazon Polly TTS Voices";
 			// 
 			// PricingLabel
 			// 
