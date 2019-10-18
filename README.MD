@@ -10,7 +10,7 @@ Addon supports Amazon Polly Text-To-Speech, Standard and Neural, voices. You nee
 
 <table>
 <tr>
-<th>Brand</th><th>Quality</th>
+<th>Developer</th><th>Quality</th>
 <th><img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Female.png" />
 
 Female</th>
