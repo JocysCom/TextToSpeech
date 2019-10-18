@@ -366,7 +366,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		JocysCom_SaveTocFileSettings()
 		return
 	elseif event == "UPDATE_MOUSEOVER_UNIT" then
-		if GossipFrame:IsVisible() or QuestFrame:IsVisible() or ItemTextFrame:IsVisible() or MailFrame:IsVisible() or (not classic and QuestMapFrame:IsVisible()) or (classic and QuestLogFrame:IsVisible()) then return end
+		-- if GossipFrame:IsVisible() or QuestFrame:IsVisible() or ItemTextFrame:IsVisible() or MailFrame:IsVisible() or (not classic and QuestMapFrame:IsVisible()) or (classic and QuestLogFrame:IsVisible()) then return end
 		JocysCom_SaveNPC("mouseover")
 		return
 	elseif event == "PLAYER_TARGET_CHANGED" then
