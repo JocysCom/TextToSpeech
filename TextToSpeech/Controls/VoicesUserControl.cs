@@ -198,7 +198,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			if (!isValid)
 			{
 				var message = "";
-				message += "Amazon \"Access key\" and \"Secret Key\" is nto set.\r\n";
+				message += "Amazon \"Access key\" and \"Secret Key\" is not configured.\r\n";
 				message += "Would you like to go to [Options] and configure [Amazon Polly] settings?";
 				var form = new MessageBoxForm();
 				form.StartPosition = FormStartPosition.CenterParent;
