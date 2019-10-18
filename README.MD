@@ -6,7 +6,9 @@
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech "World of Warcraft" Addon 8.2.5.8 (2019-10-18)
  
 <hr />
-Addon supports locally installed and Amazon Polly (Cloud) Text-To-Speech, Standard and Neural, voices. You must create account for Amazon voices on https://aws.amazon.com. More help on TTS Monitor > "Options" tab > "Amazon Poly" tab. You can compare various voices below:
+Addon supports locally installed and Amazon Polly (Cloud) Text-To-Speech, Standard and Neural, voices. You must create account for Amazon voices on https://aws.amazon.com. More help on TTS Monitor > "Options" tab > "Amazon Poly" tab.
+
+You can compare various voices below:
 
 <table>
 <tr>
