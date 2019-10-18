@@ -565,15 +565,16 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 							var wavFile = string.Format("{0}.mp3", uniqueName);
 							var wavFullPath = Path.Combine(dir.FullName, wavFile);
 							wavFi = new FileInfo(wavFullPath);
-							if (!wavFi.Exists)
+							// If wav do not exist or file is invalid.
+							if (!wavFi.Exists || wavFi.Length == 0)
 							{
 								// Get WAV file path.
 								wavFile = string.Format("{0}.wav", uniqueName);
 								wavFullPath = Path.Combine(dir.FullName, wavFile);
 								wavFi = new FileInfo(wavFullPath);
 							}
-							// If both files exists then...
-							if (xmlFi.Exists && wavFi.Exists)
+							// If both files exists and Wav file is valid then...
+							if (xmlFi.Exists && wavFi.Exists && wavFi.Length > 0)
 							{
 								using (Stream stream = new FileStream(wavFi.FullName, FileMode.Open, FileAccess.Read))
 								{

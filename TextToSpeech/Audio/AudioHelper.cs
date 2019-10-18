@@ -1,4 +1,5 @@
-﻿using NAudio.Wave;
+﻿using NAudio.MediaFoundation;
+using NAudio.Wave;
 using System;
 using System.IO;
 
@@ -202,7 +203,12 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			}
 			else if (convertFormat == CacheFileFormat.MP3)
 			{
+				// If media foundation is not started then you will get this exception during MP3 encoding:
+				// System.Runtime.InteropServices.COMException:
+				// 'The request is invalid because Shutdown() has been called. (Exception from HRESULT: 0xC00D3E85)'
+				MediaFoundationApi.Startup();
 				MediaFoundationEncoder.EncodeToMp3(reader, fullName, SettingsManager.Options.CacheAudioAverageBitsPerSecond);
+				MediaFoundationApi.Shutdown();
 			}
 			else if (convertFormat == CacheFileFormat.WAV)
 			{
