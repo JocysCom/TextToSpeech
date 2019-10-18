@@ -96,7 +96,11 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			if (savedVoices == null)
 				savedVoices = new InstalledVoiceEx[0];
 			foreach (var voice in savedVoices)
-				InstalledVoices.Add(voice);
+			{
+				// If voice is not missing information then...
+				if (!string.IsNullOrEmpty(voice.SourceKeys))
+					InstalledVoices.Add(voice);
+			}
 		}
 
 		public static void ImportVoices(BindingList<InstalledVoiceEx> toVoices, List<InstalledVoiceEx> fromVoices)
