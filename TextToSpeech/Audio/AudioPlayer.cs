@@ -102,6 +102,11 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			// Press [Configure] button, press [Test] button to see if all speaker are producing sound.
 			// Volume ranges from -10000 (-100dB silent) to 0 (maximum) and represents the attenuation, in hundredths of a decibel(dB).
 			// 10dB increase is required before a sound is perceived to be twice as loud.
+			//
+			// Doubling of the volume (loudness) should be sensed as a level difference of +10 dB.
+			// Doubling the sound pressure (voltage) corresponds to a measured level change of +6 dB.
+			// Doubling of sound intensity (acoustic energy) belongs to a calculated level change of +3 dB.
+			//
 			//var power = 10f / 3f;
 			var power = 4f;
 			var doublePowerDb = 6f;
