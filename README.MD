@@ -6,38 +6,33 @@
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech "World of Warcraft" Addon 8.2.5.8 (2019-10-16)
  
 <hr />
-Addonb supports Amazon Polly Text-To-Speech Standard and Neural voices added. You need to have https://aws.amazon.com account. More help on TTS Monitor > "Options" tab > "Amazon Poly" tab.
+Addon supports Amazon Polly Text-To-Speech, Standard and Neural, voices. You need to have https://aws.amazon.com account. More help on TTS Monitor > "Options" tab > "Amazon Poly" tab.
 
-Addon supports Amazon Polly Text-To-Speech Standard and Neural voices. You can compare various voices:
+You can compare various voices below:
 
 <table>
-</td><td>
-<img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Female.png" />
-</td><td>
-<img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Male.png" />
-</td><td>
-<img src="http://www.jocys.com/TTS/Images/Icon_INV_Misc_Head_Dragon_Nexus.png" />
-</td><td>
-<img src="http://www.jocys.com/TTS/Images/Icon_INV_Misc_Head_ClockworkGnome_01.png" />
-</td>
+<tr>
+<td><img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Female.png" /></td>
+<td><img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Male.png" /></td>
+<td><img src="http://www.jocys.com/TTS/Images/Icon_INV_Misc_Head_Dragon_Nexus.png" /></td>
+<td><img src="http://www.jocys.com/TTS/Images/Icon_INV_Misc_Head_ClockworkGnome_01.png" /></td>
 </tr><tr>
-<td>
-<a href="https://www.jocys.com/TTS/Audio/Microsoft_Female.mp3" target="_blank">Microsoft_Female.mp3</a>
-<a href="https://www.jocys.com/TTS/Audio/Ivona_Female.mp3" target="_blank">Ivona_Female.mp3</a>
-<a href="https://www.jocys.com/TTS/Audio/Amazon_Female.mp3" target="_blank">Amazon_Female.mp3</a>
-</td><td>
-<a href="https://www.jocys.com/TTS/Audio/Microsoft_Male.mp3" target="_blank">Microsoft_Male.mp3</a>
-<a href="https://www.jocys.com/TTS/Audio/Ivona_Male.mp3" target="_blank">Ivona_Male.mp3</a>
-<a href="https://www.jocys.com/TTS/Audio/Amazon_Male.mp3" target="_blank">Amazon_Male.mp3</a>
-</td><td>
-<a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Dragonkin.mp3" target="_blank">Microsoft_Male_Dragonkin.mp3</a>
-<a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Dragonkin.mp3" target="_blank">Ivona_Male_Dragonkin.mp3</a>
-<a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Dragonkin.mp3" target="_blank">Amazon_Male_Dragonkin.mp3</a>
-</td><td>
-<a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Mechanical.mp3" target="_blank">Microsoft_Male_Mechanical.mp3</a>
-<a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Mechanical.mp3" target="_blank">Ivona_Male_Mechanical.mp3</a>
-<a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Mechanical.mp3" target="_blank">Amazon_Male_Mechanical.mp3</a>0
-</td></tr></table>
+<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Female.mp3" target="_blank">Microsoft_Female</a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male.mp3" target="_blank">Microsoft_Male.mp3</a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Dragonkin.mp3" target="_blank">Microsoft_Male_Dragonkin.mp3</a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Mechanical.mp3" target="_blank">Microsoft_Male_Mechanical.mp3</a></td>
+</tr><tr>
+<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Female.mp3" target="_blank">Ivona_Female.mp3</a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Male.mp3" target="_blank">Ivona_Male.mp3</a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Dragonkin.mp3" target="_blank">Ivona_Male_Dragonkin.mp3</a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Mechanical.mp3" target="_blank">Ivona_Male_Mechanical.mp3</a></td>
+</tr><tr>
+<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Female.mp3" target="_blank">Amazon_Female.mp3</a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Male.mp3" target="_blank">Amazon_Male.mp3</a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Dragonkin.mp3" target="_blank">Amazon_Male_Dragonkin.mp3</a></td>
+<td><a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Mechanical.mp3" target="_blank">Amazon_Male_Mechanical.mp3</a></td>
+</tr>
+</table>
 
 ### Screenshots
 
