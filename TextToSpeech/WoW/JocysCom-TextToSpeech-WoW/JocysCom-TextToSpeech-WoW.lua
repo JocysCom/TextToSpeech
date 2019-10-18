@@ -1080,6 +1080,10 @@ end
 
 -- [ Save ] button.
 function JocysCom_SaveNPC(m)
+	if InCombatLockdown() then
+		if DebugEnabled then print("|cff999999Macro: inLockdown.|r") end
+		return
+	end
 	if UnitIsPlayer(m) or UnitPlayerControlled(m) or UnitName(m) == nil or UnitSex(m) == nil then
 		if DebugEnabled then
 			print("|cff999999------------------------------------------------------------------------------------|r")
