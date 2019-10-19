@@ -6,7 +6,7 @@
  * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech "World of Warcraft" Addon 8.2.5.8 (2019-10-18)
  
 <hr />
-Addon supports locally installed and Amazon Polly (Cloud) Text-To-Speech Standard and Neural voices. You must create account for Amazon voices on https://aws.amazon.com. More help on TTS Monitor > "Options" tab > "Amazon Poly" tab.
+Addon supports locally installed and <a href="https://aws.amazon.com/polly/">Amazon Polly</a> (Cloud) Text-To-Speech Standard and Neural voices. You must create account for Amazon voices on https://aws.amazon.com. More help on TTS Monitor > "Options" tab > "Amazon Poly" tab.
 
 You can compare various voices below:
 
@@ -27,19 +27,19 @@ Dragon</th>
 Robot</th>
 </tr><tr>
 	<th>Voice Developer</th><th>TTS Quality</th><td colspan="4"><b>Quest Text:</b> "I bring greetings from King Wrynn, Mage. Behind me is the Hero's Call board, a collection of proclamations from the King of Stormwind directing adventurers to locations where their talents can best aid the Alliance."</td></tr><tr>
-<td>Microsoft</td><td>Poor</td>
+<td><a href="https://developer.microsoft.com/en-us/microsoft-edge/testdrive/demos/speechsynthesis/">Microsoft</a></td><td>Poor</td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Microsoft_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male_Mechanical.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 </tr><tr>
-<td>Ivona</td><td>Good</td>
+	<td><a href="https://harposoftware.com/en/2-all-speech-synthesis-products/s-1/brand-ivona">Ivona</a></td><td>Good</td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Ivona_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Ivona_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Ivona_Male_Mechanical.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 </tr><tr>
-<td>Amazon (Neural)</td><td>Best</td>
+<td><a href="https://aws.amazon.com/polly/">Amazon (Neural)</a></td><td>Best</td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Amazon_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Amazon_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Amazon_Male_Dragonkin.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
