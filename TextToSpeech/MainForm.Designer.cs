@@ -71,7 +71,7 @@
 			this.SandBoxTabPage = new System.Windows.Forms.TabPage();
 			this.SandBoxTextBox = new System.Windows.Forms.TextBox();
 			this.MessagesTabPage = new System.Windows.Forms.TabPage();
-			this.SapiTabPage = new System.Windows.Forms.TabPage();
+			this.SsmlXmlTabPage = new System.Windows.Forms.TabPage();
 			this.SapiTextBox = new System.Windows.Forms.TextBox();
 			this.PlayListTabPage = new System.Windows.Forms.TabPage();
 			this.PlayListDataGridView = new System.Windows.Forms.DataGridView();
@@ -151,7 +151,7 @@
 			this.TextXmlTabControl.SuspendLayout();
 			this.SandBoxTabPage.SuspendLayout();
 			this.MessagesTabPage.SuspendLayout();
-			this.SapiTabPage.SuspendLayout();
+			this.SsmlXmlTabPage.SuspendLayout();
 			this.PlayListTabPage.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PlayListDataGridView)).BeginInit();
 			this.MainStatusStrip.SuspendLayout();
@@ -647,7 +647,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.TextXmlTabControl.Controls.Add(this.SandBoxTabPage);
 			this.TextXmlTabControl.Controls.Add(this.MessagesTabPage);
-			this.TextXmlTabControl.Controls.Add(this.SapiTabPage);
+			this.TextXmlTabControl.Controls.Add(this.SsmlXmlTabPage);
 			this.TextXmlTabControl.Controls.Add(this.PlayListTabPage);
 			this.TextXmlTabControl.ImageList = this.TabsImageList;
 			this.TextXmlTabControl.Location = new System.Drawing.Point(6, 336);
@@ -693,16 +693,16 @@
 			this.MessagesTabPage.TabIndex = 4;
 			this.MessagesTabPage.Text = "1. Incoming Messages";
 			// 
-			// SapiTabPage
+			// SsmlXmlTabPage
 			// 
-			this.SapiTabPage.Controls.Add(this.SapiTextBox);
-			this.SapiTabPage.ImageKey = "Message_SAPI.png";
-			this.SapiTabPage.Location = new System.Drawing.Point(4, 27);
-			this.SapiTabPage.Name = "SapiTabPage";
-			this.SapiTabPage.Size = new System.Drawing.Size(606, 278);
-			this.SapiTabPage.TabIndex = 2;
-			this.SapiTabPage.Text = "2. Formated SAPI XML Text";
-			this.SapiTabPage.UseVisualStyleBackColor = true;
+			this.SsmlXmlTabPage.Controls.Add(this.SapiTextBox);
+			this.SsmlXmlTabPage.ImageKey = "Message_SAPI.png";
+			this.SsmlXmlTabPage.Location = new System.Drawing.Point(4, 27);
+			this.SsmlXmlTabPage.Name = "SsmlXmlTabPage";
+			this.SsmlXmlTabPage.Size = new System.Drawing.Size(606, 278);
+			this.SsmlXmlTabPage.TabIndex = 2;
+			this.SsmlXmlTabPage.Text = "2. Formated SSML XML Text";
+			this.SsmlXmlTabPage.UseVisualStyleBackColor = true;
 			// 
 			// SapiTextBox
 			// 
@@ -1569,8 +1569,8 @@
 			this.SandBoxTabPage.ResumeLayout(false);
 			this.SandBoxTabPage.PerformLayout();
 			this.MessagesTabPage.ResumeLayout(false);
-			this.SapiTabPage.ResumeLayout(false);
-			this.SapiTabPage.PerformLayout();
+			this.SsmlXmlTabPage.ResumeLayout(false);
+			this.SsmlXmlTabPage.PerformLayout();
 			this.PlayListTabPage.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.PlayListDataGridView)).EndInit();
 			this.MainStatusStrip.ResumeLayout(false);
@@ -1592,7 +1592,7 @@
         private System.Windows.Forms.TabControl TextXmlTabControl;
         private System.Windows.Forms.StatusStrip MainStatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel ErrorStatusLabel;
-        private System.Windows.Forms.TabPage SapiTabPage;
+        private System.Windows.Forms.TabPage SsmlXmlTabPage;
         private System.Windows.Forms.TextBox SapiTextBox;
         private System.Windows.Forms.ContextMenuStrip MessagesContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem MessagesClearToolStripMenuItem;

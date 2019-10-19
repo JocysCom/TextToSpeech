@@ -335,7 +335,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		private void TextXmlTabControl_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			var en = (TextXmlTabControl.SelectedTab != SapiTabPage);
+			var en = (TextXmlTabControl.SelectedTab != SsmlXmlTabPage);
 			RateMinComboBox.Enabled = en;
 			RateMaxComboBox.Enabled = en;
 			PitchMinComboBox.Enabled = en;
@@ -717,7 +717,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		void SpeakButton_Click(object sender, EventArgs e)
 		{
 			// if [ Formatted SAPI XML Text ] tab selected.
-			if (TextXmlTabControl.SelectedTab == SapiTabPage)
+			if (TextXmlTabControl.SelectedTab == SsmlXmlTabPage)
 			{
 				Global.AddMessageToPlay(SapiTextBox.Text);
 			}
