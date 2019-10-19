@@ -189,7 +189,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			// </speak>;
 			var query = System.Web.HttpUtility.ParseQueryString(vi.SourceKeys ?? "");
 			var isNeural = query[InstalledVoiceEx._KeyEngine] == Amazon.Polly.Engine.Neural;
-
+			var isAmazon = vi.Source == VoiceSource.Amazon;
 
 			// Percentage could be calculated from: var percent = Math.Pow(1.1, rate);
 			// 
@@ -227,6 +227,17 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			w.WriteAttributeString("version", "1.0");
 			w.WriteAttributeString("xmlns", "http://www.w3.org/2001/10/synthesis");
 			w.WriteAttributeString("xml:lang", vi.CultureName);
+
+			// <amazon:auto-breaths>
+			if (isAmazon && !isNeural)
+				w.WriteStartElement("amazon:auto-breaths");
+			// <amazon:domain name="news">
+			// Note: "News" effect supported by Neural Matthew or Joanna voices only.
+			//if (isAmazon && isNeural && vi.Gender == VoiceGender.Neutral)
+			//{
+			//	w.WriteStartElement("amazon:domain");
+			//	w.WriteAttributeString("name", "news");
+			//}
 			//w.WriteStartElement("lang");
 			//w.WriteAttributeString("xml:lang", vi.Language);
 			// Modify: Pitch.
@@ -270,6 +281,13 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			text = SettingsManager.Current.ReplaceAcronyms(text);
 			w.WriteRaw(text);
 			if (rateString != null || pitchString != null)
+				w.WriteEndElement();
+
+			// </amazon:domain>
+			//if (isAmazon && isNeural && vi.Gender == VoiceGender.Neutral)
+			//	w.WriteEndElement();
+			// </amazon:auto-breaths>		
+			if (isAmazon && !isNeural)
 				w.WriteEndElement();
 			w.WriteEndElement();
 			xml = sw.ToString();
