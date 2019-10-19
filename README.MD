@@ -12,7 +12,7 @@ You can compare various voices below:
 
 <table>
 <tr>
-<th>Developer</th><th>Quality</th>
+<th colspan="2"></th>
 <th><img src="http://www.jocys.com/TTS/Images/Icon_Achievement_Character_Human_Female.png" />
 
 Female</th>
@@ -26,6 +26,7 @@ Dragon</th>
 
 Robot</th>
 </tr><tr>
+	<th>Developer</th><th>Quality</th><td colspan="4"><b>Quest Text:</b> I bring greetings from King Wrynn, Mage. Behind me is the Hero's Call board, a collection of proclamations from the King of Stormwind directing adventurers to locations where their talents can best aid the Alliance.</td></tr><tr>
 <td>Microsoft</td><td>Poor</td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Microsoft_Female.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></td>
 <td align="center"><a href="https://www.jocys.com/TTS/Audio/Microsoft_Male.mp3" target="_blank"><img src="https://www.jocys.com/TTS/Images/Play.png" /></a></a></td>
