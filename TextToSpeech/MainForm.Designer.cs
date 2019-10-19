@@ -17,32 +17,26 @@
         {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.TabsImageList = new System.Windows.Forms.ImageList(this.components);
 			this.MessagesTabControl = new System.Windows.Forms.TabControl();
 			this.VoicesTabPage = new System.Windows.Forms.TabPage();
-			this.VoicesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesUserControl();
 			this.VoiceErrorLabel = new System.Windows.Forms.Label();
 			this.VoiceDefaultsTabPage = new System.Windows.Forms.TabPage();
-			this.VoiceDefaultsPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesDefaultsUserControl();
 			this.SoundsTabPage = new System.Windows.Forms.TabPage();
-			this.SoundsPanel = new JocysCom.TextToSpeech.Monitor.Controls.SoundsUserControl();
 			this.AcronymsTabPage = new System.Windows.Forms.TabPage();
-			this.acronymsUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.AcronymsUserControl();
 			this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
-			this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
 			this.OptionsTabPage = new System.Windows.Forms.TabPage();
-			this.OptionsPanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsControl();
 			this.HelpTabPage = new System.Windows.Forms.TabPage();
 			this.AboutRichTextBox = new System.Windows.Forms.RichTextBox();
 			this.UpdateTabPage = new System.Windows.Forms.TabPage();
@@ -135,11 +129,6 @@
 			this.ProgramComboBox = new System.Windows.Forms.ComboBox();
 			this.MessagesTabControl.SuspendLayout();
 			this.VoicesTabPage.SuspendLayout();
-			this.VoiceDefaultsTabPage.SuspendLayout();
-			this.SoundsTabPage.SuspendLayout();
-			this.AcronymsTabPage.SuspendLayout();
-			this.EffectsPresetsEditorTabPage.SuspendLayout();
-			this.OptionsTabPage.SuspendLayout();
 			this.HelpTabPage.SuspendLayout();
 			this.UpdateTabPage.SuspendLayout();
 			this.EffectTabControl.SuspendLayout();
@@ -204,7 +193,6 @@
 			// 
 			// VoicesTabPage
 			// 
-			this.VoicesTabPage.Controls.Add(this.VoicesPanel);
 			this.VoicesTabPage.Controls.Add(this.VoiceErrorLabel);
 			this.VoicesTabPage.ImageKey = "Businessman.png";
 			this.VoicesTabPage.Location = new System.Drawing.Point(4, 27);
@@ -212,14 +200,6 @@
 			this.VoicesTabPage.Size = new System.Drawing.Size(816, 266);
 			this.VoicesTabPage.TabIndex = 3;
 			this.VoicesTabPage.Text = "Voices";
-			// 
-			// VoicesPanel
-			// 
-			this.VoicesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.VoicesPanel.Location = new System.Drawing.Point(0, 0);
-			this.VoicesPanel.Name = "VoicesPanel";
-			this.VoicesPanel.Size = new System.Drawing.Size(816, 247);
-			this.VoicesPanel.TabIndex = 2;
 			// 
 			// VoiceErrorLabel
 			// 
@@ -237,7 +217,6 @@
 			// VoiceDefaultsTabPage
 			// 
 			this.VoiceDefaultsTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.VoiceDefaultsTabPage.Controls.Add(this.VoiceDefaultsPanel);
 			this.VoiceDefaultsTabPage.ImageKey = "BusinessPeople.png";
 			this.VoiceDefaultsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.VoiceDefaultsTabPage.Name = "VoiceDefaultsTabPage";
@@ -245,18 +224,9 @@
 			this.VoiceDefaultsTabPage.TabIndex = 5;
 			this.VoiceDefaultsTabPage.Text = "Voice Defaults";
 			// 
-			// VoiceDefaultsPanel
-			// 
-			this.VoiceDefaultsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.VoiceDefaultsPanel.Location = new System.Drawing.Point(0, 0);
-			this.VoiceDefaultsPanel.Name = "VoiceDefaultsPanel";
-			this.VoiceDefaultsPanel.Size = new System.Drawing.Size(816, 266);
-			this.VoiceDefaultsPanel.TabIndex = 0;
-			// 
 			// SoundsTabPage
 			// 
 			this.SoundsTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.SoundsTabPage.Controls.Add(this.SoundsPanel);
 			this.SoundsTabPage.ImageKey = "Music.png";
 			this.SoundsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.SoundsTabPage.Name = "SoundsTabPage";
@@ -264,18 +234,9 @@
 			this.SoundsTabPage.TabIndex = 7;
 			this.SoundsTabPage.Text = "Intro Sounds";
 			// 
-			// SoundsPanel
-			// 
-			this.SoundsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.SoundsPanel.Location = new System.Drawing.Point(0, 0);
-			this.SoundsPanel.Name = "SoundsPanel";
-			this.SoundsPanel.Size = new System.Drawing.Size(816, 266);
-			this.SoundsPanel.TabIndex = 0;
-			// 
 			// AcronymsTabPage
 			// 
 			this.AcronymsTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.AcronymsTabPage.Controls.Add(this.acronymsUserControl1);
 			this.AcronymsTabPage.ImageKey = "Acronyms_16x16.png";
 			this.AcronymsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.AcronymsTabPage.Name = "AcronymsTabPage";
@@ -283,17 +244,8 @@
 			this.AcronymsTabPage.TabIndex = 9;
 			this.AcronymsTabPage.Text = "Acronyms";
 			// 
-			// acronymsUserControl1
-			// 
-			this.acronymsUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.acronymsUserControl1.Location = new System.Drawing.Point(0, 0);
-			this.acronymsUserControl1.Name = "acronymsUserControl1";
-			this.acronymsUserControl1.Size = new System.Drawing.Size(816, 266);
-			this.acronymsUserControl1.TabIndex = 0;
-			// 
 			// EffectsPresetsEditorTabPage
 			// 
-			this.EffectsPresetsEditorTabPage.Controls.Add(this.EffectPresetsEditorSoundEffectsControl);
 			this.EffectsPresetsEditorTabPage.ImageKey = "Window_Effects_Editor.png";
 			this.EffectsPresetsEditorTabPage.Location = new System.Drawing.Point(4, 27);
 			this.EffectsPresetsEditorTabPage.Name = "EffectsPresetsEditorTabPage";
@@ -301,34 +253,15 @@
 			this.EffectsPresetsEditorTabPage.TabIndex = 1;
 			this.EffectsPresetsEditorTabPage.Text = "Efect Preset Editor";
 			// 
-			// EffectPresetsEditorSoundEffectsControl
-			// 
-			this.EffectPresetsEditorSoundEffectsControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
-			this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
-			this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-			this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
-			this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
-			this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
-			// 
 			// OptionsTabPage
 			// 
 			this.OptionsTabPage.BackColor = System.Drawing.SystemColors.Control;
-			this.OptionsTabPage.Controls.Add(this.OptionsPanel);
 			this.OptionsTabPage.ImageKey = "Options_16x16.png";
 			this.OptionsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.OptionsTabPage.Name = "OptionsTabPage";
 			this.OptionsTabPage.Size = new System.Drawing.Size(816, 266);
 			this.OptionsTabPage.TabIndex = 8;
 			this.OptionsTabPage.Text = "Options";
-			// 
-			// OptionsPanel
-			// 
-			this.OptionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.OptionsPanel.Location = new System.Drawing.Point(0, 0);
-			this.OptionsPanel.Name = "OptionsPanel";
-			this.OptionsPanel.Size = new System.Drawing.Size(816, 266);
-			this.OptionsPanel.TabIndex = 0;
 			// 
 			// HelpTabPage
 			// 
@@ -503,14 +436,14 @@
 			this.MessagesDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.MessagesDataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
 			this.MessagesDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.MessagesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle12.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
+			dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.MessagesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
 			this.MessagesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.MessagesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DestinationAddressColumn,
@@ -518,14 +451,14 @@
             this.WowDataLength,
             this.VoiceXmlColumn});
 			this.MessagesDataGridView.ContextMenuStrip = this.MessagesContextMenuStrip;
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ControlLight;
-			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.MessagesDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.ControlLight;
+			dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.MessagesDataGridView.DefaultCellStyle = dataGridViewCellStyle16;
 			this.MessagesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.MessagesDataGridView.EnableHeadersVisualStyles = false;
 			this.MessagesDataGridView.GridColor = System.Drawing.SystemColors.Control;
@@ -534,13 +467,13 @@
 			this.MessagesDataGridView.MultiSelect = false;
 			this.MessagesDataGridView.Name = "MessagesDataGridView";
 			this.MessagesDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.MessagesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.MessagesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle17;
 			this.MessagesDataGridView.RowHeadersVisible = false;
 			this.MessagesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.MessagesDataGridView.Size = new System.Drawing.Size(606, 278);
@@ -552,8 +485,8 @@
 			// 
 			this.DestinationAddressColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.DestinationAddressColumn.DataPropertyName = "DestinationAddress";
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.DestinationAddressColumn.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.DestinationAddressColumn.DefaultCellStyle = dataGridViewCellStyle13;
 			this.DestinationAddressColumn.HeaderText = "Destination";
 			this.DestinationAddressColumn.Name = "DestinationAddressColumn";
 			this.DestinationAddressColumn.ReadOnly = true;
@@ -564,8 +497,8 @@
 			// 
 			this.SequenceNumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.SequenceNumberColumn.DataPropertyName = "SequenceNumber";
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.SequenceNumberColumn.DefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.SequenceNumberColumn.DefaultCellStyle = dataGridViewCellStyle14;
 			this.SequenceNumberColumn.HeaderText = "Sequence";
 			this.SequenceNumberColumn.Name = "SequenceNumberColumn";
 			this.SequenceNumberColumn.ReadOnly = true;
@@ -576,8 +509,8 @@
 			// 
 			this.WowDataLength.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.WowDataLength.DataPropertyName = "VoiceXmlLength";
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.WowDataLength.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.WowDataLength.DefaultCellStyle = dataGridViewCellStyle15;
 			this.WowDataLength.HeaderText = "Size";
 			this.WowDataLength.Name = "WowDataLength";
 			this.WowDataLength.ReadOnly = true;
@@ -701,7 +634,7 @@
 			this.SsmlXmlTabPage.Name = "SsmlXmlTabPage";
 			this.SsmlXmlTabPage.Size = new System.Drawing.Size(606, 278);
 			this.SsmlXmlTabPage.TabIndex = 2;
-			this.SsmlXmlTabPage.Text = "2. Formated SSML XML Text";
+			this.SsmlXmlTabPage.Text = "2. Formated SSML XML";
 			this.SsmlXmlTabPage.UseVisualStyleBackColor = true;
 			// 
 			// SapiTextBox
@@ -735,28 +668,28 @@
 			this.PlayListDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.PlayListDataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
 			this.PlayListDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.PlayListDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.PlayListDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.PlayListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.PlayListDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.PlayListStatusColumn,
             this.CommentColumn,
             this.PlayListDurationColumn,
             this.PlayListTextColumn});
-			dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.ControlLight;
-			dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.PlayListDataGridView.DefaultCellStyle = dataGridViewCellStyle10;
+			dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.ControlLight;
+			dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.PlayListDataGridView.DefaultCellStyle = dataGridViewCellStyle18;
 			this.PlayListDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.PlayListDataGridView.EnableHeadersVisualStyles = false;
 			this.PlayListDataGridView.GridColor = System.Drawing.SystemColors.Control;
@@ -765,13 +698,13 @@
 			this.PlayListDataGridView.Name = "PlayListDataGridView";
 			this.PlayListDataGridView.ReadOnly = true;
 			this.PlayListDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.PlayListDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+			dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.PlayListDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle19;
 			this.PlayListDataGridView.RowHeadersVisible = false;
 			this.PlayListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.PlayListDataGridView.Size = new System.Drawing.Size(606, 278);
@@ -781,8 +714,8 @@
 			// 
 			this.PlayListStatusColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.PlayListStatusColumn.DataPropertyName = "Status";
-			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.PlayListStatusColumn.DefaultCellStyle = dataGridViewCellStyle8;
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.PlayListStatusColumn.DefaultCellStyle = dataGridViewCellStyle5;
 			this.PlayListStatusColumn.HeaderText = "Status";
 			this.PlayListStatusColumn.Name = "PlayListStatusColumn";
 			this.PlayListStatusColumn.ReadOnly = true;
@@ -801,8 +734,8 @@
 			// 
 			this.PlayListDurationColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
 			this.PlayListDurationColumn.DataPropertyName = "Duration";
-			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.PlayListDurationColumn.DefaultCellStyle = dataGridViewCellStyle9;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.PlayListDurationColumn.DefaultCellStyle = dataGridViewCellStyle6;
 			this.PlayListDurationColumn.HeaderText = "Duration";
 			this.PlayListDurationColumn.MinimumWidth = 54;
 			this.PlayListDurationColumn.Name = "PlayListDurationColumn";
@@ -1552,11 +1485,6 @@
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.MessagesTabControl.ResumeLayout(false);
 			this.VoicesTabPage.ResumeLayout(false);
-			this.VoiceDefaultsTabPage.ResumeLayout(false);
-			this.SoundsTabPage.ResumeLayout(false);
-			this.AcronymsTabPage.ResumeLayout(false);
-			this.EffectsPresetsEditorTabPage.ResumeLayout(false);
-			this.OptionsTabPage.ResumeLayout(false);
 			this.HelpTabPage.ResumeLayout(false);
 			this.UpdateTabPage.ResumeLayout(false);
 			this.EffectTabControl.ResumeLayout(false);
@@ -1597,7 +1525,6 @@
         private System.Windows.Forms.ContextMenuStrip MessagesContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem MessagesClearToolStripMenuItem;
         private System.Windows.Forms.TabPage EffectsPresetsEditorTabPage;
-        private Controls.SoundEffectsControl EffectPresetsEditorSoundEffectsControl;
         private System.Windows.Forms.TabControl EffectTabControl;
         private System.Windows.Forms.TabPage EffectTabPage;
         private System.Windows.Forms.DataGridView EffectsPresetsDataGridView;
@@ -1653,8 +1580,6 @@
         private System.Windows.Forms.Label UpdateLabel;
         private System.Windows.Forms.Button UpdateButton;
 		private System.Windows.Forms.TabPage VoiceDefaultsTabPage;
-		private Controls.VoicesDefaultsUserControl VoiceDefaultsPanel;
-        private Controls.SoundsUserControl SoundsPanel;
         public System.Windows.Forms.Label MainHelpLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn PlayListStatusColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn CommentColumn;
@@ -1671,7 +1596,6 @@
 		private System.Windows.Forms.ToolStripStatusLabel EmptyStatusLabel;
 		private System.Windows.Forms.ToolStripStatusLabel FilterStatusLabel;
 		private System.Windows.Forms.TabPage AcronymsTabPage;
-		private Controls.AcronymsUserControl acronymsUserControl1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn DestinationAddressColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn SequenceNumberColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn WowDataLength;
@@ -1686,10 +1610,8 @@
 		private System.Windows.Forms.Label InGenderLabel;
 		private System.Windows.Forms.Label InNameLabel;
 		private System.Windows.Forms.Label InLanguageLabel;
-		private Controls.VoicesUserControl VoicesPanel;
 		public System.Windows.Forms.TabControl MessagesTabControl;
 		public System.Windows.Forms.TabPage OptionsTabPage;
-		public Controls.OptionsControl OptionsPanel;
 	}
 }
 
