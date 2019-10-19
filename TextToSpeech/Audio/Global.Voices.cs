@@ -190,34 +190,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			var query = System.Web.HttpUtility.ParseQueryString(vi.SourceKeys ?? "");
 			var isNeural = query[InstalledVoiceEx._KeyEngine] == Amazon.Polly.Engine.Neural;
 			var isAmazon = vi.Source == VoiceSource.Amazon;
-
-			// Percentage could be calculated from: var percent = Math.Pow(1.1, rate);
-			// 
-			//	-10	38.6%
-			//	-9	42.4%
-			//	-8	46.7%
-			//	-7	51.3%
-			//	-6	56.4%
-			//	-5	62.1%
-			//	-4	68.3%
-			//	-3	75.1%
-			//	-2	82.6%
-			//	-1	90.9%
-			//	0	100.0%
-			//	1	110.0%
-			//	2	121.0%
-			//	3	133.1%
-			//	4	146.4%
-			//	5	161.1%
-			//	6	177.2%
-			//	7	194.9%
-			//	8	214.4%
-			//	9	235.8%
-			//	10	259.4%
-
-
-
-
 			string xml;
 			string name = vi.Name;
 			var sw = new StringWriter();
@@ -227,7 +199,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			w.WriteAttributeString("version", "1.0");
 			w.WriteAttributeString("xmlns", "http://www.w3.org/2001/10/synthesis");
 			w.WriteAttributeString("xml:lang", vi.CultureName);
-
 			// <amazon:auto-breaths>
 			if (isAmazon && !isNeural)
 				w.WriteStartElement("amazon:auto-breaths");
@@ -244,7 +215,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			string pitchString = null;
 			if (!SettingsManager.Options.ModifyLocallyPitch && !isNeural && pitch != 0)
 			{
-				if (vi.Source == VoiceSource.Amazon)
+				if (isAmazon)
 					pitchString = string.Format("{0:+0;-0;0}%", pitch * 10);
 				else
 					pitchString = string.Format("{0:+0;-0;0}", pitch);
@@ -262,7 +233,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			{
 				// Convert -10 0 +10 to -100% +100%
 				// Convert 0 100 to -10dB 0dB
-				if (vi.Source == VoiceSource.Amazon)
+				if (isAmazon)
 					volumeString = string.Format("-{0}db", (100 - volume) / 10);
 				else
 					volumeString = string.Format("-{0}db", (100 - volume) / 10);
