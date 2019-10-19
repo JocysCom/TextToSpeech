@@ -1,42 +1,48 @@
 ﻿namespace JocysCom.TextToSpeech.Monitor
 {
-    partial class MainForm
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+	partial class MainForm
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.TabsImageList = new System.Windows.Forms.ImageList(this.components);
 			this.MessagesTabControl = new System.Windows.Forms.TabControl();
 			this.VoicesTabPage = new System.Windows.Forms.TabPage();
+			this.VoicesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesUserControl();
 			this.VoiceErrorLabel = new System.Windows.Forms.Label();
 			this.VoiceDefaultsTabPage = new System.Windows.Forms.TabPage();
+			this.VoiceDefaultsPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesDefaultsUserControl();
 			this.SoundsTabPage = new System.Windows.Forms.TabPage();
+			this.SoundsPanel = new JocysCom.TextToSpeech.Monitor.Controls.SoundsUserControl();
 			this.AcronymsTabPage = new System.Windows.Forms.TabPage();
+			this.acronymsUserControl1 = new JocysCom.TextToSpeech.Monitor.Controls.AcronymsUserControl();
 			this.EffectsPresetsEditorTabPage = new System.Windows.Forms.TabPage();
+			this.EffectPresetsEditorSoundEffectsControl = new JocysCom.TextToSpeech.Monitor.Controls.SoundEffectsControl();
 			this.OptionsTabPage = new System.Windows.Forms.TabPage();
+			this.OptionsPanel = new JocysCom.TextToSpeech.Monitor.Controls.OptionsControl();
 			this.HelpTabPage = new System.Windows.Forms.TabPage();
 			this.AboutRichTextBox = new System.Windows.Forms.RichTextBox();
 			this.UpdateTabPage = new System.Windows.Forms.TabPage();
@@ -129,6 +135,11 @@
 			this.ProgramComboBox = new System.Windows.Forms.ComboBox();
 			this.MessagesTabControl.SuspendLayout();
 			this.VoicesTabPage.SuspendLayout();
+			this.VoiceDefaultsTabPage.SuspendLayout();
+			this.SoundsTabPage.SuspendLayout();
+			this.AcronymsTabPage.SuspendLayout();
+			this.EffectsPresetsEditorTabPage.SuspendLayout();
+			this.OptionsTabPage.SuspendLayout();
 			this.HelpTabPage.SuspendLayout();
 			this.UpdateTabPage.SuspendLayout();
 			this.EffectTabControl.SuspendLayout();
@@ -171,9 +182,9 @@
 			// 
 			// MessagesTabControl
 			// 
-			this.MessagesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.MessagesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.MessagesTabControl.Controls.Add(this.VoicesTabPage);
 			this.MessagesTabControl.Controls.Add(this.VoiceDefaultsTabPage);
 			this.MessagesTabControl.Controls.Add(this.SoundsTabPage);
@@ -193,6 +204,7 @@
 			// 
 			// VoicesTabPage
 			// 
+			this.VoicesTabPage.Controls.Add(this.VoicesPanel);
 			this.VoicesTabPage.Controls.Add(this.VoiceErrorLabel);
 			this.VoicesTabPage.ImageKey = "Businessman.png";
 			this.VoicesTabPage.Location = new System.Drawing.Point(4, 27);
@@ -200,6 +212,14 @@
 			this.VoicesTabPage.Size = new System.Drawing.Size(816, 266);
 			this.VoicesTabPage.TabIndex = 3;
 			this.VoicesTabPage.Text = "Voices";
+			// 
+			// VoicesPanel
+			// 
+			this.VoicesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.VoicesPanel.Location = new System.Drawing.Point(0, 0);
+			this.VoicesPanel.Name = "VoicesPanel";
+			this.VoicesPanel.Size = new System.Drawing.Size(816, 247);
+			this.VoicesPanel.TabIndex = 2;
 			// 
 			// VoiceErrorLabel
 			// 
@@ -217,6 +237,7 @@
 			// VoiceDefaultsTabPage
 			// 
 			this.VoiceDefaultsTabPage.BackColor = System.Drawing.SystemColors.Control;
+			this.VoiceDefaultsTabPage.Controls.Add(this.VoiceDefaultsPanel);
 			this.VoiceDefaultsTabPage.ImageKey = "BusinessPeople.png";
 			this.VoiceDefaultsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.VoiceDefaultsTabPage.Name = "VoiceDefaultsTabPage";
@@ -224,9 +245,18 @@
 			this.VoiceDefaultsTabPage.TabIndex = 5;
 			this.VoiceDefaultsTabPage.Text = "Voice Defaults";
 			// 
+			// VoiceDefaultsPanel
+			// 
+			this.VoiceDefaultsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.VoiceDefaultsPanel.Location = new System.Drawing.Point(0, 0);
+			this.VoiceDefaultsPanel.Name = "VoiceDefaultsPanel";
+			this.VoiceDefaultsPanel.Size = new System.Drawing.Size(816, 266);
+			this.VoiceDefaultsPanel.TabIndex = 0;
+			// 
 			// SoundsTabPage
 			// 
 			this.SoundsTabPage.BackColor = System.Drawing.SystemColors.Control;
+			this.SoundsTabPage.Controls.Add(this.SoundsPanel);
 			this.SoundsTabPage.ImageKey = "Music.png";
 			this.SoundsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.SoundsTabPage.Name = "SoundsTabPage";
@@ -234,9 +264,18 @@
 			this.SoundsTabPage.TabIndex = 7;
 			this.SoundsTabPage.Text = "Intro Sounds";
 			// 
+			// SoundsPanel
+			// 
+			this.SoundsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.SoundsPanel.Location = new System.Drawing.Point(0, 0);
+			this.SoundsPanel.Name = "SoundsPanel";
+			this.SoundsPanel.Size = new System.Drawing.Size(816, 266);
+			this.SoundsPanel.TabIndex = 0;
+			// 
 			// AcronymsTabPage
 			// 
 			this.AcronymsTabPage.BackColor = System.Drawing.SystemColors.Control;
+			this.AcronymsTabPage.Controls.Add(this.acronymsUserControl1);
 			this.AcronymsTabPage.ImageKey = "Acronyms_16x16.png";
 			this.AcronymsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.AcronymsTabPage.Name = "AcronymsTabPage";
@@ -244,8 +283,17 @@
 			this.AcronymsTabPage.TabIndex = 9;
 			this.AcronymsTabPage.Text = "Acronyms";
 			// 
+			// acronymsUserControl1
+			// 
+			this.acronymsUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.acronymsUserControl1.Location = new System.Drawing.Point(0, 0);
+			this.acronymsUserControl1.Name = "acronymsUserControl1";
+			this.acronymsUserControl1.Size = new System.Drawing.Size(816, 266);
+			this.acronymsUserControl1.TabIndex = 0;
+			// 
 			// EffectsPresetsEditorTabPage
 			// 
+			this.EffectsPresetsEditorTabPage.Controls.Add(this.EffectPresetsEditorSoundEffectsControl);
 			this.EffectsPresetsEditorTabPage.ImageKey = "Window_Effects_Editor.png";
 			this.EffectsPresetsEditorTabPage.Location = new System.Drawing.Point(4, 27);
 			this.EffectsPresetsEditorTabPage.Name = "EffectsPresetsEditorTabPage";
@@ -253,15 +301,34 @@
 			this.EffectsPresetsEditorTabPage.TabIndex = 1;
 			this.EffectsPresetsEditorTabPage.Text = "Efect Preset Editor";
 			// 
+			// EffectPresetsEditorSoundEffectsControl
+			// 
+			this.EffectPresetsEditorSoundEffectsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.EffectPresetsEditorSoundEffectsControl.Location = new System.Drawing.Point(0, 0);
+			this.EffectPresetsEditorSoundEffectsControl.Name = "EffectPresetsEditorSoundEffectsControl";
+			this.EffectPresetsEditorSoundEffectsControl.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+			this.EffectPresetsEditorSoundEffectsControl.Size = new System.Drawing.Size(816, 266);
+			this.EffectPresetsEditorSoundEffectsControl.TabIndex = 0;
+			this.EffectPresetsEditorSoundEffectsControl.Load += new System.EventHandler(this.EffectPresetsEditorSoundEffectsControl_Load);
+			// 
 			// OptionsTabPage
 			// 
 			this.OptionsTabPage.BackColor = System.Drawing.SystemColors.Control;
+			this.OptionsTabPage.Controls.Add(this.OptionsPanel);
 			this.OptionsTabPage.ImageKey = "Options_16x16.png";
 			this.OptionsTabPage.Location = new System.Drawing.Point(4, 27);
 			this.OptionsTabPage.Name = "OptionsTabPage";
 			this.OptionsTabPage.Size = new System.Drawing.Size(816, 266);
 			this.OptionsTabPage.TabIndex = 8;
 			this.OptionsTabPage.Text = "Options";
+			// 
+			// OptionsPanel
+			// 
+			this.OptionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.OptionsPanel.Location = new System.Drawing.Point(0, 0);
+			this.OptionsPanel.Name = "OptionsPanel";
+			this.OptionsPanel.Size = new System.Drawing.Size(816, 266);
+			this.OptionsPanel.TabIndex = 0;
 			// 
 			// HelpTabPage
 			// 
@@ -325,9 +392,9 @@
 			// 
 			// UpdateWebBrowser
 			// 
-			this.UpdateWebBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.UpdateWebBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.UpdateWebBrowser.Location = new System.Drawing.Point(6, 21);
 			this.UpdateWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
 			this.UpdateWebBrowser.Name = "UpdateWebBrowser";
@@ -338,8 +405,8 @@
 			// 
 			// EffectTabControl
 			// 
-			this.EffectTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.EffectTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.EffectTabControl.ContextMenuStrip = this.EffectPresetsContextMenuStrip;
 			this.EffectTabControl.Controls.Add(this.EffectTabPage);
 			this.EffectTabControl.ImageList = this.TabsImageList;
@@ -354,9 +421,9 @@
 			// EffectPresetsContextMenuStrip
 			// 
 			this.EffectPresetsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addNewToolStripMenuItem,
-            this.deleteToolStripMenuItem,
-            this.refreshToolStripMenuItem});
+			this.addNewToolStripMenuItem,
+			this.deleteToolStripMenuItem,
+			this.refreshToolStripMenuItem});
 			this.EffectPresetsContextMenuStrip.Name = "EffectPresetsContextMenuStrip";
 			this.EffectPresetsContextMenuStrip.Size = new System.Drawing.Size(124, 70);
 			// 
@@ -403,7 +470,7 @@
 			this.EffectsPresetsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.EffectsPresetsDataGridView.ColumnHeadersVisible = false;
 			this.EffectsPresetsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn3});
+			this.dataGridViewTextBoxColumn3});
 			this.EffectsPresetsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.EffectsPresetsDataGridView.Location = new System.Drawing.Point(0, 0);
 			this.EffectsPresetsDataGridView.MultiSelect = false;
@@ -436,29 +503,29 @@
 			this.MessagesDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.MessagesDataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
 			this.MessagesDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle12.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-			dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.MessagesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.MessagesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.MessagesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.MessagesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DestinationAddressColumn,
-            this.SequenceNumberColumn,
-            this.WowDataLength,
-            this.VoiceXmlColumn});
+			this.DestinationAddressColumn,
+			this.SequenceNumberColumn,
+			this.WowDataLength,
+			this.VoiceXmlColumn});
 			this.MessagesDataGridView.ContextMenuStrip = this.MessagesContextMenuStrip;
-			dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.ControlLight;
-			dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.MessagesDataGridView.DefaultCellStyle = dataGridViewCellStyle16;
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ControlLight;
+			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.MessagesDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
 			this.MessagesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.MessagesDataGridView.EnableHeadersVisualStyles = false;
 			this.MessagesDataGridView.GridColor = System.Drawing.SystemColors.Control;
@@ -467,13 +534,13 @@
 			this.MessagesDataGridView.MultiSelect = false;
 			this.MessagesDataGridView.Name = "MessagesDataGridView";
 			this.MessagesDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.MessagesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle17;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.MessagesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
 			this.MessagesDataGridView.RowHeadersVisible = false;
 			this.MessagesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.MessagesDataGridView.Size = new System.Drawing.Size(606, 278);
@@ -485,8 +552,8 @@
 			// 
 			this.DestinationAddressColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.DestinationAddressColumn.DataPropertyName = "DestinationAddress";
-			dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.DestinationAddressColumn.DefaultCellStyle = dataGridViewCellStyle13;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.DestinationAddressColumn.DefaultCellStyle = dataGridViewCellStyle2;
 			this.DestinationAddressColumn.HeaderText = "Destination";
 			this.DestinationAddressColumn.Name = "DestinationAddressColumn";
 			this.DestinationAddressColumn.ReadOnly = true;
@@ -497,8 +564,8 @@
 			// 
 			this.SequenceNumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.SequenceNumberColumn.DataPropertyName = "SequenceNumber";
-			dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.SequenceNumberColumn.DefaultCellStyle = dataGridViewCellStyle14;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.SequenceNumberColumn.DefaultCellStyle = dataGridViewCellStyle3;
 			this.SequenceNumberColumn.HeaderText = "Sequence";
 			this.SequenceNumberColumn.Name = "SequenceNumberColumn";
 			this.SequenceNumberColumn.ReadOnly = true;
@@ -509,8 +576,8 @@
 			// 
 			this.WowDataLength.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.WowDataLength.DataPropertyName = "VoiceXmlLength";
-			dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.WowDataLength.DefaultCellStyle = dataGridViewCellStyle15;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.WowDataLength.DefaultCellStyle = dataGridViewCellStyle4;
 			this.WowDataLength.HeaderText = "Size";
 			this.WowDataLength.Name = "WowDataLength";
 			this.WowDataLength.ReadOnly = true;
@@ -529,7 +596,7 @@
 			// MessagesContextMenuStrip
 			// 
 			this.MessagesContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MessagesClearToolStripMenuItem});
+			this.MessagesClearToolStripMenuItem});
 			this.MessagesContextMenuStrip.Name = "MessagesContextMenuStrip";
 			this.MessagesContextMenuStrip.Size = new System.Drawing.Size(102, 26);
 			// 
@@ -576,8 +643,8 @@
 			// 
 			// TextXmlTabControl
 			// 
-			this.TextXmlTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.TextXmlTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.TextXmlTabControl.Controls.Add(this.SandBoxTabPage);
 			this.TextXmlTabControl.Controls.Add(this.MessagesTabPage);
 			this.TextXmlTabControl.Controls.Add(this.SsmlXmlTabPage);
@@ -668,28 +735,28 @@
 			this.PlayListDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.PlayListDataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
 			this.PlayListDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.PlayListDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
+			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.PlayListDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
 			this.PlayListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.PlayListDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.PlayListStatusColumn,
-            this.CommentColumn,
-            this.PlayListDurationColumn,
-            this.PlayListTextColumn});
-			dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.ControlLight;
-			dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.PlayListDataGridView.DefaultCellStyle = dataGridViewCellStyle18;
+			this.PlayListStatusColumn,
+			this.CommentColumn,
+			this.PlayListDurationColumn,
+			this.PlayListTextColumn});
+			dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.ControlLight;
+			dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.PlayListDataGridView.DefaultCellStyle = dataGridViewCellStyle10;
 			this.PlayListDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.PlayListDataGridView.EnableHeadersVisualStyles = false;
 			this.PlayListDataGridView.GridColor = System.Drawing.SystemColors.Control;
@@ -698,13 +765,13 @@
 			this.PlayListDataGridView.Name = "PlayListDataGridView";
 			this.PlayListDataGridView.ReadOnly = true;
 			this.PlayListDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.PlayListDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle19;
+			dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.PlayListDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
 			this.PlayListDataGridView.RowHeadersVisible = false;
 			this.PlayListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.PlayListDataGridView.Size = new System.Drawing.Size(606, 278);
@@ -714,8 +781,8 @@
 			// 
 			this.PlayListStatusColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.PlayListStatusColumn.DataPropertyName = "Status";
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.PlayListStatusColumn.DefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.PlayListStatusColumn.DefaultCellStyle = dataGridViewCellStyle8;
 			this.PlayListStatusColumn.HeaderText = "Status";
 			this.PlayListStatusColumn.Name = "PlayListStatusColumn";
 			this.PlayListStatusColumn.ReadOnly = true;
@@ -734,8 +801,8 @@
 			// 
 			this.PlayListDurationColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
 			this.PlayListDurationColumn.DataPropertyName = "Duration";
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.PlayListDurationColumn.DefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.PlayListDurationColumn.DefaultCellStyle = dataGridViewCellStyle9;
 			this.PlayListDurationColumn.HeaderText = "Duration";
 			this.PlayListDurationColumn.MinimumWidth = 54;
 			this.PlayListDurationColumn.Name = "PlayListDurationColumn";
@@ -755,12 +822,12 @@
 			// MainStatusStrip
 			// 
 			this.MainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ProcessStatusLabel,
-            this.ErrorStatusLabel,
-            this.FilterStatusLabel,
-            this.EmptyStatusLabel,
-            this.StateStatusLabel,
-            this.PacketsStatusLabel});
+			this.ProcessStatusLabel,
+			this.ErrorStatusLabel,
+			this.FilterStatusLabel,
+			this.EmptyStatusLabel,
+			this.StateStatusLabel,
+			this.PacketsStatusLabel});
 			this.MainStatusStrip.Location = new System.Drawing.Point(0, 652);
 			this.MainStatusStrip.Name = "MainStatusStrip";
 			this.MainStatusStrip.Size = new System.Drawing.Size(1074, 24);
@@ -770,9 +837,9 @@
 			// 
 			// ProcessStatusLabel
 			// 
-			this.ProcessStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.ProcessStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
+			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
+			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
 			this.ProcessStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
 			this.ProcessStatusLabel.Name = "ProcessStatusLabel";
 			this.ProcessStatusLabel.Size = new System.Drawing.Size(108, 19);
@@ -780,9 +847,9 @@
 			// 
 			// ErrorStatusLabel
 			// 
-			this.ErrorStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.ErrorStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
+			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
+			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
 			this.ErrorStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
 			this.ErrorStatusLabel.Name = "ErrorStatusLabel";
 			this.ErrorStatusLabel.Size = new System.Drawing.Size(71, 19);
@@ -792,9 +859,9 @@
 			// 
 			// FilterStatusLabel
 			// 
-			this.FilterStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.FilterStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
+			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
+			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
 			this.FilterStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
 			this.FilterStatusLabel.Name = "FilterStatusLabel";
 			this.FilterStatusLabel.Size = new System.Drawing.Size(72, 19);
@@ -809,9 +876,9 @@
 			// 
 			// StateStatusLabel
 			// 
-			this.StateStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.StateStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
+			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
+			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
 			this.StateStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
 			this.StateStatusLabel.Name = "StateStatusLabel";
 			this.StateStatusLabel.Size = new System.Drawing.Size(94, 19);
@@ -819,9 +886,9 @@
 			// 
 			// PacketsStatusLabel
 			// 
-			this.PacketsStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.PacketsStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
+			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
+			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
 			this.PacketsStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
 			this.PacketsStatusLabel.Name = "PacketsStatusLabel";
 			this.PacketsStatusLabel.Size = new System.Drawing.Size(125, 19);
@@ -1135,8 +1202,8 @@
 			// 
 			// InLanguageTextBox
 			// 
-			this.InLanguageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.InLanguageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.InLanguageTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InLanguageTextBox.Enabled = false;
 			this.InLanguageTextBox.Location = new System.Drawing.Point(63, 17);
@@ -1150,8 +1217,8 @@
 			// 
 			// InGroupTextBox
 			// 
-			this.InGroupTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.InGroupTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.InGroupTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InGroupTextBox.Enabled = false;
 			this.InGroupTextBox.Location = new System.Drawing.Point(63, 105);
@@ -1164,9 +1231,9 @@
 			// 
 			// InPartTextBox
 			// 
-			this.InPartTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.InPartTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.InPartTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InPartTextBox.Enabled = false;
 			this.InPartTextBox.Location = new System.Drawing.Point(63, 215);
@@ -1182,8 +1249,8 @@
 			// 
 			// InCommandTextBox
 			// 
-			this.InCommandTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.InCommandTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.InCommandTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InCommandTextBox.Enabled = false;
 			this.InCommandTextBox.Location = new System.Drawing.Point(63, 193);
@@ -1198,8 +1265,8 @@
 			// 
 			// InVolumeTextBox
 			// 
-			this.InVolumeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.InVolumeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.InVolumeTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InVolumeTextBox.Enabled = false;
 			this.InVolumeTextBox.Location = new System.Drawing.Point(63, 171);
@@ -1214,8 +1281,8 @@
 			// 
 			// InEffectTextBox
 			// 
-			this.InEffectTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.InEffectTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.InEffectTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InEffectTextBox.Enabled = false;
 			this.InEffectTextBox.Location = new System.Drawing.Point(63, 83);
@@ -1230,8 +1297,8 @@
 			// 
 			// InPitchTextBox
 			// 
-			this.InPitchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.InPitchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.InPitchTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InPitchTextBox.Enabled = false;
 			this.InPitchTextBox.Location = new System.Drawing.Point(63, 127);
@@ -1246,8 +1313,8 @@
 			// 
 			// InRateTextBox
 			// 
-			this.InRateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.InRateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.InRateTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InRateTextBox.Enabled = false;
 			this.InRateTextBox.Location = new System.Drawing.Point(63, 149);
@@ -1262,8 +1329,8 @@
 			// 
 			// InGenderTextBox
 			// 
-			this.InGenderTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.InGenderTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.InGenderTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InGenderTextBox.Enabled = false;
 			this.InGenderTextBox.Location = new System.Drawing.Point(63, 61);
@@ -1278,8 +1345,8 @@
 			// 
 			// InNameTextBox
 			// 
-			this.InNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.InNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.InNameTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InNameTextBox.Enabled = false;
 			this.InNameTextBox.Location = new System.Drawing.Point(63, 39);
@@ -1430,9 +1497,9 @@
 			this.ProgramComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ProgramComboBox.FormattingEnabled = true;
 			this.ProgramComboBox.Items.AddRange(new object[] {
-            "Disabled",
-            "For <message> tags",
-            "For all text"});
+			"Disabled",
+			"For <message> tags",
+			"For all text"});
 			this.ProgramComboBox.Location = new System.Drawing.Point(953, 350);
 			this.ProgramComboBox.Name = "ProgramComboBox";
 			this.ProgramComboBox.Size = new System.Drawing.Size(114, 21);
@@ -1485,6 +1552,11 @@
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.MessagesTabControl.ResumeLayout(false);
 			this.VoicesTabPage.ResumeLayout(false);
+			this.VoiceDefaultsTabPage.ResumeLayout(false);
+			this.SoundsTabPage.ResumeLayout(false);
+			this.AcronymsTabPage.ResumeLayout(false);
+			this.EffectsPresetsEditorTabPage.ResumeLayout(false);
+			this.OptionsTabPage.ResumeLayout(false);
 			this.HelpTabPage.ResumeLayout(false);
 			this.UpdateTabPage.ResumeLayout(false);
 			this.EffectTabControl.ResumeLayout(false);
@@ -1510,92 +1582,96 @@
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
-        }
+		}
 
-        #endregion
+		#endregion
 		private System.Windows.Forms.DataGridView MessagesDataGridView;
 		private System.Windows.Forms.Label RateLabel;
 		private System.Windows.Forms.Label PitchLabel;
-        private System.Windows.Forms.Label VolumeLabel;
-        private System.Windows.Forms.TabControl TextXmlTabControl;
-        private System.Windows.Forms.StatusStrip MainStatusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel ErrorStatusLabel;
-        private System.Windows.Forms.TabPage SsmlXmlTabPage;
-        private System.Windows.Forms.TextBox SapiTextBox;
-        private System.Windows.Forms.ContextMenuStrip MessagesContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem MessagesClearToolStripMenuItem;
-        private System.Windows.Forms.TabPage EffectsPresetsEditorTabPage;
-        private System.Windows.Forms.TabControl EffectTabControl;
-        private System.Windows.Forms.TabPage EffectTabPage;
-        private System.Windows.Forms.DataGridView EffectsPresetsDataGridView;
-        private System.Windows.Forms.ContextMenuStrip EffectPresetsContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem addNewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
-        private System.Windows.Forms.ToolStripStatusLabel StateStatusLabel;
-        private System.Windows.Forms.ToolStripStatusLabel PacketsStatusLabel;
-        private System.Windows.Forms.ComboBox AudioBitsPerSampleComboBox;
-        private System.Windows.Forms.Label AudioBitsPerSampleLabel;
-        private System.Windows.Forms.ComboBox AudioSampleRateComboBox;
-        private System.Windows.Forms.Label AudioSampleRateLabel;
-        private System.Windows.Forms.ComboBox AudioChannelsComboBox;
-        private System.Windows.Forms.Label AudioChannelsLabel;
-        private System.Windows.Forms.DataGridView PlayListDataGridView;
-        private System.Windows.Forms.Button RecognizeButton;
-        private System.Windows.Forms.ImageList TabsImageList;
-        private System.Windows.Forms.TabPage VoicesTabPage;
-        private System.Windows.Forms.TabPage MessagesTabPage;
-        private System.Windows.Forms.TabPage PlayListTabPage;
-        private System.Windows.Forms.ComboBox RateMinComboBox;
-        private System.Windows.Forms.PictureBox ProductPictureBox;
-        private System.Windows.Forms.TabPage HelpTabPage;
-        private System.Windows.Forms.Label MonitorClipboardLabel;
-        private System.Windows.Forms.TabPage SandBoxTabPage;
-        private System.Windows.Forms.TextBox SandBoxTextBox;
-        private System.Windows.Forms.TextBox PitchTextBox;
-        private System.Windows.Forms.ComboBox PitchMinComboBox;
-        private System.Windows.Forms.TextBox RateTextBox;
-        private System.Windows.Forms.TrackBar VolumeTrackBar;
-        private System.Windows.Forms.Button StopButton;
-        private System.Windows.Forms.Button SpeakButton;
-        private System.Windows.Forms.RichTextBox AboutRichTextBox;
-        private System.Windows.Forms.ComboBox RateMaxComboBox;
-        private System.Windows.Forms.ComboBox PitchMaxComboBox;
-        private System.Windows.Forms.GroupBox IncomingGroupBox;
-        private System.Windows.Forms.TextBox InVolumeTextBox;
-        private System.Windows.Forms.TextBox InEffectTextBox;
-        private System.Windows.Forms.TextBox InPitchTextBox;
-        private System.Windows.Forms.TextBox InRateTextBox;
-        private System.Windows.Forms.TextBox InGenderTextBox;
-        private System.Windows.Forms.TextBox InNameTextBox;
-        private System.Windows.Forms.TextBox InCommandTextBox;
-        private System.Windows.Forms.TextBox InPartTextBox;
-        private System.Windows.Forms.ComboBox GenderComboBox;
-        private System.Windows.Forms.Label DefaultGenderLabel;
-        private System.Windows.Forms.ComboBox MonitorClipboardComboBox;
-        private System.Windows.Forms.Label VoiceErrorLabel;
-        private System.Windows.Forms.TabPage UpdateTabPage;
-        private System.Windows.Forms.WebBrowser UpdateWebBrowser;
-        private System.Windows.Forms.Label UpdateLabel;
-        private System.Windows.Forms.Button UpdateButton;
+		private System.Windows.Forms.Label VolumeLabel;
+		private System.Windows.Forms.TabControl TextXmlTabControl;
+		private System.Windows.Forms.StatusStrip MainStatusStrip;
+		private System.Windows.Forms.ToolStripStatusLabel ErrorStatusLabel;
+		private System.Windows.Forms.TabPage SsmlXmlTabPage;
+		private System.Windows.Forms.TextBox SapiTextBox;
+		private System.Windows.Forms.ContextMenuStrip MessagesContextMenuStrip;
+		private System.Windows.Forms.ToolStripMenuItem MessagesClearToolStripMenuItem;
+		private System.Windows.Forms.TabPage EffectsPresetsEditorTabPage;
+		private Controls.SoundEffectsControl EffectPresetsEditorSoundEffectsControl;
+		private System.Windows.Forms.TabControl EffectTabControl;
+		private System.Windows.Forms.TabPage EffectTabPage;
+		private System.Windows.Forms.DataGridView EffectsPresetsDataGridView;
+		private System.Windows.Forms.ContextMenuStrip EffectPresetsContextMenuStrip;
+		private System.Windows.Forms.ToolStripMenuItem addNewToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+		private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
+		private System.Windows.Forms.ToolStripStatusLabel StateStatusLabel;
+		private System.Windows.Forms.ToolStripStatusLabel PacketsStatusLabel;
+		private System.Windows.Forms.ComboBox AudioBitsPerSampleComboBox;
+		private System.Windows.Forms.Label AudioBitsPerSampleLabel;
+		private System.Windows.Forms.ComboBox AudioSampleRateComboBox;
+		private System.Windows.Forms.Label AudioSampleRateLabel;
+		private System.Windows.Forms.ComboBox AudioChannelsComboBox;
+		private System.Windows.Forms.Label AudioChannelsLabel;
+		private System.Windows.Forms.DataGridView PlayListDataGridView;
+		private System.Windows.Forms.Button RecognizeButton;
+		private System.Windows.Forms.ImageList TabsImageList;
+		private System.Windows.Forms.TabPage VoicesTabPage;
+		private System.Windows.Forms.TabPage MessagesTabPage;
+		private System.Windows.Forms.TabPage PlayListTabPage;
+		private System.Windows.Forms.ComboBox RateMinComboBox;
+		private System.Windows.Forms.PictureBox ProductPictureBox;
+		private System.Windows.Forms.TabPage HelpTabPage;
+		private System.Windows.Forms.Label MonitorClipboardLabel;
+		private System.Windows.Forms.TabPage SandBoxTabPage;
+		private System.Windows.Forms.TextBox SandBoxTextBox;
+		private System.Windows.Forms.TextBox PitchTextBox;
+		private System.Windows.Forms.ComboBox PitchMinComboBox;
+		private System.Windows.Forms.TextBox RateTextBox;
+		private System.Windows.Forms.TrackBar VolumeTrackBar;
+		private System.Windows.Forms.Button StopButton;
+		private System.Windows.Forms.Button SpeakButton;
+		private System.Windows.Forms.RichTextBox AboutRichTextBox;
+		private System.Windows.Forms.ComboBox RateMaxComboBox;
+		private System.Windows.Forms.ComboBox PitchMaxComboBox;
+		private System.Windows.Forms.GroupBox IncomingGroupBox;
+		private System.Windows.Forms.TextBox InVolumeTextBox;
+		private System.Windows.Forms.TextBox InEffectTextBox;
+		private System.Windows.Forms.TextBox InPitchTextBox;
+		private System.Windows.Forms.TextBox InRateTextBox;
+		private System.Windows.Forms.TextBox InGenderTextBox;
+		private System.Windows.Forms.TextBox InNameTextBox;
+		private System.Windows.Forms.TextBox InCommandTextBox;
+		private System.Windows.Forms.TextBox InPartTextBox;
+		private System.Windows.Forms.ComboBox GenderComboBox;
+		private System.Windows.Forms.Label DefaultGenderLabel;
+		private System.Windows.Forms.ComboBox MonitorClipboardComboBox;
+		private System.Windows.Forms.Label VoiceErrorLabel;
+		private System.Windows.Forms.TabPage UpdateTabPage;
+		private System.Windows.Forms.WebBrowser UpdateWebBrowser;
+		private System.Windows.Forms.Label UpdateLabel;
+		private System.Windows.Forms.Button UpdateButton;
 		private System.Windows.Forms.TabPage VoiceDefaultsTabPage;
-        public System.Windows.Forms.Label MainHelpLabel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PlayListStatusColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CommentColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PlayListDurationColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PlayListTextColumn;
-        private System.Windows.Forms.TextBox InGroupTextBox;
+		private Controls.VoicesDefaultsUserControl VoiceDefaultsPanel;
+		private Controls.SoundsUserControl SoundsPanel;
+		public System.Windows.Forms.Label MainHelpLabel;
+		private System.Windows.Forms.DataGridViewTextBoxColumn PlayListStatusColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn CommentColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn PlayListDurationColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn PlayListTextColumn;
+		private System.Windows.Forms.TextBox InGroupTextBox;
 		private System.Windows.Forms.CheckBox MonitorsEnabledCheckBox;
-        private System.Windows.Forms.TextBox InLanguageTextBox;
-        private System.Windows.Forms.TabPage SoundsTabPage;
-        private System.Windows.Forms.ComboBox DefaultIntroSoundComboBox;
-        private System.Windows.Forms.Label DefaultIntroSoundLabel;
+		private System.Windows.Forms.TextBox InLanguageTextBox;
+		private System.Windows.Forms.TabPage SoundsTabPage;
+		private System.Windows.Forms.ComboBox DefaultIntroSoundComboBox;
+		private System.Windows.Forms.Label DefaultIntroSoundLabel;
 		private System.Windows.Forms.ComboBox ProgramComboBox;
 		private System.Windows.Forms.ToolStripStatusLabel ProcessStatusLabel;
 		private System.Windows.Forms.ToolStripStatusLabel EmptyStatusLabel;
 		private System.Windows.Forms.ToolStripStatusLabel FilterStatusLabel;
 		private System.Windows.Forms.TabPage AcronymsTabPage;
+		private Controls.AcronymsUserControl acronymsUserControl1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn DestinationAddressColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn SequenceNumberColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn WowDataLength;
@@ -1610,8 +1686,10 @@
 		private System.Windows.Forms.Label InGenderLabel;
 		private System.Windows.Forms.Label InNameLabel;
 		private System.Windows.Forms.Label InLanguageLabel;
+		private Controls.VoicesUserControl VoicesPanel;
 		public System.Windows.Forms.TabControl MessagesTabControl;
 		public System.Windows.Forms.TabPage OptionsTabPage;
+		public Controls.OptionsControl OptionsPanel;
 	}
 }
 
