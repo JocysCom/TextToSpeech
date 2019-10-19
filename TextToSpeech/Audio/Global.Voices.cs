@@ -181,7 +181,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		static string GetSsmlXml(string text, InstalledVoiceEx vi, int volume, int pitch, int rate, bool isComment)
 		{
-			// https://docs.aws.amazon.com/polly/latest/dg/supportedtags.html
 			// <speak>
 			//     <amazon:breath duration="long" volume="x-loud"/> <prosody rate="120%"> <prosody volume="loud"> 
 			//     Wow! <amazon:breath duration="long" volume="loud"/> </prosody> That was quite fast <amazon:breath 
@@ -189,6 +188,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			// </speak>;
 			var query = System.Web.HttpUtility.ParseQueryString(vi.SourceKeys ?? "");
 			var isNeural = query[InstalledVoiceEx._KeyEngine] == Amazon.Polly.Engine.Neural;
+			// Amazon Tags: https://docs.aws.amazon.com/polly/latest/dg/supportedtags.html		
 			var isAmazon = vi.Source == VoiceSource.Amazon;
 			string xml;
 			string name = vi.Name;
@@ -200,8 +200,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			w.WriteAttributeString("xmlns", "http://www.w3.org/2001/10/synthesis");
 			w.WriteAttributeString("xml:lang", vi.CultureName);
 			// <amazon:auto-breaths>
-			if (isAmazon && !isNeural)
-				w.WriteStartElement("amazon:auto-breaths");
+			//if (isAmazon && !isNeural)
+			//	w.WriteStartElement("amazon:auto-breaths");
 			// <amazon:domain name="news">
 			// Note: "News" effect supported by Neural Matthew or Joanna voices only.
 			//if (isAmazon && isNeural && vi.Gender == VoiceGender.Neutral)
@@ -253,13 +253,12 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			w.WriteRaw(text);
 			if (rateString != null || pitchString != null)
 				w.WriteEndElement();
-
 			// </amazon:domain>
 			//if (isAmazon && isNeural && vi.Gender == VoiceGender.Neutral)
 			//	w.WriteEndElement();
 			// </amazon:auto-breaths>		
-			if (isAmazon && !isNeural)
-				w.WriteEndElement();
+			//if (isAmazon && !isNeural)
+			//	w.WriteEndElement();
 			w.WriteEndElement();
 			xml = sw.ToString();
 			w.Close();
