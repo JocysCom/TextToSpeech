@@ -100,6 +100,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 
 		byte[] ColorPrefixBytes;
 		byte[] ColorPrefixBytesBlanked;
+		bool IsColorPrefixBytesBlanked;
 
 		public void SetColorPrefix(byte[] rgbPrefixBytes)
 		{
@@ -144,7 +145,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		/// <summary>
 		/// Image: prefix[6] + change[1] + size[1] + message_bytes
 		/// </summary>
-		public Bitmap CreateImage(string message)
+		public Bitmap CreateImage(string message, bool insertBlankPixels = false)
 		{
 			var messageBytes = System.Text.Encoding.UTF8.GetBytes(message);
 			// Create object to write.
@@ -170,20 +171,23 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 				br.Write((byte)0);
 			var allBytes = ms.ToArray();
 			br.Dispose();
-			// Insert blank pixels in the middle.
-			var newBytes = InsertBlankPixels(allBytes);
-			var pixelCount = newBytes.Length / 3;
+			if (insertBlankPixels)
+			{
+				// Insert blank pixels in the middle.
+				allBytes = InsertBlankPixels(allBytes);
+			}
+			var pixelCount = allBytes.Length / 3;
 			// Set image format.
 			var format = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
 			// If format contains Alpha color then add alpha color.
 			if (format == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
-				newBytes = JocysCom.ClassLibrary.Drawing.Basic.BppFrom24To32Bit(newBytes);
+				allBytes = JocysCom.ClassLibrary.Drawing.Basic.BppFrom24To32Bit(allBytes);
 			// Image width will be double since every second pixel is blank.
 			var image = new Bitmap(pixelCount, 1, format);
 			var g = Graphics.FromImage(image);
 			// Image bytes size must match new bytes size.
 			// var imageBytes = Basic.GetImageBytes(image);
-			Basic.SetImageBytes(image, newBytes);
+			Basic.SetImageBytes(image, allBytes);
 			g.Dispose();
 			return image;
 		}
@@ -211,12 +215,18 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			// Take screenshot of the line.
 			Basic.CaptureImage(ref lineBitmap, x, y, length, 1);
 			Basic.GetImageBytes(ref lineBytes, lineBitmap);
-			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(lineBytes, ColorPrefixBytesBlanked);
+			var prefixBytes = SettingsManager.Options.DisplayMonitorHavePixelSpaces
+				? ColorPrefixBytesBlanked
+				: ColorPrefixBytes;
+			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(lineBytes, prefixBytes);
 			// If not found then...
 			if (index == -1)
 				return;
 			//	StatusTextBox.Text += string.Format("Prefix found");
-			RemoveBlankPixels(lineBytes, ref lineBufferNoBlanks);
+			if (SettingsManager.Options.DisplayMonitorHavePixelSpaces)
+				RemoveBlankPixels(lineBytes, ref lineBufferNoBlanks);
+			else
+				lineBufferNoBlanks = lineBytes;
 			var prefix = ColorPrefixBytes;
 			// Skip prefix.
 			var ms = new MemoryStream(lineBufferNoBlanks, prefix.Length, lineBufferNoBlanks.Length - prefix.Length);
@@ -226,6 +236,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			var messageBytes = new byte[messageSize];
 			br.Read(messageBytes, 0, messageSize);
 			message = System.Text.Encoding.UTF8.GetString(messageBytes);
+			br.Dispose();
 		}
 
 		object captureLock = new object();
@@ -255,10 +266,21 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			//	StatusTextBox.Text = "Wrong Bytes. Searching...";
 			Basic.CaptureImage(ref screenBitmap);
 			Basic.GetImageBytes(ref screenBytes, screenBitmap);
-			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(screenBytes, ColorPrefixBytesBlanked);
+			// Try to find prefix image without blank pixels.
+			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(screenBytes, ColorPrefixBytes);
+			// If not found then try to find with blank pixels.
+			var havePixelSpaces = false;
+			if (index < 0)
+			{
+				index = JocysCom.ClassLibrary.Text.Helper.IndexOf(screenBytes, ColorPrefixBytesBlanked);
+				havePixelSpaces = index > -1;
+			}
+			if (SettingsManager.Options.DisplayMonitorHavePixelSpaces != havePixelSpaces)
+				SettingsManager.Options.DisplayMonitorHavePixelSpaces = havePixelSpaces;
 			//	StatusTextBox.Text = string.Format("Pixel Index  {0}...", index);
 			if (index > -1)
 			{
+
 				var screen = System.Windows.Forms.Screen.PrimaryScreen;
 				var sw = screen.Bounds.Width;
 				var sh = screen.Bounds.Height;

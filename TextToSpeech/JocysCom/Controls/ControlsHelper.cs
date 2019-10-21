@@ -31,10 +31,11 @@ namespace JocysCom.ClassLibrary.Controls
 			MainThreadId = Thread.CurrentThread.ManagedThreadId;
 			// Create a TaskScheduler that wraps the SynchronizationContext returned from
 			// System.Threading.SynchronizationContext.Current
-			MainTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+			_MainTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
 		}
 
-		static TaskScheduler MainTaskScheduler;
+		public static TaskScheduler MainTaskScheduler { get { return _MainTaskScheduler; } }
+		static TaskScheduler _MainTaskScheduler;
 		static int MainThreadId;
 
 		public static bool InvokeRequired()

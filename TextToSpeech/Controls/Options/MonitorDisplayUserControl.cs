@@ -18,7 +18,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void CreateImageButton_Click(object sender, EventArgs e)
 		{
-			ImagePictureBox.Image = Program._DisplayMonitor.CreateImage(MessageTextBox.Text);
+			ImagePictureBox.Image = Program._DisplayMonitor.CreateImage(MessageTextBox.Text, EnableBlankPixelsCheckBox.Checked);
 		}
 
 		private void CaptureImageButton_Click(object sender, EventArgs e)
@@ -91,6 +91,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			MonitorEnabledCheckBox.DataBindings.Add(nameof(MonitorEnabledCheckBox.Checked), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorEnabled));
 			CopyIntervalUpDown.DataBindings.Add(nameof(CopyIntervalUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorInterval));
 			MessagesTextBox.DataBindings.Add(nameof(MessagesTextBox.Text), Program._DisplayMonitor, nameof(Program._DisplayMonitor.MessagesReceived));
+			HavePixelSpacesTextBox.DataBindings.Add(nameof(HavePixelSpacesTextBox.Text), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorHavePixelSpaces));
 		}
 	}
 }

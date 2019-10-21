@@ -1,4 +1,5 @@
-﻿using JocysCom.TextToSpeech.Monitor.Capturing;
+﻿using JocysCom.ClassLibrary.Controls;
+using JocysCom.TextToSpeech.Monitor.Capturing;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -117,6 +118,11 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(0)]
 		public int DisplayMonitorPositionY { get { return _DisplayMonitorPositionY; } set { _DisplayMonitorPositionY = value; OnPropertyChanged(); } }
 		int _DisplayMonitorPositionY;
+
+		[DefaultValue(true)]
+		public bool DisplayMonitorHavePixelSpaces { get { return _DisplayMonitorHavePixelSpaces; } set { _DisplayMonitorHavePixelSpaces = value; OnPropertyChanged(); } }
+		bool _DisplayMonitorHavePixelSpaces = true;
+
 
 		public void DisplayMonitorResetSettings()
 		{
@@ -316,7 +322,12 @@ namespace JocysCom.TextToSpeech.Monitor
 		{
 			var handler = PropertyChanged;
 			if (handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			{
+				if (ControlsHelper.MainTaskScheduler == null)
+					handler(this, new PropertyChangedEventArgs(propertyName));
+				else
+					ControlsHelper.Invoke(handler, this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 
 		#endregion
