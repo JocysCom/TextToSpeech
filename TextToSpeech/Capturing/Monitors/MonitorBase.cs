@@ -26,9 +26,8 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		{
 			MessagesReceived++;
 			var handler = MessageReceived;
-			if (handler == null)
-				return;
-			ControlsHelper.Invoke(() => { handler(this, new ClassLibrary.EventArgs<string>(text)); });
+			if (handler != null)
+				ControlsHelper.Invoke(handler, this, new ClassLibrary.EventArgs<string>(text));
 		}
 
 		protected void OnStatusChanged(string error, string filter = null, string packets = null, string state = null)
@@ -43,7 +42,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 				Packets = packets,
 				State = state,
 			};
-			ControlsHelper.Invoke(() => { handler(this, e); });
+			ControlsHelper.Invoke(handler, this, e);
 		}
 
 		public string Error { get; set; }
@@ -85,9 +84,8 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			var handler = PropertyChanged;
-			if (handler == null)
-				return;
-			ControlsHelper.Invoke(() => { handler(this, new PropertyChangedEventArgs(propertyName)); });
+			if (handler != null)
+				ControlsHelper.Invoke(handler, this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#endregion

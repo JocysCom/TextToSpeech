@@ -132,7 +132,7 @@ namespace JocysCom.TextToSpeech.Monitor.Voices
 		public static void OnEvent<T>(EventHandler<EventArgs<T>> handler, T data)
 		{
 			if (handler != null)
-				ControlsHelper.Invoke(() => { handler(null, new EventArgs<T>(data)); });
+				ControlsHelper.Invoke(handler, null, new EventArgs<T>(data));
 		}
 
 		#endregion

@@ -206,9 +206,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			var handler = PropertyChanged;
-			if (handler == null)
-				return;
-			ControlsHelper.Invoke(() => { handler(this, new PropertyChangedEventArgs(propertyName)); });
+			if (handler != null)
+				ControlsHelper.Invoke(handler, this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#endregion

@@ -26,7 +26,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public static void OnEvent<T>(EventHandler<EventArgs<T>> handler, T data)
 		{
 			if (handler != null)
-				ControlsHelper.Invoke(() => { handler(null, new EventArgs<T>(data)); });
+				ControlsHelper.Invoke(handler, null, new EventArgs<T>(data));
 		}
 
 		public static void InitGlobal(IntPtr handle)
