@@ -1,0 +1,7 @@
+## Author: Jocys.com
+## Interface: 80205
+## Notes: Jocys.com Text to Speech World of Warcraft AddOn Example
+## Title: |cff77ccffJocys.com|r Text to Speech Example
+## Version: 8.2.5
+JocysCom-TextToSpeech-WoW-Example.xml
+JocysCom-TextToSpeech-WoW-Example.lua

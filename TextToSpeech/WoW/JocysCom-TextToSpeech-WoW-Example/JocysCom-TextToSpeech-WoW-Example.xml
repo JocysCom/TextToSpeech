@@ -1,0 +1,79 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<!-- Pixel Line -->
+	<EditBox name="JocysCom_ColorMessageEditBox" parent="WorldFrame" frameStrata="HIGH" ignoreParentScale="true" movable="false" enableMouse="false" letters="0" multiLine="true" autoFocus="false" ignoreArrows="true" clampedToScreen="false">
+		<Size y="2" />
+		<Anchors>
+			<Anchor point="TOPLEFT" />
+			<Anchor point="TOPRIGHT" />
+		</Anchors>
+		<Layers>
+			<Layer>
+				<Texture>
+					<Color a="1" r="0" g="0" b="0" />
+				</Texture>
+			</Layer>
+		</Layers>
+		<FontString justifyH="LEFT" font="Interface/AddOns/JocysCom-TextToSpeech-WoW-EXAMPLE/Fonts/JocysCom0AsPixel.ttf" wordwrap="true" spacing="0" nonspacewrap="true" ignoreParentScale="true">
+			<FontHeight val="1" />
+		</FontString>
+	</EditBox>
+	<!-- Frame -->
+	<Frame name="JocysCom_ColorMessageFrame" inherits="BasicFrameTemplate" parent="UIParent" movable="true" frameStrata="HIGH">
+		<Size x="400" y="87" />
+		<Anchors>
+			<Anchor point="CENTER" />
+		</Anchors>
+		<Frames>
+			<!-- Message Box -->
+			<EditBox name="JocysCom_MessageEditBox" inherits="InputBoxTemplate" letters="0" autofocus="false">
+				<Size x="375" y="20" />
+				<Anchors>
+					<Anchor point="BOTTOM" x="1" y="38" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self:SetText("Hello World!")
+					</OnLoad>
+				</Scripts>
+			</EditBox>
+			<!-- Play Button -->
+			<Button inherits="UIPanelButtonTemplate" text="PLAY">
+				<Size x="50" y="22" />
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOM" y="10" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						JocysCom_PlayButton_OnClick();
+						JocysCom_MessageEditBox:ClearFocus();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<!-- Stop Button -->
+			<Button inherits="UIPanelButtonTemplate" text="STOP">
+				<Size x="50" y="22" />
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativePoint="BOTTOM" y="10" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						JocysCom_StopButton_OnClick();
+						JocysCom_MessageEditBox:ClearFocus();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				self:RegisterForDrag("LeftButton");
+				self.TitleText:SetText("Jocys.Com Text to Speech Example 1.0 (2019-10-20)")
+			</OnLoad>
+			<OnDragStart>
+				self:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				self:StopMovingOrSizing();
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+</Ui>

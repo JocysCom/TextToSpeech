@@ -1,0 +1,302 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<style type="text/css">
+		body { background-color: #bfbfbf; font-family: Calibri, 'Trebuchet MS', Arial; font-size: 12px; padding-bottom: 20px; }
+		p { line-height: 1.2; }
+		.title { font-size: 22px; padding: 16px 0 16px 0; }
+		hr { margin: 10px 0 10px 0; border-top: 0; border-left: 0; border-right: 0; border-bottom: 1px dotted #888888; height: 1px; }
+		code { font-family: Monaco, Menlo, Consolas, "Droid Sans Mono", "Inconsolata", "Courier New", monospace; }
+		.code { font-family: Monaco, Menlo, Consolas, "Droid Sans Mono", "Inconsolata", "Courier New", monospace; }
+			.code p { margin: 0; }
+		.comment { color: #008000; }
+		.comment_2 { color: #800080; }
+		.text { color: #800000; }
+		.variable { color: #ee0000; }
+		.function { color: #2b91af; }
+		.default { color: #000000; }
+		.type { color: #0000cc; }
+		.red { color: #cc0000; }
+		.purple { color: #800080; }
+		.tab1 { padding-left: 27px; }
+		.tab2 { padding-left: 54px; }
+		.tab3 { padding-left: 81px; }
+		.tab4 { padding-left: 108px; }
+		.tab5 { padding-left: 135px; }
+		.line { color: #aaaaaa }
+		.highlight { color: #008000; }
+		.messageComment { color: #808080; }
+	</style>
+</head>
+<body>
+	<p class="title">TTS Monitor (XML)</p>
+	<p>Simple <span class="purple">message</span>. Example:</p>
+	<p class="code"><span class="type">&lt;<span class="text">message</span> <span class="variable">command</span>="play"&gt;&lt;<span class="text">part</span>&gt;<span class="default">text</span>&lt;/<span class="text">part</span>&gt;&lt;/<span class="text">message</span>&gt;</span></p>
+	<p>For TTS Monitor to speak in different voices, you must have text-to-speech voices installed on your operating system and Addon must submit game character <code class="variable">name</code> (example: <code class="type">"Marshal McBride"</code>) and <code class="variable">gender</code> (<code class="type">"Male"</code>, <code class="type">"Female"</code>, <code class="type">"Neutral"</code>) values. Example:</p>
+	<p class="code"><span class="type">&lt;<span class="text">message</span> <span class="variable">name</span>="Marshal McBride" <span class="variable">gender</span>="Male" <span class="variable">command</span>="play"&gt;&lt;<span class="text">part</span>&gt;<span class="default">text</span>&lt;/<span class="text">part</span>&gt;&lt;/<span class="text">message</span>&gt;</span></p>
+	<p>If submited <code class="variable">name</code> is name of text-to-speech voice, like <code class="type">"IVONA 2 Amy"</code>, it is not necessary to submit <code class="variable">gender</code> <code class="type">value</code>.</p>
+	<p>If <code class="variable">name</code> <code class="type">value</code> is not submitted, text-to-speech voice with highest <span class="highlight">popularity</span> value (of specified <code class="type">gender</code>, if <code class="variable">gender</code> <code class="type">value</code> is submitted) in TTS Monitor &gt; [ Voices ] tab will be used.</p>
+	<p><img src="https://www.jocys.com/Files/Software/JocysCom_TTS_Monitor_Voices.png" /></p>
+	<p>If <code class="variable">gender</code> <code class="type">value</code> is not submitted or submitted <code class="type">value</code> is not <code class="type">"Male"</code>, <code class="type">"Female"</code> or <code class="type">"Neutral"</code>, selected <code class="highlight">gender</code> in TTS Monitor &gt; [ Voices ] tab &gt; [ Default · My Gender ] drop-down box will be used.</p>
+	<p>If you will submit specific <code class="type">values</code>, TTS Monitor will use these submited <code class="type">values</code> and will ignore local (default) setup.</p>
+	<p class="code"><span class="type">&lt;<span class="text">message</span> <span class="variable">name</span>="Marshal McBride" <span class="variable">gender</span>="Male" <span class="variable">effect</span>="Humanoid" <span class="variable">group</span>="Quest" <span class="variable">pitch</span>="-5" <span class="variable">rate</span>="1" <span class="variable">volume</span>="100" <span class="variable">command</span>="play"&gt;&lt;<span class="text">part</span>&gt;<span class="default">text</span><span class="messageComment">[comment]</span><span class="default">text</span><span class="messageComment">[/comment]</span>&lt;/<span class="text">part</span>&gt;&lt;/<span class="text">message</span>&gt;</span></p>
+	<p><code class="messageComment">[comment]</code><code class="default">text</code><code class="messageComment">[/comment]</code> -- In Monitor will be replaced to SAPI <code class="type">&lt;pitch absmiddle="(inverted pitch value 8 or -8)" /&gt;text&lt;pitch absmiddle="(original pitch value)" /&gt;.</code></p>
+	<p>
+		<code class="variable">name</code> -- Can be text-to-specch voice name, like <code class="type">"IVONA 2 Brian"</code> - TTS Monitor will use it. Can be game character name, like <code class="type">"Marshal McBride"</code> - TTS Monitor will assign text-to-speech voice to this character name.<br />
+		<code class="variable">gender</code> -- Voice gender... <code class="type">"Male"</code>, <code class="type">"Female"</code> or <code class="type">"Neutral"</code>.<br />
+		<code class="variable">pitch</code> -- Voice pitch... value from <code class="type">"-10"</code> to <code class="type">"10"</code>.<br />
+		<code class="variable">rate</code> -- Voice speed... value from <code class="type">"-10"</code> to <code class="type">"10"</code>.<br />
+		<code class="variable">volume</code> -- Voice volume... value from <code class="type">"0"</code> to <code class="type">"100"</code>.<br />
+		<code class="variable">effect</code> -- Voice (sound card) effects... <code class="type">"Dragon"</code>, <code class="type">"Undead"</code>, <code class="type">"Mechanic"</code>, etc...<br />
+		<code class="variable">group</code> -- Messages in TTS Monitor will be assigned to specific group, if <code class="variable">group</code> <code class="type">value</code> is submitted (<code class="type">"Quest"</code>, <code class="type">"Whisper"</code>, <code class="type">"RaidLeader"</code>, etc...).
+	</p>
+	<p>
+		<code class="variable">command</code> -- <code class="type">"add"</code>, <code class="type">"play"</code>, <code class="type">"stop"</code>, <code class="type">"sound"</code>, <code class="type">"save"</code>. Examples:
+	</p>
+	<div class="tab1">
+		<p>You can play splitted message (if there is 255 character limitation in game) with <code class="variable">command</code><code class="type">="add"</code> and <code class="variable">command</code><code class="type">="play"</code>.</p>
+		<p class="tab1">
+			<code class="type">&lt;<span class="text">message</span> <span class="variable">command</span>="add"&gt;&lt;<span class="text">part</span>&gt;<span class="default">text</span>&lt;/<span class="text">part</span>&gt;&lt;/<span class="text">message</span>&gt;</code> -- First part of message.<br />
+			<code class="type">&lt;<span class="text">message</span> <span class="variable">command</span>="add&lt;<span class="text">part</span>&gt;<span class="default">text</span>&lt;/<span class="text">part</span>&gt;&lt;/<span class="text">message</span>&gt;</code> -- Second part of message.<br />
+			<code class="type">&lt;<span class="text">message</span> <span class="variable">command</span>="play"&gt;&lt;<span class="text">part</span>&gt;<span class="default">text</span>&lt;/<span class="text">part</span>&gt;&lt;/<span class="text">message</span>&gt;</code> -- Third-last part of message.
+		</p>
+		<p>Stop text-to-speech and remove message(s) from TTS Monitor’s playlist with <code class="variable">command</code><code class="type">="stop"</code>.</p>
+		<p class="tab1">
+			<code class="type">&lt;<span class="text">message</span> <span class="variable">command</span>="stop" /&gt;</code> -- Stop text-to-speech and remove all messages from TTS Monitor’s playlist.<br />
+			<code class="type">&lt;<span class="text">message</span> <span class="variable">command</span>="stop" <span class="variable">group</span>="Quest" /&gt;</code> -- Stop text-to-speech and remove all <code class="type">"Quest"</code> group messages from TTS Monitor’s playlist.
+		</p>
+		<p>Play (intro) audio sound with <code class="variable">command</code><code class="type">="sound"</code> and <code class="variable">group</code> <code class="type">value</code>. Sound must be listed and enabled in TTS Monitor &gt; [ Intro Sounds ] tab.</p>
+		<p class="tab1">
+			<code class="type">&lt;<span class="text">message</span> <span class="variable">command</span>="sound" /&gt;</code> -- Audio, selected in [ Default Intro Sound ] drop-down box, will be played.<br />
+			<code class="type">&lt;<span class="text">message</span> <span class="variable">command</span>="sound" <span class="variable">group</span>="Whisper" /&gt;</code> -- Audio, assigned to <code class="type">"Whisper"</code> group, will be played.
+		</p>
+		<p class="tab1"><img src="https://www.jocys.com/TTS/Images/JocysCom_TTS_Monitor_IntroSounds.png" style="width: 480px; height: 134px;" /></p>
+		<p class="tab1">
+			Included in Monitor sound names are listed in TTS Monitor &gt; [ Default Intro Sound ] drop-down box.<br />
+			Also, you can specify custom paths to WAV files, like <span class="highlight">C:\Windows\Media\notify.wav</span>
+		</p>
+		<p>
+			You can save <code class="variable">name</code>, <code class="variable">gender</code> and <code class="variable">effect</code> <code class="type">values</code> in TTS Monitor &gt; [ Voice Defaults ] tab with <code class="variable">command</code><code class="type">="save"</code>.
+		</p>
+		<p class="tab1">
+			<code class="type">&lt;<span class="text">message</span> <span class="variable">command</span>="save" <span class="variable">name</span>="Thomas Miller" <span class="variable">gender</span>="Male" <span class="variable">effect</span>="Humanoid" /&gt;</code>
+		</p>
+	</div>
+
+	<p class="title">Port numbers for “Network“ mode</p>
+
+	<p>3724 -- World of Warcraft.</p>
+
+	<p class="title">Acronyms</p>
+
+	<p>Key-Regex values are .NET Framework Regular Expressions.</p>
+
+	<p class="title">WoW Addon Example</p>
+
+	<p>
+		<span class="variable">Disable</span> “Jocys.com Text to Speech WoW”<br />
+		<span class="comment">Enable</span> “JocysCom Text to Speech WoW Example”
+</p>
+
+	<p><img src="https://www.jocys.com/TTS/Images/JocysCom-TextToSpeech-WoW-Example-Enabled.png" style="width: 402px; height: 48px;" /><br />
+	<img src="https://www.jocys.com/TTS/Images/JocysCom-TextToSpeech-WoW-Example.png" style="width: 402px; height: 90px;" /></p>
+
+	<p class="title">WoW Addon (*.TOC)</p>
+
+	<div class="code">
+		## Author: Jocys.com<br />
+		## Interface: 80205<br />
+		## Notes: Jocys.com TTS WoW AddOn Example<br />
+		## Title: |cff77ccffJocys.com|r TTS Example<br />
+		## Version: 8.2.5<br />
+		JocysCom-TextToSpeech-WoW-Example.xml<br />
+		JocysCom-TextToSpeech-WoW-Example.lua
+	</div>
+	<p class="title">WoW Addon (*.LUA)</p>
+	<div class="code">
+		<span class="comment">-- Message prefix for TTS Monitor to find pixel line on display. 6 coloured characters-pixels.</span><br />
+		<span class="comment">-- (|c) color starts, (##) alpha, (##) red, (##) green, (##) blue, (·) character-pixel, (|r) color ends.</span><br />
+		<span class="type">local</span> messagePrefixPixels = <span class="text">"|cff220000·|r|cff002200·|r|cff000022·|r|cff220000·|r|cff002200·|r|cff000022·|r"</span><br />
+		<span class="comment">-- Table (list) for adding and removing messages.</span><br />
+		<span class="type">local</span> messageTable = {}<br />
+		<span class="comment">-- Message change color value. For Monitor to know, when message was changed.</span><br />
+		<span class="type">local</span> messageChanged = <span class="type">math.random</span>(5, 80)<br />
+		<span class="comment">-- TTS Monitor checks display with 100 millisecond intervals.</span><br />
+		<span class="comment">-- Send and remove message(s) from table with 500 millisecond intervals.</span><br />
+		<span class="type">local</span> messageInterval = 0.5
+	</div>
+	<hr />
+	<div class="code">
+		<span class="type">function</span> <span class="function">JocysCom_PlayButton_OnClick</span>()<br />
+		<span class="tab1 type">local</span> sendMessage = <span class="text">"Hello World!"</span><br />
+		<span class="tab1 type">if</span> #JocysCom_MessageEditBox:<span class="type">GetText</span>() > 0 <span class="type">then</span><br />
+		<span class="tab2">sendMessage = JocysCom_MessageEditBox:<span class="type">GetText</span>()</span><br />
+		<span class="tab1 type">end</span><br />
+		<span class="tab1">JocysCom_MessageEditBox:<span class="type">SetText</span>(sendMessage)</span><br />
+		<span class="tab1 type">JocysCom_AddMessageToTable</span>(<span class="text">"&lt;message command=\"play\"&gt;&lt;part&gt;"</span> .. sendMessage .. <span class="text">"&lt;/part&gt;&lt;/message&gt;"</span>)<br />
+		<span class="type">end</span>
+	</div>
+	<hr />
+	<div class="code">
+		<span class="type">function</span> <span class="function">JocysCom_StopButton_OnClick</span>()<br />
+		<span class="tab1"><span class="type">JocysCom_AddMessageToTable</span>(<span class="text">"&lt;message command=\"stop\" /&gt;"</span>)</span><br />
+		<span class="type">end</span>
+	</div>
+	<hr />
+	<div class="code">
+		<span class="type">function</span> <span class="function">JocysCom_AddMessageToTable</span>(messageText)<br />
+		<span class="tab1 type">table.insert</span>(messageTable, messageText)<br />
+		<span class="type">end</span>
+	</div>
+	<hr />
+	<div class="code">
+		<span class="type">function</span> <span class="function">JocysCom_SendMessageFromTable</span>()<br />
+		<span class="tab1 comment">-- Convert message characters to bytes (UTF-8). a ш B Ш C • 61 D188 42 D0A8 43 • 61D18842D0A843</span><br />
+		<span class="tab1 type">local</span> messageBytes = messageTable[1]:<span class="type">gsub</span>(<span class="text">"."</span>, <span class="type">function</span>(v) <span class="type">return string.format</span>(<span class="text">"%02x"</span>, <span class="type">string.byte</span>(v)) <span class="type">end</span>)<br />
+		<br />
+		<span class="tab1 comment">-- Count bytes-pairs (7). 61 D1 88 42 D0 A8 43</span><br />
+		<span class="tab1 type">local</span> messageLen = #messageBytes / 2<br />
+		<span class="tab1 comment">-- Create message length value-color (3 bytes). Add missing bytes.</span><br />
+		<span class="tab1 type">local</span> messageLenBytes = <span class="type">string.format</span>(<span class="text">"%06x"</span>, messageLen)<br />
+		<span class="tab1 comment">-- Create message lenght character-pixel.</span><br />
+		<span class="tab1 type">local</span> messageLenPixel = <span class="text">"|cff"</span> .. messageLenBytes .. <span class="text">"·|r"</span><br />
+		<br />
+		<span class="tab1 comment">-- Divide message (7) into 3 byte groups and get ungrouped byte(s) • (7)-3-3=1 left • (61D188) (42D0A8) 43</span><br />
+		<span class="tab1 type">local</span> ungroupedBytes = <span class="type">math.fmod</span>(messageLen, 3)<br />
+		<span class="tab1 comment">-- If ungrouped bytes left, add missing bytes. "00" or "0000".</span><br />
+		<span class="tab1 type">if</span> ungroupedBytes > 0 <span class="type">then</span><br />
+		<span class="tab2">messageBytes = messageBytes .. <span class="type">string.rep</span>(<span class="text">"00"</span>, 3 - ungroupedBytes)</span><br />
+		<span class="tab1 type">end</span><br />
+		<span class="tab1 comment">-- Get (3 byte) groups. Switch red color with blue (RGB &gt; BGR). Create coloured pixels. |cff88D161·|r</span><br />
+		<span class="tab1 type">local</span> messagePixels = messageBytes:<span class="type">gsub</span>(<span class="text">"(..)(..)(..)"</span>, <span class="text">"|cff"</span> .. <span class="text">"%3%2%1"</span> .. <span class="text">"·|r"</span>)<br />
+		<br />
+		<span class="tab1 comment">-- Update message change indicator color for Monitor: add 5 to red, green and blue.</span><br />
+		<span class="tab1">messageChanged = messageChanged + 5</span><br />
+		<span class="tab1 comment">-- Do not exceed color brightness #808080.</span><br />
+		<span class="tab1 type">if</span> messageChanged > 80 <span class="type">then</span> messageChanged = 10 <span class="type">end</span><br />
+		<span class="tab1 comment">-- Create message change character-pixel. |cff101010·|r</span><br />
+		<span class="tab1 type">local</span> messageChangedPixel = <span class="text">"|cff"</span> .. <span class="type">string.rep</span>(messageChanged, 3) .. <span class="text">"·|r"</span><br />
+		<br />
+		<span class="tab1 comment">-- Create final message with prefixes: prefix(6px) + change(1px) + size(1px) + message(#px)</span><br />
+		<span class="tab1 type">local</span> message = messagePrefixPixels .. messageChangedPixel .. messageLenPixel .. messagePixels<br />
+		<span class="tab1 comment">-- Show message on display.</span><br />
+		<span class="tab1">JocysCom_ColorMessageEditBox:<span class="type">SetText</span>(message)</span><br />
+		<span class="tab1 comment">-- Remove message from table.</span><br />
+		<span class="tab1 type">table.remove(messageTable, 1)</span><br />
+		<span class="type">end</span>
+	</div>
+	<hr />
+	<div class="code">
+		<span class="type">function</span> <span class="function">JocysCom_SendMessageTimer</span>()<br />
+		<span class="tab1 type">if</span> #messageTable > 0 <span class="type">then JocysCom_SendMessageFromTable</span>() <span class="type">end</span><br />
+		<span class="tab1 comment">-- Wait #.# second and check messageTable.</span><br />
+		<span class="tab1">C_Timer.<span class="type">After</span>(messageInterval, JocysCom_SendMessageTimer)</span><br />
+		<span class="type">end</span><br />
+		<span class="type">JocysCom_SendMessageTimer()</span>
+	</div>
+	<hr />
+	<p class="title">WoW Addon (*.XML)</p>
+	<div class="code type">
+		<p><span class="messageComment">&lt;Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd"&gt;</span></p>
+
+		<div class="tab1 type">
+			<span class="comment">&lt;!-- Pixel Line --&gt;</span><br />
+			&lt;<span class="text">EditBox</span> <span class="variable">name</span>="JocysCom_ColorMessageEditBox" <span class="variable">parent</span>="WorldFrame" <span class="variable">frameStrata</span>="HIGH" <span class="variable">ignoreParentScale</span>="true" <span class="variable">movable</span>="false" <span class="variable">enableMouse</span>="false" <span class="variable">letters</span>="0" <span class="variable">multiLine</span>="true" <span class="variable">autoFocus</span>="false" <span class="variable">ignoreArrows</span>="true" <span class="variable">clampedToScreen</span>="false"&gt;<br />
+			<span class="tab1">&lt;<span class="text">Size</span> <span class="variable">y</span>="2" /&gt;</span><br />
+			<span class="tab1">&lt;<span class="text">Anchors</span>&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">Anchor</span> <span class="variable">point</span>="TOPLEFT" /&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">Anchor</span> <span class="variable">point</span>="TOPRIGHT" /&gt;</span><br />
+			<span class="tab1">&lt;/<span class="text">Anchors</span>&gt;</span><br />
+			<span class="tab1">&lt;<span class="text">Layers</span>&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">Layer</span>&gt;</span><br />
+			<span class="tab3">&lt;<span class="text">Texture</span>&gt;</span><br />
+			<span class="tab4">&lt;<span class="text">Color</span> <span class="variable">a</span>="1" <span class="variable">r</span>="0" <span class="variable">g</span>="0" <span class="variable">b</span>="0" /&gt;</span><br />
+			<span class="tab3">&lt;/<span class="text">Texture</span>&gt;</span><br />
+			<span class="tab2">&lt;/<span class="text">Layer</span>&gt;</span><br />
+			<span class="tab1">&lt;/<span class="text">Layers</span>&gt;</span><br />
+			<span class="tab1">&lt;<span class="text">FontString</span> <span class="variable">justifyH</span>="LEFT" <span class="variable">font</span>="<span class="comment">Interface/AddOns/JocysCom-TextToSpeech-WoW-EXAMPLE/Fonts/JocysCom0AsPixel.ttf</span>" <span class="variable">wordwrap</span>="true" <span class="variable">spacing</span>="0" <span class="variable">nonspacewrap</span>="true" <span class="variable">ignoreParentScale</span>="true"&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">FontHeight</span> <span class="variable">val</span>="1" /&gt;</span><br />
+			<span class="tab1">&lt;/<span class="text">FontString</span>&gt;</span><br />
+			&lt;/<span class="text">EditBox</span>&gt;<br />
+		</div>
+		<hr />
+		<div class="tab1">
+			<span class="comment">&lt;!-- Frame --&gt;</span><br />
+			&lt;<span class="text">Frame</span> <span class="variable">name</span>="JocysCom_ColorMessageFrame" <span class="variable">inherits</span>="BasicFrameTemplate" <span class="variable">parent</span>="UIParent" <span class="variable">movable</span>="true" <span class="variable">frameStrata</span>="HIGH"&gt;<br />
+			<span class="tab1">&lt;<span class="text">Size</span> <span class="variable">x</span>="400" <span class="variable">y</span>="87" /&gt;</span><br />
+			<span class="tab1">&lt;<span class="text">Anchors</span>&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">Anchor</span> <span class="variable">point</span>="CENTER" /&gt;</span><br />
+			<span class="tab1">&lt;/<span class="text">Anchors</span>&gt;</span><br />
+			&lt;<span class="text">Frames</span>&gt;
+		</div>
+		<hr />
+		<div class="tab2">
+			<span class="comment">&lt;!-- Message Box --&gt;</span><br />
+			&lt;<span class="text">EditBox</span> <span class="variable">name</span>="JocysCom_MessageEditBox" <span class="variable">inherits</span>="InputBoxTemplate" <span class="variable">letters</span>="0" <span class="variable">autofocus</span>="false"&gt;<br />
+			<span class="tab1">&lt;<span class="text">Size</span> x="375" y="20" /&gt;</span><br />
+			<span class="tab1">&lt;<span class="text">Anchors</span>&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">Anchor</span> <span class="variable">point</span>="BOTTOM" <span class="variable">x</span>="1" <span class="variable">y</span>="38" /&gt;</span><br />
+			<span class="tab2">&lt;/<span class="text">Anchors</span>&gt;</span><br />
+			<span class="tab1">&lt;<span class="text">Scripts</span>&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">OnLoad</span>&gt;</span><br />
+			<span class="tab3 default">self:SetText("Hello World!")</span><br />
+			<span class="tab2">&lt;<span class="text">/OnLoad</span>&gt;</span><br />
+			<span class="tab1">&lt;/<span class="text">Scripts</span>&gt;</span><br />
+			&lt;/<span class="text">EditBox</span>&gt;
+		</div>
+		<hr />
+		<div class="tab2">
+			<span class="comment">&lt;!-- Play Button --&gt;</span><br />
+			&lt;<span class="text">Button</span> <span class="variable">inherits</span>="UIPanelButtonTemplate" <span class="variable">text</span>="PLAY"&gt;<br />
+			<span class="tab1">&lt;<span class="text">Size</span> <span class="variable">x</span>="50" <span class="variable">y</span>="22" /&gt;</span><br />
+			<span class="tab1">&lt;<span class="text">Anchors</span>&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">Anchor</span> <span class="variable">point</span>="BOTTOMRIGHT" <span class="variable">relativePoint</span>="BOTTOM" <span class="variable">y</span>="10" /&gt;</span><br />
+			<span class="tab1">&lt;/<span class="text">Anchors</span>&gt;</span><br />
+			<span class="tab1">&lt;<span class="text">Scripts</span>&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">OnClick</span>&gt;</span><br />
+			<span class="tab3 default">JocysCom_PlayButton_OnClick();</span><br />
+			<span class="tab3 default">JocysCom_MessageEditBox:ClearFocus();</span><br />
+			<span class="tab2">&lt;/<span class="text">OnClick</span>&gt;</span><br />
+			<span class="tab1">&lt;/<span class="text">Scripts</span>&gt;</span><br />
+			&lt;/<span class="text">Button</span>&gt;<br />
+		</div>
+		<hr />
+		<div class="tab2">
+			<span class="comment">&lt;!-- Stop Button --&gt;</span><br />
+			&lt;<span class="text">Button</span> <span class="variable">inherits</span>="UIPanelButtonTemplate" <span class="variable">text</span>="STOP"&gt;<br />
+			<span class="tab1">&lt;<span class="text">Size</span> <span class="variable">x</span>="50" <span class="variable">y</span>="22" /&gt;</span><br />
+			<span class="tab1">&lt;<span class="text">Anchors</span>&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">Anchor</span> <span class="variable">point</span>="BOTTOMLEFT" <span class="variable">relativePoint</span>="BOTTOM" y="10" /&gt;</span><br />
+			<span class="tab1">&lt;/<span class="text">Anchors</span>&gt;</span><br />
+			<span class="tab1">&lt;<span class="text">Scripts</span>&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">OnClick</span>&gt;</span><br />
+			<span class="tab3 default">JocysCom_StopButton_OnClick();</span><br />
+			<span class="tab3 default">JocysCom_MessageEditBox:ClearFocus();</span><br />
+			<span class="tab2">&lt;/<span class="text">OnClick</span>&gt;</span><br />
+			<span class="tab1">&lt;/<span class="text">Scripts</span>&gt;</span><br />
+			&lt;/<span class="text">Button</span>&gt;<br />
+		</div>
+		<hr />
+		<div class="tab1">
+			&lt;/<span class="text">Frames</span>&gt;<br />
+			<span class="tab1">&lt;<span class="text">Scripts</span>&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">OnLoad</span>&gt;</span><br />
+			<span class="tab3 default">self:RegisterForDrag("LeftButton");</span><br />
+			<span class="tab3 default">self.TitleText:SetText("Jocys.Com Text to Speech Example 1.0 (2019-10-20)")</span><br />
+			<span class="tab2">&lt;/<span class="text">OnLoad</span>&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">OnDragStart</span>&gt;</span><br />
+			<span class="tab3 default">self:StartMoving();</span><br />
+			<span class="tab2">&lt;/<span class="text">OnDragStart</span>&gt;</span><br />
+			<span class="tab2">&lt;<span class="text">OnDragStop</span>&gt;</span><br />
+			<span class="tab3 default">self:StopMovingOrSizing();</span><br />
+			<span class="tab2">&lt;/<span class="text">OnDragStop</span>&gt;</span><br />
+			<span class="tab1">&lt;/<span class="text">Scripts</span>&gt;</span><br />
+			&lt;/<span class="text">Frame</span>&gt;<br />
+		</div>
+		<p class="messageComment">&lt;/Ui&gt;</p>
+	</div>
+</body>
+</html>

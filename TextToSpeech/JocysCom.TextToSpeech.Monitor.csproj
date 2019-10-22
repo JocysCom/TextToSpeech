@@ -508,6 +508,11 @@
     <None Include="Resources\Images\Windows XP\JocysCom_Monitor_0xc0000135_Application_Error.psd" />
     <None Include="Resources\Images\Windows XP\JocysCom_Monitor_Windows_XP_DirectX_SDK_Options.psd" />
     <None Include="Resources\Images\Windows XP\JocysCom_Monitor_Windows_XP_Exception_Error.psd" />
+    <None Include="WoW\JocysCom-TextToSpeech-WoW-EXAMPLE\Fonts\JocysCom0AsPixel.ttf" />
+    <None Include="WoW\JocysCom-TextToSpeech-WoW-EXAMPLE\Fonts\JocysCom0AsPixelSpace.ttf" />
+    <None Include="WoW\JocysCom-TextToSpeech-WoW-EXAMPLE\JocysCom-TextToSpeech-WoW-Example.lua" />
+    <None Include="WoW\JocysCom-TextToSpeech-WoW-EXAMPLE\JocysCom-TextToSpeech-WoW-Example.toc" />
+    <None Include="WoW\JocysCom-TextToSpeech-WoW-EXAMPLE\JocysCom-TextToSpeech-WoW.Help-Online.URL" />
     <None Include="WoW\Resources\LUA for Visual Studio\NPLLanguageService.vsix" />
     <None Include="WoW\Resources\Adobe\Adobe Photoshop CS6 %2864 Bit%29\Plug-ins\File Formats\BLP.8bi" />
     <None Include="WoW\Resources\Adobe\Adobe Photoshop CS6 %2864 Bit%29\Plug-ins\File Formats\ICO.8bi" />
@@ -626,6 +631,7 @@
     <None Include="Resources\Icons\Amazon_Add_Neural_16x16.png" />
     <None Include="Resources\Icons\Amazon_Add_Standard_16x16.png" />
     <None Include="Resources\Icons\Add_16x16.png" />
+    <Content Include="Resources\Documents\Help_Code.html" />
     <Content Include="Resources\Icons\CheckBox.png" />
     <Content Include="Resources\Icons\CheckBox_Unchecked.png" />
     <None Include="Resources\Icons\Local_Add_16x16.png" />
@@ -695,6 +701,8 @@
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.MediaFoundation.xml" />
     <EmbeddedResource Include="Resources\NAudio\NAudio.dll" />
     <EmbeddedResource Include="Resources\NAudio\NAudio.xml" />
+    <Content Include="WoW\JocysCom-TextToSpeech-WoW-EXAMPLE\JocysCom-TextToSpeech-WoW-Example.html" />
+    <Content Include="WoW\JocysCom-TextToSpeech-WoW-EXAMPLE\JocysCom-TextToSpeech-WoW-Example.xml" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon.png" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon_Buttons.png" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon_MiniFrame.png" />
