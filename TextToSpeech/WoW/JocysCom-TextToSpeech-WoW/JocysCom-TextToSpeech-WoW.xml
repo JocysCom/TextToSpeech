@@ -257,7 +257,6 @@
           </Anchors>
           <FontHeight val="12" />
         </ButtonText>
-
       </Button>
     </Frames>
     <Scripts>
@@ -1538,7 +1537,7 @@
   <Frame name="JocysCom_ClipboardMessageFrame" parent="UIParent" clampedToScreen="true" movable="true" enableMouse="true" frameStrata="HIGH" hidden="true">
     <Size x="8" y="8" />
     <Anchors>
-      <Anchor point="TOPLEFT" />
+      <Anchor point="TOP" y="-50" />
     </Anchors>
     <Layers>
       <Layer>
@@ -1571,7 +1570,7 @@
         </Scripts>
         <TextInsets left="1" right="1" top="1" bottom="1" />
         <FontString justifyH="LEFT" font="Interface/AddOns/JocysCom-TextToSpeech-WoW/Fonts/Arial.ttf">
-          <FontHeight val="7"/>
+          <FontHeight val="7" />
         </FontString>
       </EditBox>
     </Frames>
@@ -1589,10 +1588,10 @@
   </Frame>
 
   <Frame name="JocysCom_ColorMessageFrame" parent="WorldFrame" ignoreParentScale="true" movable="true" frameStrata="HIGH">
-    <Size x="1" y="1" />
+    <Size y="2" />
     <Anchors>
-      <Anchor point="TOP" y="-50" />
-      <Anchor point="TOP" />
+      <Anchor point="TOPLEFT" />
+      <Anchor point="TOPRIGHT" />
     </Anchors>
     <Frames>
       <EditBox name="JocysCom_ColorMessageFontString" letters="0" multiLine="true" autoFocus="false" ignoreArrows="true" ignoreParentScale="true" movable="false" enableMouse="false" frameStrata="HIGH" clampedToScreen="false">
@@ -1615,6 +1614,4 @@
       </EditBox>
     </Frames>
   </Frame>
-
-
 </Ui>

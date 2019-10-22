@@ -16,11 +16,11 @@ local version, build, date, tocversion = GetBuildInfo()
 local classic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.8 ( 2019-10-18 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.9 ( 2019-10-19 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line.
-local messagePrefix =  "|cff2200000|r|cff0022000|r|cff0000220|r|cff2200000|r|cff0022000|r|cff0000220|r"
+local messagePrefixPixels =  "|cff220000·|r|cff002200·|r|cff000022·|r|cff220000·|r|cff002200·|r|cff000022·|r"
 local unitName = UnitName("player") -- GetUnitName()
 local customName = UnitName("player")
 local unitClass = UnitClass("player")
@@ -35,9 +35,10 @@ local macroMessage = "/targetfriend"
 local pixelX = 0
 local pixelY = 0
 local chatMessageLimit = 240
-local messagesTable = {}
 local NPCNamesTable = {}
-local timerEnabled = false
+local messageTable = {}
+local messageInterval = 0.2
+local messageChanged = 20
 
 local function Clear(v)
 	if v == nil or v == "" then
@@ -72,7 +73,7 @@ end
 function JocysCom_CreateOrUpdateMacro()
 	-- Do nothing if player is in combat.
 	if InCombatLockdown() then
-		if DebugEnabled then print("|cff999999Macro inLockdown: |r" .. tostring(InCombatLockdown())) end
+		if DebugEnabled then JocysCom_DebugPrint("Lockdown", InCombatLockdown()) end
 		return
 	end
 	-- Create macro if doesn't exist and slot is available.
@@ -97,22 +98,10 @@ function JocysCom_CreateOrUpdateMacro()
 			end
 			-- Add at the end of macro.
 			macroMessage = macroMessage .. "/JocysComTTS Macro Reset\n"
-			-- Debug print.
-			if DebugEnabled then
-				for i,n in ipairs(NPCNamesTable) do
-					print("|cffffff55" .. i .. ". |r",n)
-				end
-				print("|cff40fb40------------------------------------------------------------------------------------|r")
-			end
 		else
 			macroIcon = "Spell_Holy_DivineSpirit"
 			macroMessage = "/targetfriend"
-			-- Print NPC name list.
-			if DebugEnabled then
-				print("|cff40fb40------------------------------------------------------------------------------------|r")
-				print("|cff40fb40NPCSaveTTSMacro (no names):")
-				print("|cffffff550. |rTargetFriend")
-			end
+			if DebugEnabled then JocysCom_DebugPrint("NPCNameListEmpty") end
 		end
 		-- Edit macro.
 		EditMacro(GetMacroIndexByName(macroName), macroName, macroIcon, macroMessage, 1)
@@ -125,27 +114,20 @@ function JocysCom_AddNPCNameToTable(name)
 	if #NPCNamesTable > 0 then
 		for i, n in pairs(NPCNamesTable) do
 			if string.find(n, name) then
-				if DebugEnabled then
-					print("|cff40fb40------------------------------------------------------------------------------------|r")
-					print("|cff40fb40NPCSaveTTSMacro name (name exists): |r" .. name)
-				end
+				if DebugEnabled then JocysCom_DebugPrint("NPCNameListExist", name) end
 				return
 			end
 		end
-	else
-		-- Add NPC name to NPCNamesTable.
-		table.insert(NPCNamesTable, name)
-		if DebugEnabled then
-			print("|cff40fb40------------------------------------------------------------------------------------|r")
-			print("|cff40fb40NPCSaveTTSMacro (name added): |r" .. name)
-		end
-		-- Remove names exceeding max (9) number.
-		if #NPCNamesTable > 9 then
-			repeat table.remove(NPCNamesTable, 1)
-			until (#NPCNamesTable < 10)
-		end
-		JocysCom_CreateOrUpdateMacro()
 	end
+	-- Add NPC name to NPCNamesTable.
+	table.insert(NPCNamesTable, name)
+	-- Remove names exceeding max (9) number.
+	if #NPCNamesTable > 9 then
+		repeat table.remove(NPCNamesTable, 1)
+		until (#NPCNamesTable < 10)
+	end
+	if DebugEnabled then JocysCom_DebugPrint("NPCNameListAdded", name, NPCNamesTable) end
+	JocysCom_CreateOrUpdateMacro()
 end
 
 -- Remove NPC names from NPCNamesTable.
@@ -242,15 +224,6 @@ function JocysCom_SendChatMessageStop(group) -- button = button (mouse wheel dow
 	if DebugEnabled and JocysCom_NetworkMessageCheckButton:GetChecked() then print(JocysCom_MessageAddColors(messageStop)) end
 end
 
--- Send sound intro function.
-function JocysCom_SendSoundIntro(group)
-	messageGroup = "<message command=\"sound\"" .. Attribute("group", group) .. " />"
-	-- Send message and do not fill EditBox in Options window.
-	JocysCom_SendMessage(messageGroup, false)
-	if JocysCom_NetworkMessageCheckButton:GetChecked() and DebugEnabled then print(JocysCom_MessageAddColors(messageGroup)) end
-
-end
-
 -- Register or unregister events.
 function JocysCom_SetEvent(checked, ...)
 if not JocysCom_NetworkMessageCheckButton:GetChecked() and not JocysCom_ColorMessageCheckButton:GetChecked() then
@@ -259,12 +232,12 @@ end
 	if checked then
   		for i,v in pairs({...}) do
 			JocysCom_OptionsFrame:RegisterEvent(v)
-			if DebugEnabled then print("|cffffff55Registered: " .. v .. "|r") end
+			if DebugEnabled then JocysCom_DebugPrint("Registered", v) end
 		end
 	else
   		for i,v in pairs({...}) do
 			JocysCom_OptionsFrame:UnregisterEvent(v)
-			if DebugEnabled then print("|cff558a84Unregistered: " .. v .. "|r") end
+			if DebugEnabled then JocysCom_DebugPrint("Unregistered", v) end
 		end
 	end
 end
@@ -337,12 +310,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 	if event == "CHAT_MSG_WHISPER" and JocysCom_RemoveRealmName(playerName) == unitName then return end -- Don't process your own whispers twice.
 	if string.find(tostring(text), "<message") ~= nil then return end -- Don't proceed messages with <message> tags and your own incoming whispers.
 	-- Print event details.
-	if DebugEnabled then
-		print("|cff77ccff------------------------------------------------------------------------------------|r")
-		for i,v in pairs({...}) do
-			print(i .. ". " .. type(v) .. ": " ..  tostring(v))
-		end
-	end
+	if DebugEnabled then JocysCom_DebugPrint("EventDetails", {...}) end
 	-- Attach and show frames.
 	if event == "ADDON_LOADED" or event == "GOSSIP_SHOW" or event == "QUEST_GREETING" or event == "QUEST_DETAIL" or event == "QUEST_PROGRESS" or event == "QUEST_COMPLETE" or event == "QUEST_LOG_UPDATE" or event == "MAIL_SHOW" or event == "ITEM_TEXT_READY"  then 	-- or event == "QUEST_GREETING"
 		JocysCom_AttachAndShowFrames()
@@ -355,9 +323,10 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		JocysCom_OptionsFrame_OnHide() -- Set DialogueScrollFrame and make it transparent.
 		JocysCom_AddonTXT_EN() -- Set text of elements.
 		JocysCom_LoadEventSettings() -- Register or unregister events.
+		if JocysCom_ColorMessageCheckButton:GetChecked() then JocysCom_SendMessageTimer() end
 		JocysCom_DialogueScrollFrame:Show()
 		JocysCom_DialogueMiniFrame:Show()
-		if DebugEnabled then print("WoW Classic: " .. tostring(classic) .. " TOC: " .. tocversion) end
+		if DebugEnabled then JocysCom_DebugPrint("GameVersion") end
 		return
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		JocysCom_CreateOrUpdateMacro()
@@ -439,91 +408,93 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 	-- WHISPER.
 	elseif event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" then
 		name = JocysCom_RemoveRealmName(playerName)
-		sex = UnitSex(name)
+		sex = select(5, GetPlayerInfoByGUID(guid))
 		group = "Whisper"
-		if DebugEnabled then print("WHISPER Name: " .. name .. " Gender: " .. sex) end
 		soundIntro = JocysCom_SoundWhisperCheckButton:GetChecked()
 		nameIntro = JocysCom_NameWhisperCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_BN_WHISPER_INFORM" then
 			name = unitName
 			sex = UnitSex(unitName)
-			if DebugEnabled then print("BN_WHISPER_INFORM Name: " .. name .. " Gender: " .. sex) end
+			-- sex = select(5, GetPlayerInfoByGUID(guid))
 			group = "Whisper"
 			soundIntro = JocysCom_SoundWhisperCheckButton:GetChecked()
 			nameIntro = JocysCom_NameWhisperCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_BN_WHISPER" then --or event == "CHAT_MSG_BN_CONVERSATION"
+		local nameType = "name"
 		-- bnSenderID = presenceID
 		-- local presenceID, accountName, battleTag, isBattleTagPresence, characterName, bnetIDGameAccount, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText, isRIDFriend, messageTime, canSoR, isReferAFriend, canSummonFriend = BNGetFriendInfoByID(bnSenderID)
 		local presenceID, accountName, battleTag, isBattleTagPresence, characterName = BNGetFriendInfoByID(bnSenderID)
-		if DebugEnabled then print("|cff77ccffbnSenderID:|r " .. tostring(bnSenderID) .. " |cff77ccffpresenceID:|r " .. tostring(presenceID) .. " |cff77ccffaccountName:|r " .. tostring(accountName) .. " |cff77ccffbattleTag:|r " .. tostring(battleTag) .. " |cff77ccffcharacterName:|r " .. tostring(characterName)) end
 		-- Select if not nil priority: characterName > battleTag > accountName
 		if characterName ~= nil then
 			name = JocysCom_RemoveRealmName(characterName)
+			nameType = "characterName"
 			sex = UnitSex(name)
-			if DebugEnabled then print("BN_WHISPER characterName: " .. tostring(name) .. " Gender: " .. tostring(name)) end
+			-- sex = select(5, GetPlayerInfoByGUID(guid))
 		elseif battleTag ~= nil then
 			name = tostring(battleTag)
+			nameType = "battleTag"
 			-- remove #0000 from batleTag
 			if string.find(name, "#") ~= nil then
 				local hashIndex = string.find(name, "#")
 				name = string.sub(name, 1, hashIndex - 1)
 			end
-			if DebugEnabled then print("BN_WHISPER battleTag: " .. tostring(name)) end
---		elseif accountName ~= nil then
---			name = accountName
---			if DebugEnabled then print("BN_WHISPER accountName: " .. tostring(name)) end
+		-- elseif accountName ~= nil then
+		-- name = accountName
+		-- if DebugEnabled then print("BN_WHISPER accountName: " .. tostring(name)) end
 		else
 			name = "Your friend"
 		end
+		if DebugEnabled then JocysCom_DebugPrint("BNGetFriendInfoByID", bnSenderID, presenceID, accountName, battleTag, nameType, characterName) end
 		group = "Whisper"
 		soundIntro = JocysCom_SoundWhisperCheckButton:GetChecked()
 		nameIntro = JocysCom_NameWhisperCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_EMOTE" or event == "CHAT_MSG_TEXT_EMOTE" then
 		group = "Emote"
 		name = JocysCom_RemoveRealmName(playerName)
-		sex = UnitSex(name)
+		-- local locClass, engClass, locRace, engRace, gender, name, server = GetPlayerInfoByGUID(guid)
+		sex = select(5, GetPlayerInfoByGUID(guid))
 		nameIntro = false
 		soundIntro = JocysCom_SoundEmoteCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_SAY" then
 		group = "Say"
 		name = JocysCom_RemoveRealmName(playerName)
-		sex = UnitSex(name)
+		sex = select(5, GetPlayerInfoByGUID(guid))
 		nameIntro = JocysCom_NameSayCheckButton:GetChecked()
 		soundIntro = JocysCom_SoundSayCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_YELL" then
 		group = "Yell"
 		name = JocysCom_RemoveRealmName(playerName)
-		sex = UnitSex(name)
+		sex = select(5, GetPlayerInfoByGUID(guid))
 		nameIntro = JocysCom_NameYellCheckButton:GetChecked()
 		soundIntro = JocysCom_SoundYellCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_GUILD" then
 		group = "Guild"
 		name = JocysCom_RemoveRealmName(playerName)
-		sex = UnitSex(name)
+		sex = select(5, GetPlayerInfoByGUID(guid))
 		nameIntro = JocysCom_NameGuildCheckButton:GetChecked()
 		soundIntro = JocysCom_SoundGuildCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_OFFICER" then
 		group = "Officer"
 		name = JocysCom_RemoveRealmName(playerName)
-		sex = UnitSex(name)
+		sex = select(5, GetPlayerInfoByGUID(guid))
 		nameIntro = JocysCom_NameOfficerCheckButton:GetChecked()
 		soundIntro = JocysCom_SoundOfficerCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_RAID" then
 		group = "Raid"
 		name = JocysCom_RemoveRealmName(playerName)
-		sex = UnitSex(name)
+		sex = select(5, GetPlayerInfoByGUID(guid))
 		nameIntro = JocysCom_NameRaidCheckButton:GetChecked()
 		soundIntro = JocysCom_SoundRaidCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_RAID_LEADER" or event == "CHAT_MSG_RAID_WARNING" then
 		group = "RaidLeader"
 		name = JocysCom_RemoveRealmName(playerName)
-		sex = UnitSex(name)
+		sex = select(5, GetPlayerInfoByGUID(guid))
 		nameIntro = JocysCom_NameRaidLeaderCheckButton:GetChecked()
 		soundIntro = JocysCom_SoundRaidLeaderCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_PARTY" then
 		group = "Party"
 		name = JocysCom_RemoveRealmName(playerName)
-		sex = UnitSex(name)
+		sex = select(5, GetPlayerInfoByGUID(guid))
 		nameIntro = JocysCom_NamePartyCheckButton:GetChecked()
 		soundIntro = JocysCom_SoundPartyCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_PARTY_LEADER" then
@@ -533,13 +504,13 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 	elseif event == "CHAT_MSG_INSTANCE_CHAT" then
 		group = "Instance"
 		name = JocysCom_RemoveRealmName(playerName)
-		sex = UnitSex(name)
+		sex = select(5, GetPlayerInfoByGUID(guid))
 		nameIntro = JocysCom_NameInstanceCheckButton:GetChecked()
 		soundIntro = JocysCom_SoundInstanceCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_INSTANCE_CHAT_LEADER" then
 		group = "InstanceLeader"
 		name = JocysCom_RemoveRealmName(playerName)
-		sex = UnitSex(name)
+		sex = select(5, GetPlayerInfoByGUID(guid))
 		nameIntro = JocysCom_NameInstanceLeaderCheckButton:GetChecked()
 		soundIntro = JocysCom_SoundInstanceLeaderCheckButton:GetChecked()
 	else
@@ -549,16 +520,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 	if string.find(event, "CHAT") ~= nil then
 		speakMessage = text
 	end
-	-- Debug.
-	if DebugEnabled then
-		print("event: " .. tostring(event))
-		print("speakMessage: " .. tostring(speakMessage))
-		print("name: " .. tostring(name))
-		print("sex: " .. tostring(sex))
-		print("group: " .. tostring(group))
-		print("soundIntro: " .. tostring(soundIntro))
-		print("soundEffect: " .. tostring(soundEffect))
-	end
+	if DebugEnabled then JocysCom_DebugPrint("CHAT", event, name, sex, group, soundIntro, soundEffect, speakMessage) end
 	-- Add name intro to text.
 	if nameIntro then
 		local introType = ""
@@ -650,12 +612,14 @@ end
 
 --Send message.
 function JocysCom_SendMessage(message, messageOptions)
-	if	JocysCom_NetworkMessageCheckButton:GetChecked() then
+	if JocysCom_NetworkMessageCheckButton:GetChecked() then
 		C_ChatInfo.SendAddonMessage(addonPrefix, message, "WHISPER", unitName)
-		-- Fill EditBox in Options window.
-		if messageOptions then JocysCom_MessageForOptionsEditBox(message) end
+		if messageOptions then JocysCom_MessageForOptionsEditBox(message) end -- Fill EditBox in Options window.
 	else
-		JocysCom_AddMessageToTable(message)
+		message = string.gsub(message, "<message ", "<message position=\"" .. pixelX .. "," .. pixelY .. "\" ") -- Add pixel line position (optional).
+		table.insert(messageTable, message)
+		JocysCom_ColorMessagesCountFontString:SetText(#messageTable)
+		if DebugEnabled then JocysCom_DebugPrint("MessageAdded", #messageTable, messageChanged, message) end
 	end
 end
 
@@ -678,8 +642,10 @@ function JocysCom_SpeakMessage(event, speakMessage, name, sex, group, soundIntro
 	end
 	--Replace text in message.
 	speakMessage = JocysCom_Replace(speakMessage)
-	-- Send intro sound message.
-	if soundIntro and group ~= nil then JocysCom_SendSoundIntro(group) end
+	-- Send message (false = do not fill EditBox in Options window).
+	if soundIntro and group ~= nil then
+		JocysCom_SendMessage("<message command=\"sound\"" .. Attribute("group", group) .. " />", false)
+	end
 	-- Format and send whisper message.
 	local chatMessageSP = "<message command=\"play\"" .. Attribute("group", group) .. Attribute("name", name) .. Attribute("gender", Gender(sex)) .. Attribute("effect", soundEffect) .. "><part>"
 	local chatMessageSA = "<message command=\"add\"><part>"
@@ -692,10 +658,7 @@ function JocysCom_SpeakMessage(event, speakMessage, name, sex, group, soundIntro
 	end
 	local sizeAdd = chatMessageLimit - string.len(chatMessageSA) - string.len(chatMessageE) - string.len(addonPrefix)
 	local sizePlay = chatMessageLimit - string.len(chatMessageSP) - string.len(chatMessageE) - string.len(addonPrefix)
-	if DebugEnabled then
-	print("|cffaaa7ff------------------------------------------------------------------------------------|r")
-	print("|cffaaa7ffMessage max: [|r" .. chatMessageLimit .. "|cffaaa7ff] command=\"add\" size: [|r" ..  sizeAdd .. "|cffaaa7ff] command=\"play\" size: [|r" .. sizePlay .. "|cffaaa7ff]|r")
-	end
+	if DebugEnabled then JocysCom_DebugPrint("MessageMax", chatMessageLimit, sizeAdd, sizePlay) end
 		local startIndex = 1
 		local endIndex = 1
 		local part = ""
@@ -714,8 +677,7 @@ function JocysCom_SpeakMessage(event, speakMessage, name, sex, group, soundIntro
 			chatMessage = chatMessageSP .. part .. chatMessageE
 			-- Send message and fill EditBox in Options window.
 			JocysCom_SendMessage(chatMessage, true)
-			-- Debug information
-			if JocysCom_NetworkMessageCheckButton:GetChecked() and DebugEnabled then print("|cff77ccffMessage From-To: [|r" .. startIndex  .. "-" .. speakMessageLen .. "|cff77ccff]|r" .. JocysCom_MessageAddColors(chatMessage)) end
+			if DebugEnabled and JocysCom_NetworkMessageCheckButton:GetChecked() then JocysCom_DebugPrint("MessageFromTo", startIndex, speakMessageLen, JocysCom_MessageAddColors(chatMessage)) end
 				break
 			-- If text length more than max then...
 			elseif (index - startIndex) > sizeAdd or (index >= speakMessageLen and speakMessageRemainingLen > sizePlay) then
@@ -724,7 +686,7 @@ function JocysCom_SpeakMessage(event, speakMessage, name, sex, group, soundIntro
 				chatMessage = chatMessageSA .. part .. chatMessageE
 				-- Send message and do not fill EditBox in Options window.
 				JocysCom_SendMessage(chatMessage, false)
-				if JocysCom_NetworkMessageCheckButton:GetChecked() and DebugEnabled then print("|cff77ccffSpace found:[|r" .. tostring(index) .. "|cff77ccff] Message From-To:[|r" .. startIndex .. "-" .. (endIndex - 1) .. "|cff77ccff]|r" .. JocysCom_MessageAddColors(chatMessage)) end
+				if DebugEnabled and JocysCom_NetworkMessageCheckButton:GetChecked() then JocysCom_DebugPrint("MessageFromTo2", tostring(index), startIndex, endIndex - 1, JocysCom_MessageAddColors(chatMessage)) end
 			startIndex = endIndex
 			speakMessageRemainingLen = string.len(string.sub(speakMessage, startIndex))
 		end
@@ -1067,11 +1029,7 @@ function JocysCom_AttachAndShowFrames()
 			JocysCom_DialogueMiniFrame:SetPoint("TOPRIGHT", frameButton, "BOTTOMRIGHT", 0, 1)
 		end
 	end
-	-- If DebugEnabled.
-	if DebugEnabled then
-		print("|cffabd473------------------------------------------------------------------------------------|r")
-		print("|cffabd473PLAY and STOP buttons attached to |r" .. frameButton:GetName())
-	end
+	if DebugEnabled then JocysCom_DebugPrint("FrameParent", frameButton:GetName()) end
 end
 
 -- [ Options ] button.
@@ -1086,10 +1044,7 @@ end
 -- [ Save ] button.
 function JocysCom_SaveNPC(m)
 	if UnitIsPlayer(m) or UnitPlayerControlled(m) or UnitName(m) == nil or UnitSex(m) == nil then
-		if DebugEnabled then
-			print("|cff999999------------------------------------------------------------------------------------|r")
-			print("|cff999999Only uncontrollable by players NPC targets will be saved.|r")
-		end
+		if DebugEnabled then JocysCom_DebugPrint("NPCSaved0") end
 	else
 		local saveMessage = "<message command=\"save\"" .. Attribute("name", UnitName(m)) .. Attribute("gender", Gender(UnitSex(m))) .. Attribute("effect", UnitCreatureType(m)) .. " />"
 		--Send message.
@@ -1104,6 +1059,7 @@ function JocysCom_ColorMessageCheckButton_OnClick()
 	PlaySound(856)
 	if JocysCom_ColorMessageCheckButton:GetChecked() then
 		JocysCom_NetworkMessageCheckButton:SetChecked(false)
+		JocysCom_SendMessageTimer()
 	end
 	JocysCom_ClearForm()
 	JocysCom_SaveTocFileSettings()
@@ -1127,25 +1083,6 @@ function JocysCom_ClearForm()
 	JocysCom_ClipboardMessageEditBox:SetText("")
 end
 
--- Add message to table for Clipboard.
-function JocysCom_AddMessageToTable(m)
-	m = string.gsub(m, "<message ", "<message position=\"" .. pixelX .. "," .. pixelY .. "\" ")
-	table.insert(messagesTable, m)
-	if DebugEnabled then
-		print("|cff77ccff------------------------------------------------------------------------------------|r")
-		print("|cff77ccffMessage added [|r" .. #messagesTable .. "|cff77ccff]|r")
-	end
-	if #messagesTable > 0 then
-		JocysCom_ColorMessagesCountFontString:SetText(#messagesTable)
-	else
-		JocysCom_ColorMessagesCountFontString:SetText("")
-	end
-	if timerEnabled == false then
-		timerEnabled = true
-		JocysCom_SendMessagesFromTable()
-	end
-end
-
 -- Add Colors to message.
 function JocysCom_MessageAddColors(m)
 	m = string.gsub(m, "%[comment]", "|cff808080[comment]|r|cfff7e593")
@@ -1165,59 +1102,56 @@ function JocysCom_MessageForOptionsEditBox(m)
 	end
 end
 
--- Send messages from table for Clipboard.
-
-local messageChanged = 5
-function JocysCom_SendMessagesFromTable()
+-- Send messages from table.
+function JocysCom_SendMessageFromTable()
 	--JocysCom_ButtonFlashing()
 	--if JocysCom_ClipboardMessageEditBox:HasFocus() then
-		-- Convert message characters to HEX color.
-		local messageHEX = messagesTable[1]:gsub(".", function(c) return string.format("%02x", string.byte(c)) end) -- UTF-8 (a ш B Ш C) (61 D188 42 D0A8 43): 61D18842D0A843
-		local messageLen = #messageHEX / 2 -- Count bytes-pairs (7): 61 D1 88 42 D0 A8 43
-		local mod = math.fmod(messageLen,3) -- Divide (7) by 3: (7)-3-3... = left 1 (less than 3) / 61D188 42D0A8 43 (3 3 1)
-		-- Add missing bytes.
-		if mod == 1 then
-			messageHEX = messageHEX .. "0000" -- If 1 pair left, add 2 pairs (00 00).
-		elseif mod == 2 then
-			messageHEX = messageHEX .. "00" -- If 2 pairs left, add 1 pair (00).
-		end
-		-- Split in 6 (3 pairs), reverse (RGB to BGR), create colored pixel: |cff88D1610|r  (|c alpha(ff) red(88) green(D1) blue(61) character(0) |r)
-		local message = messageHEX:gsub("(..)(..)(..)", "|cff" .. "%3%2%1" .. "0|r")
-		-- Add 5 to red color when message changes.
-		if messageChanged > 80 then messageChanged = 10 end
-		messageChanged = messageChanged + 5
-		local messageChangedColor = "|cff" .. messageChanged .. messageChanged.. messageChanged .. "0|r" -- Set message change value.
-		local messageBytes = string.format("%06x", messageLen) -- Add missing bytes to message lenght value.
-		local messageBytesColor = "|cff" .. messageBytes .. "0|r" -- Set message lenght as color.
-		-- Add prefixes: prefix[6] + change[1] + size[1] + message
-		message = messagePrefix .. messageChangedColor .. messageBytesColor ..  message
-		-- Debug.
-		if DebugEnabled then
-			print("|cff77ccff------------------------------------------------------------------------------------|r")
-			print("|cff77ccffPrefix: |r" .. messagePrefix .. "|cff77ccff Changed: (|r" .. messageChanged .. "|cff77ccff) |r" .. messageChangedColor .. "|cff77ccff Lenght: (|r" .. messageBytes .. "|cff77ccff) |r" .. messageBytesColor .. "|cff77ccff Message: (|r" .. #messageHEX .. "/2=" .. messageLen .. " L" .. mod .. "|cff77ccff) |r" .. message)
-			print("|cff77ccffMessage removed: [|r" .. #messagesTable .. "|cff77ccff]|r " .. JocysCom_MessageAddColors(messagesTable[1]))
-		end
-		-- Set color frame position.
-		pixelX = JocysCom_ColorMessagePixelXEditBox:GetNumber()
-		pixelY = JocysCom_ColorMessagePixelYEditBox:GetNumber()
-		if pixelY > 0 then pixelY = pixelY * -1 end
-		JocysCom_ColorMessageFrame:ClearAllPoints()
-		JocysCom_ColorMessageFrame:SetPoint("TOPLEFT", pixelX, pixelY)
-		JocysCom_ColorMessageFrame:SetPoint("TOPRIGHT")
-		JocysCom_ColorMessageFrame:Show()
-		-- Send to pixels.
-		JocysCom_ColorMessageFontString:SetText(message)
-		-- Send to clipboard
-		JocysCom_ClipboardMessageEditBox:SetText(messagesTable[1])
-		JocysCom_ClipboardMessageEditBoxSetFocus()
-		-- Send to options.
-		JocysCom_MessageForOptionsEditBox(messagesTable[1])
-		-- Remove sent message after * second.
-		--<PREFIX>_wait(delay, func [, param [,param [,...]]])
-		JocysCom_wait(0.2, JocysCom_RemoveMessageFromTable)
-	--else
-		--JocysCom_wait(0.2, JocysCom_SendMessagesFromTable)
-	--end
+	local messageBytes = messageTable[1]:gsub(".", function(c) return string.format("%02x", string.byte(c)) end) -- Convert message characters to bytes (UTF-8). a ш B Ш C • 61 D188 42 D0A8 43 • 61D18842D0A843
+	local messageLen = #messageBytes / 2 -- Count bytes-pairs (7). 61 D1 88 42 D0 A8 43
+	local messageLenBytes = string.format("%06x", messageLen) -- Create message length value-color (3 bytes). Add missing bytes.
+	local messageLenPixel = "|cff" .. messageLenBytes .. "·|r" -- Create message length character-pixel.
+	local ungroupedBytes = math.fmod(messageLen,3) -- Divide message (7) into 3 byte groups and get ungrouped byte(s) • (7)-3-3=1 left • (61D188) (42D0A8) 43
+	-- If ungrouped bytes left, add missing bytes: "00" or "0000".
+	if ungroupedBytes > 0 then
+		messageBytes = messageBytes .. string.rep("00", 3 - ungroupedBytes)
+	end
+	-- Get (3 byte) groups. Switch red color with blue (RGB > BGR). Create coloured pixels. |cff88D161·|r
+	local messagePixels = messageBytes:gsub("(..)(..)(..)", "|cff" .. "%3%2%1" .. "·|r")
+	-- Update message change indicator color for Monitor: add 5 to red, green and blue.
+	messageChanged = messageChanged + 5
+	-- Do not exceed color brightness #808080
+	if messageChanged > 80 then messageChanged = 10 end
+	local messageChangedPixel = "|cff" .. string.rep(messageChanged, 3) .. "·|r" -- Set message change value.
+	-- Create final message with prefixes: prefix(6px) + change(1px) + size(1px) + message(#px)
+	local message = messagePrefixPixels .. messageChangedPixel .. messageLenPixel ..  messagePixels
+	-- Set color frame position.
+	pixelX = JocysCom_ColorMessagePixelXEditBox:GetNumber()
+	pixelY = JocysCom_ColorMessagePixelYEditBox:GetNumber()
+	if pixelY > 0 then pixelY = pixelY * -1 end
+	JocysCom_ColorMessageFrame:ClearAllPoints()
+	JocysCom_ColorMessageFrame:SetPoint("TOPLEFT", pixelX, pixelY)
+	JocysCom_ColorMessageFrame:SetPoint("TOPRIGHT")
+	JocysCom_ColorMessageFrame:Show()
+	-- Send to Display.
+	JocysCom_ColorMessageFontString:SetText(message)
+	-- Send to Options.
+	JocysCom_MessageForOptionsEditBox(messageTable[1])
+	-- Send to Clipboard.
+	if DebugEnabled then JocysCom_ClipboardMessageEditBox:SetText(messageTable[1])	end
+	JocysCom_ClipboardMessageEditBoxSetFocus()
+	-- Debug.
+	if DebugEnabled then JocysCom_DebugPrint("MessageSent", #messageTable, messageChanged, messageLen, messageLenBytes, #messageBytes, ungroupedBytes, message, messageTable[1]) end
+	table.remove(messageTable, 1)
+	if #messageTable > 0 then
+		JocysCom_ColorMessagesCountFontString:SetText(#messageTable)
+	else
+		JocysCom_ColorMessagesCountFontString:SetText("")
+	end
+end
+
+function JocysCom_SendMessageTimer()
+	if #messageTable > 0 then JocysCom_SendMessageFromTable() end
+	if JocysCom_ColorMessageCheckButton:GetChecked() then C_Timer.After(messageInterval, JocysCom_SendMessageTimer) end
 end
 
 function JocysCom_ButtonFlashing()
@@ -1248,51 +1182,73 @@ function JocysCom_ClipboardMessageEditBoxSetFocus()
 	end
 end
 
-function JocysCom_RemoveMessageFromTable()
-		local messagesLeft = #messagesTable
-		table.remove(messagesTable, 1)
-		-- Repeat if there are messages in table.
-		if #messagesTable > 0 then
-			JocysCom_SendMessagesFromTable()
-		else
-			timerEnabled = false
-		end
-		if #messagesTable > 0 then
-			JocysCom_ColorMessagesCountFontString:SetText(#messagesTable)
-		else
-			JocysCom_ColorMessagesCountFontString:SetText("")
-		end
+local function Color(c, v)
+
+	return c .. " " .. v .. ": " .. "|r"
 end
 
--- Send messages with delay.
-local waitTable = {}
-local waitFrame = nil
-function JocysCom_wait(delay, func, ...)
-	if(type(delay)~="number" or type(func)~="function") then
-		return false
+-- Print debug information.
+function JocysCom_DebugPrint(name, ...)
+	local v1, v2, v3, v4, v5, v6, v7, v8  = ...
+	local ln = string.rep("-", 85)
+	local c0 = "|r"
+	local c1 = "|cff999999" -- Gray
+	local c2 = "|cffffff55" -- Yellow
+	local c3 = "|cff40fb40" -- Green
+	local c4 = "|cffff0000" -- Red
+	local c5 = "|cff558a84" -- Dark green
+	local c6 = "|cff77ccff" -- na
+	local c7 = "|cffaaa7ff" -- na
+	local c8 = "|cffabd473" -- na
+	local l1 = c1 .. ln .. c0 .. "\n"
+	local l2 = c2 .. ln .. c0 .. "\n"
+	local l6 = c6 .. ln .. c0 .. "\n"
+	local l7 = c7 .. ln .. c0 .. "\n"
+	local l8 = c8 .. ln .. c0 .. "\n"
+
+	-- print(c4 .. "DebugName: " .. c0 .. name)
+	if name == "GameVersion" then
+		print("WoW Classic: " .. tostring(classic) .. " TOC: " .. tocversion)
+	elseif name == "Lockdown" then
+		print(Color(c1,"Macro inLockdown") .. tostring(v1))
+	elseif name == "NPCNameListEmpty" then
+		print(l2 .. Color(c2,"NPCSaveTTSMacro (no names)"))
+		print(Color(c2,"0") .. "TargetFriend")
+	elseif name == "NPCNameListExist" then
+		print(l2 .. Color(c2,"NPCSaveTTSMacro (name exists)") .. v1)
+	elseif name == "NPCNameListAdded" then
+		print(l2 .. Color(c2,"NPCSaveTTSMacro (name added)") .. v1)
+		for i,v in ipairs(v2) do
+			print(c2 .. i .. ". " .. c0 .. v)
+		end
+	elseif name == "Registered" then
+		print(c2 .. "Registered: " .. v1 .. c0)
+	elseif name == "Unregistered" then
+		print(c5 .. "Unregistered: " .. v1 .. c0)
+	elseif name == "EventDetails" then
+		print(l6)
+		for i,v in pairs(v1) do
+			print(Color(c2, i .. ". " .. type(v)) ..  tostring(v))
+		end
+	elseif name == "BNGetFriendInfoByID" then
+		print(Color(c6,"BNGetFriendInfoByID") .. tostring(v1) .. Color(c6,"presenceID") .. tostring(v2) .. Color(c6,"accountName") .. tostring(v3) .. Color(c6,"battleTag") .. tostring(v4) .. Color(c6, v6) .. tostring(v5))
+	elseif name == "CHAT" then
+		print(l6 .. Color(c6,"event") .. tostring(v1) .. Color(c6,"name") .. tostring(v2) .. Color(c6,"sex") .. tostring(v3) .. Color(c6,"group") .. tostring(v4) .. Color(c6,"soundIntro") .. tostring(v5) .. Color(c6,"soundEffect") .. tostring(v6) .. Color(c6,"\nspeakMessage") .. tostring(v7))
+	elseif name == "MessageMax" then
+		print(l7 .. Color(c7,"Message max") .. v1 .. Color(c7,"command=\"add\" size") ..  v2 .. Color(c7,"command=\"play\" size") .. v3)
+	elseif name == "MessageFromTo" then
+		print(Color(c6,"Message From-To") .. v1 .. "-" .. v2 .. Color(c6,"Message") .. v3)
+	elseif name == "MessageFromTo2" then
+		print(Color(c7,"Space found") .. v1 .. Color(c6,"Message From-To") .. v2 .. "-" .. v3 .. Color(c6,"Message") .. v4)
+	elseif name == "FrameParent" then
+		print(l8 .. c8 .. "PLAY and STOP buttons attached to " .. c0 .. v1)
+	elseif name == "NPCSaved0" then
+		print(l1 .. c1 .. "Only uncontrollable by players NPC targets will be saved." .. c0)
+	elseif name == "MessageAdded" then
+		print(l6 .. Color(c6,"Message added") .. v1 .. Color(c6,"Changed") .. string.rep(v2, 3) .. "\n" ..  v3)
+	elseif name == "MessageSent" then
+		print(l6 .. Color(c6,"Message sent") .. v1 .. Color(c6,"Changed") .. string.rep(v2, 3) .. Color(c6,"Chars") .. v5 .. Color(c6,"Bytes") .. v3 .. " · " .. v4 .. Color(c6,"Ungrouped(3)") .. v6 .. "\n" .. v7:gsub("·","●") .. "\n" .. v8)
 	end
-	if(waitFrame == nil) then
-		waitFrame = CreateFrame("Frame","WaitFrame", UIParent)
-		waitFrame:SetScript("onUpdate",function (self,elapse)
-			local count = #waitTable
-			local i = 1
-			while(i<=count) do
-				local waitRecord = tremove(waitTable,i)
-				local d = tremove(waitRecord,1)
-				local f = tremove(waitRecord,1)
-				local p = tremove(waitRecord,1)
-				if(d>elapse) then
-					tinsert(waitTable,i,{d-elapse,f,p})
-					i = i + 1
-				else
-					count = count - 1
-					f(unpack(p))
-				end
-			end
-		end)
-	end
-	tinsert(waitTable,{delay,func,{...}})
-	return true
 end
 
 ---- Enable/Disable DND message filter.
@@ -1322,6 +1278,7 @@ function JocysCom_LoadTocFileSettings()
 	-- Add chat message filters.
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", function(self, event, msg) return string.find(msg, "<message") ~= nil end)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", function(self, event, msg) return string.find(msg, "<message") ~= nil end)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", function(self, event, msg, name) return string.find(JocysCom_RemoveRealmName(name), unitName) ~= nil end)  -- Don't process your own whisper twice.
 	JocysCom_FilterDND()
 	-- Set (Options) EditBoxes.
 	if JocysCom_ColorMessagePixelXEB == "" or JocysCom_ColorMessagePixelXEB == nil then JocysCom_ColorMessagePixelXEB = 0 JocysCom_ColorMessagePixelXEditBox:SetNumber(JocysCom_ColorMessagePixelXEB) else JocysCom_ColorMessagePixelXEditBox:SetNumber(JocysCom_ColorMessagePixelXEB) end
