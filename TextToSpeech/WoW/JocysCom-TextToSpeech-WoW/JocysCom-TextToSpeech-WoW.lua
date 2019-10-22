@@ -429,7 +429,6 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 			name = JocysCom_RemoveRealmName(characterName)
 			nameType = "characterName"
 			sex = UnitSex(name)
-			-- sex = select(5, GetPlayerInfoByGUID(guid))
 		elseif battleTag ~= nil then
 			name = tostring(battleTag)
 			nameType = "battleTag"
@@ -1245,9 +1244,9 @@ function JocysCom_DebugPrint(name, ...)
 	elseif name == "NPCSaved0" then
 		print(l1 .. c1 .. "Only uncontrollable by players NPC targets will be saved." .. c0)
 	elseif name == "MessageAdded" then
-		print(l6 .. Color(c6,"Message added") .. v1 .. Color(c6,"Changed") .. string.rep(v2, 3) .. "\n" ..  v3)
+		print(l6 .. Color(c6,"Message added") .. v1 .. Color(c6,"Changed") .. string.rep(v2, 3) .. "\n" ..  JocysCom_MessageAddColors(v3))
 	elseif name == "MessageSent" then
-		print(l6 .. Color(c6,"Message sent") .. v1 .. Color(c6,"Changed") .. string.rep(v2, 3) .. Color(c6,"Chars") .. v5 .. Color(c6,"Bytes") .. v3 .. " · " .. v4 .. Color(c6,"Ungrouped(3)") .. v6 .. "\n" .. v7:gsub("·","●") .. "\n" .. v8)
+		print(l6 .. Color(c6,"Message sent") .. v1 .. Color(c6,"Changed") .. string.rep(v2, 3) .. Color(c6,"Chars") .. v5 .. Color(c6,"Bytes") .. v3 .. " · " .. v4 .. Color(c6,"Ungrouped(3)") .. v6 .. "\n" .. v7:gsub("·","●") .. "\n" .. JocysCom_MessageAddColors(v8))
 	end
 end
 
