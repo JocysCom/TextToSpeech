@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace JocysCom.ClassLibrary.Controls
 {
-	public partial class ControlsHelper
+	public static partial class ControlsHelper
 	{
 		private const int WM_SETREDRAW = 0x000B;
 
@@ -31,11 +31,14 @@ namespace JocysCom.ClassLibrary.Controls
 			MainThreadId = Thread.CurrentThread.ManagedThreadId;
 			// Create a TaskScheduler that wraps the SynchronizationContext returned from
 			// System.Threading.SynchronizationContext.Current
-			_MainTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+			MainTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
 		}
 
-		public static TaskScheduler MainTaskScheduler { get { return _MainTaskScheduler; } }
-		static TaskScheduler _MainTaskScheduler;
+		/// <summary>
+		/// Object that handles the low-level work of queuing tasks onto main User Interface (GUI) thread.
+		/// </summary>
+		public static TaskScheduler MainTaskScheduler { get; private set; }
+
 		static int MainThreadId;
 
 		public static bool InvokeRequired()
@@ -43,7 +46,7 @@ namespace JocysCom.ClassLibrary.Controls
 			return MainThreadId != Thread.CurrentThread.ManagedThreadId;
 		}
 
-		/// <summary>Executes the specified action delegate asynchronously on main User Interface (UI) Thread.</summary>
+		/// <summary>Executes the specified action delegate asynchronously on main Graphical User Interface (GUI) Thread.</summary>
 		/// <param name="action">The action delegate to execute asynchronously.</param>
 		/// <returns>The started System.Threading.Tasks.Task.</returns>
 		public static Task BeginInvoke(Action action)
@@ -63,7 +66,7 @@ namespace JocysCom.ClassLibrary.Controls
 				CancellationToken.None, TaskCreationOptions.DenyChildAttach, MainTaskScheduler);
 		}
 
-		/// <summary>Executes the specified action delegate synchronously on main User Interface (UI) Thread.</summary>
+		/// <summary>Executes the specified action delegate synchronously on main Graphical User Interface (GUI) Thread.</summary>
 		/// <param name="action">The action delegate to execute synchronously.</param>
 		public static void Invoke(Action action)
 		{
@@ -72,11 +75,13 @@ namespace JocysCom.ClassLibrary.Controls
 			t.RunSynchronously(MainTaskScheduler);
 		}
 
-		/// <summary>Executes the specified action delegate synchronously on main User Interface (UI) Thread.</summary>
+		/// <summary>Executes the specified action delegate synchronously on main Graphical User Interface (GUI) Thread.</summary>
 		/// <param name="action">The delegate to execute synchronously.</param>
 		public static object Invoke(Delegate method, params object[] args)
 		{
-			InitInvokeContext();
+			if (method == null)
+				throw new ArgumentNullException(nameof(method));
+			// Run method on main Graphical User Interface thread.
 			var t = new Task<object>(() => method.DynamicInvoke(args));
 			t.RunSynchronously(MainTaskScheduler);
 			return t.Result;
@@ -831,14 +836,15 @@ namespace JocysCom.ClassLibrary.Controls
 		{
 			var dataMemberBody = (MemberExpression)dataProperty.Body;
 			var dataMemberName = dataMemberBody.Member.Name;
-			string name = null;		
+			string name = null;
 			// Add TextBox.
 			var textBox = control as TextBox;
 			if (textBox != null)
 				name = nameof(textBox.Text);
 			// Add ComboBox.
 			var comboBox = control as ComboBox;
-			if (comboBox != null) {
+			if (comboBox != null)
+			{
 				name = string.IsNullOrEmpty(comboBox.ValueMember)
 					? nameof(comboBox.SelectedItem)
 					: nameof(comboBox.SelectedValue);
