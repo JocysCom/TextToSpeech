@@ -45,7 +45,7 @@ end
 -- Get (3 byte) groups. Switch red color with blue (RGB > BGR). Create coloured pixels. |cff88D161·|r
 local messagePixels = messageBytes:gsub("(..)(..)(..)", "|cff" .. "%3%2%1" .. "·|r")
 
--- Update message change indicator color for Monitor: add 5 to red, green and blue.
+-- Update message change indicator color for Monitor: add 1 to red, green and blue.
 messageChanged = messageChanged + 1
 -- Do not exceed color brightness #808080.
 if messageChanged > 80 then messageChanged = 10 end
