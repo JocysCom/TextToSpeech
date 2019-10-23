@@ -38,7 +38,7 @@ local chatMessageLimit = 240
 local NPCNamesTable = {}
 local messageTable = {}
 local messageInterval = 0.2
-local messageChanged = 20
+local messageChanged = math.random(10, 80)
 
 local function Clear(v)
 	if v == nil or v == "" then
@@ -1116,8 +1116,8 @@ function JocysCom_SendMessageFromTable()
 	end
 	-- Get (3 byte) groups. Switch red color with blue (RGB > BGR). Create coloured pixels. |cff88D161·|r
 	local messagePixels = messageBytes:gsub("(..)(..)(..)", "|cff" .. "%3%2%1" .. "·|r")
-	-- Update message change indicator color for Monitor: add 5 to red, green and blue.
-	messageChanged = messageChanged + 5
+	-- Update message change indicator color for Monitor: add 1 to red, green and blue.
+	messageChanged = messageChanged + 1
 	-- Do not exceed color brightness #808080
 	if messageChanged > 80 then messageChanged = 10 end
 	local messageChangedPixel = "|cff" .. string.rep(messageChanged, 3) .. "·|r" -- Set message change value.
