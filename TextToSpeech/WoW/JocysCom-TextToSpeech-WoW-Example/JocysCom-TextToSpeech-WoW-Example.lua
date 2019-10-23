@@ -4,7 +4,7 @@ local messagePrefixPixels = "|cff220000·|r|cff002200·|r|cff000022·|r|cff22000
 -- Table (list) for adding and removing messages.
 local messageTable = {}
 -- Message change color value. For Monitor to know, when message was changed.
-local messageChanged = math.random(5, 80)
+local messageChanged = math.random(10, 80)
 -- TTS Monitor checks display with 100 millisecond intervals.
 -- Send and remove message(s) from table with 500 millisecond intervals.
 local messageInterval = 0.5
@@ -46,7 +46,7 @@ end
 local messagePixels = messageBytes:gsub("(..)(..)(..)", "|cff" .. "%3%2%1" .. "·|r")
 
 -- Update message change indicator color for Monitor: add 5 to red, green and blue.
-messageChanged = messageChanged + 5
+messageChanged = messageChanged + 1
 -- Do not exceed color brightness #808080.
 if messageChanged > 80 then messageChanged = 10 end
 -- Create message change character-pixel. |cff101010·|r
