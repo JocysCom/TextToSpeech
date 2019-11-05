@@ -9,7 +9,7 @@
 			<Layer>
 				<FontString name="JocysCom_MessageForMonitorFrameFontString" inherits="GameFontHighlightSmall">
 					<Anchors>
-						<Anchor point="TOP" y="-193" />
+						<Anchor point="TOP" y="-215" />
 					</Anchors>
 				</FontString>
 			</Layer>
@@ -119,10 +119,26 @@
 				</Scripts>
 			</CheckButton>
 
+			<CheckButton name="JocysCom_LocaleCheckButton" inherits="UICheckButtonTemplate">
+				<Size x="26" y="27" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="7" y="-161" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self.text:SetPoint("LEFT", 27, 0);
+					</OnLoad>
+					<OnClick>
+						JocysCom_PlaySoundAndSaveSettings();
+						JocysCom_LoadEventSettings();
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+
 			<EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate" autofocus="false">
 				<Size x="100" y="20" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="15" y="-166" />
+					<Anchor point="TOPLEFT" x="15" y="-188" />
 				</Anchors>
 				<Layers>
 					<Layer>
@@ -149,7 +165,7 @@
 
 			<Frame name="JocysCom_MessageFrame" inherits="InsetFrameTemplate">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="3" y="-210" />
+					<Anchor point="TOPLEFT" x="3" y="-232" />
 					<Anchor point="BOTTOMRIGHT" x="-3" y="142" />
 				</Anchors>
 				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true" />

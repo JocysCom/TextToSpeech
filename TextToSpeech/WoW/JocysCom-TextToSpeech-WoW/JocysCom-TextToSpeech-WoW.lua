@@ -16,7 +16,7 @@ local version, build, date, tocversion = GetBuildInfo()
 local classic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.9 ( 2019-10-19 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.2.5.10 ( 2019-11-05 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line.
@@ -185,7 +185,8 @@ function JocysCom_AddonTXT_EN()
 	JocysCom_ColorMessagePixelYFontString:SetText("|cff808080 [LEFT] and [TOP] position of color pixel line for|r |cff77ccffMonitor|r|cff808080. Default values [0] and [0].|r")
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock frame with |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080buttons. Grab frame by clicking on dark background around buttons.|r")
 	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on right side of |cffffffff[Options]|r |cff808080button. [Unchecked] show menu on left side.|r")
-	JocysCom_SaveCheckButton.text:SetText("|cff808080 Save \"target\" and \"mouseover\" NPC's name, gender and type in|r |cffffffffMonitor|r|cff808080. Default: [Checked] |r");
+	JocysCom_SaveCheckButton.text:SetText("|cff808080 Save \"target\" and \"mouseover\" NPC's name, gender and type in|r |cffffffffMonitor|r|cff808080. Default: [Checked]|r");
+	JocysCom_LocaleCheckButton.text:SetText("|cff808080 Send game \"Locale\" information (fr-FR, en-EN, etc.) to |cffffffffMonitor|r|cff808080. Default: [Unchecked]|r");
 	--JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide detailed information about addon|r |cffffffff<messages>|r |cff808080in chat window. Default: [Unchecked]|r")
 	-- Font Strings.
 	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH\n\nClose \"Options\" to make it transparent")
@@ -645,8 +646,26 @@ function JocysCom_SpeakMessage(event, speakMessage, name, sex, group, soundIntro
 	if soundIntro and group ~= nil then
 		JocysCom_SendMessage("<message command=\"sound\"" .. Attribute("group", group) .. " />", false)
 	end
+	-- Set locale.
+	--"frFR": French (France)
+	--"deDE": German (Germany)
+	--"enGB": English (Great Britain) if returned, can substitute 'enUS' for consistancy
+	--"enUS": English (America)
+	--"itIT": Italian (Italy)
+	--"koKR": Korean (Korea) RTL - right-to-left
+	--"zhCN": Chinese (China) (simplified) implemented LTR left-to-right in WoW
+	--"zhTW": Chinese (Taiwan) (traditional) implemented LTR left-to-right in WoW
+	--"ruRU": Russian (Russia)
+	--"esES": Spanish (Spain)
+	--"esMX": Spanish (Mexico)
+	--"ptBR": Portuguese (Brazil)
+	local locale = nil
+	if group == "Quest" and JocysCom_LocaleCheckButton:GetChecked() or group == "Monster" and JocysCom_LocaleCheckButton:GetChecked() then
+		locale = GetLocale()
+		locale = locale:gsub("(..)(..)",  "%1" .. "-" .. "%2")
+	end
 	-- Format and send whisper message.
-	local chatMessageSP = "<message command=\"play\"" .. Attribute("group", group) .. Attribute("name", name) .. Attribute("gender", Gender(sex)) .. Attribute("effect", soundEffect) .. "><part>"
+	local chatMessageSP = "<message command=\"play\"" .. Attribute("locale", locale) .. Attribute("group", group) .. Attribute("name", name) .. Attribute("gender", Gender(sex)) .. Attribute("effect", soundEffect) .. "><part>"
 	local chatMessageSA = "<message command=\"add\"><part>"
 	local chatMessageE = "</part></message>"
 	local chatMessage
@@ -1274,6 +1293,8 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_MenuCB == false then JocysCom_MenuCheckButton:SetChecked(false) else JocysCom_MenuCheckButton:SetChecked(true) end
 	-- Set save NPC name, gender and type to Monitor.
 	if JocysCom_SaveCB == false then JocysCom_SaveCheckButton:SetChecked(false) else JocysCom_SaveCheckButton:SetChecked(true) end
+	-- Set if send locale information to Monitor.
+	if JocysCom_LocaleCB == true then JocysCom_LocaleCheckButton:SetChecked(true) else JocysCom_LocaleCheckButton:SetChecked(false) end
 	-- Add chat message filters.
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", function(self, event, msg) return string.find(msg, "<message") ~= nil end)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", function(self, event, msg) return string.find(msg, "<message") ~= nil end)
@@ -1346,6 +1367,7 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_LockCB = JocysCom_LockCheckButton:GetChecked()
 	JocysCom_MenuCB = JocysCom_MenuCheckButton:GetChecked()
 	JocysCom_SaveCB = JocysCom_SaveCheckButton:GetChecked();
+	JocysCom_LocaleCB = JocysCom_LocaleCheckButton:GetChecked();
 	JocysCom_QuestCB = JocysCom_QuestCheckButton:GetChecked()
 	JocysCom_MonsterCB = JocysCom_MonsterCheckButton:GetChecked()
 	JocysCom_WhisperCB = JocysCom_WhisperCheckButton:GetChecked()
