@@ -39,6 +39,8 @@ local NPCNamesTable = {}
 local messageTable = {}
 local messageInterval = 0.2
 local messageChanged = math.random(10, 80)
+local locale = GetLocale()
+locale = locale:gsub("(..)(..)",  "%1" .. "-" .. "%2")
 
 local function Clear(v)
 	if v == nil or v == "" then
@@ -186,7 +188,8 @@ function JocysCom_AddonTXT_EN()
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock frame with |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080buttons. Grab frame by clicking on dark background around buttons.|r")
 	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on right side of |cffffffff[Options]|r |cff808080button. [Unchecked] show menu on left side.|r")
 	JocysCom_SaveCheckButton.text:SetText("|cff808080 Save \"target\" and \"mouseover\" NPC's name, gender and type in|r |cffffffffMonitor|r|cff808080. Default: [Checked]|r");
-	JocysCom_LocaleCheckButton.text:SetText("|cff808080 Send game \"Locale\" information (fr-FR, en-EN, etc.) to |cffffffffMonitor|r|cff808080. Default: [Unchecked]|r");
+	JocysCom_LanguageQuestCheckButton.text:SetText("|cff808080 Send-force quest language=\"|cffffffff" .. locale .. "|r|cff808080\" in|r |cffffffffMonitor|r|cff808080.|r");
+	JocysCom_LanguageChatCheckButton.text:SetText("|cff808080 Send-force chat language=\"|cffffffff" .. locale .. "|r|cff808080\" in|r |cffffffffMonitor|r|cff808080.|r");
 	--JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide detailed information about addon|r |cffffffff<messages>|r |cff808080in chat window. Default: [Unchecked]|r")
 	-- Font Strings.
 	JocysCom_DialogueScrollFrame_FontString:SetText("When mouse pointer is over this frame...\n\nSCROLL UP will START SPEECH\n\nSCROLL DOWN will STOP SPEECH\n\nClose \"Options\" to make it transparent")
@@ -256,6 +259,7 @@ function JocysCom_LoadEventSettings()
 	JocysCom_SetEvent(JocysCom_QuestCB, "GOSSIP_SHOW", "QUEST_GREETING", "QUEST_DETAIL", "QUEST_PROGRESS", "QUEST_COMPLETE", "QUEST_LOG_UPDATE", "ITEM_TEXT_READY", "GOSSIP_CLOSED","MAIL_SHOW", "MAIL_CLOSED")
 	-- MONSTER.
 	JocysCom_SetEvent(JocysCom_MonsterCB, "CHAT_MSG_MONSTER_EMOTE", "CHAT_MSG_MONSTER_PARTY", "CHAT_MSG_MONSTER_SAY", "CHAT_MSG_MONSTER_WHISPER", "CHAT_MSG_MONSTER_YELL")
+	JocysCom_SetEvent(JocysCom_ChannelCB, "CHAT_MSG_CHANNEL")
 	-- EMOTE.
 	JocysCom_SetEvent(JocysCom_EmoteCB, "CHAT_MSG_EMOTE", "CHAT_MSG_TEXT_EMOTE")
 	-- WHISPER.
@@ -281,6 +285,7 @@ function JocysCom_LoadEventSettings()
 	JocysCom_SetEvent(JocysCom_SaveCB, "PLAYER_TARGET_CHANGED")
 
 	-- if DebugEnabled then JocysCom_OptionsFrame:RegisterAllEvents() end
+
 end
 
 -- Register events.
@@ -306,7 +311,8 @@ function JocysCom_OptionsFrame_OnEvent(button, self, ...)
 	local soundEffect = nil
 -- event, text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons = ...
 local event, text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID = ...
-	--if string.find(event, "COMBAT") ~= nil or string.find(event, "SPELL") ~= nil or string.find(event, "COMPANION") ~= nil or string.find(event, "PET") ~= nil or string.find(event, "EXHAUSTION") ~= nil then return end
+	-- Ignore events.
+	-- if string.find(event, "COMBAT") ~= nil or string.find(event, "SPELL") ~= nil or string.find(event, "COMPANION") ~= nil or string.find(event, "PET") ~= nil or string.find(event, "EXHAUSTION") ~= nil or string.find(event, "PLATE") ~= nil or string.find(event, "AURA") ~= nil or string.find(event, "POWER") ~= nil or string.find(event, "TICKET") ~= nil or string.find(event, "HEALTH") ~= nil or string.find(event, "FLAGS") ~= nil or string.find(event, "ACTIONBAR") ~= nil or string.find(event, "MOUSEOVER") ~= nil or string.find(event, "TARGET") ~= nil or string.find(event, "MODEL") ~= nil or string.find(event, "INVENTORY") ~= nil or string.find(event, "CURSOR") ~= nil or string.find(event, "ABSORB") ~= nil or string.find(event, "CHALLENGE") ~= nil or string.find(event, "TRADESKILLS") ~= nil or string.find(event, "TOYS") ~= nil or string.find(event, "PORTRAIT") ~= nil or string.find(event, "NAME_UPDATE") ~= nil or string.find(event, "WATCH_LIST") ~= nil then return end
 	if event == "ADDON_LOADED" and text ~= addonName then return end -- Ignore other addons.
 	if event == "CHAT_MSG_WHISPER" and JocysCom_RemoveRealmName(playerName) == unitName then return end -- Don't process your own whispers twice.
 	if string.find(tostring(text), "<message") ~= nil then return end -- Don't proceed messages with <message> tags and your own incoming whispers.
@@ -404,7 +410,9 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		JocysCom_AddNPCNameToTable(playerName)
 		group = "Monster"
 		name = playerName
-		nameIntro = JocysCom_NameMonsterCheckButton:GetChecked()
+		if event == "CHAT_MSG_MONSTER_EMOTE" or JocysCom_NameMonsterCheckButton:GetChecked() then
+			nameIntro = true
+		end
 		soundIntro = JocysCom_SoundMonsterCheckButton:GetChecked()
 	-- WHISPER.
 	elseif event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" then
@@ -455,7 +463,15 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		sex = select(5, GetPlayerInfoByGUID(guid))
 		nameIntro = false
 		soundIntro = JocysCom_SoundEmoteCheckButton:GetChecked()
-	elseif event == "CHAT_MSG_SAY" then
+	elseif event == "CHAT_MSG_CHANNEL"  then
+		group = "Say"
+		name = JocysCom_RemoveRealmName(playerName)
+		-- print("1. " .. tostring(GetPlayerInfoByGUID(guid)))
+		-- print("2. " .. tostring(UnitSex(name)))
+		-- sex = select(5, GetPlayerInfoByGUID(guid))
+		nameIntro = JocysCom_NameChannelCheckButton:GetChecked()
+		soundIntro = JocysCom_SoundChannelCheckButton:GetChecked()
+	elseif event == "CHAT_MSG_SAY"  then
 		group = "Say"
 		name = JocysCom_RemoveRealmName(playerName)
 		sex = select(5, GetPlayerInfoByGUID(guid))
@@ -659,13 +675,12 @@ function JocysCom_SpeakMessage(event, speakMessage, name, sex, group, soundIntro
 	--"esES": Spanish (Spain)
 	--"esMX": Spanish (Mexico)
 	--"ptBR": Portuguese (Brazil)
-	local locale = nil
-	if group == "Quest" and JocysCom_LocaleCheckButton:GetChecked() or group == "Monster" and JocysCom_LocaleCheckButton:GetChecked() then
-		locale = GetLocale()
-		locale = locale:gsub("(..)(..)",  "%1" .. "-" .. "%2")
+	local localeAttribute = nil
+	if group == "Quest" and JocysCom_LanguageQuestCheckButton:GetChecked() or group == "Monster" and JocysCom_LanguageQuestCheckButton:GetChecked() or group ~= "Quest" and group ~= "Monster" and JocysCom_LanguageChatCheckButton:GetChecked() then
+		localeAttribute = locale
 	end
 	-- Format and send whisper message.
-	local chatMessageSP = "<message command=\"play\"" .. Attribute("locale", locale) .. Attribute("group", group) .. Attribute("name", name) .. Attribute("gender", Gender(sex)) .. Attribute("effect", soundEffect) .. "><part>"
+	local chatMessageSP = "<message command=\"play\"" .. Attribute("language", localeAttribute) .. Attribute("group", group) .. Attribute("name", name) .. Attribute("gender", Gender(sex)) .. Attribute("effect", soundEffect) .. "><part>"
 	local chatMessageSA = "<message command=\"add\"><part>"
 	local chatMessageE = "</part></message>"
 	local chatMessage
@@ -832,6 +847,8 @@ end
 		fontString = "|cffefc176Play DIALOGUE, BOOK, PLAQUE, etc.\nwindow text.|r"
 	elseif name == "Monster" then
 		fontString = "|cfffffb9fPlay NPC chat messages.\n|r"
+	elseif name == "Channel" then
+		fontString = "|cffc3e6e8Play CHANNEL chat messages.\n|r"
 	elseif name == "Whisper" then
 		fontString = "|cffffb2ebPlay WHISPER chat messages.\n|r"
 	elseif name == "Emote" then
@@ -861,6 +878,8 @@ end
 		fontString = "|cffefc176Play intro sound at the beginning of\nDIALOGUE, BOOK, etc. window text.|r"
 	elseif name == "SoundMonster" then
 		fontString = "|cfffffb9fPlay intro sound at the beginning of\nNPC messages.|r"
+	elseif name == "SoundChannel" then
+		fontString = "|cffc3e6e8Play intro sound at the beginning of\nCHANNEL messages.|r"
 	elseif name == "SoundWhisper" then
 		fontString = "|cffffb2ebPlay intro sound at the beginning of\nWHISPER messages.|r"
 		elseif name == "SoundEmote" then
@@ -890,6 +909,8 @@ end
 		fontString = "|cffefc176Add \"<CharacterName> says.\" to\nDIALOGUE, BOOK, etc. window text.|r"
 	elseif name == "NameMonster" then
 		fontString = "|cfffffb9fAdd \"<Name> whispers \\ says \\ yells.\" to\nNPC messages.|r"
+	elseif name == "NameChannel" then
+		fontString = "|cffc3e6e8Add \"<CharacterName> says.\" to\nCHANNEL messages.|r"
 	elseif name == "NameWhisper" then
 		fontString = "|cffffb2ebAdd \"<CharacterName> whispers.\" to\nWHISPER messages.|r"
 	elseif name == "NameSay" then
@@ -1294,7 +1315,8 @@ function JocysCom_LoadTocFileSettings()
 	-- Set save NPC name, gender and type to Monitor.
 	if JocysCom_SaveCB == false then JocysCom_SaveCheckButton:SetChecked(false) else JocysCom_SaveCheckButton:SetChecked(true) end
 	-- Set if send locale information to Monitor.
-	if JocysCom_LocaleCB == true then JocysCom_LocaleCheckButton:SetChecked(true) else JocysCom_LocaleCheckButton:SetChecked(false) end
+	if JocysCom_LanguageQuestCB == true then JocysCom_LanguageQuestCheckButton:SetChecked(true) else JocysCom_LanguageQuestCheckButton:SetChecked(false) end
+	if JocysCom_LanguageChatCB == true then JocysCom_LanguageChatCheckButton:SetChecked(true) else JocysCom_LanguageChatCheckButton:SetChecked(false) end
 	-- Add chat message filters.
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", function(self, event, msg) return string.find(msg, "<message") ~= nil end)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", function(self, event, msg) return string.find(msg, "<message") ~= nil end)
@@ -1307,6 +1329,7 @@ function JocysCom_LoadTocFileSettings()
 	-- Set (MiniFrame) CheckButtons.
 	if JocysCom_QuestCB == false then JocysCom_QuestCheckButton:SetChecked(false) else JocysCom_QuestCheckButton:SetChecked(true) end
 	if JocysCom_MonsterCB == false then JocysCom_MonsterCheckButton:SetChecked(false) else JocysCom_MonsterCheckButton:SetChecked(true) end
+	if JocysCom_ChannelCB == true then JocysCom_ChannelCheckButton:SetChecked(true) else JocysCom_ChannelCheckButton:SetChecked(false) end
 	if JocysCom_WhisperCB == false then JocysCom_WhisperCheckButton:SetChecked(false) else JocysCom_WhisperCheckButton:SetChecked(true) end
 	if JocysCom_EmoteCB == false then JocysCom_EmoteCheckButton:SetChecked(false) else JocysCom_EmoteCheckButton:SetChecked(true) end
 	if JocysCom_SayCB == false then JocysCom_SayCheckButton:SetChecked(false) else JocysCom_SayCheckButton:SetChecked(true) end
@@ -1326,6 +1349,7 @@ function JocysCom_LoadTocFileSettings()
 	-- Set (MiniFrame) Sound CheckButtons.
 	if JocysCom_SQuestCB == true then JocysCom_SoundQuestCheckButton:SetChecked(true) else JocysCom_SoundQuestCheckButton:SetChecked(false) end
 	if JocysCom_SMonsterCB == false then JocysCom_SoundMonsterCheckButton:SetChecked(false) else JocysCom_SoundMonsterCheckButton:SetChecked(true) end
+	if JocysCom_SChannelCB == false then JocysCom_SoundChannelCheckButton:SetChecked(false) else JocysCom_SoundChannelCheckButton:SetChecked(true) end
 	if JocysCom_SWhisperCB == false then JocysCom_SoundWhisperCheckButton:SetChecked(false) else JocysCom_SoundWhisperCheckButton:SetChecked(true) end
 	if JocysCom_SEmoteCB == false then JocysCom_SoundEmoteCheckButton:SetChecked(false) else JocysCom_SoundEmoteCheckButton:SetChecked(true) end
 	if JocysCom_SSayCB == false then JocysCom_SoundSayCheckButton:SetChecked(false) else JocysCom_SoundSayCheckButton:SetChecked(true) end
@@ -1341,6 +1365,7 @@ function JocysCom_LoadTocFileSettings()
 	-- Set (MiniFrame) Name CheckButtons.
 	if JocysCom_NQuestCB == true then JocysCom_NameQuestCheckButton:SetChecked(true) else JocysCom_NameQuestCheckButton:SetChecked(false) end
 	if JocysCom_NMonsterCB == true then JocysCom_NameMonsterCheckButton:SetChecked(true) else JocysCom_NameMonsterCheckButton:SetChecked(false) end
+	if JocysCom_NChannelCB == true then JocysCom_NameChannelCheckButton:SetChecked(true) else JocysCom_NameChannelCheckButton:SetChecked(false) end
 	if JocysCom_NWhisperCB == true then JocysCom_NameWhisperCheckButton:SetChecked(true) else JocysCom_NameWhisperCheckButton:SetChecked(false) end
 	if JocysCom_NSayCB == true then JocysCom_NameSayCheckButton:SetChecked(true) else JocysCom_NameSayCheckButton:SetChecked(false) end
 	if JocysCom_NYellCB == true then JocysCom_NameYellCheckButton:SetChecked(true) else JocysCom_NameYellCheckButton:SetChecked(false) end
@@ -1367,9 +1392,11 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_LockCB = JocysCom_LockCheckButton:GetChecked()
 	JocysCom_MenuCB = JocysCom_MenuCheckButton:GetChecked()
 	JocysCom_SaveCB = JocysCom_SaveCheckButton:GetChecked();
-	JocysCom_LocaleCB = JocysCom_LocaleCheckButton:GetChecked();
+	JocysCom_LanguageQuestCB = JocysCom_LanguageQuestCheckButton:GetChecked();
+	JocysCom_LanguageChatCB = JocysCom_LanguageChatCheckButton:GetChecked();
 	JocysCom_QuestCB = JocysCom_QuestCheckButton:GetChecked()
 	JocysCom_MonsterCB = JocysCom_MonsterCheckButton:GetChecked()
+	JocysCom_ChannelCB = JocysCom_ChannelCheckButton:GetChecked()
 	JocysCom_WhisperCB = JocysCom_WhisperCheckButton:GetChecked()
 	JocysCom_EmoteCB = JocysCom_EmoteCheckButton:GetChecked()
 	JocysCom_SayCB = JocysCom_SayCheckButton:GetChecked()
@@ -1389,6 +1416,7 @@ function JocysCom_SaveTocFileSettings()
 	-- Save sound check buttons.
 	JocysCom_SQuestCB = JocysCom_SoundQuestCheckButton:GetChecked()
 	JocysCom_SMonsterCB = JocysCom_SoundMonsterCheckButton:GetChecked()
+	JocysCom_SChannelCB = JocysCom_SoundChannelCheckButton:GetChecked()
 	JocysCom_SWhisperCB = JocysCom_SoundWhisperCheckButton:GetChecked()
 	JocysCom_SEmoteCB = JocysCom_SoundEmoteCheckButton:GetChecked()
 	JocysCom_SSayCB = JocysCom_SoundSayCheckButton:GetChecked()
@@ -1404,6 +1432,7 @@ function JocysCom_SaveTocFileSettings()
 	-- Save name check buttons.
 	JocysCom_NQuestCB = JocysCom_NameQuestCheckButton:GetChecked()
 	JocysCom_NMonsterCB = JocysCom_NameMonsterCheckButton:GetChecked()
+	JocysCom_NChannelCB = JocysCom_NameChannelCheckButton:GetChecked()
 	JocysCom_NWhisperCB = JocysCom_NameWhisperCheckButton:GetChecked()
 	JocysCom_NSayCB = JocysCom_NameSayCheckButton:GetChecked()
 	JocysCom_NYellCB = JocysCom_NameYellCheckButton:GetChecked()

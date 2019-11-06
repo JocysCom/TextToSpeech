@@ -13,13 +13,13 @@
 
 # Options:
 ## SavedVariablesPerCharacter: JocysCom_ReplaceNameEB, JocysCom_ColorMessagePixelXEB, JocysCom_ColorMessagePixelYEB
-## SavedVariablesPerCharacter: JocysCom_NetworkMessageCB, JocysCom_ColorMessageCB, JocysCom_LockCB, JocysCom_MenuCB, JocysCom_SaveCB, JocysCom_LocaleCB
+## SavedVariablesPerCharacter: JocysCom_NetworkMessageCB, JocysCom_ColorMessageCB, JocysCom_LockCB, JocysCom_MenuCB, JocysCom_SaveCB, JocysCom_LanguageQuestCB, JocysCom_LanguageChatCB
 
 # Mini Frame:
 ## SavedVariablesPerCharacter: JocysCom_DndCB, JocysCom_TitlesCB, JocysCom_ObjectivesCB, JocysCom_StartOnOpenCB, JocysCom_StopOnCloseCB
-## SavedVariablesPerCharacter: JocysCom_QuestCB,  JocysCom_MonsterCB,  JocysCom_WhisperCB,  JocysCom_SayCB,  JocysCom_YellCB,  JocysCom_PartyCB,  JocysCom_PartyLCB,  JocysCom_GuildCB,  JocysCom_OfficerCB,  JocysCom_RaidCB,  JocysCom_RaidLCB,  JocysCom_InstanceCB,  JocysCom_InstanceLCB, JocysCom_EmoteCB
-## SavedVariablesPerCharacter: JocysCom_SQuestCB, JocysCom_SMonsterCB, JocysCom_SWhisperCB, JocysCom_SSayCB, JocysCom_SYellCB, JocysCom_SPartyCB, JocysCom_SPartyLCB, JocysCom_SGuildCB, JocysCom_SOfficerCB, JocysCom_SRaidCB, JocysCom_SRaidLCB, JocysCom_SInstanceCB, JocysCom_SInstanceLCB, JocysCom_SEmoteCB
-## SavedVariablesPerCharacter: JocysCom_NQuestCB, JocysCom_NMonsterCB, JocysCom_NWhisperCB, JocysCom_NSayCB, JocysCom_NYellCB, JocysCom_NPartyCB, JocysCom_NPartyLCB, JocysCom_NGuildCB, JocysCom_NOfficerCB, JocysCom_NRaidCB, JocysCom_NRaidLCB, JocysCom_NInstanceCB, JocysCom_NInstanceLCB
+## SavedVariablesPerCharacter: JocysCom_QuestCB,  JocysCom_MonsterCB, JocysCom_ChannelCB,  JocysCom_WhisperCB,  JocysCom_SayCB,  JocysCom_YellCB,  JocysCom_PartyCB,  JocysCom_PartyLCB,  JocysCom_GuildCB,  JocysCom_OfficerCB,  JocysCom_RaidCB,  JocysCom_RaidLCB,  JocysCom_InstanceCB,  JocysCom_InstanceLCB, JocysCom_EmoteCB
+## SavedVariablesPerCharacter: JocysCom_SQuestCB, JocysCom_SMonsterCB, JocysCom_SChannelCB, JocysCom_SWhisperCB, JocysCom_SSayCB, JocysCom_SYellCB, JocysCom_SPartyCB, JocysCom_SPartyLCB, JocysCom_SGuildCB, JocysCom_SOfficerCB, JocysCom_SRaidCB, JocysCom_SRaidLCB, JocysCom_SInstanceCB, JocysCom_SInstanceLCB, JocysCom_SEmoteCB
+## SavedVariablesPerCharacter: JocysCom_NQuestCB, JocysCom_NMonsterCB, JocysCom_NChannelCB, JocysCom_NWhisperCB, JocysCom_NSayCB, JocysCom_NYellCB, JocysCom_NPartyCB, JocysCom_NPartyLCB, JocysCom_NGuildCB, JocysCom_NOfficerCB, JocysCom_NRaidCB, JocysCom_NRaidLCB, JocysCom_NInstanceCB, JocysCom_NInstanceLCB
 
 JocysCom-TextToSpeech-WoW.xml
 JocysCom-TextToSpeech-WoW.lua
