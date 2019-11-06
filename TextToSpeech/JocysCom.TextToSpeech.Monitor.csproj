@@ -631,7 +631,6 @@
     <None Include="Resources\Icons\Amazon_Add_Neural_16x16.png" />
     <None Include="Resources\Icons\Amazon_Add_Standard_16x16.png" />
     <None Include="Resources\Icons\Add_16x16.png" />
-    <Content Include="Resources\Documents\Help_Code.html" />
     <Content Include="Resources\Icons\CheckBox.png" />
     <Content Include="Resources\Icons\CheckBox_Unchecked.png" />
     <None Include="Resources\Icons\Local_Add_16x16.png" />
@@ -701,7 +700,6 @@
     <EmbeddedResource Include="Resources\SharpDX\SharpDX.MediaFoundation.xml" />
     <EmbeddedResource Include="Resources\NAudio\NAudio.dll" />
     <EmbeddedResource Include="Resources\NAudio\NAudio.xml" />
-    <Content Include="WoW\JocysCom-TextToSpeech-WoW-EXAMPLE\JocysCom-TextToSpeech-WoW-Example.html" />
     <Content Include="WoW\JocysCom-TextToSpeech-WoW-EXAMPLE\JocysCom-TextToSpeech-WoW-Example.xml" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon.png" />
     <Content Include="WoW\Resources\Images\JocysCom_TTS_WoW_Addon_Buttons.png" />
