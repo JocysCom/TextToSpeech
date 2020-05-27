@@ -10,19 +10,20 @@ namespace JocysCom.ClassLibrary.Text
 	{
 
 		// Used for author full name.
-		char[] NameChars = new char[] { '"' };
-		char[] BasicChars = new char[] { '-', ' ', ',', '\u00A0' };
+		private readonly char[] NameChars = new char[] { '"' };
+		private readonly char[] BasicChars = new char[] { '-', ' ', ',', '\u00A0' };
 		public TextInfo Culture = new CultureInfo("en-US", false).TextInfo;
-		Regex r22 = new Regex("\"");
+		private readonly Regex r22 = new Regex("\"");
+
 		// Multiple single quotes
-		Regex rmq = new Regex("'[']+");
-		Regex r27 = new Regex("'");
-		Regex r2E = new Regex("\\.");
-		Regex rL2E = new Regex("([A-Z])\\.");
-		Regex rU1 = new Regex("^([A-Z])\\s+");
-		Regex rU2 = new Regex("\\s+([A-Z])\\s+");
-		Regex rU3 = new Regex("\\s+([A-Z])$");
-		Regex rAnd = new Regex("\\s*&\\s*");
+		private readonly Regex rmq = new Regex("'[']+");
+		private readonly Regex r27 = new Regex("'");
+		private readonly Regex r2E = new Regex("\\.");
+		private readonly Regex rL2E = new Regex("([A-Z])\\.");
+		private readonly Regex rU1 = new Regex("^([A-Z])\\s+");
+		private readonly Regex rU2 = new Regex("\\s+([A-Z])\\s+");
+		private readonly Regex rU3 = new Regex("\\s+([A-Z])$");
+		private readonly Regex rAnd = new Regex("\\s*&\\s*");
 		public static readonly Regex RxAllExceptNumbers = new Regex("[^0-9]", RegexOptions.IgnoreCase);
 		public static readonly Regex RxAllExceptDecimal = new Regex("[^0-9.]", RegexOptions.IgnoreCase);
 		public static readonly Regex RxAllExceptLetters = new Regex("[^A-Z]", RegexOptions.IgnoreCase);
@@ -53,21 +54,9 @@ namespace JocysCom.ClassLibrary.Text
 		// This expression will: find and replace all tags with nothing and avoid problematic edge cases.
 		// <(?:[^>=]|='[^']*'|="[^"]*"|=[^'"][^\s>]*)*>
 		public static readonly Regex RxHtmlTag = new Regex(@"<(?:[^>=]|='[^']*'|=""[^""]*""|=[^'""][^\s>]*)*>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-
 		//public static readonly Regex RxHtmlTag = new Regex(@"<(.|\n)*?>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
 		public const int CropTextDefauldMaxLength = 128;
-
-		public static string CropText(string s)
-		{
-			return CropText(s, CropTextDefauldMaxLength);
-		}
-
-		public static string CropText(object s, int maxLength)
-		{
-			if (s == null) return string.Empty;
-			return CropText(s.ToString(), maxLength);
-		}
 
 		/// <summary>
 		/// if maxLength == -1, return string.Empty
@@ -76,13 +65,11 @@ namespace JocysCom.ClassLibrary.Text
 		/// <param name="s"></param>
 		/// <param name="maxLength"></param>
 		/// <returns></returns>
-		public static string CropText(string s, int maxLength)
+		public static string CropText(object so, int? maxLength = 0, bool stripHtml = true)
 		{
-			return CropText(s, maxLength, true);
-		}
-
-		public static string CropText(string s, int maxLength, bool stripHtml)
-		{
+			var s = string.Format("{0}", so);
+			if (!maxLength.HasValue)
+				maxLength = CropTextDefauldMaxLength;
 			if (string.IsNullOrEmpty(s) || maxLength == -1)
 				return string.Empty;
 			if (maxLength == 0)
@@ -91,15 +78,19 @@ namespace JocysCom.ClassLibrary.Text
 			if (stripHtml) s = StripHtml(s);
 			if (s.Length > maxLength)
 			{
-				s = s.Substring(0, maxLength - 3);
+				s = s.Substring(0, maxLength.Value - 3);
 				// Find last separator and crop there...
-				int ls = s.LastIndexOf(' ');
+				var ls = s.LastIndexOf(' ');
 				if (ls > 0) s = s.Substring(0, ls);
 				s += "...";
 			}
 			return s;
 		}
 
+		public static string StripHtml(string s)
+		{
+			return StripHtml(s, false);
+		}
 
 		public static string StripHtml(string s, bool removeBreaks)
 		{
@@ -111,29 +102,19 @@ namespace JocysCom.ClassLibrary.Text
 			return s.Trim();
 		}
 
-		public static string StripHtml(string s)
+		public static string StripUnsafeHtml(string s, string[] whiteList = null)
 		{
-			return StripHtml(s, false);
-		}
-
-		public static string StripUnsafeHtml(string s)
-		{
-			return StripUnsafeHtml(s, null);
-		}
-
-		public static string StripUnsafeHtml(string s, string[] whiteList)
-		{
-			string acceptable = whiteList == null
+			var acceptable = whiteList == null
 				? "i|em|b|strong|u|sup|sub|ol|ul|li|br|h2|h3|h4|h5|span|div|p|a|img|blockquote"
 				: string.Join("|", whiteList);
-			string stringPattern = @"<\/?(?(?=" + acceptable + @")notag|[a-z0-9]+:?[a-z0-9]+?)(?:\s[a-z0-9\-]+=?(?:(["",']?).*?\1?)?)*\s*\/?>";
+			var stringPattern = @"<\/?(?(?=" + acceptable + @")notag|[a-z0-9]+:?[a-z0-9]+?)(?:\s[a-z0-9\-]+=?(?:(["",']?).*?\1?)?)*\s*\/?>";
 			return Regex.Replace(s, stringPattern, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		}
 
-		List<string> Honors;
-		List<string> Prefixes;
-		List<string> Prefixes2;
-		List<string> Sufixes;
+		private readonly List<string> Honors;
+		private readonly List<string> Prefixes;
+		private readonly List<string> Prefixes2;
+		private readonly List<string> Sufixes;
 
 		public Filters()
 		{
@@ -146,60 +127,60 @@ namespace JocysCom.ClassLibrary.Text
 			Sufixes = FillList(new string[] { });
 		}
 
-		List<string> FillList(params string[] values)
+		private List<string> FillList(params string[] values)
 		{
-			List<string> list = new List<string>();
-			for (int i = 0; i < values.Length; i++)
+			var list = new List<string>();
+			for (var i = 0; i < values.Length; i++)
 			{
 				list.Add(values[i].ToUpper());
 			}
 			return list;
 		}
 
-		string[] FilterList(string[] list, List<string> filter)
+		private string[] FilterList(string[] list, List<string> filter)
 		{
-			List<string> newList = new List<string>();
-			foreach (string item in list)
+			var newList = new List<string>();
+			foreach (var item in list)
 			{
 				if (!filter.Contains(item)) newList.Add(item);
 			}
 			return newList.ToArray();
 		}
 
-		List<string> GetSingleChar(string[] list)
+		private List<string> GetSingleChar(string[] list)
 		{
-			List<string> newList = new List<string>();
-			foreach (string item in list)
+			var newList = new List<string>();
+			foreach (var item in list)
 			{
 				if (item.Length == 1) newList.Add(item);
 			}
 			return newList;
 		}
 
-		List<string> GetMultiChar(string[] list)
+		private List<string> GetMultiChar(string[] list)
 		{
-			List<string> newList = new List<string>();
-			foreach (string item in list)
+			var newList = new List<string>();
+			foreach (var item in list)
 			{
 				if (item.Length > 1) newList.Add(item);
 			}
 			return newList;
 		}
 
-		char[] GetDistinct(char[] list)
+		private char[] GetDistinct(char[] list)
 		{
-			List<char> newList = new List<char>();
-			foreach (char item in list)
+			var newList = new List<char>();
+			foreach (var item in list)
 			{
 				if (!newList.Contains(item)) newList.Add(item);
 			}
 			return newList.ToArray();
 		}
 
-		string[] GetUnicodeEscaped(char[] list)
+		private string[] GetUnicodeEscaped(char[] list)
 		{
-			List<string> newList = new List<string>();
-			foreach (char item in list)
+			var newList = new List<string>();
+			foreach (var item in list)
 			{
 				newList.Add("\\u" + ((uint)item).ToString("X4"));
 			}
@@ -238,7 +219,7 @@ namespace JocysCom.ClassLibrary.Text
 			s = GetPersonName(s);
 			s = GetKeyPrepare(s);
 			//-------------------------------------------------
-			string[] sa = s.Split(' ');
+			var sa = s.Split(' ');
 			if (sortName) Array.Sort(sa);
 			//-------------------------------------------------
 			// Remove honors.
@@ -249,7 +230,7 @@ namespace JocysCom.ClassLibrary.Text
 			if (sa.Length > 1) sa = FilterList(sa, Prefixes2);
 			// Remove sufixes.
 			sa = FilterList(sa, Sufixes);
-			for (int i = 0; i < sa.Length; i++)
+			for (var i = 0; i < sa.Length; i++)
 			{
 				// fix spelling mistakes, accents. replace most commmon mistakes.
 			}
@@ -259,11 +240,11 @@ namespace JocysCom.ClassLibrary.Text
 			// convert: B A C Surname => A B C Surname
 			//-------------------------------------------------
 			// Get all single char words.
-			List<string> sWords = GetSingleChar(sa);
+			var sWords = GetSingleChar(sa);
 			// Get all multiple char words.
-			List<string> mWords = GetMultiChar(sa);
+			var mWords = GetMultiChar(sa);
 			// Create new name.
-			for (int i = 0; i < mWords.Count; i++) sWords.Add(mWords[i]);
+			for (var i = 0; i < mWords.Count; i++) sWords.Add(mWords[i]);
 			s = string.Join(" ", sWords.ToArray());
 			//-------------------------------------------------
 			// Convert: A B C Surname => A. B. C. Surname
@@ -280,7 +261,7 @@ namespace JocysCom.ClassLibrary.Text
 			//ICKNS Key name suffix e.g. Jr, III
 			//ICTAN Title as displayed after name
 			//CR The ONIX role this contributor takes – Code (from ONIX list 17)
-			string sufix = string.Format("{0} {1} {2} {3}", ICCY, ICKNS, ICTAN, CRC);
+			var sufix = string.Format("{0} {1} {2} {3}", ICCY, ICKNS, ICTAN, CRC);
 			sufix = GetKeyPrepare(sufix);
 			s = string.Format("{0} {1}", s, sufix).Trim();
 			return s;
@@ -290,7 +271,7 @@ namespace JocysCom.ClassLibrary.Text
 
 		#region Filter: Title
 
-		Regex r2E3 = new Regex("\\.\\s+\\.\\s+\\.");
+		private readonly Regex r2E3 = new Regex("\\.\\s+\\.\\s+\\.");
 
 		public string GetTitle(string s)
 		{
@@ -302,7 +283,7 @@ namespace JocysCom.ClassLibrary.Text
 
 		public string GetTitleKey(string s, bool stripThe = false, bool stripA = false)
 		{
-			string result = GetKeyPrepare(s);
+			var result = GetKeyPrepare(s);
 			// Replace '&' with 'AND'
 			result = rAnd.Replace(result, " AND ");
 			if (stripThe)
@@ -333,14 +314,13 @@ namespace JocysCom.ClassLibrary.Text
 		/// http://blogs.msdn.com/michkap/archive/2007/05/14/2629747.aspx
 		/// </summary>
 		/// <param name="s"></param>
-		/// <returns></returns>
 		public static string RemoveDiacriticMarks(string s)
 		{
-			string stFormD = s.Normalize(NormalizationForm.FormD);
-			StringBuilder sb = new StringBuilder();
-			for (int ich = 0; ich < stFormD.Length; ich++)
+			var stFormD = s.Normalize(NormalizationForm.FormD);
+			var sb = new StringBuilder();
+			for (var ich = 0; ich < stFormD.Length; ich++)
 			{
-				UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(stFormD[ich]);
+				var uc = CharUnicodeInfo.GetUnicodeCategory(stFormD[ich]);
 				if (uc != UnicodeCategory.NonSpacingMark)
 				{
 					sb.Append(stFormD[ich]);
@@ -370,7 +350,7 @@ namespace JocysCom.ClassLibrary.Text
 		{
 			if (string.IsNullOrEmpty(s)) return s;
 			// Get array of \uNNNN strings
-			string[] us = GetUnicodeEscaped(s.ToCharArray());
+			var us = GetUnicodeEscaped(s.ToCharArray());
 			// Join into one string and return.
 			return string.Join("", us);
 		}
@@ -378,17 +358,17 @@ namespace JocysCom.ClassLibrary.Text
 		public string RemoveMultiChars(string s, char[] chars, int max)
 		{
 			// This is needed for regular expression because s can contain specials chars like '.', '?'
-			char[] c = GetDistinct(chars);
-			string result = s;
-			for (int i = 0; i < c.Length; i++) result = RemoveMultiChars(result, c[i].ToString(), max);
+			var c = GetDistinct(chars);
+			var result = s;
+			for (var i = 0; i < c.Length; i++) result = RemoveMultiChars(result, c[i].ToString(), max);
 			return result;
 		}
 
 		public string RemoveMultiChars(string s, string word, int max)
 		{
-			string uword = GetEscapedPattern(word);
-			string sword = string.Empty;
-			for (int i = 0; i < max; i++) sword += word;
+			var uword = GetEscapedPattern(word);
+			var sword = string.Empty;
+			for (var i = 0; i < max; i++) sword += word;
 			return System.Text.RegularExpressions.Regex.Replace(s, "((" + uword + "){" + max + ",})", sword);
 		}
 
@@ -444,7 +424,7 @@ namespace JocysCom.ClassLibrary.Text
 		public static string GetKey(string input, bool capitalize)
 		{
 			// Filter accents: Hélan => Helan
-			string s = RemoveDiacriticMarks(input);
+			var s = RemoveDiacriticMarks(input);
 			// Convert to upper-case and keep only allowed chars.
 			s = RxAllowedInKey.Replace(s, " ");
 			// Replace multiple spaces.
@@ -466,9 +446,9 @@ namespace JocysCom.ClassLibrary.Text
 		/// <returns></returns>
 		public string ReplaceM(Match m)
 		{
-			string S1 = m.Groups[1].Value;
-			string S2 = m.Groups[2].Value;
-			string S3 = m.Groups[3].Value;
+			var S1 = m.Groups[1].Value;
+			var S2 = m.Groups[2].Value;
+			var S3 = m.Groups[3].Value;
 			return S1 + S2 + S3.ToUpper();
 		}
 
@@ -539,9 +519,9 @@ namespace JocysCom.ClassLibrary.Text
 			s = s.Replace("( (", "((");
 			s = s.Replace("( (", "((");
 			// capitalize after [.!?]
-			MatchEvaluator scMe = new MatchEvaluator(ReplaceM);
+			var scMe = new MatchEvaluator(ReplaceM);
 			Regex scRx;
-			TextInfo Culture = new CultureInfo("en-US", false).TextInfo;
+			var Culture = new CultureInfo("en-US", false).TextInfo;
 			scRx = new Regex(@"(<p>)(\s*)(\w)", RegexOptions.Multiline | RegexOptions.IgnoreCase);
 			s = scRx.Replace(s, scMe);
 			scRx = new Regex(@"(\.)(\s+)(\w)", RegexOptions.Multiline | RegexOptions.IgnoreCase);

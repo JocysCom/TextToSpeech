@@ -1,8 +1,9 @@
 ﻿using Microsoft.Win32;
+using System;
 
 namespace JocysCom.ClassLibrary
 {
-	public class RegistryHelper
+	public static class RegistryHelper
 	{
 		/// <summary>
 		///  Moves a specified key to a new location.
@@ -13,6 +14,8 @@ namespace JocysCom.ClassLibrary
 		/// <returns>True if succeeds</returns>
 		public static bool Move(RegistryKey parentKey, string sourceSubKey, string targetSubKey)
 		{
+			if (parentKey == null)
+				throw new ArgumentNullException(nameof(parentKey));
 			Copy(parentKey, sourceSubKey, targetSubKey, true);
 			parentKey.DeleteSubKeyTree(sourceSubKey);
 			return true;
@@ -27,6 +30,8 @@ namespace JocysCom.ClassLibrary
 		/// <returns></returns>
 		public static bool Copy(RegistryKey parentKey, string sourceKeyName, string targetKeyName, bool recursive = true)
 		{
+			if (parentKey == null)
+				throw new ArgumentNullException(nameof(parentKey));
 			var sourceKey = parentKey.OpenSubKey(sourceKeyName);
 			var targetKey = parentKey.CreateSubKey(targetKeyName);
 			Copy(sourceKey, targetKey, recursive);

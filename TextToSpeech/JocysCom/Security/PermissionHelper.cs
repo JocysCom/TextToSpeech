@@ -98,20 +98,24 @@ namespace JocysCom.ClassLibrary.Security
 
 		public static bool IsLocalUser(SecurityIdentifier sid)
 		{
-			var context = new PrincipalContext(ContextType.Machine);
-			var principal = new UserPrincipal(context);
-			var searcher = new PrincipalSearcher(principal);
-			var users = searcher.FindAll().ToArray();
-			return users.Any(x => x.Sid.Equals(sid));
+			using (var context = new PrincipalContext(ContextType.Machine))
+			using (var principal = new UserPrincipal(context))
+			using (var searcher = new PrincipalSearcher(principal))
+			{
+				var users = searcher.FindAll().ToArray();
+				return users.Any(x => x.Sid.Equals(sid));
+			}
 		}
 
 		public static bool IsLocalGroup(SecurityIdentifier sid)
 		{
-			var context = new PrincipalContext(ContextType.Machine);
-			var principal = new GroupPrincipal(context);
-			var searcher = new PrincipalSearcher(principal);
-			var groups = searcher.FindAll().ToArray();
-			return groups.Any(x => x.Sid.Equals(sid));
+			using (var context = new PrincipalContext(ContextType.Machine))
+			using (var principal = new GroupPrincipal(context))
+			using (var searcher = new PrincipalSearcher(principal))
+			{
+				var groups = searcher.FindAll().ToArray();
+				return groups.Any(x => x.Sid.Equals(sid));
+			}
 		}
 
 		#endregion
@@ -387,7 +391,7 @@ namespace JocysCom.ClassLibrary.Security
 			var attributes = File.GetAttributes(path);
 			var isDirectory = attributes.HasFlag(FileAttributes.Directory);
 			var security = isDirectory
-				? (FileSystemSecurity)Directory.GetAccessControl(path)
+				? Directory.GetAccessControl(path)
 				: (FileSystemSecurity)File.GetAccessControl(path);
 			var rules = security.GetAccessRules(true, true, sid.GetType());
 			foreach (FileSystemAccessRule rule in rules)
@@ -428,7 +432,7 @@ namespace JocysCom.ClassLibrary.Security
 			var attributes = File.GetAttributes(path);
 			var isDirectory = attributes.HasFlag(FileAttributes.Directory);
 			var security = isDirectory
-				? (FileSystemSecurity)Directory.GetAccessControl(path)
+				? Directory.GetAccessControl(path)
 				: (FileSystemSecurity)File.GetAccessControl(path);
 			FileSystemAccessRule sidRule = null;
 			// Do not include inherited permissions, because.

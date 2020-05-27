@@ -151,7 +151,7 @@ namespace JocysCom.ClassLibrary.Runtime
 
 		static object JsonSerializersLock = new object();
 		static Dictionary<Type, DataContractJsonSerializer> JsonSerializers;
-		static DataContractJsonSerializer GetJsonSerializer(Type type)
+		public static DataContractJsonSerializer GetJsonSerializer(Type type, DataContractJsonSerializerSettings settings = null)
 		{
 			lock (JsonSerializersLock)
 			{
@@ -160,8 +160,11 @@ namespace JocysCom.ClassLibrary.Runtime
 				{
 					// Simple dictionary format looks like this: { "Key1": "Value1", "Key2": "Value2" }
 					// DataContractJsonSerializerSettings requires .NET 4.5
-					var settings = new DataContractJsonSerializerSettings();
-					settings.UseSimpleDictionaryFormat = true;
+					if (settings == null)
+					{
+						settings = new DataContractJsonSerializerSettings();
+						settings.UseSimpleDictionaryFormat = true;
+					}
 					var serializer = new DataContractJsonSerializer(type, settings);
 					JsonSerializers.Add(type, serializer);
 				}
@@ -234,7 +237,7 @@ namespace JocysCom.ClassLibrary.Runtime
 				let openChar = ch == '{' || ch == '[' ? ch + Environment.NewLine + string.Concat(Enumerable.Repeat(ident, ++indentation)) : ch.ToString()
 				let closeChar = ch == '}' || ch == ']' ? Environment.NewLine + string.Concat(Enumerable.Repeat(ident, --indentation)) + ch : ch.ToString()
 				select lineBreak == null ? openChar.Length > 1 ? openChar : closeChar : lineBreak;
-			return String.Concat(result);
+			return string.Concat(result);
 		}
 
 		#endregion
@@ -296,9 +299,18 @@ namespace JocysCom.ClassLibrary.Runtime
 			lock (serializer) { serializer.Serialize(ms, o); }
 			ms.Seek(0, SeekOrigin.Begin);
 			var doc = new XmlDocument();
-			doc.Load(ms);
+			doc.XmlResolver = null;
+			// Settings used to protect from:
+			// CWE-611: Improper Restriction of XML External Entity Reference('XXE')
+			// https://cwe.mitre.org/data/definitions/611.html
+			var settings = new XmlReaderSettings();
+			settings.DtdProcessing =  DtdProcessing.Ignore;
+			settings.XmlResolver = null;
+			settings.CloseInput = false;
+			var reader = XmlReader.Create(ms, settings);
+			doc.Load(reader);
+			reader.Dispose();
 			ms.Close();
-			ms = null;
 			return doc;
 		}
 

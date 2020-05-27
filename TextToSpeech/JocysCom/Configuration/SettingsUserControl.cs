@@ -384,19 +384,17 @@ namespace JocysCom.ClassLibrary.Configuration
 		private void EditButton_Click(object sender, EventArgs e)
 		{
 			var item = GetSelectedItems().FirstOrDefault();
-			if (item != null)
-			{
-				var form = new SettingsItemForm();
-				form.StartPosition = FormStartPosition.CenterParent;
-				var newItem = Activator.CreateInstance(item.GetType());
-				RuntimeHelper.CopyProperties(item, newItem);
-				form.MainPropertyGrid.SelectedObject = newItem;
-				var result = form.ShowDialog();
-				if (result == DialogResult.OK)
-				{
-					RuntimeHelper.CopyProperties(newItem, item);
-				}
-			}
+			if (item == null)
+				return;
+			var form = new SettingsItemForm();
+			form.StartPosition = FormStartPosition.CenterParent;
+			var newItem = Activator.CreateInstance(item.GetType());
+			RuntimeHelper.CopyProperties(item, newItem);
+			form.MainPropertyGrid.SelectedObject = newItem;
+			var result = form.ShowDialog();
+			if (result == DialogResult.OK)
+				RuntimeHelper.CopyProperties(newItem, item);
+			form.Dispose();
 		}
 
 

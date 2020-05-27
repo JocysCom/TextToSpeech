@@ -235,10 +235,8 @@ namespace JocysCom.ClassLibrary.Security
 			if (hashKeyBytes == null)
 			{
 				lock (MacProviderLock)
-				{
 					// Use default from config file.
 					hash = MacProvider.ComputeHash(bytes);
-				}
 			}
 			else
 			{

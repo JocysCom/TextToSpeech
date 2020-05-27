@@ -5,10 +5,10 @@ using System.Windows.Forms;
 
 namespace JocysCom.ClassLibrary.Processes
 {
-	public class MouseHelper
+	public static class MouseHelper
 	{
 		[Flags]
-		public enum MouseEventFlags : uint
+		public enum MouseEventFlags : int
 		{
 			MOUSEEVENTF_MOVE = 0x0001,
 			MOUSEEVENTF_LEFTDOWN = 0x0002,
@@ -24,7 +24,7 @@ namespace JocysCom.ClassLibrary.Processes
 			MOUSEEVENTF_ABSOLUTE = 0x8000
 		}
 
-		const Int32 CURSOR_SHOWING = 0x00000001;
+		const int CURSOR_SHOWING = 0x00000001;
 
 		public class NativeMethods
 		{
@@ -95,7 +95,7 @@ namespace JocysCom.ClassLibrary.Processes
 				ps = System.Diagnostics.Process.GetProcesses();
 				foreach (var p in ps)
 				{
-					if (p.MainWindowTitle.IndexOf(processName, StringComparison.InvariantCulture) > -1)
+					if (p.MainWindowTitle.IndexOf(processName, StringComparison.OrdinalIgnoreCase) > -1)
 					{
 						mainWindowHandle = p.MainWindowHandle;
 						break;

@@ -1,5 +1,4 @@
 using System;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -12,7 +11,7 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		public AssemblyInfo()
 		{
-			_assembly =
+			Assembly =
 				Assembly.GetEntryAssembly() ??
 				FindEntryAssembly1() ??
 				FindEntryAssembly2() ??
@@ -37,12 +36,12 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		public AssemblyInfo(string strValFile)
 		{
-			_assembly = Assembly.LoadFile(strValFile);
+			Assembly = Assembly.LoadFile(strValFile);
 		}
 
 		public AssemblyInfo(Assembly assembly)
 		{
-			_assembly = assembly;
+			Assembly = assembly;
 		}
 
 		#region Entry assembly
@@ -87,12 +86,7 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		#endregion
 
-		public Assembly Assembly
-		{
-			get { return _assembly; }
-			set { _assembly = value; }
-		}
-		private Assembly _assembly;
+		public Assembly Assembly { get; set; }
 
 		DateTime? _BuildDateTime;
 		object BuildDateTimeLock = new object();
@@ -104,10 +98,7 @@ namespace JocysCom.ClassLibrary.Configuration
 				lock (BuildDateTimeLock)
 				{
 					if (!_BuildDateTime.HasValue)
-					{
-						_BuildDateTime = GetBuildDateTime(_assembly);
-						//_BuildDateTime = GetBuildDateTime(_assembly.Location);
-					}
+						_BuildDateTime = GetBuildDateTime(Assembly);
 					return _BuildDateTime.Value;
 				}
 			}
@@ -122,13 +113,17 @@ namespace JocysCom.ClassLibrary.Configuration
 				lock (FullTitleLock)
 				{
 					if (string.IsNullOrEmpty(_FullTitle))
-					{
 						_FullTitle = GetTitle();
-					}
 					return _FullTitle;
 				}
 			}
 		}
+
+		//public string GetTitle(bool showBuild = true, bool showRunMode = true, bool showBuildDate = true, bool showArchitecture = true, bool showDescription = true, int versionNumbers = 3)
+		//{
+		//	return new AssemblyInfo().GetTitle(showBuild, showRunMode, showBuildDate, showArchitecture, showDescription, versionNumbers);
+		//}
+
 
 		public string GetTitle(bool showBuild = true, bool showRunMode = true, bool showBuildDate = true, bool showArchitecture = true, bool showDescription = true, int versionNumbers = 3)
 		{
@@ -143,11 +138,11 @@ namespace JocysCom.ClassLibrary.Configuration
 					case 2: s += " Beta 2"; break; // Feature Complete (FC)
 					case 3: s += " Beta 3"; break; // Technical Preview (TP)
 					case 4: s += " RC"; break;     // Release Candidate (RC)
-					case 5: s += " RTM"; break; // Release to Manufacturing (RTM)
-					default: break;// General Availability (GA) - Gold
+					case 5: s += " RTM"; break;    // Release to Manufacturing (RTM)
+					default: break;                // General Availability (GA) - Gold
 				}
 			}
-			var runMode = ConfigurationManager.AppSettings["RunMode"];
+			var runMode = SettingsParser.Current.Parse("RunMode", "");
 			var haveRunMode = !string.IsNullOrEmpty(runMode);
 			// If run mode is not specified then assume live.
 			var nonLive = haveRunMode && string.Compare(runMode, "LIVE", true) != 0;
@@ -184,6 +179,8 @@ namespace JocysCom.ClassLibrary.Configuration
 			{
 				s += " - " + Description;
 			}
+#if !NETSTANDARD
+
 			// Add elevated tag.
 			var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
 			var isElevated = identity.Owner != identity.User;
@@ -197,6 +194,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			else if (isElevated)
 				s += " (Administrator)";
 			// if (WinAPI.IsVista && WinAPI.IsElevated() && WinAPI.IsInAdministratorRole) this.Text += " (Administrator)";
+#endif
 			return s.Trim();
 		}
 
@@ -217,7 +215,7 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		public string GetWindowsUserName() { return GetInformation(5); }
 
-		string GetInformation(int WTSInfoClass)
+		private static string GetInformation(int WTSInfoClass)
 		{
 			// Use current context.
 			var WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
@@ -264,10 +262,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			// Read the linker TimeStamp
 			var offset = BitConverter.ToInt32(b, PE_HEADER_OFFSET);
 			var secondsSince1970 = BitConverter.ToInt32(b, offset + LINKER_TIMESTAMP_OFFSET);
-			// Convert the TimeStamp to a DateTime
-			var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-			var linkTimeUtc = epoch.AddSeconds(secondsSince1970);
-			var dt = TimeZoneInfo.ConvertTimeFromUtc(linkTimeUtc, tzi ?? TimeZoneInfo.Local);
+			var dt = GetDateTime(secondsSince1970);
 			return dt;
 		}
 
@@ -292,8 +287,10 @@ namespace JocysCom.ClassLibrary.Configuration
 		/// </remarks>
 		public static DateTime GetBuildDateTime(Assembly assembly, TimeZoneInfo tzi = null)
 		{
+			if (assembly == null)
+				throw new ArgumentNullException(nameof(assembly));
 			var names = assembly.GetManifestResourceNames();
-			DateTime dt;
+			var dt = default(DateTime);
 			foreach (var name in names)
 			{
 				if (!name.EndsWith("BuildDate.txt"))
@@ -307,6 +304,7 @@ namespace JocysCom.ClassLibrary.Configuration
 					return dt;
 				}
 			}
+#if !NETSTANDARD
 			// Constants related to the Windows PE file format.
 			const int PE_HEADER_OFFSET = 60;
 			const int LINKER_TIMESTAMP_OFFSET = 8;
@@ -318,27 +316,35 @@ namespace JocysCom.ClassLibrary.Configuration
 			// Read the linker TimeStamp
 			var offset = Marshal.ReadInt32(hMod, PE_HEADER_OFFSET);
 			var secondsSince1970 = Marshal.ReadInt32(hMod, offset + LINKER_TIMESTAMP_OFFSET);
-			// Convert the TimeStamp to a DateTime
+			dt = GetDateTime(secondsSince1970);
+#endif
+			return dt;
+		}
+
+		/// <summary>
+		/// Convert the TimeStamp to a DateTime
+		/// </summary>
+		static DateTime GetDateTime(int secondsSince1970, TimeZoneInfo tzi = null)
+		{
 			var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 			var linkTimeUtc = epoch.AddSeconds(secondsSince1970);
-			dt = TimeZoneInfo.ConvertTimeFromUtc(linkTimeUtc, tzi ?? TimeZoneInfo.Local);
-			return dt;
+			return TimeZoneInfo.ConvertTimeFromUtc(linkTimeUtc, tzi ?? TimeZoneInfo.Local);
 		}
 
 		public string AssemblyPath
 		{
 			get
 			{
-				string codeBase = _assembly.CodeBase;
+				string codeBase = Assembly.CodeBase;
 				UriBuilder uri = new UriBuilder(codeBase);
 				string path = Uri.UnescapeDataString(uri.Path);
 				return path;
 			}
 		}
 
-		public string AssemblyFullName { get { return _assembly.GetName().FullName.ToString(); } }
-		public string AssemblyName { get { return _assembly.GetName().Name.ToString(); } }
-		public string CodeBase { get { return _assembly.CodeBase; } }
+		public string AssemblyFullName { get { return Assembly.GetName().FullName.ToString(); } }
+		public string AssemblyName { get { return Assembly.GetName().Name.ToString(); } }
+		public string CodeBase { get { return Assembly.CodeBase; } }
 
 		public string Company { get { return GetAttribute<AssemblyCompanyAttribute>(a => a.Company); } }
 		public string Product { get { return GetAttribute<AssemblyProductAttribute>(a => a.Product); } }
@@ -350,16 +356,17 @@ namespace JocysCom.ClassLibrary.Configuration
 		public string FileVersion { get { return GetAttribute<AssemblyFileVersionAttribute>(a => a.Version); } }
 		public string ProductGuid { get { return GetAttribute<GuidAttribute>(a => a.Value); } }
 
-		public Version Version { get { return _assembly.GetName().Version; } }
+		public Version Version { get { return Assembly.GetName().Version; } }
 
 		string GetAttribute<T>(Func<T, string> value) where T : Attribute
 		{
-			T attribute = (T)Attribute.GetCustomAttribute(_assembly, typeof(T));
+			T attribute = (T)Attribute.GetCustomAttribute(Assembly, typeof(T));
 			return value.Invoke(attribute);
 		}
 
-		public FileInfo GetAppDataFile(bool userLevel, string format, params object[] args)
+		public string GetAppDataPath(bool userLevel, string format, params object[] args)
 		{
+			// Get writable application folder.
 			var specialFolder = userLevel
 				? Environment.SpecialFolder.ApplicationData
 				: Environment.SpecialFolder.CommonApplicationData;
@@ -367,8 +374,15 @@ namespace JocysCom.ClassLibrary.Configuration
 				Environment.GetFolderPath(specialFolder),
 				Company,
 				Product);
+			// Get file name.
 			var file = string.Format(format, args);
 			var path = Path.Combine(folder, file);
+			return path;
+		}
+
+		public FileInfo GetAppDataFile(bool userLevel, string format, params object[] args)
+		{
+			var path = GetAppDataPath(userLevel, format, args);
 			return new FileInfo(path);
 		}
 

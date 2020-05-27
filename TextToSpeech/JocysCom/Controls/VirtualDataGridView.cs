@@ -7,6 +7,11 @@ using System.Windows.Forms;
 namespace JocysCom.ClassLibrary.Controls
 {
 
+	/// <summary>
+	/// This control can be used when you want to display very large quantities of data and
+	/// don't want to create control for every single row. This controls is using VirtualMode (= true),
+	/// which will create controls on the fly only for rows, which must be displayed on the screen.
+	/// </summary>
 	public class VirtualDataGridView : DataGridView
 	{
 
@@ -49,8 +54,6 @@ namespace JocysCom.ClassLibrary.Controls
 			UserDeletingRow += _grid_UserDeletingRow;
 		}
 
-		Type _type;
-
 		/// <summary>
 		/// Override default data source.
 		/// </summary>
@@ -63,25 +66,29 @@ namespace JocysCom.ClassLibrary.Controls
 			get { return _Data; }
 			set
 			{
-				if (value != null)
-				{
-					_type = value.GetType().GetGenericArguments()[0];
-				}
-				// If data is bound already.
-				if (_Data != null)
+				// If old data is bound already or value is null and data must be unbound then...
+				if (_Data != null || value == null)
 				{
 					// Remove old event.
 					_Data.ListChanged -= _Data_ListChanged;
 					RowCount = 0;
 					_Data = null;
+					_Type = null;
 				}
-				_Data = (IBindingList)value;
-				_Data.ListChanged += _Data_ListChanged;
-				// Set the row count, including the row for new records.
-				RowCount = _Data.Count;
+				if (value != null)
+				{
+					// Get type of list item.
+					_Type = value.GetType().GetGenericArguments()[0];
+					_Data = (IBindingList)value;
+					_Data.ListChanged += _Data_ListChanged;
+					// Set the row count, including the row for new records.
+					RowCount = _Data.Count;
+				}
 			}
 		}
 		IBindingList _Data;
+
+		Type _Type;
 
 		bool suspendItemDeleted;
 
@@ -91,6 +98,8 @@ namespace JocysCom.ClassLibrary.Controls
 		/// <param name="items"></param>
 		public void RemoveItems(params object[] items)
 		{
+			if (items == null)
+				throw new ArgumentNullException(nameof(items));
 			suspendItemDeleted = true;
 			foreach (var item in items)
 			{
@@ -128,6 +137,8 @@ namespace JocysCom.ClassLibrary.Controls
 
 		public void InvalidateVisible(params int[] indexes)
 		{
+			if (indexes == null)
+				throw new ArgumentNullException(nameof(indexes));
 			if (FirstDisplayedCell == null)
 				return;
 			var firstRowIndex = FirstDisplayedCell.RowIndex;
@@ -159,7 +170,7 @@ namespace JocysCom.ClassLibrary.Controls
 			if (e.RowIndex < 0)
 				return;
 			var propertyName = Columns[e.ColumnIndex].DataPropertyName;
-			var p = _type.GetProperty(propertyName);
+			var p = _Type.GetProperty(propertyName);
 			if (p == null)
 				return;
 			if (e.RowIndex >= _Data.Count)
@@ -178,7 +189,7 @@ namespace JocysCom.ClassLibrary.Controls
 			if (e.RowIndex < 0)
 				return;
 			var propertyName = Columns[e.ColumnIndex].DataPropertyName;
-			var p = _type.GetProperty(propertyName);
+			var p = _Type.GetProperty(propertyName);
 			if (p == null)
 				return;
 			// Get item to edit.
@@ -194,7 +205,7 @@ namespace JocysCom.ClassLibrary.Controls
 		{
 			// Create a new Customer object when the user edits
 			// the row for new records.
-			editItem = Activator.CreateInstance(_type);
+			editItem = Activator.CreateInstance(_Type);
 			editIndex = Rows.Count - 1;
 		}
 
@@ -222,7 +233,7 @@ namespace JocysCom.ClassLibrary.Controls
 			{
 				// If the user has cancelled the edit of a newly created row, 
 				// replace the corresponding Customer object with a new, empty one.
-				editItem = Activator.CreateInstance(_type);
+				editItem = Activator.CreateInstance(_Type);
 			}
 			else
 			{

@@ -77,22 +77,22 @@ namespace JocysCom.ClassLibrary.Collections
 
 
 	[Serializable, StructLayout(LayoutKind.Sequential)]
-	public class KeyValue<K, V> : INotifyPropertyChanged
+	public class KeyValue<TKey, TValue> : INotifyPropertyChanged
 	{
 
 		public KeyValue()
 		{
 		}
 
-		public KeyValue(K key, V value)
+		public KeyValue(TKey key, TValue value)
 		{
 			_key = key;
 			_value = value;
 		}
 
-		K _key;
-		V _value;
-		public K Key
+		TKey _key;
+		TValue _value;
+		public TKey Key
 		{
 			get { return _key; }
 			set
@@ -104,7 +104,7 @@ namespace JocysCom.ClassLibrary.Collections
 				}
 			}
 		}
-		public V Value
+		public TValue Value
 		{
 			get { return _value; }
 			set

@@ -283,6 +283,8 @@
     <Compile Include="Controls\VoicesUserControl.Designer.cs">
       <DependentUpon>VoicesUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="JocysCom\Configuration\SettingsParser.cs" />
+    <Compile Include="JocysCom\Controls\ControlsHelper.Windows.cs" />
     <Compile Include="JocysCom\Security\Encryption.cs" />
     <Compile Include="Resources\SoundTouch\NET\AntiAliasFilter.cs" />
     <Compile Include="Resources\SoundTouch\NET\BpmDetect.cs" />

@@ -19,22 +19,32 @@ namespace JocysCom.ClassLibrary.Configuration
 	public class SettingsData<T> : ISettingsData
 	{
 
-		public SettingsData() { }
+		public SettingsData()
+		{
+			Initialize();
+		}
 
 		public SettingsData(string fileName, bool userLevel = false, string comment = null)
 		{
+			Initialize(fileName, userLevel, comment);
+		}
+
+		void Initialize(string fileName = null, bool userLevel = false, string comment = null)
+		{
 			Items = new SortableBindingList<T>();
 			_Comment = comment;
+			// Get writable application folder.
 			var specialFolder = userLevel
 				? Environment.SpecialFolder.ApplicationData
 				: Environment.SpecialFolder.CommonApplicationData;
-			var file = string.IsNullOrEmpty(fileName)
-				? string.Format("{0}.xml", typeof(T).Name)
-				: fileName;
 			var folder = string.Format("{0}\\{1}\\{2}",
 				Environment.GetFolderPath(specialFolder),
 				Application.CompanyName,
 				Application.ProductName);
+			// Get file name.
+			var file = string.IsNullOrEmpty(fileName)
+				? string.Format("{0}.xml", typeof(T).Name)
+				: fileName;
 			var path = Path.Combine(folder, file);
 			_XmlFile = new FileInfo(path);
 		}
@@ -151,7 +161,9 @@ namespace JocysCom.ClassLibrary.Configuration
 							data = DeserializeData(bytes, fi.Name.EndsWith(".gz"));
 							break;
 						}
+#pragma warning disable CA1031 // Do not catch general exception types
 						catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
 						{
 							var backupFile = fi.FullName + ".bak";
 							var sb = new StringBuilder();
@@ -243,11 +255,11 @@ namespace JocysCom.ClassLibrary.Configuration
 				var assembly = assemblies[a];
 				var names = assembly.GetManifestResourceNames();
 				// Get compressed resource name.
-				var name = names.FirstOrDefault(x => x.EndsWith(_XmlFile.Name + ".gz"));
+				var name = names.FirstOrDefault(x => x.EndsWith(_XmlFile.Name + ".gz", StringComparison.OrdinalIgnoreCase));
 				if (string.IsNullOrEmpty(name))
 				{
 					// Get uncompressed resource name.
-					name = names.FirstOrDefault(x => x.EndsWith(_XmlFile.Name));
+					name = names.FirstOrDefault(x => x.EndsWith(_XmlFile.Name, StringComparison.OrdinalIgnoreCase));
 				}
 				// If internal preset was found.
 				if (!string.IsNullOrEmpty(name))
@@ -260,7 +272,8 @@ namespace JocysCom.ClassLibrary.Configuration
 						sr.BaseStream.CopyTo(memstream);
 						bytes = memstream.ToArray();
 					}
-					data = DeserializeData(bytes, name.EndsWith(".gz"));
+					sr.Dispose();
+					data = DeserializeData(bytes, name.EndsWith(".gz", StringComparison.OrdinalIgnoreCase));
 					success = true;
 					break;
 				}
