@@ -550,8 +550,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 							xmlFile = string.Format("{0}.xml", uniqueName);
 							xmlFullPath = Path.Combine(dir.FullName, xmlFile);
 							xmlFi = new FileInfo(xmlFullPath);
-							// Prefer MP3 audio file first (custom recorded file).
-							wavFile = string.Format("{0}.mp3", uniqueName);
+							// Get WAV file path.
+							wavFile = string.Format("{0}.wav", uniqueName);
 							wavFullPath = Path.Combine(dir.FullName, wavFile);
 							wavFi = new FileInfo(wavFullPath);
 						}
@@ -567,18 +567,22 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 								xmlFullPath = Path.Combine(dir.FullName, xmlFile);
 								xmlFi = new FileInfo(xmlFullPath);
 							}
-							// If wav do not exist or file is invalid.
-							if (!wavFi.Exists || wavFi.Length == 0)
+							// Read WAV file by default.
+							var audioFi = wavFi;
+							// Look for MP3 audio file (custom recorded file).
+							var mp3File = string.Format("{0}.mp3", uniqueName);
+							var mp3FullPath = Path.Combine(dir.FullName, wavFile);
+							var mp3Fi = new FileInfo(wavFullPath);
+							// If MP3 audio file was found then...
+							if (mp3Fi.Exists && mp3Fi.Length > 0)
 							{
-								// Get WAV file path.
-								wavFile = string.Format("{0}.wav", uniqueName);
-								wavFullPath = Path.Combine(dir.FullName, wavFile);
-								wavFi = new FileInfo(wavFullPath);
+								// Prefer to read custon file.
+								audioFi = mp3Fi;
 							}
-							// If both files exists and Wav file is valid then...
-							if (xmlFi.Exists && wavFi.Exists && wavFi.Length > 0)
+							// If both files exists and audio file is valid then...
+							if (xmlFi.Exists && audioFi.Exists && audioFi.Length > 0)
 							{
-								using (Stream stream = new FileStream(wavFi.FullName, FileMode.Open, FileAccess.Read))
+								using (Stream stream = new FileStream(audioFi.FullName, FileMode.Open, FileAccess.Read))
 								{
 									// Load existing XML and WAV data into PlayItem.
 									var ms = new MemoryStream();
