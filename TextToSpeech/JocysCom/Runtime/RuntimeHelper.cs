@@ -290,7 +290,8 @@ namespace JocysCom.ClassLibrary.Runtime
 			var dest = t.InvokeMember("", BindingFlags.CreateInstance, null, o, null);
 			foreach (var pi in properties)
 			{
-				if (pi.CanWrite) pi.SetValue(dest, pi.GetValue(o, null), null);
+				if (pi.CanWrite)
+					pi.SetValue(dest, pi.GetValue(o, null), null);
 			}
 			return dest;
 		}
@@ -334,7 +335,8 @@ namespace JocysCom.ClassLibrary.Runtime
 					foreach (var p in props)
 					{
 						var value = p.GetValue(o);
-						writer.Write((dynamic)value);
+						dynamic dv = (dynamic)value;
+						var _ = writer.Write(dv);
 					}
 					ms.Flush();
 					ms.Seek(0, SeekOrigin.Begin);
@@ -358,24 +360,59 @@ namespace JocysCom.ClassLibrary.Runtime
 						object v;
 						switch (typeCode)
 						{
-							case TypeCode.Boolean: v = reader.ReadBoolean(); break;
-							case TypeCode.Char: v = reader.ReadChar(); break;
-							case TypeCode.DBNull: v = DBNull.Value; break;
-							case TypeCode.DateTime: v = new DateTime(reader.ReadInt64()); break;
-							case TypeCode.Decimal: v = reader.ReadDecimal(); break;
-							case TypeCode.Double: v = reader.ReadDouble(); break;
-							case TypeCode.Empty: v = null; break;
-							case TypeCode.SByte: v = reader.ReadSByte(); break;
-							case TypeCode.Int16: v = reader.ReadInt16(); break;
-							case TypeCode.Int32: v = reader.ReadInt32(); break;
-							case TypeCode.Int64: v = reader.ReadInt64(); break;
-							case TypeCode.Single: v = reader.ReadSingle(); break;
-							case TypeCode.String: v = reader.ReadString(); break;
-							case TypeCode.Byte: v = reader.ReadByte(); break;
-							case TypeCode.UInt16: v = reader.ReadUInt16(); break;
-							case TypeCode.UInt32: v = reader.ReadUInt32(); break;
-							case TypeCode.UInt64: v = reader.ReadUInt64(); break;
-							default: throw new Exception("Non Serializable Object: " + p.PropertyType);
+							case TypeCode.Boolean:
+								v = reader.ReadBoolean();
+								break;
+							case TypeCode.Char:
+								v = reader.ReadChar();
+								break;
+							case TypeCode.DBNull:
+								v = DBNull.Value;
+								break;
+							case TypeCode.DateTime:
+								v = new DateTime(reader.ReadInt64());
+								break;
+							case TypeCode.Decimal:
+								v = reader.ReadDecimal();
+								break;
+							case TypeCode.Double:
+								v = reader.ReadDouble();
+								break;
+							case TypeCode.Empty:
+								v = null;
+								break;
+							case TypeCode.SByte:
+								v = reader.ReadSByte();
+								break;
+							case TypeCode.Int16:
+								v = reader.ReadInt16();
+								break;
+							case TypeCode.Int32:
+								v = reader.ReadInt32();
+								break;
+							case TypeCode.Int64:
+								v = reader.ReadInt64();
+								break;
+							case TypeCode.Single:
+								v = reader.ReadSingle();
+								break;
+							case TypeCode.String:
+								v = reader.ReadString();
+								break;
+							case TypeCode.Byte:
+								v = reader.ReadByte();
+								break;
+							case TypeCode.UInt16:
+								v = reader.ReadUInt16();
+								break;
+							case TypeCode.UInt32:
+								v = reader.ReadUInt32();
+								break;
+							case TypeCode.UInt64:
+								v = reader.ReadUInt64();
+								break;
+							default:
+								throw new Exception("Non Serializable Object: " + p.PropertyType);
 						}
 						p.SetValue(o, v);
 					}
@@ -500,18 +537,154 @@ namespace JocysCom.ClassLibrary.Runtime
 		public static bool IsNullable(Type t)
 		{
 			// Throw exception if type not supplied.
-			if (t == null) throw new ArgumentNullException(nameof(t));
+			if (t == null)
+				throw new ArgumentNullException(nameof(t));
 			// Special Handling - known cases where Exceptions would be thrown
-			else if (t == typeof(void)) throw new Exception("There is no Nullable version of void");
+			else if (t == typeof(void))
+				throw new Exception("There is no Nullable version of void");
 			// If this is not a value type, it is a reference type, so it is automatically nullable.
 			// (NOTE: All forms of Nullable<T> are value types)
-			if (!t.IsValueType) return true;
+			if (!t.IsValueType)
+				return true;
 			// Return true if underlying Type exists (this is faster than line above).
 			return Nullable.GetUnderlyingType(t) != null;
 		}
 
-
 		#endregion
 
+		public static void DetectType(string[] values, out Type type, out int sizeMin, out int sizeMax, out bool isAscii, out bool haveEmpty)
+		{
+			if (values == null)
+				throw new ArgumentNullException(nameof(values));
+			type = typeof(string);
+			sizeMin = int.MaxValue;
+			sizeMax = 0;
+			isAscii = true;
+			haveEmpty = false;
+			// Order matters. First available type will be returned.
+			// If all values can be parsed to Int16 then it can be parsed to Int32 and Int64 too.
+			var tcs = new TypeCode[]
+			{
+				TypeCode.Boolean,
+				TypeCode.Byte,
+				TypeCode.SByte,
+				TypeCode.Int16,
+				TypeCode.Int32,
+				TypeCode.Int64,
+				TypeCode.UInt16,
+				TypeCode.UInt32,
+				TypeCode.UInt64,
+				TypeCode.Single,
+				TypeCode.Char,
+				TypeCode.DateTime,
+				TypeCode.Double,
+				TypeCode.Decimal,
+				TypeCode.String,
+				// TypeCode.DBNull,
+				// TypeCode.Empty,
+				// TypeCode.Object,
+			}.ToList();
+			// All available types.
+			var available = new Dictionary<TypeCode, Type>();
+			tcs.ForEach(x => available.Add(x, Type.GetType(nameof(System) + "." + x)));
+			//Convert.ChangeType(value, colType);
+			foreach (var value in values)
+			{
+				if (string.IsNullOrEmpty(value))
+				{
+					haveEmpty = true;
+					continue;
+				}
+				// Determine string limits.
+				sizeMin = Math.Min(sizeMin, value.Length);
+				sizeMax = Math.Max(sizeMax, value.Length);
+				isAscii &= value.All(x => x < 128);
+				// Get available types to test against.
+				var availableTypeCodes = available.Keys.ToArray();
+				// If only string was left.
+				if (availableTypeCodes.Length == 1 && availableTypeCodes[0] == TypeCode.String)
+					return;
+				// Test against available types.
+				foreach (var tc in availableTypeCodes)
+				{
+					switch (tc)
+					{
+						case TypeCode.Boolean:
+							bool resultBool;
+							if (!bool.TryParse(value, out resultBool))
+								available.Remove(tc);
+							break;
+						case TypeCode.Byte:
+							byte resultByte;
+							if (!byte.TryParse(value, out resultByte))
+								available.Remove(tc);
+							break;
+						case TypeCode.Char:
+							char resultChar;
+							if (!char.TryParse(value, out resultChar))
+								available.Remove(tc);
+							break;
+						case TypeCode.DateTime:
+							DateTime resultDateTime;
+							if (!DateTime.TryParse(value, out resultDateTime))
+								available.Remove(tc);
+							break;
+						case TypeCode.Decimal:
+							decimal resultDecimal;
+							if (!decimal.TryParse(value, out resultDecimal))
+								available.Remove(tc);
+							break;
+						case TypeCode.Double:
+							double resultDouble;
+							if (!double.TryParse(value, out resultDouble))
+								available.Remove(tc);
+							break;
+						case TypeCode.Int16:
+							short resultShort;
+							if (!short.TryParse(value, out resultShort))
+								available.Remove(tc);
+							break;
+						case TypeCode.Int32:
+							int resultInt;
+							if (!int.TryParse(value, out resultInt))
+								available.Remove(tc);
+							break;
+						case TypeCode.Int64:
+							long resultLong;
+							if (!long.TryParse(value, out resultLong))
+								available.Remove(tc);
+							break;
+						case TypeCode.SByte:
+							sbyte resultSByte;
+							if (!sbyte.TryParse(value, out resultSByte))
+								available.Remove(tc);
+							break;
+						case TypeCode.Single:
+							float resultFloat;
+							if (!float.TryParse(value, out resultFloat))
+								available.Remove(tc);
+							break;
+						case TypeCode.UInt16:
+							ushort resultUShort;
+							if (!ushort.TryParse(value, out resultUShort))
+								available.Remove(tc);
+							break;
+						case TypeCode.UInt32:
+							uint resultUInt;
+							if (!uint.TryParse(value, out resultUInt))
+								available.Remove(tc);
+							break;
+						case TypeCode.UInt64:
+							ulong resultULong;
+							if (!ulong.TryParse(value, out resultULong))
+								available.Remove(tc);
+							break;
+						default:
+							break;
+					}
+				}
+			}
+			type = available.FirstOrDefault().Value;
+		}
 	}
 }

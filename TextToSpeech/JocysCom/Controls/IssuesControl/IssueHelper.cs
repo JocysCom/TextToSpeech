@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Management;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -35,12 +36,12 @@ namespace JocysCom.ClassLibrary.Controls.IssuesControl
 		/// <summary>
 		/// Use registry because "SELECT Name, Caption FROM Win32_Product" management query object is super slow.
 		/// </summary>
-		/// <param name="name">You can use regular expression.</param>
+		/// <param name="regex">You can use regular expression.</param>
 		/// <param name="uninstall"></param>
 		/// <returns></returns>
-		public static bool IsInstalled(string name, bool uninstall = false)
+		public static bool IsInstalled(string regex, bool uninstall = false)
 		{
-			var nameRx = new Regex(name);
+			var nameRx = new Regex(regex);
 			var args = new List<SearchArg>();
 			args.Add(new SearchArg(Registry.CurrentUser, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", "DisplayName", "UninstallPath", "UninstallString"));
 			args.Add(new SearchArg(Registry.LocalMachine, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", "DisplayName", "UninstallPath", "UninstallString"));
@@ -86,7 +87,7 @@ namespace JocysCom.ClassLibrary.Controls.IssuesControl
 											: uninstallCommand.IndexOf(' ');
 										var upath = uninstallCommand.Substring(0, splitIndex);
 										var uargs = uninstallCommand.Substring(splitIndex);
-										OpenPath(upath, uargs);
+										ControlsHelper.OpenPath(upath, uargs);
 									}
 								}
 								return true;
@@ -191,23 +192,6 @@ namespace JocysCom.ClassLibrary.Controls.IssuesControl
 			return list.Count > 0;
 		}
 
-		public static void OpenPath(string path, string arguments = null)
-		{
-			try
-			{
-				var fi = new FileInfo(path);
-				//if (!fi.Exists) return;
-				// Brings up the "Windows cannot open this file" dialog if association not found.
-				var psi = new ProcessStartInfo(path);
-				psi.UseShellExecute = true;
-				psi.WorkingDirectory = fi.Directory.FullName;
-				psi.ErrorDialog = true;
-				if (arguments != null) psi.Arguments = arguments;
-				Process.Start(psi);
-			}
-			catch (Exception) { }
-		}
-
 		public static void HoldWhileRunning(string processName, string argumentFilter = null)
 		{
 			var semaphore = new SemaphoreSlim(0);
@@ -255,6 +239,60 @@ namespace JocysCom.ClassLibrary.Controls.IssuesControl
 			// Wait here until all items returns to the pool.
 			semaphore.Wait();
 			timer.Dispose();
+		}
+
+
+		public static bool DownloadAndInstall(Uri uri, string localPath, Uri infoPage, bool runElevated = false)
+		{
+			try
+			{
+				var file = DownloadFile(uri, localPath);
+				if (runElevated)
+				{
+					var proc = new ProcessStartInfo();
+					proc.UseShellExecute = true;
+					proc.WorkingDirectory = Environment.CurrentDirectory;
+					proc.FileName = file.FullName;
+					proc.Verb = "runas";
+					Process.Start(proc);
+					//Win32.UacHelper.RunElevatedAsync(file.FullName, null);
+				}
+				else
+				{
+					ControlsHelper.OpenPath(file.FullName);
+				}
+				return true;
+			}
+			catch (Exception ex)
+			{
+				var form = new MessageBoxForm();
+				form.StartPosition = FormStartPosition.CenterParent;
+				ControlsHelper.CheckTopMost(form);
+				var text = string.Format("Unable to download {0} file:\r\n\r\n{1}\r\n\r\nOpen source web page?",
+					uri.AbsoluteUri, ex.Message);
+				var result = form.ShowForm(text, "Download Error", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+				form.Dispose();
+				if (result == DialogResult.Yes)
+				{
+					ControlsHelper.OpenUrl("https://support.microsoft.com/en-gb/help/2977003/the-latest-supported-visual-c-downloads");
+				}
+			}
+			return false;
+		}
+
+		public static FileInfo DownloadFile(Uri uri, string localPath)
+		{
+			var fileName = uri.Segments.Last();
+			var webClient = new System.Net.WebClient();
+			var localFile = new FileInfo(localPath);
+			if (localFile.Exists)
+				localFile.Delete();
+			//AddLog("Downloading File: {0}", MoreInfo.AbsoluteUri);
+			webClient.DownloadFile(uri, localFile.FullName);
+			localFile.Refresh();
+			webClient.Dispose();
+			// AddLog("Done");
+			return localFile;
 		}
 
 	}

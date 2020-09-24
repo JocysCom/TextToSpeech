@@ -21,6 +21,11 @@ namespace JocysCom.ClassLibrary.Drawing
 			return b;
 		}
 
+#if NETCOREAPP // .NET Core
+#elif NETSTANDARD // .NET Standard
+#else // .NET Framework
+
+
 		/// <summary>
 		/// Take screenshot.
 		/// </summary>
@@ -39,6 +44,9 @@ namespace JocysCom.ClassLibrary.Drawing
 			var sh = s.Bounds.Height;
 			CaptureImage(ref b, 0, 0, sw, sh);
 		}
+
+#endif
+
 		public static void CaptureImage(ref Bitmap b, int x, int y, int w, int h)
 		{
 			var format = System.Drawing.Imaging.PixelFormat.Format24bppRgb;
@@ -214,14 +222,16 @@ namespace JocysCom.ClassLibrary.Drawing
 			return result;
 		}
 
-		public static bool SaveToFile(string fileName, Image image)
+		public static bool SaveToFile(string fileName, Image image, bool createFolder = false)
 		{
-			return SaveToFile(fileName, image, 100L);
+			return SaveToFile(fileName, image, 100L, createFolder);
 		}
 
-		public static bool SaveToFile(string fileName, Image image, long quality)
+		public static bool SaveToFile(string fileName, Image image, long quality, bool createFolder = false)
 		{
-			System.IO.FileInfo file = new System.IO.FileInfo(fileName);
+			var file = new System.IO.FileInfo(fileName);
+			if (createFolder && !file.Directory.Exists)
+				file.Directory.Create();
 			switch (file.Extension)
 			{
 				case ".jpg":

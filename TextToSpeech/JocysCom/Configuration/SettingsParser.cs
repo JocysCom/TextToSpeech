@@ -1,14 +1,17 @@
 ﻿using System;
+#if NETCOREAPP // .NET Core
+using Microsoft.Extensions.Configuration;
+#elif NETSTANDARD // .NET Standard
 using System.Globalization;
-using System.IO;
 using System.Net;
 using System.Linq;
-using System.Xml.Linq;
 using System.Collections.Generic;
-#if NETSTANDARD // If .NET Standard (Xamarin) preprocessor directive is set then...
-using Xamarin.Forms;
-#else
+using System.IO;
+#else // .NET Framework...
 using System.Configuration;
+#endif
+#if __MOBILE__
+	using Xamarin.Forms;
 #endif
 
 namespace JocysCom.ClassLibrary.Configuration
@@ -28,18 +31,51 @@ namespace JocysCom.ClassLibrary.Configuration
 		public static SettingsParser Current { get; } = new SettingsParser();
 
 		/// <summary>Parse all IConvertible types, like value types, with one function.</summary>
-		public T Parse<T>(string name, T defaultValue = default(T)) where T : IConvertible
+		public T Parse<T>(string name, T defaultValue = default(T))
 		{
 			var v = GetValue(name);
+			return ParseValue<T>(v, defaultValue);
+		}
+
+		public static object ParseValue(Type t, string v, object defaultValue = null)
+		{
+			if (t == null)
+				throw new ArgumentNullException(nameof(t));
 			if (v == null)
 				return defaultValue;
-			return (T)System.Convert.ChangeType(v, typeof(T));
+			if (typeof(System.Drawing.Color).IsAssignableFrom(t))
+				return System.Drawing.Color.FromName(v);
+			// Get Parse method with string parameter.
+			var m = t.GetMethod("Parse", new[] { typeof(string) });
+			if (m != null)
+				return m.Invoke(null, new[] { v });
+			//if (typeof(IPAddress).IsAssignableFrom(t))
+			//	return IPAddress.Parse(v);
+			//if (typeof(TimeSpan).IsAssignableFrom(t))
+			//	return TimeSpan.Parse(v, CultureInfo.InvariantCulture);
+			if (t.IsEnum)
+				return Enum.Parse(t, v, true);
+			// If type can be converted then convert.
+			if (typeof(IConvertible).IsAssignableFrom(t))
+				return System.Convert.ChangeType(v, t);
+			return defaultValue;
 		}
+
+		public static T ParseValue<T>(string v, T defaultValue = default(T))
+		{
+			return (T)ParseValue(typeof(T), v, defaultValue);
+		}
+
+		public static Func<string, string> _GetValue;
 
 #if NETSTANDARD // If .NET Standard (Xamarin) preprocessor directive is set then...
 
 		string GetValue(string name)
 		{
+			if (_GetValue != null)
+				return _GetValue(ConfigPrefix + name);
+#if __MOBILE__
+
 			var p = Application.Current.Properties;
 			var key = ConfigPrefix + name;
 			if (!p.Keys.Contains(key))
@@ -51,7 +87,12 @@ namespace JocysCom.ClassLibrary.Configuration
 				return null;
 			}
 			return (string)p[key];
+#else
+			return null;
+#endif
 		}
+
+#if __MOBILE__
 
 		public static Dictionary<string, string> EmbeddedAppSettings;
 
@@ -77,43 +118,55 @@ namespace JocysCom.ClassLibrary.Configuration
 					var v = item.Attribute("value").Value;
 					EmbeddedAppSettings.Add(k, v);
 				}
-
 			}
 		}
 
-#else
-
-		string GetValue(string name)=>
-			ConfigurationManager.AppSettings[ConfigPrefix + name];
-
 #endif
 
-		/// <summary>TimeSpan is structure. Default is value.</summary>
-		public TimeSpan ParseTimeSpan(string name, TimeSpan defaultValue = default(TimeSpan))
+#elif NETCOREAPP // if .NET Core preprocessor directive is set then...
+
+		/*
+			// Call InitializeParser to initialize parser in .NET Core.
+			public class Startup
+			{
+				public Startup(IConfiguration configuration)
+				{
+					Configuration = configuration;
+					JocysCom.ClassLibrary.Configuration.SettingsParser.InitializeParser(Configuration);
+				}
+			}
+		*/
+
+		static IConfiguration Configuration { get; set; }
+
+		/// <summary>
+		/// Use this method to initialize configuration in .NET core.
+		/// </summary>
+		/// <param name="configuration"></param>
+		public static void InitializeParser(IConfiguration configuration)
 		{
-			var v = GetValue(name);
-			if (v == null)
-				return defaultValue;
-			return TimeSpan.Parse(v, CultureInfo.InvariantCulture);
+			Configuration = configuration;
+			// Override GetValue function.
+			_GetValue = (string name) =>
+				Configuration.GetValue<string>(name);
 		}
 
-		/// <summary>Enumeration is structure. Default is value.</summary>
-		public T ParseEnum<T>(string name, T defaultValue = default(T), bool ignoreCase = false) where T : struct, IComparable, IFormattable, IConvertible
+		private string GetValue(string name)
 		{
-			var v = GetValue(name);
-			if (v == null)
-				return defaultValue;
-			return (T)Enum.Parse(typeof(T), v, ignoreCase);
+			return _GetValue(ConfigPrefix + name);
 		}
 
-		/// <summary>IP Address is class. Default is null.</summary>
-		public IPAddress ParseIPAddress(string name, IPAddress defaultValue = default(IPAddress))
-		{
-			var v = GetValue(name);
-			if (v == null)
-				return defaultValue;
-			return IPAddress.Parse(v);
-		}
+
+#else // NETFRAMEWORK - .NET Framework...
+
+		private string GetValue(string name)
+{
+	if (_GetValue != null)
+		return _GetValue(ConfigPrefix + name);
+	return ConfigurationManager.AppSettings[ConfigPrefix + name];
+}
+
+#endif
 
 	}
 }

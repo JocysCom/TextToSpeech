@@ -1,4 +1,8 @@
-﻿using Microsoft.Win32;
+﻿#if NETCOREAPP // .NET Core
+#elif NETSTANDARD // .NET Standard
+#else // .NET Framework
+
+using Microsoft.Win32;
 using System;
 
 namespace JocysCom.ClassLibrary
@@ -70,3 +74,5 @@ namespace JocysCom.ClassLibrary
 		}
 	}
 }
+#endif
+

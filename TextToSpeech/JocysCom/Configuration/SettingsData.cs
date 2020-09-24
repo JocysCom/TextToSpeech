@@ -61,6 +61,26 @@ namespace JocysCom.ClassLibrary.Configuration
 		[DataMember]
 		public SortableBindingList<T> Items { get; set; }
 
+		[NonSerialized]
+		private object _SyncRoot;
+
+		// Synchronization root for this object.
+		public virtual object SyncRoot
+		{
+			get
+			{
+				if (_SyncRoot == null)
+					System.Threading.Interlocked.CompareExchange<object>(ref _SyncRoot, new object(), null);
+				return _SyncRoot;
+			}
+		}
+
+		public T[] ItemsToArraySyncronized()
+		{
+			lock (SyncRoot)
+				return Items.ToArray();
+		}
+
 		[XmlIgnore]
 		System.Collections.IList ISettingsData.Items { get { return Items; } }
 
@@ -88,24 +108,22 @@ namespace JocysCom.ClassLibrary.Configuration
 			var ev = Saving;
 			if (ev != null)
 				ev(this, new EventArgs());
+			var items = ItemsToArraySyncronized();
 			lock (saveReadFileLock)
 			{
-				for (int i = 0; i < Items.Count; i++)
+				for (int i = 0; i < items.Length; i++)
 				{
-					var o = Items[i] as EntityObject;
-					if (o != null) o.EntityKey = null;
+					var o = items[i] as EntityObject;
+					if (o != null)
+						o.EntityKey = null;
 				}
 				var fi = new FileInfo(fileName);
 				if (!fi.Directory.Exists)
-				{
 					fi.Directory.Create();
-				}
 				byte[] bytes;
 				bytes = Serializer.SerializeToXmlBytes(this, Encoding.UTF8, true, _Comment);
 				if (fi.Name.EndsWith(".gz"))
-				{
 					bytes = SettingsHelper.Compress(bytes);
-				}
 				SettingsHelper.WriteIfDifferent(fi.FullName, bytes);
 			}
 		}
@@ -115,20 +133,20 @@ namespace JocysCom.ClassLibrary.Configuration
 			SaveAs(_XmlFile.FullName);
 		}
 
+		/// <summary>Remove with SyncRoot lock.</summary>
 		public void Remove(params T[] items)
 		{
-			foreach (var item in items)
-			{
+			lock (SyncRoot)
+				foreach (var item in items)
 				Items.Remove(item);
-			}
 		}
 
+		/// <summary>Add with SyncRoot lock.</summary>
 		public void Add(params T[] items)
 		{
-			foreach (var item in items)
-			{
-				Items.Add(item);
-			}
+			lock (SyncRoot)
+				foreach (var item in items)
+					Items.Add(item);
 		}
 
 		public delegate IList<T> ValidateDataDelegate(IList<T> items);
@@ -285,9 +303,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		SettingsData<T> DeserializeData(byte[] bytes, bool compressed)
 		{
 			if (compressed)
-			{
 				bytes = SettingsHelper.Decompress(bytes);
-			}
 			var data = Serializer.DeserializeFromXmlBytes<SettingsData<T>>(bytes);
 			return data;
 		}

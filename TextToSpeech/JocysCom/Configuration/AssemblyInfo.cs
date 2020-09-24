@@ -179,7 +179,10 @@ namespace JocysCom.ClassLibrary.Configuration
 			{
 				s += " - " + Description;
 			}
-#if !NETSTANDARD
+
+#if NETSTANDARD // .NET Standard
+#elif NETCOREAPP // .NET Core
+#else // .NET Framework
 
 			// Add elevated tag.
 			var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
@@ -278,7 +281,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		/// Option 2:
 		///     Create "Resources\BuildDate.txt" and set its "Build Action: Embedded Resource"
 		///     Add to pre-build event to work with latest .NET builds:
-		///     powershell -Command "(Get-Date).ToString(\"o\") | Out-File '$(ProjectDir)Resources\BuildDate.txt'
+		///     powershell.exe -Command "(Get-Date).ToString(\"o\") | Out-File "$(ProjectDir)Resources\BuildDate.txt"
 		///
 		/// Note:
 		/// The C# compiler (Roslyn) supports deterministic builds since Visual Studio 2015.
@@ -304,7 +307,10 @@ namespace JocysCom.ClassLibrary.Configuration
 					return dt;
 				}
 			}
-#if !NETSTANDARD
+#if NETSTANDARD // .NET Standard
+#elif NETCOREAPP // .NET Core
+#else // .NET Framework
+
 			// Constants related to the Windows PE file format.
 			const int PE_HEADER_OFFSET = 60;
 			const int LINKER_TIMESTAMP_OFFSET = 8;
@@ -361,7 +367,9 @@ namespace JocysCom.ClassLibrary.Configuration
 		string GetAttribute<T>(Func<T, string> value) where T : Attribute
 		{
 			T attribute = (T)Attribute.GetCustomAttribute(Assembly, typeof(T));
-			return value.Invoke(attribute);
+			return attribute == null
+				? "" 
+				: value.Invoke(attribute);
 		}
 
 		public string GetAppDataPath(bool userLevel, string format, params object[] args)

@@ -165,6 +165,10 @@ namespace JocysCom.ClassLibrary
 
 		#endregion
 
+#if NETCOREAPP // .NET Core
+#elif NETSTANDARD // .NET Standard
+#else // .NET Framework
+
 		#region Disk Activity
 
 		// Sometimes it is good to pause if there is too much disk activity.
@@ -197,6 +201,8 @@ namespace JocysCom.ClassLibrary
 
 		#endregion
 
+#endif
+
 		#region Comparisons
 
 		private static Regex _GuidRegex;
@@ -223,9 +229,9 @@ namespace JocysCom.ClassLibrary
 				: GuidRegex.IsMatch(s);
 		}
 
-		#endregion
+#endregion
 
-		#region IDisposable
+#region IDisposable
 
 		// Dispose() calls Dispose(true)
 		public void Dispose()
@@ -239,6 +245,11 @@ namespace JocysCom.ClassLibrary
 		{
 			if (disposing)
 			{
+
+#if NETCOREAPP // .NET Core
+#elif NETSTANDARD // .NET Standard
+#else // .NET Framework
+
 				// Free managed resources.
 				if (_diskReadCounter != null)
 				{
@@ -250,10 +261,11 @@ namespace JocysCom.ClassLibrary
 					_diskWriteCounter.Dispose();
 					_diskWriteCounter = null;
 				}
+#endif
 			}
 		}
 
-		#endregion
+#endregion
 
 	}
 

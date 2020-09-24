@@ -309,14 +309,13 @@ namespace JocysCom.ClassLibrary.Text
 
 
 		/// <summary>
-		/// Remove diacritic marks (accent marks) from characters.
-		/// éèàçùö =>eeacuo
-		/// http://blogs.msdn.com/michkap/archive/2007/05/14/2629747.aspx
+		/// Remove diacritic marks (accent marks) from characters and convert to ASCII.
+		/// "Fuerza Aérea (Edificio Cóndor) Heliport" -> "Fuerza Aerea (Edificio Condor) Heliport"
 		/// </summary>
-		/// <param name="s"></param>
-		public static string RemoveDiacriticMarks(string s)
+		/// <param name="input">The string to process.</param>
+		public static string ConvertToASCII(string input)
 		{
-			var stFormD = s.Normalize(NormalizationForm.FormD);
+			var stFormD = input.Normalize(NormalizationForm.FormD);
 			var sb = new StringBuilder();
 			for (var ich = 0; ich < stFormD.Length; ich++)
 			{
@@ -326,7 +325,10 @@ namespace JocysCom.ClassLibrary.Text
 					sb.Append(stFormD[ich]);
 				}
 			}
-			return (sb.ToString().Normalize(NormalizationForm.FormC));
+			var text = sb.ToString().Normalize(NormalizationForm.FormC);
+			// Remove rest chars.
+			text = FoldToASCII(text);
+			return text;
 		}
 
 		/// <summary>
@@ -406,7 +408,7 @@ namespace JocysCom.ClassLibrary.Text
 		public string GetKeyPrepare(string s)
 		{
 			// Filter accents: Hélan => Helan
-			s = RemoveDiacriticMarks(s);
+			s = ConvertToASCII(s);
 			// Convert to upper-case and replace non allowed chars with space.
 			s = RxAllowedInKey.Replace(s.ToUpper(), " ");
 			// Replace multiple spaces.
@@ -421,10 +423,15 @@ namespace JocysCom.ClassLibrary.Text
 			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(input);
 		}
 
+		/// <summary>
+		/// Convert text to ASCII key.
+		/// "Fuerza Aérea (Edificio Cóndor) Heliport" -> "Fuerza_Aerea_Edificio_Condor_Heliport"
+		/// </summary>
+		/// <param name="input">The string to convert.</param>
 		public static string GetKey(string input, bool capitalize)
 		{
 			// Filter accents: Hélan => Helan
-			var s = RemoveDiacriticMarks(input);
+			var s = ConvertToASCII(input);
 			// Convert to upper-case and keep only allowed chars.
 			s = RxAllowedInKey.Replace(s, " ");
 			// Replace multiple spaces.

@@ -27,12 +27,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			get { return SettingsDataGridView.Columns; }
 		}
 
-		public ISettingsData Data
-		{
-			get { return _Data; }
-			set { _Data = value; }
-		}
-		ISettingsData _Data;
+		public ISettingsData Data { get; set; }
 
 		public SettingsUserControl()
 		{
@@ -70,26 +65,6 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 		}
 
-		//public void SelectRow(string group)
-		//{
-		//	if (string.IsNullOrEmpty(group))
-		//	{
-		//		SettingsDataGridView.ClearSelection();
-		//		return;
-		//	}
-		//	foreach (DataGridViewRow row in SettingsDataGridView.Rows)
-		//	{
-		//		//var item = (Setting)row.DataBoundItem;
-		//		//if (item.Group.ToLower() == group.ToLower() && !row.Selected)
-		//		//{
-		//		//    SettingsDataGridView.ClearSelection();
-		//		//    row.Selected = true;
-		//		//    SettingsDataGridView.FirstDisplayedCell = row.Cells[0];
-		//		//    break;
-		//		//}
-		//	}
-		//}
-
 		public object[] GetSelectedItems()
 		{
 			var grid = SettingsDataGridView;
@@ -122,13 +97,9 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 			// If there are no records or last row is selected then...
 			if (insertIndex == -1 || insertIndex == (list.Count - 1))
-			{
 				list.Add(item);
-			}
 			else
-			{
 				list.Insert(insertIndex + 1, item);
-			}
 			var rowIndex = list.IndexOf(item);
 			var rowToEdit = grid.Rows[rowIndex];
 			// If row is not selected then...
@@ -156,14 +127,14 @@ namespace JocysCom.ClassLibrary.Configuration
 			dialog.FilterIndex = 1;
 			dialog.RestoreDirectory = true;
 			var fi = Data.XmlFile;
-			if (string.IsNullOrEmpty(dialog.FileName)) dialog.FileName = System.IO.Path.GetFileNameWithoutExtension(fi.Name);
-			if (string.IsNullOrEmpty(dialog.InitialDirectory)) dialog.InitialDirectory = fi.Directory.FullName;
+			if (string.IsNullOrEmpty(dialog.FileName))
+				dialog.FileName = System.IO.Path.GetFileNameWithoutExtension(fi.Name);
+			if (string.IsNullOrEmpty(dialog.InitialDirectory))
+				dialog.InitialDirectory = fi.Directory.FullName;
 			dialog.Title = "Import Settings File";
 			var result = dialog.ShowDialog();
 			if (result == DialogResult.OK)
-			{
 				Data.LoadFrom(dialog.FileName);
-			}
 		}
 
 		private void ExportButton_Click(object sender, EventArgs e)
@@ -175,14 +146,14 @@ namespace JocysCom.ClassLibrary.Configuration
 			dialog.FilterIndex = 1;
 			dialog.RestoreDirectory = true;
 			var fi = Data.XmlFile;
-			if (string.IsNullOrEmpty(dialog.FileName)) dialog.FileName = fi.Name;
-			if (string.IsNullOrEmpty(dialog.InitialDirectory)) dialog.InitialDirectory = fi.Directory.FullName;
+			if (string.IsNullOrEmpty(dialog.FileName))
+				dialog.FileName = fi.Name;
+			if (string.IsNullOrEmpty(dialog.InitialDirectory))
+				dialog.InitialDirectory = fi.Directory.FullName;
 			dialog.Title = "Export Settings File";
 			var result = dialog.ShowDialog();
 			if (result == DialogResult.OK)
-			{
 				Data.SaveAs(dialog.FileName);
-			}
 		}
 
 		private void DeleteButton_Click(object sender, EventArgs e)
@@ -195,9 +166,10 @@ namespace JocysCom.ClassLibrary.Configuration
 				return;
 			var message = string.Format("Are you sure you want to delete {0} item{1}?",
 					items.Length, items.Length == 1 ? "" : "s");
-			MessageBoxForm form = new MessageBoxForm();
+			var form = new MessageBoxForm();
 			form.StartPosition = FormStartPosition.CenterParent;
 			var result = form.ShowForm(message, "Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
+			form.Dispose();
 			if (result == DialogResult.OK)
 			{
 				grid.RemoveItems(items);
@@ -218,15 +190,9 @@ namespace JocysCom.ClassLibrary.Configuration
 			var row = grid.Rows[e.RowIndex];
 			var item = Data.Items[e.RowIndex];
 			if (enabledProperty == null)
-			{
 				enabledProperty = item.GetType().GetProperties().FirstOrDefault(x => x.Name == "Enabled" || x.Name == "IsEnabled");
-			}
 			var enabled = (bool)enabledProperty.GetValue(item, null);
-			// If this is not row header then...
-			if (e.ColumnIndex > -1)
-			{
-				var column = grid.Columns[e.ColumnIndex];
-			}
+			// Set style.
 			e.CellStyle.ForeColor = enabled
 				? grid.DefaultCellStyle.ForeColor
 				: System.Drawing.SystemColors.ControlDark;
@@ -252,11 +218,15 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		private void ResetButton_Click(object sender, EventArgs e)
 		{
-			var result = MessageBox.Show("Do you want to reset settings to default?", "Reset Settings", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+			var result = MessageBox.Show(
+				"Do you want to reset settings to default?",
+				"Reset Settings", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2
+			);
 			if (result == DialogResult.Yes)
 			{
 				var success = Data.ResetToDefault();
-				if (success) Data.Save();
+				if (success)
+					Data.Save();
 			}
 		}
 
@@ -334,15 +304,11 @@ namespace JocysCom.ClassLibrary.Configuration
 		{
 			var filter = FilterTextBox.Text;
 			if (filter == _CurrentFilter)
-			{
 				return;
-			}
 			_CurrentFilter = filter;
 			var ev = FilterChanged;
 			if (ev != null)
-			{
 				ev(this, new EventArgs());
-			}
 		}
 
 		public bool UpdateOnly
@@ -373,9 +339,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		{
 			DisposeDelayTimer();
 			if (disposing && (settings != null))
-			{
 				settings.Dispose();
-			}
 			base.Dispose(disposing);
 		}
 
@@ -397,15 +361,11 @@ namespace JocysCom.ClassLibrary.Configuration
 			form.Dispose();
 		}
 
-
-
 		void CheckSelected(bool check)
 		{
 			var items = GetSelectedItems().Cast<ISettingsItem>().ToArray();
 			foreach (var item in items)
-			{
 				item.Enabled = check;
-			}
 		}
 
 		private void CheckSelectedButton_Click(object sender, EventArgs e)

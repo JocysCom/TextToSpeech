@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 
 namespace JocysCom.ClassLibrary.Collections
 {
@@ -18,9 +19,7 @@ namespace JocysCom.ClassLibrary.Collections
 	public class KeyValue<T> : INotifyPropertyChanged
 	{
 
-		public KeyValue()
-		{
-		}
+		public KeyValue() { }
 
 		public KeyValue(T key, T value)
 		{
@@ -28,8 +27,7 @@ namespace JocysCom.ClassLibrary.Collections
 			_value = value;
 		}
 
-		T _key;
-		T _value;
+		[XmlAttribute]
 		public T Key
 		{
 			get { return _key; }
@@ -42,6 +40,9 @@ namespace JocysCom.ClassLibrary.Collections
 				}
 			}
 		}
+		T _key;
+
+		[XmlAttribute]
 		public T Value
 		{
 			get { return _value; }
@@ -54,6 +55,7 @@ namespace JocysCom.ClassLibrary.Collections
 				}
 			}
 		}
+		T _value;
 
 		public override string ToString()
 		{
@@ -64,11 +66,9 @@ namespace JocysCom.ClassLibrary.Collections
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var ev = PropertyChanged;
-			if (ev == null) return;
-			ev(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#endregion
@@ -126,11 +126,9 @@ namespace JocysCom.ClassLibrary.Collections
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		internal void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var ev = PropertyChanged;
-			if (ev == null) return;
-			ev(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#endregion

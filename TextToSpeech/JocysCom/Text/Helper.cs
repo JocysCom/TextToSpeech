@@ -196,6 +196,10 @@ namespace JocysCom.ClassLibrary.Text
 			return s;
 		}
 
+#if NETCOREAPP // .NET Core
+#elif NETSTANDARD // .NET Standard
+#else // .NET Framework
+
 		/// <summary>
 		/// Convert string value to an escaped C# string literal.
 		/// </summary>
@@ -217,6 +221,8 @@ namespace JocysCom.ClassLibrary.Text
 				}
 			}
 		}
+
+#endif
 
 		#region Word Wrap
 
@@ -300,7 +306,7 @@ namespace JocysCom.ClassLibrary.Text
 			return i + 1;
 		}
 
-		#endregion
+#endregion
 
 		public static string IdentText(int tabs, string s, char ident = '\t')
 		{
