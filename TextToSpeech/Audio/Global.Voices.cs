@@ -531,18 +531,32 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 						item.Status = JobStatusType.Synthesizing;
 						var encoding = System.Text.Encoding.UTF8;
 						var synthesize = true;
+						DirectoryInfo dir = null;
+						string uniqueName = null;
+						// XML file location.
+						string xmlFile = null;
+						string xmlFullPath = null;
 						FileInfo xmlFi = null;
+						// WAV file location.
+						string wavFile = null;
+						string wavFullPath = null;
 						FileInfo wavFi = null;
+						if (SettingsManager.Options.CacheDataWrite || SettingsManager.Options.CacheDataRead || SettingsManager.Options.CacheAudioConvert)
+						{
+							dir = MainHelper.GetCreateCacheFolder();
+							// Look for generalized file first.
+							uniqueName = item.GetUniqueFilePath(true);
+							// Get XML file path.
+							xmlFile = string.Format("{0}.xml", uniqueName);
+							xmlFullPath = Path.Combine(dir.FullName, xmlFile);
+							xmlFi = new FileInfo(xmlFullPath);
+							// Prefer MP3 audio file first (custom recorded file).
+							wavFile = string.Format("{0}.mp3", uniqueName);
+							wavFullPath = Path.Combine(dir.FullName, wavFile);
+							wavFi = new FileInfo(wavFullPath);
+						}
 						if (SettingsManager.Options.CacheDataRead)
 						{
-							var dir = MainHelper.GetCreateCacheFolder();
-
-							// Look for generalized file first.
-							var uniqueName = item.GetUniqueFilePath(true);
-							// Get XML file path.
-							var xmlFile = string.Format("{0}.xml", uniqueName);
-							var xmlFullPath = Path.Combine(dir.FullName, xmlFile);
-							xmlFi = new FileInfo(xmlFullPath);
 							// If generalized file do not exists then...
 							if (!xmlFi.Exists)
 							{
@@ -553,10 +567,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 								xmlFullPath = Path.Combine(dir.FullName, xmlFile);
 								xmlFi = new FileInfo(xmlFullPath);
 							}
-							// Prefer MP3 audio file first (custom recorded file).
-							var wavFile = string.Format("{0}.mp3", uniqueName);
-							var wavFullPath = Path.Combine(dir.FullName, wavFile);
-							wavFi = new FileInfo(wavFullPath);
 							// If wav do not exist or file is invalid.
 							if (!wavFi.Exists || wavFi.Length == 0)
 							{
