@@ -1,6 +1,10 @@
-﻿using JocysCom.ClassLibrary.Controls;
+﻿using JocysCom.ClassLibrary.Collections;
+using JocysCom.ClassLibrary.Configuration;
+using JocysCom.ClassLibrary.Controls;
+using JocysCom.ClassLibrary.Drawing;
 using JocysCom.TextToSpeech.Monitor.Capturing.Monitors;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -51,14 +55,15 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			//	return;
 			// Start the task.
 			//taskA.Start();
-
-
 			StatusTextBox.Text = "Capturing...";
 			int change;
 			string message;
 			Program._DisplayMonitor.CaptureMessage(out change, out message);
 			ResultsChangeTextBox.Text = change.ToString("X6");
 			ResultsMessageTextBox.Text = message ?? "";
+			// Select current screen.
+			var list = (KeyValue<Screen, string>[])ScreensList.DataSource;
+			ScreensList.SelectedItem = list.FirstOrDefault(x => x.Key == Program._DisplayMonitor.CurrentScreen);
 		}
 
 
@@ -92,6 +97,37 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			CopyIntervalUpDown.DataBindings.Add(nameof(CopyIntervalUpDown.Value), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorInterval));
 			MessagesTextBox.DataBindings.Add(nameof(MessagesTextBox.Text), Program._DisplayMonitor, nameof(Program._DisplayMonitor.MessagesReceived));
 			HavePixelSpacesTextBox.DataBindings.Add(nameof(HavePixelSpacesTextBox.Text), SettingsManager.Options, nameof(SettingsManager.Options.DisplayMonitorHavePixelSpaces));
+			UpdateScreenList();
+		}
+
+
+
+		void UpdateScreenList()
+		{
+			int i = 1;
+			var list = Screen.AllScreens.Select(x =>
+				new KeyValue<Screen, string>(x, string.Format("{0}. X={1},Y={2} [{3}x{4}]", i++, x.Bounds.X, x.Bounds.Y, x.Bounds.Width, x.Bounds.Height)))
+				.ToArray();
+			ScreensList.DataSource = list;
+			ScreensList.DisplayMember = nameof(KeyValue.Value);
+			ScreensList.ValueMember = nameof(KeyValue.Key);
+			ScreensList.SelectedItem = list.FirstOrDefault(x => x.Key == Screen.PrimaryScreen);
+		}
+
+		private void CaptureScreenAndSave_Click(object sender, EventArgs e)
+		{
+			var screen = ((KeyValue<Screen, string>)ScreensList.SelectedItem).Key;
+			byte[] screenBytes = null;
+			Bitmap screenBitmap = null;
+			Basic.CaptureImage(ref screenBitmap, screen);
+			Basic.GetImageBytes(ref screenBytes, screenBitmap);
+			var asm = new AssemblyInfo();
+			var path = asm.GetAppDataPath(false, "Images\\Screen_{0:yyyyMMdd_HHmmss_fff}.png", DateTime.Now);
+			var fi = new System.IO.FileInfo(path);
+			if (!fi.Directory.Exists)
+				fi.Directory.Create();
+			screenBitmap.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+			ControlsHelper.OpenPath(fi.Directory.FullName);
 		}
 	}
 }

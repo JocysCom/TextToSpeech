@@ -55,13 +55,16 @@
 			this.AsAdministratorPanel = new System.Windows.Forms.Panel();
 			this.RunAsAdministratorLabel = new System.Windows.Forms.Label();
 			this.DebugGroupBox = new System.Windows.Forms.GroupBox();
+			this.EnableBlankPixelsCheckBox = new System.Windows.Forms.CheckBox();
 			this.button1 = new System.Windows.Forms.Button();
+			this.HavePixelSpacesTextBox = new System.Windows.Forms.TextBox();
+			this.SpacesLabel = new System.Windows.Forms.Label();
 			this.ResultsChangeLabel = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.ResultsChangeTextBox = new System.Windows.Forms.TextBox();
-			this.HavePixelSpacesTextBox = new System.Windows.Forms.TextBox();
-			this.EnableBlankPixelsCheckBox = new System.Windows.Forms.CheckBox();
-			this.SpacesLabel = new System.Windows.Forms.Label();
+			this.CaptureScreenAndSave = new System.Windows.Forms.Button();
+			this.ScreensList = new System.Windows.Forms.ComboBox();
+			this.label4 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.BoxXUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BoxYUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
@@ -359,6 +362,8 @@
 			// 
 			this.DebugGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.DebugGroupBox.Controls.Add(this.label4);
+			this.DebugGroupBox.Controls.Add(this.ScreensList);
 			this.DebugGroupBox.Controls.Add(this.EnableBlankPixelsCheckBox);
 			this.DebugGroupBox.Controls.Add(this.BoxYLabel);
 			this.DebugGroupBox.Controls.Add(this.BoxXUpDown);
@@ -391,6 +396,18 @@
 			this.DebugGroupBox.TabStop = false;
 			this.DebugGroupBox.Text = "Debug and Tests";
 			// 
+			// EnableBlankPixelsCheckBox
+			// 
+			this.EnableBlankPixelsCheckBox.AutoSize = true;
+			this.EnableBlankPixelsCheckBox.Checked = true;
+			this.EnableBlankPixelsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.EnableBlankPixelsCheckBox.Location = new System.Drawing.Point(134, 19);
+			this.EnableBlankPixelsCheckBox.Name = "EnableBlankPixelsCheckBox";
+			this.EnableBlankPixelsCheckBox.Size = new System.Drawing.Size(119, 17);
+			this.EnableBlankPixelsCheckBox.TabIndex = 40;
+			this.EnableBlankPixelsCheckBox.Text = "Enable Blank Pixels";
+			this.EnableBlankPixelsCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// button1
 			// 
 			this.button1.Location = new System.Drawing.Point(449, 42);
@@ -400,6 +417,25 @@
 			this.button1.Text = "Reset Settings";
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.ResetToDefaultButton_Click);
+			// 
+			// HavePixelSpacesTextBox
+			// 
+			this.HavePixelSpacesTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.HavePixelSpacesTextBox.BackColor = System.Drawing.SystemColors.Control;
+			this.HavePixelSpacesTextBox.Location = new System.Drawing.Point(546, 175);
+			this.HavePixelSpacesTextBox.Name = "HavePixelSpacesTextBox";
+			this.HavePixelSpacesTextBox.Size = new System.Drawing.Size(75, 20);
+			this.HavePixelSpacesTextBox.TabIndex = 31;
+			// 
+			// SpacesLabel
+			// 
+			this.SpacesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.SpacesLabel.AutoSize = true;
+			this.SpacesLabel.Location = new System.Drawing.Point(498, 178);
+			this.SpacesLabel.Name = "SpacesLabel";
+			this.SpacesLabel.Size = new System.Drawing.Size(43, 13);
+			this.SpacesLabel.TabIndex = 24;
+			this.SpacesLabel.Text = "Spaces";
 			// 
 			// ResultsChangeLabel
 			// 
@@ -429,36 +465,34 @@
 			this.ResultsChangeTextBox.Size = new System.Drawing.Size(75, 20);
 			this.ResultsChangeTextBox.TabIndex = 20;
 			// 
-			// HavePixelSpacesTextBox
+			// CaptureScreenAndSave
 			// 
-			this.HavePixelSpacesTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.HavePixelSpacesTextBox.BackColor = System.Drawing.SystemColors.Control;
-			this.HavePixelSpacesTextBox.Location = new System.Drawing.Point(546, 175);
-			this.HavePixelSpacesTextBox.Name = "HavePixelSpacesTextBox";
-			this.HavePixelSpacesTextBox.Size = new System.Drawing.Size(75, 20);
-			this.HavePixelSpacesTextBox.TabIndex = 31;
+			this.CaptureScreenAndSave.Location = new System.Drawing.Point(4, 163);
+			this.CaptureScreenAndSave.Name = "CaptureScreenAndSave";
+			this.CaptureScreenAndSave.Size = new System.Drawing.Size(170, 23);
+			this.CaptureScreenAndSave.TabIndex = 18;
+			this.CaptureScreenAndSave.Text = "Capture Screen && Save";
+			this.CaptureScreenAndSave.UseVisualStyleBackColor = true;
+			this.CaptureScreenAndSave.Click += new System.EventHandler(this.CaptureScreenAndSave_Click);
 			// 
-			// EnableBlankPixelsCheckBox
+			// ScreensList
 			// 
-			this.EnableBlankPixelsCheckBox.AutoSize = true;
-			this.EnableBlankPixelsCheckBox.Checked = true;
-			this.EnableBlankPixelsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.EnableBlankPixelsCheckBox.Location = new System.Drawing.Point(134, 19);
-			this.EnableBlankPixelsCheckBox.Name = "EnableBlankPixelsCheckBox";
-			this.EnableBlankPixelsCheckBox.Size = new System.Drawing.Size(119, 17);
-			this.EnableBlankPixelsCheckBox.TabIndex = 40;
-			this.EnableBlankPixelsCheckBox.Text = "Enable Blank Pixels";
-			this.EnableBlankPixelsCheckBox.UseVisualStyleBackColor = true;
+			this.ScreensList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ScreensList.FormattingEnabled = true;
+			this.ScreensList.Location = new System.Drawing.Point(344, 15);
+			this.ScreensList.Name = "ScreensList";
+			this.ScreensList.Size = new System.Drawing.Size(204, 21);
+			this.ScreensList.TabIndex = 45;
 			// 
-			// SpacesLabel
+			// label4
 			// 
-			this.SpacesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.SpacesLabel.AutoSize = true;
-			this.SpacesLabel.Location = new System.Drawing.Point(498, 178);
-			this.SpacesLabel.Name = "SpacesLabel";
-			this.SpacesLabel.Size = new System.Drawing.Size(43, 13);
-			this.SpacesLabel.TabIndex = 24;
-			this.SpacesLabel.Text = "Spaces";
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(294, 21);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(44, 13);
+			this.label4.TabIndex = 8;
+			this.label4.Text = "Screen:";
 			// 
 			// MonitorDisplayUserControl
 			// 
@@ -467,6 +501,7 @@
 			this.Controls.Add(this.DebugGroupBox);
 			this.Controls.Add(this.AsAdministratorPanel);
 			this.Controls.Add(this.MainSettingsGroupBox);
+			this.Controls.Add(this.CaptureScreenAndSave);
 			this.Name = "MonitorDisplayUserControl";
 			this.Size = new System.Drawing.Size(809, 254);
 			this.Load += new System.EventHandler(this.MonitorDisplayUserControl_Load);
@@ -520,5 +555,8 @@
 		private System.Windows.Forms.CheckBox EnableBlankPixelsCheckBox;
 		private System.Windows.Forms.TextBox HavePixelSpacesTextBox;
 		private System.Windows.Forms.Label SpacesLabel;
+		private System.Windows.Forms.Button CaptureScreenAndSave;
+		private System.Windows.Forms.ComboBox ScreensList;
+		private System.Windows.Forms.Label label4;
 	}
 }

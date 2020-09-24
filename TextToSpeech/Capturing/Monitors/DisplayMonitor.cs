@@ -1,7 +1,10 @@
 ﻿using JocysCom.ClassLibrary.Drawing;
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 {
@@ -200,20 +203,24 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		/// <summary>
 		/// Image: prefix[6] + change[1] + size[1] + message_bytes
 		/// </summary>
-		public void CaptureTextFromPosition(out int change, out string message)
+		public void CaptureTextFromPosition(out int change, out string message, Screen screen)
 		{
 			change = 0;
 			message = null;
+			if (screen == null)
+				return;
 			var x = SettingsManager.Options.DisplayMonitorPositionX;
 			var y = SettingsManager.Options.DisplayMonitorPositionY;
-			var screen = System.Windows.Forms.Screen.PrimaryScreen;
 			var sw = screen.Bounds.Width;
 			var sh = screen.Bounds.Height;
 			// Make sure take pixel pairs till the end of the line.
 			var length = sw - x;
 			length = length - (length % 2);
 			// Take screenshot of the line.
-			Basic.CaptureImage(ref lineBitmap, x, y, length, 1);
+			Basic.CaptureImage(ref lineBitmap, screen.Bounds.X + x, screen.Bounds.Y + y, length, 1);
+			// var asm = new JocysCom.ClassLibrary.Configuration.AssemblyInfo();
+			// var path = asm.GetAppDataPath(false, "Images\\Screen_{0:yyyyMMdd_HHmmss_fff}.png", DateTime.Now);
+			// lineBitmap.Save(path, ImageFormat.Png);
 			Basic.GetImageBytes(ref lineBytes, lineBitmap);
 			var prefixBytes = SettingsManager.Options.DisplayMonitorHavePixelSpaces
 				? ColorPrefixBytesBlanked
@@ -248,51 +255,57 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		{
 			lock (captureLock)
 			{
-				CaptureTextFromPosition(out change, out message);
+				CaptureTextFromPosition(out change, out message, CurrentScreen);
 				if (message == null)
 				{
 					var success = FindImagePositionOnScreen();
 					if (success)
-						CaptureTextFromPosition(out change, out message);
+						CaptureTextFromPosition(out change, out message, CurrentScreen);
 				}
 			}
 		}
+
+		public Screen CurrentScreen;
 
 		// Reuse objects to save memory.
 		byte[] screenBytes;
 		Bitmap screenBitmap;
 		public bool FindImagePositionOnScreen()
 		{
-			//	StatusTextBox.Text = "Wrong Bytes. Searching...";
-			Basic.CaptureImage(ref screenBitmap);
-			Basic.GetImageBytes(ref screenBytes, screenBitmap);
-			// Try to find prefix image without blank pixels.
-			var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(screenBytes, ColorPrefixBytes);
-			// If not found then try to find with blank pixels.
-			var havePixelSpaces = false;
-			if (index < 0)
+			// Look for image on all screens.
+			foreach (var screen in Screen.AllScreens)
 			{
-				index = JocysCom.ClassLibrary.Text.Helper.IndexOf(screenBytes, ColorPrefixBytesBlanked);
-				havePixelSpaces = index > -1;
+				//	StatusTextBox.Text = "Wrong Bytes. Searching...";
+				Basic.CaptureImage(ref screenBitmap, screen);
+				Basic.GetImageBytes(ref screenBytes, screenBitmap);
+				// Try to find prefix image without blank pixels.
+				var index = JocysCom.ClassLibrary.Text.Helper.IndexOf(screenBytes, ColorPrefixBytes);
+				// If not found then try to find with blank pixels.
+				var havePixelSpaces = false;
+				if (index < 0)
+				{
+					index = JocysCom.ClassLibrary.Text.Helper.IndexOf(screenBytes, ColorPrefixBytesBlanked);
+					havePixelSpaces = index > -1;
+				}
+				if (SettingsManager.Options.DisplayMonitorHavePixelSpaces != havePixelSpaces)
+					SettingsManager.Options.DisplayMonitorHavePixelSpaces = havePixelSpaces;
+				//	StatusTextBox.Text = string.Format("Pixel Index  {0}...", index);
+				if (index > -1)
+				{
+					CurrentScreen = screen;
+					var sw = screen.Bounds.Width;
+					var sh = screen.Bounds.Height;
+					// Get new coordinates of image.
+					var pixelIndex = index / 3; // 3 bytes per pixel.
+					var newX = pixelIndex % sw;
+					var newY = (pixelIndex - newX) / sw;
+					SettingsManager.Options.DisplayMonitorPositionX = newX;
+					SettingsManager.Options.DisplayMonitorPositionY = newY;
+					//StatusTextBox.Text += string.Format(" [{0}:{1}]", x, y);
+					return true;
+				}
 			}
-			if (SettingsManager.Options.DisplayMonitorHavePixelSpaces != havePixelSpaces)
-				SettingsManager.Options.DisplayMonitorHavePixelSpaces = havePixelSpaces;
-			//	StatusTextBox.Text = string.Format("Pixel Index  {0}...", index);
-			if (index > -1)
-			{
-
-				var screen = System.Windows.Forms.Screen.PrimaryScreen;
-				var sw = screen.Bounds.Width;
-				var sh = screen.Bounds.Height;
-				// Get new coordinates of image.
-				var pixelIndex = index / 3; // 3 bytes per pixel.
-				var newX = pixelIndex % sw;
-				var newY = (pixelIndex - newX) / sw;
-				SettingsManager.Options.DisplayMonitorPositionX = newX;
-				SettingsManager.Options.DisplayMonitorPositionY = newY;
-				//StatusTextBox.Text += string.Format(" [{0}:{1}]", x, y);
-			}
-			return index > -1;
+			return false;
 		}
 
 		public static int ReadRgbInt(BinaryReader br)

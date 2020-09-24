@@ -502,7 +502,6 @@
     <EmbeddedResource Include="Resources\Icons\Information.png" />
     <EmbeddedResource Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.rtf" />
     <None Include=".editorconfig" />
-    <None Include="app.config" />
     <None Include="JocysCom\MakeLinks.bat" />
     <None Include="packages.config" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor.psd" />
