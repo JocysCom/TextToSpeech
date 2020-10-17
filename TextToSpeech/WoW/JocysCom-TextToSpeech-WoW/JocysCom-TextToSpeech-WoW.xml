@@ -497,7 +497,7 @@
 				</Layers>
 
 				<Frames>
-					<Frame>
+					<!--<Frame>
 						<Anchors>
 							<Anchor point="TOPLEFT" />
 							<Anchor point="BOTTOMRIGHT" />
@@ -507,7 +507,7 @@
 								self:SetBackdrop( { edgeFile = "Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-MiniMenuFrame-Border", edgeSize = 23 });
 							</OnLoad>
 						</Scripts>
-					</Frame>
+					</Frame>-->
 
 					<Frame name="JocysCom_MiniMenuFrameHeader">
 						<Size x="339" y="22" />

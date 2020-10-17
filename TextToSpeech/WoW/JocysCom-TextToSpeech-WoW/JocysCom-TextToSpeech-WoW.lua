@@ -16,7 +16,7 @@ local version, build, date, tocversion = GetBuildInfo()
 local classic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 8.3.0 ( 2020-01-16 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 9.0.1 ( 2020-10-16 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line.
@@ -375,7 +375,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		if event == "ITEM_TEXT_READY" then
 			speakMessage = ItemTextGetText()
 		elseif event == "GOSSIP_SHOW" then
-			speakMessage = GetGossipText()
+			speakMessage = C_GossipInfo.GetText()
 			-- print("NPCNAME: " .. _G.GossipFrameNpcNameText:GetText());
 		elseif event == "QUEST_GREETING" then
 			speakMessage = GetGreetingText()
