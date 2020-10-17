@@ -375,8 +375,12 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		if event == "ITEM_TEXT_READY" then
 			speakMessage = ItemTextGetText()
 		elseif event == "GOSSIP_SHOW" then
-			speakMessage = C_GossipInfo.GetText()
-			-- print("NPCNAME: " .. _G.GossipFrameNpcNameText:GetText());
+			if classic then
+				speakMessage = GetGossipText()
+			else
+				speakMessage = C_GossipInfo.GetText()
+			end
+		-- print("NPCNAME: " .. _G.GossipFrameNpcNameText:GetText());
 		elseif event == "QUEST_GREETING" then
 			speakMessage = GetGreetingText()
 		elseif event == "QUEST_PROGRESS" then
