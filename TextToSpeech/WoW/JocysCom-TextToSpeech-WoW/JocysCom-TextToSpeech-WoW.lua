@@ -16,7 +16,7 @@ local version, build, date, tocversion = GetBuildInfo()
 local classic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 9.0.1.1 ( 2020-10-17 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 9.0.1.2 ( 2020-10-18 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line.
@@ -1451,3 +1451,76 @@ function JocysCom_SaveTocFileSettings()
 end
 --Load events and settings.
 JocysCom_RegisterEvents()
+
+--Create_SetBackdrop_Frames.
+function JocysCom_Create_SetBackdrop_Frames()
+
+	local frame1
+	local frame2
+	local frame3
+	local frame4
+	local frameLevel1
+	local frameLevel2
+	local frameLevel3
+	local frameLevel4
+
+	if classic then
+		frame1 = CreateFrame("Frame", nil, JocysCom_MiniMenuFrameBackdrop)
+		frame2 = CreateFrame("Frame", nil, JocysCom_DialogueMiniFrameBackdrop)
+		frame3 = CreateFrame("Frame", nil, JocysCom_MessageFrameBackdrop)
+		frame4 = CreateFrame("Frame", nil, JocysCom_DescriptionFrameBackdrop)
+
+		frame3:SetBackdrop({ bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background" })
+		frame3:SetBackdropColor(1,1,1,1);
+
+		frame4:SetBackdrop({ bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background" })
+		frame4:SetBackdropColor(1,1,1,0);
+
+	else
+		frame1 = CreateFrame("Frame", nil, JocysCom_MiniMenuFrameBackdrop, BackdropTemplateMixin and "BackdropTemplate")
+		frame2 = CreateFrame("Frame", nil, JocysCom_DialogueMiniFrameBackdrop, BackdropTemplateMixin and "BackdropTemplate")
+		frame3 = CreateFrame("Frame", nil, JocysCom_MessageFrameBackdrop, BackdropTemplateMixin and "BackdropTemplate")
+		frame4 = CreateFrame("Frame", nil, JocysCom_DescriptionFrameBackdrop, BackdropTemplateMixin and "BackdropTemplate")
+
+		frame3:SetBackdrop({ bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background" })
+		frame3:SetBackdropColor(1,1,1,1);
+
+		frame4:SetBackdrop({ bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background" })
+		frame4:SetBackdropColor(1,1,1,0.6);
+	end
+		-- JocysCom_MiniMenuFrame
+		frameLevel1 = JocysCom_MiniMenuFrameBackdrop:GetFrameLevel()
+		frame1:SetFrameLevel(frameLevel1)
+		frame1:SetParent(JocysCom_MiniMenuFrameBackdrop)
+		frame1:SetPoint("TOPLEFT", 0, 0)
+		frame1:SetPoint("BOTTOMRIGHT", 0, 0)
+		frame1:SetBackdrop({ insets = { left = 7, right = 3, top = 3, bottom = 5 }, edgeFile = "Interface\\AddOns\\JocysCom-TextToSpeech-WoW\\Images\\JocysCom-MiniMenuFrame-Border", edgeSize = 23 })
+		-- JocysCom_MiniMenuFrameBackdrop Texture.
+		local texture1 = frame1:CreateTexture(nil, "BACKGROUND")
+		texture1:SetPoint("TOPLEFT", 7, -3)
+		texture1:SetPoint("BOTTOMRIGHT", -3, 7)
+		texture1:SetHorizTile(true)
+		texture1:SetVertTile(true)
+		texture1:SetTexture("Interface\\FrameGeneral\\UI-Background-Rock", "REPEAT", "REPEAT")
+
+		-- JocysCom_DialogueMiniFrame.
+		frameLevel2 = JocysCom_DialogueMiniFrameBackdrop:GetFrameLevel()
+		frame2:SetFrameLevel(frameLevel2 - 1)
+		frame2:SetPoint("TOPLEFT", 0, 0)
+		frame2:SetPoint("BOTTOMRIGHT", 0, 0)
+		frame2:SetBackdrop({ bgFile = "Interface\\AddOns\\JocysCom-TextToSpeech-WoW\\Images\\JocysCom-DialogueMiniFrame-Background" })
+
+		-- JocysCom_MessageFrame.
+		frameLevel3 = JocysCom_MessageFrameBackdrop:GetFrameLevel()
+		frame3:SetFrameLevel(frameLevel3 - 1)
+		frame3:SetPoint("TOPLEFT", 3, -3)
+		frame3:SetPoint("BOTTOMRIGHT", -2, 2)
+
+		-- JocysCom_DescriptionFrame.
+		frameLevel4 = JocysCom_DescriptionFrameBackdrop:GetFrameLevel()
+		frame4:SetFrameLevel(frameLevel4 -1)
+		frame4:SetPoint("TOPLEFT", 3, -3)
+		frame4:SetPoint("BOTTOMRIGHT", -2, 2)
+end
+
+JocysCom_Create_SetBackdrop_Frames()

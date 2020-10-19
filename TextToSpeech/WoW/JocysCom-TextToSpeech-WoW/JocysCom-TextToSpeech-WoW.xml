@@ -184,8 +184,14 @@
 					<Anchor point="TOPLEFT" x="3" y="-232" />
 					<Anchor point="BOTTOMRIGHT" x="-3" y="142" />
 				</Anchors>
-				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true" />
 				<Frames>
+					<Frame name="JocysCom_MessageFrameBackdrop">
+						<Anchors>
+							<Anchor point="TOPLEFT" />
+							<Anchor point="BOTTOMRIGHT" />
+						</Anchors>
+					</Frame>
+
 					<ScrollFrame name="JocysCom_OptionsFrameScroll" inherits="UIPanelScrollFrameTemplate">
 						<Anchors>
 							<Anchor point="TOPLEFT" x="5" y="-4" />
@@ -217,7 +223,16 @@
 					<Anchor point="TOPLEFT" x="3" y="-356" />
 					<Anchor point="BOTTOMRIGHT" x="-5" y="4" />
 				</Anchors>
-				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true" />
+
+				<Frames>
+					<Frame name="JocysCom_DescriptionFrameBackdrop">
+						<Anchors>
+							<Anchor point="TOPLEFT" />
+							<Anchor point="BOTTOMRIGHT" />
+						</Anchors>
+					</Frame>
+				</Frames>
+
 				<Layers>
 					<Layer>
 						<FontString name="JocysCom_DescriptionFrameFontString" inherits="GameFontHighlightSmall" justifyV="MIDDLE" justifyH="LEFT" wordwrap="true">
@@ -254,8 +269,15 @@
 		<Anchors>
 			<Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" />
 		</Anchors>
-		<Backdrop bgFile="Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-DialogueMiniFrame-Background" />
+
 		<Frames>
+			<Frame name="JocysCom_DialogueMiniFrameBackdrop">
+				<Anchors>
+					<Anchor point="TOPLEFT" />
+					<Anchor point="BOTTOMRIGHT" />
+				</Anchors>
+			</Frame>
+
 			<Button name="JocysCom_StopButtonQuest" inherits="UIPanelButtonTemplate" parent="JocysCom_DialogueMiniFrame" text="■">
 				<Size x="31" y="21" />
 				<Anchors>
@@ -480,34 +502,32 @@
 
 			<Frame name="JocysCom_MiniMenuFrame" enableMouse="true" hidden="true">
 				<Size x="242" y="528" />
-				<Backdrop tile="true" bgFile="Interface/FrameGeneral/UI-Background-Rock">
-					<TileSize val="350" />
-					<BackgroundInsets left="7" right="3" top="3" bottom="5" />
-				</Backdrop>
-				<Layers>
-					<Layer>
-						<Texture>
-							<Anchors>
-								<Anchor point="TOPLEFT" x="7" y="-3" />
-								<Anchor point="BOTTOMRIGHT" x="-3" y="5" />
-							</Anchors>
-							<Color a="0.6" r="0" g="0" b="0" />
-						</Texture>
-					</Layer>
-				</Layers>
-
 				<Frames>
-					<!--<Frame>
+
+					<Frame name="JocysCom_MiniMenuFrameBackdrop">
 						<Anchors>
 							<Anchor point="TOPLEFT" />
 							<Anchor point="BOTTOMRIGHT" />
 						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self:SetBackdrop( { edgeFile = "Interface/AddOns/JocysCom-TextToSpeech-WoW/Images/JocysCom-MiniMenuFrame-Border", edgeSize = 23 });
-							</OnLoad>
-						</Scripts>
-					</Frame>-->
+					</Frame>
+
+					<Frame name="JocysCom_MiniMenuFrameTexture">
+						<Anchors>
+							<Anchor point="TOPLEFT" />
+							<Anchor point="BOTTOMRIGHT" />
+						</Anchors>
+						<Layers>
+							<Layer>
+								<Texture>
+									<Anchors>
+										<Anchor point="TOPLEFT" x="7" y="-3" />
+										<Anchor point="BOTTOMRIGHT" x="-3" y="5" />
+									</Anchors>
+									<Color a="0.6" r="0" g="0" b="0" />
+								</Texture>
+							</Layer>
+						</Layers>
+					</Frame>
 
 					<Frame name="JocysCom_MiniMenuFrameHeader">
 						<Size x="339" y="22" />
