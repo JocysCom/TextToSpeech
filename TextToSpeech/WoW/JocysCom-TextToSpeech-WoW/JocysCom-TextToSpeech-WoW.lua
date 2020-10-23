@@ -16,7 +16,7 @@ local version, build, date, tocversion = GetBuildInfo()
 local classic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 9.0.1.2 ( 2020-10-18 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 9.0.1.3 ( 2020-10-23 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line.
@@ -363,6 +363,7 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 			-- local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isStory = GetQuestLogTitle()
 			local questDescription, questObjectives = GetQuestLogQuestText()
 			group = "Quest"
+			name = "Quest Log"
 			local title = nil
 			if classic then
 				title = JocysCom_TitlesCheckButton:GetChecked() and QuestLogQuestTitle:GetText() or nil
