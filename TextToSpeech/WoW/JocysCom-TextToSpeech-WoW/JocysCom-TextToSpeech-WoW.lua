@@ -16,7 +16,7 @@ local version, build, date, tocversion = GetBuildInfo()
 local classic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 9.0.1.3 ( 2020-10-23 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 9.0.1.4 ( 2020-10-23 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line.
@@ -520,6 +520,8 @@ local event, text, playerName, languageName, channelName, playerName2, specialFl
 		soundIntro = JocysCom_SoundPartyCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_PARTY_LEADER" then
 		group = "PartyLeader"
+		name = JocysCom_RemoveRealmName(playerName)
+		sex = select(5, GetPlayerInfoByGUID(guid))
 		nameIntro = JocysCom_NamePartyLeaderCheckButton:GetChecked()
 		soundIntro = JocysCom_SoundPartyLeaderCheckButton:GetChecked()
 	elseif event == "CHAT_MSG_INSTANCE_CHAT" then
