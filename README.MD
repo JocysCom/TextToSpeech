@@ -2,8 +2,8 @@
 
 <p align="justify">WoW Addon and TTS Monitor reads <i>quests</i> and <i>chat messages</i> with text-to-speech voices. Program will choose correct gender and apply special audio effects depending on character type. It makes game more immersive and you will not miss messages in chat. Addon's text-to-speech feature offers the better gaming experience for visually impaired people. <b>Now works with WoW version 8.x and official WoW Classic.</b> E-mail: <a href="mailto:info@jocys.com?subject=Jocys.com%20Text-to-Speech%20Monitor">info@jocys.com</a></p>
 
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech Monitor 3.3.6 (2020-10-25) • Digitally Signed
- * <a target="_blank" href="http://www.jocys.com">Jocys.com</a> Text to Speech "World of Warcraft" Addon 9.0.1.5 (2020-10-25)
+ * <a target="_blank" href="http://www.jocys.com/tts">Jocys.com</a> Text to Speech Monitor 3.3.6 (2020-10-25) • Digitally Signed
+ * <a target="_blank" href="http://www.jocys.com/tts">Jocys.com</a> Text to Speech "World of Warcraft" Addon 9.0.1.5 (2020-10-25)
  
 <hr />
 Monitor supports locally installed and <a href="https://aws.amazon.com/polly/">Amazon Polly</a> (Cloud) Text-To-Speech Standard and Neural voices. You must create account for Amazon voices on https://aws.amazon.com. More help on TTS Monitor > "Options" tab > "Amazon Poly" tab.
