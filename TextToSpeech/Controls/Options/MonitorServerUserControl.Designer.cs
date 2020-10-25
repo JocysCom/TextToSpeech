@@ -85,7 +85,7 @@
 			// TestUdpPortTestButton
 			// 
 			this.TestUdpPortTestButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.TestUdpPortTestButton.Location = new System.Drawing.Point(106, 94);
+			this.TestUdpPortTestButton.Location = new System.Drawing.Point(105, 91);
 			this.TestUdpPortTestButton.Name = "TestUdpPortTestButton";
 			this.TestUdpPortTestButton.Size = new System.Drawing.Size(58, 23);
 			this.TestUdpPortTestButton.TabIndex = 2;
@@ -124,7 +124,7 @@
 			this.MainSettingsGroupBox.Controls.Add(this.UdpPortNumberLabel);
 			this.MainSettingsGroupBox.Location = new System.Drawing.Point(3, 3);
 			this.MainSettingsGroupBox.Name = "MainSettingsGroupBox";
-			this.MainSettingsGroupBox.Size = new System.Drawing.Size(170, 130);
+			this.MainSettingsGroupBox.Size = new System.Drawing.Size(170, 120);
 			this.MainSettingsGroupBox.TabIndex = 5;
 			this.MainSettingsGroupBox.TabStop = false;
 			this.MainSettingsGroupBox.Text = "Main Settings";
@@ -144,10 +144,10 @@
 			this.MonitorMessageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.MonitorMessageTextBox.Location = new System.Drawing.Point(142, 73);
+			this.MonitorMessageTextBox.Location = new System.Drawing.Point(142, 60);
 			this.MonitorMessageTextBox.Multiline = true;
 			this.MonitorMessageTextBox.Name = "MonitorMessageTextBox";
-			this.MonitorMessageTextBox.Size = new System.Drawing.Size(486, 59);
+			this.MonitorMessageTextBox.Size = new System.Drawing.Size(486, 41);
 			this.MonitorMessageTextBox.TabIndex = 3;
 			this.MonitorMessageTextBox.Text = "<message name=\"Marshal McBride\" gender=\"Male\" effect=\"Humanoid\" group=\"Quest\" pit" +
     "ch=\"0\" rate=\"1\" volume=\"100\" command=\"Play\"><part>Test Monitor text to speech.</" +
@@ -161,7 +161,7 @@
 			this.SapiMessageTextBox.Multiline = true;
 			this.SapiMessageTextBox.Name = "SapiMessageTextBox";
 			this.SapiMessageTextBox.ReadOnly = true;
-			this.SapiMessageTextBox.Size = new System.Drawing.Size(486, 48);
+			this.SapiMessageTextBox.Size = new System.Drawing.Size(486, 35);
 			this.SapiMessageTextBox.TabIndex = 3;
 			this.SapiMessageTextBox.Text = "<voice required=\"name=IVONA 2 Brian\"><volume level=\"100\"><rate absspeed=\"0\"><pitc" +
     "h absmiddle=\"0\">Test SAPI text to speech.</pitch></rate></volume></voice>";
@@ -171,13 +171,14 @@
 			this.TestMessageGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.TestMessageGroupBox.AutoSize = true;
 			this.TestMessageGroupBox.Controls.Add(this.SapiVoiceRadioButton);
 			this.TestMessageGroupBox.Controls.Add(this.MonitorMessageRadioButton);
 			this.TestMessageGroupBox.Controls.Add(this.MonitorMessageTextBox);
 			this.TestMessageGroupBox.Controls.Add(this.SapiMessageTextBox);
-			this.TestMessageGroupBox.Location = new System.Drawing.Point(3, 139);
+			this.TestMessageGroupBox.Location = new System.Drawing.Point(3, 129);
 			this.TestMessageGroupBox.Name = "TestMessageGroupBox";
-			this.TestMessageGroupBox.Size = new System.Drawing.Size(634, 138);
+			this.TestMessageGroupBox.Size = new System.Drawing.Size(634, 114);
 			this.TestMessageGroupBox.TabIndex = 5;
 			this.TestMessageGroupBox.TabStop = false;
 			this.TestMessageGroupBox.Text = "Test Message";
@@ -197,7 +198,7 @@
 			// 
 			this.MonitorMessageRadioButton.AutoSize = true;
 			this.MonitorMessageRadioButton.Checked = true;
-			this.MonitorMessageRadioButton.Location = new System.Drawing.Point(6, 74);
+			this.MonitorMessageRadioButton.Location = new System.Drawing.Point(6, 61);
 			this.MonitorMessageRadioButton.Name = "MonitorMessageRadioButton";
 			this.MonitorMessageRadioButton.Size = new System.Drawing.Size(130, 17);
 			this.MonitorMessageRadioButton.TabIndex = 4;
@@ -213,7 +214,8 @@
 			this.CodeExampleTextBox.Multiline = true;
 			this.CodeExampleTextBox.Name = "CodeExampleTextBox";
 			this.CodeExampleTextBox.ReadOnly = true;
-			this.CodeExampleTextBox.Size = new System.Drawing.Size(458, 130);
+			this.CodeExampleTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.CodeExampleTextBox.Size = new System.Drawing.Size(458, 120);
 			this.CodeExampleTextBox.TabIndex = 6;
 			// 
 			// MonitorServerUserControl
@@ -224,7 +226,7 @@
 			this.Controls.Add(this.TestMessageGroupBox);
 			this.Controls.Add(this.MainSettingsGroupBox);
 			this.Name = "MonitorServerUserControl";
-			this.Size = new System.Drawing.Size(640, 280);
+			this.Size = new System.Drawing.Size(640, 246);
 			this.Load += new System.EventHandler(this.MonitorServerUserControl_Load);
 			((System.ComponentModel.ISupportInitialize)(this.UdpPortNumberNumericUpDown)).EndInit();
 			this.MainSettingsGroupBox.ResumeLayout(false);

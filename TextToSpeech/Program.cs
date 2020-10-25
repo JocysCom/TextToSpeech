@@ -70,6 +70,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				// Failed to enable useLegacyV2RuntimeActivationPolicy at runtime.
 			}
+			if (Environment.OSVersion.Version.Major >= 6)
+				NativeMethods.SetProcessDPIAware();
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.ApplicationExit += Application_ApplicationExit;
@@ -199,6 +201,13 @@ namespace JocysCom.TextToSpeech.Monitor
 			sr.Read(bytes, 0, bytes.Length);
 			return Assembly.Load(bytes);
 		}
+
+		internal class NativeMethods
+		{
+			[System.Runtime.InteropServices.DllImport("user32.dll")]
+			internal static extern bool SetProcessDPIAware();
+		}
+
 
 	}
 }

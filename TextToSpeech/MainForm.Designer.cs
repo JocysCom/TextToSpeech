@@ -182,9 +182,9 @@
 			// 
 			// MessagesTabControl
 			// 
-			this.MessagesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.MessagesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.MessagesTabControl.Controls.Add(this.VoicesTabPage);
 			this.MessagesTabControl.Controls.Add(this.VoiceDefaultsTabPage);
 			this.MessagesTabControl.Controls.Add(this.SoundsTabPage);
@@ -392,9 +392,9 @@
 			// 
 			// UpdateWebBrowser
 			// 
-			this.UpdateWebBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.UpdateWebBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.UpdateWebBrowser.Location = new System.Drawing.Point(6, 21);
 			this.UpdateWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
 			this.UpdateWebBrowser.Name = "UpdateWebBrowser";
@@ -405,8 +405,8 @@
 			// 
 			// EffectTabControl
 			// 
-			this.EffectTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.EffectTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.EffectTabControl.ContextMenuStrip = this.EffectPresetsContextMenuStrip;
 			this.EffectTabControl.Controls.Add(this.EffectTabPage);
 			this.EffectTabControl.ImageList = this.TabsImageList;
@@ -420,10 +420,11 @@
 			// 
 			// EffectPresetsContextMenuStrip
 			// 
+			this.EffectPresetsContextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.EffectPresetsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.addNewToolStripMenuItem,
-			this.deleteToolStripMenuItem,
-			this.refreshToolStripMenuItem});
+            this.addNewToolStripMenuItem,
+            this.deleteToolStripMenuItem,
+            this.refreshToolStripMenuItem});
 			this.EffectPresetsContextMenuStrip.Name = "EffectPresetsContextMenuStrip";
 			this.EffectPresetsContextMenuStrip.Size = new System.Drawing.Size(124, 70);
 			// 
@@ -470,7 +471,7 @@
 			this.EffectsPresetsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.EffectsPresetsDataGridView.ColumnHeadersVisible = false;
 			this.EffectsPresetsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.dataGridViewTextBoxColumn3});
+            this.dataGridViewTextBoxColumn3});
 			this.EffectsPresetsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.EffectsPresetsDataGridView.Location = new System.Drawing.Point(0, 0);
 			this.EffectsPresetsDataGridView.MultiSelect = false;
@@ -513,10 +514,10 @@
 			this.MessagesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.MessagesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.MessagesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.DestinationAddressColumn,
-			this.SequenceNumberColumn,
-			this.WowDataLength,
-			this.VoiceXmlColumn});
+            this.DestinationAddressColumn,
+            this.SequenceNumberColumn,
+            this.WowDataLength,
+            this.VoiceXmlColumn});
 			this.MessagesDataGridView.ContextMenuStrip = this.MessagesContextMenuStrip;
 			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -595,8 +596,9 @@
 			// 
 			// MessagesContextMenuStrip
 			// 
+			this.MessagesContextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.MessagesContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.MessagesClearToolStripMenuItem});
+            this.MessagesClearToolStripMenuItem});
 			this.MessagesContextMenuStrip.Name = "MessagesContextMenuStrip";
 			this.MessagesContextMenuStrip.Size = new System.Drawing.Size(102, 26);
 			// 
@@ -643,8 +645,8 @@
 			// 
 			// TextXmlTabControl
 			// 
-			this.TextXmlTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.TextXmlTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.TextXmlTabControl.Controls.Add(this.SandBoxTabPage);
 			this.TextXmlTabControl.Controls.Add(this.MessagesTabPage);
 			this.TextXmlTabControl.Controls.Add(this.SsmlXmlTabPage);
@@ -745,10 +747,10 @@
 			this.PlayListDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
 			this.PlayListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.PlayListDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.PlayListStatusColumn,
-			this.CommentColumn,
-			this.PlayListDurationColumn,
-			this.PlayListTextColumn});
+            this.PlayListStatusColumn,
+            this.CommentColumn,
+            this.PlayListDurationColumn,
+            this.PlayListTextColumn});
 			dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.ControlLight;
 			dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -821,13 +823,14 @@
 			// 
 			// MainStatusStrip
 			// 
+			this.MainStatusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.MainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.ProcessStatusLabel,
-			this.ErrorStatusLabel,
-			this.FilterStatusLabel,
-			this.EmptyStatusLabel,
-			this.StateStatusLabel,
-			this.PacketsStatusLabel});
+            this.ProcessStatusLabel,
+            this.ErrorStatusLabel,
+            this.FilterStatusLabel,
+            this.EmptyStatusLabel,
+            this.StateStatusLabel,
+            this.PacketsStatusLabel});
 			this.MainStatusStrip.Location = new System.Drawing.Point(0, 652);
 			this.MainStatusStrip.Name = "MainStatusStrip";
 			this.MainStatusStrip.Size = new System.Drawing.Size(1074, 24);
@@ -837,9 +840,9 @@
 			// 
 			// ProcessStatusLabel
 			// 
-			this.ProcessStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
-			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
-			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.ProcessStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
 			this.ProcessStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
 			this.ProcessStatusLabel.Name = "ProcessStatusLabel";
 			this.ProcessStatusLabel.Size = new System.Drawing.Size(108, 19);
@@ -847,9 +850,9 @@
 			// 
 			// ErrorStatusLabel
 			// 
-			this.ErrorStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
-			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
-			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.ErrorStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
 			this.ErrorStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
 			this.ErrorStatusLabel.Name = "ErrorStatusLabel";
 			this.ErrorStatusLabel.Size = new System.Drawing.Size(71, 19);
@@ -859,9 +862,9 @@
 			// 
 			// FilterStatusLabel
 			// 
-			this.FilterStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
-			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
-			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.FilterStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
 			this.FilterStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
 			this.FilterStatusLabel.Name = "FilterStatusLabel";
 			this.FilterStatusLabel.Size = new System.Drawing.Size(72, 19);
@@ -876,9 +879,9 @@
 			// 
 			// StateStatusLabel
 			// 
-			this.StateStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
-			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
-			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.StateStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
 			this.StateStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
 			this.StateStatusLabel.Name = "StateStatusLabel";
 			this.StateStatusLabel.Size = new System.Drawing.Size(94, 19);
@@ -886,9 +889,9 @@
 			// 
 			// PacketsStatusLabel
 			// 
-			this.PacketsStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
-			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
-			| System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+			this.PacketsStatusLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
 			this.PacketsStatusLabel.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
 			this.PacketsStatusLabel.Name = "PacketsStatusLabel";
 			this.PacketsStatusLabel.Size = new System.Drawing.Size(125, 19);
@@ -1202,8 +1205,8 @@
 			// 
 			// InLanguageTextBox
 			// 
-			this.InLanguageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.InLanguageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.InLanguageTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InLanguageTextBox.Enabled = false;
 			this.InLanguageTextBox.Location = new System.Drawing.Point(63, 17);
@@ -1217,8 +1220,8 @@
 			// 
 			// InGroupTextBox
 			// 
-			this.InGroupTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.InGroupTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.InGroupTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InGroupTextBox.Enabled = false;
 			this.InGroupTextBox.Location = new System.Drawing.Point(63, 105);
@@ -1231,9 +1234,9 @@
 			// 
 			// InPartTextBox
 			// 
-			this.InPartTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.InPartTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.InPartTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InPartTextBox.Enabled = false;
 			this.InPartTextBox.Location = new System.Drawing.Point(63, 215);
@@ -1249,8 +1252,8 @@
 			// 
 			// InCommandTextBox
 			// 
-			this.InCommandTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.InCommandTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.InCommandTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InCommandTextBox.Enabled = false;
 			this.InCommandTextBox.Location = new System.Drawing.Point(63, 193);
@@ -1265,8 +1268,8 @@
 			// 
 			// InVolumeTextBox
 			// 
-			this.InVolumeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.InVolumeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.InVolumeTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InVolumeTextBox.Enabled = false;
 			this.InVolumeTextBox.Location = new System.Drawing.Point(63, 171);
@@ -1281,8 +1284,8 @@
 			// 
 			// InEffectTextBox
 			// 
-			this.InEffectTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.InEffectTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.InEffectTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InEffectTextBox.Enabled = false;
 			this.InEffectTextBox.Location = new System.Drawing.Point(63, 83);
@@ -1297,8 +1300,8 @@
 			// 
 			// InPitchTextBox
 			// 
-			this.InPitchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.InPitchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.InPitchTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InPitchTextBox.Enabled = false;
 			this.InPitchTextBox.Location = new System.Drawing.Point(63, 127);
@@ -1313,8 +1316,8 @@
 			// 
 			// InRateTextBox
 			// 
-			this.InRateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.InRateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.InRateTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InRateTextBox.Enabled = false;
 			this.InRateTextBox.Location = new System.Drawing.Point(63, 149);
@@ -1329,8 +1332,8 @@
 			// 
 			// InGenderTextBox
 			// 
-			this.InGenderTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.InGenderTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.InGenderTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InGenderTextBox.Enabled = false;
 			this.InGenderTextBox.Location = new System.Drawing.Point(63, 61);
@@ -1345,8 +1348,8 @@
 			// 
 			// InNameTextBox
 			// 
-			this.InNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.InNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.InNameTextBox.BackColor = System.Drawing.SystemColors.Control;
 			this.InNameTextBox.Enabled = false;
 			this.InNameTextBox.Location = new System.Drawing.Point(63, 39);
@@ -1497,9 +1500,9 @@
 			this.ProgramComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ProgramComboBox.FormattingEnabled = true;
 			this.ProgramComboBox.Items.AddRange(new object[] {
-			"Disabled",
-			"For <message> tags",
-			"For all text"});
+            "Disabled",
+            "For <message> tags",
+            "For all text"});
 			this.ProgramComboBox.Location = new System.Drawing.Point(953, 350);
 			this.ProgramComboBox.Name = "ProgramComboBox";
 			this.ProgramComboBox.Size = new System.Drawing.Size(114, 21);
@@ -1509,6 +1512,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.ClientSize = new System.Drawing.Size(1074, 676);
 			this.Controls.Add(this.MonitorClipboardComboBox);
 			this.Controls.Add(this.ProgramComboBox);

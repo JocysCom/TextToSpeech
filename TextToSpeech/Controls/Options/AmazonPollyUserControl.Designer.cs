@@ -36,10 +36,12 @@
 			this.SecurityGroupBox = new System.Windows.Forms.GroupBox();
 			this.HelpLabel = new System.Windows.Forms.Label();
 			this.HelpGroupBox = new System.Windows.Forms.GroupBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.PricingLabel = new System.Windows.Forms.Label();
 			this.Help2Label = new System.Windows.Forms.Label();
-			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+			this.panel1 = new System.Windows.Forms.Panel();
 			this.AwsLinkLabel = new System.Windows.Forms.LinkLabel();
+			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.ServiceGroupBox = new System.Windows.Forms.GroupBox();
 			this.StatusTextBox = new System.Windows.Forms.TextBox();
 			this.SpeakButton = new System.Windows.Forms.Button();
@@ -51,9 +53,9 @@
 			this.VoicesComboBox = new System.Windows.Forms.ComboBox();
 			this.MessageTextBox = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
 			this.SecurityGroupBox.SuspendLayout();
 			this.HelpGroupBox.SuspendLayout();
+			this.panel1.SuspendLayout();
 			this.ServiceGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -98,13 +100,14 @@
 			// 
 			this.SecurityGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.SecurityGroupBox.AutoSize = true;
 			this.SecurityGroupBox.Controls.Add(this.AccessKeyTextBox);
 			this.SecurityGroupBox.Controls.Add(this.SecretKeyLabel);
 			this.SecurityGroupBox.Controls.Add(this.SecretKeyTextBox);
 			this.SecurityGroupBox.Controls.Add(this.AccessKeyLabel);
 			this.SecurityGroupBox.Location = new System.Drawing.Point(3, 3);
 			this.SecurityGroupBox.Name = "SecurityGroupBox";
-			this.SecurityGroupBox.Size = new System.Drawing.Size(381, 75);
+			this.SecurityGroupBox.Size = new System.Drawing.Size(381, 84);
 			this.SecurityGroupBox.TabIndex = 17;
 			this.SecurityGroupBox.TabStop = false;
 			this.SecurityGroupBox.Text = "Security";
@@ -112,35 +115,50 @@
 			// HelpLabel
 			// 
 			this.HelpLabel.AutoSize = true;
-			this.HelpLabel.Location = new System.Drawing.Point(3, 22);
+			this.HelpLabel.Dock = System.Windows.Forms.DockStyle.Left;
+			this.HelpLabel.Location = new System.Drawing.Point(0, 0);
 			this.HelpLabel.Name = "HelpLabel";
-			this.HelpLabel.Size = new System.Drawing.Size(124, 13);
+			this.HelpLabel.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
+			this.HelpLabel.Size = new System.Drawing.Size(124, 21);
 			this.HelpLabel.TabIndex = 18;
 			this.HelpLabel.Text = "1. Create AWS Account:";
 			// 
 			// HelpGroupBox
 			// 
-			this.HelpGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.HelpGroupBox.Controls.Add(this.linkLabel1);
-			this.HelpGroupBox.Controls.Add(this.PricingLabel);
+			this.HelpGroupBox.AutoSize = true;
 			this.HelpGroupBox.Controls.Add(this.label1);
+			this.HelpGroupBox.Controls.Add(this.PricingLabel);
 			this.HelpGroupBox.Controls.Add(this.Help2Label);
-			this.HelpGroupBox.Controls.Add(this.AwsLinkLabel);
-			this.HelpGroupBox.Controls.Add(this.HelpLabel);
+			this.HelpGroupBox.Controls.Add(this.panel1);
+			this.HelpGroupBox.Controls.Add(this.linkLabel1);
 			this.HelpGroupBox.Location = new System.Drawing.Point(390, 3);
 			this.HelpGroupBox.Name = "HelpGroupBox";
-			this.HelpGroupBox.Size = new System.Drawing.Size(370, 259);
+			this.HelpGroupBox.Size = new System.Drawing.Size(370, 233);
 			this.HelpGroupBox.TabIndex = 19;
 			this.HelpGroupBox.TabStop = false;
 			this.HelpGroupBox.Text = "How To Use Amazon Polly TTS Voices";
 			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.label1.Location = new System.Drawing.Point(3, 164);
+			this.label1.Name = "label1";
+			this.label1.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
+			this.label1.Size = new System.Drawing.Size(258, 60);
+			this.label1.TabIndex = 20;
+			this.label1.Text = "Neural voices are supported in the following Regions:\r\nUS East (N. Virginia): us-" +
+    "east-1\r\nUS West (Oregon): us-west-2\r\nEU (Ireland): eu-west-1";
+			this.label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+			// 
 			// PricingLabel
 			// 
 			this.PricingLabel.AutoSize = true;
-			this.PricingLabel.Location = new System.Drawing.Point(0, 125);
+			this.PricingLabel.Dock = System.Windows.Forms.DockStyle.Top;
+			this.PricingLabel.Location = new System.Drawing.Point(3, 117);
 			this.PricingLabel.Name = "PricingLabel";
-			this.PricingLabel.Size = new System.Drawing.Size(359, 39);
+			this.PricingLabel.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
+			this.PricingLabel.Size = new System.Drawing.Size(359, 47);
 			this.PricingLabel.TabIndex = 18;
 			this.PricingLabel.Text = "AWS Free tier pricing for first 12 months:\r\n5 million characters per month for St" +
     "andard voices (~20 000 WoW quests).\r\n1 million characters per month for Neural v" +
@@ -149,11 +167,35 @@
 			// Help2Label
 			// 
 			this.Help2Label.AutoSize = true;
-			this.Help2Label.Location = new System.Drawing.Point(3, 35);
+			this.Help2Label.Dock = System.Windows.Forms.DockStyle.Top;
+			this.Help2Label.Location = new System.Drawing.Point(3, 39);
 			this.Help2Label.Name = "Help2Label";
 			this.Help2Label.Size = new System.Drawing.Size(350, 78);
 			this.Help2Label.TabIndex = 20;
 			this.Help2Label.Text = resources.GetString("Help2Label.Text");
+			// 
+			// panel1
+			// 
+			this.panel1.Controls.Add(this.AwsLinkLabel);
+			this.panel1.Controls.Add(this.HelpLabel);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel1.Location = new System.Drawing.Point(3, 16);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(364, 23);
+			this.panel1.TabIndex = 21;
+			// 
+			// AwsLinkLabel
+			// 
+			this.AwsLinkLabel.AutoSize = true;
+			this.AwsLinkLabel.Dock = System.Windows.Forms.DockStyle.Left;
+			this.AwsLinkLabel.Location = new System.Drawing.Point(124, 0);
+			this.AwsLinkLabel.Name = "AwsLinkLabel";
+			this.AwsLinkLabel.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
+			this.AwsLinkLabel.Size = new System.Drawing.Size(125, 21);
+			this.AwsLinkLabel.TabIndex = 19;
+			this.AwsLinkLabel.TabStop = true;
+			this.AwsLinkLabel.Text = "https://aws.amazon.com";
+			this.AwsLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AwsLinkLabel_LinkClicked);
 			// 
 			// linkLabel1
 			// 
@@ -166,21 +208,11 @@
 			this.linkLabel1.Text = "https://aws.amazon.com/polly/pricing/";
 			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AwsLinkLabel_LinkClicked);
 			// 
-			// AwsLinkLabel
-			// 
-			this.AwsLinkLabel.AutoSize = true;
-			this.AwsLinkLabel.Location = new System.Drawing.Point(125, 22);
-			this.AwsLinkLabel.Name = "AwsLinkLabel";
-			this.AwsLinkLabel.Size = new System.Drawing.Size(125, 13);
-			this.AwsLinkLabel.TabIndex = 19;
-			this.AwsLinkLabel.TabStop = true;
-			this.AwsLinkLabel.Text = "https://aws.amazon.com";
-			this.AwsLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AwsLinkLabel_LinkClicked);
-			// 
 			// ServiceGroupBox
 			// 
 			this.ServiceGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.ServiceGroupBox.AutoSize = true;
 			this.ServiceGroupBox.Controls.Add(this.StatusTextBox);
 			this.ServiceGroupBox.Controls.Add(this.SpeakButton);
 			this.ServiceGroupBox.Controls.Add(this.RegionComboBox);
@@ -193,7 +225,7 @@
 			this.ServiceGroupBox.Controls.Add(this.label4);
 			this.ServiceGroupBox.Location = new System.Drawing.Point(3, 84);
 			this.ServiceGroupBox.Name = "ServiceGroupBox";
-			this.ServiceGroupBox.Size = new System.Drawing.Size(381, 129);
+			this.ServiceGroupBox.Size = new System.Drawing.Size(381, 138);
 			this.ServiceGroupBox.TabIndex = 17;
 			this.ServiceGroupBox.TabStop = false;
 			this.ServiceGroupBox.Text = "Service";
@@ -298,17 +330,6 @@
 			this.label4.TabIndex = 16;
 			this.label4.Text = "Voices";
 			// 
-			// label1
-			// 
-			this.label1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.label1.Location = new System.Drawing.Point(3, 193);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(364, 63);
-			this.label1.TabIndex = 20;
-			this.label1.Text = "Neural voices are supported in the following Regions:\r\nUS East (N. Virginia): us-" +
-    "east-1\r\nUS West (Oregon): us-west-2\r\nEU (Ireland): eu-west-1";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-			// 
 			// AmazonPollyUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -317,14 +338,17 @@
 			this.Controls.Add(this.ServiceGroupBox);
 			this.Controls.Add(this.SecurityGroupBox);
 			this.Name = "AmazonPollyUserControl";
-			this.Size = new System.Drawing.Size(763, 265);
+			this.Size = new System.Drawing.Size(763, 261);
 			this.SecurityGroupBox.ResumeLayout(false);
 			this.SecurityGroupBox.PerformLayout();
 			this.HelpGroupBox.ResumeLayout(false);
 			this.HelpGroupBox.PerformLayout();
+			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.ServiceGroupBox.ResumeLayout(false);
 			this.ServiceGroupBox.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -353,5 +377,6 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label PricingLabel;
 		private System.Windows.Forms.LinkLabel linkLabel1;
+		private System.Windows.Forms.Panel panel1;
 	}
 }
