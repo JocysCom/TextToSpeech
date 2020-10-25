@@ -71,5 +71,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ControlsHelper.AddDataBinding(UdpPortMessagesTextBox, s => s.Text, Program._UdpMonitor, d => d.MessagesReceived);
 			UpdateExample();
 		}
+
+		private void TestMessageGroupBox_Enter(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

@@ -83,7 +83,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.SecretKeyTextBox.Location = new System.Drawing.Point(75, 45);
 			this.SecretKeyTextBox.Name = "SecretKeyTextBox";
-			this.SecretKeyTextBox.Size = new System.Drawing.Size(300, 20);
+			this.SecretKeyTextBox.Size = new System.Drawing.Size(299, 20);
 			this.SecretKeyTextBox.TabIndex = 13;
 			this.SecretKeyTextBox.UseSystemPasswordChar = true;
 			// 
@@ -93,21 +93,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.AccessKeyTextBox.Location = new System.Drawing.Point(75, 19);
 			this.AccessKeyTextBox.Name = "AccessKeyTextBox";
-			this.AccessKeyTextBox.Size = new System.Drawing.Size(300, 20);
+			this.AccessKeyTextBox.Size = new System.Drawing.Size(299, 20);
 			this.AccessKeyTextBox.TabIndex = 14;
 			// 
 			// SecurityGroupBox
 			// 
-			this.SecurityGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.SecurityGroupBox.AutoSize = true;
 			this.SecurityGroupBox.Controls.Add(this.AccessKeyTextBox);
 			this.SecurityGroupBox.Controls.Add(this.SecretKeyLabel);
 			this.SecurityGroupBox.Controls.Add(this.SecretKeyTextBox);
 			this.SecurityGroupBox.Controls.Add(this.AccessKeyLabel);
 			this.SecurityGroupBox.Location = new System.Drawing.Point(3, 3);
 			this.SecurityGroupBox.Name = "SecurityGroupBox";
-			this.SecurityGroupBox.Size = new System.Drawing.Size(381, 84);
+			this.SecurityGroupBox.Size = new System.Drawing.Size(380, 75);
 			this.SecurityGroupBox.TabIndex = 17;
 			this.SecurityGroupBox.TabStop = false;
 			this.SecurityGroupBox.Text = "Security";
@@ -125,13 +122,15 @@
 			// 
 			// HelpGroupBox
 			// 
+			this.HelpGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.HelpGroupBox.AutoSize = true;
 			this.HelpGroupBox.Controls.Add(this.label1);
 			this.HelpGroupBox.Controls.Add(this.PricingLabel);
 			this.HelpGroupBox.Controls.Add(this.Help2Label);
 			this.HelpGroupBox.Controls.Add(this.panel1);
 			this.HelpGroupBox.Controls.Add(this.linkLabel1);
-			this.HelpGroupBox.Location = new System.Drawing.Point(390, 3);
+			this.HelpGroupBox.Location = new System.Drawing.Point(389, 3);
 			this.HelpGroupBox.Name = "HelpGroupBox";
 			this.HelpGroupBox.Size = new System.Drawing.Size(370, 233);
 			this.HelpGroupBox.TabIndex = 19;
@@ -210,9 +209,6 @@
 			// 
 			// ServiceGroupBox
 			// 
-			this.ServiceGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.ServiceGroupBox.AutoSize = true;
 			this.ServiceGroupBox.Controls.Add(this.StatusTextBox);
 			this.ServiceGroupBox.Controls.Add(this.SpeakButton);
 			this.ServiceGroupBox.Controls.Add(this.RegionComboBox);
@@ -225,7 +221,7 @@
 			this.ServiceGroupBox.Controls.Add(this.label4);
 			this.ServiceGroupBox.Location = new System.Drawing.Point(3, 84);
 			this.ServiceGroupBox.Name = "ServiceGroupBox";
-			this.ServiceGroupBox.Size = new System.Drawing.Size(381, 138);
+			this.ServiceGroupBox.Size = new System.Drawing.Size(380, 152);
 			this.ServiceGroupBox.TabIndex = 17;
 			this.ServiceGroupBox.TabStop = false;
 			this.ServiceGroupBox.Text = "Service";
@@ -237,13 +233,13 @@
 			this.StatusTextBox.Location = new System.Drawing.Point(71, 99);
 			this.StatusTextBox.Name = "StatusTextBox";
 			this.StatusTextBox.ReadOnly = true;
-			this.StatusTextBox.Size = new System.Drawing.Size(304, 20);
+			this.StatusTextBox.Size = new System.Drawing.Size(303, 20);
 			this.StatusTextBox.TabIndex = 19;
 			// 
 			// SpeakButton
 			// 
 			this.SpeakButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.SpeakButton.Location = new System.Drawing.Point(300, 71);
+			this.SpeakButton.Location = new System.Drawing.Point(299, 71);
 			this.SpeakButton.Name = "SpeakButton";
 			this.SpeakButton.Size = new System.Drawing.Size(75, 23);
 			this.SpeakButton.TabIndex = 18;
@@ -259,13 +255,13 @@
 			this.RegionComboBox.FormattingEnabled = true;
 			this.RegionComboBox.Location = new System.Drawing.Point(71, 19);
 			this.RegionComboBox.Name = "RegionComboBox";
-			this.RegionComboBox.Size = new System.Drawing.Size(304, 21);
+			this.RegionComboBox.Size = new System.Drawing.Size(303, 21);
 			this.RegionComboBox.TabIndex = 17;
 			// 
 			// RefreshVoicesButton
 			// 
 			this.RefreshVoicesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.RefreshVoicesButton.Location = new System.Drawing.Point(300, 44);
+			this.RefreshVoicesButton.Location = new System.Drawing.Point(299, 44);
 			this.RefreshVoicesButton.Name = "RefreshVoicesButton";
 			this.RefreshVoicesButton.Size = new System.Drawing.Size(75, 23);
 			this.RefreshVoicesButton.TabIndex = 18;
@@ -308,7 +304,7 @@
 			this.VoicesComboBox.FormattingEnabled = true;
 			this.VoicesComboBox.Location = new System.Drawing.Point(71, 46);
 			this.VoicesComboBox.Name = "VoicesComboBox";
-			this.VoicesComboBox.Size = new System.Drawing.Size(223, 21);
+			this.VoicesComboBox.Size = new System.Drawing.Size(222, 21);
 			this.VoicesComboBox.TabIndex = 17;
 			// 
 			// MessageTextBox
@@ -317,7 +313,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.MessageTextBox.Location = new System.Drawing.Point(71, 73);
 			this.MessageTextBox.Name = "MessageTextBox";
-			this.MessageTextBox.Size = new System.Drawing.Size(223, 20);
+			this.MessageTextBox.Size = new System.Drawing.Size(222, 20);
 			this.MessageTextBox.TabIndex = 13;
 			this.MessageTextBox.Text = "Hello world! Test Text to speech.";
 			// 
@@ -338,7 +334,7 @@
 			this.Controls.Add(this.ServiceGroupBox);
 			this.Controls.Add(this.SecurityGroupBox);
 			this.Name = "AmazonPollyUserControl";
-			this.Size = new System.Drawing.Size(763, 261);
+			this.Size = new System.Drawing.Size(762, 261);
 			this.SecurityGroupBox.ResumeLayout(false);
 			this.SecurityGroupBox.PerformLayout();
 			this.HelpGroupBox.ResumeLayout(false);

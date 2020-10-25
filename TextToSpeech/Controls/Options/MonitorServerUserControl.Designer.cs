@@ -141,13 +141,13 @@
 			// 
 			// MonitorMessageTextBox
 			// 
-			this.MonitorMessageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+			this.MonitorMessageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.MonitorMessageTextBox.Location = new System.Drawing.Point(142, 60);
+			this.MonitorMessageTextBox.Location = new System.Drawing.Point(142, 51);
 			this.MonitorMessageTextBox.Multiline = true;
 			this.MonitorMessageTextBox.Name = "MonitorMessageTextBox";
-			this.MonitorMessageTextBox.Size = new System.Drawing.Size(486, 41);
+			this.MonitorMessageTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.MonitorMessageTextBox.Size = new System.Drawing.Size(596, 37);
 			this.MonitorMessageTextBox.TabIndex = 3;
 			this.MonitorMessageTextBox.Text = "<message name=\"Marshal McBride\" gender=\"Male\" effect=\"Humanoid\" group=\"Quest\" pit" +
     "ch=\"0\" rate=\"1\" volume=\"100\" command=\"Play\"><part>Test Monitor text to speech.</" +
@@ -157,11 +157,12 @@
 			// 
 			this.SapiMessageTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.SapiMessageTextBox.Location = new System.Drawing.Point(142, 19);
+			this.SapiMessageTextBox.Location = new System.Drawing.Point(142, 10);
 			this.SapiMessageTextBox.Multiline = true;
 			this.SapiMessageTextBox.Name = "SapiMessageTextBox";
 			this.SapiMessageTextBox.ReadOnly = true;
-			this.SapiMessageTextBox.Size = new System.Drawing.Size(486, 35);
+			this.SapiMessageTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.SapiMessageTextBox.Size = new System.Drawing.Size(596, 35);
 			this.SapiMessageTextBox.TabIndex = 3;
 			this.SapiMessageTextBox.Text = "<voice required=\"name=IVONA 2 Brian\"><volume level=\"100\"><rate absspeed=\"0\"><pitc" +
     "h absmiddle=\"0\">Test SAPI text to speech.</pitch></rate></volume></voice>";
@@ -171,17 +172,17 @@
 			this.TestMessageGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.TestMessageGroupBox.AutoSize = true;
 			this.TestMessageGroupBox.Controls.Add(this.SapiVoiceRadioButton);
 			this.TestMessageGroupBox.Controls.Add(this.MonitorMessageRadioButton);
 			this.TestMessageGroupBox.Controls.Add(this.MonitorMessageTextBox);
 			this.TestMessageGroupBox.Controls.Add(this.SapiMessageTextBox);
 			this.TestMessageGroupBox.Location = new System.Drawing.Point(3, 129);
 			this.TestMessageGroupBox.Name = "TestMessageGroupBox";
-			this.TestMessageGroupBox.Size = new System.Drawing.Size(634, 114);
+			this.TestMessageGroupBox.Size = new System.Drawing.Size(741, 107);
 			this.TestMessageGroupBox.TabIndex = 5;
 			this.TestMessageGroupBox.TabStop = false;
 			this.TestMessageGroupBox.Text = "Test Message";
+			this.TestMessageGroupBox.Enter += new System.EventHandler(this.TestMessageGroupBox_Enter);
 			// 
 			// SapiVoiceRadioButton
 			// 
@@ -215,7 +216,7 @@
 			this.CodeExampleTextBox.Name = "CodeExampleTextBox";
 			this.CodeExampleTextBox.ReadOnly = true;
 			this.CodeExampleTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.CodeExampleTextBox.Size = new System.Drawing.Size(458, 120);
+			this.CodeExampleTextBox.Size = new System.Drawing.Size(565, 120);
 			this.CodeExampleTextBox.TabIndex = 6;
 			// 
 			// MonitorServerUserControl
@@ -226,7 +227,7 @@
 			this.Controls.Add(this.TestMessageGroupBox);
 			this.Controls.Add(this.MainSettingsGroupBox);
 			this.Name = "MonitorServerUserControl";
-			this.Size = new System.Drawing.Size(640, 246);
+			this.Size = new System.Drawing.Size(747, 240);
 			this.Load += new System.EventHandler(this.MonitorServerUserControl_Load);
 			((System.ComponentModel.ISupportInitialize)(this.UdpPortNumberNumericUpDown)).EndInit();
 			this.MainSettingsGroupBox.ResumeLayout(false);
