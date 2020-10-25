@@ -1722,9 +1722,9 @@
 					</Layer>
 				</Layers>
 				<TextInsets left="0" right="0" top="0" bottom="0" />
-				<FontString justifyH="LEFT" font="Interface/AddOns/JocysCom-TextToSpeech-WoW/Fonts/JocysCom0AsPixel.ttf" wordwrap="true" spacing="0" nonspacewrap="true" ignoreParentScale="true">
+				<FontString justifyH="LEFT" font="Interface/AddOns/JocysCom-TextToSpeech-WoW/Fonts/JocysCom0AsPixel.ttf" wordwrap="true" spacing="0" nonspacewrap="true" ignoreParentScale="true" >
 					<Color a="1" r="1" g="1" b="1" />
-					<FontHeight val="1" />
+					<FontHeight val="0.75" />
 				</FontString>
 			</EditBox>
 		</Frames>
