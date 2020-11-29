@@ -35,6 +35,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			if (region != null)
 				RegionComboBox.SelectedItem = region;
 			RegionComboBox.SelectedIndexChanged += RegionComboBox_SelectedIndexChanged;
+			RegionComboBox_SelectedIndexChanged(null, null);
 			//AmazonEnabledCheckBox.DataBindings.Add(nameof(AmazonEnabledCheckBox.Checked), SettingsManager.Options, nameof(SettingsManager.Options.AmazonEnabled));
 		}
 
