@@ -4,7 +4,6 @@ using JocysCom.ClassLibrary.Controls;
 using JocysCom.TextToSpeech.Monitor.Audio;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -25,6 +24,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 				.OrderBy(x => x.ToString())
 				.ToArray();
 			RegionComboBox.DataSource = regions;
+			// Try to get region from settings.
 			var region = regions.FirstOrDefault(x => x.SystemName == SettingsManager.Options.AmazonRegionSystemName);
 			if (region == null)
 				region = regions.FirstOrDefault(x => x.ToString().Contains("EU West") && x.ToString().Contains("London"));
@@ -33,10 +33,24 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			if (region == null)
 				region = regions.FirstOrDefault();
 			if (region != null)
+			{
 				RegionComboBox.SelectedItem = region;
+				// If other region was selected then 
+				if (SettingsManager.Options.AmazonRegionSystemName != region.SystemName)
+					SettingsManager.Options.AmazonRegionSystemName = region.SystemName;
+			}
 			RegionComboBox.SelectedIndexChanged += RegionComboBox_SelectedIndexChanged;
-			RegionComboBox_SelectedIndexChanged(null, null);
-			//AmazonEnabledCheckBox.DataBindings.Add(nameof(AmazonEnabledCheckBox.Checked), SettingsManager.Options, nameof(SettingsManager.Options.AmazonEnabled));
+			// If amazon key is valid then...
+			var isValid =
+				!string.IsNullOrEmpty(SettingsManager.Options.AmazonAccessKey) &&
+				!string.IsNullOrEmpty(SettingsManager.Options.AmazonSecretKey);
+			if (isValid)
+				RefreshVoicesButton_Click(null, null);
+		}
+
+		private void VoicesComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SpeakButton.Enabled = VoicesComboBox.SelectedIndex > -1;
 		}
 
 		private void RegionComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -65,8 +79,18 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 
 		private void RefreshVoicesButton_Click(object sender, EventArgs e)
 		{
+			var selectedName = (VoicesComboBox.SelectedItem as InstalledVoiceEx)?.ToString();
 			var voices = GetAmazonVoices();
 			VoicesComboBox.DataSource = voices;
+			var selected = voices.FirstOrDefault(x => x.ToString() == selectedName);
+			if (selected == null)
+				selected = voices.FirstOrDefault(x => x.Name == "Joanna" && x.ToString().Contains("neural") && x.CultureName.Contains("en-US"));
+			if (selected == null)
+				selected = voices.FirstOrDefault(x => x.Name != "Ivy" && x.ToString().Contains("neural") && x.CultureName.Contains("en-US"));
+			if (selected == null)
+				selected = voices.FirstOrDefault(x => x.Name != "Ivy" && x.CultureName.Contains("en-US"));
+			if (selected != null)
+				VoicesComboBox.SelectedItem = selected;
 		}
 
 		List<InstalledVoiceEx> GetAmazonVoices()

@@ -239,6 +239,7 @@
 			// SpeakButton
 			// 
 			this.SpeakButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.SpeakButton.Enabled = false;
 			this.SpeakButton.Location = new System.Drawing.Point(299, 71);
 			this.SpeakButton.Name = "SpeakButton";
 			this.SpeakButton.Size = new System.Drawing.Size(75, 23);
@@ -306,6 +307,7 @@
 			this.VoicesComboBox.Name = "VoicesComboBox";
 			this.VoicesComboBox.Size = new System.Drawing.Size(222, 21);
 			this.VoicesComboBox.TabIndex = 17;
+			this.VoicesComboBox.SelectedIndexChanged += new System.EventHandler(this.VoicesComboBox_SelectedIndexChanged);
 			// 
 			// MessageTextBox
 			// 
