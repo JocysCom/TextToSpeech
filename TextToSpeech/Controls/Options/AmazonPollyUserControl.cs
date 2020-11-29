@@ -35,6 +35,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			if (region != null)
 				RegionComboBox.SelectedItem = region;
 			RegionComboBox.SelectedIndexChanged += RegionComboBox_SelectedIndexChanged;
+			RegionComboBox_SelectedIndexChanged(null, null);
 			//AmazonEnabledCheckBox.DataBindings.Add(nameof(AmazonEnabledCheckBox.Checked), SettingsManager.Options, nameof(SettingsManager.Options.AmazonEnabled));
 		}
 
@@ -91,7 +92,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 		private void SpeakButton_Click(object sender, EventArgs e)
 		{
 			StatusTextBox.Text = "";
-			var text = MessageTextBox.Text;
+			var promptBuilder = new System.Speech.Synthesis.PromptBuilder();
+			promptBuilder.AppendText(MessageTextBox.Text);
 			var client = new Voices.AmazonPolly(
 				SettingsManager.Options.AmazonAccessKey,
 				SettingsManager.Options.AmazonSecretKey,
@@ -101,7 +103,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			Amazon.Polly.Engine engine = null;
 			if (voice.SupportedEngines.Contains(Amazon.Polly.Engine.Neural))
 				engine = Amazon.Polly.Engine.Neural;
-			var buffer = client.SynthesizeSpeech(voice.Id, text, null, engine);
+			var buffer = client.SynthesizeSpeech(voice.Id, promptBuilder.ToXml(), null, engine);
 			var result = client.LastException == null ? "Success" : client.LastException.Message;
 			StatusTextBox.Text = string.Format("{0:HH:mm:ss}: {1}", DateTime.Now, result);
 			var item = Global.DecodeToPlayItem(buffer);
