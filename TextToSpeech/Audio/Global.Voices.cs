@@ -28,18 +28,29 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public static BindingList<InstalledVoiceEx> AmazonStandardVoices { get; set; }
 
 		public static InstalledVoiceEx SelectedVoice { get { return _SelectedVoice; } set { _SelectedVoice = value; } }
-		static InstalledVoiceEx _SelectedVoice;
+		private static InstalledVoiceEx _SelectedVoice;
+
+		public static string SelectedEffect { get { return _SelectedEffect; } set { _SelectedEffect = value; } }
+		private static string _SelectedEffect;
+
 		public static string ValidateInstalledVoices()
 		{
 			var iv = InstalledVoices;
 			string error = "";
-			if (iv.Count == 0) error = "No voices were found";
-			else if (!iv.Any(x => x.Female > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Female\" column to use it as female voice ( recommended value: 100 ).";
-			else if (!iv.Any(x => x.Female > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Female\" column for at least one voice to use it as female voice.";
-			else if (!iv.Any(x => x.Male > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Male\" column to use it as male voice ( recommended value: 100 ).";
-			else if (!iv.Any(x => x.Male > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Male\" column for at least one voice to use it as male voice.";
-			else if (!iv.Any(x => x.Neutral > 0)) error = "Please set popularity value higher than 0 for at least one voice in \"Neutral\" column to use it as neutral voice ( recommended value: 100 ).";
-			else if (!iv.Any(x => x.Neutral > 0 && x.Enabled)) error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Neutral\" column for at least one voice to use it as neutral voice.";
+			if (iv.Count == 0)
+				error = "No voices were found";
+			else if (!iv.Any(x => x.Female > 0))
+				error = "Please set popularity value higher than 0 for at least one voice in \"Female\" column to use it as female voice ( recommended value: 100 ).";
+			else if (!iv.Any(x => x.Female > 0 && x.Enabled))
+				error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Female\" column for at least one voice to use it as female voice.";
+			else if (!iv.Any(x => x.Male > 0))
+				error = "Please set popularity value higher than 0 for at least one voice in \"Male\" column to use it as male voice ( recommended value: 100 ).";
+			else if (!iv.Any(x => x.Male > 0 && x.Enabled))
+				error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Male\" column for at least one voice to use it as male voice.";
+			else if (!iv.Any(x => x.Neutral > 0))
+				error = "Please set popularity value higher than 0 for at least one voice in \"Neutral\" column to use it as neutral voice ( recommended value: 100 ).";
+			else if (!iv.Any(x => x.Neutral > 0 && x.Enabled))
+				error = "Please enable and set popularity value higher than 0 ( recommended value: 100 ) in \"Neutral\" column for at least one voice to use it as neutral voice.";
 			return error;
 		}
 
@@ -90,7 +101,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			InstalledVoiceEx[] savedVoices = null;
 			if (!string.IsNullOrEmpty(xml))
 			{
-				try { savedVoices = Serializer.DeserializeFromXmlString<InstalledVoiceEx[]>(xml); }
+				try
+				{ savedVoices = Serializer.DeserializeFromXmlString<InstalledVoiceEx[]>(xml); }
 				catch (Exception) { }
 			}
 			if (savedVoices == null)
@@ -146,8 +158,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					// If new voice is Microsoft then...
 					if (newVoice.Name.StartsWith("Microsoft"))
 					{
-						if (newVoice.Gender == VoiceGender.Male && maleIvonaFound) newVoice.Enabled = false;
-						if (newVoice.Gender == VoiceGender.Female && femaleIvonaFound) newVoice.Enabled = false;
+						if (newVoice.Gender == VoiceGender.Male && maleIvonaFound)
+							newVoice.Enabled = false;
+						if (newVoice.Gender == VoiceGender.Female && femaleIvonaFound)
+							newVoice.Enabled = false;
 					}
 				}
 				var firstVoiceVoice = newVoices.First();
@@ -161,15 +175,18 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				if (!toVoices.Any(x => x.Neutral > 0))
 				{
 					var neutralVoices = toVoices.Where(x => x.Gender == VoiceGender.Neutral);
-					foreach (var neutralVoice in neutralVoices) neutralVoice.Neutral = InstalledVoiceEx.MaxVoice;
+					foreach (var neutralVoice in neutralVoices)
+						neutralVoice.Neutral = InstalledVoiceEx.MaxVoice;
 					if (neutralVoices.Count() == 0)
 					{
 						var maleVoices = toVoices.Where(x => x.Gender == VoiceGender.Male);
-						foreach (var maleVoice in maleVoices) maleVoice.Neutral = InstalledVoiceEx.MaxVoice;
+						foreach (var maleVoice in maleVoices)
+							maleVoice.Neutral = InstalledVoiceEx.MaxVoice;
 						if (maleVoices.Count() == 0)
 						{
 							var femaleVoices = toVoices.Where(x => x.Gender == VoiceGender.Female);
-							foreach (var femaleVoice in femaleVoices) femaleVoice.Neutral = InstalledVoiceEx.MaxVoice;
+							foreach (var femaleVoice in femaleVoices)
+								femaleVoice.Neutral = InstalledVoiceEx.MaxVoice;
 						}
 					}
 				}
@@ -312,12 +329,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			return returnHtmlText;
 		}
 
-		public static List<PlayItem> AddTextToPlaylist(string game, string text, bool addToPlaylist, string voiceGroup,
+		public static List<PlayItem> AddTextToPlaylist(ItemPlayOptions ipo, string game, string text, bool addToPlaylist, string voiceGroup,
 			// Optional properties for NPC character.
 			string name = null,
-			string gender = null,
 			string effect = null,
-			int volume = 100,
 			// Optional propertied for player character
 			string playerName = null,
 			string playerNameChanged = null,
@@ -326,8 +341,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			string voiceSourceKeys = null
 		)
 		{
-			MessageGender _gender;
-			Enum.TryParse(gender, out _gender);
 			// It will take too long to convert large amount of text to WAV data and apply all filters.
 			// This function will split text into smaller sentences.
 			var cs = "[comment]";
@@ -338,7 +351,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				? MainHelper.SplitText(text, new string[] { ". ", "! ", "? ", cs, ce })
 				: MainHelper.SplitText(text, new string[] { cs, ce });
 			var sentences = splitItems.Where(x => (x.Value + x.Key).Trim().Length > 0).ToArray();
-			bool comment = false;
+			bool isComment = false;
 			// Loop trough each sentence.
 			for (int i = 0; i < sentences.Length; i++)
 			{
@@ -354,36 +367,40 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					item.PlayerNameChanged = playerNameChanged;
 					item.PlayerClass = playerClass;
 					// Set NPC properties.
-					item.Name = name;
-					item.Gender = _gender;
+					//name = string.IsNullOrEmpty(name) ? "Undefined" : name;
+					item.Name = isComment ? "Commentator" : name;
+					item.Gender = ipo.Gender;
 					item.Effect = effect;
-					item.Volume = volume;
+					item.Volume = ipo.Volume;
 					// Set data properties.
 					item.Status = JobStatusType.Parsed;
-					item.IsComment = comment;
+					item.IsComment = isComment;
 					item.Group = voiceGroup;
 					item.VoiceSourceKeys = voiceSourceKeys;
 					item.Text = sentence;
 					if (SettingsManager.Options.CacheDataGeneralize)
 						item.Text = item.GetGeneralizedText();
-					item.Xml = ConvertTextToXml(item.Text, comment, volume);
+					item.Xml = ConvertTextToXml(ipo, item.Text, isComment, ipo.Volume);
 					items.Add(item);
-					if (addToPlaylist) lock (playlistLock) { playlist.Add(item); }
+					if (addToPlaylist)
+						lock (playlistLock)
+						{ playlist.Add(item); }
 				};
 				// If comment started.
-				if (block.Key == cs) comment = true;
+				if (block.Key == cs)
+					isComment = true;
 				// If comment ended.
-				if (block.Key == ce) comment = false;
+				if (block.Key == ce)
+					isComment = false;
 			}
 			return items;
 		}
 
-		public static string ConvertTextToXml(string text, bool isComment = false, int volume = 100)
+		public static string ConvertTextToXml(ItemPlayOptions ipo, string text, bool isComment = false, int volume = 100)
 		{
-			var vi = SelectedVoice;
 			// Apply 'message' volume and playback volume.
 			//var vol = (int)(((decimal)volume / 100m) * (decimal)SettingsManager.Options.Volume);
-			var xml = GetSsmlXml(text, vi, volume, _Pitch, _Rate, isComment);
+			var xml = GetSsmlXml(text, ipo.Voice, volume, ipo.Pitch, ipo.Rate, isComment);
 			return xml;
 		}
 
@@ -617,14 +634,15 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 						}
 						if (item.WavData != null)
 						{
-							var applyRate = SettingsManager.Options.ModifyLocallyRate && _Rate != 0;
-							var applyPitch = SettingsManager.Options.ModifyLocallyPitch && _Pitch != 0;
+							var ipo = Global.GetPlayOptions();
+							var applyRate = SettingsManager.Options.ModifyLocallyRate && ipo.Rate != 0;
+							var applyPitch = SettingsManager.Options.ModifyLocallyPitch && ipo.Pitch != 0;
 							var applyVolume = SettingsManager.Options.ModifyLocallyVolume && item.Volume < 100;
 							if (applyRate || applyPitch)
 							{
 								var parameters = new SoundStretch.RunParameters();
-								parameters.TempoDelta = GetTempoDeltaFromRate(_Rate);
-								parameters.PitchDelta = (float)_Pitch;
+								parameters.TempoDelta = GetTempoDeltaFromRate(ipo.Rate);
+								parameters.PitchDelta = ipo.Pitch;
 								parameters.Speech = true;
 								var inStream = new MemoryStream();
 								AudioHelper.Write(item, inStream);
@@ -751,7 +769,13 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				voices = voices.OrderByDescending(x => x.Neutral).ToArray();
 		}
 
-		// Set voice.
+		/// <summary>
+		/// Select Computer voice by NPC name, language and gender.
+		/// </summary>
+		/// <param name="name">NPC Name</param>
+		/// <param name="language">NPC Language</param>
+		/// <param name="gender">NPC Gender</param>
+		/// <returns>Computer Voice</returns>
 		static InstalledVoiceEx SelectVoice(string name, string language, MessageGender gender)
 		{
 			// Get only enabled voices.

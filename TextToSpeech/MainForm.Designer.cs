@@ -32,7 +32,6 @@
 			this.MessagesTabControl = new System.Windows.Forms.TabControl();
 			this.VoicesTabPage = new System.Windows.Forms.TabPage();
 			this.VoicesPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesUserControl();
-			this.VoiceErrorLabel = new System.Windows.Forms.Label();
 			this.VoiceDefaultsTabPage = new System.Windows.Forms.TabPage();
 			this.VoiceDefaultsPanel = new JocysCom.TextToSpeech.Monitor.Controls.VoicesDefaultsUserControl();
 			this.SoundsTabPage = new System.Windows.Forms.TabPage();
@@ -205,7 +204,6 @@
 			// VoicesTabPage
 			// 
 			this.VoicesTabPage.Controls.Add(this.VoicesPanel);
-			this.VoicesTabPage.Controls.Add(this.VoiceErrorLabel);
 			this.VoicesTabPage.ImageKey = "Businessman.png";
 			this.VoicesTabPage.Location = new System.Drawing.Point(4, 27);
 			this.VoicesTabPage.Name = "VoicesTabPage";
@@ -218,21 +216,8 @@
 			this.VoicesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.VoicesPanel.Location = new System.Drawing.Point(0, 0);
 			this.VoicesPanel.Name = "VoicesPanel";
-			this.VoicesPanel.Size = new System.Drawing.Size(816, 247);
+			this.VoicesPanel.Size = new System.Drawing.Size(816, 266);
 			this.VoicesPanel.TabIndex = 2;
-			// 
-			// VoiceErrorLabel
-			// 
-			this.VoiceErrorLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.VoiceErrorLabel.ForeColor = System.Drawing.Color.DarkRed;
-			this.VoiceErrorLabel.Location = new System.Drawing.Point(0, 247);
-			this.VoiceErrorLabel.Name = "VoiceErrorLabel";
-			this.VoiceErrorLabel.Padding = new System.Windows.Forms.Padding(3);
-			this.VoiceErrorLabel.Size = new System.Drawing.Size(816, 19);
-			this.VoiceErrorLabel.TabIndex = 1;
-			this.VoiceErrorLabel.Text = "Voice Error";
-			this.VoiceErrorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.VoiceErrorLabel.Visible = false;
 			// 
 			// VoiceDefaultsTabPage
 			// 
@@ -1651,7 +1636,6 @@
 		private System.Windows.Forms.ComboBox GenderComboBox;
 		private System.Windows.Forms.Label DefaultGenderLabel;
 		private System.Windows.Forms.ComboBox MonitorClipboardComboBox;
-		private System.Windows.Forms.Label VoiceErrorLabel;
 		private System.Windows.Forms.TabPage UpdateTabPage;
 		private System.Windows.Forms.WebBrowser UpdateWebBrowser;
 		private System.Windows.Forms.Label UpdateLabel;

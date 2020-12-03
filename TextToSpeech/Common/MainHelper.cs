@@ -194,7 +194,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		public static int GetNumber(int min, int max, string key, string value)
 		{
-			var s = key + value;
+			var s = string.Format("{0}{1}", key, value);
 			var hashBytes = JocysCom.ClassLibrary.Security.CRC32Helper.ComputeHash(s);
 			var hash = System.BitConverter.ToUInt32(hashBytes, 0);
 			var d = ((uint)max - (uint)min);

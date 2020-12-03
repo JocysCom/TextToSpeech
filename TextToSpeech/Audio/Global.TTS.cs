@@ -10,11 +10,6 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 	public static partial class Global
 	{
 
-		static string language;
-		static int _Pitch;
-		static int _PitchComment;
-		static int _Rate;
-
 		static string _PlayerName;
 		static string _PlayerNameChanged;
 		static string _PlayerClass;
@@ -30,6 +25,67 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		}
 
 		static message addMessage;
+
+		public static ItemPlayOptions GetPlayOptions(string name = null, string language = null, string gender = null,
+			string overridePitch = null,
+			string overrideRate = null,
+			string overrideVolume = null,
+			string effect = null
+		)
+		{
+			var ipo = new ItemPlayOptions();
+			// Set gender: Male, Female or Neutral.
+			MessageGender amGender;
+			if (!Enum.TryParse(gender, out amGender))
+				amGender = SettingsManager.Options.GenderComboBoxText;
+			ipo.Gender = amGender;
+			if (name == null)
+				ipo.Voice = SelectedVoice;
+			else
+				ipo.Voice = SelectVoice(name, language, amGender);
+			// Set pitch.
+			int _pitch;
+			var pitchIsValid = int.TryParse(overridePitch, out _pitch);
+			if (!pitchIsValid)
+				_pitch = MainHelper.GetNumber(SettingsManager.Options.PitchMin, SettingsManager.Options.PitchMax, "pitch", name);
+			if (_pitch < -10)
+				_pitch = -10;
+			if (_pitch > 10)
+				_pitch = 10;
+			ipo.Pitch = _pitch;
+			// Set rate.
+			int _rate;
+			var rateIsValid = int.TryParse(overrideRate, out _rate);
+			if (!rateIsValid)
+				_rate = MainHelper.GetNumber(SettingsManager.Options.RateMin, SettingsManager.Options.RateMax, "rate", name);
+			if (_rate < -10)
+				_rate = -10;
+			if (_rate > 10)
+				_rate = 10;
+			ipo.Rate = _rate;
+			// Set volume.
+			int _volume;
+			var volumeIsValid = int.TryParse(overrideVolume, out _volume);
+			if (!volumeIsValid)
+				_volume = 100;
+			if (_volume < 0)
+				_volume = 0;
+			if (_volume > 100)
+				_volume = 100;
+			ipo.Volume = _volume;
+			// Set effect.
+			string _effect;
+			if (string.IsNullOrEmpty(effect))
+				_effect = "Default";
+			else
+			{
+				_effect = effect;
+				if (SelectedEffect != effect)
+					OnEvent(EffectsPresetSelected, effect);
+			}
+			ipo.Effect = _effect;
+			return ipo;
+		}
 
 		public static void ProcessVoiceTextMessage(string text)
 		{
@@ -97,44 +153,10 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					// Clear buffer.
 					addMessage = null;
 
-					// Set gender: Male, Female or Neutral.
-					MessageGender amGender;
-					if (!Enum.TryParse(am.gender, out amGender))
-						amGender = SettingsManager.Options.GenderComboBoxText;
-					am.gender = amGender.ToString();
-
 					// Select voice. ----------------------------------------------------------------------------------------------------
-					var selectedVoice = SelectVoice(am.name, am.language, amGender);
+					var ipo = GetPlayOptions(am.name, am.language, am.gender, am.pitch, am.rate, am.volume, am.effect);
 
-					// Set pitch.
-					var pitchIsValid = int.TryParse(am.pitch, out _Pitch);
-					if (!pitchIsValid)
-						_Pitch = MainHelper.GetNumber(SettingsManager.Options.PitchMin, SettingsManager.Options.PitchMax, "pitch", am.name);
-					if (_Pitch < -10) _Pitch = -10;
-					if (_Pitch > 10) _Pitch = 10;
-					// Set PitchComment.
-					_PitchComment = _Pitch >= 0 ? -1 : 1;
-
-					// Set rate.
-					var rateIsValid = int.TryParse(am.rate, out _Rate);
-					if (!rateIsValid)
-						_Rate = MainHelper.GetNumber(SettingsManager.Options.RateMin, SettingsManager.Options.RateMax, "rate", am.name);
-					if (_Rate < -10) _Rate = -10;
-					if (_Rate > 10) _Rate = 10;
-
-					// Set effect.
-					var _effect = string.IsNullOrEmpty(am.effect) ? "Default" : am.effect;
-					if (cmd != MessageCommands.Save)
-						OnEvent(EffectsPresetSelected, _effect);
-
-					// Set volume.
-					int _volume;
-					var volumeIsValid = int.TryParse(am.volume, out _volume);
-					if (!volumeIsValid)
-						_volume = 100;
-					if (_volume < 0) _volume = 0;
-					if (_volume > 100) _volume = 100;
-
+				
 					bool amSound;
 					bool.TryParse(am.sound, out amSound);
 					if (amSound)
@@ -171,20 +193,20 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					var programName = Program.MonitorItem.Name;
 					var silenceIntBefore = SettingsManager.Options.AddSilenceBeforeMessage;
 					if (silenceIntBefore > 0)
-						AddTextToPlaylist(programName, "<silence msec=\"" + silenceIntBefore.ToString() + "\" />", true, am.group);
+						AddTextToPlaylist(ipo, programName, "<silence msec=\"" + silenceIntBefore.ToString() + "\" />", true, am.group);
 					// Add actual message to the playlist
-					AddTextToPlaylist(programName, allText, true, am.group,
+					AddTextToPlaylist(ipo, programName, allText, true, am.group,
 						// Supply NCP properties.
-						am.name, am.gender, am.effect, _volume,
+						am.name, am.effect,
 						// Supply Player properties.
 						_PlayerName, _PlayerNameChanged, _PlayerClass,
 						// Pass information required to pick correct synthesizer i.e. Local, Amazon or Google voice.
-						selectedVoice == null ? null : selectedVoice.SourceKeys
+						ipo.Voice?.SourceKeys
 					);
 					// Add silence after message.
 					var silenceIntAfter = (int)SettingsManager.Options.AddSilenceAfterMessage;
 					if (silenceIntAfter > 0)
-						AddTextToPlaylist(programName, "<silence msec=\"" + silenceIntAfter.ToString() + "\" />", true, am.group);
+						AddTextToPlaylist(ipo, programName, "<silence msec=\"" + silenceIntAfter.ToString() + "\" />", true, am.group);
 					break;
 				case MessageCommands.Stop:
 					StopPlayer(v.group);

@@ -255,14 +255,6 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		#endregion
 
-		void InstalledVoices_ListChanged(object sender, ListChangedEventArgs e)
-		{
-			var error = Global.ValidateInstalledVoices();
-			VoiceErrorLabel.Visible = error.Length > 0;
-			VoiceErrorLabel.Text = error;
-		}
-
-
 		Exception _LastException;
 		Exception LastException
 		{
@@ -294,21 +286,8 @@ namespace JocysCom.TextToSpeech.Monitor
 			MessagesDataGridView.DataSource = MessagesVoiceItems;
 			// Load voices from settings.
 			Global.LoadSettings();
-			// If installed voices are missing then add all local voices.
-			if (Global.InstalledVoices.Count == 0)
-			{
-				var voicesEx = Voices.VoiceHelper.GetLocalVoices();
-				foreach (var item in voicesEx)
-					item.Enabled = true;
-				Global.ImportVoices(Global.InstalledVoices, voicesEx);
-			}
 			refreshPresets();
-			VoicesPanel.VoicesGridView.DataSource = Global.InstalledVoices;
-			VoicesPanel.VoicesGridView.SelectionChanged += VoicesDataGridView_SelectionChanged;
-			VoicesDataGridView_SelectionChanged(null, null);
-			Global.InstalledVoices.ListChanged += InstalledVoices_ListChanged;
-			Global.VoiceChanged += AudioGlobal_VoiceChanged;
-			InstalledVoices_ListChanged(null, null);
+			VoicesPanel.InitializeVoices();
 			if (MonitorsEnabledCheckBox.Checked)
 				ProgramComboBox.Enabled = false;
 			UpdateClipboardMonitor();
@@ -318,11 +297,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			AboutRichTextBox.Rtf = sr.ReadToEnd();
 			sr.Close();
 			ResetHelpToDefault();
-		}
-
-		private void AudioGlobal_VoiceChanged(object sender, ClassLibrary.EventArgs<InstalledVoiceEx> e)
-		{
-			VoicesPanel.SelectItem(e.Data);
 		}
 
 		//Make the recognizer ready
@@ -347,15 +321,16 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				SandBoxTextBox.Text = "<message command=\"Play\" language=\"809\" name=\"Marshal McBride\" gender=\"Male\" effect=\"Humanoid\" group=\"Quest\" pitch=\"0\" rate=\"1\" volume=\"100\"><part>Test text to speech. [comment]Test text to speech.[/comment]</part></message>";
 			}
-
+			var ipo = Global.GetPlayOptions();
 			//Fill SAPI Tab
 			if (string.IsNullOrEmpty(InPartTextBox.Text))
 			{
-				SapiTextBox.Text = Global.ConvertTextToXml("Test text to speech.");
+
+				SapiTextBox.Text = Global.ConvertTextToXml(ipo, "Test text to speech.");
 			}
 			else
 			{
-				var blocks = Global.AddTextToPlaylist(ProgramComboBox.Text, InPartTextBox.Text, false, "TextBox");
+				var blocks = Global.AddTextToPlaylist(ipo, ProgramComboBox.Text, InPartTextBox.Text, false, "TextBox");
 				SapiTextBox.Text = string.Join("\r\n\r\n", blocks.Select(x => x.Xml));
 			}
 		}
@@ -738,15 +713,9 @@ namespace JocysCom.TextToSpeech.Monitor
 			}
 			else
 			{
-				Global.AddTextToPlaylist(ProgramComboBox.Text, InPartTextBox.Text, true, "TextBox");
+				var ipo = Global.GetPlayOptions();
+				Global.AddTextToPlaylist(ipo, ProgramComboBox.Text, InPartTextBox.Text, true, "TextBox");
 			}
-		}
-
-		private void VoicesDataGridView_SelectionChanged(object sender, EventArgs e)
-		{
-			var voice = VoicesPanel.GetSelectedItems().FirstOrDefault();
-			if (Global.SelectedVoice != voice)
-				Global.SelectedVoice = voice;
 		}
 
 		/// <summary>

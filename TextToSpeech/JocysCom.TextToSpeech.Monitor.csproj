@@ -176,6 +176,7 @@
     <Compile Include="Audio\Global.Effects.cs" />
     <Compile Include="Audio\Global.TTS.cs" />
     <Compile Include="Audio\Global.Voices.cs" />
+    <Compile Include="Audio\ItemPlayOptions.cs" />
     <Compile Include="Audio\KeyValue.cs" />
     <Compile Include="Capturing\CapturingType.cs" />
     <Compile Include="Capturing\MessageCommand.cs" />

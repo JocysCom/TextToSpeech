@@ -55,20 +55,70 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			return items;
 		}
 
-		public void SelectItem(InstalledVoiceEx item)
+		#region Initialize Voices
+
+		public void InitializeVoices()
 		{
-			// Select rows first.
-			foreach (DataGridViewRow row in VoicesDataGridView.Rows)
+			// If installed voices are missing then add all local voices.
+			if (Global.InstalledVoices.Count == 0)
 			{
+				var voicesEx = Voices.VoiceHelper.GetLocalVoices();
+				foreach (var item in voicesEx)
+					item.Enabled = true;
+				Global.ImportVoices(Global.InstalledVoices, voicesEx);
+			}
+			// Monitor list and give suggestions.
+			Global.InstalledVoices.ListChanged += Global_InstalledVoices_ListChanged;
+			// Bind installed voices to Ui DataGridView.
+			VoicesGridView.DataSource = Global.InstalledVoices;
+			// Monitor when user selects voice by using control.
+			VoicesGridView.SelectionChanged += VoicesDataGridView_SelectionChanged;
+			VoicesDataGridView_SelectionChanged(null, null);
+			// Monitor when system selects voice.
+			Global.VoiceChanged += Global_VoiceChanged;
+			Global_InstalledVoices_ListChanged(null, null);
+		}
+
+		private void VoicesDataGridView_SelectionChanged(object sender, EventArgs e)
+		{
+			var voice = GetSelectedItems().FirstOrDefault();
+			if (Global.SelectedVoice != voice)
+				Global.SelectedVoice = voice;
+		}
+
+		void Global_InstalledVoices_ListChanged(object sender, ListChangedEventArgs e)
+		{
+			var error = Global.ValidateInstalledVoices();
+			VoiceErrorSeparatorLabel.Visible = error.Length > 0;
+			VoiceErrorLabel.Visible = error.Length > 0;
+			VoiceErrorLabel.Text = error;
+		}
+
+		private void Global_VoiceChanged(object sender, ClassLibrary.EventArgs<InstalledVoiceEx> e)
+		{
+			ControlsHelper.SetSelectedItem(VoicesGridView, e.Data);
+		}
+
+		#endregion
+
+		/// <summary>
+		/// Select item on DataGridView control.
+		/// Select item first to make sure that no items are unselected.
+		/// </summary>
+		/// <param name="control">DataGridView, Control</param>
+		/// <param name="item">Data bound object to select</param>
+		public static void SelectItem(DataGridView control, object item)
+		{
+			if (control == null)
+				throw new ArgumentNullException(nameof(control));
+			// Select rows first.
+			foreach (DataGridViewRow row in control.Rows)
 				if (row.DataBoundItem.Equals(item) && !row.Selected)
 					row.Selected = true;
-			}
 			// Unselect rows.
-			foreach (DataGridViewRow row in VoicesDataGridView.Rows)
-			{
+			foreach (DataGridViewRow row in control.Rows)
 				if (!row.DataBoundItem.Equals(item) && row.Selected)
 					row.Selected = false;
-			}
 		}
 
 		#region Appearance
@@ -117,13 +167,15 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void VoicesDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			if (e.RowIndex == -1) return;
+			if (e.RowIndex == -1)
+				return;
 			var grid = (DataGridView)sender;
 			var voice = (InstalledVoiceEx)grid.Rows[e.RowIndex].DataBoundItem;
 			var column = VoicesDataGridView.Columns[e.ColumnIndex];
 			if (e.ColumnIndex == grid.Columns[AgeColumn.Name].Index)
 			{
-				if (voice.Age.ToString() == "NotSet") e.Value = "...";
+				if (voice.Age.ToString() == "NotSet")
+					e.Value = "...";
 			}
 			// If main window then...
 			if (MenuButtonsVisible)
@@ -139,7 +191,8 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		private void VoicesDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.RowIndex < 0) return;
+			if (e.RowIndex < 0)
+				return;
 			var grid = (DataGridView)sender;
 			//var column = VoicesDataGridView.Columns[e.ColumnIndex];
 			if (e.ColumnIndex == grid.Columns[EnabledColumn.Name].Index)
@@ -148,9 +201,12 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				voice.Enabled = !voice.Enabled;
 				VoicesDataGridView.Invalidate();
 			}
-			if (e.ColumnIndex == grid.Columns[FemaleColumn.Name].Index) VoicesDataGridView.BeginEdit(true);
-			if (e.ColumnIndex == grid.Columns[MaleColumn.Name].Index) VoicesDataGridView.BeginEdit(true);
-			if (e.ColumnIndex == grid.Columns[NeutralColumn.Name].Index) VoicesDataGridView.BeginEdit(true);
+			if (e.ColumnIndex == grid.Columns[FemaleColumn.Name].Index)
+				VoicesDataGridView.BeginEdit(true);
+			if (e.ColumnIndex == grid.Columns[MaleColumn.Name].Index)
+				VoicesDataGridView.BeginEdit(true);
+			if (e.ColumnIndex == grid.Columns[NeutralColumn.Name].Index)
+				VoicesDataGridView.BeginEdit(true);
 		}
 
 
