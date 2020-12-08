@@ -1,32 +1,122 @@
 ﻿using PacketDotNet;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
 namespace JocysCom.TextToSpeech.Monitor.PlugIns
 {
 	public class VoiceListItem
 	{
+		public VoiceListItem()
+		{
+			FilterDirection = TrafficDirection.Out;
+			FilterProtocol = System.Net.Sockets.ProtocolType.Tcp;
+			// Encoding used when converting bytes to text.
+			DataEncoding = Encoding.UTF8;
+		}
+
+		protected Encoding DataEncoding;
+		protected string StartTag = "<message";
+		protected string EndTag1 = "</message>";
+		protected string EndTag2 = " />";
+
+		protected string ExtractMessage(byte[] bytes)
+		{
+			if (bytes == null || bytes.Length == 0)
+				return null;
+			var startTagBytes = DataEncoding.GetBytes(StartTag);
+			// Find start tag.
+			var start = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, startTagBytes);
+			if (start == -1)
+				return null;
+			// Find end tag.
+			var endTag1Bytes = DataEncoding.GetBytes(EndTag1);
+			var end = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, endTag1Bytes, start);
+			// If ending was found then...
+			if (end > -1)
+				return DataEncoding.GetString(bytes, start, end + endTag1Bytes.Length - start);
+			// Try to find alternative ending.
+			var endTag2Bytes = DataEncoding.GetBytes(EndTag2);
+			end = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, endTag2Bytes, start);
+			// If ending was found then...
+			if (end > -1)
+				return DataEncoding.GetString(bytes, start, end + endTag2Bytes.Length - start);
+			return null;
+		}
+
+		protected string ExtractMessage(string text)
+		{
+			if (string.IsNullOrEmpty(text))
+				return null;
+			// Find start tag.
+			var start = text.IndexOf(StartTag, System.StringComparison.Ordinal);
+			if (start == -1)
+				return null;
+			// Find end tag.
+			var end = text.IndexOf(EndTag1, start, System.StringComparison.Ordinal);
+			// If ending was found then...
+			if (end > -1)
+				return text.Substring(start, end + EndTag1.Length - start);
+			// Try to find alternative ending.
+			end = text.IndexOf(EndTag2, start, System.StringComparison.Ordinal);
+			// If ending was found then...
+			if (end > -1)
+				return text.Substring(start, end + EndTag2.Length - start);
+			return null;
+		}
+
+		/// <summary>
+		/// Load message from bytes captured from from network.
+		/// </summary>
+		/// <returns>Null if message not found.</returns>
+		public virtual bool Load(IpPacket ipHeader, TcpPacket tcpHeader)
+		{
+			if (tcpHeader == null)
+				return false;
+			_IpHeader = ipHeader;
+			_TcpHeader = tcpHeader;
+			var s = ExtractMessage(tcpHeader.PayloadData);
+			_Load(s);
+			return s != null;
+		}
+
+		/// <summary>
+		/// Load message from text.
+		/// </summary>
+		/// <returns>Null if message not found.</returns>
+		public virtual bool Load(string text)
+		{
+			var s = ExtractMessage(text);
+			_Load(s);
+			return s != null;
+		}
+
+		private void _Load(string text)
+		{
+			_IsVoiceItem = true;
+			_VoiceXml = text;
+		}
 
 		internal IpPacket _IpHeader;
 		internal TcpPacket _TcpHeader;
 
 		#region GridView columns.
 
-		public int TotalLength { get { return _IpHeader == null ? 0 : _IpHeader.TotalLength; } }
-		public IPAddress SourceAddress { get { return _IpHeader == null ? null : _IpHeader.SourceAddress; } }
-		public ushort SourcePort { get { return _TcpHeader == null ? (ushort)0 : _TcpHeader.SourcePort; } }
-		public IPAddress DestinationAddress { get { return _IpHeader == null ? null : _IpHeader.DestinationAddress; } }
-		public ushort DestinationPort { get { return _TcpHeader == null ? (ushort)0 : _TcpHeader.DestinationPort; } }
-		public int DataLength { get { return _TcpHeader == null ? 0 : _TcpHeader.PayloadData.Length; } }
-		public uint SequenceNumber { get { return _TcpHeader == null ? 0 : _TcpHeader.SequenceNumber; } }
-		public int VoiceXmlLength { get { return string.IsNullOrEmpty(_VoiceXml) ? 0 : _VoiceXml.Length; } }
+		public int TotalLength => _IpHeader?.TotalLength ?? 0;
+		public IPAddress SourceAddress => _IpHeader?.SourceAddress;
+		public ushort SourcePort => _TcpHeader?.SourcePort ?? 0;
+		public IPAddress DestinationAddress => _IpHeader?.DestinationAddress;
+		public ushort DestinationPort => _TcpHeader?.DestinationPort ?? 0;
+		public int DataLength => _TcpHeader?.PayloadData?.Length ?? 0;
+		public uint SequenceNumber => _TcpHeader?.SequenceNumber ?? 0; 
+		public int VoiceXmlLength => _VoiceXml?.Length ?? 0; 
 
 		#endregion
 
-		public bool IsVoiceItem { get { return _IsVoiceItem; } }
+		public bool IsVoiceItem => _IsVoiceItem;
 		internal bool _IsVoiceItem;
 
-		public string VoiceXml { get { return _VoiceXml; } }
+		public string VoiceXml => _VoiceXml;
 		internal string _VoiceXml;
 
 		public string Name { get; set; }
@@ -42,10 +132,7 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 		public string FilterProcessName { get; set; }
 
 		#endregion
-
-		public virtual bool Load(string text) { return false; }
-
-		public virtual bool Load(IpPacket ipHeader, TcpPacket tcpHeader) { return false; }
+	
 
 	}
 
