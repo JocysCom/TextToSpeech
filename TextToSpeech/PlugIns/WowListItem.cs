@@ -1,4 +1,5 @@
 ﻿using PacketDotNet;
+using System.Text;
 
 namespace JocysCom.TextToSpeech.Monitor.PlugIns
 {
@@ -8,52 +9,95 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 		{
 			Name = "WoW";
 			Process = new string[] { "wow.exe", "wow-64.exe" };
-
 			FilterDestinationPort = 3724;
 			FilterDirection = TrafficDirection.Out;
 			FilterProtocol = System.Net.Sockets.ProtocolType.Tcp;
+			// Encoding used when converting bytes to text.
+			DataEncoding = Encoding.UTF8;
 		}
 
-		public override void Load(IpPacket ipHeader, TcpPacket tcpHeader)
+		private Encoding DataEncoding;
+		public const string startTag = "<message";
+		public const string endTag1 = "</message>";
+		public const string endTag2 = " />";
+
+		private string ExtractMessage(byte[] bytes)
 		{
+			if (bytes == null || bytes.Length == 0)
+				return null;
+			var startTagBytes = DataEncoding.GetBytes(startTag);
+			// Find start tag.
+			var start = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, startTagBytes);
+			if (start == -1)
+				return null;
+			// Find end tag.
+			var endTag1Bytes = DataEncoding.GetBytes(endTag1);
+			var end = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, endTag1Bytes, start);
+			// If ending was found then...
+			if (end > -1)
+				return DataEncoding.GetString(bytes, start, end + endTag1Bytes.Length - start);
+			// Try to find alternative ending.
+			var endTag2Bytes = DataEncoding.GetBytes(endTag2);
+			end = JocysCom.ClassLibrary.Text.Helper.IndexOf(bytes, endTag2Bytes, start);
+			// If ending was found then...
+			if (end > -1)
+				return DataEncoding.GetString(bytes, start, end + endTag2Bytes.Length - start);
+			return null;
+		}
+
+		private static string ExtractMessage(string text)
+		{
+			if (string.IsNullOrEmpty(text))
+				return null;
+			// Find start tag.
+			var start = text.IndexOf(startTag, System.StringComparison.Ordinal);
+			if (start == -1)
+				return null;
+			// Find end tag.
+			var end = text.IndexOf(endTag1, start, System.StringComparison.Ordinal);
+			// If ending was found then...
+			if (end > -1)
+				return text.Substring(start, end + endTag1.Length - start);
+			// Try to find alternative ending.
+			end = text.IndexOf(endTag2, start, System.StringComparison.Ordinal);
+			// If ending was found then...
+			if (end > -1)
+				return text.Substring(start, end + endTag2.Length - start);
+			return null;
+		}
+
+		/// <summary>
+		/// Load message from bytes captured from from network.
+		/// </summary>
+		/// <returns>Null if message not found.</returns>
+		public override bool Load(IpPacket ipHeader, TcpPacket tcpHeader)
+		{
+			if (tcpHeader == null)
+				return false;
 			_IpHeader = ipHeader;
 			_TcpHeader = tcpHeader;
-			// Convert bytes to ASCII text. ASCII encoding is used in order to find property position of <message></message> tags inside byte array.
-			var text = System.Text.Encoding.ASCII.GetString(tcpHeader.PayloadData);
-			Load(text, tcpHeader.PayloadData);
+			var s = ExtractMessage(tcpHeader.PayloadData);
+			_Load(s);
+			return s != null;
 		}
 
-		public override void Load(string text, byte[] data = null)
+		/// <summary>
+		/// Load message from text.
+		/// </summary>
+		/// <returns>Null if message not found.</returns>
+		public override bool Load(string text)
 		{
-			if (text.Contains("<message"))
-			{
-				var endTag = "</message>";
-				// Find start of the voice tag.
-				var start = text.IndexOf("<message");
-				// Find end of the voice tag.
-				var end = text.IndexOf(endTag, start);
-				if (end == -1)
-				{
-					endTag = " />";
-					end = text.IndexOf(endTag, start);
-				}
-				if (end > start)
-				{
-					_IsVoiceItem = true;
-					// If original bytes are not available then...
-					if (data == null)
-					{
-						// Get voice text from original text block.
-						_VoiceXml = text.Substring(start, end - start + endTag.Length);
-					}
-					else
-					{
-						// Get voice text from original bytes as UTF8 text.
-						_VoiceXml = System.Text.Encoding.UTF8.GetString(data, start, end - start + endTag.Length);
-					}
-				}
-			}
+			var s = ExtractMessage(text);
+			_Load(s);
+			return s != null;
 		}
+
+		private void _Load(string text)
+		{
+			_IsVoiceItem = true;
+			_VoiceXml = text;
+		}
+
 
 	}
 }

@@ -43,9 +43,9 @@ namespace JocysCom.TextToSpeech.Monitor.PlugIns
 
 		#endregion
 
-		public virtual void Load(string text, byte[] data = null) { }
+		public virtual bool Load(string text) { return false; }
 
-		public virtual void Load(IpPacket ipHeader, TcpPacket tcpHeader) { }
+		public virtual bool Load(IpPacket ipHeader, TcpPacket tcpHeader) { return false; }
 
 	}
 

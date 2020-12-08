@@ -594,8 +594,10 @@ namespace JocysCom.TextToSpeech.Monitor
 					if (text == _lastData)
 						return;
 					_lastData = text;
-					if (MonitorClipboardComboBox.SelectedIndex == 2 && !text.Contains("<message")) text = "<message command=\"Play\"><part>" + text + "</part></message>";
-					if (string.IsNullOrEmpty(text) || !text.Contains("<message")) return;
+					if (MonitorClipboardComboBox.SelectedIndex == 2 && !text.Contains("<message"))
+						text = "<message command=\"Play\"><part>" + text + "</part></message>";
+					if (string.IsNullOrEmpty(text) || !text.Contains("<message"))
+						return;
 					var voiceItem = (VoiceListItem)Activator.CreateInstance(Program.MonitorItem.GetType());
 					voiceItem.Load(text);
 					Global.addVoiceListItem(voiceItem);

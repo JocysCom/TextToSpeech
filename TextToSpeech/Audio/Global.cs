@@ -106,7 +106,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 				Group = group,
 				Status = JobStatusType.Pitched,
 			};
-			lock (playlistLock) { playlist.Add(item); }
+			lock (playlistLock)
+			{ playlist.Add(item); }
 		}
 
 		public static void PlayCurrentIntroSound()
@@ -205,7 +206,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					{
 						bool groupIsPlaying;
 						int itemsLeftToPlay;
-						lock (playlistLock) { ClearPlayList(null, out groupIsPlaying, out itemsLeftToPlay); }
+						lock (playlistLock)
+						{ ClearPlayList(null, out groupIsPlaying, out itemsLeftToPlay); }
 					});
 				}
 				else
@@ -259,7 +261,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		{
 			bool groupIsPlaying;
 			int itemsLeftToPlay;
-			lock (playlistLock) { ClearPlayList(group, out groupIsPlaying, out itemsLeftToPlay); }
+			lock (playlistLock)
+			{ ClearPlayList(group, out groupIsPlaying, out itemsLeftToPlay); }
 			if (groupIsPlaying || itemsLeftToPlay == 0)
 			{
 				addMessage = null;
@@ -276,24 +279,24 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		public static void AddMessageToPlay(string text)
 		{
-			if (!string.IsNullOrEmpty(text))
+			if (string.IsNullOrEmpty(text))
+				return;
+			if (text.StartsWith("<message"))
 			{
-				if (text.StartsWith("<message"))
+				var voiceItem = (VoiceListItem)Activator.CreateInstance(Program.MonitorItem.GetType());
+				voiceItem.Load(text);
+				addVoiceListItem(voiceItem);
+			}
+			else
+			{
+				var item = new PlayItem()
 				{
-					var voiceItem = (VoiceListItem)Activator.CreateInstance(Program.MonitorItem.GetType());
-					voiceItem.Load(text);
-					addVoiceListItem(voiceItem);
-				}
-				else
-				{
-					var item = new PlayItem()
-					{
-						Text = "SAPI XML",
-						Xml = text,
-						Status = JobStatusType.Parsed,
-					};
-					lock (playlistLock) { playlist.Add(item); }
-				}
+					Text = "SAPI XML",
+					Xml = text,
+					Status = JobStatusType.Parsed,
+				};
+				lock (playlistLock)
+				{ playlist.Add(item); }
 			}
 		}
 
