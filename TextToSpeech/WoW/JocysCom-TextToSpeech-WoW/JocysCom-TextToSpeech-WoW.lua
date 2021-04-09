@@ -16,7 +16,7 @@ local version, build, date, tocversion = GetBuildInfo()
 local classic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 9.0.2.1 ( 2020-11-25 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 9.0.5.1 ( 2021-04-09 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line.
@@ -157,11 +157,12 @@ local function JocysCom_AddonCommands(msg, editbox)
 	else
 		-- If cmd is nil, display help message.
 		print("|cff77ccff------------------------------------------------------------------------------------|r")
-		print("|cff77ccffJocys.com Text to Speech addon's slash commands|r")
+		print("|cff77ccffJocys.com Text to Speech addon's slash commands and macros|r")
 		print("|cff77ccff------------------------------------------------------------------------------------|r")
 		print("|cffffff55/JocysComTTS|r -- Show this help")
 		print("|cffffff55/JocysComTTS Debug|r -- Debug enable / disable")
 		print("|cffffff55/JocysComTTS Macro Reset|r -- Reset |cff40fb40" .. macroName .. "|r")
+		print("Macro: |cffffff55/run JocysCom_SaveNPCAs(\"Orc\")|r -- Save in TTS Monitor as \"effect\" |r")
 		print("|cff77ccff------------------------------------------------------------------------------------|r")
   end
 end
@@ -1084,6 +1085,21 @@ function JocysCom_OptionsButton_OnClick()
 		JocysCom_OptionsFrame:Hide()
 	else
 		JocysCom_OptionsFrame:Show()
+	end
+end
+
+-- Function for macro. Saves targeted NPC in TTS Monitor with custom effect name. Macro example: /run JocysCom_SaveNPCAs("Orc")
+--  If CheckBox [Save "target" and "mouseover" NPC's name, gender and type in Monitor.] in TTS Addon "Options" window is enabled, targeting or mouseover NPC will overwrite custom save.
+function JocysCom_SaveNPCAs(e)
+	local t = "target"
+	if UnitIsPlayer(t) or UnitPlayerControlled(t) or UnitName(t) == nil or UnitSex(t) == nil then
+		if DebugEnabled then JocysCom_DebugPrint("NPCSaved0") end
+	else
+		local saveMessage = "<message command=\"save\"" .. Attribute("name", UnitName(t)) .. Attribute("gender", Gender(UnitSex(t))) .. Attribute("effect", e) .. " />"
+		--Send message.
+		messageEditBox = "|cff808080" .. saveMessage .. "|r"
+		-- Send message and do not fill EditBox in Options window.
+		JocysCom_SendMessage(saveMessage, false)
 	end
 end
 

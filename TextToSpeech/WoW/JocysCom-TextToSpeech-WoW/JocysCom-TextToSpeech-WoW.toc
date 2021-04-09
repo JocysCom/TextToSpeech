@@ -1,10 +1,10 @@
 #Extract current TOC Version (Interface) in chat window: /run print((select(4, GetBuildInfo())));
 
 ## Author: Jocys.com
-## Interface: 90002
+## Interface: 90005
 ## Notes: Jocys.com Text to Speech World of Warcraft AddOn
 ## Title: |cff77ccffJocys.com|r Text to Speech
-## Version: 9.0.2
+## Version: 9.0.5
 
 ## SavedVariables:
 
