@@ -60,6 +60,93 @@ namespace JocysCom.TextToSpeech.Monitor
 			ControlsHelper.ApplyImageStyle(MessagesTabControl);
 		}
 
+		/*
+		
+		1. TTS Monitor can receive 3 types of messages (<message>, <sapi xml>, text) from 4 sources (Network, Screen, Clipboard, TTS Monitor TextBox).
+
+		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+		█ A. <Message> (can be splitted):
+
+		<message command="add"><part>Test text to speech. [comment]Test </part></message>
+		<message command="add"><part>text to speech.[/comment] Test </part></message>
+		<message command="play" name="Marshal McBride" gender="Male" effect="Humanoid" group="Quest" pitch="0" rate="1" volume="100"><part>text to speech.</part></message>
+
+		A1. STEP - Set-extact attributes (join text parts together).
+
+		name="Marshal McBride"
+		gender="Male"
+		effect="Humanoid"
+		group="Quest"
+		pitch="0"
+		rate="1"
+		volume="100"
+		text="Test text to speech. [comment]Test text to speech.[/comment] Test text to speech."
+
+		A2. STEP - Convert received <message> attributes to <sapi xml> attributes:
+
+		voice="IVONA 2 Brian"
+		voiceComment="IVONA 2 Amy"
+		pitch="0"
+		rate="1"
+		volume="100"
+		text="Test text to speech. [comment]Test text to speech.[/comment] Test text to speech."
+
+		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+		█ B. <Sapi XML>:
+
+		<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-GB">Test text to speech. [comment]Test text to speech.[/comment] Test text to speech.</speak>
+
+		B1. STEP - Set-Extact attributes.
+
+		version="1.0"
+		xmlns="http://www.w3.org/2001/10/synthesis"
+		xml:lang="en-GB"
+		text="Test text to speech. [comment]Test text to speech.[/comment] Test text to speech."
+
+		B2. STEP - Convert received <sapi xml> attributes to <sapi xml> attributes:
+
+		voice="IVONA 2 Brian"
+		voiceComment="IVONA 2 Amy"
+		pitch="0"
+		rate="1"
+		volume="100"
+		text="Test text to speech. [comment]Test text to speech.[/comment] Test text to speech."
+
+		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+		█ C. Text:
+
+		C1. STEP - Set-Extact attributes.
+
+		text="Test text to speech. [comment]Test text to speech.[/comment] Test text to speech."
+
+		C2. STEP - Convert received text to <sapi xml> attributes:
+
+		voice="IVONA 2 Brian"
+		voiceComment="IVONA 2 Amy"
+		pitch="0"
+		rate="1"
+		volume="100"
+		text="Test text to speech. [comment]Test text to speech.[/comment] Test text to speech."
+
+		-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+		ABC-1. STEP - Split "text" into sentences:
+
+		Test text to speech.
+		[comment]Test text to speech.[/comment]
+		Test text to speech.
+
+		ABC-2. STEP - Convert text to <sapi xml> with assigned <sapi xml> attributes and add to TTS play list:
+
+		<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-GB"><voice required="name=IVONA 2 Brian"><rate absspeed="1"><pitch absmiddle="0">Test text to speech.</pith></rate></voice></speak>
+		<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-GB"><voice required="name=IVONA 2 Amy"><rate absspeed="1"><pitch absmiddle="0">Test text to speech.</pith></rate></voice></speak>
+		<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-GB"><voice required="name=IVONA 2 Brian"><rate absspeed="1"><pitch absmiddle="0">Test text to speech.</pith></rate></voice></speak>
+
+		 */
+
 		private void _NetworkMonitor_ProcessChanged(object sender, ClassLibrary.EventArgs<string> e)
 		{
 			ProcessStatusLabel.Text = string.IsNullOrEmpty(e.Data)
