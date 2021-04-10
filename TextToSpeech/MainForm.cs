@@ -62,7 +62,9 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		/*
 		
-		1. TTS Monitor can receive 3 types of messages (<message>, <sapi xml>, text) from 4 sources (Network, Screen, Clipboard, TTS Monitor TextBox).
+		TTS Monitor can receive 3 types of messages (<message>, <sapi xml>, text) from 4 sources (Network, Screen, Clipboard, TTS Monitor TextBox).
+
+		█ ABC1. STEP - Detect incoming type.
 
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -133,13 +135,13 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-		ABC-1. STEP - Split "text" into sentences:
+		█ ABC1. STEP - Split "text" into sentences:
 
 		Test text to speech.
 		[comment]Test text to speech.[/comment]
 		Test text to speech.
 
-		ABC-2. STEP - Convert text to <sapi xml> with assigned <sapi xml> attributes and add to TTS play list:
+		█ ABC2. STEP - Convert text to <sapi xml> with assigned <sapi xml> attributes and add to TTS play list:
 
 		<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-GB"><voice required="name=IVONA 2 Brian"><rate absspeed="1"><pitch absmiddle="0">Test text to speech.</pith></rate></voice></speak>
 		<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-GB"><voice required="name=IVONA 2 Amy"><rate absspeed="1"><pitch absmiddle="0">Test text to speech.</pith></rate></voice></speak>
