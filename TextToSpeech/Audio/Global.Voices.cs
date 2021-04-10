@@ -368,8 +368,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					item.PlayerNameChanged = playerNameChanged;
 					item.PlayerClass = playerClass;
 					// Set NPC properties.
-					//string commentator = FindVoiceForNameInTheList("Commentator");
-					//name = isComment ? "Microsoft Zira Desktop" : name;
+					//item.Name = isComment ? ReplaceNameToVoiceFromVoiceDefaultsTab("Commentator") : name;
 					item.Name = name;
 					item.Gender = ipo.Gender;
 					item.Effect = effect;
