@@ -4,6 +4,7 @@ using JocysCom.TextToSpeech.Monitor.Capturing;
 using System;
 using System.IO;
 using System.Linq;
+//using System.Text.RegularExpressions;
 
 namespace JocysCom.TextToSpeech.Monitor.Audio
 {
@@ -90,8 +91,11 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 		public static void ProcessVoiceTextMessage(string text)
 		{
 			// If <message.
-			if (!text.Contains("<message"))
-				return;
+			if (!text.Contains("<message")) return;
+
+			// Insert name="Undefined" attribute if not submited.
+			text = !text.Contains("name=") ? text.Replace("<message", "<message name=\"Undefined\"") : text;
+
 			var v = Serializer.DeserializeFromXmlString<message>(text);
 			// Get default values by NPC or Player name.
 			var overrideVoice = SettingsFile.Current.Defaults.FirstOrDefault(x => string.Equals(x.name, v.name, StringComparison.InvariantCultureIgnoreCase));
@@ -156,7 +160,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					// Select voice. ----------------------------------------------------------------------------------------------------
 					var ipo = GetPlayOptions(am.name, am.language, am.gender, am.pitch, am.rate, am.volume, am.effect);
 
-				
+
 					bool amSound;
 					bool.TryParse(am.sound, out amSound);
 					if (amSound)
@@ -194,8 +198,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					var silenceIntBefore = SettingsManager.Options.AddSilenceBeforeMessage;
 					if (silenceIntBefore > 0)
 						AddTextToPlaylist(ipo, programName, "<silence msec=\"" + silenceIntBefore.ToString() + "\" />", true, am.group);
-					// Add actual message to the playlist
-					AddTextToPlaylist(ipo, programName, allText, true, am.group,
+						// Add actual message to the playlist
+						AddTextToPlaylist(ipo, programName, allText, true, am.group,
 						// Supply NCP properties.
 						am.name, am.effect,
 						// Supply Player properties.

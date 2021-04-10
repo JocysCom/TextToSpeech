@@ -690,6 +690,7 @@ namespace JocysCom.TextToSpeech.Monitor
 
 		}
 
+		public string InsertNameUndefinedAttributeIfNotSubmited(string text) { return text.Contains("<message") && !text.Contains("name=") ? text.Replace("<message", "<message name=\"Undefined\"") : text; }
 
 		void SpeakButton_Click(object sender, EventArgs e)
 		{

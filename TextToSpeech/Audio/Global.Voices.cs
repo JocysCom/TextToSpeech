@@ -341,6 +341,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			string voiceSourceKeys = null
 		)
 		{
+
 			// It will take too long to convert large amount of text to WAV data and apply all filters.
 			// This function will split text into smaller sentences.
 			var cs = "[comment]";
@@ -367,8 +368,9 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					item.PlayerNameChanged = playerNameChanged;
 					item.PlayerClass = playerClass;
 					// Set NPC properties.
-					//name = string.IsNullOrEmpty(name) ? "Undefined" : name;
-					item.Name = isComment ? "Commentator" : name;
+					//string commentator = FindVoiceForNameInTheList("Commentator");
+					//name = isComment ? "Microsoft Zira Desktop" : name;
+					item.Name = name;
 					item.Gender = ipo.Gender;
 					item.Effect = effect;
 					item.Volume = ipo.Volume;
@@ -380,8 +382,8 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 					item.Text = sentence;
 					if (SettingsManager.Options.CacheDataGeneralize)
 						item.Text = item.GetGeneralizedText();
-					item.Xml = ConvertTextToXml(ipo, item.Text, isComment, ipo.Volume);
-					items.Add(item);
+						item.Xml = ConvertTextToXml(ipo, item.Text, isComment, ipo.Volume);
+						items.Add(item);
 					if (addToPlaylist)
 						lock (playlistLock)
 						{ playlist.Add(item); }

@@ -279,10 +279,13 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 
 		public static void AddMessageToPlay(string text)
 		{
-			if (string.IsNullOrEmpty(text))
-				return;
+			if (string.IsNullOrEmpty(text)) return;
+
 			if (text.StartsWith("<message"))
 			{
+				// Insert name="Undefined" attribute if not submited.
+				text = !text.Contains("name=") ? text.Replace("<message", "<message name=\"Undefined\"") : text;
+
 				var voiceItem = (VoiceListItem)Activator.CreateInstance(Program.MonitorItem.GetType());
 				voiceItem.Load(text);
 				addVoiceListItem(voiceItem);
