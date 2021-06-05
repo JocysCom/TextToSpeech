@@ -13,10 +13,10 @@ local DebugEnabled = false
 
 -- version, build, date, tocversion = GetBuildInfo()
 local version, build, date, tocversion = GetBuildInfo()
-local classic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
+local classic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 9.0.5.1 ( 2021-04-09 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 9.0.5.2 ( 2021-06-04 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line.
