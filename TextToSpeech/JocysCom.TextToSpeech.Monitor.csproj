@@ -293,6 +293,7 @@
     <Compile Include="JocysCom\Configuration\SettingsParser.cs" />
     <Compile Include="JocysCom\Controls\ControlsHelper.Windows.cs" />
     <Compile Include="JocysCom\Security\Encryption.cs" />
+    <Compile Include="JocysCom\Security\Encryption.Windows.cs" />
     <Compile Include="JocysCom\Text\Filters.FoldToASCII.cs" />
     <Compile Include="Resources\SoundTouch\NET\AntiAliasFilter.cs" />
     <Compile Include="Resources\SoundTouch\NET\BpmDetect.cs" />

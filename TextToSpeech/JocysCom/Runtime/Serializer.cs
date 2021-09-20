@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Xml;
@@ -81,69 +80,6 @@ namespace JocysCom.ClassLibrary.Runtime
 
 		#endregion
 
-		#region Bytes
-
-		static object ByteSerializersLock = new object();
-		static Dictionary<Type, BinaryFormatter> ByteSerializers;
-		static BinaryFormatter GetByteSerializer(Type type)
-		{
-			lock (ByteSerializersLock)
-			{
-				if (ByteSerializers == null) ByteSerializers = new Dictionary<Type, BinaryFormatter>();
-				if (!ByteSerializers.ContainsKey(type))
-				{
-					ByteSerializers.Add(type, new BinaryFormatter());
-				}
-			}
-			return ByteSerializers[type];
-		}
-
-		/// <summary>
-		/// Serialize object to byte array.
-		/// </summary>
-		/// <param name="o">The object to serialize.</param>
-		/// <returns>Byte array.</returns>
-		public static byte[] SerializeToBytes(object o)
-		{
-			if (o == null)
-				return null;
-			var serializer = GetByteSerializer(o.GetType());
-			var ms = new MemoryStream();
-			lock (serializer) { serializer.Serialize(ms, o); }
-			var bytes = ms.ToArray();
-			ms.Close();
-			return bytes;
-		}
-
-		/// <summary>
-		/// De-serialize object from byte array.
-		/// </summary>
-		/// <param name="bytes">Byte array representing object. </param>
-		/// <returns>Object.</returns>
-		public static object DeserializeFromBytes(byte[] bytes, Type type)
-		{
-			if (bytes == null)
-				return null;
-			var serializer = GetByteSerializer(type);
-			var ms = new MemoryStream(bytes);
-			object o;
-			lock (serializer) { o = serializer.Deserialize(ms); }
-			ms.Close();
-			return o;
-		}
-
-		/// <summary>
-		/// De-serialize object from byte array.
-		/// </summary>
-		/// <param name="bytes">Byte array representing object. </param>
-		/// <returns>Object.</returns>
-		public static T DeserializeFromBytes<T>(byte[] bytes)
-		{
-			return (T)DeserializeFromBytes(bytes, typeof(T));
-		}
-
-		#endregion
-
 		#region JSON
 
 		// Notes: Use [DataMember(EmitDefaultValue = false, IsRequired = false)] attribute
@@ -173,6 +109,9 @@ namespace JocysCom.ClassLibrary.Runtime
 			return JsonSerializers[type];
 		}
 
+		public static Func<object, Encoding, string> _SerializeToJson;
+		public static Func<string, Type, Encoding, object> _DeserializeFromJson;
+
 		/// <summary>
 		/// Serialize object to JSON string.
 		/// </summary>
@@ -181,6 +120,8 @@ namespace JocysCom.ClassLibrary.Runtime
 		/// <returns>JSON string.</returns>
 		public static string SerializeToJson(object o, Encoding encoding = null)
 		{
+			if (_SerializeToJson != null)
+				return _SerializeToJson(o, encoding);
 			if (o == null)
 				return null;
 #if NETCOREAPP
@@ -189,7 +130,10 @@ namespace JocysCom.ClassLibrary.Runtime
 			options.PropertyNamingPolicy = null;
 			options.WriteIndented = true;
 			options.MaxDepth = 64;
-			return System.Text.Json.JsonSerializer.Serialize(o, o.GetType(), options);
+			// Add support for de-serializing enumeration strings.
+			options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+			var json = System.Text.Json.JsonSerializer.Serialize(o, o.GetType(), options);
+			return json;
 #else
 			var serializer = GetJsonSerializer(o.GetType());
 			var ms = new MemoryStream();
@@ -211,6 +155,8 @@ namespace JocysCom.ClassLibrary.Runtime
 		/// <returns>The de-serialized object.</returns>
 		public static object DeserializeFromJson(string json, Type type, Encoding encoding = null)
 		{
+			if (_DeserializeFromJson != null)
+				return _DeserializeFromJson(json, type, encoding);
 			if (json == null)
 				return null;
 #if NETCOREAPP
@@ -219,7 +165,10 @@ namespace JocysCom.ClassLibrary.Runtime
 			options.PropertyNamingPolicy = null;
 			options.WriteIndented = true;
 			options.MaxDepth = 64;
-			return System.Text.Json.JsonSerializer.Deserialize(json, type, options);
+			// Add support for de-serializing enumeration strings.
+			options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+			var o = System.Text.Json.JsonSerializer.Deserialize(json, type, options);
+			return o;
 #else
 			var serializer = GetJsonSerializer(type);
 			if (encoding == null)

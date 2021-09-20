@@ -34,6 +34,13 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 		}
 
+		public static string ExpandPath(string path)
+		{
+			path = Environment.ExpandEnvironmentVariables(path);
+			path = JocysCom.ClassLibrary.Text.Helper.Replace(path, Entry, false);
+			return path;
+		}
+
 		public AssemblyInfo(string strValFile)
 		{
 			Assembly = Assembly.LoadFile(strValFile);
@@ -119,11 +126,16 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 		}
 
-		//public string GetTitle(bool showBuild = true, bool showRunMode = true, bool showBuildDate = true, bool showArchitecture = true, bool showDescription = true, int versionNumbers = 3)
-		//{
-		//	return new AssemblyInfo().GetTitle(showBuild, showRunMode, showBuildDate, showArchitecture, showDescription, versionNumbers);
-		//}
-
+		public string RunMode
+		{
+			get
+			{
+				if (_RunMode == null)
+					_RunMode = SettingsParser.Current.Parse("RunMode", "");
+				return _RunMode;
+			}
+		}
+		public string _RunMode;
 
 		public string GetTitle(bool showBuild = true, bool showRunMode = true, bool showBuildDate = true, bool showArchitecture = true, bool showDescription = true, int versionNumbers = 3)
 		{
@@ -142,16 +154,16 @@ namespace JocysCom.ClassLibrary.Configuration
 					default: break;                // General Availability (GA) - Gold
 				}
 			}
-			var runMode = SettingsParser.Current.Parse("RunMode", "");
-			var haveRunMode = !string.IsNullOrEmpty(runMode);
+			
+			var haveRunMode = !string.IsNullOrEmpty(RunMode);
 			// If run mode is not specified then assume live.
-			var nonLive = haveRunMode && string.Compare(runMode, "LIVE", true) != 0;
+			var nonLive = haveRunMode && string.Compare(RunMode, "LIVE", true) != 0;
 			if (showBuildDate || (showRunMode && nonLive))
 			{
 				s += " (";
 				if (showRunMode && nonLive)
 				{
-					s += string.Format("{0}", runMode);
+					s += string.Format("{0}", RunMode);
 					if (showBuildDate) s += " ";
 				}
 				if (showBuildDate)
@@ -162,7 +174,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 			if (showArchitecture)
 			{
-				switch (Assembly.GetEntryAssembly().GetName().ProcessorArchitecture)
+				switch ((Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).GetName().ProcessorArchitecture)
 				{
 					case ProcessorArchitecture.Amd64:
 					case ProcessorArchitecture.IA64:
@@ -201,6 +213,10 @@ namespace JocysCom.ClassLibrary.Configuration
 			return s.Trim();
 		}
 
+#if NETSTANDARD // .NET Standard
+#elif NETCOREAPP // .NET Core
+#else // .NET Framework
+
 		internal partial class NativeMethods
 		{
 			[DllImport("wtsapi32.dll")]
@@ -235,6 +251,8 @@ namespace JocysCom.ClassLibrary.Configuration
 			);
 			return Marshal.PtrToStringUni(AnswerBytes);
 		}
+
+#endif
 
 		/// <summary>
 		/// Read build time from the file. This won't work with deterministic builds.
@@ -285,8 +303,8 @@ namespace JocysCom.ClassLibrary.Configuration
 		///     Create "Resources\BuildDate.txt" and set its "Build Action: Embedded Resource"
 		///     Add to pre-build event to work with latest .NET builds:
 		///     
-		///     IF NOT EXIST "$(ProjectDir)Resources" MKDIR "$(ProjectDir)Resources" 2>nul
-		///     PowerShell.exe -Command "(Get-Date).ToString(\"o\") | Out-File "$(ProjectDir)Resources\BuildDate.txt"
+		///     PowerShell.exe -Command "New-Item -ItemType Directory -Force -Path \"$(ProjectDir)Resources\" | Out-Null"
+		///     PowerShell.exe -Command "(Get-Date).ToString(\"o\") | Out-File \"$(ProjectDir)Resources\BuildDate.txt\""
 		///
 		/// Note:
 		/// The C# compiler (Roslyn) supports deterministic builds since Visual Studio 2015.
@@ -346,7 +364,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		{
 			get
 			{
-				string codeBase = Assembly.CodeBase;
+				string codeBase = Assembly.Location;
 				UriBuilder uri = new UriBuilder(codeBase);
 				string path = Uri.UnescapeDataString(uri.Path);
 				return path;
@@ -355,7 +373,7 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		public string AssemblyFullName { get { return Assembly.GetName().FullName.ToString(); } }
 		public string AssemblyName { get { return Assembly.GetName().Name.ToString(); } }
-		public string CodeBase { get { return Assembly.CodeBase; } }
+		public string CodeBase { get { return Assembly.Location; } }
 
 		public string Company { get { return GetAttribute<AssemblyCompanyAttribute>(a => a.Company); } }
 		public string Product { get { return GetAttribute<AssemblyProductAttribute>(a => a.Product); } }
@@ -373,7 +391,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		{
 			T attribute = (T)Attribute.GetCustomAttribute(Assembly, typeof(T));
 			return attribute == null
-				? "" 
+				? ""
 				: value.Invoke(attribute);
 		}
 

@@ -335,8 +335,43 @@ namespace JocysCom.ClassLibrary.Runtime
 					foreach (var p in props)
 					{
 						var value = p.GetValue(o);
-						dynamic dv = (dynamic)value;
-						var _ = writer.Write(dv);
+						switch (value)
+						{
+							case bool v:
+								writer.Write(v); break;
+							case byte v:
+								writer.Write(v); break;
+							case byte[] v:
+								writer.Write(v); break;
+							case char[] v:
+								writer.Write(v); break;
+							case char v:
+								writer.Write(v); break;
+							case decimal v:
+								writer.Write(v); break;
+							case double v:
+								writer.Write(v); break;
+							case float v:
+								writer.Write(v); break;
+							case int v:
+								writer.Write(v); break;
+							case long v:
+								writer.Write(v); break;
+							case sbyte v:
+								writer.Write(v); break;
+							case short v:
+								writer.Write(v); break;
+							case string v:
+								writer.Write(v); break;
+							case uint v:
+								writer.Write(v); break;
+							case ulong v:
+								writer.Write(v); break;
+							case ushort v:
+								writer.Write(v); break;
+							default:
+								break;
+						}
 					}
 					ms.Flush();
 					ms.Seek(0, SeekOrigin.Begin);
@@ -484,11 +519,11 @@ namespace JocysCom.ClassLibrary.Runtime
 		/// </summary>
 		/// <typeparam name="T">The type to try and convert to.</typeparam>
 		/// <param name="value">A string containing the value to try and convert.</param>
+		/// <param name="type">target type</param>
 		/// <param name="result">If the conversion was successful, the converted value of type T.</param>
 		/// <returns>If value was converted successfully, true; otherwise false.</returns>
-		public static bool TryParse<T>(string value, out T result)
+		public static bool TryParse(string value, Type t, out object result)
 		{
-			var t = typeof(T);
 			if (IsNullable(t))
 				t = Nullable.GetUnderlyingType(t) ?? t;
 			//var converter = System.ComponentModel.TypeDescriptor.GetConverter(typeof(T));
@@ -497,10 +532,15 @@ namespace JocysCom.ClassLibrary.Runtime
 			//	result = (T)converter.ConvertFromString(value);
 			//	return true;
 			//}
+			if (t == typeof(string))
+			{
+				result = value;
+				return true;
+			}
 			if (t.IsEnum)
 			{
 				var retValue = value == null ? false : Enum.IsDefined(t, value);
-				result = retValue ? (T)Enum.Parse(t, value) : default(T);
+				result = retValue ? Enum.Parse(t, value) : default;
 				return retValue;
 			}
 			var tryParseMethod = t.GetMethod("TryParse",
@@ -508,8 +548,27 @@ namespace JocysCom.ClassLibrary.Runtime
 				new[] { typeof(string), t.MakeByRefType() }, null);
 			var parameters = new object[] { value, null };
 			var retVal = (bool)tryParseMethod.Invoke(null, parameters);
-			result = (T)parameters[1];
+			result = parameters[1];
 			return retVal;
+		}
+
+
+		/// <summary>
+		/// Tries to convert the specified string representation of a logical value to
+		/// its type T equivalent. A return value indicates whether the conversion
+		/// succeeded or failed.
+		/// </summary>
+		/// <typeparam name="T">The type to try and convert to.</typeparam>
+		/// <param name="value">A string containing the value to try and convert.</param>
+		/// <param name="result">If the conversion was successful, the converted value of type T.</param>
+		/// <returns>If value was converted successfully, true; otherwise false.</returns>
+		public static bool TryParse<T>(string value, out T result)
+		{
+			var t = typeof(T);
+			object o;
+			var success = TryParse(value, t, out o);
+			result = (T)o;
+			return success;
 		}
 
 		/// <summary>
@@ -552,16 +611,33 @@ namespace JocysCom.ClassLibrary.Runtime
 
 		#endregion
 
-		public static void DetectType(string[] values, out Type type, out int sizeMin, out int sizeMax, out bool isAscii, out bool haveEmpty)
+		public class DetectTypeItem
+		{
+			public string Name { get; set; }
+			public Type Type { get; set; }
+			public int MinLength { get; set; }
+			public int MaxLength { get; set; }
+			public int DecimalPrecision { get; set; }
+			public int DecimalScale { get; set; }
+			public bool IsAscii { get; set; }
+			public bool IsRequired { get; set; }
+			public List<string> Log { get; set; }
+		}
+
+
+		public static DetectTypeItem DetectType(string[] values)
 		{
 			if (values == null)
 				throw new ArgumentNullException(nameof(values));
-			type = typeof(string);
-			sizeMin = int.MaxValue;
-			sizeMax = 0;
-			isAscii = true;
-			haveEmpty = false;
-			// Order matters. First available type will be returned.
+			var log = new List<string>();
+			var type = typeof(string);
+			var sizeMin = int.MaxValue;
+			var sizeMax = 0;
+			var decimalPrecision = 0;
+			var decimalScale = 0;
+			var isAscii = true;
+			var haveEmpty = false;
+			// Order matters. Strictest on the top. First available type will be returned.
 			// If all values can be parsed to Int16 then it can be parsed to Int32 and Int64 too.
 			var tcs = new TypeCode[]
 			{
@@ -588,8 +664,9 @@ namespace JocysCom.ClassLibrary.Runtime
 			var available = new Dictionary<TypeCode, Type>();
 			tcs.ForEach(x => available.Add(x, Type.GetType(nameof(System) + "." + x)));
 			//Convert.ChangeType(value, colType);
-			foreach (var value in values)
+			for (int i = 0; i < values.Length; i++)
 			{
+				var value = values[i];
 				if (string.IsNullOrEmpty(value))
 				{
 					haveEmpty = true;
@@ -603,7 +680,7 @@ namespace JocysCom.ClassLibrary.Runtime
 				var availableTypeCodes = available.Keys.ToArray();
 				// If only string was left.
 				if (availableTypeCodes.Length == 1 && availableTypeCodes[0] == TypeCode.String)
-					return;
+					break;
 				// Test against available types.
 				foreach (var tc in availableTypeCodes)
 				{
@@ -612,72 +689,117 @@ namespace JocysCom.ClassLibrary.Runtime
 						case TypeCode.Boolean:
 							bool resultBool;
 							if (!bool.TryParse(value, out resultBool))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						case TypeCode.Byte:
 							byte resultByte;
 							if (!byte.TryParse(value, out resultByte))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						case TypeCode.Char:
 							char resultChar;
 							if (!char.TryParse(value, out resultChar))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						case TypeCode.DateTime:
 							DateTime resultDateTime;
 							if (!DateTime.TryParse(value, out resultDateTime))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						case TypeCode.Decimal:
 							decimal resultDecimal;
 							if (!decimal.TryParse(value, out resultDecimal))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
+							var d = (System.Data.SqlTypes.SqlDecimal)resultDecimal;
+							decimalPrecision = Math.Max(decimalPrecision, d.Precision);
+							decimalScale = Math.Max(decimalScale, d.Scale);
 							break;
 						case TypeCode.Double:
 							double resultDouble;
 							if (!double.TryParse(value, out resultDouble))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						case TypeCode.Int16:
 							short resultShort;
 							if (!short.TryParse(value, out resultShort))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						case TypeCode.Int32:
 							int resultInt;
 							if (!int.TryParse(value, out resultInt))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						case TypeCode.Int64:
 							long resultLong;
 							if (!long.TryParse(value, out resultLong))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						case TypeCode.SByte:
 							sbyte resultSByte;
 							if (!sbyte.TryParse(value, out resultSByte))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						case TypeCode.Single:
 							float resultFloat;
 							if (!float.TryParse(value, out resultFloat))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						case TypeCode.UInt16:
 							ushort resultUShort;
 							if (!ushort.TryParse(value, out resultUShort))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						case TypeCode.UInt32:
 							uint resultUInt;
 							if (!uint.TryParse(value, out resultUInt))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						case TypeCode.UInt64:
 							ulong resultULong;
 							if (!ulong.TryParse(value, out resultULong))
+							{
+								log.Add(string.Format($"Removed {tc,-8} at {i,4} line. Value: {value}"));
 								available.Remove(tc);
+							}
 							break;
 						default:
 							break;
@@ -685,6 +807,19 @@ namespace JocysCom.ClassLibrary.Runtime
 				}
 			}
 			type = available.FirstOrDefault().Value;
+			var item = new DetectTypeItem()
+			{
+				Type = type,
+				MinLength = sizeMin,
+				MaxLength = sizeMax,
+				IsAscii = isAscii,
+				DecimalPrecision = decimalPrecision,
+				DecimalScale = decimalScale,
+				IsRequired = !haveEmpty,
+				Log = log,
+			};
+			return item;
 		}
+
 	}
 }

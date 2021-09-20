@@ -2,7 +2,6 @@
 using JocysCom.ClassLibrary.Runtime;
 using System;
 using System.Collections.Generic;
-using System.Data.Objects.DataClasses;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -24,23 +23,34 @@ namespace JocysCom.ClassLibrary.Configuration
 			Initialize();
 		}
 
-		public SettingsData(string fileName, bool userLevel = false, string comment = null)
+		public SettingsData(string fileName, bool userLevel = false, string comment = null, Assembly assembly = null)
 		{
-			Initialize(fileName, userLevel, comment);
+			Initialize(fileName, userLevel, comment, assembly);
 		}
 
-		void Initialize(string fileName = null, bool userLevel = false, string comment = null)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="fileName"></param>
+		/// <param name="userLevel"></param>
+		/// <param name="comment"></param>
+		/// <param name="assembly">Used to get company and product name.</param>
+		void Initialize(string fileName = null, bool userLevel = false, string comment = null, Assembly assembly = null)
 		{
 			Items = new SortableBindingList<T>();
 			_Comment = comment;
+			var company = Application.CompanyName;
+			var product = Application.ProductName;
+			if (assembly != null)
+			{
+				company = ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyCompanyAttribute))).Company;
+				product = ((AssemblyProductAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyProductAttribute))).Product;
+			}
 			// Get writable application folder.
 			var specialFolder = userLevel
 				? Environment.SpecialFolder.ApplicationData
 				: Environment.SpecialFolder.CommonApplicationData;
-			var folder = string.Format("{0}\\{1}\\{2}",
-				Environment.GetFolderPath(specialFolder),
-				Application.CompanyName,
-				Application.ProductName);
+			var folder = string.Format("{0}\\{1}\\{2}", Environment.GetFolderPath(specialFolder), company, product);
 			// Get file name.
 			var file = string.IsNullOrEmpty(fileName)
 				? string.Format("{0}.xml", typeof(T).Name)
@@ -50,7 +60,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		}
 
 		[XmlIgnore]
-		public FileInfo XmlFile { get { return _XmlFile; } }
+		public FileInfo XmlFile { get { return _XmlFile; } set { _XmlFile = value; } }
 
 		[NonSerialized]
 		protected FileInfo _XmlFile;
@@ -111,11 +121,12 @@ namespace JocysCom.ClassLibrary.Configuration
 			var items = ItemsToArraySyncronized();
 			lock (saveReadFileLock)
 			{
-				for (int i = 0; i < items.Length; i++)
+				var type = items.FirstOrDefault()?.GetType();
+				if (type != null && type.Name.EndsWith("EntityObject"))
 				{
-					var o = items[i] as EntityObject;
-					if (o != null)
-						o.EntityKey = null;
+					var pi = type.GetProperty("EntityKey");
+					for (int i = 0; i < items.Length; i++)
+						pi.SetValue(items[i], null);
 				}
 				var fi = new FileInfo(fileName);
 				if (!fi.Directory.Exists)
@@ -138,7 +149,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		{
 			lock (SyncRoot)
 				foreach (var item in items)
-				Items.Remove(item);
+					Items.Remove(item);
 		}
 
 		/// <summary>Add with SyncRoot lock.</summary>
@@ -229,6 +240,7 @@ namespace JocysCom.ClassLibrary.Configuration
 					var ao = ApplyOrder;
 					if (ao != null)
 						ao(data);
+					Version = data.Version;
 					LoadAndValidateData(data.Items);
 					settingsLoaded = true;
 				}
@@ -265,7 +277,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			var exasm = Assembly.GetExecutingAssembly();
 			var enasm = Assembly.GetEntryAssembly();
 			assemblies.Add(exasm);
-			if (exasm != enasm)
+			if (enasm != null && exasm != enasm)
 				assemblies.Add(enasm);
 			var success = false;
 			for (int a = 0; a < assemblies.Count; a++)

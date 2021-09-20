@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Data;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,8 +9,6 @@ namespace JocysCom.ClassLibrary.Controls
 {
 	public static partial class ControlsHelper
 	{
-		private const int WM_SETREDRAW = 0x000B;
-
 		#region Invoke and BeginInvoke
 
 		/// <summary>
@@ -17,7 +18,7 @@ namespace JocysCom.ClassLibrary.Controls
 		{
 			if (MainTaskScheduler != null)
 				return;
-			MainThreadId = Thread.CurrentThread.ManagedThreadId;
+			_MainThreadId = Thread.CurrentThread.ManagedThreadId;
 			// Create a TaskScheduler that wraps the SynchronizationContext returned from
 			// System.Threading.SynchronizationContext.Current
 			MainTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
@@ -28,12 +29,11 @@ namespace JocysCom.ClassLibrary.Controls
 		/// </summary>
 		public static TaskScheduler MainTaskScheduler { get; private set; }
 
-		private static int MainThreadId;
+		public static int MainThreadId => _MainThreadId;
+		private static int _MainThreadId;
 
-		public static bool InvokeRequired()
-		{
-			return MainThreadId != Thread.CurrentThread.ManagedThreadId;
-		}
+		public static bool InvokeRequired
+			=> _MainThreadId != Thread.CurrentThread.ManagedThreadId;
 
 		/*
 
@@ -101,7 +101,7 @@ namespace JocysCom.ClassLibrary.Controls
 			{
 				return Task.Run(async () =>
 				{
-					// Wait 1 second, which will allow to relase the button.
+					// Wait 1 second, which will allow to release the button.
 					await Task.Delay(millisecondsDelay.Value).ConfigureAwait(true);
 					await BeginInvoke(action);
 				});
@@ -128,7 +128,7 @@ namespace JocysCom.ClassLibrary.Controls
 			if (action == null)
 				throw new ArgumentNullException(nameof(action));
 			InitInvokeContext();
-			if (InvokeRequired())
+			if (InvokeRequired)
 			{
 				var t = new Task(action);
 				t.RunSynchronously(MainTaskScheduler);
@@ -146,7 +146,7 @@ namespace JocysCom.ClassLibrary.Controls
 			if (method == null)
 				throw new ArgumentNullException(nameof(method));
 			// Run method on main Graphical User Interface thread.
-			if (InvokeRequired())
+			if (InvokeRequired)
 			{
 				var t = new Task<object>(() => method.DynamicInvoke(args));
 				t.RunSynchronously(MainTaskScheduler);
@@ -159,6 +159,128 @@ namespace JocysCom.ClassLibrary.Controls
 		}
 
 		#endregion
+
+		#region Open Path or URL
+
+		public static void OpenUrl(string url)
+		{
+			try
+			{
+				System.Diagnostics.Process.Start(url);
+			}
+			catch (System.ComponentModel.Win32Exception winEx)
+			{
+				if (winEx.ErrorCode == -2147467259)
+					MessageBoxShow(winEx.Message);
+			}
+			catch (Exception ex)
+			{
+				MessageBoxShow(ex.Message);
+			}
+		}
+
+		private static void MessageBoxShow(string message)
+		{
+#if NETCOREAPP // .NET Core
+			System.Windows.Forms.MessageBox.Show(message);
+#elif NETSTANDARD // .NET Standard
+#elif NETFRAMEWORK // .NET Framework
+			// Requires: PresentationFramework.dll
+			System.Windows.MessageBox.Show(message);
+#else
+			throw new NotImplementedException("MessageBox not available for this .NET type");
+#endif
+		}
+
+		/// <summary>
+		/// Open file with associated program.
+		/// </summary>
+		/// <param name="path">file to open.</param>
+		public static void OpenPath(string path, string arguments = null)
+		{
+			try
+			{
+				var fi = new System.IO.FileInfo(path);
+				// Brings up the "Windows cannot open this file" dialog if association not found.
+				var psi = new System.Diagnostics.ProcessStartInfo(path);
+				psi.UseShellExecute = true;
+				psi.WorkingDirectory = fi.Directory.FullName;
+				psi.ErrorDialog = true;
+				if (arguments != null)
+					psi.Arguments = arguments;
+				System.Diagnostics.Process.Start(psi);
+			}
+			catch (Exception) { }
+		}
+
+		#endregion
+
+		public static PropertyInfo GetPrimaryKeyPropertyInfo(object item)
+		{
+			if (item == null)
+				return null;
+			var t = item.GetType();
+			PropertyInfo pi = null;
+#if NETCOREAPP // .NET Core
+			// Try to find property by KeyAttribute.
+			pi = t.GetProperties()
+				.Where(x => Attribute.IsDefined(x, typeof(System.ComponentModel.DataAnnotations.KeyAttribute), true))
+				.FirstOrDefault();
+			if (pi != null)
+				return pi;
+#else
+				// Try to find property by EntityFramework EdmScalarPropertyAttribute (System.Data.Entity.dll).
+				pi = t.GetProperties()
+					.Where(x =>
+						x.GetCustomAttributes(typeof(System.Data.Objects.DataClasses.EdmScalarPropertyAttribute), true)
+						.Cast<System.Data.Objects.DataClasses.EdmScalarPropertyAttribute>()
+						.Any(a => a.EntityKeyProperty))
+					.FirstOrDefault();
+			if (pi != null)
+				return pi;
+
+#endif
+			return null;
+		}
+
+		/// <summary>
+		/// Get DataViewRow, DataRow or item property value.
+		/// </summary>
+		/// <typeparam name="T">Return value type.</typeparam>
+		/// <param name="item">DataViewRow, DataRow or another type.</param>
+		/// <param name="keyPropertyName">Data property or column name.</param>
+		/// <param name="pi">Optional property info cache.</param>
+		/// <returns></returns>
+		private static T GetValue<T>(object item, string keyPropertyName, PropertyInfo pi = null)
+		{
+			// Return object value if property info supplied.
+			if (pi != null)
+				return (T)pi.GetValue(item, null);
+			// Get DataRow.
+			var row = item is System.Data.DataRowView rowView
+				? rowView.Row
+				: (System.Data.DataRow)item;
+			// Return DataRow value.
+			return row.IsNull(keyPropertyName)
+					? default
+					: (T)row[keyPropertyName];
+		}
+
+		/// <summary>
+		///  Get Property info 
+		/// </summary>
+		/// <param name="keyPropertyName"></param>
+		/// <param name="item"></param>
+		private static PropertyInfo GetPropertyInfo(string keyPropertyName, object item)
+		{
+			// Get property info if not DataRowView or DataRow.
+			PropertyInfo pi = null;
+			if (!(item is DataRowView) && !(item is DataRow))
+				pi = string.IsNullOrEmpty(keyPropertyName)
+					? GetPrimaryKeyPropertyInfo(item)
+					: item.GetType().GetProperty(keyPropertyName);
+			return pi;
+		}
 
 	}
 }

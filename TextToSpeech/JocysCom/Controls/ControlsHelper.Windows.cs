@@ -1,7 +1,4 @@
-﻿#if NETCOREAPP // .NET Core
-#elif NETSTANDARD // .NET Standard
-#else // .NET Framework
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections;
@@ -13,13 +10,66 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Data.Objects.DataClasses;
 using System.Windows.Forms;
+using System.IO;
+
+#if NETCOREAPP // .NET Core
+#elif NETSTANDARD // .NET Standard
+#else // .NET Framework
+using System.Data.Objects.DataClasses;
+#endif
 
 namespace JocysCom.ClassLibrary.Controls
 {
 	public static partial class ControlsHelper
 	{
+
+		#region IsDesignMode
+
+		private static bool? _IsDesignMode;
+
+		public static bool IsDesignMode(Component component)
+		{
+			if (!_IsDesignMode.HasValue)
+				_IsDesignMode = IsDesignMode1(component);
+			return _IsDesignMode.Value;
+		}
+
+		private static bool IsDesignMode2(IComponent component, IComponent parent)
+		{
+			// Check 1.
+			if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+				return true;
+			if (component == null)
+				throw new ArgumentNullException(nameof(component));
+			// Check 2 (DesignMode).
+			var site = component.Site;
+			if (site != null && site.DesignMode)
+				return true;
+			if (parent != null && parent.GetType().FullName.Contains("VisualStudio"))
+				return true;
+			// Not design mode.
+			return false;
+		}
+
+		private static bool IsDesignMode1(Component component)
+		{
+			var form = component as Form;
+			if (form != null)
+				return IsDesignMode2(form, form.ParentForm ?? form.Owner);
+			var control = component as Control;
+			if (control != null)
+				return IsDesignMode2(control, control.Parent);
+			return IsDesignMode2(component, null);
+		}
+
+		#endregion
+
+#if NETCOREAPP // .NET Core
+#elif NETSTANDARD // .NET Standard
+#else // .NET Framework
+
+
 
 		/// <summary>
 		/// Raise event on same thread as the target of delegate.
@@ -67,8 +117,10 @@ namespace JocysCom.ClassLibrary.Controls
 			/// If no window exists at the given point, the return value is NULL.
 			/// If the point is over a static text control, the return value is a handle to the window under the static text control. </returns>
 			[DllImport("user32.dll", SetLastError = true)]
-			public static extern IntPtr WindowFromPoint(Point point);
+			public static extern IntPtr WindowFromPoint(System.Windows.Point point);
 		}
+
+		private const int WM_SETREDRAW = 0x000B;
 
 		public static void SuspendDrawing(Control control)
 		{
@@ -90,7 +142,9 @@ namespace JocysCom.ClassLibrary.Controls
 			control.Invalidate();
 		}
 
-		public static void RebindGrid<T>(DataGridView grid, object data, string primaryKeyPropertyName = null, bool selectFirst = true, List<T> selection = null)
+		#region Data Grid Functions
+
+		public static void RebindGrid<T>(DataGridView grid, object data, string keyPropertyName = null, bool selectFirst = true, List<T> selection = null)
 		{
 			if (grid == null)
 				throw new ArgumentNullException(nameof(grid));
@@ -102,38 +156,12 @@ namespace JocysCom.ClassLibrary.Controls
 					rowIndex = firsCell.RowIndex;
 			}
 			var sel = (selection == null)
-				? GetSelection<T>(grid, primaryKeyPropertyName)
+				? GetSelection<T>(grid, keyPropertyName)
 				: selection;
 			grid.DataSource = data;
 			if (rowIndex != 0 && rowIndex < grid.Rows.Count)
 				grid.FirstDisplayedScrollingRowIndex = rowIndex;
-			RestoreSelection(grid, primaryKeyPropertyName, sel, selectFirst);
-		}
-
-		public static string GetPrimaryKey(EntityObject eo)
-		{
-			if (eo == null)
-				throw new ArgumentNullException(nameof(eo));
-			// Try to select primary key name.
-			if (eo.EntityKey != null && eo.EntityKey.EntityKeyValues.Length > 0)
-			{
-				return eo.EntityKey.EntityKeyValues[0].Key;
-			}
-			// Try to find primary key by [EdmScalarPropertyAttribute] attribute.
-			var properties = eo.GetType().GetProperties();
-			foreach (var pi in properties)
-			{
-				var attributes = pi.GetCustomAttributes(true);
-				foreach (var attribute in attributes)
-				{
-					var ea = attribute as EdmScalarPropertyAttribute;
-					if (ea != null && ea.EntityKeyProperty)
-					{
-						return pi.Name;
-					}
-				}
-			}
-			return null;
+			RestoreSelection(grid, keyPropertyName, sel, selectFirst);
 		}
 
 		/// <summary>
@@ -142,7 +170,7 @@ namespace JocysCom.ClassLibrary.Controls
 		/// <typeparam name="T">Type of Primary key.</typeparam>
 		/// <param name="grid">Grid for getting selection</param>
 		/// <param name="primaryKeyPropertyName">Primary key name.</param>
-		public static List<T> GetSelection<T>(DataGridView grid, string primaryKeyPropertyName = null)
+		public static List<T> GetSelection<T>(DataGridView grid, string keyPropertyName = null)
 		{
 			if (grid == null)
 				throw new ArgumentNullException(nameof(grid));
@@ -154,23 +182,16 @@ namespace JocysCom.ClassLibrary.Controls
 			// If nothing selected then return.
 			if (rows.Length == 0)
 				return list;
-			if (string.IsNullOrEmpty(primaryKeyPropertyName))
-			{
-				var item = rows.First().DataBoundItem;
-				var eo = item as EntityObject;
-				if (eo != null)
-					primaryKeyPropertyName = GetPrimaryKey(eo);
-			}
+			var pi = GetPropertyInfo(keyPropertyName, rows[0].DataBoundItem);
 			for (var i = 0; i < rows.Length; i++)
 			{
-				var item = rows[i].DataBoundItem;
-				var val = GetValue<T>(item, primaryKeyPropertyName);
-				list.Add(val);
+				var value = GetValue<T>(rows[i].DataBoundItem, keyPropertyName, pi);
+				list.Add(value);
 			}
 			return list;
 		}
 
-		public static void RestoreSelection<T>(DataGridView grid, string primaryKeyPropertyName, List<T> list, bool selectFirst = true)
+		public static void RestoreSelection<T>(DataGridView grid, string keyPropertyName, List<T> list, bool selectFirst = true)
 		{
 			if (grid == null)
 				throw new ArgumentNullException(nameof(grid));
@@ -183,13 +204,7 @@ namespace JocysCom.ClassLibrary.Controls
 			// If something to restore then...
 			if (list.Count > 0)
 			{
-				if (string.IsNullOrEmpty(primaryKeyPropertyName))
-				{
-					var item = rows.First().DataBoundItem;
-					var eo = item as EntityObject;
-					if (eo != null)
-						primaryKeyPropertyName = GetPrimaryKey(eo);
-				}
+				var pi = GetPropertyInfo(keyPropertyName, rows[0].DataBoundItem);
 				DataGridViewRow firstVisibleRow = null;
 				for (var i = 0; i < rows.Length; i++)
 				{
@@ -197,7 +212,7 @@ namespace JocysCom.ClassLibrary.Controls
 					if (firstVisibleRow == null && row.Visible)
 						firstVisibleRow = row;
 					var item = row.DataBoundItem;
-					var val = GetValue<T>(item, primaryKeyPropertyName);
+					var val = GetValue<T>(item, keyPropertyName, pi);
 					if (list.Contains(val) != row.Selected)
 					{
 						var selected = list.Contains(val);
@@ -211,32 +226,13 @@ namespace JocysCom.ClassLibrary.Controls
 			if (selectFirst && grid.SelectedRows.Count == 0)
 			{
 				var firstVisibleRow = rows.FirstOrDefault(x => x.Visible);
+				// Select first visible row.
 				if (firstVisibleRow != null)
-				{
-					// Select first visible row.
 					firstVisibleRow.Selected = true;
-				}
 			}
 		}
 
-		private static T GetValue<T>(object item, string dataPropertyName)
-		{
-			object val = null;
-			if (item is DataRowView)
-			{
-				var row = ((DataRowView)item).Row;
-				if (!row.IsNull(dataPropertyName))
-				{
-					val = (T)row[dataPropertyName];
-				}
-			}
-			else
-			{
-				var pi = item.GetType().GetProperty(dataPropertyName);
-				val = (T)pi.GetValue(item, null);
-			}
-			return (T)val;
-		}
+		#endregion
 
 		/// <summary>
 		/// Set form TopMost if one of the application forms is top most.
@@ -250,7 +246,7 @@ namespace JocysCom.ClassLibrary.Controls
 				form.TopMost = true;
 		}
 
-		#region "UserControl is Visible"
+		#region UserControl is Visible
 
 		public static bool IsControlVisibleOnForm(Control control)
 		{
@@ -263,7 +259,7 @@ namespace JocysCom.ClassLibrary.Controls
 			var pointsToCheck = GetPoints(control, true);
 			foreach (var p in pointsToCheck)
 			{
-				var child = control.Parent.GetChildAtPoint(p);
+				var child = control.Parent.GetChildAtPoint(new Point((int)p.X, (int)p.Y));
 				if (child == null)
 					continue;
 				if (control == child || control.Contains(child))
@@ -272,12 +268,12 @@ namespace JocysCom.ClassLibrary.Controls
 			return false;
 		}
 
-		public static Point[] GetPoints(Control control, bool relative = false)
+		public static System.Windows.Point[] GetPoints(Control control, bool relative = false)
 		{
 			if (control == null)
 				throw new ArgumentNullException(nameof(control));
 			var pos = relative
-				? System.Drawing.Point.Empty
+				? Point.Empty
 				// Get control position on the screen
 				: control.PointToScreen(System.Drawing.Point.Empty);
 			var pointsToCheck =
@@ -294,7 +290,7 @@ namespace JocysCom.ClassLibrary.Controls
 						// Middle-Centre.
 						new Point(pos.X + control.Width/2, pos.Y + control.Height/2)
 					};
-			return pointsToCheck;
+			return pointsToCheck.Select(x => new System.Windows.Point(x.X, x.Y)).ToArray();
 		}
 
 		public static bool IsControlVisibleToUser(Control control)
@@ -368,6 +364,24 @@ namespace JocysCom.ClassLibrary.Controls
 			if (control == null)
 				return new T[0];
 			return GetAll(control, typeof(T), includeTop).Cast<T>().ToArray();
+		}
+
+		public static void GetActiveControl(Control control, out Control activeControl, out string activePath)
+		{
+			// Return current control by default.
+			activePath = string.Format("/{0}", control.Name);
+			activeControl = control;
+			// If control can contains active controls.
+			var container = control as ContainerControl;
+			while (container != null)
+			{
+				control = container.ActiveControl;
+				if (control == null)
+					break;
+				activePath += string.Format("/{0}", control.Name);
+				activeControl = control;
+				container = control as ContainerControl;
+			}
 		}
 
 		#endregion
@@ -451,6 +465,18 @@ namespace JocysCom.ClassLibrary.Controls
 				control.Text = text;
 		}
 
+		public static void SetTextFromResource(RichTextBox box, string resourceName)
+		{
+			var rtf = Helper.FindResource<string>(resourceName, Assembly.GetEntryAssembly());
+			box.Rtf = rtf;
+			box.SelectAll();
+			box.SelectionIndent = 8;
+			box.SelectionRightIndent = 8;
+			box.DeselectAll();
+			box.LinkClicked += (object sender, System.Windows.Forms.LinkClickedEventArgs e) =>
+				OpenUrl(e.LinkText);
+		}
+
 		public static void SetReadOnly(Control control, bool readOnly)
 		{
 			if (control == null)
@@ -515,7 +541,7 @@ namespace JocysCom.ClassLibrary.Controls
 				throw new ArgumentNullException(nameof(control));
 			// Select rows first.
 			foreach (DataGridViewRow row in control.Rows)
-				if (items.Any(x=> row.DataBoundItem.Equals(x)) && !row.Selected)
+				if (items.Any(x => row.DataBoundItem.Equals(x)) && !row.Selected)
 					row.Selected = true;
 			// Unselect rows.
 			foreach (DataGridViewRow row in control.Rows)
@@ -830,38 +856,6 @@ namespace JocysCom.ClassLibrary.Controls
 
 		#endregion
 
-		#region IsDesignMode
-
-		public static bool _IsDesignMode(IComponent component, IComponent parent)
-		{
-			// Check 1.
-			if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
-				return true;
-			if (component == null)
-				throw new ArgumentNullException(nameof(component));
-			// Check 2 (DesignMode).
-			var site = component.Site;
-			if (site != null && site.DesignMode)
-				return true;
-			if (parent != null && parent.GetType().FullName.Contains("VisualStudio"))
-				return true;
-			// Not design mode.
-			return false;
-		}
-
-		public static bool IsDesignMode(Component component)
-		{
-			var form = component as Form;
-			if (form != null)
-				return _IsDesignMode(form, form.ParentForm ?? form.Owner);
-			var control = component as Control;
-			if (control != null)
-				return _IsDesignMode(control, control.Parent);
-			return _IsDesignMode(component, null);
-		}
-
-		#endregion
-
 		#region Binding
 
 		public static Binding AddDataBinding<TD, TDp>(
@@ -993,50 +987,9 @@ namespace JocysCom.ClassLibrary.Controls
 
 		#endregion
 
-		#region Open Path or URL
+#endif
 
-
-		public static void OpenUrl(string url)
-		{
-			try
-			{
-				System.Diagnostics.Process.Start(url);
-			}
-			catch (System.ComponentModel.Win32Exception noBrowser)
-			{
-				if (noBrowser.ErrorCode == -2147467259)
-					MessageBox.Show(noBrowser.Message);
-			}
-			catch (System.Exception other)
-			{
-				MessageBox.Show(other.Message);
-			}
-		}
-
-		/// <summary>
-		/// Open file with associated program.
-		/// </summary>
-		/// <param name="path">file to open.</param>
-		public static void OpenPath(string path, string arguments = null)
-		{
-			try
-			{
-				var fi = new System.IO.FileInfo(path);
-				// Brings up the "Windows cannot open this file" dialog if association not found.
-				var psi = new System.Diagnostics.ProcessStartInfo(path);
-				psi.UseShellExecute = true;
-				psi.WorkingDirectory = fi.Directory.FullName;
-				psi.ErrorDialog = true;
-				if (arguments != null)
-					psi.Arguments = arguments;
-				System.Diagnostics.Process.Start(psi);
-			}
-			catch (Exception) { }
-		}
-
-		#endregion
 
 	}
 }
 
-#endif
