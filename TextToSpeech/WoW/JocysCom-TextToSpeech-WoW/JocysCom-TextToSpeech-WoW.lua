@@ -16,7 +16,7 @@ local version, build, date, tocversion = GetBuildInfo()
 local classic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 9.0.5.2 ( 2021-06-04 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 10.0.2.1 ( 2022-11-22 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line.
@@ -1014,46 +1014,57 @@ end
 
 -- Show or Hide JocysCom frames.
 function JocysCom_AttachAndShowFrames()
+	local frameMargin = -4
 	local frameButton = GossipFrame
-	local frameScroll = GossipGreetingScrollFrame
+	local frameScroll = GossipFrameInset -- GossipGreetingScrollFrame
 	-- Gossip.
 	if GossipFrame:IsVisible() then
 		frameButton = GossipFrame
-		frameScroll = GossipGreetingScrollFrame
+		frameScroll = GossipFrameInset -- GossipGreetingScrollFrame
+		frameMargin = -30
 	-- Log.
 	elseif not classic and QuestMapFrame:IsVisible() then
 		frameButton = QuestMapFrame.DetailsFrame
 		frameScroll = QuestMapDetailsScrollFrame
+		frameMargin = -4
 	-- Quest.
 	elseif classic and QuestLogFrame:IsVisible() then
 		frameButton = QuestLogFrame
 		frameScroll = QuestLogDetailScrollFrame
+		frameMargin = -4
 	-- Quest.
 	elseif QuestFrame:IsVisible() then
 		if QuestGreetingScrollFrame:IsVisible() then
 			frameScroll = QuestGreetingScrollFrame
+			frameMargin = -30
 		elseif QuestDetailScrollFrame:IsVisible() then
 			frameScroll = QuestDetailScrollFrame
+			frameMargin = -30
 		elseif QuestProgressScrollFrame:IsVisible() then
 			frameScroll = QuestProgressScrollFrame
+			frameMargin = -30
 		elseif QuestRewardScrollFrame:IsVisible() then
 			frameScroll = QuestRewardScrollFrame
+			frameMargin = -30
 		end
 		frameButton = QuestFrame
 	-- Item.
 	elseif ItemTextFrame:IsVisible() then
 		frameButton = ItemTextFrame
 		frameScroll = ItemTextScrollFrame
+		frameMargin = -4
 	-- Mail.
 	elseif MailFrame:IsVisible() then
 		frameButton = OpenMailFrame
 		frameScroll = OpenMailScrollFrame
+		frameMargin = -4
 	end
 	-- ScrollFrame
 	JocysCom_DialogueScrollFrame:ClearAllPoints()
 	JocysCom_DialogueScrollFrame:SetParent(frameScroll)
 	JocysCom_DialogueScrollFrame:SetPoint("TOPLEFT", frameScroll, 4, -4)
-	JocysCom_DialogueScrollFrame:SetPoint("BOTTOMRIGHT", frameScroll, -4, 4)
+	JocysCom_DialogueScrollFrame:SetPoint("BOTTOMRIGHT", frameScroll, frameMargin, 4)
+
 	JocysCom_DialogueScrollFrame:SetFrameLevel(100)
 	-- ButtonFrame
 	JocysCom_DialogueMiniFrame:ClearAllPoints()
