@@ -16,7 +16,7 @@ local version, build, date, tocversion = GetBuildInfo()
 local classic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
 
 -- Set variables.
-local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 10.0.2.1 ( 2022-11-22 )"
+local addonVersion = "Jocys.com Text to Speech World of Warcraft Addon 10.0.2.2 ( 2022-11-25 )"
 local addonName = "JocysCom-TextToSpeech-WoW"
 local addonPrefix = "JocysComTTS"
 -- Message prefix for Monitor to find pixel line.
@@ -188,7 +188,8 @@ function JocysCom_AddonTXT_EN()
 	JocysCom_ColorMessagePixelYFontString:SetText("|cff808080 [LEFT] and [TOP] position of color pixel line for|r |cff77ccffMonitor|r|cff808080. Default values [0] and [0].|r")
 	JocysCom_LockCheckButton.text:SetText("|cff808080 Lock frame with |cffffffff[Options]|r |cff808080and|r |cffffffff[Stop]|r |cff808080buttons. Grab frame by clicking on dark background around buttons.|r")
 	JocysCom_MenuCheckButton.text:SetText("|cff808080 [Checked] show menu on right side of |cffffffff[Options]|r |cff808080button. [Unchecked] show menu on left side.|r")
-	JocysCom_SaveCheckButton.text:SetText("|cff808080 Save \"target\" and \"mouseover\" NPC's name, gender and type in|r |cffffffffMonitor|r|cff808080. Default: [Checked]|r");
+	JocysCom_SaveCheckButton.text:SetText("|cff808080 Save \"target\" and \"mouseover\" NPC's name, gender and type in|r |cffffffffMonitor|r|cff808080. Default: [Checked].|r");
+	JocysCom_ScrollFrameCheckButton.text:SetText("|cff808080 Set TTS ScrollFrame (Scroll-UP starts speech, Scroll-DOWN stops speech) width |r|cffffffff50%|r|cff808080. Default: [Checked].|r");
 	JocysCom_LanguageQuestCheckButton.text:SetText("|cff808080 Send-force quest language=\"|cffffffff" .. locale .. "|r|cff808080\" in|r |cffffffffMonitor|r|cff808080.|r");
 	JocysCom_LanguageChatCheckButton.text:SetText("|cff808080 Send-force chat language=\"|cffffffff" .. locale .. "|r|cff808080\" in|r |cffffffffMonitor|r|cff808080.|r");
 	--JocysCom_FilterCheckButton.text:SetText("|cff808080 Hide detailed information about addon|r |cffffffff<messages>|r |cff808080in chat window. Default: [Unchecked]|r")
@@ -1012,58 +1013,75 @@ function JocysCom_PlayOpenedFrame()
 	if event ~= nil then JocysCom_OptionsFrame_OnEvent(true, nil, event) end
 end
 
+ -- Set ScrollFrame width 50% or 100% of parent frame.
+function JocysCom_ScrollFrameCheckButton_OnClick()
+	PlaySound(856)
+	JocysCom_AttachAndShowFrames()
+	JocysCom_SaveTocFileSettings()
+end
+
+
 -- Show or Hide JocysCom frames.
 function JocysCom_AttachAndShowFrames()
-	local frameMargin = -4
+	local frameMargin = 0
+	local frameMargin1 = -4 -- QuestMapFrame, QuestLogFrame, ItemTextFrame, MailFrame.
+	local frameMargin2 = -30 -- GossipFrame, QuestFrame.
 	local frameButton = GossipFrame
 	local frameScroll = GossipFrameInset -- GossipGreetingScrollFrame
 	-- Gossip.
 	if GossipFrame:IsVisible() then
 		frameButton = GossipFrame
 		frameScroll = GossipFrameInset -- GossipGreetingScrollFrame
-		frameMargin = -30
+		frameMargin = frameMargin2
 	-- Log.
 	elseif not classic and QuestMapFrame:IsVisible() then
 		frameButton = QuestMapFrame.DetailsFrame
 		frameScroll = QuestMapDetailsScrollFrame
-		frameMargin = -4
+		frameMargin = frameMargin1
 	-- Quest.
 	elseif classic and QuestLogFrame:IsVisible() then
 		frameButton = QuestLogFrame
 		frameScroll = QuestLogDetailScrollFrame
-		frameMargin = -4
+		frameMargin = frameMargin1
 	-- Quest.
 	elseif QuestFrame:IsVisible() then
 		if QuestGreetingScrollFrame:IsVisible() then
 			frameScroll = QuestGreetingScrollFrame
-			frameMargin = -30
+			frameMargin = frameMargin2
 		elseif QuestDetailScrollFrame:IsVisible() then
 			frameScroll = QuestDetailScrollFrame
-			frameMargin = -30
+			frameMargin = frameMargin2
 		elseif QuestProgressScrollFrame:IsVisible() then
 			frameScroll = QuestProgressScrollFrame
-			frameMargin = -30
+			frameMargin = frameMargin2
 		elseif QuestRewardScrollFrame:IsVisible() then
 			frameScroll = QuestRewardScrollFrame
-			frameMargin = -30
+			frameMargin = frameMargin2
 		end
 		frameButton = QuestFrame
 	-- Item.
 	elseif ItemTextFrame:IsVisible() then
 		frameButton = ItemTextFrame
 		frameScroll = ItemTextScrollFrame
-		frameMargin = -4
+		frameMargin = frameMargin1
 	-- Mail.
 	elseif MailFrame:IsVisible() then
 		frameButton = OpenMailFrame
 		frameScroll = OpenMailScrollFrame
-		frameMargin = -4
+		frameMargin = frameMargin1
 	end
+
+	-- Set ScrollFrame 50% width of parent frame.
+	if JocysCom_ScrollFrameCheckButton:GetChecked() then
+		local frameWidth, frameHeight = frameScroll:GetSize()
+		frameMargin = (frameWidth / -2)
+	end
+
 	-- ScrollFrame
 	JocysCom_DialogueScrollFrame:ClearAllPoints()
 	JocysCom_DialogueScrollFrame:SetParent(frameScroll)
 	JocysCom_DialogueScrollFrame:SetPoint("TOPLEFT", frameScroll, 4, -4)
-	JocysCom_DialogueScrollFrame:SetPoint("BOTTOMRIGHT", frameScroll, frameMargin, 4)
+	JocysCom_DialogueScrollFrame:SetPoint("BOTTOMRIGHT", frameScroll, math.ceil(frameMargin), 4)
 
 	JocysCom_DialogueScrollFrame:SetFrameLevel(100)
 	-- ButtonFrame
@@ -1348,6 +1366,8 @@ function JocysCom_LoadTocFileSettings()
 	if JocysCom_MenuCB == false then JocysCom_MenuCheckButton:SetChecked(false) else JocysCom_MenuCheckButton:SetChecked(true) end
 	-- Set save NPC name, gender and type to Monitor.
 	if JocysCom_SaveCB == false then JocysCom_SaveCheckButton:SetChecked(false) else JocysCom_SaveCheckButton:SetChecked(true) end
+	-- Set ScrollFrameCheckButton.
+	if JocysCom_ScrollFrameCB == false then JocysCom_ScrollFrameCheckButton:SetChecked(false) else JocysCom_ScrollFrameCheckButton:SetChecked(true) end
 	-- Set if send locale information to Monitor.
 	if JocysCom_LanguageQuestCB == true then JocysCom_LanguageQuestCheckButton:SetChecked(true) else JocysCom_LanguageQuestCheckButton:SetChecked(false) end
 	if JocysCom_LanguageChatCB == true then JocysCom_LanguageChatCheckButton:SetChecked(true) else JocysCom_LanguageChatCheckButton:SetChecked(false) end
@@ -1425,9 +1445,10 @@ function JocysCom_SaveTocFileSettings()
 	JocysCom_DndCB = JocysCom_DndCheckButton:GetChecked()
 	JocysCom_LockCB = JocysCom_LockCheckButton:GetChecked()
 	JocysCom_MenuCB = JocysCom_MenuCheckButton:GetChecked()
-	JocysCom_SaveCB = JocysCom_SaveCheckButton:GetChecked();
-	JocysCom_LanguageQuestCB = JocysCom_LanguageQuestCheckButton:GetChecked();
-	JocysCom_LanguageChatCB = JocysCom_LanguageChatCheckButton:GetChecked();
+	JocysCom_ScrollFrameCB = JocysCom_ScrollFrameCheckButton:GetChecked()
+	JocysCom_SaveCB = JocysCom_SaveCheckButton:GetChecked()
+	JocysCom_LanguageQuestCB = JocysCom_LanguageQuestCheckButton:GetChecked()
+	JocysCom_LanguageChatCB = JocysCom_LanguageChatCheckButton:GetChecked()
 	JocysCom_QuestCB = JocysCom_QuestCheckButton:GetChecked()
 	JocysCom_MonsterCB = JocysCom_MonsterCheckButton:GetChecked()
 	JocysCom_ChannelCB = JocysCom_ChannelCheckButton:GetChecked()

@@ -9,7 +9,7 @@
 			<Layer>
 				<FontString name="JocysCom_MessageForMonitorFrameFontString" inherits="GameFontHighlightSmall">
 					<Anchors>
-						<Anchor point="TOP" y="-215" />
+						<Anchor point="TOP" y="-242" />
 					</Anchors>
 				</FontString>
 			</Layer>
@@ -119,10 +119,25 @@
 				</Scripts>
 			</CheckButton>
 
-			<CheckButton name="JocysCom_LanguageQuestCheckButton" inherits="UICheckButtonTemplate">
+			<CheckButton name="JocysCom_ScrollFrameCheckButton" inherits="UICheckButtonTemplate">
 				<Size x="26" y="27" />
 				<Anchors>
 					<Anchor point="TOPLEFT" x="7" y="-161" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self.text:SetPoint("LEFT", 27, 0);
+					</OnLoad>
+					<OnClick>
+						JocysCom_ScrollFrameCheckButton_OnClick();
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+
+			<CheckButton name="JocysCom_LanguageQuestCheckButton" inherits="UICheckButtonTemplate">
+				<Size x="26" y="27" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="7" y="-188" />
 				</Anchors>
 				<Scripts>
 					<OnLoad>
@@ -138,7 +153,7 @@
 			<CheckButton name="JocysCom_LanguageChatCheckButton" inherits="UICheckButtonTemplate">
 				<Size x="26" y="27" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="288" y="-161" />
+					<Anchor point="TOPLEFT" x="288" y="-188" />
 				</Anchors>
 				<Scripts>
 					<OnLoad>
@@ -154,7 +169,7 @@
 			<EditBox name="JocysCom_ReplaceNameEditBox" inherits="InputBoxTemplate" autofocus="false">
 				<Size x="100" y="20" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="15" y="-188" />
+					<Anchor point="TOPLEFT" x="15" y="-215" />
 				</Anchors>
 				<Layers>
 					<Layer>
@@ -181,7 +196,7 @@
 
 			<Frame name="JocysCom_MessageFrame" inherits="InsetFrameTemplate">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="3" y="-232" />
+					<Anchor point="TOPLEFT" x="3" y="-259" />
 					<Anchor point="BOTTOMRIGHT" x="-3" y="142" />
 				</Anchors>
 				<Frames>
