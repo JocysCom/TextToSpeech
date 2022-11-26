@@ -1023,10 +1023,12 @@ end
 
 -- Show or Hide JocysCom frames.
 function JocysCom_AttachAndShowFrames()
+	-- Set default right margin.
 	local frameMargin = 0
 	local frameMargin1 = -4 -- QuestMapFrame, QuestLogFrame, ItemTextFrame, MailFrame.
 	local frameMargin2 = -30 -- GossipFrame, QuestFrame.
 	local frameButton = GossipFrame
+	-- Set default parent frame.
 	local frameScroll = GossipFrameInset -- GossipGreetingScrollFrame
 	-- Gossip.
 	if GossipFrame:IsVisible() then
@@ -1071,9 +1073,11 @@ function JocysCom_AttachAndShowFrames()
 		frameMargin = frameMargin1
 	end
 
-	-- Set ScrollFrame 50% width of parent frame.
+	-- Set JocysCom_DialogueScrollFrame right margin width 50% of parent frame.
 	if JocysCom_ScrollFrameCheckButton:GetChecked() then
+		-- Get parent frame width.
 		local frameWidth, frameHeight = frameScroll:GetSize()
+		-- Set right margin width 50% of parent frame width.
 		frameMargin = (frameWidth / -2)
 	end
 
@@ -1081,6 +1085,7 @@ function JocysCom_AttachAndShowFrames()
 	JocysCom_DialogueScrollFrame:ClearAllPoints()
 	JocysCom_DialogueScrollFrame:SetParent(frameScroll)
 	JocysCom_DialogueScrollFrame:SetPoint("TOPLEFT", frameScroll, 4, -4)
+	-- Set parent frame and bottom-right margins for JocysCom_DialogueScrollFrame.
 	JocysCom_DialogueScrollFrame:SetPoint("BOTTOMRIGHT", frameScroll, math.ceil(frameMargin), 4)
 
 	JocysCom_DialogueScrollFrame:SetFrameLevel(100)
