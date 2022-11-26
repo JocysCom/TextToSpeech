@@ -1078,7 +1078,7 @@ function JocysCom_AttachAndShowFrames()
 		-- Get parent frame width.
 		local frameWidth, frameHeight = frameScroll:GetSize()
 		-- Set right margin width 50% of parent frame width.
-		frameMargin = (frameWidth / -2)
+		frameMargin = math.ceil(frameWidth / -2)
 	end
 
 	-- ScrollFrame
@@ -1086,7 +1086,7 @@ function JocysCom_AttachAndShowFrames()
 	JocysCom_DialogueScrollFrame:SetParent(frameScroll)
 	JocysCom_DialogueScrollFrame:SetPoint("TOPLEFT", frameScroll, 4, -4)
 	-- Set parent frame and bottom-right margins for JocysCom_DialogueScrollFrame.
-	JocysCom_DialogueScrollFrame:SetPoint("BOTTOMRIGHT", frameScroll, math.ceil(frameMargin), 4)
+	JocysCom_DialogueScrollFrame:SetPoint("BOTTOMRIGHT", frameScroll, frameMargin, 4)
 
 	JocysCom_DialogueScrollFrame:SetFrameLevel(100)
 	-- ButtonFrame
