@@ -30,11 +30,9 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 			lock (serverSocketLock)
 			{
 				if (IsDisposing) return;
+				// If server is already running then return.
 				if (serverSocket != null)
-				{
-					// Server is already running;
 					return;
-				}
 				serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 				serverSocket.ExclusiveAddressUse = false;
 				serverSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
@@ -83,10 +81,9 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 		void CompleteReceive(SocketAsyncEventArgs args)
 		{
 			string text = null;
+			// If success then process text.
 			if (args.SocketError == SocketError.Success)
-			{
 				text = System.Text.Encoding.UTF8.GetString(args.Buffer, 0, args.BytesTransferred);
-			}
 			if (!string.IsNullOrEmpty(text))
 				OnMessageReceived(text);
 			lock (serverSocketLock)

@@ -62,10 +62,13 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			// If installed voices are missing then add all local voices.
 			if (Global.InstalledVoices.Count == 0)
 			{
-				var voicesEx = Voices.VoiceHelper.GetLocalVoices();
-				foreach (var item in voicesEx)
+				var client = new WindowsVoiceClient();
+				var voices = client.GetVoices()
+					.Select(x => client.Convert(x))
+					.ToList();
+				foreach (var item in voices)
 					item.Enabled = true;
-				Global.ImportVoices(Global.InstalledVoices, voicesEx);
+				Global.ImportVoices(Global.InstalledVoices, voices);
 			}
 			// Monitor list and give suggestions.
 			Global.InstalledVoices.ListChanged += Global_InstalledVoices_ListChanged;

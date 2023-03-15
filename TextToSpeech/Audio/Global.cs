@@ -43,7 +43,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			playlist = new BindingList<PlayItem>();
 			playlist.ListChanged += playlist_ListChanged;
 			// Track Amazon Polly errors globally.
-			Voices.AmazonPolly.Exception += AmazonPolly_Exception;
+			Voices.AmazonVoiceClient.Exception += AmazonPolly_Exception;
 			SettingsManager.Options.PropertyChanged += Options_PropertyChanged;
 		}
 

@@ -98,30 +98,6 @@ namespace JocysCom.TextToSpeech.Monitor
 			return isSame;
 		}
 
-		public InstalledVoiceEx(Amazon.Polly.Model.Voice voice)
-		{
-			Voice = voice;
-			Source = VoiceSource.Amazon;
-			// Set culture properties.
-			var culture = new CultureInfo(voice.LanguageCode);
-			SetCulture(culture);
-			// Set voice properties.
-			Name = voice.Name;
-			Age = VoiceAge.NotSet;
-			Description = string.Format("{0} {1} - {2} - {3}: {4}", Source, Name, CultureName, Gender, string.Join(", ", voice.SupportedEngines));
-			Version = "";
-			if (voice.Gender == Amazon.Polly.Gender.Female)
-			{
-				Gender = VoiceGender.Female;
-				Female = MaxVoice;
-			}
-			else if (voice.Gender == Amazon.Polly.Gender.Male)
-			{
-				Gender = VoiceGender.Male;
-				Male = MaxVoice;
-			}
-		}
-
 		bool _Enabled;
 		int _Female;
 		int _Male;

@@ -420,7 +420,7 @@ namespace JocysCom.TextToSpeech.Monitor.Audio
 			{
 				var region = query[InstalledVoiceEx._KeyRegion];
 				var engine = query[InstalledVoiceEx._KeyEngine];
-				var client = new Voices.AmazonPolly(
+				var client = new Voices.AmazonVoiceClient(
 					SettingsManager.Options.AmazonAccessKey,
 					SettingsManager.Options.AmazonSecretKey,
 					region

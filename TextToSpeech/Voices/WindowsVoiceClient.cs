@@ -1,17 +1,17 @@
-﻿using Amazon;
-using Amazon.Polly;
-using Amazon.Polly.Model;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Speech.Synthesis;
 
 namespace JocysCom.TextToSpeech.Monitor.Voices
 {
-	public static class VoiceHelper
+	public class WindowsVoiceClient: IVoiceClient<VoiceInfo>
 	{
-		public static List<InstalledVoiceEx> GetLocalVoices()
+		public InstalledVoiceEx Convert(VoiceInfo voice)
+		{
+			return new InstalledVoiceEx(voice);
+		}
+
+		public List<VoiceInfo> GetVoices(string cultureName = null, bool isNeural = false, int timeout = 20000)
 		{
 			// Fill grid with voices.
 			// Create synthesizer which will be used to create WAV files from SSML XML.
@@ -20,12 +20,10 @@ namespace JocysCom.TextToSpeech.Monitor.Voices
 				.OrderBy(x => x.VoiceInfo.Culture.Name)
 				.ThenBy(x => x.VoiceInfo.Gender)
 				.ThenBy(x => x.VoiceInfo.Name)
+				.Select(x => x.VoiceInfo)
 				.ToList();
-			var voicesEx = voices.Select(x => new InstalledVoiceEx(x.VoiceInfo)).ToList();
 			ssmlSynthesizer.Dispose();
-			return voicesEx;
+			return voices;
 		}
-
-	
 	}
 }

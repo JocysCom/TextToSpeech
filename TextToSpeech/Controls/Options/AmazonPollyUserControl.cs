@@ -96,7 +96,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 		List<InstalledVoiceEx> GetAmazonVoices()
 		{
 			StatusTextBox.Text = "";
-			var client = new Voices.AmazonPolly(
+			var client = new Voices.AmazonVoiceClient(
 				SettingsManager.Options.AmazonAccessKey,
 				SettingsManager.Options.AmazonSecretKey,
 				SettingsManager.Options.AmazonRegionSystemName
@@ -104,8 +104,11 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			var voices = client.GetVoices();
 			var result = client.LastException == null ? "Success" : client.LastException.Message;
 			StatusTextBox.Text = string.Format("{0:HH:mm:ss}: {1}", DateTime.Now, result);
-			var installedVoices = voices.Select(x => new InstalledVoiceEx(x));
-			return installedVoices.OrderBy(x => x.Name).ToList();
+			var installedVoices = voices
+				.Select(x => client.Convert(x))
+				.OrderBy(x => x.Name)
+				.ToList();
+			return installedVoices;
 		}
 
 		private void Global_Exception(object sender, ClassLibrary.EventArgs<Exception> e)
@@ -118,7 +121,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 			StatusTextBox.Text = "";
 			var promptBuilder = new System.Speech.Synthesis.PromptBuilder();
 			promptBuilder.AppendText(MessageTextBox.Text);
-			var client = new Voices.AmazonPolly(
+			var client = new Voices.AmazonVoiceClient(
 				SettingsManager.Options.AmazonAccessKey,
 				SettingsManager.Options.AmazonSecretKey,
 				SettingsManager.Options.AmazonRegionSystemName

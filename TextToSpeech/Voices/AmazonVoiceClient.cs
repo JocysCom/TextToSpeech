@@ -6,23 +6,24 @@ using JocysCom.ClassLibrary;
 using JocysCom.ClassLibrary.Controls;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Speech.Synthesis;
 
 namespace JocysCom.TextToSpeech.Monitor.Voices
 {
-	public class AmazonPolly
+	public class AmazonVoiceClient: IVoiceClient<Voice>
 	{
 
-		public AmazonPolly(string accessKey, string secretKey, string regionSystemName)
+		public AmazonVoiceClient(string accessKey, string secretKey, string regionSystemName)
 		{
-			_credentials = new BasicAWSCredentials(accessKey, secretKey);
-			_Region = RegionEndpoint.GetBySystemName(regionSystemName);
-			Client = new AmazonPollyClient(_credentials, _Region);
+			var credentials = new BasicAWSCredentials(accessKey, secretKey);
+			var region = RegionEndpoint.GetBySystemName(regionSystemName);
+			Client = new AmazonPollyClient(credentials, region);
+			// Client.Config.RegionEndpoint.SystemName;
 		}
 
 		public AmazonPollyClient Client { get; }
-		BasicAWSCredentials _credentials;
-		RegionEndpoint _Region;
 
 		//PutLexiconSample.PutLexicon();
 		//    GetLexiconSample.GetLexicon();
@@ -139,7 +140,47 @@ namespace JocysCom.TextToSpeech.Monitor.Voices
 
 		public Exception LastException;
 
-		public List<Voice> GetVoices(DescribeVoicesRequest request = null, int millisecondsTimeout = 20000)
+		//InstalledVoiceEx
+		public List<Voice> GetVoices(string cultureName = null, bool isNeural = false, int timeout = 20000)
+		{
+			var request = new DescribeVoicesRequest();
+			if (isNeural)
+				request.Engine = isNeural ? Engine.Neural : Engine.Standard;
+			if (cultureName != null)
+				request.LanguageCode = cultureName;
+			var voices = GetVoices(request, timeout);
+			return voices;
+		}
+
+		public InstalledVoiceEx Convert(Voice voice)
+		{
+			if (voice == null)
+				throw new ArgumentNullException(nameof(voice));
+			var v = new InstalledVoiceEx();
+			v.Voice = voice;
+			v.Source = VoiceSource.Amazon;
+			// Set culture properties.
+			var culture = new CultureInfo(voice.LanguageCode);
+			v.SetCulture(culture);
+			// Set voice properties.
+			v.Name = voice.Name;
+			v.Age = VoiceAge.NotSet;
+			v.Description = string.Format("{0} {1} - {2} - {3}: {4}", v.Source, v.Name, v.CultureName, v.Gender, string.Join(", ", voice.SupportedEngines));
+			v.Version = "";
+			if (voice.Gender == Gender.Female)
+			{
+				v.Gender = VoiceGender.Female;
+				v.Female = InstalledVoiceEx.MaxVoice;
+			}
+			else if (voice.Gender == Gender.Male)
+			{
+				v.Gender = VoiceGender.Male;
+				v.Male = InstalledVoiceEx.MaxVoice;
+			}
+			return v;
+		}
+
+		private List<Voice> GetVoices(DescribeVoicesRequest request, int millisecondsTimeout)
 		{
 			LastException = null;
 			var voices = new List<Voice>();

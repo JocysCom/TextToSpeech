@@ -229,7 +229,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 						);
 						var block = JocysCom.ClassLibrary.Text.Helper.BytesToStringBlock(
 							ep.PayloadData, false, true, true);
-						block = JocysCom.ClassLibrary.Text.Helper.IdentText(4, block, ' ');
+						block = JocysCom.ClassLibrary.Text.Helper.IdentText(block, 4, " ");
 						writer.WriteLine(block);
 						writer.WriteLine("");
 					}

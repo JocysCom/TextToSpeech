@@ -227,18 +227,18 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 
 		string GetVoices(RegionTaskSettings settings)
 		{
-			var reg = settings.Region;
+			var region = settings.Region;
 			var engine = settings.Engine;
 			var culture = settings.Culture;
 			settings.Voices = new List<InstalledVoiceEx>();
 			//var engine = reg.e		
-			AmazonPolly client = null;
+			Voices.AmazonVoiceClient client;
 			try
 			{
-				client = new AmazonPolly(
+				client = new Voices.AmazonVoiceClient(
 					SettingsManager.Options.AmazonAccessKey,
 					SettingsManager.Options.AmazonSecretKey,
-					reg.SystemName
+					region.SystemName
 				);
 			}
 			catch (Exception ex)
@@ -246,15 +246,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				Console.WriteLine(ex);
 				return ex.Message;
 			}
-			var request = new DescribeVoicesRequest();
-			if (engine != null)
-				request.Engine = engine;
-			if (culture != null)
-				request.LanguageCode = culture.Name;
 			// Create stop watch to measure speed with the servers.
 			var sw = new Stopwatch();
 			sw.Start();
-			var voices = client.GetVoices(request, 5000);
+			var voices = client.GetVoices(culture?.Name, engine == Engine.Neural, 5000);
 			var elapsed = sw.Elapsed;
 			if (client.LastException != null)
 				return string.Format("Exception: {0}", client.LastException.Message);
@@ -272,19 +267,20 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 					var c = new CultureInfo(cultureName);
 					foreach (var engineName in voice.SupportedEngines)
 					{
-						var vx = new InstalledVoiceEx(voice);
+						var vx = client.Convert(voice);
 						vx.SetCulture(c);
 						vx.SourceRequestSpeed = elapsed;
+						// Store custom data whi
 						var keys = System.Web.HttpUtility.ParseQueryString("");
 						keys.Add(InstalledVoiceEx._KeySource, vx.Source.ToString());
-						keys.Add(InstalledVoiceEx._KeyRegion, reg.SystemName);
+						keys.Add(InstalledVoiceEx._KeyRegion, client.Client.Config.RegionEndpoint.SystemName);
 						keys.Add(InstalledVoiceEx._KeyCulture, cultureName);
 						keys.Add(InstalledVoiceEx._KeyEngine, engineName);
 						keys.Add(InstalledVoiceEx._KeyVoiceId, voice.Id);
 						vx.SourceKeys = keys.ToString();
 						// Override Description.
 						vx.Description = string.Format("{0}, {1}, {2}, {3}",
-							vx.Source, reg.DisplayName, cultureName, engineName);
+							vx.Source, client.Client.Config.RegionEndpoint.DisplayName, cultureName, engineName);
 						// Add voice.
 						settings.Voices.Add(vx);
 						vex++;
@@ -293,7 +289,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 					}
 				}
 			}
-			return string.Format("Time (ms): {0,4}, Voices: {1,2}", (int)elapsed.Milliseconds, voices.Count);
+			return string.Format("Time (ms): {0,4}, Voices: {1,2}", elapsed.Milliseconds, voices.Count);
 		}
 
 		void AddStatus(string format, params object[] args)
@@ -327,7 +323,10 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 			ControlsHelper.BeginInvoke(() =>
 			{
 				list.Clear();
-				var voices = Voices.VoiceHelper.GetLocalVoices();
+				var client = new WindowsVoiceClient();
+				var voices = client.GetVoices()
+					.Select(x=> client.Convert(x))
+					.ToList();
 				voices = RemoveVoices(voices, Global.InstalledVoices);
 				// Uncehck selection by default.
 				//foreach (var item in list)

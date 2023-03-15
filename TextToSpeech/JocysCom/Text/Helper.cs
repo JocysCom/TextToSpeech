@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -50,6 +51,34 @@ namespace JocysCom.ClassLibrary.Text
 						: string.Format("{0:" + format + "}", value);
 					s = Replace(s, m.Value, text, StringComparison.OrdinalIgnoreCase);
 				}
+			}
+			return s;
+		}
+
+		/// <summary>
+		/// Used to parametrize path. For example:
+		/// Convert "C:\Program Files\JocysCom\Focus Logger" to
+		/// "C:\Program Files\{Company}\{Product}"
+		/// </summary>
+		public static string Replace<T>(T o, string s, bool usePrefix = true, string customPrefix = null)
+		{
+			if (string.IsNullOrEmpty(s))
+				return s;
+			if (o == null)
+				return s;
+			var t = typeof(T);
+			var properties = t.GetProperties();
+			var prefix = string.IsNullOrEmpty(customPrefix) ? t.Name : customPrefix;
+			foreach (var p in properties)
+			{
+				var value = $"{p.GetValue(o, null)}";
+				if (string.IsNullOrEmpty(value))
+					continue;
+				var text = "{";
+				if (usePrefix && !string.IsNullOrEmpty(prefix))
+					text += prefix;
+				text += p.Name + "}";
+				s = Replace(s, value, text, StringComparison.OrdinalIgnoreCase);
 			}
 			return s;
 		}
@@ -254,25 +283,45 @@ namespace JocysCom.ClassLibrary.Text
 
 		#endregion
 
-		public static string IdentText(int tabs, string s, char ident = '\t')
+		/// <summary>
+		/// Add or remove ident.
+		/// </summary>
+		/// <param name="s">String to ident.</param>
+		/// <param name="tabs">Positive - add ident, negative - remove ident.</param>
+		/// <param name="ident">Ident character</param>
+		public static string IdentText(string s, int tabs = 1, string ident = "\t")
 		{
 			if (tabs == 0)
 				return s;
-			if (s == null)
-				s = string.Empty;
+			if (string.IsNullOrEmpty(s))
+				return s;
 			var sb = new StringBuilder();
 			var tr = new StringReader(s);
-			var prefix = string.Empty;
-			for (var i = 0; i < tabs; i++)
-				prefix += ident;
+			var prefix = string.Concat(Enumerable.Repeat(ident, tabs));
 			string line;
-			while ((line = tr.ReadLine()) != null)
+			var lines = s.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+			for (int i = 0; i < lines.Length; i++)
 			{
-				if (sb.Length > 0)
-					sb.AppendLine();
-				if (tabs > 0)
-					sb.Append(prefix);
-				sb.Append(line);
+				line = lines[i];
+				if (line != "")
+				{
+					// If add idents then...
+					if (tabs > 0)
+						sb.Append(prefix);
+					// If remove idents then...
+					else if (tabs < 0)
+					{
+						var count = 0;
+						// Count how much idents could be removed
+						while (line.Substring(count * ident.Length, ident.Length) == ident && count < tabs)
+							count++;
+						line = line.Substring(count * ident.Length);
+					}
+				}
+				if (i < lines.Length - 1)
+					sb.AppendLine(line);
+				else
+					sb.Append(line);
 			}
 			tr.Dispose();
 			return sb.ToString();
