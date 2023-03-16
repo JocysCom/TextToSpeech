@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace JocysCom.TextToSpeech.Monitor.Voices
 {
@@ -8,5 +9,7 @@ namespace JocysCom.TextToSpeech.Monitor.Voices
 
 		InstalledVoiceEx Convert(TVoice voice);
 
-	}
+        Exception LastException { get; set; }
+
+    }
 }

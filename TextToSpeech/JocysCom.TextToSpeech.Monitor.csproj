@@ -218,6 +218,12 @@
     <Compile Include="Controls\AddVoicesForm.Designer.cs">
       <DependentUpon>AddVoicesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Options\ElevenLabsVoicesUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Options\ElevenLabsVoicesUserControl.Designer.cs">
+      <DependentUpon>ElevenLabsVoicesUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Options\MonitorClipboardUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -261,11 +267,11 @@
       <DependentUpon>OptionsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Audio\AudioPlayer.cs" />
-    <Compile Include="Controls\Options\AmazonPollyUserControl.cs">
+    <Compile Include="Controls\Options\AmazonVoicesUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Options\AmazonPollyUserControl.Designer.cs">
-      <DependentUpon>AmazonPollyUserControl.cs</DependentUpon>
+    <Compile Include="Controls\Options\AmazonVoicesUserControl.Designer.cs">
+      <DependentUpon>AmazonVoicesUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Options\GeneralOptionsUserControl.cs">
       <SubType>UserControl</SubType>
@@ -335,6 +341,7 @@
     <Compile Include="Controls\Options\GoogleTTSUserControl.Designer.cs">
       <DependentUpon>GoogleTTSUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Voices\ElevenLabsClient.cs" />
     <Compile Include="Voices\Google\ListResponse.cs" />
     <Compile Include="Voices\Google\SsmlVoiceGender.cs" />
     <Compile Include="Voices\Google\TextToSpeechClient.cs" />
@@ -441,6 +448,9 @@
       <DependentUpon>AddVoicesForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Options\ElevenLabsVoicesUserControl.resx">
+      <DependentUpon>ElevenLabsVoicesUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Options\MonitorClipboardUserControl.resx">
       <DependentUpon>MonitorClipboardUserControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -464,8 +474,8 @@
       <DependentUpon>OptionsControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Options\AmazonPollyUserControl.resx">
-      <DependentUpon>AmazonPollyUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Options\AmazonVoicesUserControl.resx">
+      <DependentUpon>AmazonVoicesUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Options\GeneralOptionsUserControl.resx">
       <DependentUpon>GeneralOptionsUserControl.cs</DependentUpon>

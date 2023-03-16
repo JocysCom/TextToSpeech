@@ -266,7 +266,7 @@ namespace JocysCom.TextToSpeech.Monitor.Controls
 				{
 					ControlsHelper.BeginInvoke(() =>
 					{
-						Program.TopForm.OptionsPanel.OptionsTabControl.SelectedTab = Program.TopForm.OptionsPanel.AmazonPollyTabPage;
+						Program.TopForm.OptionsPanel.OptionsTabControl.SelectedTab = Program.TopForm.OptionsPanel.AmazonVoicesTabPage;
 						Program.TopForm.MessagesTabControl.SelectedTab = Program.TopForm.OptionsTabPage;
 					});
 				}

@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace JocysCom.TextToSpeech.Monitor.Controls.Options
 {
-	public partial class AmazonPollyUserControl : UserControl
+	public partial class AmazonVoicesUserControl : UserControl
 	{
-		public AmazonPollyUserControl()
+		public AmazonVoicesUserControl()
 		{
 			InitializeComponent();
 			if (ControlsHelper.IsDesignMode(this))

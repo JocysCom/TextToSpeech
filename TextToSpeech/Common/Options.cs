@@ -163,11 +163,28 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(null), XmlElement(ElementName = nameof(AmazonSecretKey))]
 		public string _AmazonSecretKeyEncrypted { get; set; }
 
-		#endregion
+        #endregion
 
-		#region Encrypt Settings 
+        #region Voices: ElevenLabs
 
-		static string UserEncrypt(string text)
+        [DefaultValue(null)]
+        public bool ElevenLabsEnabled { get { return _ElevenLabsEnabled; } set { _ElevenLabsEnabled = value; OnPropertyChanged(); } }
+        bool _ElevenLabsEnabled;
+
+        [XmlIgnore]
+        public string ElevenLabsApiKey
+        {
+            get { return UserDecrypt(_ElevenLabsApiKeyEncrypted); }
+            set { _ElevenLabsApiKeyEncrypted = UserEncrypt(value); OnPropertyChanged(); }
+        }
+        [DefaultValue(null), XmlElement(ElementName = nameof(ElevenLabsApiKey))]
+        public string _ElevenLabsApiKeyEncrypted { get; set; }
+
+        #endregion
+
+        #region Encrypt Settings 
+
+        static string UserEncrypt(string text)
 		{
 			try
 			{

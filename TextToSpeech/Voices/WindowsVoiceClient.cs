@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Speech.Synthesis;
 
@@ -6,7 +7,9 @@ namespace JocysCom.TextToSpeech.Monitor.Voices
 {
 	public class WindowsVoiceClient: IVoiceClient<VoiceInfo>
 	{
-		public InstalledVoiceEx Convert(VoiceInfo voice)
+        public Exception LastException { get; set; }
+
+        public InstalledVoiceEx Convert(VoiceInfo voice)
 		{
 			return new InstalledVoiceEx(voice);
 		}

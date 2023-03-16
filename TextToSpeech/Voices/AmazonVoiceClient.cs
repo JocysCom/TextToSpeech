@@ -20,7 +20,6 @@ namespace JocysCom.TextToSpeech.Monitor.Voices
 			var credentials = new BasicAWSCredentials(accessKey, secretKey);
 			var region = RegionEndpoint.GetBySystemName(regionSystemName);
 			Client = new AmazonPollyClient(credentials, region);
-			// Client.Config.RegionEndpoint.SystemName;
 		}
 
 		public AmazonPollyClient Client { get; }
@@ -138,7 +137,7 @@ namespace JocysCom.TextToSpeech.Monitor.Voices
 
 		#endregion
 
-		public Exception LastException;
+		public Exception LastException { get; set; }
 
 		//InstalledVoiceEx
 		public List<Voice> GetVoices(string cultureName = null, bool isNeural = false, int timeout = 20000)
