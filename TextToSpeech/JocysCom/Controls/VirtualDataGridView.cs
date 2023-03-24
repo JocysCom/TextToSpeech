@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -60,7 +59,7 @@ namespace JocysCom.ClassLibrary.Controls
 		[AttributeProvider(typeof(IListSource))]
 		[DefaultValue(null)]
 		[RefreshProperties(RefreshProperties.Repaint)]
-		[IODescription("DataGridViewDataSourceDescr")]
+		//[IODescription("DataGridViewDataSourceDescr")]
 		public new object DataSource
 		{
 			get { return _Data; }

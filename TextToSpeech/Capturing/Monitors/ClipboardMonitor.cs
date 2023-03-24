@@ -25,7 +25,7 @@ namespace JocysCom.TextToSpeech.Monitor.Capturing.Monitors
 				//KeyboardHelper.SendKey("^(C)", process.ProcessName);
 				PressKeys();
 			}
-			catch (Exception ex)
+			catch
 			{
 				throw;
 			}

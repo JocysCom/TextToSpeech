@@ -21,55 +21,54 @@ using System.Data.Objects.DataClasses;
 
 namespace JocysCom.ClassLibrary.Controls
 {
-	public static partial class ControlsHelper
-	{
+    public static partial class ControlsHelper
+    {
 
-		#region IsDesignMode
+        #region IsDesignMode
 
-		private static bool? _IsDesignMode;
+        private static bool? _IsDesignMode;
 
-		public static bool IsDesignMode(Component component)
-		{
-			if (!_IsDesignMode.HasValue)
-				_IsDesignMode = IsDesignMode1(component);
-			return _IsDesignMode.Value;
-		}
+        public static bool IsDesignMode(Component component)
+        {
+            if (!_IsDesignMode.HasValue)
+                _IsDesignMode = IsDesignMode1(component);
+            return _IsDesignMode.Value;
+        }
 
-		private static bool IsDesignMode2(IComponent component, IComponent parent)
-		{
-			// Check 1.
-			if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
-				return true;
-			if (component == null)
-				throw new ArgumentNullException(nameof(component));
-			// Check 2 (DesignMode).
-			var site = component.Site;
-			if (site != null && site.DesignMode)
-				return true;
-			if (parent != null && parent.GetType().FullName.Contains("VisualStudio"))
-				return true;
-			// Not design mode.
-			return false;
-		}
+        private static bool IsDesignMode2(IComponent component, IComponent parent)
+        {
+            // Check 1.
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                return true;
+            if (component == null)
+                throw new ArgumentNullException(nameof(component));
+            // Check 2 (DesignMode).
+            var site = component.Site;
+            if (site != null && site.DesignMode)
+                return true;
+            if (parent != null && parent.GetType().FullName.Contains("VisualStudio"))
+                return true;
+            // Not design mode.
+            return false;
+        }
 
-		private static bool IsDesignMode1(Component component)
-		{
-			var form = component as Form;
-			if (form != null)
-				return IsDesignMode2(form, form.ParentForm ?? form.Owner);
-			var control = component as Control;
-			if (control != null)
-				return IsDesignMode2(control, control.Parent);
-			return IsDesignMode2(component, null);
-		}
+        private static bool IsDesignMode1(Component component)
+        {
+            var form = component as Form;
+            if (form != null)
+                return IsDesignMode2(form, form.ParentForm ?? form.Owner);
+            var control = component as Control;
+            if (control != null)
+                return IsDesignMode2(control, control.Parent);
+            return IsDesignMode2(component, null);
+        }
 
 		#endregion
 
 #if NETCOREAPP // .NET Core
 #elif NETSTANDARD // .NET Standard
 #else // .NET Framework
-
-
+#endif
 
 		/// <summary>
 		/// Raise event on same thread as the target of delegate.
@@ -142,7 +141,7 @@ namespace JocysCom.ClassLibrary.Controls
 			control.Invalidate();
 		}
 
-		#region Data Grid Functions
+        #region Data Grid Functions
 
 		public static void RebindGrid<T>(DataGridView grid, object data, string keyPropertyName = null, bool selectFirst = true, List<T> selection = null)
 		{
@@ -232,7 +231,7 @@ namespace JocysCom.ClassLibrary.Controls
 			}
 		}
 
-		#endregion
+        #endregion
 
 		/// <summary>
 		/// Set form TopMost if one of the application forms is top most.
@@ -384,9 +383,9 @@ namespace JocysCom.ClassLibrary.Controls
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region Set Visible, Enabled and Text
+        #region Set Visible, Enabled and Text
 
 		internal const int STATE_VISIBLE = 0x00000002;
 		internal const int STATE_ENABLED = 0x00000004;
@@ -549,9 +548,9 @@ namespace JocysCom.ClassLibrary.Controls
 					row.Selected = false;
 		}
 
-		#endregion
+        #endregion
 
-		#region Add Grip to SplitContainer 
+        #region Add Grip to SplitContainer 
 
 		public static void ApplySplitterStyle(SplitContainer control)
 		{
@@ -618,9 +617,9 @@ namespace JocysCom.ClassLibrary.Controls
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region Apply Grid Border Style
+        #region Apply Grid Border Style
 
 		public static void ApplyBorderStyle(DataGridView grid, bool updateEnabledProperty = false)
 		{
@@ -781,9 +780,9 @@ namespace JocysCom.ClassLibrary.Controls
 			e.Handled = true;
 		}
 
-		#endregion
+        #endregion
 
-		#region  Apply ToolStrip Border Style
+        #region  Apply ToolStrip Border Style
 
 		public static void ApplyBorderStyle(ToolStrip control)
 		{
@@ -792,11 +791,12 @@ namespace JocysCom.ClassLibrary.Controls
 			control.Renderer = new ToolStripBorderlessRenderer();
 		}
 
-		#endregion
+        #endregion
 
-		#region Apply TabControl Image Style
 
-		private const string ApplyImageStyleDisabledSuffix = "_DisabledStyle";
+        #region Apply TabControl Image Style
+
+        private const string ApplyImageStyleDisabledSuffix = "_DisabledStyle";
 
 		public static void ApplyImageStyle(TabControl control)
 		{
@@ -854,142 +854,141 @@ namespace JocysCom.ClassLibrary.Controls
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region Binding
+        #region Binding
 
-		public static Binding AddDataBinding<TD, TDp>(
-			IBindableComponent control,
-			TD data, Expression<Func<TD, TDp>> dataProperty)
-		{
-			if (control == null)
-				throw new ArgumentNullException(nameof(control));
-			if (dataProperty == null)
-				throw new ArgumentNullException(nameof(dataProperty));
-			var dataMemberBody = (MemberExpression)dataProperty.Body;
-			var dataMemberName = dataMemberBody.Member.Name;
-			string name = null;
-			// Add TextBox.
-			var textBox = control as TextBox;
-			if (textBox != null)
-				name = nameof(textBox.Text);
-			// Add ComboBox.
-			var comboBox = control as ComboBox;
-			if (comboBox != null)
-			{
-				name = string.IsNullOrEmpty(comboBox.ValueMember)
-					? nameof(comboBox.SelectedItem)
-					: nameof(comboBox.SelectedValue);
-			}
-			// Add CheckBox.
-			var checkBox = control as CheckBox;
-			if (checkBox != null)
-				name = nameof(checkBox.Checked);
-			// Add NumericUpDown.
-			var upDown = control as NumericUpDown;
-			if (upDown != null)
-				name = nameof(upDown.Value);
-			// If type is missing then throw error.
-			if (string.IsNullOrEmpty(name))
-				throw new Exception(string.Format("Add control Type '{0}' to ControlsHelper.AddDataBinding(control, data, dataProperty) method!", control.GetType()));
-			// Add data binding.
-			return control.DataBindings.Add(name, data, dataMemberName,
-				false,
-				DataSourceUpdateMode.OnPropertyChanged,
-				null,
-				null,
-				null);
-		}
+        public static Binding AddDataBinding<TD, TDp>(
+            IBindableComponent control,
+            TD data, Expression<Func<TD, TDp>> dataProperty)
+        {
+            if (control == null)
+                throw new ArgumentNullException(nameof(control));
+            if (dataProperty == null)
+                throw new ArgumentNullException(nameof(dataProperty));
+            var dataMemberBody = (MemberExpression)dataProperty.Body;
+            var dataMemberName = dataMemberBody.Member.Name;
+            string name = null;
+            // Add TextBox.
+            var textBox = control as TextBox;
+            if (textBox != null)
+                name = nameof(textBox.Text);
+            // Add ComboBox.
+            var comboBox = control as ComboBox;
+            if (comboBox != null)
+            {
+                name = string.IsNullOrEmpty(comboBox.ValueMember)
+                    ? nameof(comboBox.SelectedItem)
+                    : nameof(comboBox.SelectedValue);
+            }
+            // Add CheckBox.
+            var checkBox = control as CheckBox;
+            if (checkBox != null)
+                name = nameof(checkBox.Checked);
+            // Add NumericUpDown.
+            var upDown = control as NumericUpDown;
+            if (upDown != null)
+                name = nameof(upDown.Value);
+            // If type is missing then throw error.
+            if (string.IsNullOrEmpty(name))
+                throw new Exception(string.Format("Add control Type '{0}' to ControlsHelper.AddDataBinding(control, data, dataProperty) method!", control.GetType()));
+            // Add data binding.
+            return control.DataBindings.Add(name, data, dataMemberName,
+                false,
+                DataSourceUpdateMode.OnPropertyChanged,
+                null,
+                null,
+                null);
+        }
 
-		/// <summary>
-		/// To avoid validation problems, make sure to add DataBindings inside "Load" event and not inside Constructor.
-		/// </summary>
-		public static Binding AddDataBinding<TC, TCp, TD, TDp>(
-				TC control, Expression<Func<TC, TCp>> controlProperty,
-				TD data, Expression<Func<TD, TDp>> dataProperty,
-				bool formattingEnabled = false,
-				DataSourceUpdateMode updateMode = DataSourceUpdateMode.OnPropertyChanged,
-				object nullValue = null,
-				string formatString = null,
-				IFormatProvider formatInfo = null
-			) where TC : IBindableComponent
-		{
-			if (controlProperty == null)
-				throw new ArgumentNullException(nameof(controlProperty));
-			if (dataProperty == null)
-				throw new ArgumentNullException(nameof(dataProperty));
-			var propertyBody = (MemberExpression)controlProperty.Body;
-			var propertyName = propertyBody.Member.Name;
-			var dataMemberBody = (MemberExpression)dataProperty.Body;
-			var dataMemberName = dataMemberBody.Member.Name;
-			return control.DataBindings.Add(propertyName, data, dataMemberName,
-				formattingEnabled,
-				updateMode,
-				nullValue,
-				formatString,
-				formatInfo);
-		}
+        /// <summary>
+        /// To avoid validation problems, make sure to add DataBindings inside "Load" event and not inside Constructor.
+        /// </summary>
+        public static Binding AddDataBinding<TC, TCp, TD, TDp>(
+                TC control, Expression<Func<TC, TCp>> controlProperty,
+                TD data, Expression<Func<TD, TDp>> dataProperty,
+                bool formattingEnabled = false,
+                DataSourceUpdateMode updateMode = DataSourceUpdateMode.OnPropertyChanged,
+                object nullValue = null,
+                string formatString = null,
+                IFormatProvider formatInfo = null
+            ) where TC : IBindableComponent
+        {
+            if (controlProperty == null)
+                throw new ArgumentNullException(nameof(controlProperty));
+            if (dataProperty == null)
+                throw new ArgumentNullException(nameof(dataProperty));
+            var propertyBody = (MemberExpression)controlProperty.Body;
+            var propertyName = propertyBody.Member.Name;
+            var dataMemberBody = (MemberExpression)dataProperty.Body;
+            var dataMemberName = dataMemberBody.Member.Name;
+            return control.DataBindings.Add(propertyName, data, dataMemberName,
+                formattingEnabled,
+                updateMode,
+                nullValue,
+                formatString,
+                formatInfo);
+        }
 
-		/// <summary>
-		/// Bing Enum to ComboBox.
-		/// </summary>
-		/// <typeparam name="TE">enum</typeparam>
-		/// <param name="box">Combo box control</param>
-		/// <param name="format">{0} - name, {1} - numeric value, {2} - description attribute.</param>
-		/// <param name="addEmpty"></param>
-		public static void BindEnum<TE>(System.Windows.Forms.ComboBox box, string format = null, bool addEmpty = false, bool sort = false, TE? selected = null, TE[] exclude = null)
-			// Declare TE as same as Enum.
-			where TE : struct, IComparable, IFormattable, IConvertible
-		{
-			if (box == null)
-				throw new ArgumentNullException(nameof(box));
-			var list = new List<DictionaryEntry>();
-			if (string.IsNullOrEmpty(format))
-				format = "{0}";
-			string display;
-			foreach (var value in (TE[])Enum.GetValues(typeof(TE)))
-			{
-				if (exclude != null && exclude.Contains(value))
-					continue;
-				display = string.Format(format, value, System.Convert.ToInt64(value), Runtime.Attributes.GetDescription(value));
-				list.Add(new DictionaryEntry(display, value));
-			}
-			if (sort)
-				list = list.OrderBy(x => x.Key).ToList();
-			if (addEmpty && !list.Any(x => string.IsNullOrEmpty((string)x.Key)))
-				list.Insert(0, new DictionaryEntry("", null));
-			// Make sure sorted is disabled, because it is not allowed when using DataSource.
-			if (box.Sorted)
-				box.Sorted = false;
-			box.DataSource = list;
-			box.DisplayMember = "Key";
-			box.ValueMember = "Value";
-			if (selected.HasValue)
-				SelectEnumValue(box, selected.Value);
-		}
+        /// <summary>
+        /// Bing Enum to ComboBox.
+        /// </summary>
+        /// <typeparam name="TE">enum</typeparam>
+        /// <param name="box">Combo box control</param>
+        /// <param name="format">{0} - name, {1} - numeric value, {2} - description attribute.</param>
+        /// <param name="addEmpty"></param>
+        public static void BindEnum<TE>(System.Windows.Forms.ComboBox box, string format = null, bool addEmpty = false, bool sort = false, TE? selected = null, TE[] exclude = null)
+            // Declare TE as same as Enum.
+            where TE : struct, IComparable, IFormattable, IConvertible
+        {
+            if (box == null)
+                throw new ArgumentNullException(nameof(box));
+            var list = new List<DictionaryEntry>();
+            if (string.IsNullOrEmpty(format))
+                format = "{0}";
+            string display;
+            foreach (var value in (TE[])Enum.GetValues(typeof(TE)))
+            {
+                if (exclude != null && exclude.Contains(value))
+                    continue;
+                display = string.Format(format, value, System.Convert.ToInt64(value), Runtime.Attributes.GetDescription(value));
+                list.Add(new DictionaryEntry(display, value));
+            }
+            if (sort)
+                list = list.OrderBy(x => x.Key).ToList();
+            if (addEmpty && !list.Any(x => string.IsNullOrEmpty((string)x.Key)))
+                list.Insert(0, new DictionaryEntry("", null));
+            // Make sure sorted is disabled, because it is not allowed when using DataSource.
+            if (box.Sorted)
+                box.Sorted = false;
+            box.DataSource = list;
+            box.DisplayMember = "Key";
+            box.ValueMember = "Value";
+            if (selected.HasValue)
+                SelectEnumValue(box, selected.Value);
+        }
 
-		public static void SelectEnumValue<TE>(ComboBox box, TE value)
-			// Declare TE as same as Enum.
-			where TE : struct, IComparable, IFormattable, IConvertible
-		{
-			if (box == null)
-				throw new ArgumentNullException(nameof(box));
-			for (var i = 0; i < box.Items.Count; i++)
-			{
-				var val = ((DictionaryEntry)box.Items[i]).Value;
-				if (Equals(val, value))
-				{
-					box.SelectedIndex = i;
-					return;
-				}
-			}
-		}
+        public static void SelectEnumValue<TE>(ComboBox box, TE value)
+            // Declare TE as same as Enum.
+            where TE : struct, IComparable, IFormattable, IConvertible
+        {
+            if (box == null)
+                throw new ArgumentNullException(nameof(box));
+            for (var i = 0; i < box.Items.Count; i++)
+            {
+                var val = ((DictionaryEntry)box.Items[i]).Value;
+                if (Equals(val, value))
+                {
+                    box.SelectedIndex = i;
+                    return;
+                }
+            }
+        }
 
-		#endregion
-
-#endif
+        #endregion
 
 
-	}
+
+    }
 }
 

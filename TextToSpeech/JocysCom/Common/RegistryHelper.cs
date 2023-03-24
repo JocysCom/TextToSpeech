@@ -1,5 +1,4 @@
-﻿#if NETCOREAPP // .NET Core
-#elif NETSTANDARD // .NET Standard
+﻿#if NETSTANDARD // .NET Standard
 #else // .NET Framework
 
 using Microsoft.Win32;

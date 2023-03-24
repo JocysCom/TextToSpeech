@@ -169,13 +169,14 @@ namespace JocysCom.ClassLibrary.Configuration
 			}
 			if (showArchitecture)
 			{
-				switch ((Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).GetName().ProcessorArchitecture)
+				switch (RuntimeInformation.ProcessArchitecture)
 				{
-					case ProcessorArchitecture.Amd64:
-					case ProcessorArchitecture.IA64:
+					case Architecture.X64:
+					case Architecture.Arm64:
 						s += " 64-bit";
 						break;
-					case ProcessorArchitecture.X86:
+					case Architecture.X86:
+					case Architecture.Arm:
 						s += " 32-bit";
 						break;
 					default: // Default is MSIL: Any CPU, show nothing/

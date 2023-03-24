@@ -1,7 +1,14 @@
-﻿using System.Security.Cryptography.Xml;
+﻿using System.Reflection;
+using System.Security.Cryptography.Xml;
 using System.Text;
-using System.Web.Security;
 using System.Xml;
+
+#if NETFRAMEWORK
+using System.Web.Security;
+#elif NETCOREAPP
+// NuGet Package
+using Microsoft.AspNetCore.DataProtection;
+#endif
 
 namespace JocysCom.ClassLibrary.Security
 {
@@ -11,6 +18,7 @@ namespace JocysCom.ClassLibrary.Security
 	public partial class Encryption
 	{
 
+
 		#region Machine Key
 
 		/// <summary>Encrypts text with MachineKey and converts to Base64 string.</summary>
@@ -18,8 +26,15 @@ namespace JocysCom.ClassLibrary.Security
 		{
 			if (string.IsNullOrEmpty(text))
 				return text;
-			var stream = (encoding ?? Encoding.UTF8).GetBytes(text);
-			var encrypted = MachineKey.Protect(stream, purpose);
+			var bytes = (encoding ?? Encoding.UTF8).GetBytes(text);
+#if NETFRAMEWORK
+			var encrypted = MachineKey.Protect(bytes, purpose);
+#elif NETCOREAPP
+			var appName = Assembly.GetEntryAssembly().GetName().Name;
+			var provider = DataProtectionProvider.Create(appName);
+			var protector = provider.CreateProtector(purpose);
+			var encrypted = protector.Protect(bytes);
+#endif
 			var base64 = System.Convert.ToBase64String(encrypted);
 			return base64;
 		}
@@ -29,23 +44,30 @@ namespace JocysCom.ClassLibrary.Security
 		{
 			if (string.IsNullOrEmpty(base64))
 				return base64;
-			var encrypted = System.Convert.FromBase64String(base64);
-			var decrypted = MachineKey.Unprotect(encrypted, purpose);
+			var bytes = System.Convert.FromBase64String(base64);
+#if NETFRAMEWORK
+			var decrypted = MachineKey.Unprotect(bytes, purpose);
+#elif NETCOREAPP
+			var appName = Assembly.GetEntryAssembly().GetName().Name;
+			var provider = DataProtectionProvider.Create(appName);
+			var protector = provider.CreateProtector(purpose);
+			var decrypted = protector.Unprotect(bytes);
+#endif
 			var text = (encoding ?? Encoding.UTF8).GetString(decrypted);
 			return text;
 		}
 
-		#endregion
+#endregion
 
-		#region RSA Sign
+			#region RSA Sign
 
-		/// <summary>
-		/// Private RSA key is required to sign data.
-		/// </summary>
-		/// <param name="bytes"></param>
-		/// <returns></returns>
-		/// <remarks>Private RSA key is required to sign data.</remarks>
-		string RsaGenerateSignature(byte[] bytes)
+			/// <summary>
+			/// Private RSA key is required to sign data.
+			/// </summary>
+			/// <param name="bytes"></param>
+			/// <returns></returns>
+			/// <remarks>Private RSA key is required to sign data.</remarks>
+			string RsaGenerateSignature(byte[] bytes)
 		{
 			//byte[] hash = RsaSignatureHashAlgorithm.ComputeHash(bytes);
 			//byte[] sign = RsaProvider.SignHash(hash, System.Security.Cryptography.CryptoConfig.MapNameToOID("SHA1"));

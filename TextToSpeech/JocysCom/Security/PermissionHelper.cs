@@ -1,10 +1,13 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
+
+// .NET Core: requires "System.IO.FileSystem.AccessControl" NuGet package.
 
 namespace JocysCom.ClassLibrary.Security
 {
@@ -391,8 +394,10 @@ namespace JocysCom.ClassLibrary.Security
 			var attributes = File.GetAttributes(path);
 			var isDirectory = attributes.HasFlag(FileAttributes.Directory);
 			var security = isDirectory
-				? Directory.GetAccessControl(path)
-				: (FileSystemSecurity)File.GetAccessControl(path);
+				? new DirectoryInfo(path).GetAccessControl()
+				: (FileSystemSecurity)new FileInfo(path).GetAccessControl();
+			Console.WriteLine($"Access control information for the directory '{path}':");
+			Console.WriteLine(security);
 			var rules = security.GetAccessRules(true, true, sid.GetType());
 			foreach (FileSystemAccessRule rule in rules)
 			{
@@ -432,8 +437,8 @@ namespace JocysCom.ClassLibrary.Security
 			var attributes = File.GetAttributes(path);
 			var isDirectory = attributes.HasFlag(FileAttributes.Directory);
 			var security = isDirectory
-				? Directory.GetAccessControl(path)
-				: (FileSystemSecurity)File.GetAccessControl(path);
+				? new DirectoryInfo(path).GetAccessControl()
+				: (FileSystemSecurity)new FileInfo(path).GetAccessControl();
 			FileSystemAccessRule sidRule = null;
 			// Do not include inherited permissions, because.
 			var rules = security.GetAccessRules(true, false, sid.GetType());
@@ -476,9 +481,9 @@ namespace JocysCom.ClassLibrary.Security
 				security.SetAccessRule(newRule);
 			}
 			if (isDirectory)
-				Directory.SetAccessControl(path, (DirectorySecurity)security);
+				new DirectoryInfo(path).SetAccessControl((DirectorySecurity)security);
 			else
-				File.SetAccessControl(path, (FileSecurity)security);
+				new FileInfo(path).SetAccessControl((FileSecurity)security);
 			return true;
 		}
 
