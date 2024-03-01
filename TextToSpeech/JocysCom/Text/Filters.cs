@@ -104,7 +104,7 @@ namespace JocysCom.ClassLibrary.Text
 
 		public static string StripUnsafeHtml(string s, string[] whiteList = null)
 		{
-			var acceptable = whiteList == null
+			var acceptable = whiteList is null
 				? "i|em|b|strong|u|sup|sub|ol|ul|li|br|h2|h3|h4|h5|span|div|p|a|img|blockquote"
 				: string.Join("|", whiteList);
 			var stringPattern = @"<\/?(?(?=" + acceptable + @")notag|[a-z0-9]+:?[a-z0-9]+?)(?:\s[a-z0-9\-]+=?(?:(["",']?).*?\1?)?)*\s*\/?>";

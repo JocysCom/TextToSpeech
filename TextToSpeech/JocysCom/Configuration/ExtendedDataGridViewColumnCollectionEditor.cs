@@ -60,16 +60,16 @@ namespace JocysCom.ClassLibrary.Configuration
 			if (provider != null && context != null)
 			{
 				var service = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
-				if (service == null || context.Instance == null)
+				if (service is null || context.Instance is null)
 				{
 					return value;
 				}
 				var host = (IDesignerHost)provider.GetService(typeof(IDesignerHost));
-				if (host == null)
+				if (host is null)
 				{
 					return value;
 				}
-				if (dataGridViewColumnCollectionDialog == null)
+				if (dataGridViewColumnCollectionDialog is null)
 				{
 					dataGridViewColumnCollectionDialog = CreateColumnCollectionDialog(provider);
 				}

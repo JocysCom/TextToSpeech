@@ -17,7 +17,7 @@ namespace JocysCom.ClassLibrary
 		/// <returns>True if succeeds</returns>
 		public static bool Move(RegistryKey parentKey, string sourceSubKey, string targetSubKey)
 		{
-			if (parentKey == null)
+			if (parentKey is null)
 				throw new ArgumentNullException(nameof(parentKey));
 			Copy(parentKey, sourceSubKey, targetSubKey, true);
 			parentKey.DeleteSubKeyTree(sourceSubKey);
@@ -33,7 +33,7 @@ namespace JocysCom.ClassLibrary
 		/// <returns></returns>
 		public static bool Copy(RegistryKey parentKey, string sourceKeyName, string targetKeyName, bool recursive = true)
 		{
-			if (parentKey == null)
+			if (parentKey is null)
 				throw new ArgumentNullException(nameof(parentKey));
 			var sourceKey = parentKey.OpenSubKey(sourceKeyName);
 			var targetKey = parentKey.CreateSubKey(targetKeyName);

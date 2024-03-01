@@ -26,7 +26,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			{
 				lock (_EntryLock)
 				{
-					if (_Entry == null)
+					if (_Entry is null)
 						_Entry = new AssemblyInfo();
 					return _Entry;
 				}
@@ -122,7 +122,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		{
 			get
 			{
-				if (_RunMode == null)
+				if (_RunMode is null)
 					// TODO: Standardize configuration provider XML, JSON, INI, Registry, etc...
 					// https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 					//_RunMode = SettingsParser.Current.Parse("RunMode", "");
@@ -134,11 +134,11 @@ namespace JocysCom.ClassLibrary.Configuration
 
 		public string GetTitle(bool showBuild = true, bool showRunMode = true, bool showBuildDate = true, bool showArchitecture = true, bool showDescription = true, int versionNumbers = 3)
 		{
-			var s = string.Format("{0} {1} {2}", Company, Product, this.Version.ToString(versionNumbers));
+			var s = string.Format("{0} {1} {2}", Company, Product, Version.ToString(versionNumbers));
 			if (showBuild)
 			{
 				// Version = major.minor.build.revision
-				switch (this.Version.Build)
+				switch (Version.Build)
 				{
 					case 0: s += " Alpha"; break;  // Alpha Release (AR)
 					case 1: s += " Beta 1"; break; // Master Beta (MB)
@@ -204,7 +204,7 @@ namespace JocysCom.ClassLibrary.Configuration
 				s += string.Format(" ({0}\\{1})", processDomain, processUser);
 			else if (isElevated)
 				s += " (Administrator)";
-			// if (WinAPI.IsVista && WinAPI.IsElevated() && WinAPI.IsInAdministratorRole) this.Text += " (Administrator)";
+			// if (WinAPI.IsVista && WinAPI.IsElevated() && WinAPI.IsInAdministratorRole) Text += " (Administrator)";
 #endif
 			return s.Trim();
 		}
@@ -309,7 +309,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		/// </remarks>
 		public static DateTime GetBuildDateTime(Assembly assembly, TimeZoneInfo tzi = null)
 		{
-			if (assembly == null)
+			if (assembly is null)
 				throw new ArgumentNullException(nameof(assembly));
 			var names = assembly.GetManifestResourceNames();
 			var dt = default(DateTime);
@@ -388,7 +388,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		string GetAttribute<T>(Func<T, string> value) where T : Attribute
 		{
 			T attribute = (T)Attribute.GetCustomAttribute(Assembly, typeof(T));
-			return attribute == null
+			return attribute is null
 				? ""
 				: value.Invoke(attribute);
 		}

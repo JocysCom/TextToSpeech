@@ -27,9 +27,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -42,8 +43,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -84,6 +87,27 @@
     <ApplicationIcon>app.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>60F171B9DDEC11957D89324C5D05AC78A912399A</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>JocysCom.TextToSpeech.Monitor_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>JocysCom.TextToSpeech.Monitor_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AWSSDK.Core">
       <HintPath>Resources\Amazon\AWSSDK.Core.dll</HintPath>
@@ -132,12 +156,15 @@
     <Reference Include="System.Design" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Memory" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Speech" />
-    <Reference Include="System.Text.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+    <Reference Include="System.Text.Json">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms.DataVisualization.Design" />
     <Reference Include="System.Xaml" />
@@ -284,7 +311,10 @@
     <Compile Include="Controls\VoicesUserControl.Designer.cs">
       <DependentUpon>VoicesUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="JocysCom\Collections\CollectionsHelper.cs" />
+    <Compile Include="JocysCom\Collections\IKeyValue.cs" />
     <Compile Include="JocysCom\Configuration\AssemblyInfo.Ext1.cs" />
+    <Compile Include="JocysCom\Configuration\ISettingsItemFile.cs" />
     <Compile Include="JocysCom\Configuration\SettingsParser.cs" />
     <Compile Include="JocysCom\Controls\ControlsHelper.Windows.cs" />
     <Compile Include="JocysCom\Data\SqlHelper.Types.cs" />
@@ -511,6 +541,8 @@
     <EmbeddedResource Include="Resources\Icons\Information.png" />
     <EmbeddedResource Include="Resources\Documents\JocysCom.TextToSpeech.Monitor.rtf" />
     <None Include=".editorconfig" />
+    <None Include="Evaldas_Jocys.PublicKey.cer" />
+    <None Include="JocysCom.TextToSpeech.Monitor_TemporaryKey.pfx" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor.psd" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor_IntroSounds.psd" />
     <None Include="Resources\Images\JocysCom_TTS_Monitor_Voices.psd" />

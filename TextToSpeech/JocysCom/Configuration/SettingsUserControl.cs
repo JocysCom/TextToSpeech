@@ -86,7 +86,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			var type = list.GetType().GetGenericArguments()[0];
 			var selectedActions = GetSelectedItems();
 			var last = selectedActions.LastOrDefault();
-			var insertIndex = (last == null)
+			var insertIndex = (last is null)
 					? -1 : list.IndexOf(last);
 			var item = Activator.CreateInstance(type);
 			var ev = AddingNew;
@@ -105,7 +105,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			// If row is not selected then...
 			if (!rowToEdit.Selected)
 				rowToEdit.Selected = true;
-			var column = DefaultEditColumn == null
+			var column = DefaultEditColumn is null
 				? grid.Columns.Cast<DataGridViewColumn>().FirstOrDefault(x => !x.ReadOnly && x is DataGridViewTextBoxColumn)
 				: DefaultEditColumn;
 			if (column != null)
@@ -189,7 +189,7 @@ namespace JocysCom.ClassLibrary.Configuration
 			var grid = (DataGridView)sender;
 			var row = grid.Rows[e.RowIndex];
 			var item = Data.Items[e.RowIndex];
-			if (enabledProperty == null)
+			if (enabledProperty is null)
 				enabledProperty = item.GetType().GetProperties().FirstOrDefault(x => x.Name == "Enabled" || x.Name == "IsEnabled");
 			var enabled = (bool)enabledProperty.GetValue(item, null);
 			// Set style.
@@ -348,7 +348,7 @@ namespace JocysCom.ClassLibrary.Configuration
 		private void EditButton_Click(object sender, EventArgs e)
 		{
 			var item = GetSelectedItems().FirstOrDefault();
-			if (item == null)
+			if (item is null)
 				return;
 			var form = new SettingsItemForm();
 			form.StartPosition = FormStartPosition.CenterParent;

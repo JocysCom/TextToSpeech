@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
 
 namespace JocysCom.ClassLibrary.Runtime
 {
@@ -15,11 +16,12 @@ namespace JocysCom.ClassLibrary.Runtime
 
 		public static bool IsKnownType(Type type)
 		{
-			if (type == null)
+			if (type is null)
 				throw new ArgumentNullException(nameof(type));
 			return
 				type == typeof(string)
-				|| type.IsPrimitive
+				// Note: Every Primitive type (such as int, double, bool, char, etc.) is a ValueType. 
+				|| type.IsValueType
 				|| type.IsSerializable;
 		}
 
@@ -59,7 +61,7 @@ namespace JocysCom.ClassLibrary.Runtime
 
 		public static string GetBuiltInTypeNameOrAlias(Type type)
 		{
-			if (type == null)
+			if (type is null)
 				throw new ArgumentNullException(nameof(type));
 			var elementType = type.IsArray
 				? type.GetElementType()
@@ -91,7 +93,7 @@ namespace JocysCom.ClassLibrary.Runtime
 
 		public static bool IsNullableType(Type type)
 		{
-			if (type == null)
+			if (type is null)
 				throw new ArgumentNullException(nameof(type));
 			return type.IsGenericType
 				? type.GetGenericTypeDefinition() == typeof(Nullable<>)
@@ -105,33 +107,67 @@ namespace JocysCom.ClassLibrary.Runtime
 		/// <summary>
 		/// Get source intersecting fields.
 		/// </summary>
-		private static FieldInfo[] GetItersectingFields(object source, object dest)
+		private static FieldInfo[] GetItersectingFields(object source, object target)
 		{
-			var dFieldNames = dest.GetType().GetFields(DefaultBindingFlags).Select(x => x.Name).ToArray();
-			var itersectingFields = source
+			var targetNames = target.GetType().GetFields(DefaultBindingFlags).Select(x => x.Name).ToArray();
+			var sourceFields = source
 				.GetType()
 				.GetFields(DefaultBindingFlags)
-				.Where(x => dFieldNames.Contains(x.Name))
+				.Where(x => targetNames.Contains(x.Name))
 				.ToArray();
-			return itersectingFields;
+			return sourceFields;
 		}
 
-		public static void CopyFields(object source, object dest)
+		/// <summary>Cache data for speed.</summary>
+		/// <remarks>Cache allows for this class to work 20 times faster.</remarks>
+		private static ConcurrentDictionary<Type, FieldInfo[]> Fields { get; } = new ConcurrentDictionary<Type, FieldInfo[]>();
+
+		private static FieldInfo[] GetFields(Type t, bool cache = true)
 		{
-			if (source == null)
+			var items = cache
+				? Fields.GetOrAdd(t, x => t.GetFields(DefaultBindingFlags))
+				: t.GetFields(DefaultBindingFlags);
+			return items;
+		}
+
+
+		/// <summary>Cache data for speed.</summary>
+		/// <remarks>Cache allows for this class to work 20 times faster.</remarks>
+		private static ConcurrentDictionary<Type, PropertyInfo[]> Properties { get; } = new ConcurrentDictionary<Type, PropertyInfo[]>();
+
+		private static PropertyInfo[] GetProperties(Type t, bool cache = true)
+		{
+			var items = cache
+				? Properties.GetOrAdd(t, x => t.GetProperties(DefaultBindingFlags))
+				: t.GetProperties(DefaultBindingFlags);
+			return items;
+		}
+
+		public static void CopyFields(object source, object target)
+		{
+			if (source is null)
 				throw new ArgumentNullException(nameof(source));
-			if (dest == null)
-				throw new ArgumentNullException(nameof(dest));
-			// Get type of the destination object.
-			var destType = dest.GetType();
-			// Copy fields.
-			var sourceItersectingFields = GetItersectingFields(source, dest);
-			foreach (var sfi in sourceItersectingFields)
+			if (target is null)
+				throw new ArgumentNullException(nameof(target));
+			// Get Field Info.
+			var sourceFields = GetFields(source.GetType());
+			var targetFields = GetFields(target.GetType());
+			foreach (var sf in sourceFields)
 			{
-				if (IsKnownType(sfi.FieldType))
+				var tf = targetFields.FirstOrDefault(x => x.Name == sf.Name);
+				if (tf == null || !IsKnownType(sf.FieldType) || sf.FieldType != tf.FieldType)
+					continue;
+				var useJson = sf.FieldType.IsSerializable && !sf.FieldType.IsValueType;
+				var value = sf.GetValue(source);
+				if (useJson)
 				{
-					var dfi = destType.GetField(sfi.Name, DefaultBindingFlags);
-					dfi.SetValue(dest, sfi.GetValue(source));
+					var json = JsonSerializer.Serialize(value);
+					value = JsonSerializer.Deserialize(json, tf.FieldType);
+					tf.SetValue(target, value);
+				}
+				else
+				{
+					tf.SetValue(target, sf.GetValue(source));
 				}
 			}
 		}
@@ -139,11 +175,6 @@ namespace JocysCom.ClassLibrary.Runtime
 		#endregion
 
 		#region Copy Properties
-
-		private static readonly object PropertiesReadLock = new object();
-		private static readonly Dictionary<Type, PropertyInfo[]> PropertiesReadList = new Dictionary<Type, PropertyInfo[]>();
-		private static readonly object PropertiesWriteLock = new object();
-		private static readonly Dictionary<Type, PropertyInfo[]> PropertiesWriteList = new Dictionary<Type, PropertyInfo[]>();
 
 		/// <summary>
 		/// Get information about different and intersecting properties.
@@ -191,134 +222,50 @@ namespace JocysCom.ClassLibrary.Runtime
 			}
 			return sb.ToString();
 		}
-		/// <summary>
-		/// Get properties which exists on both objects.
-		/// </summary>
-		static PropertyInfo[] GetItersectingProperties(object source, object dest)
-		{
-			if (source == null)
-				throw new ArgumentNullException(nameof(source));
-			if (dest == null)
-				throw new ArgumentNullException(nameof(dest));
-			// Properties to read.
-			PropertyInfo[] sProperties;
-			lock (PropertiesReadLock)
-			{
-				var sType = source.GetType();
-				if (PropertiesReadList.ContainsKey(sType))
-				{
-					sProperties = PropertiesReadList[sType];
-				}
-				else
-				{
-					sProperties = sType.GetProperties(DefaultBindingFlags)
-						.Where(p => p.CanRead)
-						.ToArray();
-					PropertiesReadList.Add(sType, sProperties);
-				}
-			}
-			// Properties to write.
-			PropertyInfo[] dProperties;
-			lock (PropertiesWriteLock)
-			{
-				var dType = dest.GetType();
-				if (PropertiesWriteList.ContainsKey(dType))
-				{
-					dProperties = PropertiesWriteList[dType];
-				}
-				else
-				{
-					dProperties = dType.GetProperties(DefaultBindingFlags)
-						.Where(p => p.CanWrite)
-						.ToArray();
-					PropertiesWriteList.Add(dType, dProperties);
-				}
-			}
-			var dPropertyNames = dProperties.Select(x => x.Name).ToArray();
-			var itersectingProperties = sProperties
-				.Where(x => dPropertyNames.Contains(x.Name))
-				.ToArray();
-			return itersectingProperties;
-		}
 
-		public static void CopyProperties(object source, object dest)
+		public static void CopyProperties(object source, object target)
 		{
-			if (source == null)
+			if (source is null)
 				throw new ArgumentNullException(nameof(source));
-			if (dest == null)
-				throw new ArgumentNullException(nameof(dest));
+			if (target is null)
+				throw new ArgumentNullException(nameof(target));
 			// Get type of the destination object.
-			var destType = dest.GetType();
-			// Copy properties.
-			var sourceItersectingProperties = GetItersectingProperties(source, dest);
-			foreach (var spi in sourceItersectingProperties)
+			var sourceProperties = GetProperties(source.GetType());
+			var targetProperties = GetProperties(target.GetType());
+			foreach (var sp in sourceProperties)
 			{
-				// Skip if can't read.
-				if (!spi.CanRead)
+				// Get destination property and skip if not found.
+				var tp = targetProperties.FirstOrDefault(x => Equals(x.Name, sp.Name));
+				if (!sp.CanRead || !tp.CanWrite)
 					continue;
-				if (!IsKnownType(spi.PropertyType))
+				if (tp == null || !IsKnownType(sp.PropertyType) || sp.PropertyType != tp.PropertyType)
 					continue;
-				// Get destination type.
-				var dpi = destType.GetProperty(spi.Name, DefaultBindingFlags);
-				// Skip if can't write.
-				if (!dpi.CanWrite)
-					continue;
+				var useJson = sp.PropertyType.IsSerializable && !sp.PropertyType.IsValueType;
 				// Get source value.
-				var sValue = spi.GetValue(source, null);
+				var sValue = sp.GetValue(source, null);
+				if (useJson)
+					sValue = JsonSerializer.Serialize(sValue);
 				var update = true;
-				// If can read destination.
-				if (dpi.CanRead)
+				// If can read target value.
+				if (tp.CanRead)
 				{
-					// Get destination value.
-					var dValue = dpi.GetValue(dest, null);
+					// Get target value.
+					var dValue = tp.GetValue(target, null);
+					if (useJson)
+						dValue = JsonSerializer.Serialize(dValue);
 					// Update only if values are different.
 					update = !Equals(sValue, dValue);
 				}
 				if (update)
-					dpi.SetValue(dest, sValue, null);
+				{
+					if (useJson)
+						sValue = JsonSerializer.Deserialize(sValue as string, tp.PropertyType);
+					tp.SetValue(target, sValue, null);
+				}
 			}
 		}
 
 		#endregion
-
-		public static object CloneObject(object o)
-		{
-			if (o == null)
-				throw new ArgumentNullException(nameof(o));
-			var t = o.GetType();
-			var properties = t.GetProperties();
-			var dest = t.InvokeMember("", BindingFlags.CreateInstance, null, o, null);
-			foreach (var pi in properties)
-			{
-				if (pi.CanWrite)
-					pi.SetValue(dest, pi.GetValue(o, null), null);
-			}
-			return dest;
-		}
-
-		/// <summary>
-		/// Assign property values from their [DefaultValueAttribute] value.
-		/// </summary>
-		/// <param name="o">Object to reset properties on.</param>
-		public static void ResetPropertiesToDefault(object o, bool onlyIfNull = false)
-		{
-			if (o == null)
-				return;
-			var type = o.GetType();
-			var properties = type.GetProperties();
-			foreach (var p in properties)
-			{
-				if (p.CanRead && onlyIfNull && p.GetValue(o, null) != null)
-					continue;
-				if (!p.CanWrite)
-					continue;
-				var da = p.GetCustomAttributes(typeof(DefaultValueAttribute), false);
-				if (da.Length == 0)
-					continue;
-				var value = ((DefaultValueAttribute)da[0]).Value;
-				p.SetValue(o, value, null);
-			}
-		}
 
 		#region Convert: Object <-> Bytes
 
@@ -491,7 +438,7 @@ namespace JocysCom.ClassLibrary.Runtime
 		/// </summary>
 		public static object BytesToStructure(byte[] bytes, Type type)
 		{
-			if (type == null)
+			if (type is null)
 				throw new ArgumentNullException(nameof(type));
 			var value = type.IsValueType ? Activator.CreateInstance(type) : null;
 			var handle = default(GCHandle);
@@ -539,7 +486,7 @@ namespace JocysCom.ClassLibrary.Runtime
 			}
 			if (t.IsEnum)
 			{
-				var retValue = value == null ? false : Enum.IsDefined(t, value);
+				var retValue = value is null ? false : Enum.IsDefined(t, value);
 				result = retValue ? Enum.Parse(t, value) : default;
 				return retValue;
 			}
@@ -596,7 +543,7 @@ namespace JocysCom.ClassLibrary.Runtime
 		public static bool IsNullable(Type t)
 		{
 			// Throw exception if type not supplied.
-			if (t == null)
+			if (t is null)
 				throw new ArgumentNullException(nameof(t));
 			// Special Handling - known cases where Exceptions would be thrown
 			else if (t == typeof(void))
@@ -715,9 +662,9 @@ namespace JocysCom.ClassLibrary.Runtime
 
 		public static void DetectType(ref DetectTypeItem item, params string[] values)
 		{
-			if (values == null)
+			if (values is null)
 				throw new ArgumentNullException(nameof(values));
-			if (item == null)
+			if (item is null)
 				item = new DetectTypeItem();
 			// Order matters. Strictest on the top. First available type will be returned.
 			// If all values can be parsed to Int16 then it can be parsed to Int32 and Int64 too.

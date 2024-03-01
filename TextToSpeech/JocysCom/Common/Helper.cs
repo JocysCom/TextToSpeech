@@ -6,6 +6,7 @@ using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Concurrent;
 
 namespace JocysCom.ClassLibrary
 {
@@ -46,7 +47,7 @@ namespace JocysCom.ClassLibrary
 		/// </summary>
 		public static T FindResource<T>(string name, object o)
 		{
-			if (o == null)
+			if (o is null)
 				throw new ArgumentNullException(nameof(o));
 			var resources = new System.ComponentModel.ComponentResourceManager(o.GetType());
 			return (T)(resources.GetObject(name));
@@ -58,7 +59,8 @@ namespace JocysCom.ClassLibrary
 		/// </summary>
 		public static T FindResource<T>(string name, params Assembly[] assemblies)
 		{
-			name = name.Replace("/", ".").Replace(@"\", ".").Replace(' ', '_');
+			var name1 = name.Replace("/", ".").Replace(@"\", ".");
+			var name2 = name1.Replace(' ', '_');
 			if (assemblies.Length == 0)
 				assemblies = GetAssemblies();
 			foreach (var assembly in assemblies)
@@ -66,7 +68,7 @@ namespace JocysCom.ClassLibrary
 				var resourceNames = assembly.GetManifestResourceNames();
 				foreach (var resourceName in resourceNames)
 				{
-					if (!resourceName.EndsWith(name))
+					if (!resourceName.EndsWith(name1) && !resourceName.EndsWith(name2))
 						continue;
 					var stream = assembly.GetManifestResourceStream(resourceName);
 					return ConvertResource<T>(stream);
@@ -119,7 +121,8 @@ namespace JocysCom.ClassLibrary
 		/// </summary>
 		public static T GetResource<T>(string name, params Assembly[] assemblies)
 		{
-			name = name.Replace("/", ".").Replace(@"\", ".").Replace(' ', '_');
+			var name1 = name.Replace("/", ".").Replace(@"\", ".");
+			var name2 = name1.Replace(' ', '_');
 			if (assemblies.Length == 0)
 				assemblies = GetAssemblies();
 			foreach (var assembly in assemblies)
@@ -127,7 +130,7 @@ namespace JocysCom.ClassLibrary
 				var resourceNames = assembly.GetManifestResourceNames();
 				foreach (var resourceName in resourceNames)
 				{
-					if (resourceName != name)
+					if (resourceName != name1 && resourceName != name2)
 						continue;
 					var stream = assembly.GetManifestResourceStream(resourceName);
 					return ConvertResource<T>(stream);
@@ -220,6 +223,54 @@ namespace JocysCom.ClassLibrary
 			} while (millisecondsDelay > 0);
 		}
 
+		#region Delay Execution
+
+		/// <summary>
+		/// Contain CancellationTokenSource for each function.
+		/// </summary>
+		static ConcurrentDictionary<Delegate, CancellationTokenSource> DelayActions = new ConcurrentDictionary<Delegate, CancellationTokenSource>();
+
+
+		/// <summary>
+		/// Delay some frequently repeatable actions.
+		/// </summary>
+		public static async Task Delay(Action action, int? delay = null)
+		{
+			await _Delay(action, delay);
+		}
+
+		/// <summary>
+		/// Delay some frequently repeatable actions.
+		/// </summary>
+		private static async Task _Delay(Delegate action, int? delay = null, params object[] args)
+		{
+			var source = new CancellationTokenSource();
+			// Replace any previous CancellationTokenSource with a new one.
+			DelayActions.AddOrUpdate(
+				// Add token if action key do not exists.
+				action, source,
+				// Run this function if the action key already exists.
+				(key, oldSource) =>
+				{
+					System.Diagnostics.Debug.WriteLine("Cancel previous");
+					// Cancel previous delayed operation of the same action.
+					oldSource?.Cancel();
+					// Return new token.
+					return source;
+				}
+			);
+			await Task.Delay(delay ?? 500);
+			lock (action)
+			{
+				// If new delayed operation was started then return.
+				if (source.Token.IsCancellationRequested)
+					return;
+				System.Diagnostics.Debug.WriteLine("Invoke");
+				action.DynamicInvoke(args);
+			}
+		}
+
+		#endregion
 
 #if NETCOREAPP // .NET Core
 #elif NETSTANDARD // .NET Standard
@@ -266,7 +317,7 @@ namespace JocysCom.ClassLibrary
 		{
 			get
 			{
-				if (_GuidRegex == null)
+				if (_GuidRegex is null)
 				{
 					_GuidRegex = new Regex(
 				"^[A-Fa-f0-9]{32}$|" +
@@ -305,8 +356,74 @@ namespace JocysCom.ClassLibrary
 			// ---------|...|-----
 			// Null is treated as a full range.
 			return
-			(min1 == null || max2 == null || min1.Value.CompareTo(max2.Value) <= (inclusive ? 0 : -1)) &&
-			(min2 == null || max1 == null || min2.Value.CompareTo(max1.Value) <= (inclusive ? 0 : -1));
+			(min1 is null || max2 is null || min1.Value.CompareTo(max2.Value) <= (inclusive ? 0 : -1)) &&
+			(min2 is null || max1 is null || min2.Value.CompareTo(max1.Value) <= (inclusive ? 0 : -1));
+		}
+
+		#endregion
+
+		#region Run functions synchronously.
+
+		/// <summary>
+		/// Runs the specified asynchronous function synchronously.
+		/// </summary>
+		/// <param name="asyncFunc">The asynchronous function to run.</param>
+		/// <remarks>
+		/// This method avoids deadlocks by temporarily removing the current SynchronizationContext,
+		/// allowing the asynchronous function to execute without waiting for the context to be available.
+		/// The main disadvantage when compared to the Task.RunSynchronously() method is that
+		/// it bypasses the Task scheduler, which could lead to potential performance issues.
+		/// </remarks>
+		public static void RunSynchronously(Func<Task> asyncFunc)
+		{
+			// Save the current synchronization context
+			var context = SynchronizationContext.Current;
+
+			// Temporarily remove the current synchronization context
+			SynchronizationContext.SetSynchronizationContext(null);
+
+			try
+			{
+				// Execute the asynchronous function and wait for it to complete
+				asyncFunc().GetAwaiter().GetResult();
+			}
+			finally
+			{
+				// Restore the original synchronization context
+				SynchronizationContext.SetSynchronizationContext(context);
+			}
+		}
+
+		/// <summary>
+		/// Runs the specified asynchronous function synchronously and returns the result.
+		/// </summary>
+		/// <typeparam name="TResult">The type of the result.</typeparam>
+		/// <param name="asyncFunc">The asynchronous function to run.</param>
+		/// <returns>The result of the asynchronous function.</returns>
+		/// <remarks>
+		/// This method avoids deadlocks by temporarily removing the current SynchronizationContext,
+		/// allowing the asynchronous function to execute without waiting for the context to be available.
+		/// The main disadvantage when compared to the Task.RunSynchronously() method is that
+		/// it bypasses the Task scheduler, which could lead to potential performance issues.
+		/// </remarks>
+		public static TResult RunSynchronously<TResult>(Func<Task<TResult>> asyncFunc)
+		{
+			// Save the current synchronization context
+			var context = SynchronizationContext.Current;
+
+			// Temporarily remove the current synchronization context
+			SynchronizationContext.SetSynchronizationContext(null);
+
+			try
+			{
+				// Execute the asynchronous function and wait for it to complete, then return the result
+				return asyncFunc().GetAwaiter().GetResult();
+			}
+			finally
+			{
+				// Restore the original synchronization context
+				SynchronizationContext.SetSynchronizationContext(context);
+			}
 		}
 
 		#endregion

@@ -32,10 +32,10 @@ namespace JocysCom.ClassLibrary.Controls
 		{
 			if (rowIndex < 0)
 				return null;
-			if (DataSource == null)
+			if (DataSource is null)
 				return null;
 			var list = DataSource as IBindingList;
-			if (list == null)
+			if (list is null)
 				return null;
 			var item = list[rowIndex];
 			return item;
@@ -66,7 +66,7 @@ namespace JocysCom.ClassLibrary.Controls
 			set
 			{
 				// If old data is bound already or value is null and data must be unbound then...
-				if (_Data != null || value == null)
+				if (_Data != null || value is null)
 				{
 					// Remove old event.
 					_Data.ListChanged -= _Data_ListChanged;
@@ -97,7 +97,7 @@ namespace JocysCom.ClassLibrary.Controls
 		/// <param name="items"></param>
 		public void RemoveItems(params object[] items)
 		{
-			if (items == null)
+			if (items is null)
 				throw new ArgumentNullException(nameof(items));
 			suspendItemDeleted = true;
 			foreach (var item in items)
@@ -136,9 +136,9 @@ namespace JocysCom.ClassLibrary.Controls
 
 		public void InvalidateVisible(params int[] indexes)
 		{
-			if (indexes == null)
+			if (indexes is null)
 				throw new ArgumentNullException(nameof(indexes));
-			if (FirstDisplayedCell == null)
+			if (FirstDisplayedCell is null)
 				return;
 			var firstRowIndex = FirstDisplayedCell.RowIndex;
 			var rowsCount = DisplayedRowCount(true);
@@ -170,7 +170,7 @@ namespace JocysCom.ClassLibrary.Controls
 				return;
 			var propertyName = Columns[e.ColumnIndex].DataPropertyName;
 			var p = _Type.GetProperty(propertyName);
-			if (p == null)
+			if (p is null)
 				return;
 			if (e.RowIndex >= _Data.Count)
 				return;
@@ -189,7 +189,7 @@ namespace JocysCom.ClassLibrary.Controls
 				return;
 			var propertyName = Columns[e.ColumnIndex].DataPropertyName;
 			var p = _Type.GetProperty(propertyName);
-			if (p == null)
+			if (p is null)
 				return;
 			// Get item to edit.
 			var item = _Data[e.RowIndex];

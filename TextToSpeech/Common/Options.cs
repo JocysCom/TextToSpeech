@@ -12,7 +12,7 @@ namespace JocysCom.TextToSpeech.Monitor
 	{
 		public Options()
 		{
-			JocysCom.ClassLibrary.Runtime.RuntimeHelper.ResetPropertiesToDefault(this, false);
+			JocysCom.ClassLibrary.Runtime.Attributes.ResetPropertiesToDefault(this, false);
 		}
 
 		/// <summary>
@@ -20,7 +20,7 @@ namespace JocysCom.TextToSpeech.Monitor
 		/// </summary>
 		public void InitDefaults(bool onlyIfNull = false)
 		{
-			JocysCom.ClassLibrary.Runtime.RuntimeHelper.ResetPropertiesToDefault(this, onlyIfNull);
+			JocysCom.ClassLibrary.Runtime.Attributes.ResetPropertiesToDefault(this, onlyIfNull);
 		}
 
 		[DefaultValue("")]
@@ -163,34 +163,34 @@ namespace JocysCom.TextToSpeech.Monitor
 		[DefaultValue(null), XmlElement(ElementName = nameof(AmazonSecretKey))]
 		public string _AmazonSecretKeyEncrypted { get; set; }
 
-        #endregion
+		#endregion
 
-        #region Voices: ElevenLabs
+		#region Voices: ElevenLabs
 
-        [DefaultValue(null)]
-        public bool ElevenLabsEnabled { get { return _ElevenLabsEnabled; } set { _ElevenLabsEnabled = value; OnPropertyChanged(); } }
-        bool _ElevenLabsEnabled;
+		[DefaultValue(null)]
+		public bool ElevenLabsEnabled { get { return _ElevenLabsEnabled; } set { _ElevenLabsEnabled = value; OnPropertyChanged(); } }
+		bool _ElevenLabsEnabled;
 
-        [XmlIgnore]
-        public string ElevenLabsApiKey
-        {
-            get { return UserDecrypt(_ElevenLabsApiKeyEncrypted); }
-            set { _ElevenLabsApiKeyEncrypted = UserEncrypt(value); OnPropertyChanged(); }
-        }
-        [DefaultValue(null), XmlElement(ElementName = nameof(ElevenLabsApiKey))]
-        public string _ElevenLabsApiKeyEncrypted { get; set; }
+		[XmlIgnore]
+		public string ElevenLabsApiKey
+		{
+			get { return UserDecrypt(_ElevenLabsApiKeyEncrypted); }
+			set { _ElevenLabsApiKeyEncrypted = UserEncrypt(value); OnPropertyChanged(); }
+		}
+		[DefaultValue(null), XmlElement(ElementName = nameof(ElevenLabsApiKey))]
+		public string _ElevenLabsApiKeyEncrypted { get; set; }
 
-        #endregion
+		#endregion
 
-        #region Encrypt Settings 
+		#region Encrypt Settings 
 
-        static string UserEncrypt(string text)
+		static string UserEncrypt(string text)
 		{
 			try
 			{
 				//var user = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
 				var user = "AppContext";
-				return JocysCom.ClassLibrary.Security.Encryption.ProtectWithMachineKey(text, user);
+				return JocysCom.ClassLibrary.Security.Encryption.Encrypt(text, user);
 			}
 			catch (Exception ex)
 			{
@@ -205,7 +205,7 @@ namespace JocysCom.TextToSpeech.Monitor
 			{
 				//var user = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
 				var user = "AppContext";
-				return JocysCom.ClassLibrary.Security.Encryption.UnProtectWithMachineKey(base64, user);
+				return JocysCom.ClassLibrary.Security.Encryption.Decrypt(base64, user);
 			}
 			catch (Exception ex)
 			{
